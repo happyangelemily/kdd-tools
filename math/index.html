@@ -6,40 +6,78 @@
 <title>数学工具 · 可豆妈妈</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(135deg,#0c0d2e,#1a1a4e,#2d1b69);color:#fff;min-height:100vh}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
-.container{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:30px 20px}
-.back{display:inline-block;color:#ffd200;text-decoration:none;font-size:.9em;margin-bottom:20px}
-.hero{text-align:center;padding:20px 0}
-.hero h1{font-size:1.8em;background:linear-gradient(90deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.tools{display:flex;flex-direction:column;gap:12px;margin:20px 0}
-.tool{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 20px;text-decoration:none;color:#fff;transition:all .2s}
-.tool:hover{border-color:#ffd200;background:rgba(255,210,0,.06)}
-.tool-name{font-size:1.1em;font-weight:bold;color:#f7971e;margin-bottom:4px}
-.tool-desc{color:#aaa;font-size:.85em;line-height:1.5}
-.footer{text-align:center;color:#666;font-size:.8em;margin-top:40px}
-@media(max-width:500px){.hero h1{font-size:1.4em}.container{padding:20px 14px}}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
+.nav{position:sticky;top:0;z-index:10;background:rgba(10,10,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-back{color:#ffd200;text-decoration:none;font-size:.9em;display:inline-flex;align-items:center;gap:6px}
+.nav-back:hover{color:#fff}
+.container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px 20px 60px}
+.hero{text-align:center;padding:24px 0}
+.hero h1{font-size:1.8em;background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subcat{margin:20px 0 12px}
+.subcat-title{font-size:1em;color:#888;margin-bottom:10px;padding-left:4px;display:flex;align-items:center;gap:8px}
+.subcat-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.tools{display:flex;flex-direction:column;gap:8px}
+.tool{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;text-decoration:none;color:#e0e0e0;transition:all .2s}
+.tool:hover{border-color:rgba(255,210,0,.4);background:rgba(255,210,0,.05)}
+.tool-icon{font-size:1.8em;flex-shrink:0}
+.tool-info{flex:1;min-width:0}
+.tool-name{font-size:1em;font-weight:600;color:#f7971e;margin-bottom:2px}
+.tool-desc{font-size:.8em;color:#888;line-height:1.4}
+.tool-arrow{color:#555;font-size:1.1em}
+.placeholder{color:#555;font-size:.85em;text-align:center;padding:30px 0}
+.footer{text-align:center;color:#444;font-size:.78em;margin-top:40px}
+@media(max-width:500px){
+  .nav-inner{padding:0 14px;height:48px}
+  .hero h1{font-size:1.4em}.container{padding:16px 14px 50px}
+  .tool{padding:14px}
+}
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-back">◀ 助学工具</a>
+</div></nav>
 <div class="container">
-  <a class="back" href="../">◀ 返回首页</a>
   <div class="hero"><h1>📐 数学</h1></div>
-  <div class="tools">
-    <a class="tool" href="leapyear.html">
-      <div class="tool-name">🌍 平年与闰年的秘密</div>
-      <div class="tool-desc">双轨对比动画 + 日历管理员角色扮演。让孩子亲手推导「四年一闰、百年不闰、四百年再闰」</div>
-    </a>
+
+  <!-- ★ 子分类：日历与时间 ★ -->
+  <div class="subcat">
+    <div class="subcat-title">📅 日历与时间</div>
+    <div class="tools">
+      <a class="tool" href="leapyear.html">
+        <span class="tool-icon">🌍</span>
+        <span class="tool-info">
+          <div class="tool-name">平年与闰年的秘密</div>
+          <div class="tool-desc">双轨对比动画 + 日历管理员角色扮演。亲手推导「四年一闰、百年不闰、四百年再闰」</div>
+        </span>
+        <span class="tool-arrow">▸</span>
+      </a>
+    </div>
   </div>
-  <div class="footer">更多工具开发中…</div>
+
+  <!-- ★ 子分类：计算（占位）★ -->
+  <div class="subcat">
+    <div class="subcat-title">🧮 计算</div>
+    <div class="placeholder">工具开发中…</div>
+  </div>
+
+  <!-- ★ 子分类：几何（占位）★ -->
+  <div class="subcat">
+    <div class="subcat-title">📏 几何</div>
+    <div class="placeholder">工具开发中…</div>
+  </div>
+
+  <div class="footer">关注公众号「可豆妈妈」获取最新数学工具</div>
 </div>
 <script>
 (function(){
   var c=document.getElementById('stars');
-  for(var i=0;i<50;i++){
+  for(var i=0;i<40;i++){
     var s=document.createElement('div');s.className='star';
     s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(Math.random()*3+1)+'px;height:'+s.style.width+';--d:'+(Math.random()*3+2)+'s';
     c.appendChild(s);

@@ -6,63 +6,121 @@
 <title>可豆妈妈 · AI助学工具</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(135deg,#0c0d2e,#1a1a4e,#2d1b69);color:#fff;min-height:100vh}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
+
+/* ── 星空背景 ── */
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
-.container{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:30px 20px}
-.hero{text-align:center;padding:40px 0 20px}
-.hero h1{font-size:2em;background:linear-gradient(90deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.hero p{color:#aaa;font-size:.95em}
-.cats{display:flex;flex-direction:column;gap:14px;margin:24px 0}
-.cat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px 24px;text-decoration:none;color:#fff;transition:all .2s;display:flex;align-items:center;gap:14px}
-.cat:hover{border-color:#ffd200;background:rgba(255,210,0,.06);transform:translateX(4px)}
-.cat-icon{font-size:2em;flex-shrink:0}
-.cat-info{flex:1}
-.cat-title{font-size:1.2em;font-weight:bold;margin-bottom:4px}
-.cat-desc{color:#999;font-size:.85em}
-.cat-arrow{color:#ffd200;font-size:1.2em}
-.footer{text-align:center;color:#666;font-size:.8em;margin-top:40px;padding-bottom:30px}
-@media(max-width:500px){.hero h1{font-size:1.5em}.container{padding:20px 14px}}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
+
+/* ── 顶部导航 ── */
+.nav{position:sticky;top:0;z-index:10;background:rgba(10,10,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px;gap:4px}
+.nav-brand{font-weight:700;font-size:1.05em;color:#ffd200;margin-right:auto;text-decoration:none;letter-spacing:.5px}
+.nav-item{display:inline-flex;align-items:center;padding:8px 16px;border-radius:8px;color:#aaa;text-decoration:none;font-size:.9em;transition:all .2s;white-space:nowrap}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-item.active{color:#ffd200;background:rgba(255,210,0,.08)}
+
+/* ── 容器 ── */
+.container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:30px 20px 60px}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:40px 0 30px}
+.hero h1{font-size:2em;background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.hero p{color:#777;font-size:.9em}
+
+/* ── Section 标题 ── */
+.section-title{font-size:1.1em;color:#888;margin:10px 0 16px;padding-left:4px}
+
+/* ── 学科卡片网格 ── */
+.subjects{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:40px}
+.subject{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:28px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;text-decoration:none;color:#e0e0e0;transition:all .25s;text-align:center;min-height:130px}
+.subject:hover{border-color:rgba(255,210,0,.4);background:rgba(255,210,0,.05);transform:translateY(-2px)}
+.subject-icon{font-size:2.4em;line-height:1}
+.subject-name{font-size:1.1em;font-weight:600}
+.subject-desc{font-size:.78em;color:#888;line-height:1.4}
+
+/* ── 其他板块占位 ── */
+.placeholder-section{margin-top:40px}
+.placeholder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.placeholder-card{display:flex;align-items:center;gap:10px;padding:20px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);border-radius:14px;color:#666;font-size:.9em;text-decoration:none;transition:all .2s}
+.placeholder-card:hover{border-color:rgba(255,255,255,.2);color:#999}
+
+/* ── 页脚 ── */
+.footer{text-align:center;color:#444;font-size:.78em;margin-top:50px;padding-bottom:30px;line-height:1.8}
+
+@media(max-width:500px){
+  .nav-inner{padding:0 12px;height:48px}
+  .nav-item{padding:6px 10px;font-size:.8em}
+  .hero h1{font-size:1.5em}
+  .hero{padding:24px 0 20px}
+  .subjects{grid-template-columns:repeat(2,1fr);gap:8px}
+  .subject{padding:20px 10px;min-height:100px}
+  .subject-icon{font-size:2em}
+  .container{padding:20px 14px 60px}
+}
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
+
+<!-- ── 导航 ── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">可豆妈妈</a>
+    <a href="/" class="nav-item active">助学工具</a>
+    <a href="javascript:void(0)" class="nav-item" onclick="return false">文章</a>
+    <a href="javascript:void(0)" class="nav-item" onclick="return false">关于</a>
+  </div>
+</nav>
+
 <div class="container">
+  <!-- Hero -->
   <div class="hero">
     <h1>可豆妈妈 · AI助学工具</h1>
-    <p>把抽象难点变直观 · 扫码就能玩</p>
+    <p>把抽象难点变直观 · 持续更新中</p>
   </div>
-  <div class="cats">
-    <a class="cat" href="math/">
-      <span class="cat-icon">📐</span>
-      <span class="cat-info">
-        <div class="cat-title">数学</div>
-        <div class="cat-desc">闰年、分数、几何 · 把课本上的「为什么」变成看得见</div>
-      </span>
-      <span class="cat-arrow">▸</span>
+
+  <!-- 学科入口 -->
+  <div class="section-title">🔽 选择学科</div>
+  <div class="subjects" id="subjects">
+    <!-- ★ 添加新学科：在这里加一行 <a class="subject"> 即可 ★ -->
+    <a class="subject" href="math/">
+      <span class="subject-icon">📐</span>
+      <span class="subject-name">数学</span>
+      <span class="subject-desc">闰年·分数·几何</span>
     </a>
-    <a class="cat" href="english/">
-      <span class="cat-icon">🔤</span>
-      <span class="cat-info">
-        <div class="cat-title">英语</div>
-        <div class="cat-desc">自然拼读、Magic E · 互动闯关记规则</div>
-      </span>
-      <span class="cat-arrow">▸</span>
+    <a class="subject" href="english/">
+      <span class="subject-icon">🔤</span>
+      <span class="subject-name">英语</span>
+      <span class="subject-desc">自然拼读·词汇</span>
     </a>
-    <a class="cat" href="general/">
-      <span class="cat-icon">🌍</span>
-      <span class="cat-info">
-        <div class="cat-title">通识</div>
-        <div class="cat-desc">太空冒险、百科探索 · 边玩边学</div>
-      </span>
-      <span class="cat-arrow">▸</span>
+    <a class="subject" href="chinese/">
+      <span class="subject-icon">📖</span>
+      <span class="subject-name">语文</span>
+      <span class="subject-desc">识字·阅读·写作</span>
+    </a>
+    <a class="subject" href="general/">
+      <span class="subject-icon">🌍</span>
+      <span class="subject-name">通识</span>
+      <span class="subject-desc">太空·百科·探索</span>
     </a>
   </div>
+
+  <!-- 其他板块占位 -->
+  <div class="placeholder-section">
+    <div class="section-title" style="color:#555">📋 更多板块</div>
+    <div class="placeholder-grid">
+      <div class="placeholder-card">📝 学习心得 · 整理中</div>
+      <div class="placeholder-card">🎮 亲子游戏 · 即将上线</div>
+    </div>
+  </div>
+
   <div class="footer">
-    由 AI 辅助制作 · 持续更新中<br>关注公众号「可豆妈妈」获取最新工具
+    由 AI 辅助制作 · 关注公众号「可豆妈妈」获取最新工具
   </div>
 </div>
+
 <script>
 (function(){
   var c=document.getElementById('stars');
