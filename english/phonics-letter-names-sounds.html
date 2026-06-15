@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>字母名字 vs 字母声音 | 自然拼读 Stage 1</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #4fc3f7)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}.container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#81c784,#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#4fc3f7;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(79,195,247,.15);border-color:#4fc3f7;color:#4fc3f7}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#4fc3f7,#81c784);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(79,195,247,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#4fc3f7;color:#4fc3f7}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(79,195,247,.08);border-left:3px solid #4fc3f7;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.story-example{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.se-card{text-align:center;min-width:100px}.se-letter{font-size:3em;font-weight:bold;color:#ffd200}.se-name{color:#4fc3f7;font-size:.9em}.se-sound{color:#81c784;font-size:.9em}.se-word{color:#ff8a65;font-size:.85em}.se-divider{color:#888;font-size:1.5em}
+.insight-box{background:rgba(255,210,0,.08);border:1px solid rgba(255,210,0,.25);border-radius:14px;padding:16px;margin:14px 0;text-align:center}.insight-box .big{font-size:1.2em;color:#ffd200;font-weight:bold;margin-bottom:8px}.insight-box .demo{font-size:1.1em;color:#ccc;margin:8px 0}.insight-box .demo .wrong{color:#ff5252;text-decoration:line-through}.insight-box .demo .right{color:#69f0ae;font-weight:bold}
+.word-demo{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0;font-size:1.6em;font-weight:bold;letter-spacing:2px}
+
+.lab-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 8px;text-align:center;width:110px;cursor:default;transition:all .4s;position:relative}.lab-card:hover{border-color:rgba(79,195,247,.5);transform:translateY(-3px)}.lab-card.vowel{border-color:rgba(79,195,247,.3)}.lab-card.consonant{border-color:rgba(255,138,101,.3)}.lab-card .big-letter{font-size:2.2em;font-weight:bold;color:#ffd200;margin-bottom:4px}.lab-card .lname{font-size:.75em;color:#4fc3f7;margin:2px 0}.lab-card .lsound{font-size:.8em;color:#81c784;margin:2px 0;font-weight:bold}.lab-card .lexample{font-size:.85em;color:#ccc;margin:3px 0}.lab-card .speak-wrap{margin-top:6px}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#4fc3f7;color:#4fc3f7;background:rgba(79,195,247,.1)}.lab-tab.vowel-tab.active{border-color:#4fc3f7;color:#4fc3f7}.lab-tab.consonant-tab.active{border-color:#ff8a65;color:#ff8a65}
+
+.sort-pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:10px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:130px;min-height:180px;border-radius:16px;padding:10px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center}.sort-bin-label{font-size:.9em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-hint{text-align:center;color:#888;font-size:.85em;margin-bottom:10px}.sort-item{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:14px;font-size:.95em;font-weight:bold;cursor:pointer;transition:all .3s;user-select:none;letter-spacing:1.5px}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35)}.sort-item.placed{cursor:default;opacity:.35}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.95em;min-height:22px}.sort-item.dragging{opacity:.35;transform:scale(.85)}.sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important;transform:scale(1.03);box-shadow:0 0 18px rgba(255,210,0,.35);transition:all .2s}.sort-item[draggable=true]{cursor:grab}.sort-item[draggable=true]:active{cursor:grabbing}.sort-touch-clone{position:fixed;pointer-events:none;z-index:999;opacity:.85;transform:scale(1.08);background:rgba(255,210,0,.18);border:2px solid #ffd200;border-radius:14px;padding:6px 14px;font-weight:bold;letter-spacing:1.5px;color:#ffd200;font-size:.95em}
+
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#4fc3f7;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#4fc3f7}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2)}
+
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4.5em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(79,195,247,.3))}.book-title{font-size:1.4em;color:#4fc3f7;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .sv{color:#4fc3f7;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.home-link{text-align:center;margin-top:8px}.home-link a{color:#888;text-decoration:none;font-size:.85em}.home-link a:hover{color:#4fc3f7}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%}
+  .container{padding:8px}
+  h1{font-size:1.4em}h2{font-size:1.1em}h3{font-size:.95em}
+  .glass{padding:16px 10px;margin:10px 0;border-radius:14px}
+  .nav{gap:4px;margin:6px 0}
+  .nav-btn{padding:12px 10px;font-size:.82em;border-radius:16px;min-height:44px}
+  .nav-btn:hover{background:rgba(79,195,247,.15);border-color:#4fc3f7;color:#4fc3f7}
+  .nav-btn:active{transform:scale(.94)}
+  .btn{padding:14px 20px;font-size:.9em;border-radius:22px;min-height:44px}
+  .btn-gold:hover{transform:none}
+  .btn-gold:active{transform:scale(.95);box-shadow:0 0 20px rgba(79,195,247,.4)}
+  .btn-outline:hover{border-color:rgba(255,255,255,.3);color:#ccc}
+  .btn-outline:active{border-color:#4fc3f7;color:#4fc3f7}
+  .btn-outline:disabled{opacity:.35}
+  .speak-btn{width:36px!important;height:36px!important;font-size:.9em!important}
+  .speak-btn:hover{background:rgba(79,195,247,.15);transform:none}
+  .speak-btn:active{background:rgba(79,195,247,.4);transform:scale(1.15)}
+  .lab-grid{gap:8px}
+  .lab-card{width:calc(50% - 6px);min-width:130px;padding:14px 8px;border-radius:12px}
+  .lab-card:hover{border-color:rgba(255,255,255,.1);transform:none}
+  .lab-card:active{border-color:rgba(79,195,247,.5);transform:scale(.96)}
+  .lab-tabs{gap:4px;margin-bottom:10px}
+  .lab-tab{padding:10px 10px;font-size:.82em;border-radius:18px;min-height:38px}
+  .lab-tab:hover{border-color:rgba(255,255,255,.2);color:#ccc}
+  .lab-tab:active,.lab-tab.active{border-color:#4fc3f7;color:#4fc3f7;background:rgba(79,195,247,.1)}
+  .story-speech{padding:10px 14px;font-size:.9em}
+  .story-example{gap:8px;padding:10px}
+  .se-letter{font-size:2.2em}
+  .insight-box{padding:12px}
+  .insight-box .big{font-size:1em}
+  .insight-box .demo{font-size:.9em}
+  .sort-pool{gap:6px}
+  .sort-bins{gap:6px}
+  .sort-bin{min-width:90px;min-height:120px;padding:6px}
+  .sort-item{padding:10px 12px;font-size:.85em;min-height:40px}
+  .sort-bin-label{font-size:.75em}
+  .sort-hint{font-size:.75em}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:12px}
+  .quiz-q{font-size:.9em}
+  .quiz-word{font-size:1.4em}
+  .quiz-opts{gap:6px}
+  .quiz-opt{padding:13px 14px;font-size:.88em;min-height:44px;width:100%}
+  .quiz-opt:hover:not(.locked){border-color:rgba(255,255,255,.3)}
+  .quiz-opt:active:not(.locked){border-color:#4fc3f7}
+  .quiz-nav{gap:8px}
+  .quiz-dot{width:14px;height:14px}
+  .book-page{padding:14px;min-height:220px;border-radius:14px}
+  .book-scene{font-size:2.8em}
+  .book-text{font-size:.95em;line-height:1.9}
+  .book-title{font-size:1.1em}
+  .home-link a{font-size:.9em;padding:8px 0;display:inline-block}
+  .sort-feedback{font-size:.85em}
+  .subtitle{font-size:.82em;margin-bottom:14px}
+  input,select,textarea{font-size:16px}
+}
+</style></head>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔤 字母的名字 vs 字母的声音</h1><p class="subtitle">每个字母都有两个身份！学会区分，你就能拼读任何单词 🚀</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button></div>
+
+<!-- STORY -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 每个字母都有两个身份！</h2>
+<div class="story-speech"><p>你知道吗？每个英文字母都有<b style="color:#ffd200">两个身份</b>：</p><p>👋 <b style="color:#4fc3f7">字母名（Letter Name）</b>——就像叫人家的名字："嘿，A！"</p><p>🗣️ <b style="color:#81c784">字母音（Letter Sound）</b>——字母在单词里发出的声音</p></div>
+
+<h3>🔍 看看字母A的两个身份：</h3>
+<div class="story-example">
+<div class="se-card"><div class="se-letter">A</div><div class="se-name">名字：ay</div><div style="color:#aaa;font-size:.75em">（唱ABC歌用的）</div></div>
+<div class="se-divider">|</div>
+<div class="se-card"><div class="se-letter">A</div><div class="se-sound">声音：/æ/</div><div class="se-word">apple 🍎</div><div style="color:#aaa;font-size:.75em">（发音像"哎"）</div></div>
+</div>
+
+<h3>🔍 再看看字母B：</h3>
+<div class="story-example">
+<div class="se-card"><div class="se-letter">B</div><div class="se-name">名字：bee</div><div style="color:#aaa;font-size:.75em">（像蜜蜂bee）</div></div>
+<div class="se-divider">|</div>
+<div class="se-card"><div class="se-letter">B</div><div class="se-sound">声音：/b/</div><div class="se-word">ball ⚽</div><div style="color:#aaa;font-size:.75em">（嘴唇闭紧弹开）</div></div>
+</div>
+
+<div class="insight-box">
+<div class="big">💡 关键秘密：</div>
+<div class="demo">拼读单词 <b style="color:#ffd200">C-A-T</b> 时：</div>
+<div class="demo"><span class="wrong">❌ 用名字：see-ay-tee → 猫？</span></div>
+<div class="demo"><span class="right">✅ 用声音：/k/-/æ/-/t/ → cat！🐱</span></div>
+<div style="color:#aaa;margin-top:8px;font-size:.9em"><b style="color:#ffd200">读书时用声音，不叫名字！</b> 就像你不会叫朋友的全名来说话一样~</div>
+</div>
+
+<div class="story-speech"><p>🎯 <b style="color:#ffd200">自然拼读的魔法：</b>把每个字母的<b style="color:#81c784">声音</b>连起来读——知道每个字母发什么音，你就能自己拼出任何单词！</p><p style="color:#aaa;font-size:.9em;margin-top:8px">记住：<b style="color:#4fc3f7">ABC歌用名字</b>，<b style="color:#81c784">读书拼词用声音</b>！</p></div>
+</div></div>
+
+<!-- LAB -->
+<div class="section" id="sec-lab"><div class="glass">
+<h2>🧪 26个字母实验室</h2><p style="color:#aaa;margin-bottom:8px">点击🔊听每个字母的声音！蓝色=元音 橙色=辅音</p>
+<div class="lab-tabs"><button class="lab-tab vowel-tab active" onclick="switchL('vowel')">🔵 元音 (5个)</button><button class="lab-tab consonant-tab" onclick="switchL('consonant')">🟠 辅音 (21个)</button></div>
+<div class="lab-grid" id="labGrid"></div>
+</div></div>
+
+<!-- SORT -->
+<div class="section" id="sec-sort"><div class="glass">
+<h2>🎯 元音还是辅音？</h2><p class="sort-hint">💡 元音：嘴巴张开，声音自由出来！辅音：嘴巴有阻挡~</p>
+<div class="sort-pool" id="sortPool"></div>
+<div class="sort-bins" id="sortBins"></div>
+<div class="sort-feedback" id="sortFB"></div>
+<div style="text-align:center;margin-top:10px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div>
+</div></div>
+
+<!-- QUIZ -->
+<div class="section" id="sec-quiz"><div class="glass">
+<h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">字母名字 vs 字母声音 · 元音和辅音</p>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- BOOK -->
+<div class="section" id="sec-book"><div class="glass">
+<h2>📚 The ABC Sound Party</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">字母们在派对上用声音介绍自己！🎉</p>
+<div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div>
+</div></div>
+
+<p class="home-link"><a href="phonics-index.html">← 返回总目录</a></p></div>
+
+<script>
+// ========== STARS ==========
+(function(){var c=document.getElementById('stars');for(var i=0;i<80;i++){var s=document.createElement('div');s.className='star';s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(1+Math.random()*2)+'px;height:'+(1+Math.random()*2)+'px;--dur:'+(2+Math.random()*4)+'s;--delay:'+Math.random()*5+'s;';c.appendChild(s)}})();
+
+// ========== TTS ENGINE ==========
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){var v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=function(){loadVoices()};
+loadVoices();
+setTimeout(function(){try{var d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+function spk(word){speechSynthesis.resume();if(speechSynthesis.getVoices().length===0){voiceQ.push(word);loadVoices();return}speakNow(word)}
+function speakNow(word){speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}speechSynthesis.cancel();document.querySelectorAll('.speak-btn.speaking').forEach(function(b){b.classList.remove('speaking')});var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.8;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var en=voices.find(function(v){return v.lang==='en-US'&&v.name.indexOf('Google')>=0})||voices.find(function(v){return v.lang==='en-US'})||voices.find(function(v){return v.lang.indexOf('en')===0});if(en)u.voice=en;u.onstart=function(){document.querySelectorAll('.speak-btn').forEach(function(b){if(b.getAttribute('data-word')===word)b.classList.add('speaking')})};u.onend=function(){spT=setTimeout(function(){document.querySelectorAll('.speak-btn.speaking').forEach(function(b){b.classList.remove('speaking')})},300)};u.onerror=function(e){console.log('TTS error:',e.error);document.querySelectorAll('.speak-btn.speaking').forEach(function(b){b.classList.remove('speaking')})};setTimeout(function(){speechSynthesis.speak(u)},50);}
+
+// ========== NAVIGATION ==========
+var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本'};
+function showS(n){document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});document.getElementById('sec-'+n).classList.add('active');document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.indexOf(NM[n])>=0)b.classList.add('active')});if(n==='lab')buildL();if(n==='sort')resetSort();if(n==='quiz')initQ();if(n==='book'){cp=0;renderP()}}
+
+// ========== LAB DATA ==========
+var labLetters=[
+  {l:'A',n:'ay',s:'/æ/',w:'apple',e:'🍎',type:'vowel'},
+  {l:'E',n:'ee',s:'/e/',w:'egg',e:'🥚',type:'vowel'},
+  {l:'I',n:'eye',s:'/ɪ/',w:'igloo',e:'🏠',type:'vowel'},
+  {l:'O',n:'oh',s:'/ɒ/',w:'orange',e:'🍊',type:'vowel'},
+  {l:'U',n:'you',s:'/ʌ/',w:'umbrella',e:'☂️',type:'vowel'},
+  {l:'B',n:'bee',s:'/b/',w:'ball',e:'⚽',type:'consonant'},
+  {l:'C',n:'see',s:'/k/',w:'cat',e:'🐱',type:'consonant'},
+  {l:'D',n:'dee',s:'/d/',w:'dog',e:'🐶',type:'consonant'},
+  {l:'F',n:'ef',s:'/f/',w:'fish',e:'🐟',type:'consonant'},
+  {l:'G',n:'jee',s:'/g/',w:'goat',e:'🐐',type:'consonant'},
+  {l:'H',n:'aych',s:'/h/',w:'hat',e:'🎩',type:'consonant'},
+  {l:'J',n:'jay',s:'/dʒ/',w:'jam',e:'🍯',type:'consonant'},
+  {l:'K',n:'kay',s:'/k/',w:'kite',e:'🪁',type:'consonant'},
+  {l:'L',n:'el',s:'/l/',w:'lion',e:'🦁',type:'consonant'},
+  {l:'M',n:'em',s:'/m/',w:'moon',e:'🌙',type:'consonant'},
+  {l:'N',n:'en',s:'/n/',w:'nose',e:'👃',type:'consonant'},
+  {l:'P',n:'pee',s:'/p/',w:'pig',e:'🐷',type:'consonant'},
+  {l:'Q',n:'cue',s:'/kw/',w:'queen',e:'👑',type:'consonant'},
+  {l:'R',n:'ar',s:'/r/',w:'rain',e:'🌧️',type:'consonant'},
+  {l:'S',n:'ess',s:'/s/',w:'sun',e:'☀️',type:'consonant'},
+  {l:'T',n:'tee',s:'/t/',w:'tiger',e:'🐯',type:'consonant'},
+  {l:'V',n:'vee',s:'/v/',w:'van',e:'🚐',type:'consonant'},
+  {l:'W',n:'double-u',s:'/w/',w:'whale',e:'🐋',type:'consonant'},
+  {l:'X',n:'eks',s:'/ks/',w:'box',e:'📦',type:'consonant'},
+  {l:'Y',n:'wye',s:'/j/',w:'yoyo',e:'🪀',type:'consonant'},
+  {l:'Z',n:'zee',s:'/z/',w:'zebra',e:'🦓',type:'consonant'}
+];
+
+var curL='vowel';
+function switchL(k){curL=k;document.querySelectorAll('.lab-tab').forEach(function(t){t.classList.remove('active')});if(k==='vowel'){document.querySelector('.lab-tab.vowel-tab').classList.add('active')}else{document.querySelector('.lab-tab.consonant-tab').classList.add('active')}buildL()}
+function buildL(){var filtered=labLetters.filter(function(x){return x.type===curL});document.getElementById('labGrid').innerHTML=filtered.map(function(d,i){return '<div class="lab-card '+d.type+'"><div class="big-letter">'+d.l+'</div><div class="lname">名字: '+d.n+'</div><div class="lsound">声音: '+d.s+'</div><div class="lexample">'+d.w+' '+d.e+'</div><div class="speak-wrap"><span class="speak-btn" data-word="'+d.w+'" onclick="spk(\''+d.w+'\');event.stopPropagation()">🔊</span></div></div>'}).join('')}
+
+// ========== SORT ==========
+var sW=[],sSc=0,sTot=0,sDragIdx=-1,sTouchIdx=-1,sTouchClone=null,sTX=0,sTY=0;
+function resetSort(){sW=labLetters.map(function(d){return{w:d.l,t:d.type,placed:false}}).sort(function(){return Math.random()-.5});sSc=0;sTot=0;sDragIdx=-1;sTouchIdx=-1;document.getElementById('sortFB').innerHTML='';document.getElementById('sortBins').innerHTML='<div class="sort-bin" id="binvowel" onclick="placeS(\'vowel\')" ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')" ondrop="dropS(event,\'vowel\')" style="border-color:rgba(79,195,247,.3);background:rgba(79,195,247,.05)"><div class="sort-bin-label" style="color:#4fc3f7">🔵 元音 (Vowels)</div><div class="items" id="binvowelItems"></div></div><div class="sort-bin" id="binconsonant" onclick="placeS(\'consonant\')" ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')" ondrop="dropS(event,\'consonant\')" style="border-color:rgba(255,138,101,.3);background:rgba(255,138,101,.05)"><div class="sort-bin-label" style="color:#ff8a65">🟠 辅音 (Consonants)</div><div class="items" id="binconsonantItems"></div></div>';renderSPool()}
+function renderSPool(){document.getElementById('sortPool').innerHTML=sW.map(function(w,i){return '<div class="sort-item unplaced" id="si'+i+'" draggable="true" onclick="selS('+i+')" ondragstart="ds(event,'+i+')" ondragend="de(event)" ontouchstart="ts(event,'+i+')" ontouchmove="tm(event)" ontouchend="te(event,'+i+')">'+w.w+'</div>'}).join('')}
+function ds(e,i){if(sW[i].placed)return;sDragIdx=i;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',''+i)}
+function de(e){e.target.classList.remove('dragging');document.querySelectorAll('.sort-bin').forEach(function(b){b.classList.remove('drag-over')})}
+function dropS(e,bin){e.preventDefault();e.currentTarget.classList.remove('drag-over');if(sDragIdx>=0&&!sW[sDragIdx].placed)doP(sDragIdx,bin)}
+function selS(i){if(sW[i].placed)return;document.querySelectorAll('.sort-item').forEach(function(el){el.classList.remove('selected')});document.getElementById('si'+i).classList.add('selected')}
+function placeS(bin){var sel=document.querySelector('.sort-item.selected');if(!sel){document.getElementById('sortFB').innerHTML='👆 先点字母或拖拽过去！';return}var i=parseInt(sel.id.replace('si',''));if(sW[i].placed)return;doP(i,bin)}
+function ts(e,i){if(sW[i].placed||e.touches.length!==1)return;sTouchIdx=i;var t=e.touches[0];sTX=t.clientX;sTY=t.clientY}
+function tm(e){if(sTouchIdx<0||e.touches.length!==1)return;e.preventDefault();var t=e.touches[0];var dx=t.clientX-sTX,dy=t.clientY-sTY;if(!sTouchClone&&(Math.abs(dx)>5||Math.abs(dy)>5)){sTouchClone=document.getElementById('si'+sTouchIdx).cloneNode(true);sTouchClone.className='sort-touch-clone';sTouchClone.textContent=sW[sTouchIdx].w;document.body.appendChild(sTouchClone);document.getElementById('si'+sTouchIdx).classList.add('dragging');document.querySelectorAll('.sort-item.selected').forEach(function(el){el.classList.remove('selected')})}if(sTouchClone){sTouchClone.style.left=(t.clientX-35)+'px';sTouchClone.style.top=(t.clientY-18)+'px';document.querySelectorAll('.sort-bin').forEach(function(b){b.classList.remove('drag-over')});var el=document.elementFromPoint(t.clientX,t.clientY);if(el){var bin=el.closest('.sort-bin');if(bin)bin.classList.add('drag-over')}}}
+function te(e,si){if(sTouchClone){sTouchClone.remove();sTouchClone=null;document.getElementById('si'+si).classList.remove('dragging');document.querySelectorAll('.sort-bin').forEach(function(b){b.classList.remove('drag-over')});var t=e.changedTouches[0];var el=document.elementFromPoint(t.clientX,t.clientY);if(el){var bin=el.closest('.sort-bin');if(bin&&!sW[si].placed){var binId=bin.id.replace('bin','');doP(si,binId)}}}sTouchIdx=-1}
+function doP(i,bin){var w=sW[i];var ok=w.t===bin;sTot++;if(ok)sSc++;var it=document.getElementById('si'+i);it.classList.remove('unplaced','selected','dragging');it.classList.add('placed');if(!ok)it.classList.add('wrong');it.style.cursor='default';it.draggable=false;it.onclick=null;it.ondragstart=null;it.ontouchstart=null;it.ontouchmove=null;it.ontouchend=null;var d=document.getElementById('bin'+bin+'Items');var cl=it.cloneNode(true);cl.classList.remove('wrong','dragging','placed');cl.style.cssText='opacity:1;margin:2px;cursor:default';cl.draggable=false;cl.onclick=null;d.appendChild(cl);it.style.opacity='.35';w.placed=true;sDragIdx=-1;var done=sW.every(function(x){return x.placed});if(done){var fb=document.getElementById('sortFB');if(sSc===sTot)fb.innerHTML='🎉 <b style="color:#4fc3f7">全对！元音和辅音你完全掌握了！</b>🏆';else if(sSc>=sTot*.7)fb.innerHTML='👏 '+sSc+'/'+sTot+' 不错~';else fb.innerHTML='💪 '+sSc+'/'+sTot+' 再试一次！'}else{document.getElementById('sortFB').innerHTML=ok?'✅ 正确！'+w.w+' 是'+(bin==='vowel'?'元音':'辅音'):'❌ 再想想~ '+w.w+' 是'+(w.t==='vowel'?'元音':'辅音')+'哦'}}
+
+// ========== QUIZ ==========
+var qPool_=[
+  {q:'字母 <b style="color:#ffd200">A</b> 的名字是什么？',word:'A',opts:['ay','bee','see','dee'],ans:0,explain:'A的名字念作"ay"（诶）。唱ABC歌时我们唱的就是字母的名字！'},
+  {q:'字母 <b style="color:#ffd200">B</b> 在单词里发什么音？',word:'ball',opts:['/b/（嘴唇弹开）','/p/（喷气）','/d/（舌头弹）','/t/（舌尖弹）'],ans:0,explain:'B的声音是/b/，像ball⚽里的第一个音。嘴唇闭紧然后弹开！'},
+  {q:'字母 <b style="color:#ffd200">C</b> 的名字是什么？',word:'C',opts:['see','kay','bee','dee'],ans:0,explain:'C的名字念作"see"（西）。但它在cat🐱里发/k/的声音！名字≠声音。'},
+  {q:'字母 <b style="color:#ffd200">D</b> 在单词里发什么音？',word:'dog',opts:['/t/','/k/','/d/','/g/'],ans:2,explain:'D的声音是/d/，像dog🐶的第一个音。舌尖抵住上颚弹开！'},
+  {q:'下面哪个是<b style="color:#4fc3f7">元音</b>？',opts:['B','A','C','D'],ans:1,explain:'A是元音（Vowel）！元音只有5个：A、E、I、O、U。发音时嘴巴张开，气流自由通过。'},
+  {q:'下面哪个是<b style="color:#ff8a65">辅音</b>？',opts:['A','E','I','M'],ans:3,explain:'M是辅音（Consonant）！辅音发音时嘴巴或舌头有阻挡。元音只有A/E/I/O/U五个。'},
+  {q:'要拼出 <b style="color:#ffd200">/kæt/</b>，你需要知道字母的____？',opts:['名字（name）','声音/字母音（sound）','形状','颜色'],ans:1,explain:'读书拼词时用字母的<b style="color:#81c784">声音</b>！/k/+/æ/+/t/=cat。如果用名字see-ay-tee就读不出cat。'},
+  {q:'唱ABC歌时，我们用的是字母的____？',opts:['声音（sound）','名字（name）','形状','大小'],ans:1,explain:'ABC歌用的是字母的<b style="color:#4fc3f7">名字</b>：ay-bee-see-dee...。但读书时要用声音！'},
+  {q:'字母 <b style="color:#ffd200">S</b> 在单词里发什么音？',word:'sun',opts:['/s/（像蛇叫）','/z/（像蜜蜂）','/ʃ/（像嘘）','/θ/（咬舌头）'],ans:0,explain:'S的声音是/s/，像sun☀️的第一个音，也像蛇发嘶嘶声🐍。'},
+  {q:'下面哪一组<b style="color:#4fc3f7">全部是元音</b>？',opts:['A E I O U','B C D F G','H J K L M','P Q R S T'],ans:0,explain:'元音只有5个：A、E、I、O、U！其他21个全是辅音。记住这个，你就掌握了字母最重要的分类！'},
+  {q:'字母 <b style="color:#ffd200">T</b> 的名字是什么？',word:'T',opts:['tee','dee','pee','bee'],ans:0,explain:'T的名字念作"tee"（踢）。但它在tiger🐯里发/t/的声音！'},
+  {q:'自然拼读（Phonics）的核心是什么？',opts:['记住字母的名字','学会字母的声音并连起来读','背很多单词','学语法'],ans:1,explain:'自然拼读就是学会每个字母的<b style="color:#81c784">声音</b>，然后把它们连起来拼出单词！这是自己读书的秘密武器。'}
+];
+
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(qPool_).sort(function(){return Math.random()-.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(null)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]!==null){c+=' '+(qS.as[i]===qS.qs[i].ans?'correct':'wrong')}return '<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur];var a=qS.as[qS.cur]!==null;var h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题</div><div class="quiz-q">❓ '+q.q+'</div>';if(q.word)h+='<div class="quiz-word">'+q.word+' <span class="speak-btn" data-word="'+q.word+'" onclick="spk(\''+q.word+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.opts.map(function(o,i){return '<button class="quiz-opt'+(a?' locked':'')+(a&&i===qS.as[qS.cur]?(i===q.ans?' correct':' wrong'):'')+(a&&i===q.ans&&i!==qS.as[qS.cur]?' correct':'')+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';h+='<div class="quiz-explain">'+(a?((qS.as[qS.cur]===q.ans?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.explain):'')+'</div></div>';document.getElementById('qc').innerHTML=h;var ad=qS.as.every(function(x){return x!==null});document.getElementById('qn').innerHTML='<button class="btn btn-outline" onclick="goQ(-1)" '+(qS.cur===0?'disabled':'')+'>⬅ 上题</button><span class="qi">'+(qS.cur+1)+'/10</span><button class="btn btn-outline" onclick="goQ(1)" '+(qS.cur===9?'disabled':'')+'>下题 ➡</button>'+(ad?'<button class="btn btn-gold" onclick="showQR()">📊 查看成绩</button>':'<span style="color:#888;font-size:.8em">答完查看</span>');renderQD()}
+function ansQ(i){if(qS.as[qS.cur]!==null)return;qS.as[qS.cur]=i;renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].ans?1:0)},0);var msg='',cls='';if(s===10){msg='🏆 <b style="color:#ffd200">满分！你是字母声音大师！</b> 🎉<br>你完全掌握了字母名字和声音的区别！';cls='perfect'}else if(s>=8){msg='🌟 <b style="color:#4fc3f7">太棒了！答对'+s+'/10题！</b><br>你对字母名字和声音的理解非常好！';cls=''}else if(s>=6){msg='👍 答对'+s+'/10题，继续加油！<br>多区分一下字母的名字和声音哦~';cls=''}else{msg='💪 答对'+s+'/10题，别灰心！<br>回到实验室多听听字母的声音，再试一次！';cls=''}document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';document.getElementById('qf').style.display='block';document.getElementById('qf').innerHTML='<div class="quiz-final '+cls+'">'+msg+'<div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再闯一次</button></div></div>'}
+
+// ========== BOOK ==========
+var cp=0;
+var bp_=[
+  {s:'🎉🎵🏠',t:'Page 1 — Welcome!',x:'Welcome to the <span class="sv">Sound Party</span>! 🎉<br>At this party, letters don\'t say their <span style="color:#ff5252">names</span>...<br>They say their <span class="sv">SOUNDS</span>!<br>Let\'s meet them! 👋'},
+  {s:'🅰️🍎🎤',t:'Page 2 — A is here!',x:'<span class="sv">A</span> says: <span style="color:#ffd200;font-size:1.2em">/æ/ /æ/ /æ/</span><br>"I brought <span class="sv">apples</span>!" 🍎<br><span style="color:#aaa;font-size:.85em">(Not "ay" — that\'s just my name!)</span>'},
+  {s:'🅱️⚽🎤',t:'Page 3 — B arrives!',x:'<span class="sv">B</span> says: <span style="color:#ffd200;font-size:1.2em">/b/ /b/ /b/</span><br>"I brought a <span class="sv">ball</span>!" ⚽<br><span style="color:#aaa;font-size:.85em">(Not "bee" — that\'s just my name!)</span>'},
+  {s:'©️🐱🅳️🐶',t:'Page 4 — C and D!',x:'<span class="sv">C</span> says: <span style="color:#ffd200;font-size:1.2em">/k/ /k/ /k/</span><br>"I brought a <span class="sv">cat</span>!" 🐱<br><span class="sv">D</span> says: <span style="color:#ffd200;font-size:1.2em">/d/ /d/ /d/</span><br>"I brought a <span class="sv">dog</span>!" 🐶'},
+  {s:'🎵🅴️🥚🅵️🐟',t:'Page 5 — More friends!',x:'<span class="sv">E</span> says /e/ — "I brought <span class="sv">eggs</span>!" 🥚<br><span class="sv">F</span> says /f/ — "I brought a <span class="sv">fish</span>!" 🐟<br><span class="sv">G</span> says /g/ — "I brought a <span class="sv">goat</span>!" 🐐<br><span style="color:#aaa;font-size:.85em">Everyone is sharing their sounds!</span>'},
+  {s:'🪄🐱✨',t:'Page 6 — The Magic!',x:'<span style="color:#ffd200;font-size:1.1em">Now watch this!</span><br><br>Put sounds together...<br><span style="font-size:1.4em"><span style="color:#ff8a65">/k/</span> + <span style="color:#4fc3f7">/æ/</span> + <span style="color:#81c784">/t/</span></span><br><span style="font-size:1.6em">= <span class="sv">CAT</span>! 🐱</span><br><br><span style="color:#ffd200">That\'s READING!</span>'},
+  {s:'🌟📖🎵',t:'Page 7 — Remember!',x:'<span style="color:#ffd200;font-size:1.15em">The Big Rule:</span><br><br>🔤 <span style="color:#4fc3f7">Names</span> are for singing <span style="color:#4fc3f7">ABC</span> 🎵<br>🗣️ <span style="color:#81c784">Sounds</span> are for <span style="color:#81c784">READING</span> words! 📖<br><br><span style="color:#ffd200">You\'ve got this!</span> 🌟'}
+];
+function renderP(){var p=bp_[cp];document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;document.getElementById('pn').textContent=(cp+1)+'/'+bp_.length;document.getElementById('bp').style.visibility=cp===0?'hidden':'visible';document.getElementById('bn').style.visibility=cp===bp_.length-1?'hidden':'visible'}
+function nextP(){if(cp<bp_.length-1){cp++;renderP()}}
+function prevP(){if(cp>0){cp--;renderP()}}
+
+// ========== INIT ==========
+buildL();resetSort();initQ();
+</script></body></html>
