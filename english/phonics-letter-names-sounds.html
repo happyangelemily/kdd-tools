@@ -36,8 +36,8 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 .letter-card .snd-val{color:#81c784;font-weight:600;margin:0 2px;font-size:.85em}
 .letter-card .word-val{color:#ff8a65;font-size:.8em;margin-left:2px}
 
-.spk{background:rgba(255,210,0,.12);border:1px solid rgba(255,210,0,.2);border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.55em;transition:all .2s;flex-shrink:0;color:#ffd200;padding:0;line-height:1}
-.spk:hover{background:rgba(255,210,0,.3);transform:scale(1.25)}
+.spk{background:rgba(255,210,0,.12);border:1px solid rgba(255,210,0,.2);border-radius:50%;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75em;transition:all .2s;flex-shrink:0;color:#ffd200;padding:0;line-height:1;vertical-align:middle}
+.spk:hover{background:rgba(255,210,0,.3);transform:scale(1.15)}
 .spk.on{animation:pulse .3s;background:rgba(255,210,0,.5)}
 .spk.sound-spk{background:rgba(129,199,132,.12);border-color:rgba(129,199,132,.2);color:#81c784}.spk.sound-spk:hover{background:rgba(129,199,132,.3)}
 .spk.word-spk{background:rgba(255,138,101,.12);border-color:rgba(255,138,101,.2);color:#ff8a65}.spk.word-spk:hover{background:rgba(255,138,101,.3)}
@@ -88,11 +88,11 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 @media(max-width:768px){
   body{font-size:16px;-webkit-text-size-adjust:100%}.container{padding:8px}h1{font-size:1.3em}
   .glass{padding:12px 8px;margin:8px 0;border-radius:14px}.nav{gap:3px;margin:6px 0 8px}
-  .nav-btn{padding:9px 8px;font-size:.75em;border-radius:16px;min-height:38px}
+  .nav-btn{padding:9px 8px;font-size:.78em;border-radius:16px;min-height:44px}
   .btn{padding:12px 18px;font-size:.85em;min-height:44px}
-  .spk{width:28px!important;height:28px!important;font-size:.7em!important}
+  .spk{width:44px!important;height:44px!important;font-size:.85em!important}
   .letter-card{width:calc(50% - 6px);min-width:130px;padding:8px 4px}
-  .sort-bin{min-width:80px;min-height:100px;padding:4px}.sort-item{padding:8px 10px;font-size:.78em;min-height:36px}
+  .sort-bin{min-width:80px;min-height:100px;padding:4px}.sort-item{padding:10px 12px;font-size:.82em;min-height:44px}
   .sort-bin-label{font-size:.7em}.sort-hint{font-size:.7em}
   .quiz-card{padding:10px}.quiz-q{font-size:.86em}.quiz-opt{padding:11px 12px;font-size:.82em;min-height:44px;width:100%}
   .quiz-nav{gap:6px}.decon-row{padding:5px 8px;font-size:.76em}
@@ -134,12 +134,12 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 <div class="note-box">
 <p>💡 <b>比如字母 A</b></p>
 <div style="line-height:2.2">
-<div><b style="color:#4fc3f7;font-size:1.1em">字母名</b>：<b style="color:#4fc3f7">/eɪ/</b> <span class="spk name-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkLetterName('/eɪ/',this)" title="剑桥真人·字母名 A">🔊</span> <span style="color:#888;font-size:.82em">（唱 ABC 歌时用的）</span></div>
+<div><b style="color:#4fc3f7;font-size:1.1em">字母名</b>：<b style="color:#4fc3f7">/eɪ/</b> <span class="spk name-spk" onclick="spkLetterName('/eɪ/',this)" title="剑桥真人·字母名 A">🔊</span> <span style="color:#888;font-size:.82em">（唱 ABC 歌时用的）</span></div>
 <div style="margin-top:6px"><b style="color:#ff8a65;font-size:1.1em">字母音</b> 有三种：</div>
 <div style="padding-left:12px">
-<div><b style="color:#81c784">/æ/</b> <span class="spk sound-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkPhoneme('/æ/',this)" title="剑桥真人·音素 /æ/">🔊</span> → apple <span class="spk word-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkWord('apple',this)" title="剑桥真人·apple">🔊</span></div>
-<div><b style="color:#81c784">/eɪ/</b> <span class="spk sound-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkPhoneme('/eɪ/',this)" title="剑桥真人·音素 /eɪ/">🔊</span> → cake <span class="spk word-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkWord('cake',this)" title="剑桥真人·cake">🔊</span></div>
-<div><b style="color:#81c784">/ɑː/</b> <span class="spk sound-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkPhoneme('/ɑː/',this)" title="剑桥真人·音素 /ɑː/">🔊</span> → car <span class="spk word-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkWord('car',this)" title="剑桥真人·car">🔊</span></div>
+<div><b style="color:#81c784">/æ/</b> <span class="spk sound-spk" onclick="spkPhoneme('/æ/',this)" title="剑桥真人·音素 /æ/">🔊</span> → apple <span class="spk word-spk" onclick="spkWord('apple',this)" title="剑桥真人·apple">🔊</span></div>
+<div><b style="color:#81c784">/eɪ/</b> <span class="spk sound-spk" onclick="spkPhoneme('/eɪ/',this)" title="剑桥真人·音素 /eɪ/">🔊</span> → cake <span class="spk word-spk" onclick="spkWord('cake',this)" title="剑桥真人·cake">🔊</span></div>
+<div><b style="color:#81c784">/ɑː/</b> <span class="spk sound-spk" onclick="spkPhoneme('/ɑː/',this)" title="剑桥真人·音素 /ɑː/">🔊</span> → car <span class="spk word-spk" onclick="spkWord('car',this)" title="剑桥真人·car">🔊</span></div>
 </div>
 </div>
 <p style="margin-top:8px;font-size:.85em;color:#aaa">字母名只有一个，但同一个字母在不同单词里可以发出不同的字母音。</p>
@@ -582,11 +582,11 @@ function buildDecon() {
       h += '<div class="decon-row"><div class="decon-letter">' + r.u + '</div>';
       h += '<div class="decon-info"><span style="color:#888;font-size:.8em">' + r.t + '</span> · 发音 <span class="ds">' + r.s + '</span></div>';
       if (r.s !== '—') {
-        h += '<span class="spk sound-spk" style="width:24px;height:24px" onclick="spkPhoneme(\'' + esc(r.s) + '\',this)" title="剑桥真人·音素">🔊</span>';
+        h += '<span class="spk sound-spk" onclick="spkPhoneme(\'' + esc(r.s) + '\',this)" title="剑桥真人·音素">🔊</span>';
       }
       h += '</div>';
     });
-    h += '<div class="decon-say">🔊 ' + d.say + ' <span class="spk word-spk" style="width:22px;height:22px;display:inline-flex;vertical-align:middle" onclick="spkWord(\'' + esc(d.w) + '\',this)" title="剑桥真人·' + d.w + '">🔊</span></div>';
+    h += '<div class="decon-say">🔊 ' + d.say + ' <span class="spk word-spk" onclick="spkWord(\'' + esc(d.w) + '\',this)" title="剑桥真人·' + d.w + '">🔊</span></div>';
     h += '</div>';
   });
   document.getElementById('deconExamples').innerHTML = h;
@@ -717,11 +717,11 @@ function buildIpaGrid(data, gridId) {
     h += '<div class="ipa-item" style="min-width:70px;padding:8px 10px">';
     h += '<div style="display:flex;align-items:center;justify-content:center;gap:4px">';
     h += '<span class="ipa-sym" style="font-size:1.2em">' + d.s + '</span>';
-    h += '<span class="spk sound-spk" style="width:20px;height:20px" onclick="spkPhoneme(\'' + esc(d.s) + '\',this)" title="剑桥真人·音素">🔊</span>';
+    h += '<span class="spk sound-spk" onclick="spkPhoneme(\'' + esc(d.s) + '\',this)" title="剑桥真人·音素">🔊</span>';
     h += '</div>';
     h += '<div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:3px">';
     h += '<span class="ipa-ex">' + d.w + '</span>';
-    h += '<span class="spk word-spk" style="width:20px;height:20px" onclick="spkWord(\'' + esc(d.w) + '\',this)" title="剑桥真人·' + d.w + '">🔊</span>';
+    h += '<span class="spk word-spk" onclick="spkWord(\'' + esc(d.w) + '\',this)" title="剑桥真人·' + d.w + '">🔊</span>';
     h += '</div></div>';
   });
   document.getElementById(gridId).innerHTML = h;
