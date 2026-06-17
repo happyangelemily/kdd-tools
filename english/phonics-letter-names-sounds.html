@@ -76,13 +76,18 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 .decon-block:hover .decon-block-title{color:#ffe44d}
 .decon-block-arrow{font-size:1.2em;color:#888;transition:transform .35s;flex-shrink:0}
 .decon-block.open .decon-block-arrow{transform:rotate(180deg)}
-.decon-block-body{max-height:600px;overflow:hidden;transition:max-height .4s ease,padding .4s ease;padding:0 18px 16px;line-height:2;font-size:.92em}
+.decon-block-body{max-height:800px;overflow:hidden;transition:max-height .4s ease,padding .4s ease;padding:0 20px 18px;line-height:2.1;font-size:.92em}
 .decon-block-body.collapsed{max-height:0;padding-top:0;padding-bottom:0}
-.decon-block-body p{margin:6px 0}
-.decon-block-body .skill-item{display:flex;align-items:flex-start;gap:8px;margin:8px 0;padding:6px 0}
-.decon-block-body .skill-badge{flex-shrink:0;font-size:1.1em}
+.decon-block-body p{margin:8px 0}
+.decon-block-body .skill-item{display:flex;align-items:flex-start;gap:10px;margin:10px 0;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.decon-block-body .skill-item:last-child{border-bottom:none}
+.decon-block-body .skill-badge{flex-shrink:0;font-size:1.2em}
+.decon-block-body .hl-skill{color:#ff8a65;font-weight:bold}
 .decon-block-body .ex-word{display:inline-block;font-size:.8em;color:#666;background:rgba(255,255,255,.04);border-radius:6px;padding:1px 8px;margin:0 2px;font-style:italic}
-.decon-block-body .stage-num{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:rgba(79,195,247,.15);color:#4fc3f7;border-radius:50%;font-size:.8em;font-weight:bold;margin-right:4px;flex-shrink:0}
+.decon-block-body .stage-num{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;background:rgba(79,195,247,.15);color:#4fc3f7;border-radius:50%;font-size:.8em;font-weight:bold;margin-right:6px;flex-shrink:0}
+.decon-block-body .stage-desc{display:block;color:#ccc;font-size:.85em;margin-top:2px;padding-left:30px}
+.decon-block.intro-block .decon-block-body{background:rgba(129,199,132,.03);border-radius:0 0 14px 14px}
+.decon-block.intro-block .decon-block-body b{color:#81c784}
 
 .quiz-container{max-width:600px;margin:0 auto}
 .quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
@@ -217,48 +222,42 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 <div class="glass">
 <h2>🔍 单词拆解 · 看懂自然拼读</h2>
 
-<div class="decon-block open">
+<div class="decon-block open intro-block">
 <div class="decon-block-header" onclick="toggleBlock(this.parentElement)">
 <span class="decon-block-icon">💡</span>
-<span class="decon-block-title">板块 1：什么是自然拼读？</span>
+<span class="decon-block-title">什么是自然拼读？</span>
 <span class="decon-block-arrow">▼</span>
 </div>
 <div class="decon-block-body">
-<p>我们已经分清 26 个字母的<b>字母名</b>和<b>字母音</b>啦 🎉</p>
-<p>自然拼读是一套<b>英语识字小规则</b>，</p>
-<p>专门讲字母、字母小组合在单词里的发音。</p>
-<p>英文里经常两三个字母组合在一起，</p>
-<p>发出新的读音——</p>
-<p>这套规则就能帮我们<b>看懂字母和发音的对应关系</b>。</p>
+<p>我们已经分清 26 个字母的<b>字母名</b>和<b>字母音</b>啦 🎉 自然拼读是一套<b>英语识字小规则</b>，专门讲字母、字母小组合在单词里的发音——英文里经常两三个字母组合在一起，发出新的读音，这套规则就能帮我们<b>看懂字母和发音的对应关系</b>。</p>
 </div>
 </div>
 
 <div class="decon-block open">
 <div class="decon-block-header" onclick="toggleBlock(this.parentElement)">
 <span class="decon-block-icon">⚡</span>
-<span class="decon-block-title">板块 2：学会自然拼读有什么用？</span>
+<span class="decon-block-title">学会自然拼读有什么用？</span>
 <span class="decon-block-arrow">▼</span>
 </div>
 <div class="decon-block-body">
 <p>掌握这套规则，能拥有 <b>3 个超能力</b>：</p>
-<div class="skill-item"><span class="skill-badge">🔍</span><span><b>见词能读</b> — 碰到陌生单词，不用问老师，自己拆分字母就能读出声音</span></div>
-<div class="skill-item"><span class="skill-badge">✏️</span><span><b>听音能写</b> — 听到单词发音，就能匹配对应字母，拼写出单词</span></div>
-<div class="skill-item"><span class="skill-badge">🧠</span><span><b>不用死背</b> — 靠着拼读规则，自己就能认出好多单词，大部分根本不用刻意背诵</span></div>
+<div class="skill-item"><span class="skill-badge">🔍</span><span><span class="hl-skill">见词能读</span> — 碰到陌生单词，不用问老师，自己拆分字母就能读出声音</span></div>
+<div class="skill-item"><span class="skill-badge">✏️</span><span><span class="hl-skill">听音能写</span> — 听到单词发音，就能匹配对应字母，拼写出单词</span></div>
+<div class="skill-item"><span class="skill-badge">🧠</span><span><span class="hl-skill">不用死背</span> — 靠着拼读规则，自己就能认出好多单词，大部分根本不用刻意背诵</span></div>
 </div>
 </div>
 
 <div class="decon-block open">
 <div class="decon-block-header" onclick="toggleBlock(this.parentElement)">
 <span class="decon-block-icon">🗺️</span>
-<span class="decon-block-title">板块 3：自然拼读完整学习路线</span>
+<span class="decon-block-title">自然拼读完整学习路线</span>
 <span class="decon-block-arrow">▼</span>
 </div>
 <div class="decon-block-body">
-<p>本节课只学基础单词拆分，</p>
-<p>完整自然拼读分 <b>3 个阶段</b>，后面会一个一个学：</p>
-<div class="skill-item"><span class="stage-num">1</span><span><b>单个字母发音</b> — 分清固定 / 多变发音字母，掌握短元音、长元音 <span class="ex-word">cat · cake</span></span></div>
-<div class="skill-item"><span class="stage-num">2</span><span><b>双字母组合发音</b> — 两个字母搭在一起，产生全新读音 <span class="ex-word">shop · chair · see</span></span></div>
-<div class="skill-item"><span class="stage-num">3</span><span><b>高阶拼读 & 特殊单词</b> — r 控制元音、多字母长组合、少量不规则单词 <span class="ex-word">car · three · who</span></span></div>
+<p>本节课只学基础单词拆分，完整自然拼读分 <b>3 个阶段</b>，后面会一个一个学：</p>
+<div class="skill-item"><span class="stage-num">1</span><span><b>单个字母发音</b><span class="stage-desc">分清固定发音字母和多变发音字母，掌握短元音、长元音基础</span><span class="ex-word">cat（短音 a）</span> <span class="ex-word">cake（长音 a）</span></span></div>
+<div class="skill-item"><span class="stage-num">2</span><span><b>双字母组合发音</b><span class="stage-desc">两个字母搭配在一起，产生全新读音</span><span class="ex-word">shop（sh）</span> <span class="ex-word">chair（ch）</span> <span class="ex-word">see（ee）</span></span></div>
+<div class="skill-item"><span class="stage-num">3</span><span><b>高阶拼读 & 特殊单词</b><span class="stage-desc">学习 r 控制元音（元音 + 字母 r，元音发音会被 r 改变）、多字母长组合（3 个及以上字母抱团发音）；同时记忆少量不遵循拼读规则的单词</span><span class="ex-word">car（r 控制元音 ar）</span> <span class="ex-word">three（多字母组合 thr）</span> <span class="ex-word">who（不规则单词）</span></span></div>
 </div>
 </div>
 
