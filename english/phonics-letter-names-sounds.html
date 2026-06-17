@@ -379,14 +379,53 @@ var WORDS = {
   'cup':'words/cup.mp3','blue':'words/blue.mp3'
 };
 
+// ── Audio Cache (preload all on page load for instant playback) ──
+var audioCache = {};
+var audioLoading = 0;
+
+function preloadAudio(path) {
+  var full = AUDIO_BASE + path;
+  if (audioCache[full]) return;
+  audioLoading++;
+  var a = new Audio();
+  a.preload = 'auto';
+  a.src = full;
+  a.load();
+  a.addEventListener('canplaythrough', function() {
+    audioLoading--;
+  }, {once: true});
+  a.addEventListener('error', function() {
+    audioLoading--;
+  }, {once: true});
+  audioCache[full] = a;
+}
+
+// Preload all audio files from all three layers
+(function() {
+  var seen = {};
+  // Phonemes
+  for (var k in PHONEMES) { if (!seen[PHONEMES[k]]) { seen[PHONEMES[k]] = true; preloadAudio(PHONEMES[k]); } }
+  // Letter names
+  for (var k in LETTER_NAMES) { if (!seen[LETTER_NAMES[k]]) { seen[LETTER_NAMES[k]] = true; preloadAudio(LETTER_NAMES[k]); } }
+  // Words
+  for (var k in WORDS) { if (!seen[WORDS[k]]) { seen[WORDS[k]] = true; preloadAudio(WORDS[k]); } }
+})();
+
 // ── Unified Audio Player ──
 function playAudio(path, el) {
   if (el.classList.contains('on')) return;
-  var a = new Audio(AUDIO_BASE + path);
+  var full = AUDIO_BASE + path;
+  var a = audioCache[full];
+  if (!a) {
+    // Fallback: create on demand if not preloaded
+    a = new Audio(full);
+    audioCache[full] = a;
+  }
+  a.currentTime = 0;
   el.classList.add('on');
   a.onended = function(){ el.classList.remove('on'); };
-  a.onerror = function(){ el.classList.remove('on'); console.log('Audio load failed:', path); };
-  a.play().catch(function(e){ el.classList.remove('on'); console.log('Play failed:', path, e); });
+  a.onerror = function(){ el.classList.remove('on'); };
+  a.play().catch(function(e){ el.classList.remove('on'); });
 }
 
 // ── Unicode IPA → ASCII key normalization ──
