@@ -1,0 +1,842 @@
+{
+  "/iː/": {
+    "file": "letter-names/letter-e.mp3",
+    "type": "letter-name",
+    "letter": "E"
+  },
+  "/ɪ/": {
+    "file": "phonemes/ship.mp3",
+    "type": "phoneme",
+    "word": "ship"
+  },
+  "/ɑː/": {
+    "file": "letter-names/letter-r.mp3",
+    "type": "letter-name",
+    "letter": "R"
+  },
+  "/æ/": {
+    "file": "phonemes/hat.mp3",
+    "type": "phoneme",
+    "word": "hat"
+  },
+  "/ʌ/": {
+    "file": "phonemes/cup.mp3",
+    "type": "phoneme",
+    "word": "cup"
+  },
+  "/ɔː/": {
+    "file": "phonemes/horse.mp3",
+    "type": "phoneme",
+    "word": "horse"
+  },
+  "/ɒ/": {
+    "file": "phonemes/sock.mp3",
+    "type": "phoneme",
+    "word": "sock"
+  },
+  "/uː/": {
+    "file": "phonemes/blue.mp3",
+    "type": "phoneme",
+    "word": "blue"
+  },
+  "/ʊ/": {
+    "file": "phonemes/foot.mp3",
+    "type": "phoneme",
+    "word": "foot"
+  },
+  "/e/": {
+    "file": "phonemes/head.mp3",
+    "type": "phoneme",
+    "word": "head"
+  },
+  "/ɜː/": {
+    "file": "phonemes/bird.mp3",
+    "type": "phoneme",
+    "word": "bird"
+  },
+  "/ə/": {
+    "file": "phonemes/above.mp3",
+    "type": "phoneme",
+    "word": "above"
+  },
+  "/eɪ/": {
+    "file": "letter-names/letter-a.mp3",
+    "type": "letter-name",
+    "letter": "A"
+  },
+  "/aɪ/": {
+    "file": "letter-names/letter-i.mp3",
+    "type": "letter-name",
+    "letter": "I"
+  },
+  "/ɔɪ/": {
+    "file": "phonemes/boy.mp3",
+    "type": "phoneme",
+    "word": "boy"
+  },
+  "/əʊ/": {
+    "file": "letter-names/letter-o.mp3",
+    "type": "letter-name",
+    "letter": "O"
+  },
+  "/aʊ/": {
+    "file": "phonemes/mouth.mp3",
+    "type": "phoneme",
+    "word": "mouth"
+  },
+  "/ɪə/": {
+    "file": "phonemes/ear.mp3",
+    "type": "phoneme",
+    "word": "ear"
+  },
+  "/eə/": {
+    "file": "phonemes/hair.mp3",
+    "type": "phoneme",
+    "word": "hair"
+  },
+  "/ʊə/": {
+    "file": "phonemes/pure.mp3",
+    "type": "phoneme",
+    "word": "pure"
+  },
+  "/aɪə/": {
+    "file": "phonemes/fire.mp3",
+    "type": "phoneme",
+    "word": "fire"
+  },
+  "/aʊə/": {
+    "file": "phonemes/hour.mp3",
+    "type": "phoneme",
+    "word": "hour"
+  },
+  "/p/": {
+    "file": "phonemes/pen.mp3",
+    "type": "phoneme",
+    "word": "pen"
+  },
+  "/b/": {
+    "file": "phonemes/book.mp3",
+    "type": "phoneme",
+    "word": "book"
+  },
+  "/t/": {
+    "file": "phonemes/town.mp3",
+    "type": "phoneme",
+    "word": "town"
+  },
+  "/k/": {
+    "file": "phonemes/cat.mp3",
+    "type": "phoneme",
+    "word": "cat"
+  },
+  "/g/": {
+    "file": "phonemes/give.mp3",
+    "type": "phoneme",
+    "word": "give"
+  },
+  "/f/": {
+    "file": "phonemes/fish.mp3",
+    "type": "phoneme",
+    "word": "fish"
+  },
+  "/v/": {
+    "file": "phonemes/very.mp3",
+    "type": "phoneme",
+    "word": "very"
+  },
+  "/θ/": {
+    "file": "phonemes/think.mp3",
+    "type": "phoneme",
+    "word": "think"
+  },
+  "/ð/": {
+    "file": "phonemes/this.mp3",
+    "type": "phoneme",
+    "word": "this"
+  },
+  "/s/": {
+    "file": "phonemes/say.mp3",
+    "type": "phoneme",
+    "word": "say"
+  },
+  "/z/": {
+    "file": "phonemes/zoo.mp3",
+    "type": "phoneme",
+    "word": "zoo"
+  },
+  "/ʃ/": {
+    "file": "phonemes/she.mp3",
+    "type": "phoneme",
+    "word": "she"
+  },
+  "/ʒ/": {
+    "file": "phonemes/vision.mp3",
+    "type": "phoneme",
+    "word": "vision"
+  },
+  "/h/": {
+    "file": "phonemes/hand.mp3",
+    "type": "phoneme",
+    "word": "hand"
+  },
+  "/tʃ/": {
+    "file": "phonemes/cheese.mp3",
+    "type": "phoneme",
+    "word": "cheese"
+  },
+  "/dʒ/": {
+    "file": "phonemes/jump.mp3",
+    "type": "phoneme",
+    "word": "jump"
+  },
+  "/m/": {
+    "file": "phonemes/moon.mp3",
+    "type": "phoneme",
+    "word": "moon"
+  },
+  "/n/": {
+    "file": "phonemes/name.mp3",
+    "type": "phoneme",
+    "word": "name"
+  },
+  "/ŋ/": {
+    "file": "phonemes/sing.mp3",
+    "type": "phoneme",
+    "word": "sing"
+  },
+  "/l/": {
+    "file": "phonemes/look.mp3",
+    "type": "phoneme",
+    "word": "look"
+  },
+  "/r/": {
+    "file": "phonemes/run.mp3",
+    "type": "phoneme",
+    "word": "run"
+  },
+  "/w/": {
+    "file": "phonemes/we.mp3",
+    "type": "phoneme",
+    "word": "we"
+  },
+  "/j/": {
+    "file": "phonemes/yes.mp3",
+    "type": "phoneme",
+    "word": "yes"
+  },
+  "/i/": {
+    "file": "phonemes/happy.mp3",
+    "type": "phoneme",
+    "word": "happy"
+  },
+  "/u/": {
+    "file": "phonemes/situation.mp3",
+    "type": "phoneme",
+    "word": "situation"
+  },
+  "/ɒ̃/": {
+    "file": "phonemes/croissant.mp3",
+    "type": "phoneme",
+    "word": "croissant"
+  },
+  "/x/": {
+    "file": "phonemes/loch.mp3",
+    "type": "phoneme",
+    "word": "loch"
+  },
+  "/d/": {
+    "file": "phonemes/day.mp3",
+    "type": "phoneme",
+    "word": "day"
+  },
+  "/biː/": {
+    "file": "letter-names/letter-b.mp3",
+    "type": "letter-name",
+    "letter": "B"
+  },
+  "/siː/": {
+    "file": "letter-names/letter-c.mp3",
+    "type": "letter-name",
+    "letter": "C"
+  },
+  "/diː/": {
+    "file": "letter-names/letter-d.mp3",
+    "type": "letter-name",
+    "letter": "D"
+  },
+  "/ef/": {
+    "file": "letter-names/letter-f.mp3",
+    "type": "letter-name",
+    "letter": "F"
+  },
+  "/dʒiː/": {
+    "file": "letter-names/letter-g.mp3",
+    "type": "letter-name",
+    "letter": "G"
+  },
+  "/eɪtʃ/": {
+    "file": "letter-names/letter-h.mp3",
+    "type": "letter-name",
+    "letter": "H"
+  },
+  "/dʒeɪ/": {
+    "file": "letter-names/letter-j.mp3",
+    "type": "letter-name",
+    "letter": "J"
+  },
+  "/keɪ/": {
+    "file": "letter-names/letter-k.mp3",
+    "type": "letter-name",
+    "letter": "K"
+  },
+  "/el/": {
+    "file": "letter-names/letter-l.mp3",
+    "type": "letter-name",
+    "letter": "L"
+  },
+  "/em/": {
+    "file": "letter-names/letter-m.mp3",
+    "type": "letter-name",
+    "letter": "M"
+  },
+  "/en/": {
+    "file": "letter-names/letter-n.mp3",
+    "type": "letter-name",
+    "letter": "N"
+  },
+  "/piː/": {
+    "file": "letter-names/letter-p.mp3",
+    "type": "letter-name",
+    "letter": "P"
+  },
+  "/kjuː/": {
+    "file": "letter-names/letter-q.mp3",
+    "type": "letter-name",
+    "letter": "Q"
+  },
+  "/es/": {
+    "file": "letter-names/letter-s.mp3",
+    "type": "letter-name",
+    "letter": "S"
+  },
+  "/tiː/": {
+    "file": "letter-names/letter-t.mp3",
+    "type": "letter-name",
+    "letter": "T"
+  },
+  "/juː/": {
+    "file": "letter-names/letter-u.mp3",
+    "type": "letter-name",
+    "letter": "U"
+  },
+  "/viː/": {
+    "file": "letter-names/letter-v.mp3",
+    "type": "letter-name",
+    "letter": "V"
+  },
+  "/ˈdʌbljuː/": {
+    "file": "letter-names/letter-w.mp3",
+    "type": "letter-name",
+    "letter": "W"
+  },
+  "/eks/": {
+    "file": "letter-names/letter-x.mp3",
+    "type": "letter-name",
+    "letter": "X"
+  },
+  "/waɪ/": {
+    "file": "letter-names/letter-y.mp3",
+    "type": "letter-name",
+    "letter": "Y"
+  },
+  "/zed/": {
+    "file": "letter-names/letter-z.mp3",
+    "type": "letter-name",
+    "letter": "Z"
+  },
+  "WORD:bat": {
+    "file": "words/bat.mp3",
+    "type": "word",
+    "word": "bat"
+  },
+  "WORD:dog": {
+    "file": "words/dog.mp3",
+    "type": "word",
+    "word": "dog"
+  },
+  "WORD:fish": {
+    "file": "words/fish.mp3",
+    "type": "word",
+    "word": "fish"
+  },
+  "WORD:hat": {
+    "file": "words/hat.mp3",
+    "type": "word",
+    "word": "hat"
+  },
+  "WORD:jam": {
+    "file": "words/jam.mp3",
+    "type": "word",
+    "word": "jam"
+  },
+  "WORD:kite": {
+    "file": "words/kite.mp3",
+    "type": "word",
+    "word": "kite"
+  },
+  "WORD:lion": {
+    "file": "words/lion.mp3",
+    "type": "word",
+    "word": "lion"
+  },
+  "WORD:moon": {
+    "file": "words/moon.mp3",
+    "type": "word",
+    "word": "moon"
+  },
+  "WORD:nose": {
+    "file": "words/nose.mp3",
+    "type": "word",
+    "word": "nose"
+  },
+  "WORD:pig": {
+    "file": "words/pig.mp3",
+    "type": "word",
+    "word": "pig"
+  },
+  "WORD:queen": {
+    "file": "words/queen.mp3",
+    "type": "word",
+    "word": "queen"
+  },
+  "WORD:red": {
+    "file": "words/red.mp3",
+    "type": "word",
+    "word": "red"
+  },
+  "WORD:top": {
+    "file": "words/top.mp3",
+    "type": "word",
+    "word": "top"
+  },
+  "WORD:van": {
+    "file": "words/van.mp3",
+    "type": "word",
+    "word": "van"
+  },
+  "WORD:wet": {
+    "file": "words/wet.mp3",
+    "type": "word",
+    "word": "wet"
+  },
+  "WORD:zoo": {
+    "file": "words/zoo.mp3",
+    "type": "word",
+    "word": "zoo"
+  },
+  "WORD:apple": {
+    "file": "words/apple.mp3",
+    "type": "word",
+    "word": "apple"
+  },
+  "WORD:cake": {
+    "file": "words/cake.mp3",
+    "type": "word",
+    "word": "cake"
+  },
+  "WORD:car": {
+    "file": "words/car.mp3",
+    "type": "word",
+    "word": "car"
+  },
+  "WORD:egg": {
+    "file": "words/egg.mp3",
+    "type": "word",
+    "word": "egg"
+  },
+  "WORD:me": {
+    "file": "words/me.mp3",
+    "type": "word",
+    "word": "me"
+  },
+  "WORD:igloo": {
+    "file": "words/igloo.mp3",
+    "type": "word",
+    "word": "igloo"
+  },
+  "WORD:ice": {
+    "file": "words/ice.mp3",
+    "type": "word",
+    "word": "ice"
+  },
+  "WORD:octopus": {
+    "file": "words/octopus.mp3",
+    "type": "word",
+    "word": "octopus"
+  },
+  "WORD:open": {
+    "file": "words/open.mp3",
+    "type": "word",
+    "word": "open"
+  },
+  "WORD:umbrella": {
+    "file": "words/umbrella.mp3",
+    "type": "word",
+    "word": "umbrella"
+  },
+  "WORD:unicorn": {
+    "file": "words/unicorn.mp3",
+    "type": "word",
+    "word": "unicorn"
+  },
+  "WORD:cat": {
+    "file": "words/cat.mp3",
+    "type": "word",
+    "word": "cat"
+  },
+  "WORD:city": {
+    "file": "words/city.mp3",
+    "type": "word",
+    "word": "city"
+  },
+  "WORD:goat": {
+    "file": "words/goat.mp3",
+    "type": "word",
+    "word": "goat"
+  },
+  "WORD:giraffe": {
+    "file": "words/giraffe.mp3",
+    "type": "word",
+    "word": "giraffe"
+  },
+  "WORD:sun": {
+    "file": "words/sun.mp3",
+    "type": "word",
+    "word": "sun"
+  },
+  "WORD:rose": {
+    "file": "words/rose.mp3",
+    "type": "word",
+    "word": "rose"
+  },
+  "WORD:box": {
+    "file": "words/box.mp3",
+    "type": "word",
+    "word": "box"
+  },
+  "WORD:xylophone": {
+    "file": "words/xylophone.mp3",
+    "type": "word",
+    "word": "xylophone"
+  },
+  "WORD:yellow": {
+    "file": "words/yellow.mp3",
+    "type": "word",
+    "word": "yellow"
+  },
+  "WORD:myth": {
+    "file": "words/myth.mp3",
+    "type": "word",
+    "word": "myth"
+  },
+  "WORD:my": {
+    "file": "words/my.mp3",
+    "type": "word",
+    "word": "my"
+  },
+  "WORD:think": {
+    "file": "words/think.mp3",
+    "type": "word",
+    "word": "think"
+  },
+  "WORD:this": {
+    "file": "words/this.mp3",
+    "type": "word",
+    "word": "this"
+  },
+  "WORD:sing": {
+    "file": "words/sing.mp3",
+    "type": "word",
+    "word": "sing"
+  },
+  "WORD:jump": {
+    "file": "words/jump.mp3",
+    "type": "word",
+    "word": "jump"
+  },
+  "WORD:ship": {
+    "file": "words/ship.mp3",
+    "type": "word",
+    "word": "ship"
+  },
+  "WORD:chip": {
+    "file": "words/chip.mp3",
+    "type": "word",
+    "word": "chip"
+  },
+  "WORD:she": {
+    "file": "words/she.mp3",
+    "type": "word",
+    "word": "she"
+  },
+  "WORD:look": {
+    "file": "words/look.mp3",
+    "type": "word",
+    "word": "look"
+  },
+  "WORD:happy": {
+    "file": "words/happy.mp3",
+    "type": "word",
+    "word": "happy"
+  },
+  "WORD:bus": {
+    "file": "words/bus.mp3",
+    "type": "word",
+    "word": "bus"
+  },
+  "COMBO:sh": {
+    "file": "phonemes/she.mp3",
+    "type": "combination",
+    "combo": "sh",
+    "ipa": "ʃ",
+    "references": "she"
+  },
+  "COMBO:ch": {
+    "file": "phonemes/cheese.mp3",
+    "type": "combination",
+    "combo": "ch",
+    "ipa": "tʃ",
+    "references": "cheese"
+  },
+  "COMBO:th_voiceless": {
+    "file": "phonemes/think.mp3",
+    "type": "combination",
+    "combo": "th_voiceless",
+    "ipa": "θ",
+    "references": "think"
+  },
+  "COMBO:th_voiced": {
+    "file": "phonemes/this.mp3",
+    "type": "combination",
+    "combo": "th_voiced",
+    "ipa": "ð",
+    "references": "this"
+  },
+  "COMBO:ng": {
+    "file": "phonemes/sing.mp3",
+    "type": "combination",
+    "combo": "ng",
+    "ipa": "ŋ",
+    "references": "sing"
+  },
+  "COMBO:ee": {
+    "file": "phonemes/sheep.mp3",
+    "type": "combination",
+    "combo": "ee",
+    "ipa": "iː",
+    "references": "sheep"
+  },
+  "COMBO:oo_long": {
+    "file": "phonemes/blue.mp3",
+    "type": "combination",
+    "combo": "oo_long",
+    "ipa": "uː",
+    "references": "blue"
+  },
+  "COMBO:oo_short": {
+    "file": "phonemes/foot.mp3",
+    "type": "combination",
+    "combo": "oo_short",
+    "ipa": "ʊ",
+    "references": "foot"
+  },
+  "COMBO:ai": {
+    "file": "phonemes/day.mp3",
+    "type": "combination",
+    "combo": "ai",
+    "ipa": "eɪ",
+    "references": "day"
+  },
+  "COMBO:ay": {
+    "file": "phonemes/day.mp3",
+    "type": "combination",
+    "combo": "ay",
+    "ipa": "eɪ",
+    "references": "day"
+  },
+  "COMBO:oa": {
+    "file": "phonemes/nose.mp3",
+    "type": "combination",
+    "combo": "oa",
+    "ipa": "əʊ",
+    "references": "nose"
+  },
+  "COMBO:ow_goat": {
+    "file": "phonemes/nose.mp3",
+    "type": "combination",
+    "combo": "ow_goat",
+    "ipa": "əʊ",
+    "references": "nose"
+  },
+  "COMBO:ow_mouth": {
+    "file": "phonemes/mouth.mp3",
+    "type": "combination",
+    "combo": "ow_mouth",
+    "ipa": "aʊ",
+    "references": "mouth"
+  },
+  "COMBO:ou": {
+    "file": "phonemes/mouth.mp3",
+    "type": "combination",
+    "combo": "ou",
+    "ipa": "aʊ",
+    "references": "mouth"
+  },
+  "COMBO:oi": {
+    "file": "phonemes/boy.mp3",
+    "type": "combination",
+    "combo": "oi",
+    "ipa": "ɔɪ",
+    "references": "boy"
+  },
+  "COMBO:oy": {
+    "file": "phonemes/boy.mp3",
+    "type": "combination",
+    "combo": "oy",
+    "ipa": "ɔɪ",
+    "references": "boy"
+  },
+  "COMBO:er": {
+    "file": "phonemes/bird.mp3",
+    "type": "combination",
+    "combo": "er",
+    "ipa": "ɜː",
+    "references": "bird"
+  },
+  "COMBO:ir": {
+    "file": "phonemes/bird.mp3",
+    "type": "combination",
+    "combo": "ir",
+    "ipa": "ɜː",
+    "references": "bird"
+  },
+  "COMBO:ur": {
+    "file": "phonemes/bird.mp3",
+    "type": "combination",
+    "combo": "ur",
+    "ipa": "ɜː",
+    "references": "bird"
+  },
+  "COMBO:ar": {
+    "file": "phonemes/father.mp3",
+    "type": "combination",
+    "combo": "ar",
+    "ipa": "ɑː",
+    "references": "father"
+  },
+  "COMBO:or": {
+    "file": "phonemes/horse.mp3",
+    "type": "combination",
+    "combo": "or",
+    "ipa": "ɔː",
+    "references": "horse"
+  },
+  "COMBO:ea_sheep": {
+    "file": "phonemes/sheep.mp3",
+    "type": "combination",
+    "combo": "ea_sheep",
+    "ipa": "iː",
+    "references": "sheep"
+  },
+  "COMBO:ea_head": {
+    "file": "phonemes/head.mp3",
+    "type": "combination",
+    "combo": "ea_head",
+    "ipa": "e",
+    "references": "head"
+  },
+  "COMBO:ie": {
+    "file": "phonemes/eye.mp3",
+    "type": "combination",
+    "combo": "ie",
+    "ipa": "aɪ",
+    "references": "eye"
+  },
+  "COMBO:ue": {
+    "file": "phonemes/blue.mp3",
+    "type": "combination",
+    "combo": "ue",
+    "ipa": "uː",
+    "references": "blue"
+  },
+  "COMBO:aw": {
+    "file": "phonemes/horse.mp3",
+    "type": "combination",
+    "combo": "aw",
+    "ipa": "ɔː",
+    "references": "horse"
+  },
+  "COMBO:au": {
+    "file": "phonemes/horse.mp3",
+    "type": "combination",
+    "combo": "au",
+    "ipa": "ɔː",
+    "references": "horse"
+  },
+  "COMBO:igh": {
+    "file": "phonemes/eye.mp3",
+    "type": "combination",
+    "combo": "igh",
+    "ipa": "aɪ",
+    "references": "eye"
+  },
+  "COMBO:ck": {
+    "file": "phonemes/cat.mp3",
+    "type": "combination",
+    "combo": "ck",
+    "ipa": "k",
+    "references": "cat"
+  },
+  "COMBO:wh": {
+    "file": "phonemes/we.mp3",
+    "type": "combination",
+    "combo": "wh",
+    "ipa": "w",
+    "references": "we"
+  },
+  "COMBO:ph": {
+    "file": "phonemes/fish.mp3",
+    "type": "combination",
+    "combo": "ph",
+    "ipa": "f",
+    "references": "fish"
+  },
+  "COMBO:kn": {
+    "file": "phonemes/name.mp3",
+    "type": "combination",
+    "combo": "kn",
+    "ipa": "n",
+    "references": "name"
+  },
+  "COMBO:wr": {
+    "file": "phonemes/run.mp3",
+    "type": "combination",
+    "combo": "wr",
+    "ipa": "r",
+    "references": "run"
+  },
+  "COMBO:dge": {
+    "file": "phonemes/jump.mp3",
+    "type": "combination",
+    "combo": "dge",
+    "ipa": "dʒ",
+    "references": "jump"
+  },
+  "COMBO:tch": {
+    "file": "phonemes/cheese.mp3",
+    "type": "combination",
+    "combo": "tch",
+    "ipa": "tʃ",
+    "references": "cheese"
+  }
+}
