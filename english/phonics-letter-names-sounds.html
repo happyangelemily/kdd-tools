@@ -621,8 +621,8 @@ function renderQ() {
   var dots = '';
   for (var i = 0; i < 10; i++) {
     var c = 'quiz-dot';
-    if (qAns[i] === 0) c += ' correct';
-    else if (qAns[i] === 1) c += ' wrong';
+    if (qAns[i] === qPool[i].a) c += ' correct';
+    else if (qAns[i] >= 0 && qAns[i] !== qPool[i].a) c += ' wrong';
     if (i === qIdx) c += ' current';
     dots += '<span class="' + c + '"></span>';
   }
@@ -635,7 +635,7 @@ function renderQ() {
     if (qAns[qIdx] >= 0) { cl += ' locked'; if (i === q.a) cl += ' correct'; else if (i === qAns[qIdx] && i !== q.a) cl += ' wrong'; }
     card += '<button class="' + cl + '" onclick="answerQ(' + i + ')">' + o + '</button>';
   });
-  card += '</div><div class="quiz-explain">' + (qAns[qIdx] >= 0 ? (qAns[qIdx] === 0 ? '<span style="color:#69f0ae">✅ 正确！</span> ' : '<span style="color:#ff5252">❌ </span> ') + q.x : '') + '</div>';
+  card += '</div><div class="quiz-explain">' + (qAns[qIdx] >= 0 ? (qAns[qIdx] === qPool[qIdx].a ? '<span style="color:#69f0ae">✅ 正确！</span> ' : '<span style="color:#ff5252">❌ </span> ') + q.x : '') + '</div>';
   document.getElementById('quizCard').innerHTML = card;
   document.getElementById('btnPrev').style.display = qIdx > 0 ? 'inline-block' : 'none';
   var last = qIdx >= 9, ans = qAns[qIdx] >= 0;
@@ -645,7 +645,7 @@ function renderQ() {
 function answerQ(i) {
   if (qAns[qIdx] >= 0) return;
   var ok = i === qPool[qIdx].a;
-  qAns[qIdx] = ok ? 0 : 1;
+  qAns[qIdx] = i;
   var btns = document.querySelectorAll('.quiz-opt');
   btns.forEach(function(b, j) {
     b.classList.add('locked');
@@ -658,7 +658,7 @@ function quizNext() { var last = qIdx >= 9; if (last && qAns[qIdx] >= 0) { showF
 function quizPrev() { if (qIdx > 0) { qIdx--; renderQ(); } }
 function showFinal() {
   var corr = 0;
-  qAns.forEach(function(a) { if (a === 0) corr++; });
+  qAns.forEach(function(a, idx) { if (a === qPool[idx].a) corr++; });
   var pct = Math.round(corr / 10 * 100), emo = pct >= 80 ? '🌟' : (pct >= 60 ? '👍' : '💪'), msg = pct >= 80 ? '满分！字母名和字母音彻底分清！' : (pct >= 60 ? '不错，继续加油！' : '再练练，你可以的！');
   document.getElementById('quizCard').innerHTML = '<div class="quiz-final"><div style="font-size:2.3em;margin-bottom:6px">' + emo + '</div><div style="font-size:1.2em;color:#ffd200;font-weight:bold;margin-bottom:6px">得分：' + corr + ' / 10（' + pct + '%）</div><div style="color:#ccc;margin-bottom:12px">' + msg + '</div><button class="btn btn-gold" onclick="restartQuiz()">🔄 重新随机出题</button><div style="margin-top:8px;font-size:.8em;color:#888">错题点「上一题」回看</div></div>';
   document.getElementById('quizProgress').innerHTML = '';
