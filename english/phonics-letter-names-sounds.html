@@ -6,15 +6,15 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.9}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.container{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:18px}
+.container{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:18px 16px}
 h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#81c784,#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
 .subtitle{text-align:center;color:#aaa;margin-bottom:14px;font-size:.88em}
 .nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin:10px 0 14px}
 .nav-btn{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.88em;transition:all .3s;white-space:nowrap}
 .nav-btn:hover,.nav-btn.active{background:rgba(79,195,247,.15);border-color:#4fc3f7;color:#4fc3f7}
-.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 20px;margin:16px 0;animation:slideIn .5s ease-out both}
-.glass h2{color:#4fc3f7;font-size:1.25em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.glass h3{color:#ffd200;font-size:1.05em;margin:18px 0 10px}
+.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:24px 20px;margin:16px 0;animation:slideIn .5s ease-out both}
+.glass h2{color:#4fc3f7;font-size:1.25em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.glass h3{color:#ffd200;font-size:1.05em;margin:18px 0 12px;display:flex;align-items:center;gap:8px}
 .section{display:none}.section.active{display:block}
 
 .toy-box{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:14px;padding:14px;margin:10px 0;line-height:1.8;font-size:.93em}
@@ -25,18 +25,18 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 .ipa-item{background:rgba(0,0,0,.3);border-radius:10px;padding:7px 12px;text-align:center;min-width:55px}
 .ipa-sym{font-size:1.3em;color:#ffd200;font-weight:bold}.ipa-ex{font-size:.72em;color:#aaa}
 
-.card-group{margin:16px 0}.card-group h3{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.card-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.letter-card{background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:10px 6px;text-align:center;width:155px;transition:all .35s}
+.card-group{margin:20px 0}.card-group>h3{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;justify-content:center}
+.letter-card{background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 8px 10px;text-align:center;transition:all .35s;display:flex;flex-direction:column;align-items:center}
 .letter-card:hover{border-color:rgba(79,195,247,.45);transform:translateY(-3px)}
-.letter-card .big{font-size:2em;font-weight:bold;color:#ffd200;margin-bottom:2px;line-height:1.2}
-.letter-card .name-row,.letter-card .sound-row{display:flex;align-items:center;justify-content:center;gap:2px;margin:3px 0;font-size:.73em;flex-wrap:wrap}
+.letter-card .big{font-size:2em;font-weight:bold;color:#ffd200;margin-bottom:6px;line-height:1.2}
+.letter-card .name-row,.letter-card .sound-row{display:flex;align-items:center;justify-content:center;gap:4px;margin:4px 0;font-size:.73em;min-height:28px}
 .letter-card .lbl{color:#888;font-size:.7em;min-width:26px;text-align:right;flex-shrink:0}
-.letter-card .ipa-val{color:#4fc3f7;font-weight:600;margin:0 2px;font-size:.85em}
-.letter-card .snd-val{color:#81c784;font-weight:600;margin:0 2px;font-size:.85em}
-.letter-card .word-val{color:#ff8a65;font-size:.8em;margin-left:2px}
+.letter-card .ipa-val{color:#4fc3f7;font-weight:600;margin:0 2px;font-size:.85em;white-space:nowrap}
+.letter-card .snd-val{color:#81c784;font-weight:600;margin:0 2px;font-size:.85em;white-space:nowrap}
+.letter-card .word-val{color:#ff8a65;font-size:.8em;margin:0 2px;white-space:nowrap}
 
-.spk{background:rgba(255,210,0,.12);border:1px solid rgba(255,210,0,.2);border-radius:50%;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75em;transition:all .2s;flex-shrink:0;color:#ffd200;padding:0;line-height:1;vertical-align:middle}
+.spk{background:rgba(255,210,0,.12);border:1px solid rgba(255,210,0,.2);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200;padding:0;line-height:1;vertical-align:middle}
 .spk:hover{background:rgba(255,210,0,.3);transform:scale(1.15)}
 .spk.on{animation:pulse .3s;background:rgba(255,210,0,.5)}
 .spk.sound-spk{background:rgba(129,199,132,.12);border-color:rgba(129,199,132,.2);color:#81c784}.spk.sound-spk:hover{background:rgba(129,199,132,.3)}
@@ -86,12 +86,16 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 .audio-badge.cambridge{background:rgba(79,195,247,.15);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
 
 @media(max-width:768px){
-  body{font-size:16px;-webkit-text-size-adjust:100%}.container{padding:8px}h1{font-size:1.3em}
-  .glass{padding:12px 8px;margin:8px 0;border-radius:14px}.nav{gap:3px;margin:6px 0 8px}
+  body{font-size:16px;-webkit-text-size-adjust:100%}.container{padding:10px}h1{font-size:1.3em}
+  .glass{padding:14px 10px;margin:8px 0;border-radius:14px}.nav{gap:3px;margin:6px 0 8px}
   .nav-btn{padding:9px 8px;font-size:.78em;border-radius:16px;min-height:44px}
   .btn{padding:12px 18px;font-size:.85em;min-height:44px}
-  .spk{width:44px!important;height:44px!important;font-size:.85em!important}
-  .letter-card{width:calc(50% - 6px);min-width:130px;padding:8px 4px}
+  .spk{width:42px!important;height:42px!important;font-size:.85em!important}
+  .card-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .letter-card{padding:10px 5px 8px}
+  .letter-card .big{font-size:1.6em;margin-bottom:4px}
+  .letter-card .name-row,.letter-card .sound-row{gap:3px;margin:3px 0;font-size:.7em;min-height:34px}
+  .card-group{margin:14px 0}.card-group>h3{font-size:.95em;margin-bottom:10px}
   .sort-bin{min-width:80px;min-height:100px;padding:4px}.sort-item{padding:10px 12px;font-size:.82em;min-height:44px}
   .sort-bin-label{font-size:.7em}.sort-hint{font-size:.7em}
   .quiz-card{padding:10px}.quiz-q{font-size:.86em}.quiz-opt{padding:11px 12px;font-size:.82em;min-height:44px;width:100%}
@@ -426,12 +430,8 @@ function buildCards(data, cId) {
       h += '<span class="lbl">字母音</span><span class="snd-val">' + it.s + '</span>';
       // Handle special phoneme references: /kw/ → /k/+/w/, /ks/ → /k/+/s/
       var phonemeKey = it.s;
-      if (phonemeKey === '/kw/') {
-        h += '<span class="spk sound-spk" onclick="spkPhoneme(\'/k/\',this)" title="剑桥真人·音素 /k/">🔊</span>';
-        h += '<span class="spk sound-spk" onclick="spkPhoneme(\'/w/\',this)" title="剑桥真人·音素 /w/">🔊</span>';
-      } else if (phonemeKey === '/ks/') {
-        h += '<span class="spk sound-spk" onclick="spkPhoneme(\'/k/\',this)" title="剑桥真人·音素 /k/">🔊</span>';
-        h += '<span class="spk sound-spk" onclick="spkPhoneme(\'/s/\',this)" title="剑桥真人·音素 /s/">🔊</span>';
+      if (phonemeKey === '/kw/' || phonemeKey === '/ks/') {
+        h += '<span class="spk sound-spk" onclick="spkWord(\'' + esc(it.w) + '\',this)" title="剑桥真人·' + it.w + '">🔊</span>';
       } else {
         h += '<span class="spk sound-spk" onclick="spkPhoneme(\'' + esc(phonemeKey) + '\',this)" title="剑桥真人·音素">🔊</span>';
       }
