@@ -319,7 +319,8 @@ var PHONEMES = {
   // Edge (happY, sitUation)
   '/i/':'phonemes/happy.mp3', '/u/':'phonemes/situation.mp3',
   // Composite (not standalone RP phonemes, but useful for phonics)
-  '/juː/':'words/you.mp3'   // Cambridge word "you" ≈ /juː/ in isolation
+  '/juː/':'words/you.mp3',  // Cambridge word "you" ≈ /juː/ in isolation
+  '/kw/':'phonemes/kw.mp3', '/ks/':'phonemes/ks.mp3'  // composite blends, ffmpeg-concatenated seamlessly
 };
 
 // ── Layer 2: Letter Names (Cambridge word pronunciations, 26 letters) ──
@@ -527,13 +528,8 @@ function buildCards(data, cId) {
     d.snds.forEach(function(it) {
       h += '<div class="sound-row">';
       h += '<span class="lbl">字母音</span><span class="snd-val">' + it.s + '</span>';
-      // Handle special phoneme references: /kw/ → /k/+/w/, /ks/ → /k/+/s/
       var phonemeKey = it.s;
-      if (phonemeKey === '/kw/' || phonemeKey === '/ks/') {
-        h += '<span class="spk sound-spk" onclick="spkWord(\'' + esc(it.w) + '\',this)" title="剑桥真人·' + it.w + '">🔊</span>';
-      } else {
-        h += '<span class="spk sound-spk" onclick="spkPhoneme(\'' + esc(phonemeKey) + '\',this)" title="剑桥真人·音素">🔊</span>';
-      }
+      h += '<span class="spk sound-spk" onclick="spkPhoneme(\'' + esc(phonemeKey) + '\',this)" title="剑桥真人·音素">🔊</span>';
       h += '<span class="word-val">' + it.w + '</span>';
       h += '<span class="spk word-spk" onclick="spkWord(\'' + esc(it.w) + '\',this)" title="剑桥真人·' + it.w + '">🔊</span>';
       h += '</div>';
@@ -550,7 +546,7 @@ buildCards(supplementData, 'supp-cards');
 // ═══════════════════════════════════════════
 // SORT GAME
 // ═══════════════════════════════════════════
-var sortLetters = 'B D F H J K L M N P Q R T V W Z A E I O U C G S X Y'.split(' ');
+var sortLetters = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'.split(' ');
 var fixedSet = 'B D F H J K L M N P Q R T V W Z'.split(' ');
 var selectedLetter = null, placedCount = 0;
 
