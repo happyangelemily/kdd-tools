@@ -1690,7 +1690,7 @@ var b=concaveConfig.box;
 ctx.strokeStyle='rgba(180,170,160,.35)';ctx.lineWidth=1;ctx.setLineDash([6,4]);
 ctx.strokeRect(b.l,b.t,b.r-b.l,b.b-b.t);ctx.setLineDash([]);
 ctx.fillStyle='#b4aaa0';ctx.font='10px sans-serif';ctx.textAlign='center';
-ctx.fillText('原始长方形外框',(b.l+b.r)/2,b.t-8);
+ctx.fillText('原始长方形外框',(b.l+b.r)/2,b.t-12);
 // Outer segments
 cfg.out.forEach(function(s){
 ctx.strokeStyle=s.col;ctx.lineWidth=3;
@@ -1701,7 +1701,7 @@ if(s.gap && cd.inner.every(function(se){return se.moved})){
 ctx.strokeStyle='#2980b9';ctx.lineWidth=3;
 ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
 }
-var mx=(s.x1+s.x2)/2,my=(s.y1+s.y2)/2,dx=mx-220,dy=my-140,dist=Math.hypot(dx,dy)||1,ox=mx+dx/dist*14,oy=my+dy/dist*10;
+var mx=(s.x1+s.x2)/2,my=(s.y1+s.y2)/2,dx=mx-220,dy=my-140,dist=Math.hypot(dx,dy)||1,ox=mx+dx/dist*22,oy=my+dy/dist*16;
 ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(ox,oy,8,0,Math.PI*2);ctx.fill();
 ctx.fillStyle=s.col;ctx.font='bold 9px sans-serif';ctx.textAlign='center';
 ctx.fillText(Math.round(Math.hypot(s.x2-s.x1,s.y2-s.y1)/sc)+' cm',ox,oy+3);
@@ -1721,10 +1721,10 @@ cd.inner.forEach(function(s){
 var sel=concaveSelected===s.id;
 ctx.strokeStyle=s.col;ctx.lineWidth=sel?7:5;if(s.moved)ctx.globalAlpha=.22;
 ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();ctx.globalAlpha=1;
-var mx=(s.x1+s.x2)/2,my=(s.y1+s.y2)/2,dx=mx-220,dy=my-140,dist=Math.hypot(dx,dy)||1,ox=s.moved?mx:mx+dx/dist*10,oy=s.moved?my-8:my+dy/dist*10;
+var mx=(s.x1+s.x2)/2,my=(s.y1+s.y2)/2,dx=mx-220,dy=my-140,dist=Math.hypot(dx,dy)||1,ox=s.moved?mx:mx+dx/dist*16,oy=s.moved?my-8:my+dy/dist*14;
 ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(ox,oy,8,0,Math.PI*2);ctx.fill();
 ctx.fillStyle=s.col;ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.fillText(s.lbl,ox,oy+3);
-if(!s.moved&&sel){ctx.fillStyle=s.col;ctx.font='bold 11px sans-serif';ctx.fillText('✅ 已选中',mx,my-14)}
+if(!s.moved&&sel){ctx.fillStyle=s.col;ctx.font='bold 11px sans-serif';ctx.fillText('✅ 已选中',mx,my-18)}
 });
 // Legend
 var leg=concaveMode===0?'<span style="color:#e67e22;font-size:.73em">🟠 原边</span> <span style="color:#2980b9;font-size:.73em">🔵 侧边</span> <span style="color:#9b59b6;font-size:.73em">🟣 竖凹边（拖）</span> <span style="color:#e74c3c;font-size:.73em">🔴 横凹边（拖）</span>':'<span style="color:#e67e22;font-size:.73em">🟠 原边</span> <span style="color:#2980b9;font-size:.73em">🔵 侧边</span> <span style="color:#9b59b6;font-size:.73em">🟣 凹底（拖）</span> <span style="color:#e74c3c;font-size:.73em">🔴 凹壁（拖）</span> <span style="color:#e67e22;font-size:.73em">🟠 固定短边</span>';
