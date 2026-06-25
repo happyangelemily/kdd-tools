@@ -1600,11 +1600,11 @@ function dP(){var c=document.getElementById('pv');if(!c)return;var ctx=c.getCont
     var j=(i+1)%pt.length,len=Math.round(Math.hypot(pt[j].x-pt[i].x,pt[j].y-pt[i].y)*scale);
     t+=len;parts.push(len+'');
     var mx=(pt[i].x+pt[j].x)/2,my=(pt[i].y+pt[j].y)/2;
-    // Push label outward
+    // Push label farther outward to avoid vertex overlap
     var cx=220,cy=110,dx=mx-cx,dy=my-cy,dist=Math.hypot(dx,dy)||1;
-    var ox=mx+dx/dist*16,oy=my+dy/dist*14;
+    var ox=mx+dx/dist*22,oy=my+dy/dist*18;
     // Badge
-    ctx.fillStyle='rgba(230,126,34,.12)';ctx.beginPath();ctx.arc(ox,oy,11,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(230,126,34,.12)';ctx.beginPath();ctx.arc(ox,oy,12,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.fillText(len+' cm',ox,oy-3);
     ctx.fillStyle='#888';ctx.font='8px sans-serif';ctx.fillText('边'+(i+1),ox,oy+9);
   }
