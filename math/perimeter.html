@@ -80,6 +80,7 @@ body{
 .btn:active{background:#f0ebe0;transform:scale(.97)}
 .btn.go{background:linear-gradient(135deg,#e67e22,#d35400);color:#fff;border:none;font-weight:bold}
 .btn.gr{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+.btn.bad{background:#fdecea;border-color:#e74c3c;color:#c0392b}
 .btn.blu{background:#e3f2fd;border-color:#90caf9;color:#1565c0}
 .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 
@@ -239,7 +240,7 @@ body{
 
 <!-- Mini-challenge: match shape to tool -->
 <div id="toolMatch" style="background:#faf8f4;border-radius:14px;padding:14px;margin:10px 0">
-  <p style="font-size:.8em;color:#555;text-align:center;margin-bottom:10px"><b>🤔 先猜猜看</b>——下面这些图形，该用什么工具量周长？</p>
+  <p style="font-size:.8em;color:#555;text-align:center;margin-bottom:10px"><b>🤔 先猜猜看</b>（可多选）——下面这些图形，该用什么工具量周长？</p>
   <div id="matchItems" style="display:flex;flex-direction:column;gap:8px"></div>
   <p id="matchFeedback" style="text-align:center;font-size:.78em;min-height:20px;margin-top:8px"></p>
   <div id="matchDone" style="display:none;text-align:center;margin-top:8px">
@@ -982,7 +983,7 @@ dR();
 
 // ===== MODULE 2: Tools =====
 // ===== MODULE 2: Tool match challenge =====
-var matchState=[-1,-1,-1]; // -1=unanswered, 0/1/2=chosen tool index
+var matchBtnState=[[0,0,0],[0,0,0],[0,0,0]]; // per-question per-button: 0=untried, 1=correct, -1=wrong
 var matchData=[
   {shape:'⬛',name:'正方形',answer:[0,1], tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
   {shape:'❤️',name:'心形',answer:[1],   tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
@@ -1004,26 +1005,30 @@ function buildMatch(){
   container.innerHTML=h;
 }
 function pickMatch(qIdx,tIdx,btn){
-  if(matchState[qIdx]>=0)return; // already answered
+  var state=matchBtnState[qIdx][tIdx];
+  if(state!==0)return; // already tried
   var correct=matchData[qIdx].answer;
-  var btns=document.querySelectorAll('#mBtns'+qIdx+' .btn');
   if(correct.indexOf(tIdx)>=0){
-    matchState[qIdx]=tIdx;sfxOK();
-    // Highlight all correct options green
-    correct.forEach(function(ci){
-      btns[ci].classList.add('gr');
-      btns[ci].textContent=matchData[qIdx].tools[ci]+' ✅';
-    });
-    // Dim incorrect options
-    btns.forEach(function(b,i){if(correct.indexOf(i)<0){b.disabled=true;b.style.opacity='.4'}});
-    checkAllMatched();
+    matchBtnState[qIdx][tIdx]=1;sfxOK();
+    btn.classList.add('gr');btn.textContent=matchData[qIdx].tools[tIdx]+' ✅';
+    btn.disabled=true;
   }else{
-    sfxNO();btn.style.opacity='.5';
-    setTimeout(function(){btn.style.opacity='1'},400);
+    matchBtnState[qIdx][tIdx]=-1;sfxNO();
+    btn.classList.add('bad');btn.textContent=matchData[qIdx].tools[tIdx]+' ❌';
+    btn.disabled=true;
   }
+  checkAllMatched();
 }
 function checkAllMatched(){
-  if(matchState.every(function(s){return s>=0})){
+  var allDone=true;
+  for(var i=0;i<3;i++){
+    var correct=matchData[i].answer;
+    for(var j=0;j<correct.length;j++){
+      if(matchBtnState[i][correct[j]]!==1){allDone=false;break}
+    }
+    if(!allDone)break;
+  }
+  if(allDone){
     document.getElementById('matchDone').style.display='block';
     document.getElementById('matchFeedback').innerHTML='';
     sfxDone();
