@@ -369,6 +369,7 @@ body{
 
 <!-- Quiz area (hidden until step 3) -->
 <div id="formulaQuiz" style="display:none;margin:10px 0"></div>
+<div id="formulaExplain" style="display:none;background:#faf8f4;border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.78em;color:#555;line-height:1.6"></div>
 <div class="reveal open" id="formulaDone" style="display:none;margin-top:8px">
   <div class="big">周长 = (长+宽)×2</div>
   <p class="sub">2条长+2条宽 → 长×2+宽×2 → (长+宽)×2。公式是数出来的，不是背出来的！</p>
@@ -393,6 +394,7 @@ body{
 <p id="sqSum" style="text-align:center;font-size:.8em;color:#888;min-height:20px"></p>
 
 <div id="sqFormulaQuiz" style="display:none;margin:10px 0"></div>
+<div id="sqFormulaExplain" style="display:none;background:#faf8f4;border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.78em;color:#555;line-height:1.6"></div>
 <div class="reveal open" id="sqDone" style="display:none;margin-top:8px">
   <div class="big">正方形周长 = 边长 × 4</div>
   <p class="sub">正方形是特殊的长方形（长=宽），所以 (边长+边长)×2 = 边长×4。用哪个公式都对！</p>
@@ -1315,6 +1317,7 @@ function newRect(){
   if(rectL<=rectW)rectL=rectW+1;
   rectState=0;rectClicked=[false,false,false,false];rectQuizDone4=!1;formulaStep=0;formulaFound=[false,false,false];
   document.getElementById('formulaQuiz').style.display='none';
+  document.getElementById('formulaExplain').style.display='none';
   document.getElementById('formulaDone').style.display='none';
   document.getElementById('stepSum').innerHTML='';
   updateRectUI();
@@ -1390,23 +1393,25 @@ function handleRectClick(e,c){
 }
 function showFormulaQuiz(){
   rectQuizDone4=!0;formulaStep=0;formulaFound=[false,false,false];
+  document.getElementById('formulaExplain').style.display='none';
   var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>第一问（可多选）</b>：怎么计算长方形周长？</p>';
   q+='<button class="qopt" onclick="formulaAnswer(0,this)" style="margin-bottom:4px">A. '+rectL+'+'+rectW+' = '+(rectL+rectW)+' cm</button>';
-  q+='<button class="qopt" onclick="formulaAnswer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2 = '+(rectL*2+rectW*2)+' cm（2条长+2条宽）</button>';
-  q+='<button class="qopt" onclick="formulaAnswer(2,this)">C. ('+rectL+'+'+rectW+')×2 = '+(2*(rectL+rectW))+' cm（先加再乘2）</button></div>';
+  q+='<button class="qopt" onclick="formulaAnswer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2 = '+(rectL*2+rectW*2)+' cm</button>';
+  q+='<button class="qopt" onclick="formulaAnswer(2,this)">C. ('+rectL+'+'+rectW+')×2 = '+(2*(rectL+rectW))+' cm</button></div>';
   document.getElementById('formulaQuiz').innerHTML=q;
   document.getElementById('formulaQuiz').style.display='block';
 }
 var formulaStep=0,formulaFound=[false,false,false];
 function formulaAnswer(idx,btn){
   if(formulaStep===0){
+    var ex=document.getElementById('formulaExplain');ex.style.display='block';
     if(idx===0){
-      // Wrong: A only adds once
       btn.classList.add('bad');sfxNO();btn.disabled=true;
+      ex.innerHTML='<b>A</b> 只加了长和宽<b>各一次</b>，缺了另外两条边。长方形有4条边，要全部算进去~';
     }else{
-      // Correct: B or C
       formulaFound[idx]=true;btn.classList.add('good');sfxOK();btn.disabled=true;
+      ex.innerHTML=idx===1?'<b>B</b> 把2条长和2条宽<b>分别算好再加</b>——长×2 + 宽×2，把4条边都算全了 ✅':'<b>C</b> 先把长和宽<b>加在一起</b>，<b>再乘2</b>——因为有两个「长+宽」的组合 ✅';
       if(formulaFound[1]&&formulaFound[2])showFormulaStep2();
     }
   }
@@ -1422,9 +1427,10 @@ function showFormulaStep2(){
   sfxOK();
 }
 function formulaStep2Answer(idx,btn){
-  var opts=document.querySelectorAll('#formulaStep2 .f2btn');
+  var opts=document.querySelectorAll('#formulaStep2 .f2btn'),ex=document.getElementById('formulaExplain');
   if(idx===2){
     btn.classList.add('good');sfxOK();opts.forEach(function(o){o.disabled=true});
+    ex.innerHTML='<b>C</b> (长+宽)×2 最<b>快</b>——只要两步：先加再乘。比 B 少算一步乘法 ✅';
     rectState=3;
     var dots=document.querySelectorAll('#stepDots .qd');
     for(var i=0;i<4;i++){dots[i].className='qd ok'}
@@ -1435,6 +1441,7 @@ function formulaStep2Answer(idx,btn){
     },600);
   }else{
     btn.classList.add('bad');sfxNO();btn.disabled=true;
+    ex.innerHTML='<b>B</b> 也能算对，但要算3步（长×2 + 宽×2 = 结果）。<b>C</b> 只需2步——更快！试试选 C~';
     document.getElementById('stepHint').innerHTML='<span style="color:#e67e22">B也对，但C<b>更快</b>~ 试试选C</span>';
   }
 }
@@ -1448,6 +1455,7 @@ function newSq(){
   sqSide=Math.floor(Math.random()*6)+3; // 3~8
   sqState=0;sqClicked=[false,false,false,false];sqQuizDone=!1;sqFormulaStep=0;sqFormulaFound=[false,false,false];
   document.getElementById('sqFormulaQuiz').style.display='none';
+  document.getElementById('sqFormulaExplain').style.display='none';
   document.getElementById('sqDone').style.display='none';
   document.getElementById('sqSum').innerHTML='';
   updateSqUI();
@@ -1517,19 +1525,23 @@ function handleSqClick(e,c){
 }
 function showSqQuiz(){
   sqQuizDone=!0;sqFormulaStep=0;sqFormulaFound=[false,false,false];
+  document.getElementById('sqFormulaExplain').style.display='none';
   var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>第一问（可多选）</b>：哪些算式能算出正方形周长？</p>';
-  q+='<button class="qopt" onclick="sqAnswer(0,this)" style="margin-bottom:4px">A. '+sqSide+'+'+sqSide+'+'+sqSide+'+'+sqSide+' = '+(sqSide*4)+' cm（一条条加）</button>';
-  q+='<button class="qopt" onclick="sqAnswer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2 = '+(sqSide*4)+' cm（套长方形公式）</button>';
-  q+='<button class="qopt" onclick="sqAnswer(2,this)">C. '+sqSide+'×4 = '+(sqSide*4)+' cm（边长×4）</button></div>';
+  q+='<button class="qopt" onclick="sqAnswer(0,this)" style="margin-bottom:4px">A. '+sqSide+'+'+sqSide+'+'+sqSide+'+'+sqSide+' = '+(sqSide*4)+' cm</button>';
+  q+='<button class="qopt" onclick="sqAnswer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2 = '+(sqSide*4)+' cm</button>';
+  q+='<button class="qopt" onclick="sqAnswer(2,this)">C. '+sqSide+'×4 = '+(sqSide*4)+' cm</button></div>';
   document.getElementById('sqFormulaQuiz').innerHTML=q;
   document.getElementById('sqFormulaQuiz').style.display='block';
 }
 var sqFormulaStep=0,sqFormulaFound=[false,false,false];
 function sqAnswer(idx,btn){
   if(sqFormulaStep===0){
-    // All three are mathematically correct
     sqFormulaFound[idx]=true;btn.classList.add('good');sfxOK();btn.disabled=true;
+    var ex=document.getElementById('sqFormulaExplain');ex.style.display='block';
+    ex.innerHTML=idx===0?'<b>A</b> 四条边一条条加起来——虽然慢，但一定对 ✅':
+                 idx===1?'<b>B</b> 套用长方形公式 (长+宽)×2——因为正方形的长=宽 ✅':
+                 '<b>C</b> 边长×4——正方形最<b>快</b>的算法 ✅';
     if(sqFormulaFound[0]&&sqFormulaFound[1]&&sqFormulaFound[2])showSqStep2();
   }
 }
@@ -1537,16 +1549,17 @@ function showSqStep2(){
   sqFormulaStep=1;
   var q='<div id="sqStep2" style="background:#faf8f4;border-radius:12px;padding:14px;margin-top:10px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>最快</b>？</p>';
-  q+='<button class="qopt sq2btn" onclick="sqStep2Answer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2（套长方形公式）</button>';
+  q+='<button class="qopt sq2btn" onclick="sqStep2Answer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2</button>';
   q+='<button class="qopt sq2btn" onclick="sqStep2Answer(2,this)">C. '+sqSide+'×4</button></div>';
   var container=document.getElementById('sqFormulaQuiz');
   container.insertAdjacentHTML('beforeend',q);
   sfxOK();
 }
 function sqStep2Answer(idx,btn){
-  var opts=document.querySelectorAll('#sqStep2 .sq2btn');
+  var opts=document.querySelectorAll('#sqStep2 .sq2btn'),ex=document.getElementById('sqFormulaExplain');
   if(idx===2){
     btn.classList.add('good');sfxOK();opts.forEach(function(o){o.disabled=true});
+    ex.innerHTML='<b>C</b> 边长×4 最<b>快</b>——正方形4条边一样长，直接乘4 ✅';
     sqState=3;
     var dots=document.querySelectorAll('#sqDots .qd');
     for(var i=0;i<3;i++)dots[i].className='qd ok';
@@ -1556,6 +1569,7 @@ function sqStep2Answer(idx,btn){
     },500);
   }else{
     btn.classList.add('bad');sfxNO();btn.disabled=true;
+    ex.innerHTML='<b>B</b> 套长方形公式也能算对，但<b>C</b> 更直接——正方形4条边一样长，×4一步完成！';
     document.getElementById('sqHint').innerHTML='<span style="color:#e67e22">B也对，但C<b>更快</b>~ 试试选C</span>';
   }
 }
