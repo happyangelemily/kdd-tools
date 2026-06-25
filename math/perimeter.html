@@ -1887,7 +1887,7 @@ document.addEventListener('DOMContentLoaded',function(){
   df();dJ();buildMatch();initTC();
   // Observer for module 4
   var s4=document.getElementById('s4');
-  var obs4=new IntersectionObserver(function(e){if(e[0].isIntersecting){newRect();drawSq();switchPoly(0);obs4.unobserve(s4)}},{threshold:.3});
+  var obs4=new IntersectionObserver(function(e){if(e[0].isIntersecting){drawSq();switchPoly(0);obs4.unobserve(s4)}},{threshold:.3});
   obs4.observe(s4);
   newRect();drawSq();switchPoly(0); // init immediately, not just on scroll
   // Observer for module 5
