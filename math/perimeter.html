@@ -1395,7 +1395,7 @@ function showFormulaQuiz(){
   rectQuizDone4=!0;formulaStep=0;formulaFound=[false,false,false];
   var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>第一问（可多选）</b>：怎么计算长方形周长？</p>';
-  q+='<button class="qopt" onclick="formulaAnswer(0,this)" style="margin-bottom:4px">A. '+rectL+'+'+rectW+' = '+(rectL+rectW)+' cm（只加了一次）</button>';
+  q+='<button class="qopt" onclick="formulaAnswer(0,this)" style="margin-bottom:4px">A. '+rectL+'+'+rectW+' = '+(rectL+rectW)+' cm</button>';
   q+='<button class="qopt" onclick="formulaAnswer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2 = '+(rectL*2+rectW*2)+' cm（2条长+2条宽）</button>';
   q+='<button class="qopt" onclick="formulaAnswer(2,this)">C. ('+rectL+'+'+rectW+')×2 = '+(2*(rectL+rectW))+' cm（先加再乘2）</button></div>';
   document.getElementById('formulaQuiz').innerHTML=q;
@@ -1418,8 +1418,8 @@ function showFormulaStep2(){
   formulaStep=1;
   var q='<div id="formulaStep2" style="background:#faf8f4;border-radius:12px;padding:14px;margin-top:10px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>更快</b>？</p>';
-  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2（要算3步）</button>';
-  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2（<b>最快！</b>只要2步）</button></div>';
+  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2</button>';
+  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2</button></div>';
   var container=document.getElementById('formulaQuiz');
   container.insertAdjacentHTML('beforeend',q);
   sfxOK();
@@ -1541,7 +1541,7 @@ function showSqStep2(){
   var q='<div id="sqStep2" style="background:#faf8f4;border-radius:12px;padding:14px;margin-top:10px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>最快</b>？</p>';
   q+='<button class="qopt sq2btn" onclick="sqStep2Answer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2（套长方形公式）</button>';
-  q+='<button class="qopt sq2btn" onclick="sqStep2Answer(2,this)">C. '+sqSide+'×4（<b>最快！</b>）</button></div>';
+  q+='<button class="qopt sq2btn" onclick="sqStep2Answer(2,this)">C. '+sqSide+'×4</button></div>';
   var container=document.getElementById('sqFormulaQuiz');
   container.insertAdjacentHTML('beforeend',q);
   sfxOK();
