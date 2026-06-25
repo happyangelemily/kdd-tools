@@ -1437,7 +1437,7 @@ function formulaStep2Answer(idx,btn){
     document.getElementById('stepHint').innerHTML='<span class="g">🎉 (长+宽)×2 最快！</span>';
     setTimeout(function(){
       document.getElementById('formulaDone').style.display='block';
-      drawSq();sfxDone();md(3);
+      drawSq4();sfxDone();md(3);
     },600);
   }else{
     btn.classList.add('bad');sfxNO();btn.disabled=true;
@@ -1924,9 +1924,9 @@ document.addEventListener('DOMContentLoaded',function(){
   df();dJ();buildMatch();initTC();
   // Observer for module 4
   var s4=document.getElementById('s4');
-  var obs4=new IntersectionObserver(function(e){if(e[0].isIntersecting){drawSq();switchPoly(0);obs4.unobserve(s4)}},{threshold:.3});
+  var obs4=new IntersectionObserver(function(e){if(e[0].isIntersecting){drawSq4();switchPoly(0);obs4.unobserve(s4)}},{threshold:.3});
   obs4.observe(s4);
-  newRect();drawSq();switchPoly(0); // init immediately, not just on scroll
+  newRect();drawSq4();switchPoly(0); // init immediately, not just on scroll
   // Observer for module 5
   var s5=document.getElementById('s5');
   var obs5=new IntersectionObserver(function(e){if(e[0].isIntersecting){obs5.unobserve(s5)}},{threshold:.3});
