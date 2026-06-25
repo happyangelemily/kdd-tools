@@ -884,7 +884,7 @@ function dT(){
 }
 function dStar(c,cx,cy,or,ir,n){c.beginPath();for(var i=0;i<n*2;i++){var r=i%2===0?or:ir,a=-Math.PI/2+Math.PI*i/n;if(i===0)c.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a));else c.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a))}c.closePath()}
 function dHeart(c,cx,cy,sz){c.beginPath();c.moveTo(cx,cy+sz*.55);c.bezierCurveTo(cx-sz,cy-sz*.25,cx-sz*.55,cy-sz*.75,cx,cy-sz*.15);c.bezierCurveTo(cx+sz*.55,cy-sz*.75,cx+sz,cy-sz*.25,cx,cy+sz*.55)}
-function gSP(sh,sx,sy){if(sh.tp==='circle')return{x:(sh.cx+sh.r)*sx,y:sh.cy*sy};if(sh.tp==='star')return{x:sh.cx*sx,y:(sh.cy-sh.or)*sy};if(sh.tp==='heart')return{x:sh.cx*sx,y:(sh.cy-sh.sz*.75)*sy};return{x:sh.pt[0].x*sx,y:sh.pt[0].y*sy}}
+function gSP(sh,sx,sy){if(sh.tp==='circle')return{x:(sh.cx+sh.r)*sx,y:sh.cy*sy};if(sh.tp==='star')return{x:sh.cx*sx,y:(sh.cy-sh.or)*sy};if(sh.tp==='heart')return{x:sh.cx*sx,y:(sh.cy-sh.sz*.15)*sy};return{x:sh.pt[0].x*sx,y:sh.pt[0].y*sy}}
 function dSeg(px,py,ax,ay,bx,by){var abx=bx-ax,aby=by-ay,apx=px-ax,apy=py-ay,t=Math.max(0,Math.min(1,(apx*abx+apy*aby)/(abx*abx+aby*aby)));return Math.hypot(px-(ax+t*abx),py-(ay+t*aby))}
 function tS(e){if(tcO||!tsh[ti].cl)return;
   var r=tC.getBoundingClientRect(),x=(e.clientX-r.left)*(tC.width/r.width),y=(e.clientY-r.top)*(tC.height/r.height);
