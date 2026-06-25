@@ -1616,7 +1616,7 @@ function dP(){var c=document.getElementById('pv');if(!c)return;var ctx=c.getCont
   var note=diffCount>1?'<span style="color:#888;font-size:.75em">（注意：每条边都不一样长，但周长还是全部加起来！）</span>':'';
   document.getElementById('pi').innerHTML+=note;
 }
-document.addEventListener('DOMContentLoaded',function(){dr();dsq();dP();drv()});
+// Poly init handled in main INIT block below
 
 // ===== MODULE 5: Concave — click-to-translate =====
 var concaveMode=0,concaveData=null,concaveSelected=-1,concaveDrag=false,concaveDragStart=null;
