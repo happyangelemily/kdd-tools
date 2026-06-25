@@ -200,6 +200,7 @@ body{
   <p>现在你知道了——周长就是「围一圈」。来，用手指沿着彩色线<b>描完整的一圈</b>：</p>
   <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:6px 0">
     <button class="btn" onclick="nextTrace()">🔄 换个图形</button>
+    <button class="btn gr" id="resetTraceBtn" onclick="resetTrace()" style="display:none">✏️ 重绘</button>
     <span id="tname" style="font-size:.78em;color:#aaa;align-self:center"></span>
   </div>
   <div class="cv"><canvas id="tc" width="440" height="340"></canvas></div>
@@ -919,9 +920,9 @@ function cC(){var sh=tsh[ti];if(!sh.cl||tp.length<20)return;
   if(closureOK&&fitOK){
     tcO=!0;sfxDone();
     document.getElementById('tok').innerHTML='⭐ <b>太棒了！描出了「'+sh.n+'」完整的一圈！</b>';
+    document.getElementById('resetTraceBtn').style.display='inline-block';
     tCtx.strokeStyle='rgba(255,210,0,.4)';tCtx.lineWidth=10;tCtx.beginPath();
     tCtx.moveTo(tp[0].x,tp[0].y);for(var i=1;i<tp.length;i++)tCtx.lineTo(tp[i].x,tp[i].y);tCtx.stroke();
-    setTimeout(dT,800);
   }else{
     // Gentle nudge — keep the trace visible, let user keep trying
     var msg='';
@@ -966,7 +967,8 @@ function ptToSegDist(px,py,ax,ay,bx,by){
   var t=Math.max(0,Math.min(1,(apx*abx+apy*aby)/(abx*abx+aby*aby+1e-9)));
   return Math.hypot(px-(ax+t*abx),py-(ay+t*aby));
 }
-function nextTrace(){ti=(ti+1)%tsh.length;tp=[];tdr=!1;tcO=!1;document.getElementById('tok').innerHTML='';updateTN();dT()}
+function nextTrace(){ti=(ti+1)%tsh.length;tp=[];tdr=!1;tcO=!1;document.getElementById('tok').innerHTML='';document.getElementById('resetTraceBtn').style.display='none';updateTN();dT()}
+function resetTrace(){tp=[];tdr=!1;tcO=!1;document.getElementById('tok').innerHTML='';document.getElementById('resetTraceBtn').style.display='none';dT()}
 
 // ===== MODULE 1: Closed/Open =====
 var cd=[{n:'正方形',cl:!0,s:'⬛'},{n:'开口折线',cl:!1,s:'└─'},{n:'圆形',cl:!0,s:'⭕'},{n:'半圆开口',cl:!1,s:'◠'},{n:'五角星',cl:!0,s:'⭐'},{n:'缺口曲线',cl:!1,s:'◡'}];
