@@ -900,6 +900,7 @@ function tM(e){if(tcO)return;
   if(tp.length===20)document.getElementById('tok').innerHTML='<span style="color:#999">👆 继续沿着线描，绕回到起点~</span>';
 }
 function tE(){
+  if(tcO)return;
   if(!tdr||tp.length<15){tdr=!1;tp=[];dT();document.getElementById('tok').innerHTML='';return}
   tdr=!1;cC();
 }
