@@ -837,7 +837,7 @@ sc.forEach(function(s,i){
       if(!scDiscovered[i]){
         scDiscovered[i]=true;sf++;
         document.getElementById('sceneCount').innerHTML='已发现：<b>'+sf+'/8</b>';
-        if(sf>=8){document.getElementById('nameReveal').style.display='block';document.getElementById('traceArea').style.display='block';initTC();md(0)}
+        if(sf>=8){document.getElementById('nameReveal').style.display='block';md(0)}
       }
     }else{
       drawScene(ctx,i,0);
