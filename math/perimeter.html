@@ -1082,12 +1082,12 @@ function genOutlinePoints(sh,nPts){
   }
   return pts;
 }
-function iSM(){var c=document.getElementById('scv');if(!c)return;sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();document.getElementById('si').textContent='';resetSMbtn();
+function iSM(){var c=document.getElementById('scv');if(!c)return;sp=[];sdn=!1;pullMode=!1;pullProgress=0;dragEnd=-1;endL=150;endR=290;straightDone=!1;dSM();document.getElementById('si').textContent='';resetSMbtn();
   c.onmousedown=function(e){sD(e,c)};c.onmousemove=function(e){sM(e,c)};c.onmouseup=sU;c.onmouseleave=sU;
   c.ontouchstart=function(e){e.preventDefault();sD(e.touches[0],c)};c.ontouchmove=function(e){e.preventDefault();sM(e.touches[0],c)};c.ontouchend=function(e){e.preventDefault();sU(e.changedTouches[0],c)}}
 function resetSMbtn(){
   var el=document.getElementById('si');
-  if(sdn&&!pullMode)el.innerHTML='✅ 围完一圈！<b>拖动软绳</b>把它拉直看看——';
+  if(sdn&&!straightDone)el.innerHTML='✅ 围完一圈！<b>拖动 ◀ ▶ 端点</b>把它拉直——';
 }
 function calcStraightPositions(){
   var dists=[0],totalPx=0,lineStart=20,lineEnd=420,lineLen=lineEnd-lineStart,lineY=240;
@@ -1103,20 +1103,23 @@ function updatePullHint(progress,totalPx){
 }
 function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.getContext('2d'),sh=sSh[ssi];ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);
   if(sdn&&sp.length>10){
-    // ===== Pull-to-straighten mode =====
-    var spData=calcStraightPositions(),targets=spData.targets,totalPx=spData.totalPx;
-    var prog=pullProgress,perimCm=Math.round(totalPx/20);
-    // Draw shape outline at ORIGINAL size and position (no scale/translate — locked)
-    ctx.globalAlpha=.35;
+    // ===== Endpoint drag-to-straighten mode =====
+    var spData=calcStraightPositions(),totalPx=spData.totalPx,lineY=spData.lineY;
+    var perimCm=Math.round(totalPx/20);
+    // Compute progress from endpoint positions (0=wrapped, 1=fully straight)
+    var lProg=Math.max(0,Math.min(1,(150-endL)/130)); // endL: 150→20
+    var rProg=Math.max(0,Math.min(1,(endR-290)/130)); // endR: 290→420
+    var prog=Math.min(lProg,rProg);
+    pullProgress=prog;
+    // Draw shape outline — fades as rope straightens
+    ctx.globalAlpha=.35*(1-prog*.7);
     ctx.strokeStyle='#90a4ae';ctx.lineWidth=2.5;ctx.beginPath();
     if(sh.tp==='star')dStar(ctx,sh.cx,sh.cy,sh.or,sh.ir,sh.spikes||5);
     else if(sh.tp==='heart')dHeart(ctx,sh.cx,sh.cy,sh.sz);
     ctx.stroke();ctx.globalAlpha=1;
-    // Label above shape
-    ctx.fillStyle='#90a4ae';ctx.font='bold 11px sans-serif';ctx.textAlign='center';
-    ctx.fillText('原图轮廓',sh.cx,sh.cy-sh.or-14);
-    // Draw interpolated string — transitions from wrapped to straight
+    // Draw interpolated rope OR straight segment
     if(prog<.99){
+      // Interpolated rope from wrapped to straight
       ctx.strokeStyle='rgba(230,126,34,.9)';ctx.lineWidth=prog<.3?5:(5-prog*3);
       ctx.beginPath();ctx.moveTo(sp[0].x+(targets[0].x-sp[0].x)*prog,sp[0].y+(targets[0].y-sp[0].y)*prog);
       for(var i=1;i<sp.length;i++){
@@ -1126,27 +1129,42 @@ function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.ge
       if(prog<.3)ctx.closePath();
       ctx.stroke();
     }
-    // Draw straight line guide (becomes more visible as progress increases)
-    if(prog>.1){
-      ctx.globalAlpha=Math.min(1,prog*1.5);
-      ctx.fillStyle='rgba(236,64,122,.06)';ctx.fillRect(15,spData.lineY-15,410,28);
-      ctx.strokeStyle='rgba(236,64,122,'+(prog*.8)+')';ctx.lineWidth=prog<.5?2:5;
-      ctx.setLineDash(prog>.8?[]:[4,4]);
-      ctx.beginPath();ctx.moveTo(20,spData.lineY);ctx.lineTo(420,spData.lineY);ctx.stroke();ctx.setLineDash([]);
-      ctx.fillStyle='#ec407a';ctx.beginPath();ctx.arc(20,spData.lineY,prog>.8?5:3,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(420,spData.lineY,prog>.8?5:3,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='#ec407a';ctx.font='bold '+(prog>.8?15:12)+'px sans-serif';ctx.textAlign='center';
-      ctx.fillText('拉直 = '+perimCm+' cm',220,spData.lineY-24);
+    // Draw straight line guide area
+    if(prog>.05){
+      ctx.globalAlpha=Math.min(1,prog*2);
+      ctx.fillStyle='rgba(236,64,122,.06)';ctx.fillRect(15,lineY-15,410,28);
+      ctx.strokeStyle='rgba(236,64,122,'+(prog*.7)+')';ctx.lineWidth=2;ctx.setLineDash([4,4]);
+      ctx.beginPath();ctx.moveTo(20,lineY);ctx.lineTo(420,lineY);ctx.stroke();ctx.setLineDash([]);
       ctx.globalAlpha=1;
     }
+    // Draggable endpoint circles
+    var endR2=endL+(endR-endL)*prog; // Right endpoint moves with progress
+    // Draw left handle
+    ctx.fillStyle=straightDone?'#27ae60':(dragEnd===0?'#e67e22':'#ec407a');
+    ctx.beginPath();ctx.arc(endL,lineY,straightDone?12:10,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.fillText('◀',endL,lineY+3);
+    // Draw right handle
+    ctx.fillStyle=straightDone?'#27ae60':(dragEnd===1?'#e67e22':'#ec407a');
+    ctx.beginPath();ctx.arc(endR,lineY,straightDone?12:10,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.fillText('▶',endR,lineY+3);
+    // Connecting line between endpoints
+    ctx.strokeStyle=straightDone?'#27ae60':'#ec407a';ctx.lineWidth=straightDone?5:4;
+    ctx.setLineDash(straightDone?[]:[6,3]);
+    ctx.beginPath();ctx.moveTo(endL,lineY);ctx.lineTo(endR,lineY);ctx.stroke();ctx.setLineDash([]);
+    // Length label
+    var curLen=Math.round((endR-endL)*perimCm/400);
+    ctx.fillStyle=straightDone?'#27ae60':'#ec407a';
+    ctx.font='bold '+(straightDone?16:13)+'px sans-serif';ctx.textAlign='center';
+    ctx.fillText((straightDone?'🎉 ':'')+(straightDone?'拉直 = ':'拉出 ')+curLen+' / '+perimCm+' cm',220,lineY-24);
     // Full straighten celebration
-    if(prog>=.99){
+    if(straightDone){
       ctx.fillStyle='#27ae60';ctx.font='bold 16px sans-serif';ctx.textAlign='center';
-      ctx.fillText('🎉 围一圈 = 拉直 = '+perimCm+' cm',220,285);
+      ctx.fillText('🎉 围一圈 = 拉直 = '+perimCm+' cm',220,290);
     }
-    // Hint arrow
-    if(prog<.99){
-      ctx.fillStyle='#b0bec5';ctx.font='14px sans-serif';ctx.fillText('👆 继续向右拖动拉直',220,275);
+    // Hint for dragging
+    if(!straightDone&&prog<.95){
+      ctx.fillStyle='#b0bec5';ctx.font='13px sans-serif';
+      ctx.fillText('👆 拖动 ◀ ▶ 端点拉直',220,280);
     }
   }else{
     // ===== Normal wrap mode =====
@@ -1193,17 +1211,25 @@ function projectToOutline(x,y,sh){
   }
   return minD<16?proj:null; // 16px snap tolerance
 }
-function sD(e,c){if(sdn&&!pullMode){pullMode=!0;pullStartX=e.clientX;return}
-  if(pullMode)return;
-  if(sdn){sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();resetSMbtn();return}
+function sD(e,c){if(sdn&&sp.length>10&&!straightDone){
+    // Check if clicking on an endpoint
+    var r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+    var ly=240,dxL=Math.abs(mx-endL),dyL=Math.abs(my-ly),dxR=Math.abs(mx-endR),dyR=Math.abs(my-ly);
+    if(dxL<25&&dyL<25){dragEnd=0;dSM();return}
+    if(dxR<25&&dyR<25){dragEnd=1;dSM();return}
+    dragEnd=-1;return;
+  }
+  if(sdn){sp=[];sdn=!1;dragEnd=-1;endL=150;endR=290;straightDone=!1;dSM();resetSMbtn();return}
   var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(300/r.height);sdr=!0;var snap=projectToOutline(x,y,sSh[ssi]);sp=[snap||{x:x,y:y}];dSM()}
 function sM(e,c){
-  if(pullMode){
-    // Pull-to-straighten: drag right to increase progress
-    var dx=(e.clientX-pullStartX)/300; // 300px drag = full straighten
-    pullProgress=Math.max(0,Math.min(1,dx));
-    var spData=calcStraightPositions();
-    updatePullHint(pullProgress,spData.totalPx);
+  if(dragEnd>=0){
+    var r=c.getBoundingClientRect(),mx=e.clientX-r.left;
+    if(dragEnd===0){endL=Math.max(20,Math.min(150,mx))}
+    else{endR=Math.max(290,Math.min(420,mx))}
+    // Check if fully straightened
+    if(endL<=22&&endR>=418){straightDone=!0;sfxDone();dragEnd=-1;
+      var sd=calcStraightPositions();updatePullHint(1,sd.totalPx);
+    }
     dSM();return;
   }
   if(!sdr)return;var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(300/r.height);
@@ -1214,9 +1240,9 @@ function sM(e,c){
     sdn=!0;sfxDone();dSM();resetSMbtn();
   }
 }
-function sU(e,c){sdr=!1;pullMode=!1}
-function resetSM(){sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();document.getElementById('si').textContent=''}
-function nextSS(){ssi=(ssi+1)%sSh.length;resetSM()}function showStr(){if(!sdn){sp=genOutlinePoints(sSh[ssi]);sdn=!0}pullProgress=1;var sd=calcStraightPositions();updatePullHint(1,sd.totalPx);dSM()}
+function sU(e,c){sdr=!1;dragEnd=-1}
+function resetSM(){sp=[];sdn=!1;dragEnd=-1;endL=150;endR=290;straightDone=!1;dSM();document.getElementById('si').textContent=''}
+function nextSS(){ssi=(ssi+1)%sSh.length;resetSM()}function showStr(){if(!sdn){sp=genOutlinePoints(sSh[ssi]);sdn=!0}endL=20;endR=420;straightDone=!0;var sd=calcStraightPositions();updatePullHint(1,sd.totalPx);sfxDone();dSM()}
 // Roll
 var ra=null,raA=0,raX=0;
 function dRo(){var c=document.getElementById('rocv');if(!c)return;var ctx=c.getContext('2d');ctx.clearRect(0,0,440,200);
