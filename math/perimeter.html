@@ -946,11 +946,11 @@ function ptToShapeDist(px,py,sh,sx,sy){
     var cx=sh.cx*sx,cy=sh.cy*sy,r=sh.r*sx;
     minD=Math.abs(Math.hypot(px-cx,py-cy)-r);
   }else if(sh.tp==='star'){
-    // Sample star outline at 100 points
-    for(var a=0;a<Math.PI*2;a+=.063){
-      var si=Math.floor((a/(Math.PI*2))*sh.n*2),rr=si%2===0?sh.or*sx:sh.ir*sx;
-      var sx2=sh.cx*sx+rr*Math.cos(a-Math.PI/2),sy2=sh.cy*sy+rr*Math.sin(a-Math.PI/2);
-      var d=Math.hypot(px-sx2,py-sy2);if(d<minD)minD=d;
+    // Sample star edges with scale (matching heart smoothness)
+    var n=sh.n||5,verts=[],i;
+    for(i=0;i<n*2;i++){var a=-Math.PI/2+Math.PI*i/n,r=(i%2===0?sh.or:sh.ir);verts.push({x:sh.cx*sx+r*sx*Math.cos(a),y:sh.cy*sy+r*sy*Math.sin(a)})}
+    for(i=0;i<n*2;i++){var j=(i+1)%(n*2),ax=verts[i].x,ay=verts[i].y,bx=verts[j].x,by=verts[j].y;
+      for(var t=0;t<1;t+=.05){var sx2=ax+(bx-ax)*t,sy2=ay+(by-ay)*t,d=Math.hypot(px-sx2,py-sy2);if(d<minD)minD=d;}
     }
   }else if(sh.tp==='heart'){
     // Sample bezier heart at 200 points (matching dHeart)
@@ -1073,11 +1073,11 @@ var ssi=0,sp=[],sdn=!1,sdr=!1,pullMode=!1,pullProgress=0,pullStartX=0,sSh=[
 function genOutlinePoints(sh,nPts){
   nPts=nPts||200;var pts=[],i;
   if(sh.tp==='star'){
-    for(i=0;i<nPts;i++){
-      var a=-Math.PI/2+(Math.PI*2*i)/nPts;
-      var seg=Math.floor((a+Math.PI/2)/(Math.PI*2)*sh.spikes*2)%(sh.spikes*2);
-      var r=seg%2===0?sh.or:sh.ir;
-      pts.push({x:sh.cx+r*Math.cos(a),y:sh.cy+r*Math.sin(a)});
+    // Sample along star edges (same as projectToOutline)
+    var n=sh.spikes||5,verts=[];
+    for(i=0;i<n*2;i++){var a=-Math.PI/2+Math.PI*i/n,r=i%2===0?sh.or:sh.ir;verts.push({x:sh.cx+r*Math.cos(a),y:sh.cy+r*Math.sin(a)})}
+    for(i=0;i<n*2;i++){var j=(i+1)%(n*2),ax=verts[i].x,ay=verts[i].y,bx=verts[j].x,by=verts[j].y;
+      for(var t=0;t<1;t+=.05){pts.push({x:ax+(bx-ax)*t,y:ay+(by-ay)*t})}
     }
   }else if(sh.tp==='heart'){
     // Sample bezier heart (matching dHeart exactly)
@@ -1191,11 +1191,11 @@ function projectToOutline(x,y,sh){
     proj={x:sh.cx+sh.r*Math.cos(ang),y:sh.cy+sh.r*Math.sin(ang)};
     minD=Math.abs(Math.hypot(x-sh.cx,y-sh.cy)-sh.r);
   }else if(sh.tp==='star'){
-    // IDENTICAL to trace module ptToShapeDist star sampling
-    for(var a=0;a<Math.PI*2;a+=.063){
-      var si=Math.floor((a/(Math.PI*2))*(sh.spikes||5)*2),rr=si%2===0?sh.or:sh.ir;
-      var sx=sh.cx+rr*Math.cos(a-Math.PI/2),sy=sh.cy+rr*Math.sin(a-Math.PI/2);
-      var d=Math.hypot(x-sx,y-sy);if(d<minD){minD=d;proj={x:sx,y:sy}}
+    // Sample star edges (matching heart bezier smoothness)
+    var n=sh.spikes||5,verts=[],i;
+    for(i=0;i<n*2;i++){var a=-Math.PI/2+Math.PI*i/n,r=i%2===0?sh.or:sh.ir;verts.push({x:sh.cx+r*Math.cos(a),y:sh.cy+r*Math.sin(a)})}
+    for(i=0;i<n*2;i++){var j=(i+1)%(n*2),ax=verts[i].x,ay=verts[i].y,bx=verts[j].x,by=verts[j].y;
+      for(var t=0;t<1;t+=.05){var sx=ax+(bx-ax)*t,sy=ay+(by-ay)*t,d=Math.hypot(x-sx,y-sy);if(d<minD){minD=d;proj={x:sx,y:sy}}}
     }
   }else if(sh.tp==='heart'){
     // Sample bezier heart at 200 points (matching dHeart)
