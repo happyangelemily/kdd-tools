@@ -458,7 +458,7 @@ body{
 <div class="sl"><label>长：</label><input type="range" id="fl" min="3" max="8" value="5" oninput="df()"><span class="v" id="flv">5 m</span></div>
 <div class="sl"><label>宽：</label><input type="range" id="fw" min="2" max="5" value="3" oninput="df()"><span class="v" id="fwv">3 m</span></div>
 <div class="cv"><canvas id="fv" width="440" height="240"></canvas></div>
-<p id="fi" style="text-align:center;font-size:.82em;color:#ffd200;min-height:22px"></p>
+<p id="fi" style="text-align:center;font-size:.82em;color:#555;min-height:22px"></p>
 <div class="reveal open" style="margin-top:8px"><div class="big" id="ff"></div><p class="sub">完整周长是四面全围的长度。靠墙省了墙那边 → <b>不能直接套公式</b>！</p></div>
 
 </div>
@@ -1830,7 +1830,7 @@ function dJ(){var c=document.getElementById('jv');if(!c)return;var ctx=c.getCont
   ctx.strokeStyle='#4fc3f7';ctx.lineWidth=3;
   if(jm===0){
     ctx.strokeRect(40,48,sq,sq);ctx.strokeRect(275,48,sq,sq);
-    ctx.fillStyle='#ffd200';ctx.font='13px sans-serif';ctx.textAlign='center';
+    ctx.fillStyle='#555';ctx.font='13px sans-serif';ctx.textAlign='center';
     ctx.fillText('边长='+jSide+'cm 周长='+sPerim+'cm',40+sq/2,48+sq+18);
     ctx.fillText('边长='+jSide+'cm 周长='+sPerim+'cm',275+sq/2,48+sq+18);
     ctx.fillText('两个分开：4+4=8条边  总周长='+twoTotal+' cm',220,150);
@@ -1839,7 +1839,7 @@ function dJ(){var c=document.getElementById('jv');if(!c)return;var ctx=c.getCont
     ctx.strokeRect(40,48,sq*2,sq);
     ctx.strokeStyle='rgba(255,82,82,.5)';ctx.setLineDash([5,5]);
     ctx.beginPath();ctx.moveTo(40+sq,48);ctx.lineTo(40+sq,48+sq);ctx.stroke();ctx.setLineDash([]);
-    ctx.fillStyle='#ffd200';ctx.font='13px sans-serif';ctx.textAlign='center';
+    ctx.fillStyle='#555';ctx.font='13px sans-serif';ctx.textAlign='center';
     ctx.fillText('2长='+(jSide*2)+'×2='+(jSide*4),40+sq,48+sq+18);
     ctx.fillText('2宽='+jSide+'×2='+(jSide*2),40+sq,48+sq+36);
     ctx.fillText('总周长='+joinPerim+' cm',40+sq,48+sq+54);
@@ -1863,13 +1863,13 @@ function df(){
   else if(wm===1){ctx.beginPath();ctx.moveTo(rx-12,ry-25);ctx.lineTo(rx-12,ry+rh+25);ctx.stroke();ctx.fillStyle='#aaa';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('🏠 墙',rx-24,ry+rh/2)}
   else{ctx.beginPath();ctx.moveTo(rx-25,ry-12);ctx.lineTo(rx+rw+25,ry-12);ctx.stroke();ctx.beginPath();ctx.moveTo(rx-12,ry-25);ctx.lineTo(rx-12,ry+rh+25);ctx.stroke();ctx.fillStyle='#aaa';ctx.font='11px sans-serif';ctx.textAlign='center';ctx.fillText('墙',rx+rw/2,ry-20);ctx.fillText('墙',rx-24,ry+rh/2)}
   // Draw fence
-  ctx.strokeStyle='#ffd200';ctx.lineWidth=4;ctx.beginPath();
+  ctx.strokeStyle='#d35400';ctx.lineWidth=4;ctx.beginPath();
   if(wm===0){ctx.moveTo(rx,ry);ctx.lineTo(rx,ry+rh);ctx.lineTo(rx+rw,ry+rh);ctx.lineTo(rx+rw,ry)}
   else if(wm===1){ctx.moveTo(rx,ry);ctx.lineTo(rx+rw,ry);ctx.lineTo(rx+rw,ry+rh);ctx.lineTo(rx,ry+rh)}
   else{ctx.moveTo(rx+rw,ry);ctx.lineTo(rx+rw,ry+rh);ctx.lineTo(rx,ry+rh)}
   ctx.stroke();
   // Labels
-  ctx.fillStyle='#ffd200';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
+  ctx.fillStyle='#555';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
   if(wm===0){ctx.fillText(l+' m',rx+rw/2,ry+rh+20);ctx.fillText(w+' m',rx-22,ry+rh/2);ctx.fillText(w+' m',rx+rw+22,ry+rh/2)}
   else if(wm===1){ctx.fillText(w+' m',rx+rw/2,ry-10);ctx.fillText(l+' m',rx+rw+22,ry+rh/2);ctx.fillText(l+' m',rx+rw/2,ry+rh+20)}
   else{ctx.fillText(w+' m',rx+rw+22,ry+rh/2);ctx.fillText(l+' m',rx+rw/2,ry+rh+20)}
