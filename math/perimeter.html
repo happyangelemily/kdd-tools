@@ -1373,19 +1373,24 @@ function showFormulaQuiz(){
   document.getElementById('formulaQuiz').style.display='block';
 }
 function formulaAnswer(idx,btn){
-  var opts=document.querySelectorAll('#formulaQuiz .qopt');
-  opts.forEach(function(o){o.disabled=true});
-  if(idx===0){btn.classList.add('bad');sfxNO();opts[1].classList.add('good');opts[2].classList.add('good')}
-  else{btn.classList.add('good');sfxOK();if(idx===1)opts[2].classList.add('good');else opts[1].classList.add('good')}
-  rectState=3;
-  var dots=document.querySelectorAll('#stepDots .qd');
-  for(var i=0;i<4;i++){dots[i].className='qd ok'}
-  document.getElementById('stepHint').innerHTML='<span class="g">🎉 找到了！</span>';
-  setTimeout(function(){
-    document.getElementById('formulaDone').style.display='block';
-    document.getElementById('sqSection').style.display='block';
-    drawSq();sfxDone();md(3);
-  },600);
+  if(idx===0){
+    // Wrong: A only adds once
+    btn.classList.add('bad');sfxNO();btn.disabled=true;
+  }else{
+    // Correct: B or C — only mark clicked button
+    btn.classList.add('good');sfxOK();
+    var opts=document.querySelectorAll('#formulaQuiz .qopt');
+    opts.forEach(function(o){o.disabled=true});
+    rectState=3;
+    var dots=document.querySelectorAll('#stepDots .qd');
+    for(var i=0;i<4;i++){dots[i].className='qd ok'}
+    document.getElementById('stepHint').innerHTML='<span class="g">🎉 找到了！</span>';
+    setTimeout(function(){
+      document.getElementById('formulaDone').style.display='block';
+      document.getElementById('sqSection').style.display='block';
+      drawSq();sfxDone();md(3);
+    },600);
+  }
 }
 // old rs removed — replaced by interactive quiz version
 // ===== MODULE 4: Square — interactive click-to-discover =====
@@ -1475,18 +1480,23 @@ function showSqQuiz(){
   document.getElementById('sqFormulaQuiz').style.display='block';
 }
 function sqAnswer(idx,btn){
-  var opts=document.querySelectorAll('#sqFormulaQuiz .qopt');
-  opts.forEach(function(o){o.disabled=true});
-  // All are correct, but C is the fastest
-  btn.classList.add('good');sfxOK();
-  if(idx!==2)opts[2].classList.add('good');
-  sqState=3;
-  var dots=document.querySelectorAll('#sqDots .qd');
-  for(var i=0;i<3;i++)dots[i].className='qd ok';
-  document.getElementById('sqHint').innerHTML='<span class="g">🎉 正方形周长 = 边长 × 4</span>';
-  setTimeout(function(){
-    document.getElementById('sqDone').style.display='block';sfxDone();
-  },500);
+  if(idx===2){
+    // C is the fastest — only mark clicked button
+    btn.classList.add('good');sfxOK();
+    var opts=document.querySelectorAll('#sqFormulaQuiz .qopt');
+    opts.forEach(function(o){o.disabled=true});
+    sqState=3;
+    var dots=document.querySelectorAll('#sqDots .qd');
+    for(var i=0;i<3;i++)dots[i].className='qd ok';
+    document.getElementById('sqHint').innerHTML='<span class="g">🎉 正方形周长 = 边长 × 4</span>';
+    setTimeout(function(){
+      document.getElementById('sqDone').style.display='block';sfxDone();
+    },500);
+  }else{
+    // A or B are correct but not fastest — give different feedback
+    btn.classList.add('bad');sfxNO();btn.disabled=true;
+    document.getElementById('sqHint').innerHTML='<span style="color:#e67e22">也对，但不是<b>最快</b>的方法~</span>';
+  }
 }
 
 // Replace init to call newSq
