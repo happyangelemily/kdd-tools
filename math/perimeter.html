@@ -275,7 +275,7 @@ body{
 <div id="tp1" style="display:none">
   <p style="font-size:.76em;color:#999">单击每条边——像用尺子一样量它的长度</p>
   <div class="cv"><canvas id="rcv" width="440" height="300"></canvas></div>
-  <p id="ri" style="text-align:center;font-size:.8em;color:#69f0ae;min-height:20px"></p>
+  <p id="ri" style="text-align:center;font-size:.8em;color:#2e7d32;min-height:20px"></p>
   <div class="btns"><button class="btn" onclick="nextRS()">🔀 换图形</button><button class="btn gr" onclick="resetRM()">🔄 重测</button></div>
 </div>
 <div id="tp2" style="display:none">
@@ -1063,7 +1063,7 @@ function pickT(n){
 // Ruler measure
 var rsi=0,rE=[],rM=[],rSh=[{n:'长方形',x:40,y:50,w:340,h:160},{n:'正方形',x:100,y:40,w:220,h:220},{n:'三角形',tri:!0,pt:[{x:220,y:25},{x:370,y:240},{x:50,y:240}]}];
 function iRM(){var c=document.getElementById('rcv');if(!c)return;rM=[];dRM();c.onmousedown=function(e){rD(e,c)};c.onmouseup=rU;c.ontouchstart=function(e){e.preventDefault();rD(e.touches[0],c)};c.ontouchend=function(e){e.preventDefault();rU()}}
-function dRM(){var c=document.getElementById('rcv');if(!c)return;var ctx=c.getContext('2d'),sh=rSh[rsi];ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);ctx.strokeStyle='#4fc3f7';ctx.lineWidth=3;rE=[];if(sh.tri){ctx.beginPath();ctx.moveTo(sh.pt[0].x,sh.pt[0].y);ctx.lineTo(sh.pt[1].x,sh.pt[1].y);ctx.lineTo(sh.pt[2].x,sh.pt[2].y);ctx.closePath();ctx.stroke();rE=[{a:sh.pt[0],b:sh.pt[1]},{a:sh.pt[1],b:sh.pt[2]},{a:sh.pt[2],b:sh.pt[0]}]}else{ctx.strokeRect(sh.x,sh.y,sh.w,sh.h);rE=[{a:{x:sh.x,y:sh.y},b:{x:sh.x+sh.w,y:sh.y}},{a:{x:sh.x+sh.w,y:sh.y},b:{x:sh.x+sh.w,y:sh.y+sh.h}},{a:{x:sh.x+sh.w,y:sh.y+sh.h},b:{x:sh.x,y:sh.y+sh.h}},{a:{x:sh.x,y:sh.y+sh.h},b:{x:sh.x,y:sh.y}}]}if(rM.length===0)rM=new Array(rE.length).fill(!1);var t=0,all=!0;ctx.fillStyle='#69f0ae';ctx.font='13px sans-serif';ctx.textAlign='center';rE.forEach(function(e,i){if(rM[i]){ctx.strokeStyle='#ffd200';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.lineTo(e.b.x,e.b.y);ctx.stroke();ctx.lineWidth=3;ctx.strokeStyle='#4fc3f7';var mx=(e.a.x+e.b.x)/2,my=(e.a.y+e.b.y)/2,len=Math.round(Math.hypot(e.b.x-e.a.x,e.b.y-e.a.y)/25);t+=len;ctx.fillText(len+'cm',mx,my-7)}else all=!1});document.getElementById('ri').textContent=all&&t>0?'✅ 测量完成！周长 = '+t+' cm':'已测：'+t+' cm（单击其他边）'}
+function dRM(){var c=document.getElementById('rcv');if(!c)return;var ctx=c.getContext('2d'),sh=rSh[rsi];ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);ctx.strokeStyle='#4fc3f7';ctx.lineWidth=3;rE=[];if(sh.tri){ctx.beginPath();ctx.moveTo(sh.pt[0].x,sh.pt[0].y);ctx.lineTo(sh.pt[1].x,sh.pt[1].y);ctx.lineTo(sh.pt[2].x,sh.pt[2].y);ctx.closePath();ctx.stroke();rE=[{a:sh.pt[0],b:sh.pt[1]},{a:sh.pt[1],b:sh.pt[2]},{a:sh.pt[2],b:sh.pt[0]}]}else{ctx.strokeRect(sh.x,sh.y,sh.w,sh.h);rE=[{a:{x:sh.x,y:sh.y},b:{x:sh.x+sh.w,y:sh.y}},{a:{x:sh.x+sh.w,y:sh.y},b:{x:sh.x+sh.w,y:sh.y+sh.h}},{a:{x:sh.x+sh.w,y:sh.y+sh.h},b:{x:sh.x,y:sh.y+sh.h}},{a:{x:sh.x,y:sh.y+sh.h},b:{x:sh.x,y:sh.y}}]}if(rM.length===0)rM=new Array(rE.length).fill(!1);var t=0,all=!0;ctx.fillStyle='#2e7d32';ctx.font='bold 14px sans-serif';ctx.textAlign='center';rE.forEach(function(e,i){if(rM[i]){ctx.strokeStyle='#ffd200';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.lineTo(e.b.x,e.b.y);ctx.stroke();ctx.lineWidth=3;ctx.strokeStyle='#4fc3f7';var mx=(e.a.x+e.b.x)/2,my=(e.a.y+e.b.y)/2,len=Math.round(Math.hypot(e.b.x-e.a.x,e.b.y-e.a.y)/25);t+=len;ctx.fillText(len+'cm',mx,my-7)}else all=!1});document.getElementById('ri').textContent=all&&t>0?'✅ 测量完成！周长 = '+t+' cm':'已测：'+t+' cm（单击其他边）'}
 function rD(e,c){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(300/r.height);for(var i=0;i<rE.length;i++){if(rM[i])continue;if(dSeg(x,y,rE[i].a.x,rE[i].a.y,rE[i].b.x,rE[i].b.y)<16){rM[i]=!0;dRM();sfxOK();break}}}
 function rU(){}function resetRM(){rM=[];dRM();document.getElementById('ri').textContent=''}function nextRS(){rsi=(rsi+1)%rSh.length;resetRM()}
 // String measure
@@ -1280,7 +1280,7 @@ function dRo(){var c=document.getElementById('rocv');if(!c)return;var ctx=c.getC
   ctx.restore();
   // Labels
   var pi=Math.PI*2*r0,circCm=Math.round(pi/20),rolledCm=Math.round(raX/20);
-  ctx.fillStyle='#ffd200';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+  ctx.fillStyle='#333';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
   if(raX<1){
     ctx.fillText('圆周长 = 2πr ≈ '+circCm+' cm',220,185);
   }else if(raX>=pi-.5){
