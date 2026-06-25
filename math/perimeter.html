@@ -413,11 +413,984 @@ body{
 <div class="reveal open" style="margin-top:10px">
   <p style="font-size:.78em;color:#888">终极总结——</p>
   <div class="big">周长 = 各边之和</div>
-  <p class="s
+  <p class="sub">长方形 (长+宽)×2、正方形 边长×4、三角形三边和……<b>所有公式都来自这同一句话</b>。记住了这句话，公式忘了也能自己推出来。</p>
+</div>
+</div>
 
-... [OUTPUT TRUNCATED - 56129 chars omitted out of 106129 total] ...
+<!-- ===== 5: 特殊情况 ===== -->
+<div class="sec" id="s5">
+<h2>🔄 第五步：不规整的形状怎么办？</h2>
+<p>生活中不都是整整齐齐的长方形。这一站解决<b>最常考的三个陷阱</b>。</p>
 
-pt f2btn" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2（<b>最快！</b>只要2步）</button></div>';
+<h3>🔄 凹进去的图形——周长变了吗？</h3>
+<p>选一种凹陷方式，<b>按住彩色凹边垂直拖拽</b>——推向最近的边框：</p>
+<div class="btns">
+  <button class="btn" id="modeBtn0" onclick="setConcaveMode(0)">⬅ 单角凹陷</button>
+  <button class="btn" id="modeBtn1" onclick="setConcaveMode(1)">🔽 深挖凹陷</button>
+</div>
+<div class="cv"><canvas id="dv" width="440" height="300" style="cursor:pointer"></canvas></div>
+<p style="text-align:center;font-size:.9em;color:#555;margin:8px 0;font-weight:bold">凹进去的图形周长，和标准长方形（600 cm）相比？</p>
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:4px 0">
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(0)">一样长</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(60)">多 60 cm</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(40)">多 40 cm</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(280)">多 280 cm</button>
+</div>
+<p style="text-align:center;font-size:.78em;min-height:20px" id="dvQuizFb"></p>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0" id="dvLegend"></div>
+<div class="btns"><button class="btn gr" onclick="resetConcave()">🔲 一键重置</button></div>
+
+<h3 style="margin-top:14px">✂️ 拼在一起 / 切开——边的数量变了</h3>
+<p>两个正方形<b>拼在一起</b>，中间那条边「消失」了——周长<b>变小</b>。<br>反过来，把一个长方形<b>切成两块</b>，中间多了一条边——周长<b>变大</b>。</p>
+<div class="btns">
+  <button class="btn" id="jb0" onclick="sj(0)">⬛⬛ 两个分开</button>
+  <button class="btn" id="jb1" onclick="sj(1)">▬ 拼在一起</button>
+</div>
+<div class="cv"><canvas id="jv" width="440" height="190"></canvas></div>
+<p id="ji" style="text-align:center;font-size:.8em;color:#69f0ae;min-height:20px"></p>
+
+<h3 style="margin-top:14px">🏡 靠墙——少算一条边</h3>
+<p>靠墙的一边不用围。篱笆长度 ≠ 完整周长。试试不同情况：</p>
+<div class="btns"><button class="btn" id="wb0" onclick="sw(0)">上面靠墙</button><button class="btn" id="wb1" onclick="sw(1)">左边靠墙</button><button class="btn" id="wb2" onclick="sw(2)">两边靠墙</button></div>
+<div class="sl"><label>长：</label><input type="range" id="fl" min="3" max="8" value="5" oninput="df()"><span class="v" id="flv">5 m</span></div>
+<div class="sl"><label>宽：</label><input type="range" id="fw" min="2" max="5" value="3" oninput="df()"><span class="v" id="fwv">3 m</span></div>
+<div class="cv"><canvas id="fv" width="440" height="240"></canvas></div>
+<p id="fi" style="text-align:center;font-size:.82em;color:#ffd200;min-height:22px"></p>
+<div class="reveal open" style="margin-top:8px"><div class="big" id="ff"></div><p class="sub">完整周长是四面全围的长度。靠墙省了墙那边 → <b>不能直接套公式</b>！</p></div>
+
+</div>
+
+<!-- ===== 6: 闯关 ===== -->
+<div class="sec" id="s6">
+<h2>🏆 第六步：综合闯关</h2>
+<p>25 题题库随机抽 <span class="b">10 题</span>，做完看成绩。</p>
+<div class="qdots" id="qds"></div>
+<div class="qq" id="qqq"></div>
+<div class="qo" id="qos"></div>
+<div class="qexp" id="qex"></div>
+<div class="qnav" id="qnv">
+  <button class="btn" id="qpr" onclick="qpr()" disabled>◀ 上一题</button>
+  <button class="btn go" id="qnx" onclick="qnx()">下一题 ▶</button>
+</div>
+<div id="qsc" style="display:none">
+  <div class="sb"><div class="se" id="semo"></div><div class="sn" id="snum"></div>
+  <p id="smsg" style="font-size:.92em;color:#ccc;margin:8px 0"></p>
+  <div class="btns">
+    <button class="btn blu" id="qrw" onclick="qrw()">🔍 回顾错题</button>
+    <button class="btn go" onclick="qrs()">🔄 再来一组</button>
+  </div></div>
+</div>
+</div>
+
+<div class="foot">🛠 由 AI 辅助制作 · 持续改进中<br>如有 bug 请留言反馈 ❤️</div>
+</div>
+
+<script>
+// ===== STARS =====
+(function(){var h='',s=document.getElementById('stars');for(var i=0;i<60;i++)h+='<div class="star" style="left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;width:'+(Math.random()*2+1.2)+'px;height:'+(Math.random()*2+1.2)+'px;--d:'+(Math.random()*3+2)+'s;--delay:'+(Math.random()*3)+'s"></div>';s.innerHTML=h})();
+
+// ===== SOUND =====
+var audioCtx=null;
+function getAC(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx}
+function beep(freq,dur,type){
+  try{var ac=getAC(),o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.value=freq;g.gain.value=.12;g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+dur);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+dur)}catch(e){}
+}
+function sfxOK(){beep(660,.12);setTimeout(function(){beep(880,.15)},120)}
+function sfxNO(){beep(200,.2,'triangle')}
+function sfxDone(){beep(523,.1);setTimeout(function(){beep(659,.1)},100);setTimeout(function(){beep(784,.1)},200);setTimeout(function(){beep(1047,.25)},300)}
+
+// ===== MODULE 3: Unit quiz =====
+var unitAnswered=!1;
+function answerUnit(idx,btn){
+  if(unitAnswered)return;
+  var opts=document.querySelectorAll('#unitQuiz .qopt');
+  opts.forEach(function(o){o.disabled=true});
+  if(idx===0){
+    // Correct: cm (length unit)
+    btn.classList.add('good');sfxOK();
+    document.getElementById('unitFeedback').innerHTML='<span class="g">✅ 正确！</span> 周长量的是<b>长度</b>，当然用长度单位 <b>cm</b>！';
+    setTimeout(function(){
+      document.getElementById('unitReveal').style.display='block';
+      md(2);
+    },600);
+  }else{
+    // Wrong
+    btn.classList.add('bad');sfxNO();
+    var msgs=['<span class="r">❌ cm² 是面积单位</span>——量「面的大小」用的。周长是「长度」，不用面积单位。',
+              '<span class="r">❌ kg 是重量单位</span>——量多重用的。周长和重量完全没关系！',
+              '<span class="r">❌ "个"不是测量单位</span>——量长度需要标准的长度单位，比如 cm。'];
+    document.getElementById('unitFeedback').innerHTML=msgs[idx-1];
+    // Highlight correct answer
+    opts[0].classList.add('good');
+    setTimeout(function(){
+      document.getElementById('unitReveal').style.display='block';
+      md(2);
+    },1200);
+  }
+  unitAnswered=!0;
+}
+
+// ===== PROGRESS =====
+var sd=[!1,!1,!1,!1,!1,!1];
+function md(n){
+  if(sd[n])return;sd[n]=!0;var ds=document.querySelectorAll('#prog .pd');
+  for(var i=0;i<6;i++){ds[i].className='pd';if(sd[i])ds[i].classList.add('done')}
+  var cur=n<5?n+1:n;
+  if(cur<6&&!sd[cur])ds[cur].classList.add('cur');else if(sd.every(function(x){return x}))ds[5].classList.add('cur');
+}
+new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting){e.target.classList.add('reached');var n=parseInt(e.target.id.replace('s',''))-1;var ds=document.querySelectorAll('#prog .pd');ds.forEach(function(d,i){d.classList.remove('cur')});if(!sd[n])ds[n].classList.add('cur')}})}).observe(document.querySelector('.sec')); // observe all sections
+document.querySelectorAll('.sec').forEach(function(s){new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.add('reached');var n=parseInt(s.id.replace('s',''))-1;document.querySelectorAll('#prog .pd').forEach(function(d,i){d.classList.remove('cur')});if(!sd[n])document.querySelectorAll('#prog .pd')[n].classList.add('cur')}},{threshold:.3}).observe(s)});
+
+// ===== MODULE 1: Scenes (NO "周长" word!) =====
+var sc=[
+  {id:0,t:'花园围篱笆',d:'要买多长的篱笆才能把花园<b>四周围起来</b>？沿着<b>花园边缘</b>走完整的一圈，这一圈的长度就是你要买的篱笆长度。'},
+  {id:1,t:'操场跑道',d:'跑<b>一圈</b>是多少米？不是跑到操场中间去，是<b>沿着跑道外圈线</b>跑完一整圈的距离。'},
+  {id:2,t:'花坛边沿',d:'用彩色石头沿着花坛<b>外围</b>绕一圈装饰边。需要多少块石头？——得先知道外围一圈有多长。'},
+  {id:3,t:'相框包边',d:'给照片做一个木质边框，边框材料要多长？量的是照片<b>四周边沿</b>加在一起的总长度，不是照片里面。'},
+  {id:4,t:'游泳池边沿',d:'沿着泳池<b>边缘</b>走一圈，一共走了多少米？踩的是泳池边沿的瓷砖，不是游在水里。'},
+  {id:5,t:'蛋糕围边',d:'给圆形蛋糕围一圈丝带做装饰，丝带要剪多长？是围<b>蛋糕外侧一圈</b>的长度，不是蛋糕顶上的面积。'},
+  {id:6,t:'桌子包边',d:'给桌子边缘包一圈防撞软条，防撞条要买多长？量的是<b>桌面外圈</b>一圈的长度。'},
+  {id:7,t:'裁缝量布边',d:'做一块圆形桌布，要给边缘缝一圈花边。花边要多长？是桌布<b>最外圈</b>的长度——走一圈就知道了。'},
+];
+var sf=0,sg=document.getElementById('scenes'),scDiscovered=[],scAnimId=[],scAnimP=[];
+sc.forEach(function(s,i){scDiscovered[i]=false;scAnimId[i]=null;scAnimP[i]=0});
+
+// Scene illustration drawing
+var CW=240,CH=160; // canvas size for each card
+function drawScene(ctx,i,trace){
+  var w=CW,h=CH;ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#faf8f4';ctx.fillRect(0,0,w,h);
+  if(trace===undefined)trace=0; // 0=no trace, 0-1=trace progress
+  // Animated dot on perimeter
+  function dotOnRect(rx,ry,rw,rh,frac){
+    var perim=2*rw+2*rh,d=(frac*perim)%perim;
+    if(d<rw)return{x:rx+d,y:ry};
+    if(d<rw+rh)return{x:rx+rw,y:ry+(d-rw)};
+    if(d<2*rw+rh)return{x:rx+rw-(d-rw-rh),y:ry+rh};
+    return{x:rx,y:ry+rh-(d-2*rw-rh)};
+  }
+  function dotOnCircle(cx,cy,r,frac){
+    var a=frac*Math.PI*2-Math.PI/2;
+    return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};
+  }
+  function dotOnEllipse(cx,cy,rx,ry,frac){
+    var a=frac*Math.PI*2-Math.PI/2;
+    return{x:cx+rx*Math.cos(a),y:cy+ry*Math.sin(a)};
+  }
+  function drawGlowLine(fn){
+    ctx.save();ctx.shadowColor='rgba(236,64,122,.45)';ctx.shadowBlur=8;fn();ctx.restore();
+  }
+  function drawDot(pt){ctx.fillStyle='#ec407a';ctx.beginPath();ctx.arc(pt.x,pt.y,4.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(pt.x,pt.y,2,0,Math.PI*2);ctx.fill()}
+  switch(i){
+  case 0: // 花园围篱笆 — top-down view of garden with perimeter fence
+    // Lawn
+    ctx.fillStyle='#a5d6a7';ctx.fillRect(24,24,w-48,h-48);
+    // Grass texture
+    ctx.fillStyle='#81c784';
+    for(var gx=28;gx<w-28;gx+=8){for(var gy=28;gy<h-28;gy+=8){if((gx+gy)%16===0)ctx.fillRect(gx,gy,3,3)}}
+    // Flower beds (circular, top-down)
+    var beds=[{x:60,y:55,c:'#e91e63',r:10},{x:180,y:50,c:'#ff9800',r:8},{x:130,y:75,c:'#9c27b0',r:9},{x:85,y:95,c:'#f44336',r:7},{x:160,y:105,c:'#ff5722',r:8},{x:55,y:110,c:'#e91e63',r:6},{x:200,y:85,c:'#fdd835',r:7}];
+    beds.forEach(function(b){ctx.fillStyle=b.c;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(255,255,255,.25)';ctx.beginPath();ctx.arc(b.x-2,b.y-2,b.r*.4,0,Math.PI*2);ctx.fill()});
+    // Path
+    ctx.fillStyle='#d7ccc8';ctx.fillRect(w/2-4,24,8,h-48);
+    // Fence posts around perimeter (top-down view = small squares)
+    ctx.fillStyle='#8d6e63';
+    var margin=20,spacing=18;
+    // Top row
+    for(var fx=margin;fx<=w-margin;fx+=spacing)ctx.fillRect(fx-2,24-2.5,4.5,5);
+    // Bottom row
+    for(var fx=margin;fx<=w-margin;fx+=spacing)ctx.fillRect(fx-2,h-24-2.5,4.5,5);
+    // Left column
+    for(var fy=margin;fy<=h-margin;fy+=spacing)ctx.fillRect(24-2.5,fy-2,5,4.5);
+    // Right column
+    for(var fy=margin;fy<=h-margin;fy+=spacing)ctx.fillRect(w-24-2.5,fy-2,5,4.5);
+    // Fence rail (connecting line)
+    ctx.strokeStyle='#a1887f';ctx.lineWidth=2;ctx.setLineDash([2,3]);
+    ctx.strokeRect(24,24,w-48,h-48);ctx.setLineDash([]);
+    // Boundary highlight
+    if(trace>0){
+      ctx.save();
+      ctx.shadowColor='rgba(230,126,34,.6)';ctx.shadowBlur=10;
+      ctx.strokeStyle='#ec407a';ctx.lineWidth=4;
+      ctx.strokeRect(22,22,w-44,h-44);
+      ctx.restore();
+      // Animated dot on perimeter
+      var perim=2*(w-44)+2*(h-44),d=(trace*perim)%perim;
+      var dx,dy;
+      if(d<w-44){dx=22+d;dy=22}
+      else if(d<w-44+h-44){dx=w-22;dy=22+(d-(w-44))}
+      else if(d<2*(w-44)+h-44){dx=w-22-(d-(w-44+h-44));dy=h-22}
+      else{dx=22;dy=h-22-(d-(2*(w-44)+h-44))}
+      ctx.fillStyle='#ec407a';ctx.beginPath();ctx.arc(dx,dy,5,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(dx,dy,2,0,Math.PI*2);ctx.fill();
+    }else{
+      ctx.strokeStyle='rgba(160,114,74,.3)';ctx.lineWidth=2;ctx.setLineDash([3,4]);
+      ctx.strokeRect(22,22,w-44,h-44);ctx.setLineDash([]);
+    }
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('篱笆围一圈 = 周长',w/2,h-4)}
+    break;
+  case 1: // 操场跑道 — red track with lanes, green infield
+    ctx.fillStyle='#c8e6c9';ctx.beginPath();ctx.ellipse(w/2,h/2,w/2-8,h/2-6,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#d35400';ctx.beginPath();ctx.ellipse(w/2,h/2,w/2-8,h/2-6,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#e67e22';ctx.beginPath();ctx.ellipse(w/2,h/2,w/2-16,h/2-14,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#c8e6c9';ctx.beginPath();ctx.ellipse(w/2,h/2,w/2-16,h/2-14,0,0,Math.PI*2);ctx.fill();
+    // 4 lanes
+    ctx.strokeStyle='#fff';ctx.lineWidth=.7;
+    for(var r=1;r<=4;r++){var rx=w/2-8-r*4,ry=h/2-6-r*3.5;ctx.beginPath();ctx.ellipse(w/2,h/2,rx,ry,0,0,Math.PI*2);ctx.stroke()}
+    // Starting line
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(w/2+70,h/2-12);ctx.lineTo(w/2+70,h/2+12);ctx.stroke();
+    // Boundary
+    if(trace>0){
+      drawGlowLine(function(){ctx.strokeStyle='#ec407a';ctx.lineWidth=3.5;ctx.beginPath();ctx.ellipse(w/2,h/2,w/2-8,h/2-6,0,0,Math.PI*2);ctx.stroke()});
+      var pt=dotOnEllipse(w/2,h/2,w/2-8,h/2-6,trace);
+      drawDot(pt);
+    }else{ctx.strokeStyle='rgba(211,84,0,.3)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.beginPath();ctx.ellipse(w/2,h/2,w/2-8,h/2-6,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([])}
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('跑道外圈 = 周长',w/2,h-4)}
+    break;
+  case 2: // 花坛边沿 — soil bed, varied flowers, greenery, stone border
+    ctx.fillStyle='#8d6e63';ctx.beginPath();ctx.arc(w/2,h/2-2,30,0,Math.PI*2);ctx.fill();
+    // Leaves
+    ctx.fillStyle='#66bb6a';for(var l=0;l<6;l++){var la=l*Math.PI/3;ctx.beginPath();ctx.ellipse(w/2+14*Math.cos(la),h/2-2+14*Math.sin(la),9,5,la,0,Math.PI*2);ctx.fill()}
+    // Tulips
+    var tcols=['#e91e63','#ff5722','#fdd835'];
+    for(var t=0;t<3;t++){var ta=t*2.1;ctx.fillStyle=tcols[t];ctx.beginPath();ctx.ellipse(w/2+18*Math.cos(ta),h/2-2+18*Math.sin(ta)-8,5,10,-.3,0,Math.PI*2);ctx.fill();ctx.fillStyle='#4caf50';ctx.fillRect(w/2+18*Math.cos(ta)-1,h/2-2+18*Math.sin(ta)-2,2,10)}
+    // Small daisies
+    for(var d=0;d<5;d++){var da=d*1.26+.5;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(w/2+22*Math.cos(da),h/2-4+22*Math.sin(da),4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fdd835';ctx.beginPath();ctx.arc(w/2+22*Math.cos(da),h/2-4+22*Math.sin(da),2,0,Math.PI*2);ctx.fill()}
+    // Stone border
+    if(trace>0){
+      drawGlowLine(function(){ctx.strokeStyle='#ec407a';ctx.lineWidth=3.5;ctx.beginPath();ctx.arc(w/2,h/2-2,34,0,Math.PI*2);ctx.stroke()});
+      var pt=dotOnCircle(w/2,h/2-2,34,trace);
+      drawDot(pt);
+    }else{ctx.strokeStyle='#bcaaa4';ctx.lineWidth=2.5;ctx.setLineDash([3,3]);ctx.beginPath();ctx.arc(w/2,h/2-2,34,0,Math.PI*2);ctx.stroke();ctx.setLineDash([])}
+    // Individual stones
+    if(!trace>0){ctx.fillStyle='#d7ccc8';for(var s=0;s<16;s++){var sa=s*Math.PI/8;ctx.beginPath();ctx.arc(w/2+34*Math.cos(sa)-1,h/2-2+34*Math.sin(sa)-1,3,0,Math.PI*2);ctx.fill()}}
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('石头围一圈 = 周长',w/2,h-4)}
+    break;
+  case 3: // 相框包边 — landscape photo inside wooden frame
+    // Photo: sky, mountains, sun, tree
+    ctx.fillStyle='#81d4fa';ctx.fillRect(26,18,w-52,h-56);
+    ctx.fillStyle='#fdd835';ctx.beginPath();ctx.arc(160,32,7,0,Math.PI*2);ctx.fill();
+    // Mountains
+    ctx.fillStyle='#a5d6a7';ctx.beginPath();ctx.moveTo(26,h-40);ctx.lineTo(70,30);ctx.lineTo(110,h-40);ctx.fill();
+    ctx.fillStyle='#81c784';ctx.beginPath();ctx.moveTo(80,h-40);ctx.lineTo(130,24);ctx.lineTo(180,h-40);ctx.fill();
+    // Grass
+    ctx.fillStyle='#66bb6a';ctx.fillRect(26,h-40,w-52,12);
+    // Tree
+    ctx.fillStyle='#795548';ctx.fillRect(175,28,4,18);ctx.fillStyle='#4caf50';ctx.beginPath();ctx.arc(177,24,10,0,Math.PI*2);ctx.fill();
+    // Frame — wood grain
+    ctx.fillStyle='#d7a86e';ctx.fillRect(20,12,w-40,h-24);
+    ctx.fillStyle='#c9955e';ctx.fillRect(24,16,w-48,h-32);
+    // Frame inner edge
+    ctx.strokeStyle='#b8844a';ctx.lineWidth=1.5;ctx.strokeRect(26,18,w-52,h-36);
+    // Boundary
+    if(trace>0){
+      drawGlowLine(function(){ctx.strokeStyle='#ec407a';ctx.lineWidth=3.5;ctx.strokeRect(20,12,w-40,h-24)});
+      var pt=dotOnRect(20,12,w-40,h-24,trace);
+      drawDot(pt);
+    }else{ctx.strokeStyle='rgba(180,130,70,.3)';ctx.lineWidth=2;ctx.setLineDash([3,3]);ctx.strokeRect(20,12,w-40,h-24);ctx.setLineDash([])}
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('画框四边 = 周长',w/2,h-4)}
+    break;
+  case 4: // 游泳池边沿 — blue water, tiles, diving board
+    ctx.fillStyle='#b3e5fc';ctx.beginPath();ctx.roundRect(16,20,w-32,h-36,14);ctx.fill();
+    ctx.fillStyle='#4fc3f7';ctx.beginPath();ctx.roundRect(20,24,w-40,h-44,12);ctx.fill();
+    // Water ripples
+    ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=.6;
+    for(var wy=30;wy<h-26;wy+=7){ctx.beginPath();ctx.moveTo(26,wy);ctx.quadraticCurveTo(w/2,wy+4,w-26,wy);ctx.stroke()}
+    // Tile border — small colored squares around edge
+    ctx.fillStyle='#fff';var tiles=Math.floor((2*(w-32)+2*(h-36))/7);
+    for(var ti=0;ti<tiles;ti++){var tx,ty,perc=ti/tiles,perim=2*(w-32)+2*(h-36);
+      var d=perc*perim;if(d<w-32){tx=16+d;ty=20}else if(d<w-32+h-36){tx=w-16;ty=20+(d-(w-32))}else if(d<2*(w-32)+h-36){tx=w-16-(d-(w-32+h-36));ty=h-16}else{tx=16;ty=h-16-(d-(2*(w-32)+h-36))}
+      if(tx>15&&tx<w-15&&ty>19&&ty<h-15){ctx.fillStyle=ti%3===0?'#e0e0e0':'#f5f5f5';ctx.fillRect(tx-1,ty-1,6,5)}
+    }
+    // Diving board
+    ctx.fillStyle='#fff';ctx.fillRect(w-60,14,20,6);ctx.strokeStyle='#bbb';ctx.lineWidth=.5;ctx.strokeRect(w-60,14,20,6);
+    // Boundary
+    if(trace>0){
+      drawGlowLine(function(){ctx.strokeStyle='#ec407a';ctx.lineWidth=3.5;ctx.beginPath();ctx.roundRect(16,20,w-32,h-36,14);ctx.stroke()});
+      var pt=dotOnRect(16,20,w-32,h-36,trace);
+      drawDot(pt);
+    }else{ctx.strokeStyle='rgba(79,195,247,.35)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.beginPath();ctx.roundRect(16,20,w-32,h-36,14);ctx.stroke();ctx.setLineDash([])}
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('池边一圈 = 周长',w/2,h-4)}
+    break;
+  case 5: // 蛋糕围边 — shorter realistic cake, cream, ribbon
+    var cakeTop=52,cakeH=48,cakeBot=cakeTop+cakeH,cakeRX=40,cakeRY=13;
+    // Cake body
+    ctx.fillStyle='#f0c78e';ctx.fillRect(w/2-cakeRX,cakeTop,cakeRX*2,cakeH);
+    // Bottom ellipse
+    ctx.fillStyle='#e8b878';ctx.beginPath();ctx.ellipse(w/2,cakeBot,cakeRX,cakeRY,0,0,Math.PI*2);ctx.fill();
+    // Top surface
+    ctx.fillStyle='#fae3c3';ctx.beginPath();ctx.ellipse(w/2,cakeTop,cakeRX,cakeRY-2,0,0,Math.PI*2);ctx.fill();
+    // Cream swirls on top
+    ctx.fillStyle='#fff';for(var sw=0;sw<6;sw++){ctx.beginPath();ctx.arc(w/2-16+sw*7,cakeTop-2,4,0,Math.PI,1);ctx.fill()}
+    // Frosting drips on side
+    ctx.fillStyle='#fff';for(var dr=0;dr<5;dr++){ctx.beginPath();ctx.moveTo(w/2-30+dr*15,cakeTop+2);ctx.quadraticCurveTo(w/2-30+dr*15+3,cakeTop+12,w/2-30+dr*15+6,cakeTop+4);ctx.fill()}
+    // Subtle side texture (not full stripes — don't confuse with perimeter)
+    ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=.6;
+    for(var st=0;st<2;st++){ctx.beginPath();ctx.moveTo(w/2-cakeRX+8,cakeTop+18+st*18);ctx.lineTo(w/2+cakeRX-8,cakeTop+18+st*18);ctx.stroke()}
+    // Cherry on top
+    ctx.fillStyle='#e53935';ctx.beginPath();ctx.arc(w/2,cakeTop-6,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#4caf50';ctx.beginPath();ctx.arc(w/2,cakeTop-12,1,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#388e3c';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(w/2,cakeTop-11);ctx.lineTo(w/2,cakeTop-6);ctx.stroke();
+    // Plate
+    ctx.strokeStyle='#e0e0e0';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(w/2,cakeBot+8,48,8,0,0,Math.PI*2);ctx.stroke();
+    // Boundary — only bottom ellipse = cake's outer circumference
+    if(trace>0){
+      drawGlowLine(function(){
+        ctx.strokeStyle='#ec407a';ctx.lineWidth=3.5;
+        ctx.beginPath();ctx.ellipse(w/2,cakeBot,cakeRX+2,cakeRY+2,0,0,Math.PI*2);ctx.stroke();
+      });
+      var pt=dotOnEllipse(w/2,cakeBot,cakeRX+2,cakeRY+2,trace);
+      drawDot(pt);
+    }else{
+      ctx.strokeStyle='rgba(233,30,99,.3)';ctx.lineWidth=2;ctx.setLineDash([2,3]);
+      ctx.beginPath();ctx.ellipse(w/2,cakeBot,cakeRX+2,cakeRY+2,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    }
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('蛋糕底部一圈 = 周长',w/2,h-4)}
+    break;
+  case 6: // 桌子包边 — wood table with bumper strip
+    ctx.fillStyle='#d4a574';ctx.fillRect(20,26,w-40,h-52);
+    ctx.fillStyle='#c9955e';ctx.fillRect(16,22,w-32,h-48);
+    // Wood grain lines
+    ctx.strokeStyle='rgba(139,105,20,.15)';ctx.lineWidth=.6;
+    for(var gx=26;gx<w-26;gx+=10){ctx.beginPath();ctx.moveTo(gx,28);ctx.lineTo(gx-2,h-30);ctx.stroke()}
+    // Legs
+    ctx.fillStyle='#a0724a';ctx.fillRect(28,h-30,7,12);ctx.fillRect(w-35,h-30,7,12);
+    ctx.fillStyle='#8B6914';ctx.fillRect(38,h-32,5,14);ctx.fillRect(w-43,h-32,5,14);
+    // Bumper strip
+    if(trace>0){
+      drawGlowLine(function(){
+        ctx.strokeStyle='#ec407a';ctx.lineWidth=4;
+        var cr2=3;ctx.beginPath();ctx.moveTo(14+cr2,20);ctx.lineTo(w-14-cr2,20);ctx.arcTo(w-14,20,w-14,20+cr2,cr2);
+        ctx.lineTo(w-14,h-20-cr2);ctx.arcTo(w-14,h-20,w-14-cr2,h-20,cr2);
+        ctx.lineTo(14+cr2,h-20);ctx.arcTo(14,h-20,14,h-20-cr2,cr2);
+        ctx.lineTo(14,20+cr2);ctx.arcTo(14,20,14+cr2,20,cr2);ctx.stroke();
+      });
+      var pt=dotOnRect(14,20,w-28,h-40,trace);
+      drawDot(pt);
+    }else{
+      ctx.strokeStyle='#ef9a9a';ctx.lineWidth=3;ctx.setLineDash([2,3]);
+      var cr2=3;ctx.beginPath();ctx.moveTo(14+cr2,20);ctx.lineTo(w-14-cr2,20);ctx.arcTo(w-14,20,w-14,20+cr2,cr2);
+      ctx.lineTo(w-14,h-20-cr2);ctx.arcTo(w-14,h-20,w-14-cr2,h-20,cr2);
+      ctx.lineTo(14+cr2,h-20);ctx.arcTo(14,h-20,14,h-20-cr2,cr2);
+      ctx.lineTo(14,20+cr2);ctx.arcTo(14,20,14+cr2,20,cr2);ctx.stroke();ctx.setLineDash([]);
+    }
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('防撞条一圈 = 周长',w/2,h-4)}
+    break;
+  case 7: // 裁缝量布边 — elegant tablecloth with lace
+    ctx.fillStyle='#e8d5f5';ctx.beginPath();ctx.arc(w/2,h/2-2,38,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#dcc8ed';ctx.beginPath();ctx.arc(w/2,h/2-2,33,0,Math.PI*2);ctx.fill();
+    // Floral pattern
+    for(var p=0;p<6;p++){var pa=p*Math.PI/3,px=w/2+14*Math.cos(pa),py=h/2-2+14*Math.sin(pa);
+      ctx.fillStyle='rgba(150,100,180,.2)';ctx.beginPath();ctx.arc(px,py,7,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(180,130,200,.3)';ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fill();
+      // Small petals
+      for(var pt=0;pt<4;pt++){ctx.fillStyle='rgba(200,160,220,.25)';ctx.beginPath();ctx.arc(px+4*Math.cos(pt*1.57),py+4*Math.sin(pt*1.57),3,0,Math.PI*2);ctx.fill()}
+    }
+    // Center motif
+    ctx.strokeStyle='rgba(150,100,180,.2)';ctx.lineWidth=.8;ctx.beginPath();ctx.arc(w/2,h/2-2,10,0,Math.PI*2);ctx.stroke();
+    // Lace/scalloped edge
+    if(trace>0){
+      drawGlowLine(function(){
+        ctx.strokeStyle='#ec407a';ctx.lineWidth=3.5;
+        for(var a=0;a<Math.PI*2;a+=.25){var sx=w/2+(38+Math.sin(a*12)*2)*Math.cos(a),sy=h/2-2+(38+Math.sin(a*12)*2)*Math.sin(a);
+          if(a===0)ctx.beginPath();ctx.lineTo(sx,sy)}
+        ctx.closePath();ctx.stroke();
+      });
+      var pt=dotOnCircle(w/2,h/2-2,38,trace);
+      drawDot(pt);
+    }else{
+      ctx.strokeStyle='rgba(180,130,200,.3)';ctx.lineWidth=2;ctx.setLineDash([1,4]);
+      for(var a=0;a<Math.PI*2;a+=.25){var sx=w/2+(38+Math.sin(a*12)*2)*Math.cos(a),sy=h/2-2+(38+Math.sin(a*12)*2)*Math.sin(a);
+        if(a===0)ctx.beginPath();ctx.lineTo(sx,sy)}
+      ctx.closePath();ctx.stroke();ctx.setLineDash([]);
+    }
+    if(trace>0){ctx.fillStyle='#ec407a';ctx.font='bold 9px sans-serif';ctx.fillText('花边一圈 = 周长',w/2,h-4)}
+    break;
+  }
+  ctx.setLineDash([]);
+}
+
+// Render scene cards with canvas
+sc.forEach(function(s,i){
+  var d=document.createElement('div');d.className='sc';d.setAttribute('data-idx',i);
+  var c=document.createElement('canvas');c.width=CW;c.height=CH;
+  d.appendChild(c);
+  var tl=document.createElement('div');tl.className='t';tl.textContent=s.t;
+  d.appendChild(tl);
+  var de=document.createElement('div');de.className='de';de.innerHTML=s.d;
+  d.appendChild(de);
+  // Draw initial scene
+  var ctx=c.getContext('2d');drawScene(ctx,i,0);
+  d.onclick=function(){
+    var wasExpanded=d.classList.contains('pick');
+    document.querySelectorAll('#scenes .sc').forEach(function(x){x.classList.remove('pick')});
+    if(!wasExpanded){
+      d.classList.add('pick');sfxOK();
+      // Animate boundary trace
+      if(scAnimId[i])cancelAnimationFrame(scAnimId[i]);
+      scAnimP[i]=0;
+      (function anim(){
+        scAnimP[i]+=.012;if(scAnimP[i]>1)scAnimP[i]=1;
+        drawScene(ctx,i,scAnimP[i]);
+        if(scAnimP[i]<1)scAnimId[i]=requestAnimationFrame(anim);
+        else scAnimId[i]=null;
+      })();
+      if(!scDiscovered[i]){
+        scDiscovered[i]=true;sf++;
+        document.getElementById('sceneCount').innerHTML='已发现：<b>'+sf+'/8</b>';
+        if(sf>=8){document.getElementById('nameReveal').style.display='block';document.getElementById('traceArea').style.display='block';initTC();md(0)}
+      }
+    }else{
+      drawScene(ctx,i,0);
+    }
+  };
+  sg.appendChild(d);
+});
+
+// ===== MODULE 1: Trace =====
+var tsh=[
+  {n:'正方形',tp:'poly',cl:!0,pt:[{x:80,y:40},{x:320,y:40},{x:320,y:280},{x:80,y:280}],c:'#4fc3f7'},
+  {n:'长方形',tp:'poly',cl:!0,pt:[{x:50,y:60},{x:350,y:60},{x:350,y:260},{x:50,y:260}],c:'#f7971e'},
+  {n:'三角形',tp:'poly',cl:!0,pt:[{x:200,y:25},{x:355,y:285},{x:45,y:285}],c:'#69f0ae'},
+  {n:'圆形',tp:'circle',cl:!0,cx:200,cy:170,r:110,c:'#ffd200'},
+  {n:'五角星',tp:'star',cl:!0,cx:200,cy:170,or:110,ir:44,n:5,c:'#ce93d8'},
+  {n:'心形',tp:'heart',cl:!0,cx:200,cy:175,sz:95,c:'#ef9a9a'},
+  {n:'开口曲线',tp:'openC',cl:!1,pt:[{x:40,y:280},{x:100,y:100},{x:200,y:250},{x:300,y:80},{x:360,y:200}],c:'#ff5252'},
+  {n:'开口折线',tp:'openP',cl:!1,pt:[{x:40,y:50},{x:200,y:280},{x:360,y:50}],c:'#ff5252'},
+];
+var ti=0,tp=[],tdr=!1,tcO=!1,tC,tCtx;
+function initTC(){
+  tC=document.getElementById('tc');if(!tC)return;tCtx=tC.getContext('2d');tp=[];tdr=!1;tcO=!1;dT();updateTN();
+  tC.onmousedown=function(e){tS(e)};tC.onmousemove=function(e){tM(e)};tC.onmouseup=tE;tC.onmouseleave=tE;
+  tC.ontouchstart=function(e){e.preventDefault();tS(e.touches[0])};tC.ontouchmove=function(e){e.preventDefault();tM(e.touches[0])};tC.ontouchend=function(e){e.preventDefault();tE()};
+}
+function updateTN(){
+  var sh=tsh[ti];
+  document.getElementById('tname').innerHTML='<span style="color:'+sh.c+'">'+sh.n+'</span>'+(sh.cl?'':' 🔓');
+  document.getElementById('thint').textContent=sh.cl?'👆 沿着彩色线描完整一圈':'👀 有缺口——围不起来，它没有周长！';
+}
+function dT(){
+  var sh=tsh[ti],cw=tC.width,ch=tC.height,sx=cw/440,sy=ch/340;
+  tCtx.clearRect(0,0,cw,ch);tCtx.fillStyle='#f0ede6';tCtx.fillRect(0,0,cw,ch);
+  tCtx.strokeStyle=sh.c;tCtx.lineWidth=3;tCtx.setLineDash([]);tCtx.beginPath();
+  if(sh.tp==='poly'||sh.tp==='openP'||sh.tp==='openC'){tCtx.moveTo(sh.pt[0].x*sx,sh.pt[0].y*sy);for(var i=1;i<sh.pt.length;i++)tCtx.lineTo(sh.pt[i].x*sx,sh.pt[i].y*sy);if(sh.cl)tCtx.closePath()}
+  else if(sh.tp==='circle')tCtx.arc(sh.cx*sx,sh.cy*sy,sh.r*sx,0,Math.PI*2);
+  else if(sh.tp==='star'){dStar(tCtx,sh.cx*sx,sh.cy*sy,sh.or*sx,sh.ir*sx,sh.n)}
+  else if(sh.tp==='heart'){dHeart(tCtx,sh.cx*sx,sh.cy*sy,sh.sz*sx)}
+  tCtx.stroke();
+  if(tp.length>1){tCtx.strokeStyle='rgba(255,210,0,.7)';tCtx.lineWidth=5;tCtx.beginPath();tCtx.moveTo(tp[0].x,tp[0].y);for(var i=1;i<tp.length;i++)tCtx.lineTo(tp[i].x,tp[i].y);tCtx.stroke()}
+  if(sh.cl){var sp=gSP(sh,sx,sy);tCtx.fillStyle='#ffd200';tCtx.beginPath();tCtx.arc(sp.x,sp.y,7,0,Math.PI*2);tCtx.fill();tCtx.fillStyle='#000';tCtx.font='10px sans-serif';tCtx.textAlign='center';tCtx.fillText('起点',sp.x,sp.y-11)}
+}
+function dStar(c,cx,cy,or,ir,n){c.beginPath();for(var i=0;i<n*2;i++){var r=i%2===0?or:ir,a=-Math.PI/2+Math.PI*i/n;if(i===0)c.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a));else c.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a))}c.closePath()}
+function dHeart(c,cx,cy,sz){c.beginPath();c.moveTo(cx,cy+sz*.55);c.bezierCurveTo(cx-sz,cy-sz*.25,cx-sz*.55,cy-sz*.75,cx,cy-sz*.15);c.bezierCurveTo(cx+sz*.55,cy-sz*.75,cx+sz,cy-sz*.25,cx,cy+sz*.55)}
+function gSP(sh,sx,sy){if(sh.tp==='circle')return{x:(sh.cx+sh.r)*sx,y:sh.cy*sy};if(sh.tp==='star')return{x:sh.cx*sx,y:(sh.cy-sh.or)*sy};if(sh.tp==='heart')return{x:sh.cx*sx,y:(sh.cy-sh.sz*.75)*sy};return{x:sh.pt[0].x*sx,y:sh.pt[0].y*sy}}
+function dSeg(px,py,ax,ay,bx,by){var abx=bx-ax,aby=by-ay,apx=px-ax,apy=py-ay,t=Math.max(0,Math.min(1,(apx*abx+apy*aby)/(abx*abx+aby*aby)));return Math.hypot(px-(ax+t*abx),py-(ay+t*aby))}
+function tS(e){if(tcO||!tsh[ti].cl)return;
+  var r=tC.getBoundingClientRect(),x=(e.clientX-r.left)*(tC.width/r.width),y=(e.clientY-r.top)*(tC.height/r.height);
+  // Don't start yet — wait for actual drag movement
+  tdr=!1;tp=[{x:x,y:y}];document.getElementById('tok').innerHTML='';
+}
+function tM(e){if(tcO)return;
+  var r=tC.getBoundingClientRect(),x=(e.clientX-r.left)*(tC.width/r.width),y=(e.clientY-r.top)*(tC.height/r.height);
+  var dist=Math.hypot(x-tp[0].x,y-tp[0].y);
+  // Only start tracing after moving at least 8px from initial touch
+  if(!tdr&&dist<8)return;
+  if(!tdr){tdr=!0;dT();return} // just activated — first real point already recorded
+  var lp=tp[tp.length-1];if(Math.hypot(x-lp.x,y-lp.y)<1.5)return;
+  tp.push({x:x,y:y});dT();
+  if(tp.length===20)document.getElementById('tok').innerHTML='<span style="color:#999">👆 继续沿着线描，绕回到起点~</span>';
+}
+function tE(){
+  if(!tdr||tp.length<15){tdr=!1;tp=[];dT();document.getElementById('tok').innerHTML='';return}
+  tdr=!1;cC();
+}
+function cC(){var sh=tsh[ti];if(!sh.cl||tp.length<20)return;
+  var cw=tC.width,ch=tC.height,sx=cw/440,sy=ch/340;
+  // Check 1: Closure — relaxed to 8% canvas width (was 5%)
+  var closureDist=Math.hypot(tp[0].x-tp[tp.length-1].x,tp[0].y-tp[tp.length-1].y);
+  var closureOK=closureDist<cw*.08;
+  // Check 2: Contour fit — relaxed tolerance 8%, fit ratio 50%
+  var fitCount=0,tolerance=Math.max(cw,ch)*.08;
+  var step=Math.max(1,Math.floor(tp.length/40)); // sample ~40 points
+  for(var i=0;i<tp.length;i+=step){
+    var minD=ptToShapeDist(tp[i].x,tp[i].y,sh,sx,sy);
+    if(minD<tolerance)fitCount++;
+  }
+  var samples=Math.floor(tp.length/step),fitRatio=samples>0?fitCount/samples:1;
+  var fitOK=fitRatio>=.5;
+  if(closureOK&&fitOK){
+    tcO=!0;sfxDone();
+    document.getElementById('tok').innerHTML='⭐ <b>太棒了！描出了「'+sh.n+'」完整的一圈！</b>';
+    tCtx.strokeStyle='rgba(255,210,0,.4)';tCtx.lineWidth=10;tCtx.beginPath();
+    tCtx.moveTo(tp[0].x,tp[0].y);for(var i=1;i<tp.length;i++)tCtx.lineTo(tp[i].x,tp[i].y);tCtx.stroke();
+    setTimeout(dT,800);
+  }else{
+    // Gentle nudge — keep the trace visible, let user keep trying
+    var msg='';
+    if(!closureOK)msg='💡 快到了！手指<b>绕回到起点</b>（绿色起点标记），然后松手~';
+    else msg='💡 差一点点！<b>贴紧彩色线</b>再描一次，手指绕回起点松手~';
+    document.getElementById('tok').innerHTML=msg;
+    // Don't clear tp — user can keep drawing
+  }
+}
+// Distance from a point to the nearest point on a shape outline
+function ptToShapeDist(px,py,sh,sx,sy){
+  var minD=1e9;
+  if(sh.tp==='poly'||sh.tp==='openP'||sh.tp==='openC'){
+    for(var i=0;i<sh.pt.length;i++){
+      var j=(i+1)%sh.pt.length;if(!sh.cl&&i===sh.pt.length-1)continue;
+      var ax=sh.pt[i].x*sx,ay=sh.pt[i].y*sy,bx=sh.pt[j].x*sx,by=sh.pt[j].y*sy;
+      var d=ptToSegDist(px,py,ax,ay,bx,by);if(d<minD)minD=d;
+    }
+  }else if(sh.tp==='circle'){
+    var cx=sh.cx*sx,cy=sh.cy*sy,r=sh.r*sx;
+    minD=Math.abs(Math.hypot(px-cx,py-cy)-r);
+  }else if(sh.tp==='star'){
+    // Sample star outline at 100 points
+    for(var a=0;a<Math.PI*2;a+=.063){
+      var si=Math.floor((a/(Math.PI*2))*sh.n*2),rr=si%2===0?sh.or*sx:sh.ir*sx;
+      var sx2=sh.cx*sx+rr*Math.cos(a-Math.PI/2),sy2=sh.cy*sy+rr*Math.sin(a-Math.PI/2);
+      var d=Math.hypot(px-sx2,py-sy2);if(d<minD)minD=d;
+    }
+  }else if(sh.tp==='heart'){
+    // Sample heart at 100 points
+    for(var a=0;a<Math.PI*2;a+=.063){
+      var hx=sh.cx*sx+sh.sz*sx*16*Math.pow(Math.sin(a),3);
+      var hy=sh.cy*sy-sh.sz*sy*(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a))/16;
+      var d=Math.hypot(px-hx,py-hy);if(d<minD)minD=d;
+    }
+  }
+  return minD;
+}
+// Distance from point to line segment
+function ptToSegDist(px,py,ax,ay,bx,by){
+  var abx=bx-ax,aby=by-ay,apx=px-ax,apy=py-ay;
+  var t=Math.max(0,Math.min(1,(apx*abx+apy*aby)/(abx*abx+aby*aby+1e-9)));
+  return Math.hypot(px-(ax+t*abx),py-(ay+t*aby));
+}
+function nextTrace(){ti=(ti+1)%tsh.length;tp=[];tdr=!1;tcO=!1;document.getElementById('tok').innerHTML='';updateTN();dT()}
+
+// ===== MODULE 1: Closed/Open =====
+var cd=[{n:'正方形',cl:!0,s:'⬛'},{n:'开口折线',cl:!1,s:'└─'},{n:'圆形',cl:!0,s:'⭕'},{n:'半圆开口',cl:!1,s:'◠'},{n:'五角星',cl:!0,s:'⭐'},{n:'缺口曲线',cl:!1,s:'◡'}];
+var cg=document.getElementById('clGrid');
+cd.forEach(function(c,i){var d=document.createElement('div');d.className='sc';d.innerHTML='<span class="e" style="font-size:2.4em">'+c.s+'</span><span class="t">'+c.n+'</span>';d.onclick=function(){document.querySelectorAll('#clGrid .sc').forEach(function(x){x.classList.remove('pick')});d.classList.add('pick');document.getElementById('clHint').innerHTML=c.cl?'✅ <span class="g">封闭图形</span>——有周长。':'❌ <span class="r">开口图形</span>——有缺口，围不起来，<b>没有周长</b>。';if(c.cl)sfxOK();else sfxNO()};cg.appendChild(d)});
+
+// ===== MODULE 2: Ruler =====
+var rc=0;
+function addR(){if(rc<40){rc++;dR()}}
+function addRs(n){rc=Math.min(40,rc+n);dR()}
+function resetR(){rc=0;dR()}
+function dR(){var h='';for(var i=0;i<40;i++){var cls='rcell '+(i<rc?'on':'off');if(i<rc&&(i+1)%10===0)cls+=' m10';else if(i<rc&&(i+1)%5===0)cls+=' m5';h+='<div class="'+cls+'">'+(i<rc&&(i+1)%5===0?i+1:'')+'</div>'}document.getElementById('rstrip').innerHTML=h;document.getElementById('rcnt').textContent=rc}
+dR();
+
+// ===== MODULE 2: Tools =====
+// ===== MODULE 2: Tool match challenge =====
+var matchBtnState=[[0,0,0],[0,0,0],[0,0,0]]; // per-question per-button: 0=untried, 1=correct, -1=wrong
+var matchData=[
+  {shape:'⬛',name:'正方形',answer:[0,1], tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
+  {shape:'❤️',name:'心形',answer:[1],   tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
+  {shape:'⭕',name:'圆形',answer:[1,2], tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
+];
+function buildMatch(){
+  var container=document.getElementById('matchItems');if(!container)return;
+  var h='';
+  matchData.forEach(function(m,i){
+    h+='<div style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:8px 12px">';
+    h+='<span style="font-size:1.8em;width:36px;text-align:center">'+m.shape+'</span>';
+    h+='<span style="font-size:.78em;color:#555;min-width:44px">'+m.name+'</span>';
+    h+='<div style="display:flex;gap:4px;flex:1;justify-content:flex-end" id="mBtns'+i+'">';
+    m.tools.forEach(function(t,ti){
+      h+='<button class="btn" style="min-height:34px;padding:6px 10px;font-size:.72em" onclick="pickMatch('+i+','+ti+',this)">'+t+'</button>';
+    });
+    h+='</div></div>';
+  });
+  container.innerHTML=h;
+}
+function pickMatch(qIdx,tIdx,btn){
+  var state=matchBtnState[qIdx][tIdx];
+  if(state!==0)return; // already tried
+  var correct=matchData[qIdx].answer;
+  if(correct.indexOf(tIdx)>=0){
+    matchBtnState[qIdx][tIdx]=1;sfxOK();
+    btn.classList.add('gr');btn.textContent=matchData[qIdx].tools[tIdx]+' ✅';
+    btn.disabled=true;
+  }else{
+    matchBtnState[qIdx][tIdx]=-1;sfxNO();
+    btn.classList.add('bad');btn.textContent=matchData[qIdx].tools[tIdx]+' ❌';
+    btn.disabled=true;
+  }
+  checkAllMatched();
+}
+function checkAllMatched(){
+  var allDone=true;
+  for(var i=0;i<3;i++){
+    var correct=matchData[i].answer;
+    for(var j=0;j<correct.length;j++){
+      if(matchBtnState[i][correct[j]]!==1){allDone=false;break}
+    }
+    if(!allDone)break;
+  }
+  if(allDone){
+    document.getElementById('matchDone').style.display='block';
+    document.getElementById('matchFeedback').innerHTML='';
+    sfxDone();
+    md(1);
+  }
+}
+// Init on load
+document.addEventListener('DOMContentLoaded',function(){buildMatch()});
+
+var tpK=0;
+function pickT(n){
+  tpK=n;document.getElementById('tb1').className='btn'+(n===1?' gr':'');document.getElementById('tb2').className='btn'+(n===2?' gr':'');document.getElementById('tb3').className='btn'+(n===3?' gr':'');
+  document.getElementById('tp1').style.display=n===1?'block':'none';document.getElementById('tp2').style.display=n===2?'block':'none';document.getElementById('tp3').style.display=n===3?'block':'none';
+  // Highlight corresponding card
+  document.getElementById('tCard1').style.boxShadow=n===1?'0 0 0 2px #1565c0':'';document.getElementById('tCard1').style.transform=n===1?'scale(1.03)':'';
+  document.getElementById('tCard2').style.boxShadow=n===2?'0 0 0 2px #c62828':'';document.getElementById('tCard2').style.transform=n===2?'scale(1.03)':'';
+  document.getElementById('tCard3').style.boxShadow=n===3?'0 0 0 2px #e65100':'';document.getElementById('tCard3').style.transform=n===3?'scale(1.03)':'';
+  if(n===1)iRM();if(n===2)iSM();if(n===3)dRo();md(1);
+}
+// Ruler measure
+var rsi=0,rE=[],rM=[],rSh=[{n:'长方形',x:40,y:50,w:340,h:160},{n:'正方形',x:100,y:40,w:220,h:220},{n:'三角形',tri:!0,pt:[{x:220,y:25},{x:370,y:240},{x:50,y:240}]}];
+function iRM(){var c=document.getElementById('rcv');if(!c)return;rM=[];dRM();c.onmousedown=function(e){rD(e,c)};c.onmouseup=rU;c.ontouchstart=function(e){e.preventDefault();rD(e.touches[0],c)};c.ontouchend=function(e){e.preventDefault();rU()}}
+function dRM(){var c=document.getElementById('rcv');if(!c)return;var ctx=c.getContext('2d'),sh=rSh[rsi];ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);ctx.strokeStyle='#4fc3f7';ctx.lineWidth=3;rE=[];if(sh.tri){ctx.beginPath();ctx.moveTo(sh.pt[0].x,sh.pt[0].y);ctx.lineTo(sh.pt[1].x,sh.pt[1].y);ctx.lineTo(sh.pt[2].x,sh.pt[2].y);ctx.closePath();ctx.stroke();rE=[{a:sh.pt[0],b:sh.pt[1]},{a:sh.pt[1],b:sh.pt[2]},{a:sh.pt[2],b:sh.pt[0]}]}else{ctx.strokeRect(sh.x,sh.y,sh.w,sh.h);rE=[{a:{x:sh.x,y:sh.y},b:{x:sh.x+sh.w,y:sh.y}},{a:{x:sh.x+sh.w,y:sh.y},b:{x:sh.x+sh.w,y:sh.y+sh.h}},{a:{x:sh.x+sh.w,y:sh.y+sh.h},b:{x:sh.x,y:sh.y+sh.h}},{a:{x:sh.x,y:sh.y+sh.h},b:{x:sh.x,y:sh.y}}]}if(rM.length===0)rM=new Array(rE.length).fill(!1);var t=0,all=!0;ctx.fillStyle='#69f0ae';ctx.font='13px sans-serif';ctx.textAlign='center';rE.forEach(function(e,i){if(rM[i]){ctx.strokeStyle='#ffd200';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.lineTo(e.b.x,e.b.y);ctx.stroke();ctx.lineWidth=3;ctx.strokeStyle='#4fc3f7';var mx=(e.a.x+e.b.x)/2,my=(e.a.y+e.b.y)/2,len=Math.round(Math.hypot(e.b.x-e.a.x,e.b.y-e.a.y)/25);t+=len;ctx.fillText(len+'cm',mx,my-7)}else all=!1});document.getElementById('ri').textContent=all&&t>0?'✅ 测量完成！周长 = '+t+' cm':'已测：'+t+' cm（单击其他边）'}
+function rD(e,c){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(300/r.height);for(var i=0;i<rE.length;i++){if(rM[i])continue;if(dSeg(x,y,rE[i].a.x,rE[i].a.y,rE[i].b.x,rE[i].b.y)<16){rM[i]=!0;dRM();sfxOK();break}}}
+function rU(){}function resetRM(){rM=[];dRM();document.getElementById('ri').textContent=''}function nextRS(){rsi=(rsi+1)%rSh.length;resetRM()}
+// String measure
+var ssi=0,sp=[],sdn=!1,sdr=!1,pullMode=!1,pullProgress=0,pullStartX=0,sSh=[
+  {n:'五角星',tp:'star',cl:!0,cx:220,cy:115,or:70,ir:28,spikes:5},
+  {n:'心形',tp:'heart',cl:!0,cx:220,cy:125,sz:60},
+];
+// Generate perfect outline points from shape geometry
+function genOutlinePoints(sh,nPts){
+  nPts=nPts||200;var pts=[],i;
+  if(sh.tp==='star'){
+    for(i=0;i<nPts;i++){
+      var a=-Math.PI/2+(Math.PI*2*i)/nPts;
+      var seg=Math.floor((a+Math.PI/2)/(Math.PI*2)*sh.spikes*2)%(sh.spikes*2);
+      var r=seg%2===0?sh.or:sh.ir;
+      pts.push({x:sh.cx+r*Math.cos(a),y:sh.cy+r*Math.sin(a)});
+    }
+  }else if(sh.tp==='heart'){
+    for(i=0;i<nPts;i++){
+      var t=(Math.PI*2*i)/nPts;
+      var hx=sh.cx+sh.sz*16*Math.pow(Math.sin(t),3);
+      var hy=sh.cy-sh.sz*(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))/16;
+      pts.push({x:hx,y:hy});
+    }
+  }
+  return pts;
+}
+function iSM(){var c=document.getElementById('scv');if(!c)return;sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();document.getElementById('si').textContent='';resetSMbtn();
+  c.onmousedown=function(e){sD(e,c)};c.onmousemove=function(e){sM(e,c)};c.onmouseup=sU;c.onmouseleave=sU;
+  c.ontouchstart=function(e){e.preventDefault();sD(e.touches[0],c)};c.ontouchmove=function(e){e.preventDefault();sM(e.touches[0],c)};c.ontouchend=function(e){e.preventDefault();sU(e.changedTouches[0],c)}}
+function resetSMbtn(){
+  var el=document.getElementById('si');
+  if(sdn&&!pullMode)el.innerHTML='✅ 围完一圈！<b>拖动软绳</b>把它拉直看看——';
+}
+function calcStraightPositions(){
+  var dists=[0],totalPx=0,lineStart=20,lineEnd=420,lineLen=lineEnd-lineStart,lineY=240;
+  for(var i=1;i<sp.length;i++){var d=Math.hypot(sp[i].x-sp[i-1].x,sp[i].y-sp[i-1].y);totalPx+=d;dists.push(totalPx)}
+  var targets=[];
+  for(var i=0;i<sp.length;i++)targets.push({x:lineStart+(dists[i]/(totalPx||1))*lineLen,y:lineY});
+  return {targets:targets,totalPx:totalPx,lineY:lineY};
+}
+function updatePullHint(progress,totalPx){
+  var perimCm=Math.round(totalPx*.25),pulled=Math.round(progress*totalPx*.25);
+  if(progress>=.99)document.getElementById('si').innerHTML='✅ 完全拉直！<b>围一圈 = 拉直 = '+perimCm+' cm</b>';
+  else document.getElementById('si').innerHTML='拉出 '+pulled+' / '+perimCm+' cm ... <span style="color:#888">继续拖~</span>';
+}
+function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.getContext('2d'),sh=sSh[ssi];ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);
+  if(sdn&&sp.length>10){
+    // ===== Pull-to-straighten mode =====
+    var spData=calcStraightPositions(),targets=spData.targets,totalPx=spData.totalPx;
+    var prog=pullProgress,perimCm=Math.round(totalPx*.25);
+    // Draw shape outline at ORIGINAL size and position (no scale/translate — locked)
+    ctx.globalAlpha=.35;
+    ctx.strokeStyle='#90a4ae';ctx.lineWidth=2.5;ctx.beginPath();
+    if(sh.tp==='star')dStar(ctx,sh.cx,sh.cy,sh.or,sh.ir,sh.spikes||5);
+    else if(sh.tp==='heart')dHeart(ctx,sh.cx,sh.cy,sh.sz);
+    ctx.stroke();ctx.globalAlpha=1;
+    // Label above shape
+    ctx.fillStyle='#90a4ae';ctx.font='bold 11px sans-serif';ctx.textAlign='center';
+    ctx.fillText('原图轮廓',sh.cx,sh.cy-sh.or-14);
+    // Draw interpolated string — transitions from wrapped to straight
+    if(prog<.99){
+      ctx.strokeStyle='rgba(230,126,34,.9)';ctx.lineWidth=prog<.3?5:(5-prog*3);
+      ctx.beginPath();ctx.moveTo(sp[0].x+(targets[0].x-sp[0].x)*prog,sp[0].y+(targets[0].y-sp[0].y)*prog);
+      for(var i=1;i<sp.length;i++){
+        var ix=sp[i].x+(targets[i].x-sp[i].x)*prog,iy=sp[i].y+(targets[i].y-sp[i].y)*prog;
+        ctx.lineTo(ix,iy);
+      }
+      if(prog<.3)ctx.closePath();
+      ctx.stroke();
+    }
+    // Draw straight line guide (becomes more visible as progress increases)
+    if(prog>.1){
+      ctx.globalAlpha=Math.min(1,prog*1.5);
+      ctx.fillStyle='rgba(236,64,122,.06)';ctx.fillRect(15,spData.lineY-15,410,28);
+      ctx.strokeStyle='rgba(236,64,122,'+(prog*.8)+')';ctx.lineWidth=prog<.5?2:5;
+      ctx.setLineDash(prog>.8?[]:[4,4]);
+      ctx.beginPath();ctx.moveTo(20,spData.lineY);ctx.lineTo(420,spData.lineY);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='#ec407a';ctx.beginPath();ctx.arc(20,spData.lineY,prog>.8?5:3,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(420,spData.lineY,prog>.8?5:3,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#ec407a';ctx.font='bold '+(prog>.8?15:12)+'px sans-serif';ctx.textAlign='center';
+      ctx.fillText('拉直 = '+perimCm+' cm',220,spData.lineY-24);
+      ctx.globalAlpha=1;
+    }
+    // Full straighten celebration
+    if(prog>=.99){
+      ctx.fillStyle='#27ae60';ctx.font='bold 16px sans-serif';ctx.textAlign='center';
+      ctx.fillText('🎉 围一圈 = 拉直 = '+perimCm+' cm',220,285);
+    }
+    // Hint arrow
+    if(prog<.99){
+      ctx.fillStyle='#b0bec5';ctx.font='14px sans-serif';ctx.fillText('👆 继续向右拖动拉直',220,275);
+    }
+  }else{
+    // ===== Normal wrap mode =====
+    ctx.strokeStyle='#4fc3f7';ctx.lineWidth=3;ctx.beginPath();
+    if(sh.tp==='poly'){ctx.moveTo(sh.pt[0].x,sh.pt[0].y);for(var i=1;i<sh.pt.length;i++)ctx.lineTo(sh.pt[i].x,sh.pt[i].y);ctx.closePath()}
+    else if(sh.tp==='star')dStar(ctx,sh.cx,sh.cy,sh.or,sh.ir,sh.spikes||5);
+    else if(sh.tp==='heart')dHeart(ctx,sh.cx,sh.cy,sh.sz);
+    else if(sh.tp==='circle')ctx.arc(sh.cx,sh.cy,sh.r,0,Math.PI*2);
+    ctx.stroke();
+    if(sp.length>1){ctx.strokeStyle='rgba(230,126,34,.8)';ctx.lineWidth=4;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(sp[0].x,sp[0].y);for(var i=1;i<sp.length;i++)ctx.lineTo(sp[i].x,sp[i].y);if(sdn)ctx.closePath();ctx.stroke()}
+  }
+}
+// Project a point onto the nearest point of the shape outline
+// Uses same edge-projection logic as trace module's ptToShapeDist
+function projectToOutline(x,y,sh){
+  var minD=1e9,proj=null;
+  if(sh.tp==='poly'){
+    for(var i=0;i<sh.pt.length;i++){
+      var j=(i+1)%sh.pt.length;
+      var ax=sh.pt[i].x,ay=sh.pt[i].y,bx=sh.pt[j].x,by=sh.pt[j].y;
+      var abx=bx-ax,aby=by-ay,apx=x-ax,apy=y-ay;
+      var t=Math.max(0,Math.min(1,(apx*abx+apy*aby)/(abx*abx+aby*aby+1e-9)));
+      var px=ax+t*abx,py=ay+t*aby,d=Math.hypot(x-px,y-py);
+      if(d<minD){minD=d;proj={x:px,y:py}}
+    }
+  }else if(sh.tp==='circle'){
+    var ang=Math.atan2(y-sh.cy,x-sh.cx);
+    proj={x:sh.cx+sh.r*Math.cos(ang),y:sh.cy+sh.r*Math.sin(ang)};
+    minD=Math.abs(Math.hypot(x-sh.cx,y-sh.cy)-sh.r);
+  }else if(sh.tp==='star'){
+    // IDENTICAL to trace module ptToShapeDist star sampling
+    for(var a=0;a<Math.PI*2;a+=.063){
+      var si=Math.floor((a/(Math.PI*2))*(sh.spikes||5)*2),rr=si%2===0?sh.or:sh.ir;
+      var sx=sh.cx+rr*Math.cos(a-Math.PI/2),sy=sh.cy+rr*Math.sin(a-Math.PI/2);
+      var d=Math.hypot(x-sx,y-sy);if(d<minD){minD=d;proj={x:sx,y:sy}}
+    }
+  }else if(sh.tp==='heart'){
+    // IDENTICAL to trace module ptToShapeDist heart sampling
+    for(var a=0;a<Math.PI*2;a+=.063){
+      var hx=sh.cx+sh.sz*16*Math.pow(Math.sin(a),3);
+      var hy=sh.cy-sh.sz*(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a))/16;
+      var d=Math.hypot(x-hx,y-hy);if(d<minD){minD=d;proj={x:hx,y:hy}}
+    }
+  }
+  return minD<16?proj:null; // 16px snap tolerance
+}
+function sD(e,c){if(sdn&&!pullMode){pullMode=!0;pullStartX=e.clientX;return}
+  if(pullMode)return;
+  if(sdn){sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();resetSMbtn();return}
+  var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(300/r.height);sdr=!0;var snap=projectToOutline(x,y,sSh[ssi]);sp=[snap||{x:x,y:y}];dSM()}
+function sM(e,c){
+  if(pullMode){
+    // Pull-to-straighten: drag right to increase progress
+    var dx=(e.clientX-pullStartX)/300; // 300px drag = full straighten
+    pullProgress=Math.max(0,Math.min(1,dx));
+    var spData=calcStraightPositions();
+    updatePullHint(pullProgress,spData.totalPx);
+    dSM();return;
+  }
+  if(!sdr)return;var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(300/r.height);
+  var snap=projectToOutline(x,y,sSh[ssi]),lp=sp[sp.length-1];
+  var nx=snap?snap.x:x,ny=snap?snap.y:y;
+  if(Math.hypot(nx-lp.x,ny-lp.y)>1.2){sp.push({x:nx,y:ny});dSM()}
+  if(sp.length>100&&!sdn&&Math.hypot(sp[0].x-sp[sp.length-1].x,sp[0].y-sp[sp.length-1].y)<18){
+    sdn=!0;sfxDone();dSM();resetSMbtn();
+  }
+}
+function sU(e,c){sdr=!1;pullMode=!1}
+function resetSM(){sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();document.getElementById('si').textContent=''}
+function nextSS(){ssi=(ssi+1)%sSh.length;resetSM()}function showStr(){if(!sdn){sp=genOutlinePoints(sSh[ssi]);sdn=!0}pullProgress=1;var sd=calcStraightPositions();updatePullHint(1,sd.totalPx);dSM()}
+// Roll
+var ra=null,raA=0,raX=0;
+function dRo(){var c=document.getElementById('rocv');if(!c)return;var ctx=c.getContext('2d');ctx.clearRect(0,0,440,200);
+  ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,200);
+  // Ground line
+  ctx.strokeStyle='#999';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(30,155);ctx.lineTo(410,155);ctx.stroke();
+  // Start marker on ground
+  ctx.fillStyle='#69f0ae';ctx.beginPath();ctx.moveTo(70,147);ctx.lineTo(76,155);ctx.lineTo(64,155);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#69f0ae';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText('起点',70,145);
+  var r0=55; // circle radius in px
+  var startX=70; // circle center x at start
+  var groundY=155; // ground line y
+  // Rolling trail on ground
+  if(raX>0){
+    ctx.strokeStyle='rgba(79,195,247,.6)';ctx.lineWidth=5;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(70,157);ctx.lineTo(70+raX,157);ctx.stroke();ctx.setLineDash([]);
+    // End marker
+    ctx.fillStyle='#ff5252';ctx.beginPath();ctx.moveTo(70+raX,147);ctx.lineTo(70+raX+6,155);ctx.lineTo(70+raX-6,155);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#ff5252';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText('终点',70+raX,145);
+  }
+  var cx=startX+raX,cy=groundY-r0;
+  // Highlight contact point
+  if(raX>0){
+    ctx.fillStyle='rgba(255,210,0,.4)';ctx.beginPath();ctx.arc(cx,groundY,6,0,Math.PI*2);ctx.fill();
+  }
+  ctx.save();ctx.translate(cx,cy);
+  // Rotate the circle — anchor dot at bottom (contact point)
+  ctx.rotate(raA);
+  ctx.strokeStyle='#ffd200';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,r0,0,Math.PI*2);ctx.stroke();
+  // Line from center to bottom (contact anchor dot)
+  ctx.strokeStyle='#ff5252';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,r0);ctx.stroke();
+  // Anchor dot at bottom (contact point)
+  ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,r0,5,0,Math.PI*2);ctx.fill();
+  // Center dot
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(0,0,3.5,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+  // Labels
+  var pi=Math.PI*2*r0,rolledPx=Math.round(raX);
+  ctx.fillStyle='#ffd200';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+  if(raX<1){
+    ctx.fillText('圆周长 = 2πr ≈ '+Math.round(pi)+' px',220,185);
+  }else if(raX>=pi-.5){
+    ctx.fillText('✅ 滚动距离 = '+Math.round(pi)+' px = 圆周长！',220,185);
+  }else{
+    ctx.fillText('已滚动 '+rolledPx+' px / 圆周长 '+Math.round(pi)+' px',220,185);
+  }
+}
+function doRoll(){if(ra)return;raA=0;raX=0;
+  var r0=55,circ=Math.PI*2*r0;
+  (function a(){
+    raA+=.07;raX=raA*r0;dRo();
+    if(raA>=Math.PI*2){
+      raA=Math.PI*2;raX=circ;dRo();sfxDone();
+      document.getElementById('roi').textContent='✅ 滚完整一圈！滚动距离='+Math.round(circ)+'px=圆周长（化曲为直：弯的圆周→直的线段）';
+      cancelAnimationFrame(ra);ra=null;return;
+    }
+    ra=requestAnimationFrame(a);
+  })()
+}
+function resetRo(){if(ra){cancelAnimationFrame(ra);ra=null}raA=0;raX=0;dRo();document.getElementById('roi').textContent=''}
+
+// ===== MODULE 3: Unit quiz (see answerUnit above) =====
+// old su() function removed — replaced by interactive quiz
+
+// ===== MODULE 4: Interactive click-to-discover rectangle =====
+var rectL,rectW,rectRX,rectRY,rectRW,rectRH; // computed on draw
+var rectState=0,rectClicked=[false,false,false,false]; // 0=top,1=bot,2=left,3=right
+var rectQuizDone4=!1;
+
+function newRect(){
+  rectL=Math.floor(Math.random()*7)+4; // 4~10
+  rectW=Math.floor(Math.random()*5)+2; // 2~6
+  if(rectL<=rectW)rectL=rectW+1;
+  rectState=0;rectClicked=[false,false,false,false];rectQuizDone4=!1;formulaStep=0;formulaFound=[false,false,false];
+  document.getElementById('formulaQuiz').style.display='none';
+  document.getElementById('formulaDone').style.display='none';
+  document.getElementById('stepSum').innerHTML='';
+  updateRectUI();
+  drawRect4();
+}
+function updateRectUI(){
+  document.getElementById('dL').textContent=rectL;document.getElementById('dW').textContent=rectW;
+  var dots=document.querySelectorAll('#stepDots .qd');
+  for(var i=0;i<4;i++){dots[i].className='qd';if(i<rectState)dots[i].classList.add('ok');else if(i===rectState)dots[i].classList.add('cur')}
+  var hints=['👆 点击两条 <span style="color:#e67e22">橙色长边</span>（上、下）',
+             '👆 点击两条 <span style="color:#2980b9">蓝色短边</span>（左、右）',
+             '✅ 都找到了！观察每条边的长度——'];
+  document.getElementById('stepHint').innerHTML=hints[Math.min(rectState,2)];
+}
+function drawRect4(){
+  var c=document.getElementById('rcV');if(!c)return;var ctx=c.getContext('2d');
+  ctx.clearRect(0,0,440,260);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,260);
+  var sc=Math.min(300/rectL,160/rectW,38),rw=rectL*sc,rh=rectW*sc,rx=(440-rw)/2,ry=30+(180-rh)/2;
+  rectRX=rx;rectRY=ry;rectRW=rw;rectRH=rh;
+  // Fill
+  ctx.fillStyle='rgba(230,126,34,.04)';ctx.fillRect(rx,ry,rw,rh);
+  // Draw edges — highlight clicked ones with glow
+  var edges=[{x1:rx,y1:ry,x2:rx+rw,y2:ry,color:'#e67e22',label:rectL+' cm（长）',lx:rx+rw/2,ly:ry-12},
+             {x1:rx,y1:ry+rh,x2:rx+rw,y2:ry+rh,color:'#e67e22',label:rectL+' cm（长）',lx:rx+rw/2,ly:ry+rh+24},
+             {x1:rx,y1:ry,x2:rx,y2:ry+rh,color:'#2980b9',label:rectW+' cm（宽）',lx:rx-24,ly:ry+rh/2+4},
+             {x1:rx+rw,y1:ry,x2:rx+rw,y2:ry+rh,color:'#2980b9',label:rectW+' cm（宽）',lx:rx+rw+24,ly:ry+rh/2+4}];
+  edges.forEach(function(e,i){
+    var clicked=rectClicked[i];
+    if(clicked){ctx.save();ctx.shadowColor=e.color;ctx.shadowBlur=12}
+    ctx.strokeStyle=e.color;ctx.lineWidth=clicked?7:5;
+    ctx.beginPath();ctx.moveTo(e.x1,e.y1);ctx.lineTo(e.x2,e.y2);ctx.stroke();
+    if(clicked)ctx.restore();
+    ctx.fillStyle=e.color;ctx.font='bold 14px sans-serif';ctx.textAlign='center';
+    ctx.fillText(e.label+(clicked?' ✓':''),e.lx,e.ly);
+  });
+  // If all clicked, show sum
+  if(rectState>=2){
+    var p=2*(rectL+rectW);
+    document.getElementById('stepSum').innerHTML='长+长+宽+宽 = '+rectL+'+'+rectL+'+'+rectW+'+'+rectW+' = <span class="b" style="font-size:1.1em">'+p+' cm</span>';
+    if(rectState===2&&!rectQuizDone4)showFormulaQuiz();
+  }
+}
+// Canvas click handler
+document.addEventListener('DOMContentLoaded',function(){
+  var c4=document.getElementById('rcV');
+  if(c4){c4.onclick=function(e){handleRectClick(e,c4)};c4.ontouchend=function(e){e.preventDefault();handleRectClick(e.changedTouches[0],c4)}}
+});
+function handleRectClick(e,c){
+  if(rectState>=3)return;
+  var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(260/r.height);
+  var margin=18; // click tolerance
+  // Check each edge
+  var hit=-1;
+  // Top edge
+  if(y>=rectRY-margin&&y<=rectRY+margin&&x>=rectRX&&x<=rectRX+rectRW)hit=0;
+  // Bottom edge
+  else if(y>=rectRY+rectRH-margin&&y<=rectRY+rectRH+margin&&x>=rectRX&&x<=rectRX+rectRW)hit=1;
+  // Left edge
+  else if(x>=rectRX-margin&&x<=rectRX+margin&&y>=rectRY&&y<=rectRY+rectRH)hit=2;
+  // Right edge
+  else if(x>=rectRX+rectRW-margin&&x<=rectRX+rectRW+margin&&y>=rectRY&&y<=rectRY+rectRH)hit=3;
+  if(hit<0)return;
+  if(rectClicked[hit])return; // already clicked
+  // Check if this edge type matches current state
+  var isLength=(hit===0||hit===1);
+  if(rectState===0&&!isLength)return; // step 0: only length edges
+  if(rectState===1&&isLength)return; // step 1: only width edges
+  rectClicked[hit]=true;sfxOK();
+  drawRect4();
+  // Check completion of current step
+  if(rectState===0&&rectClicked[0]&&rectClicked[1]){rectState=1;updateRectUI()}
+  else if(rectState===1&&rectClicked[2]&&rectClicked[3]){rectState=2;updateRectUI();drawRect4()}
+}
+function showFormulaQuiz(){
+  rectQuizDone4=!0;formulaStep=0;formulaFound=[false,false,false];
+  var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
+  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>第一问（可多选）</b>：怎么计算长方形周长？</p>';
+  q+='<button class="qopt" onclick="formulaAnswer(0,this)" style="margin-bottom:4px">A. '+rectL+'+'+rectW+' = '+(rectL+rectW)+' cm（只加了一次）</button>';
+  q+='<button class="qopt" onclick="formulaAnswer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2 = '+(rectL*2+rectW*2)+' cm（2条长+2条宽）</button>';
+  q+='<button class="qopt" onclick="formulaAnswer(2,this)">C. ('+rectL+'+'+rectW+')×2 = '+(2*(rectL+rectW))+' cm（先加再乘2）</button></div>';
+  document.getElementById('formulaQuiz').innerHTML=q;
+  document.getElementById('formulaQuiz').style.display='block';
+}
+var formulaStep=0,formulaFound=[false,false,false];
+function formulaAnswer(idx,btn){
+  if(formulaStep===0){
+    if(idx===0){
+      // Wrong: A only adds once
+      btn.classList.add('bad');sfxNO();btn.disabled=true;
+    }else{
+      // Correct: B or C
+      formulaFound[idx]=true;btn.classList.add('good');sfxOK();btn.disabled=true;
+      if(formulaFound[1]&&formulaFound[2])showFormulaStep2();
+    }
+  }
+}
+function showFormulaStep2(){
+  formulaStep=1;
+  var q='<div id="formulaStep2" style="background:#faf8f4;border-radius:12px;padding:14px;margin-top:10px">';
+  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>更快</b>？</p>';
+  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2（要算3步）</button>';
+  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2（<b>最快！</b>只要2步）</button></div>';
   var container=document.getElementById('formulaQuiz');
   container.insertAdjacentHTML('beforeend',q);
   sfxOK();
