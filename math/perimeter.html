@@ -402,14 +402,14 @@ body{
 </div>
 
 <!-- ====== 多边形 ====== -->
-<h3 style="margin-top:16px">🔺 不管几条边——全部加起来</h3>
+<h3 style="margin-top:16px">🔺 不管几条边，每条边有多长，全部加起来</h3>
 <p>长方形有公式，但<b>所有图形的周长都是各边之和</b>。看看下面这些边<b>不一样长</b>的图形：</p>
 <div class="cv"><canvas id="pv" width="440" height="220"></canvas></div>
 <div class="btns">
-  <button class="btn" onclick="switchPoly(0)">🔺 三角形</button>
-  <button class="btn" onclick="switchPoly(1)">▭ 四边形</button>
-  <button class="btn" onclick="switchPoly(2)">⬟ 五边形</button>
-  <button class="btn" onclick="switchPoly(3)">⬡ 六边形</button>
+  <button class="btn" id="polyBtn0" onclick="switchPoly(0)">🔺 三角形</button>
+  <button class="btn" id="polyBtn1" onclick="switchPoly(1)">▭ 四边形</button>
+  <button class="btn" id="polyBtn2" onclick="switchPoly(2)">⬟ 五边形</button>
+  <button class="btn" id="polyBtn3" onclick="switchPoly(3)">⬡ 六边形</button>
 </div>
 <p id="pi" style="text-align:center;font-size:.8em;color:#555;min-height:20px"></p>
 
@@ -1587,7 +1587,7 @@ var polyShapes=[
   {n:'五边形',pts:[{x:220,y:20},{x:370,y:70},{x:340,y:180},{x:120,y:190},{x:60,y:100}]},
   {n:'六边形',pts:[{x:160,y:20},{x:320,y:40},{x:370,y:120},{x:290,y:190},{x:120,y:190},{x:60,y:110}]},
 ];
-function switchPoly(n){polyIdx=n;dP()}
+function switchPoly(n){polyIdx=n;for(var i=0;i<4;i++){var b=document.getElementById('polyBtn'+i);b.className='btn'+(i===n?' gr':'')}dP()}
 function dP(){var c=document.getElementById('pv');if(!c)return;var ctx=c.getContext('2d');ctx.clearRect(0,0,440,220);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,220);
   var sh=polyShapes[polyIdx],pt=sh.pts;
   // Draw shape
