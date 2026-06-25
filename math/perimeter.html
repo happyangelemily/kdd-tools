@@ -953,11 +953,18 @@ function ptToShapeDist(px,py,sh,sx,sy){
       var d=Math.hypot(px-sx2,py-sy2);if(d<minD)minD=d;
     }
   }else if(sh.tp==='heart'){
-    // Sample heart at 100 points
-    for(var a=0;a<Math.PI*2;a+=.063){
-      var hx=sh.cx*sx+sh.sz*sx*16*Math.pow(Math.sin(a),3);
-      var hy=sh.cy*sy-sh.sz*sy*(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a))/16;
-      var d=Math.hypot(px-hx,py-hy);if(d<minD)minD=d;
+    // Sample bezier heart at 200 points (matching dHeart)
+    for(var a=0;a<1;a+=.005){
+      var t0=a,t1=1-a,cz=sh.cx*sx,cy=sh.cy*sy,sz2=sh.sz*sx,sz3=sh.sz*sy;
+      var bx=Math.pow(t1,3)*cz + 3*Math.pow(t1,2)*t0*(cz-sz2) + 3*t1*Math.pow(t0,2)*(cz-sz2*.55) + Math.pow(t0,3)*cz;
+      var by=Math.pow(t1,3)*(cy+sz3*.55) + 3*Math.pow(t1,2)*t0*(cy-sz3*.25) + 3*t1*Math.pow(t0,2)*(cy-sz3*.75) + Math.pow(t0,3)*(cy-sz3*.15);
+      var d=Math.hypot(px-bx,py-by);if(d<minD)minD=d;
+    }
+    for(var a=0;a<1;a+=.005){
+      var t0=a,t1=1-a;
+      var bx=Math.pow(t1,3)*cz + 3*Math.pow(t1,2)*t0*(cz+sz2*.55) + 3*t1*Math.pow(t0,2)*(cz+sz2) + Math.pow(t0,3)*cz;
+      var by=Math.pow(t1,3)*(cy-sz3*.15) + 3*Math.pow(t1,2)*t0*(cy-sz3*.75) + 3*t1*Math.pow(t0,2)*(cy-sz3*.25) + Math.pow(t0,3)*(cy+sz3*.55);
+      var d=Math.hypot(px-bx,py-by);if(d<minD)minD=d;
     }
   }
   return minD;
@@ -1073,11 +1080,21 @@ function genOutlinePoints(sh,nPts){
       pts.push({x:sh.cx+r*Math.cos(a),y:sh.cy+r*Math.sin(a)});
     }
   }else if(sh.tp==='heart'){
+    // Sample bezier heart (matching dHeart exactly)
+    var cx=sh.cx,cy=sh.cy,sz=sh.sz;
     for(i=0;i<nPts;i++){
-      var t=(Math.PI*2*i)/nPts;
-      var hx=sh.cx+sh.sz*16*Math.pow(Math.sin(t),3);
-      var hy=sh.cy-sh.sz*(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))/16;
-      pts.push({x:hx,y:hy});
+      var t=(i/nPts)*2; // 0..2, left half then right half
+      var bx,by,t0,t1;
+      if(t<=1){
+        t0=t;t1=1-t;
+        bx=Math.pow(t1,3)*cx + 3*Math.pow(t1,2)*t0*(cx-sz) + 3*t1*Math.pow(t0,2)*(cx-sz*.55) + Math.pow(t0,3)*cx;
+        by=Math.pow(t1,3)*(cy+sz*.55) + 3*Math.pow(t1,2)*t0*(cy-sz*.25) + 3*t1*Math.pow(t0,2)*(cy-sz*.75) + Math.pow(t0,3)*(cy-sz*.15);
+      }else{
+        t0=t-1;t1=2-t;
+        bx=Math.pow(t1,3)*cx + 3*Math.pow(t1,2)*t0*(cx+sz*.55) + 3*t1*Math.pow(t0,2)*(cx+sz) + Math.pow(t0,3)*cx;
+        by=Math.pow(t1,3)*(cy-sz*.15) + 3*Math.pow(t1,2)*t0*(cy-sz*.75) + 3*t1*Math.pow(t0,2)*(cy-sz*.25) + Math.pow(t0,3)*(cy+sz*.55);
+      }
+      pts.push({x:bx,y:by});
     }
   }
   return pts;
@@ -1104,7 +1121,7 @@ function updatePullHint(progress,totalPx){
 function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.getContext('2d'),sh=sSh[ssi];ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);
   if(sdn&&sp.length>10){
     // ===== Endpoint drag-to-straighten mode =====
-    var spData=calcStraightPositions(),totalPx=spData.totalPx,lineY=spData.lineY;
+    var spData=calcStraightPositions(),targets=spData.targets,totalPx=spData.totalPx,lineY=spData.lineY;
     var perimCm=Math.round(totalPx/20);
     // Compute progress from endpoint positions (0=wrapped, 1=fully straight)
     var lProg=Math.max(0,Math.min(1,(150-endL)/130)); // endL: 150→20
@@ -1202,11 +1219,18 @@ function projectToOutline(x,y,sh){
       var d=Math.hypot(x-sx,y-sy);if(d<minD){minD=d;proj={x:sx,y:sy}}
     }
   }else if(sh.tp==='heart'){
-    // IDENTICAL to trace module ptToShapeDist heart sampling
-    for(var a=0;a<Math.PI*2;a+=.063){
-      var hx=sh.cx+sh.sz*16*Math.pow(Math.sin(a),3);
-      var hy=sh.cy-sh.sz*(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a))/16;
-      var d=Math.hypot(x-hx,y-hy);if(d<minD){minD=d;proj={x:hx,y:hy}}
+    // Sample bezier heart at 200 points (matching dHeart)
+    for(var a=0;a<1;a+=.005){
+      var t0=a,t1=1-a,cz=sh.cx,cy=sh.cy,sz=sh.sz;
+      var bx=Math.pow(t1,3)*cz + 3*Math.pow(t1,2)*t0*(cz-sz) + 3*t1*Math.pow(t0,2)*(cz-sz*.55) + Math.pow(t0,3)*cz;
+      var by=Math.pow(t1,3)*(cy+sz*.55) + 3*Math.pow(t1,2)*t0*(cy-sz*.25) + 3*t1*Math.pow(t0,2)*(cy-sz*.75) + Math.pow(t0,3)*(cy-sz*.15);
+      var d=Math.hypot(x-bx,y-by);if(d<minD){minD=d;proj={x:bx,y:by}}
+    }
+    for(var a=0;a<1;a+=.005){
+      var t0=a,t1=1-a;
+      var bx=Math.pow(t1,3)*cz + 3*Math.pow(t1,2)*t0*(cz+sz*.55) + 3*t1*Math.pow(t0,2)*(cz+sz) + Math.pow(t0,3)*cz;
+      var by=Math.pow(t1,3)*(cy-sz*.15) + 3*Math.pow(t1,2)*t0*(cy-sz*.75) + 3*t1*Math.pow(t0,2)*(cy-sz*.25) + Math.pow(t0,3)*(cy+sz*.55);
+      var d=Math.hypot(x-bx,y-by);if(d<minD){minD=d;proj={x:bx,y:by}}
     }
   }
   return minD<16?proj:null; // 16px snap tolerance
