@@ -1231,8 +1231,10 @@ function sM(e,c){
   var snap=projectToOutline(x,y,sSh[ssi]),lp=sp[sp.length-1];
   var nx=snap?snap.x:x,ny=snap?snap.y:y;
   if(Math.hypot(nx-lp.x,ny-lp.y)>1.2){sp.push({x:nx,y:ny});dSM()}
-  if(sp.length>100&&!sdn&&Math.hypot(sp[0].x-sp[sp.length-1].x,sp[0].y-sp[sp.length-1].y)<18){
-    sdn=!0;sfxDone();dSM();resetSMbtn();
+  if(sp.length>80&&!sdn){
+    var closed=!1,lx=sp[sp.length-1].x,ly=sp[sp.length-1].y;
+    for(var k=0;k<Math.min(8,sp.length-10);k++){if(Math.hypot(sp[k].x-lx,sp[k].y-ly)<25){closed=!0;break}}
+    if(closed){sdn=!0;sfxDone();dSM();resetSMbtn();}
   }
 }
 function sU(e,c){sdr=!1;pullMode=!1}
