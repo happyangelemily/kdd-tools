@@ -1097,7 +1097,7 @@ function calcStraightPositions(){
   return {targets:targets,totalPx:totalPx,lineY:lineY};
 }
 function updatePullHint(progress,totalPx){
-  var perimCm=Math.round(totalPx*.25),pulled=Math.round(progress*totalPx*.25);
+  var perimCm=Math.round(totalPx/20),pulled=Math.round(progress*totalPx/20);
   if(progress>=.99)document.getElementById('si').innerHTML='✅ 完全拉直！<b>围一圈 = 拉直 = '+perimCm+' cm</b>';
   else document.getElementById('si').innerHTML='拉出 '+pulled+' / '+perimCm+' cm ... <span style="color:#888">继续拖~</span>';
 }
@@ -1105,7 +1105,7 @@ function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.ge
   if(sdn&&sp.length>10){
     // ===== Pull-to-straighten mode =====
     var spData=calcStraightPositions(),targets=spData.targets,totalPx=spData.totalPx;
-    var prog=pullProgress,perimCm=Math.round(totalPx*.25);
+    var prog=pullProgress,perimCm=Math.round(totalPx/20);
     // Draw shape outline at ORIGINAL size and position (no scale/translate — locked)
     ctx.globalAlpha=.35;
     ctx.strokeStyle='#90a4ae';ctx.lineWidth=2.5;ctx.beginPath();
@@ -1254,14 +1254,14 @@ function dRo(){var c=document.getElementById('rocv');if(!c)return;var ctx=c.getC
   ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(0,0,3.5,0,Math.PI*2);ctx.fill();
   ctx.restore();
   // Labels
-  var pi=Math.PI*2*r0,rolledPx=Math.round(raX);
+  var pi=Math.PI*2*r0,circCm=Math.round(pi/20),rolledCm=Math.round(raX/20);
   ctx.fillStyle='#ffd200';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
   if(raX<1){
-    ctx.fillText('圆周长 = 2πr ≈ '+Math.round(pi)+' px',220,185);
+    ctx.fillText('圆周长 = 2πr ≈ '+circCm+' cm',220,185);
   }else if(raX>=pi-.5){
-    ctx.fillText('✅ 滚动距离 = '+Math.round(pi)+' px = 圆周长！',220,185);
+    ctx.fillText('✅ 滚动距离 = '+circCm+' cm = 圆周长！',220,185);
   }else{
-    ctx.fillText('已滚动 '+rolledPx+' px / 圆周长 '+Math.round(pi)+' px',220,185);
+    ctx.fillText('已滚动 '+rolledCm+' cm / 圆周长 '+circCm+' cm',220,185);
   }
 }
 function doRoll(){if(ra)return;raA=0;raX=0;
@@ -1270,7 +1270,7 @@ function doRoll(){if(ra)return;raA=0;raX=0;
     raA+=.07;raX=raA*r0;dRo();
     if(raA>=Math.PI*2){
       raA=Math.PI*2;raX=circ;dRo();sfxDone();
-      document.getElementById('roi').textContent='✅ 滚完整一圈！滚动距离='+Math.round(circ)+'px=圆周长（化曲为直：弯的圆周→直的线段）';
+      document.getElementById('roi').textContent='✅ 滚完整一圈！滚动距离='+Math.round(circ/20)+'cm=圆周长（化曲为直：弯的圆周→直的线段）';
       cancelAnimationFrame(ra);ra=null;return;
     }
     ra=requestAnimationFrame(a);
