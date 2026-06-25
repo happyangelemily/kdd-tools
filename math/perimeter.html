@@ -1056,9 +1056,29 @@ function rD(e,c){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.wid
 function rU(){}function resetRM(){rM=[];dRM();document.getElementById('ri').textContent=''}function nextRS(){rsi=(rsi+1)%rSh.length;resetRM()}
 // String measure
 var ssi=0,sp=[],sdn=!1,sdr=!1,pullMode=!1,pullProgress=0,pullStartX=0,sSh=[
-  {n:'五角星',tp:'star',cl:!0,cx:200,cy:170,or:110,ir:44,spikes:5},
-  {n:'心形',tp:'heart',cl:!0,cx:200,cy:175,sz:95},
+  {n:'五角星',tp:'star',cl:!0,cx:220,cy:115,or:70,ir:28,spikes:5},
+  {n:'心形',tp:'heart',cl:!0,cx:220,cy:125,sz:60},
 ];
+// Generate perfect outline points from shape geometry
+function genOutlinePoints(sh,nPts){
+  nPts=nPts||200;var pts=[],i;
+  if(sh.tp==='star'){
+    for(i=0;i<nPts;i++){
+      var a=-Math.PI/2+(Math.PI*2*i)/nPts;
+      var seg=Math.floor((a+Math.PI/2)/(Math.PI*2)*sh.spikes*2)%(sh.spikes*2);
+      var r=seg%2===0?sh.or:sh.ir;
+      pts.push({x:sh.cx+r*Math.cos(a),y:sh.cy+r*Math.sin(a)});
+    }
+  }else if(sh.tp==='heart'){
+    for(i=0;i<nPts;i++){
+      var t=(Math.PI*2*i)/nPts;
+      var hx=sh.cx+sh.sz*16*Math.pow(Math.sin(t),3);
+      var hy=sh.cy-sh.sz*(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))/16;
+      pts.push({x:hx,y:hy});
+    }
+  }
+  return pts;
+}
 function iSM(){var c=document.getElementById('scv');if(!c)return;sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();document.getElementById('si').textContent='';resetSMbtn();
   c.onmousedown=function(e){sD(e,c)};c.onmousemove=function(e){sM(e,c)};c.onmouseup=sU;c.onmouseleave=sU;
   c.ontouchstart=function(e){e.preventDefault();sD(e.touches[0],c)};c.ontouchmove=function(e){e.preventDefault();sM(e.touches[0],c)};c.ontouchend=function(e){e.preventDefault();sU(e.changedTouches[0],c)}}
@@ -1067,16 +1087,14 @@ function resetSMbtn(){
   if(sdn&&!pullMode)el.innerHTML='✅ 围完一圈！<b>拖动软绳</b>把它拉直看看——';
 }
 function calcStraightPositions(){
-  // Calculate each point's distance along the contour and target on straight line
-  var dists=[0],totalPx=0;
+  var dists=[0],totalPx=0,lineStart=20,lineEnd=420,lineLen=lineEnd-lineStart,lineY=240;
   for(var i=1;i<sp.length;i++){var d=Math.hypot(sp[i].x-sp[i-1].x,sp[i].y-sp[i-1].y);totalPx+=d;dists.push(totalPx)}
-  var lineStart=20,lineEnd=420,lineLen=lineEnd-lineStart;
   var targets=[];
-  for(var i=0;i<sp.length;i++)targets.push({x:lineStart+(dists[i]/totalPx)*lineLen,y:255});
-  return {targets:targets,totalPx:totalPx};
+  for(var i=0;i<sp.length;i++)targets.push({x:lineStart+(dists[i]/(totalPx||1))*lineLen,y:lineY});
+  return {targets:targets,totalPx:totalPx,lineY:lineY};
 }
 function updatePullHint(progress,totalPx){
-  var perimCm=Math.round(totalPx*.18),pulled=Math.round(progress*totalPx*.18);
+  var perimCm=Math.round(totalPx*.25),pulled=Math.round(progress*totalPx*.25);
   if(progress>=.99)document.getElementById('si').innerHTML='✅ 完全拉直！<b>围一圈 = 拉直 = '+perimCm+' cm</b>';
   else document.getElementById('si').innerHTML='拉出 '+pulled+' / '+perimCm+' cm ... <span style="color:#888">继续拖~</span>';
 }
@@ -1084,18 +1102,16 @@ function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.ge
   if(sdn&&sp.length>10){
     // ===== Pull-to-straighten mode =====
     var spData=calcStraightPositions(),targets=spData.targets,totalPx=spData.totalPx;
-    var prog=pullProgress,perimCm=Math.round(totalPx*.18);
-    // Draw shape outline (scaled to top area, dim)
-    ctx.save();ctx.globalAlpha=.5;ctx.translate(220,70);ctx.scale(.5,.5);ctx.translate(-220,-70);
+    var prog=pullProgress,perimCm=Math.round(totalPx*.25);
+    // Draw shape outline at ORIGINAL size and position (no scale/translate — locked)
+    ctx.globalAlpha=.35;
     ctx.strokeStyle='#90a4ae';ctx.lineWidth=2.5;ctx.beginPath();
-    if(sh.tp==='poly'){ctx.moveTo(sh.pt[0].x,sh.pt[0].y);for(var i=1;i<sh.pt.length;i++)ctx.lineTo(sh.pt[i].x,sh.pt[i].y);ctx.closePath()}
-    else if(sh.tp==='star')dStar(ctx,sh.cx,sh.cy,sh.or,sh.ir,sh.spikes||5);
+    if(sh.tp==='star')dStar(ctx,sh.cx,sh.cy,sh.or,sh.ir,sh.spikes||5);
     else if(sh.tp==='heart')dHeart(ctx,sh.cx,sh.cy,sh.sz);
-    else if(sh.tp==='circle')ctx.arc(sh.cx,sh.cy,sh.r,0,Math.PI*2);
-    ctx.stroke();ctx.restore();
-    // Label
+    ctx.stroke();ctx.globalAlpha=1;
+    // Label above shape
     ctx.fillStyle='#90a4ae';ctx.font='bold 11px sans-serif';ctx.textAlign='center';
-    ctx.fillText('原图轮廓',220,16);
+    ctx.fillText('原图轮廓',sh.cx,sh.cy-sh.or-14);
     // Draw interpolated string — transitions from wrapped to straight
     if(prog<.99){
       ctx.strokeStyle='rgba(230,126,34,.9)';ctx.lineWidth=prog<.3?5:(5-prog*3);
@@ -1110,15 +1126,14 @@ function dSM(str){var c=document.getElementById('scv');if(!c)return;var ctx=c.ge
     // Draw straight line guide (becomes more visible as progress increases)
     if(prog>.1){
       ctx.globalAlpha=Math.min(1,prog*1.5);
-      ctx.fillStyle='rgba(236,64,122,.06)';ctx.fillRect(15,240,410,28);
+      ctx.fillStyle='rgba(236,64,122,.06)';ctx.fillRect(15,spData.lineY-15,410,28);
       ctx.strokeStyle='rgba(236,64,122,'+(prog*.8)+')';ctx.lineWidth=prog<.5?2:5;
       ctx.setLineDash(prog>.8?[]:[4,4]);
-      ctx.beginPath();ctx.moveTo(20,255);ctx.lineTo(420,255);ctx.stroke();ctx.setLineDash([]);
-      // Endpoint dots
-      ctx.fillStyle='#ec407a';ctx.beginPath();ctx.arc(20,255,prog>.8?5:3,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(420,255,prog>.8?5:3,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.moveTo(20,spData.lineY);ctx.lineTo(420,spData.lineY);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='#ec407a';ctx.beginPath();ctx.arc(20,spData.lineY,prog>.8?5:3,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(420,spData.lineY,prog>.8?5:3,0,Math.PI*2);ctx.fill();
       ctx.fillStyle='#ec407a';ctx.font='bold '+(prog>.8?15:12)+'px sans-serif';ctx.textAlign='center';
-      ctx.fillText('拉直 = '+perimCm+' cm',220,prog>.8?230:238);
+      ctx.fillText('拉直 = '+perimCm+' cm',220,spData.lineY-24);
       ctx.globalAlpha=1;
     }
     // Full straighten celebration
@@ -1198,7 +1213,7 @@ function sM(e,c){
 }
 function sU(e,c){sdr=!1;pullMode=!1}
 function resetSM(){sp=[];sdn=!1;pullMode=!1;pullProgress=0;dSM();document.getElementById('si').textContent=''}
-function nextSS(){ssi=(ssi+1)%sSh.length;resetSM()}function showStr(){if(sdn){pullProgress=1;var sd=calcStraightPositions();updatePullHint(1,sd.totalPx);dSM()}}
+function nextSS(){ssi=(ssi+1)%sSh.length;resetSM()}function showStr(){if(!sdn){sp=genOutlinePoints(sSh[ssi]);sdn=!0}pullProgress=1;var sd=calcStraightPositions();updatePullHint(1,sd.totalPx);dSM()}
 // Roll
 var ra=null,raA=0,raX=0;
 function dRo(){var c=document.getElementById('rocv');if(!c)return;var ctx=c.getContext('2d');ctx.clearRect(0,0,440,200);
