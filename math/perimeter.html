@@ -432,7 +432,7 @@ body{
   <button class="btn" id="modeBtn1" onclick="setConcaveMode(1)">🔽 深挖凹陷</button>
 </div>
 <div class="cv"><canvas id="dv" width="440" height="300" style="cursor:pointer"></canvas></div>
-<p style="text-align:center;font-size:.9em;color:#555;margin:8px 0;font-weight:bold">凹进去的图形周长，和标准长方形（600 cm）相比？</p>
+<p style="text-align:center;font-size:.9em;color:#555;margin:8px 0;font-weight:bold" id="dvQuestion">凹进去的图形周长，和标准长方形（600 cm）相比？</p>
 <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:4px 0">
   <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(0,this)">一样长</button>
   <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(60,this)">多 60 cm</button>
@@ -1657,6 +1657,12 @@ function setConcaveMode(m){
 concaveMode=m;concaveSelected=-1;concaveDrag=false;
 document.getElementById('modeBtn0').className='btn'+(m===0?' gr':'');
 document.getElementById('modeBtn1').className='btn'+(m===1?' gr':'');
+// Update question text and reset quiz feedback
+var q=(m===0?'单角凹陷':'深挖凹陷')+'：凹进去的图形周长，和标准长方形（600 cm）相比？';
+document.getElementById('dvQuestion').textContent=q;
+document.getElementById('dvQuizFb').innerHTML='';
+// Reset all quiz buttons
+document.querySelectorAll('#s5 .qopt').forEach(function(b){b.className='btn qopt';b.disabled=false});
 initConcave();}
 function initConcave(){
 var cfg=concaveConfig[concaveMode];
