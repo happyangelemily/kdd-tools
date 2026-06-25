@@ -1287,7 +1287,7 @@ function newRect(){
   rectL=Math.floor(Math.random()*7)+4; // 4~10
   rectW=Math.floor(Math.random()*5)+2; // 2~6
   if(rectL<=rectW)rectL=rectW+1;
-  rectState=0;rectClicked=[false,false,false,false];rectQuizDone4=!1;
+  rectState=0;rectClicked=[false,false,false,false];rectQuizDone4=!1;formulaStep=0;formulaFound=[false,false,false];
   document.getElementById('formulaQuiz').style.display='none';
   document.getElementById('formulaDone').style.display='none';
   document.getElementById('stepSum').innerHTML='';
@@ -1363,33 +1363,53 @@ function handleRectClick(e,c){
   else if(rectState===1&&rectClicked[2]&&rectClicked[3]){rectState=2;updateRectUI();drawRect4()}
 }
 function showFormulaQuiz(){
-  rectQuizDone4=!0;
+  rectQuizDone4=!0;formulaStep=0;formulaFound=[false,false,false];
   var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
-  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>有没有更快的方法</b>？不用一条条加——</p>';
+  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>第一问（可多选）</b>：怎么计算长方形周长？</p>';
   q+='<button class="qopt" onclick="formulaAnswer(0,this)" style="margin-bottom:4px">A. '+rectL+'+'+rectW+' = '+(rectL+rectW)+' cm（只加了一次）</button>';
   q+='<button class="qopt" onclick="formulaAnswer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2 = '+(rectL*2+rectW*2)+' cm（2条长+2条宽）</button>';
   q+='<button class="qopt" onclick="formulaAnswer(2,this)">C. ('+rectL+'+'+rectW+')×2 = '+(2*(rectL+rectW))+' cm（先加再乘2）</button></div>';
   document.getElementById('formulaQuiz').innerHTML=q;
   document.getElementById('formulaQuiz').style.display='block';
 }
+var formulaStep=0,formulaFound=[false,false,false];
 function formulaAnswer(idx,btn){
-  if(idx===0){
-    // Wrong: A only adds once
-    btn.classList.add('bad');sfxNO();btn.disabled=true;
-  }else{
-    // Correct: B or C — only mark clicked button
-    btn.classList.add('good');sfxOK();
-    var opts=document.querySelectorAll('#formulaQuiz .qopt');
-    opts.forEach(function(o){o.disabled=true});
+  if(formulaStep===0){
+    if(idx===0){
+      // Wrong: A only adds once
+      btn.classList.add('bad');sfxNO();btn.disabled=true;
+    }else{
+      // Correct: B or C
+      formulaFound[idx]=true;btn.classList.add('good');sfxOK();btn.disabled=true;
+      if(formulaFound[1]&&formulaFound[2])showFormulaStep2();
+    }
+  }
+}
+function showFormulaStep2(){
+  formulaStep=1;
+  var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
+  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>更快</b>？</p>';
+  q+='<button class="qopt" onclick="formulaStep2Answer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2（要算3步）</button>';
+  q+='<button class="qopt" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2（<b>最快！</b>只要2步）</button></div>';
+  document.getElementById('formulaQuiz').innerHTML=q;
+  sfxOK();
+}
+function formulaStep2Answer(idx,btn){
+  var opts=document.querySelectorAll('#formulaQuiz .qopt');
+  if(idx===2){
+    btn.classList.add('good');sfxOK();opts.forEach(function(o){o.disabled=true});
     rectState=3;
     var dots=document.querySelectorAll('#stepDots .qd');
     for(var i=0;i<4;i++){dots[i].className='qd ok'}
-    document.getElementById('stepHint').innerHTML='<span class="g">🎉 找到了！</span>';
+    document.getElementById('stepHint').innerHTML='<span class="g">🎉 (长+宽)×2 最快！</span>';
     setTimeout(function(){
       document.getElementById('formulaDone').style.display='block';
       document.getElementById('sqSection').style.display='block';
       drawSq();sfxDone();md(3);
     },600);
+  }else{
+    btn.classList.add('bad');sfxNO();btn.disabled=true;
+    document.getElementById('stepHint').innerHTML='<span style="color:#e67e22">B也对，但C<b>更快</b>~ 试试选C</span>';
   }
 }
 // old rs removed — replaced by interactive quiz version
