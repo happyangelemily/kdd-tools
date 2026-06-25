@@ -195,7 +195,7 @@ body{
   <p class="sub">封闭图形一周的长度，就叫「周长」。</p>
 </div>
 
-<div id="traceArea" style="display:none">
+<div id="traceArea">
   <h3>✏️ 动手描一描</h3>
   <p>现在你知道了——周长就是「围一圈」。来，用手指沿着彩色线<b>描完整的一圈</b>：</p>
   <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:6px 0">
@@ -1883,7 +1883,7 @@ function qrs(){document.getElementById('qsc').style.display='none';document.getE
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded',function(){
-  df();dJ();buildMatch();
+  df();dJ();buildMatch();initTC();
   // Observer for module 4
   var s4=document.getElementById('s4');
   var obs4=new IntersectionObserver(function(e){if(e[0].isIntersecting){newRect();drawSq();switchPoly(0);obs4.unobserve(s4)}},{threshold:.3});
