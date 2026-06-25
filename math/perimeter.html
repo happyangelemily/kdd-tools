@@ -1421,7 +1421,7 @@ var sqQuizDone=!1;
 
 function newSq(){
   sqSide=Math.floor(Math.random()*6)+3; // 3~8
-  sqState=0;sqClicked=[false,false,false,false];sqQuizDone=!1;
+  sqState=0;sqClicked=[false,false,false,false];sqQuizDone=!1;sqFormulaStep=0;sqFormulaFound=[false,false,false];
   document.getElementById('sqFormulaQuiz').style.display='none';
   document.getElementById('sqDone').style.display='none';
   document.getElementById('sqSum').innerHTML='';
@@ -1491,21 +1491,37 @@ function handleSqClick(e,c){
   else if(sqState===1&&sqClicked[2]&&sqClicked[3]){sqState=2;updateSqUI();drawSq4()}
 }
 function showSqQuiz(){
-  sqQuizDone=!0;
+  sqQuizDone=!0;sqFormulaStep=0;sqFormulaFound=[false,false,false];
   var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
-  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 正方形长=宽='+sqSide+'，周长怎么算<b>最快</b>？</p>';
-  q+='<button class="qopt" onclick="sqAnswer(0,this)" style="margin-bottom:4px">A. '+sqSide+'+'+sqSide+'+'+sqSide+'+'+sqSide+' = '+(sqSide*4)+' cm</button>';
+  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">🤔 <b>第一问（可多选）</b>：哪些算式能算出正方形周长？</p>';
+  q+='<button class="qopt" onclick="sqAnswer(0,this)" style="margin-bottom:4px">A. '+sqSide+'+'+sqSide+'+'+sqSide+'+'+sqSide+' = '+(sqSide*4)+' cm（一条条加）</button>';
   q+='<button class="qopt" onclick="sqAnswer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2 = '+(sqSide*4)+' cm（套长方形公式）</button>';
-  q+='<button class="qopt" onclick="sqAnswer(2,this)">C. '+sqSide+'×4 = '+(sqSide*4)+' cm（最快！）</button></div>';
+  q+='<button class="qopt" onclick="sqAnswer(2,this)">C. '+sqSide+'×4 = '+(sqSide*4)+' cm（边长×4）</button></div>';
   document.getElementById('sqFormulaQuiz').innerHTML=q;
   document.getElementById('sqFormulaQuiz').style.display='block';
 }
+var sqFormulaStep=0,sqFormulaFound=[false,false,false];
 function sqAnswer(idx,btn){
+  if(sqFormulaStep===0){
+    // All three are mathematically correct
+    sqFormulaFound[idx]=true;btn.classList.add('good');sfxOK();btn.disabled=true;
+    if(sqFormulaFound[0]&&sqFormulaFound[1]&&sqFormulaFound[2])showSqStep2();
+  }
+}
+function showSqStep2(){
+  sqFormulaStep=1;
+  var q='<div id="sqStep2" style="background:#faf8f4;border-radius:12px;padding:14px;margin-top:10px">';
+  q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>最快</b>？</p>';
+  q+='<button class="qopt sq2btn" onclick="sqStep2Answer(1,this)" style="margin-bottom:4px">B. ('+sqSide+'+'+sqSide+')×2（套长方形公式）</button>';
+  q+='<button class="qopt sq2btn" onclick="sqStep2Answer(2,this)">C. '+sqSide+'×4（<b>最快！</b>）</button></div>';
+  var container=document.getElementById('sqFormulaQuiz');
+  container.insertAdjacentHTML('beforeend',q);
+  sfxOK();
+}
+function sqStep2Answer(idx,btn){
+  var opts=document.querySelectorAll('#sqStep2 .sq2btn');
   if(idx===2){
-    // C is the fastest — only mark clicked button
-    btn.classList.add('good');sfxOK();
-    var opts=document.querySelectorAll('#sqFormulaQuiz .qopt');
-    opts.forEach(function(o){o.disabled=true});
+    btn.classList.add('good');sfxOK();opts.forEach(function(o){o.disabled=true});
     sqState=3;
     var dots=document.querySelectorAll('#sqDots .qd');
     for(var i=0;i<3;i++)dots[i].className='qd ok';
@@ -1514,9 +1530,8 @@ function sqAnswer(idx,btn){
       document.getElementById('sqDone').style.display='block';sfxDone();
     },500);
   }else{
-    // A or B are correct but not fastest — give different feedback
     btn.classList.add('bad');sfxNO();btn.disabled=true;
-    document.getElementById('sqHint').innerHTML='<span style="color:#e67e22">也对，但不是<b>最快</b>的方法~</span>';
+    document.getElementById('sqHint').innerHTML='<span style="color:#e67e22">B也对，但C<b>更快</b>~ 试试选C</span>';
   }
 }
 
