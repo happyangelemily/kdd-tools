@@ -52,7 +52,7 @@ body{
 .sc .t{font-size:.82em;color:#555;font-weight:bold;margin:8px 0 4px}
 .sc .de{font-size:.7em;color:#888;display:none;line-height:1.55;margin-top:6px}
 .sc.pick .de{display:block}
-.sc canvas{display:block;margin:0 auto;border-radius:8px;width:240px;height:160px}
+.sc canvas{display:block;margin:0 auto;border-radius:8px;width:240px;height:160px;max-width:100%}
 @keyframes edgeWalk{
   0%{box-shadow:0 0 0 2px rgba(230,126,34,.4), 0 0 12px rgba(230,126,34,.12)}
   50%{box-shadow:0 0 0 4px rgba(230,126,34,.2), 0 0 20px rgba(230,126,34,.06)}
@@ -148,9 +148,13 @@ body{
 
 .foot{text-align:center;padding:20px 0 40px;font-size:.68em;color:#bbb}
 
+@media(max-width:500px){
+  .scenes{grid-template-columns:1fr}
+}
 @media(max-width:380px){
   .hero h1{font-size:1.35em}
   .sec{padding:16px 10px}
+  .scenes{grid-template-columns:1fr}
   .sc{padding:8px 6px 6px}
   .sc .t{font-size:.72em}
   .sc .de{font-size:.63em}
