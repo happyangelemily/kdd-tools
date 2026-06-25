@@ -1387,15 +1387,16 @@ function formulaAnswer(idx,btn){
 }
 function showFormulaStep2(){
   formulaStep=1;
-  var q='<div style="background:#faf8f4;border-radius:12px;padding:14px">';
+  var q='<div id="formulaStep2" style="background:#faf8f4;border-radius:12px;padding:14px;margin-top:10px">';
   q+='<p style="font-size:.78em;color:#555;margin-bottom:8px">✅ 都正确！<b>第二问</b>：哪一种计算<b>更快</b>？</p>';
-  q+='<button class="qopt" onclick="formulaStep2Answer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2（要算3步）</button>';
-  q+='<button class="qopt" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2（<b>最快！</b>只要2步）</button></div>';
-  document.getElementById('formulaQuiz').innerHTML=q;
+  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(1,this)" style="margin-bottom:4px">B. '+rectL+'×2 + '+rectW+'×2（要算3步）</button>';
+  q+='<button class="qopt f2btn" onclick="formulaStep2Answer(2,this)">C. ('+rectL+'+'+rectW+')×2（<b>最快！</b>只要2步）</button></div>';
+  var container=document.getElementById('formulaQuiz');
+  container.insertAdjacentHTML('beforeend',q);
   sfxOK();
 }
 function formulaStep2Answer(idx,btn){
-  var opts=document.querySelectorAll('#formulaQuiz .qopt');
+  var opts=document.querySelectorAll('#formulaStep2 .f2btn');
   if(idx===2){
     btn.classList.add('good');sfxOK();opts.forEach(function(o){o.disabled=true});
     rectState=3;
