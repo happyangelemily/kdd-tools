@@ -432,10 +432,10 @@ body{
 <div class="cv"><canvas id="dv" width="440" height="300" style="cursor:pointer"></canvas></div>
 <p style="text-align:center;font-size:.9em;color:#555;margin:8px 0;font-weight:bold">凹进去的图形周长，和标准长方形（600 cm）相比？</p>
 <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:4px 0">
-  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(0)">一样长</button>
-  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(60)">多 60 cm</button>
-  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(40)">多 40 cm</button>
-  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(280)">多 280 cm</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(0,this)">一样长</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(60,this)">多 60 cm</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(40,this)">多 40 cm</button>
+  <button class="btn qopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerQuiz(280,this)">多 280 cm</button>
 </div>
 <p style="text-align:center;font-size:.78em;min-height:20px" id="dvQuizFb"></p>
 <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0" id="dvLegend"></div>
@@ -1754,9 +1754,19 @@ function onUp(e,c){
     s.x1=ds.x1;s.y1=ds.y1;s.x2=ds.x2;s.y2=ds.y2;}
   drawConcave();}
 
-function answerQuiz(chosen){
+function answerQuiz(chosen,btn){
   var correct=concaveMode===0?0:280,fb=document.getElementById('dvQuizFb');
-  if(chosen===correct){fb.innerHTML='<span class="g">✅ 正确！</span>';sfxDone()}else{fb.innerHTML='<span class="r">❌ 不对哦，再想想</span>';sfxNO()}}
+  if(chosen===correct){
+    btn.classList.add('good');sfxDone();
+    fb.innerHTML='<span class="g">✅ 正确！</span>';
+    // Disable all quiz buttons
+    var all=document.querySelectorAll('#s5 .qopt');
+    all.forEach(function(b){b.disabled=true});
+  }else{
+    btn.classList.add('bad');sfxNO();
+    fb.innerHTML='<span class="r">❌ 不对哦，再想想</span>';
+    setTimeout(function(){btn.classList.remove('bad')},600);
+  }}
 
 // Event bindings
 document.addEventListener('DOMContentLoaded',function(){
