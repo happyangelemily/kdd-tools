@@ -984,9 +984,9 @@ dR();
 // ===== MODULE 2: Tool match challenge =====
 var matchState=[-1,-1,-1]; // -1=unanswered, 0/1/2=chosen tool index
 var matchData=[
-  {shape:'⬛',name:'正方形',answer:0, tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
-  {shape:'❤️',name:'心形',answer:1, tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
-  {shape:'⭕',name:'圆形',answer:2, tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
+  {shape:'⬛',name:'正方形',answer:[0,1], tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
+  {shape:'❤️',name:'心形',answer:[1],   tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
+  {shape:'⭕',name:'圆形',answer:[1,2], tools:['📐 直尺','🧵 软绳','🛞 滚轮']},
 ];
 function buildMatch(){
   var container=document.getElementById('matchItems');if(!container)return;
@@ -1007,10 +1007,15 @@ function pickMatch(qIdx,tIdx,btn){
   if(matchState[qIdx]>=0)return; // already answered
   var correct=matchData[qIdx].answer;
   var btns=document.querySelectorAll('#mBtns'+qIdx+' .btn');
-  if(tIdx===correct){
+  if(correct.indexOf(tIdx)>=0){
     matchState[qIdx]=tIdx;sfxOK();
-    btn.classList.add('gr');btn.textContent=matchData[qIdx].tools[tIdx]+' ✅';
-    btns.forEach(function(b,i){if(i!==tIdx)b.disabled=true;b.style.opacity=i===tIdx?'1':'.4'});
+    // Highlight all correct options green
+    correct.forEach(function(ci){
+      btns[ci].classList.add('gr');
+      btns[ci].textContent=matchData[qIdx].tools[ci]+' ✅';
+    });
+    // Dim incorrect options
+    btns.forEach(function(b,i){if(correct.indexOf(i)<0){b.disabled=true;b.style.opacity='.4'}});
     checkAllMatched();
   }else{
     sfxNO();btn.style.opacity='.5';
