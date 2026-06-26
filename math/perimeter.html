@@ -450,7 +450,15 @@ body{
   <button class="btn" id="jb1" onclick="sj(1)">▬ 拼在一起</button>
 </div>
 <div class="cv"><canvas id="jv" width="440" height="190"></canvas></div>
-<p id="ji" style="text-align:center;font-size:.8em;color:#69f0ae;min-height:20px"></p>
+<p style="text-align:center;font-size:.9em;color:#555;margin:8px 0;font-weight:bold" id="jvQuestion">两个正方形分开，总周长是多少？</p>
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:4px 0">
+  <button class="btn qopt jqopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerJoinQuiz(48,this)">A. 48 cm</button>
+  <button class="btn qopt jqopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerJoinQuiz(24,this)">B. 24 cm</button>
+  <button class="btn qopt jqopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerJoinQuiz(36,this)">C. 36 cm</button>
+  <button class="btn qopt jqopt" style="min-height:36px;padding:6px 14px;font-size:.82em" onclick="answerJoinQuiz(12,this)">D. 12 cm</button>
+</div>
+<p style="text-align:center;font-size:.78em;min-height:20px" id="jvQuizFb"></p>
+<p id="ji" style="text-align:center;font-size:.8em;color:#555;min-height:20px"></p>
 
 <h3 style="margin-top:14px">🏡 靠墙——少算一条边</h3>
 <p>靠墙的一边不用围。篱笆长度 ≠ 完整周长。试试不同情况：</p>
@@ -1837,7 +1845,16 @@ document.getElementById('dvQuestion').textContent='单角凹陷：凹进去的�
 
 // ===== MODULE 5: Joining =====
 var jm=0,jSide=6; // square side = 6cm
-function sj(m){jm=m;document.getElementById('jb0').className='btn'+(m===0?' gr':'');document.getElementById('jb1').className='btn'+(m===1?' gr':'');dJ();md(4)}
+function sj(m){
+  jm=m;
+  document.getElementById('jb0').className='btn'+(m===0?' gr':'');
+  document.getElementById('jb1').className='btn'+(m===1?' gr':'');
+  // Reset join quiz
+  document.getElementById('jvQuizFb').innerHTML='';
+  document.querySelectorAll('.jqopt').forEach(function(b){b.disabled=false;b.classList.remove('good','bad')});
+  document.getElementById('jvQuestion').textContent=m===0?'两个正方形分开，总周长是多少？':'拼在一起后，总周长变成多少？';
+  dJ();md(4)
+}
 function dJ(){var c=document.getElementById('jv');if(!c)return;var ctx=c.getContext('2d');ctx.clearRect(0,0,440,190);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,190);
   var sq=60;
   var sPerim=4*jSide;
@@ -1863,6 +1880,19 @@ function dJ(){var c=document.getElementById('jv');if(!c)return;var ctx=c.getCont
   }
 }
 document.addEventListener('DOMContentLoaded',function(){dJ()});
+
+function answerJoinQuiz(chosen,btn){
+  var correct=jm===0?48:36,fb=document.getElementById('jvQuizFb');
+  if(chosen===correct){
+    btn.classList.add('good');sfxDone();
+    fb.innerHTML='<span class="g">✅ 正确！</span>';
+    document.querySelectorAll('.jqopt').forEach(function(b){b.disabled=true});
+  }else{
+    btn.classList.add('bad');sfxNO();
+    fb.innerHTML='<span class="r">❌ 不对哦，再想想~</span>';
+    setTimeout(function(){btn.classList.remove('bad')},600);
+  }
+}
 
 // ===== MODULE 5: Fence =====
 var wm=0;
