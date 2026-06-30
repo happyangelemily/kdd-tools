@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>面积彻底搞懂 — 互动学习</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  background:#f7f4ed;color:#3a3530;min-height:100vh;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+.stars{display:none}
+.star{display:none}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.75}}
+.container{max-width:540px;margin:0 auto;padding:0 10px 60px;position:relative;z-index:1}
+
+/* Progress */
+.prog{position:sticky;top:0;z-index:100;background:rgba(247,244,237,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:8px 10px;display:flex;gap:4px;justify-content:center;border-bottom:1px solid rgba(0,0,0,.06)}
+.pd{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.08);transition:all .4s;flex-shrink:0}
+.pd.done{background:#4caf50;box-shadow:0 0 6px rgba(76,175,80,.4)}
+.pd.cur{background:#f7971e;box-shadow:0 0 10px #f7971e;transform:scale(1.4)}
+
+/* Hero */
+.hero{text-align:center;padding:28px 14px 10px}
+.hero h1{font-size:1.6em;background:linear-gradient(135deg,#27ae60,#2e7d32);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.hero .sub{font-size:.8em;color:#999}
+
+/* Section */
+.sec{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:20px 14px;margin-bottom:16px;scroll-margin-top:60px;transition:border-color .5s;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.sec.reached{border-color:rgba(39,174,96,.3)}
+.sec h2{color:#2e7d32;font-size:1.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec h3{color:#555;font-size:.92em;margin:10px 0 8px}
+.sec p{font-size:.82em;line-height:1.7;color:#666;margin-bottom:8px}
+.b{color:#2e7d32;font-weight:bold}
+.r{color:#e74c3c;font-weight:bold}
+.g{color:#27ae60;font-weight:bold}
+.bl{color:#2980b9;font-weight:bold}
+
+/* Scene cards */
+.scenes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.sc{
+  background:#fff;border-radius:14px;padding:12px 10px 10px;text-align:center;
+  border:2px solid #e8e4dc;cursor:pointer;transition:all .3s;
+  -webkit-tap-highlight-color:rgba(39,174,96,.1);
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+}
+.sc:active,.sc.pick{border-color:#27ae60;background:#f0faf4;box-shadow:0 2px 8px rgba(39,174,96,.1)}
+.sc.pick{animation:edgeWalk 2s linear infinite}
+.sc .t{font-size:.82em;color:#555;font-weight:bold;margin:8px 0 4px}
+.sc .de{font-size:.7em;color:#888;display:none;line-height:1.55;margin-top:6px}
+.sc.pick .de{display:block}
+.sc canvas{display:block;margin:0 auto;border-radius:8px;width:240px;height:160px;max-width:100%}
+@keyframes edgeWalk{
+  0%{box-shadow:0 0 0 2px rgba(39,174,96,.4), 0 0 12px rgba(39,174,96,.12)}
+  50%{box-shadow:0 0 0 4px rgba(39,174,96,.2), 0 0 20px rgba(39,174,96,.06)}
+  100%{box-shadow:0 0 0 2px rgba(39,174,96,.4), 0 0 12px rgba(39,174,96,.12)}
+}
+
+/* Reveal box */
+.reveal{
+  background:#e8f5e9;border:2px dashed rgba(39,174,96,.2);
+  border-radius:14px;padding:16px;text-align:center;margin:12px 0;
+  transition:all .5s;
+}
+.reveal.open{border-style:solid;border-color:#27ae60;background:#f0faf4}
+.reveal .big{font-size:1.2em;font-weight:bold;color:#2e7d32;margin:6px 0}
+.reveal .sub{font-size:.75em;color:#999}
+
+/* Common elements */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:44px;padding:10px 18px;border-radius:12px;border:2px solid #ddd;
+  background:#fafaf7;color:#666;font-size:.82em;cursor:pointer;
+  transition:all .25s;font-family:inherit;
+  -webkit-tap-highlight-color:rgba(39,174,96,.1);
+}
+.btn:active{background:#f0ebe0;transform:scale(.97)}
+.btn.go{background:linear-gradient(135deg,#27ae60,#2e7d32);color:#fff;border:none;font-weight:bold}
+.btn.gr{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+.btn.bad{background:#fdecea;border-color:#e74c3c;color:#c0392b}
+.btn.blu{background:#e3f2fd;border-color:#90caf9;color:#1565c0}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+
+/* Canvas */
+.cv{background:#f0ede6;border-radius:14px;overflow:hidden;margin:10px 0;border:1px solid #e0dcd4}
+.cv canvas{display:block;max-width:100%;height:auto;touch-action:none}
+.hint{text-align:center;font-size:.73em;color:#999;padding:4px 0}
+
+/* Discovery steps */
+.ds{
+  background:#faf8f4;border-radius:12px;padding:12px;margin:6px 0;
+  border-left:3px solid transparent;transition:all .4s;cursor:pointer;
+  -webkit-tap-highlight-color:rgba(39,174,96,.1);
+}
+.ds.s1{border-color:#2980b9}.ds.s2{border-color:#27ae60}.ds.s3{border-color:#e67e22}
+.ds .n{display:inline-block;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:.75em;font-weight:bold;margin-right:8px;color:#fff}
+.ds.s1 .n{background:#2980b9}.ds.s2 .n{background:#27ae60}.ds.s3 .n{background:#e67e22}
+.ds .rt{display:none;margin-top:8px;font-size:.8em;color:#666;line-height:1.6}
+.ds.open .rt{display:block}
+
+/* Unit squares */
+.sqstrip{display:flex;gap:1px;flex-wrap:wrap;justify-content:center;padding:8px;max-width:440px;margin:0 auto}
+.sqcell{width:18px;height:18px;border-radius:2px;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
+.sqcell.on{background:#27ae60;opacity:1;transform:scale(1)}
+.sqcell.off{background:transparent;opacity:0;transform:scale(0)}
+
+/* Quiz */
+.qdots{display:flex;gap:4px;justify-content:center;margin:8px 0;flex-wrap:wrap}
+.qd{width:10px;height:10px;border-radius:50%;background:#e0dcd4;transition:all .3s}
+.qd.cur{background:#27ae60;box-shadow:0 0 8px #27ae60}
+.qd.ok{background:#27ae60}.qd.no{background:#e74c3c}
+.qq{font-size:.88em;font-weight:bold;color:#444;margin:6px 0;line-height:1.5}
+.qo{display:flex;flex-direction:column;gap:6px}
+.qopt{
+  width:100%;text-align:left;padding:12px 14px;border-radius:12px;
+  background:#faf8f4;border:2px solid #e0dcd4;
+  font-size:.8em;color:#555;cursor:pointer;transition:all .25s;
+  font-family:inherit;min-height:44px;
+  -webkit-tap-highlight-color:rgba(39,174,96,.1);
+}
+.qopt:active{background:#f0faf4}
+.qopt.good{background:#e8f5e9;border-color:#27ae60;color:#2e7d32}
+.qopt.bad{background:#fdecea;border-color:#e74c3c;color:#c0392b}
+.qopt:disabled{cursor:default}
+.qexp{font-size:.76em;color:#999;padding:8px;min-height:28px}
+.qnav{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.sb{text-align:center;padding:16px 0}
+.sb .se{font-size:3.5em}
+.sb .sn{font-size:2.8em;font-weight:bold;color:#2e7d32}
+
+/* Trap cards */
+.trap-grid{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0}
+.trap{
+  background:#fdecea;border:1px solid rgba(231,76,60,.15);border-radius:12px;
+  padding:12px;font-size:.78em;color:#666;line-height:1.6;
+}
+.trap .tr{color:#c0392b;font-weight:bold}
+.trap .tf{color:#27ae60;font-weight:bold}
+
+/* Grid canvas for formula */
+.grid-info{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.grid-info span{font-size:.78em;color:#888}
+
+.foot{text-align:center;padding:20px 0 40px;font-size:.68em;color:#bbb}
+
+@media(max-width:500px){
+  .scenes{grid-template-columns:1fr}
+}
+@media(max-width:380px){
+  .hero h1{font-size:1.35em}
+  .sec{padding:16px 10px}
+  .scenes{grid-template-columns:1fr}
+  .sc{padding:8px 6px 6px}
+  .sc .t{font-size:.72em}
+  .sc .de{font-size:.63em}
+  .sc canvas{width:180px;height:120px}
+}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="container">
+
+<div class="hero">
+  <h1>里面有多大？</h1>
+  <p class="sub">从生活出发，六步彻底搞懂「面积」</p>
+</div>
+
+<div class="prog" id="prog">
+  <div class="pd cur"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div>
+</div>
+
+<!-- ===== 1: 什么是「铺满」 ===== -->
+<div class="sec" id="s1">
+<h2>🔍 第一步：生活中那些「铺满」的事</h2>
+<p>下面这些场景，都有一个<b>共同的需求</b>。点开看看，你能发现是什么吗？</p>
+
+<div class="scenes" id="scenes"></div>
+<p style="text-align:center;font-size:.78em;color:#777;min-height:22px" id="sceneCount">已发现：0/8</p>
+
+<div class="reveal" id="nameReveal" style="display:none">
+  <p style="font-size:.8em;color:#aaa">全部找到了！你发现了吗——</p>
+  <p style="font-size:.95em;color:#555;line-height:1.7;margin:8px 0">
+    铺地板砖、贴墙纸、种草坪、买桌布……虽然东西不一样，但做的事都是同一个：<br>
+    <span class="b">测量一块平面<b>里面</b>有多大——要用多少东西才能<b>铺满</b>。</span>
+  </p>
+  <p style="font-size:.8em;color:#aaa">「铺满一块面的大小」，有一个专门的名字——</p>
+  <div class="big">📐 面 积</div>
+  <p class="sub">封闭图形<b>里面</b>有多大，就叫「面积」。</p>
+</div>
+
+<p style="margin-top:12px">💡 注意：面积说的是<b>里面</b>——和「绕一圈的长度」（周长）完全不一样！</p>
+</div>
+
+<!-- ===== 2: 测量面积 ===== -->
+<div class="sec" id="s2">
+<h2>📏 第二步：怎么量出「里面有多大」？</h2>
+<p>知道要量「面的大小」了。但具体怎么量？<span class="b">面积的最小单位是什么</span>？</p>
+
+<h3>🧱 面积的秘密：1 平方厘米小方块拼出来的</h3>
+<p>点「+1平方厘米」，看小方块怎样一个个铺满长方形——这就是<span class="b">面积 = 数方块累加</span>的底层原理：</p>
+<div class="btns">
+  <button class="btn go" onclick="addSq()">+1 平方厘米</button>
+  <button class="btn gr" onclick="addSqs(allSqNeeded)">一次铺满</button>
+  <button class="btn" onclick="resetSq()">🔄 重来</button>
+</div>
+<div class="sqstrip" id="sqstrip"></div>
+<p style="text-align:center;font-size:.82em;color:#2e7d32">已铺：<span id="sqcnt">0</span> / <span id="sqtotal"></span> 平方厘米</p>
+<p style="font-size:.73em;color:#999">💡 对比：测<b>周长</b>用小线段（cm）去拼，测<b>面积</b>用小方块（cm²）去铺——都是「数一数累加」，但数的东西不一样！</p>
+
+<h3>🔲 数格子——最直接的面积测量法</h3>
+<p>把一个图形画在方格纸上，<b>数一数里面有多少个完整的小格子</b>：</p>
+<div class="btns">
+  <button class="btn" id="g0" onclick="pickGrid(0)">▯ 长方形</button>
+  <button class="btn" id="g1" onclick="pickGrid(1)">⬛ 正方形</button>
+  <button class="btn" id="g2" onclick="pickGrid(2)">L 形</button>
+</div>
+<div class="cv"><canvas id="gridCv" width="440" height="300"></canvas></div>
+<p id="gridInfo" style="text-align:center;font-size:.82em;color:#2e7d32;min-height:22px"></p>
+
+<div class="reveal open" style="margin-top:12px">
+  <p style="font-size:.78em;color:#aaa">核心——</p>
+  <div class="big">面积 = 里面能铺多少个 1cm² 的小方块</div>
+  <p class="sub">就像数地板砖：一块砖 = 1cm²，铺了几块就是几平方厘米。<b>面积本质是「数方块」。</b></p>
+</div>
+</div>
+
+<!-- ===== 3: 单位 ===== -->
+<div class="sec" id="s3">
+<h2>⚖️ 第三步：数字后面是什么？</h2>
+<p>上一步数出来——长方形里面能铺「<span class="b">24</span>」个小方块。</p>
+<p>但「24」后面应该跟什么？选出正确的答案：</p>
+
+<div class="qo" id="unitQuiz" style="margin:12px 0">
+  <button class="qopt" onclick="answerUnit(0,this)">A. 24 <b>cm</b>（厘米）</button>
+  <button class="qopt" onclick="answerUnit(1,this)">B. 24 <b>cm²</b>（平方厘米）</button>
+  <button class="qopt" onclick="answerUnit(2,this)">C. 24 <b>个</b></button>
+  <button class="qopt" onclick="answerUnit(3,this)">D. 24 <b>m</b>（米）</button>
+</div>
+<p id="unitFeedback" style="text-align:center;font-size:.85em;min-height:24px;margin:8px 0"></p>
+
+<div id="unitReveal" style="display:none">
+  <div class="reveal open" style="margin-top:8px">
+    <p style="font-size:.78em;color:#999">为什么是 <b>cm²</b>（面积单位）？</p>
+    <p style="font-size:.85em;color:#555;line-height:1.8;margin:8px 0">
+      面积量的是<b>「里面有多大」</b>——铺了几个 1cm×1cm 的小方块。<br>
+      既然是<b>面积</b>，当然用<b>面积单位</b>——<span class="b">平方厘米(cm²)、平方米(m²)</span>。
+    </p>
+    <p style="font-size:.78em;color:#888">
+      就像数地板砖用「块」、但标准的测量单位是 <b>cm²</b>。<b>量什么，就用什么的单位</b>。
+    </p>
+  </div>
+
+  <div class="reveal open" style="margin-top:10px">
+    <p style="font-size:.78em;color:#999">⚠️ 最容易搞混的地方——</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:10px 0">
+      <div style="text-align:center;flex:1;min-width:120px;background:#e3f2fd;border-radius:12px;padding:14px">
+        <div style="font-size:1.2em;font-weight:bold;color:#1565c0">📏 周长</div>
+        <div style="font-size:.8em;color:#666;margin-top:4px">长度单位 <b style="color:#1565c0">cm</b></div>
+        <div style="font-size:.7em;color:#999;margin-top:2px">测「一圈多长」<br>用小线段去拼</div>
+      </div>
+      <div style="font-size:1.5em;color:#bbb;align-self:center">≠</div>
+      <div style="text-align:center;flex:1;min-width:120px;background:#e8f5e9;border-radius:12px;padding:14px">
+        <div style="font-size:1.2em;font-weight:bold;color:#2e7d32">📐 面积</div>
+        <div style="font-size:.8em;color:#666;margin-top:4px">面积单位 <b style="color:#2e7d32">cm²</b></div>
+        <div style="font-size:.7em;color:#999;margin-top:2px">测「里面多大」<br>用小方块去铺</div>
+      </div>
+    </div>
+    <p style="font-size:.78em;color:#888;text-align:center">周长是「长度」→ 用 <b>cm</b>。面积是「面的大小」→ 用 <b>cm²</b>。<br>差一个小小的 ²，意思完全不同！</p>
+  </div>
+</div>
+</div>
+
+<!-- ===== 4: 公式 ===== -->
+<div class="sec" id="s4">
+<h2>🔍 第四步：不想每次数格子——找规律</h2>
+<p>每次都要一个一个数格子太慢了。<span class="b">有没有更快的方法？</span></p>
+
+<!-- ====== 长方形：网格点击发现 ====== -->
+<h3>📐 长方形：自己发现规律</h3>
+<p>画了一个长方形在方格纸上。<b>每行有几个格子？有几行？</b></p>
+<div class="grid-info">
+  <span>长 <b id="dL"></b> cm &nbsp; 宽 <b id="dW"></b> cm</span>
+  <button class="btn blu" onclick="newGrid()" style="min-height:28px;padding:4px 10px;font-size:.7em">🔄 换一个</button>
+</div>
+<div class="cv"><canvas id="formCv" width="440" height="280" style="cursor:pointer"></canvas></div>
+
+<!-- Progress dots -->
+<div style="display:flex;gap:6px;justify-content:center;margin:8px 0" id="stepDots">
+  <div class="qd cur" style="width:12px;height:12px"></div>
+  <div class="qd" style="width:12px;height:12px"></div>
+  <div class="qd" style="width:12px;height:12px"></div>
+</div>
+<p id="stepHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold"></p>
+<p id="stepSum" style="text-align:center;font-size:.8em;color:#888;min-height:20px"></p>
+
+<!-- Quiz area (hidden until step 2) -->
+<div id="formulaQuiz" style="display:none;margin:10px 0"></div>
+<div id="formulaExplain" style="display:none;background:#faf8f4;border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.78em;color:#555;line-height:1.6"></div>
+<div class="reveal open" id="formulaDone" style="display:none;margin-top:8px">
+  <div class="big">长方形面积 = 长 × 宽</div>
+  <p class="sub">每行 L 个格子 × W 行 = L×W。面积公式从「数格子」推出来的！</p>
+</div>
+
+<!-- ====== 正方形 ====== -->
+<div id="sqSection">
+<h3 style="margin-top:16px">⬛ 正方形：长 = 宽 的长方形</h3>
+<p>正方形<b>就是长和宽相等的长方形</b>。按同样的方法试试——</p>
+<div class="grid-info">
+  <span>边长 <b id="dS"></b> cm</span>
+  <button class="btn blu" onclick="newSqGrid()" style="min-height:28px;padding:4px 10px;font-size:.7em">🔄 换一个</button>
+</div>
+<div class="cv"><canvas id="sqFormCv" width="440" height="240"></canvas></div>
+<div style="display:flex;gap:6px;justify-content:center;margin:8px 0" id="sqDots">
+  <div class="qd cur" style="width:12px;height:12px"></div>
+  <div class="qd" style="width:12px;height:12px"></div>
+</div>
+<p id="sqHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold"></p>
+<p id="sqSum" style="text-align:center;font-size:.8em;color:#888;min-height:20px"></p>
+<div id="sqFormulaQuiz" style="display:none;margin:10px 0"></div>
+<div class="reveal open" id="sqDone" style="display:none;margin-top:8px">
+  <div class="big">正方形面积 = 边长 × 边长</div>
+  <p class="sub">正方形是特殊的长方形（长=宽），所以 长×宽 = 边长×边长。用哪个公式都对！</p>
+</div>
+</div>
+
+<!-- ====== 逆运算 ====== -->
+<h3 style="margin-top:16px">🔄 反过来想：已知面积，求边长</h3>
+<p>知道面积，也知道一条边——能推出另一边吗？</p>
+<div class="grid-info">
+  <span>面积 = <b id="revArea"></b> cm² &nbsp; 已知边 = <b id="revKnown"></b> cm</span>
+  <button class="btn blu" onclick="newRev()" style="min-height:28px;padding:4px 10px;font-size:.7em">🔄 换一题</button>
+</div>
+<div class="cv"><canvas id="revCv" width="440" height="200"></canvas></div>
+<p id="revQ" style="text-align:center;font-size:.85em;color:#555;font-weight:bold;min-height:22px"></p>
+<div style="display:flex;gap:6px;justify-content:center;align-items:center;margin:8px 0">
+  <input type="number" id="revInput" style="width:80px;height:40px;border:2px solid #ddd;border-radius:10px;text-align:center;font-size:1em;font-family:inherit" placeholder="?">
+  <button class="btn go" onclick="checkRev()" style="min-height:40px">✅ 检查</button>
+</div>
+<p id="revFeedback" style="text-align:center;font-size:.8em;min-height:22px"></p>
+<p style="font-size:.73em;color:#999;text-align:center">提示：面积 = 长×宽 → 未知边 = 面积 ÷ 已知边</p>
+
+<!-- ====== 组合图形 ====== -->
+<h3 style="margin-top:16px">🧩 组合图形：切成小块再算</h3>
+<p>遇到不规整的形状怎么办？<b>切成几块长方形，分别算面积再相加！</b></p>
+<div class="cv"><canvas id="compCv" width="440" height="260"></canvas></div>
+<div class="btns">
+  <button class="btn" onclick="toggleCompSplit()">✂️ 显示切分</button>
+  <button class="btn blu" onclick="newComp()">🔄 换一个</button>
+</div>
+<p id="compInfo" style="text-align:center;font-size:.8em;color:#555;min-height:20px"></p>
+<p id="compSum" style="text-align:center;font-size:.82em;color:#2e7d32;min-height:22px;font-weight:bold"></p>
+
+<div class="reveal open" style="margin-top:10px">
+  <p style="font-size:.78em;color:#888">终极总结——</p>
+  <div class="big">面积 = 长 × 宽（长方形）</div>
+  <p class="sub">所有面积公式都来自「数方块」。长方形长×宽、正方形边长×边长、组合图形切分相加……<b>万变不离其宗——铺满多少个小方块。</b></p>
+</div>
+</div>
+
+<!-- ===== 5: 易错点 ===== -->
+<div class="sec" id="s5">
+<h2>🔄 第五步：最容易错的地方</h2>
+<p>学完周长和面积，<b>最大的陷阱就是把它们搞混</b>。这站专门解决。</p>
+
+<h3>🔀 陷阱一：周长一样，面积不一样</h3>
+<p>下面的长方形<b>周长都是 20 cm</b>，但面积不同！拖拽滑块改变长宽，看面积怎么变：</p>
+<div class="sl" style="display:flex;align-items:center;gap:8px;margin:8px 0;flex-wrap:wrap">
+  <label style="font-size:.78em;color:#888;min-width:44px">长：</label>
+  <input type="range" id="trapL" min="1" max="9" value="6" oninput="drawTrap1()" style="flex:1;min-width:100px;accent-color:#27ae60;height:20px">
+  <span class="v" id="trapLv" style="font-size:.88em;color:#2e7d32;font-weight:bold;min-width:48px">6 cm</span>
+</div>
+<div class="cv"><canvas id="trap1Cv" width="440" height="200"></canvas></div>
+<p id="trap1Info" style="text-align:center;font-size:.85em;color:#555;min-height:22px;font-weight:bold"></p>
+<p style="font-size:.78em;color:#888">💡 绳子长度固定（周长不变），把它拉成不同的形状，<b>里面能装的东西（面积）却不一样</b>！</p>
+
+<h3 style="margin-top:14px">✂️ 陷阱二：拼在一起——面积直接相加</h3>
+<p>和周长不同——拼起来面积<b>就是各部分之和</b>，不会消失！</p>
+<div class="btns">
+  <button class="btn" id="jb0" onclick="compJ(0)">⬛⬛ 两个分开</button>
+  <button class="btn" id="jb1" onclick="compJ(1)">▬ 拼在一起</button>
+</div>
+<div class="cv"><canvas id="jv" width="440" height="190"></canvas></div>
+<p id="jInfo" style="text-align:center;font-size:.85em;color:#555;min-height:22px;font-weight:bold"></p>
+<p style="font-size:.78em;color:#888">💡 周长拼接后<b>变小</b>（中间那条边消失了），但面积<b>不变</b>（里面的格子一个没少）！</p>
+
+<h3 style="margin-top:14px">⚠️ 四个经典陷阱</h3>
+<div class="trap-grid">
+  <div class="trap">
+    <span class="tr">❌ 陷阱一：用周长公式算面积</span><br>
+    长方形周长=(长+宽)×2，面积=长×宽。两个<b>完全不同的公式</b>！
+  </div>
+  <div class="trap">
+    <span class="tr">❌ 陷阱二：单位写错</span><br>
+    面积用 <b>cm²</b>、m²，周长用 <b>cm</b>、m。<b>差一个²，意思全错！</b>
+  </div>
+  <div class="trap">
+    <span class="tr">❌ 陷阱三：觉得面积大周长就大</span><br>
+    长方形 9×1 面积 9 cm² 周长 20 cm。正方形 3×3 面积 9 cm² 周长 12 cm。<b>面积相同时，周长可以差很多！</b>
+  </div>
+  <div class="trap">
+    <span class="tr">❌ 陷阱四：正方形面积 = 边长×4</span><br>
+    边长×4 是<b>周长</b>！面积是 <b>边长×边长</b>。两条公式经常背混。
+  </div>
+</div>
+</div>
+
+<!-- ===== 6: 闯关 ===== -->
+<div class="sec" id="s6">
+<h2>🏆 第六步：综合闯关</h2>
+<p>25 题题库随机抽 <span class="b">10 题</span>，做完看成绩。</p>
+<div class="qdots" id="qds"></div>
+<div class="qq" id="qqq"></div>
+<div class="qo" id="qos"></div>
+<div class="qexp" id="qex"></div>
+<div class="qnav" id="qnv">
+  <button class="btn" id="qpr" onclick="qpr()" disabled>◀ 上一题</button>
+  <button class="btn go" id="qnx" onclick="qnx()">下一题 ▶</button>
+</div>
+<div id="qsc" style="display:none">
+  <div class="sb"><div class="se" id="semo"></div><div class="sn" id="snum"></div>
+  <p id="smsg" style="font-size:.92em;color:#555;margin:8px 0"></p>
+  <div class="btns">
+    <button class="btn blu" id="qrw" onclick="qrw()">🔍 回顾错题</button>
+    <button class="btn go" onclick="qrs()">🔄 再来一组</button>
+  </div></div>
+</div>
+</div>
+
+<div class="foot">🛠 由 AI 辅助制作 · 持续改进中<br>如有 bug 请留言反馈 ❤️</div>
+</div>
+
+<script>
+// ===== STARS =====
+(function(){var h='',s=document.getElementById('stars');for(var i=0;i<60;i++)h+='<div class="star" style="left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;width:'+(Math.random()*2+1.2)+'px;height:'+(Math.random()*2+1.2)+'px;--d:'+(Math.random()*3+2)+'s;--delay:'+(Math.random()*3)+'s"></div>';s.innerHTML=h})();
+
+// ===== SOUND =====
+var audioCtx=null;
+function getAC(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx}
+function beep(freq,dur,type){
+  try{var ac=getAC(),o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.value=freq;g.gain.value=.12;g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+dur);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+dur)}catch(e){}
+}
+function sfxOK(){beep(660,.12);setTimeout(function(){beep(880,.15)},120)}
+function sfxNO(){beep(200,.2,'triangle')}
+function sfxDone(){beep(523,.1);setTimeout(function(){beep(659,.1)},100);setTimeout(function(){beep(784,.1)},200);setTimeout(function(){beep(1047,.25)},300)}
+
+// ===== PROGRESS =====
+var sd=[!1,!1,!1,!1,!1,!1];
+function md(n){
+  if(sd[n])return;sd[n]=!0;var ds=document.querySelectorAll('#prog .pd');
+  for(var i=0;i<6;i++){ds[i].className='pd';if(sd[i])ds[i].classList.add('done')}
+  var cur=n<5?n+1:n;
+  if(cur<6&&!sd[cur])ds[cur].classList.add('cur');else if(sd.every(function(x){return x}))ds[5].classList.add('cur');
+}
+document.querySelectorAll('.sec').forEach(function(s){
+  new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.add('reached');var n=parseInt(s.id.replace('s',''))-1;document.querySelectorAll('#prog .pd').forEach(function(d,i){d.classList.remove('cur')});if(!sd[n])document.querySelectorAll('#prog .pd')[n].classList.add('cur')}},{threshold:.3}).observe(s);
+});
+
+// ===== STATION 1: Scene cards =====
+var sc=[
+  {id:0,t:'铺地板砖',d:'要给一个房间铺满木地板。需要买多少块地板砖？——量的是<b>地面有多大</b>，看能<b>铺满</b>几块砖。'},
+  {id:1,t:'贴墙纸',d:'要给一面墙贴满墙纸。需要买多大面积的墙纸？——量的是<b>墙面的面积</b>，不是墙的厚度或高度。'},
+  {id:2,t:'种草坪',d:'院子里要铺一块草坪。草皮按面积卖——需要买多少平方米的草皮？量的是<b>这块地里面有多大</b>。'},
+  {id:3,t:'买桌布',d:'给桌子配一块桌布，要刚好盖住桌面。桌布要多大？——量的是<b>桌面有多大</b>。'},
+  {id:4,t:'铺地毯',d:'在房间里铺一块地毯。地毯要多大才能铺满整个房间？——量的是<b>房间地面的大小</b>。'},
+  {id:5,t:'刷墙壁',d:'要给一面墙刷漆。一桶漆能刷 5 平方米——需要几桶？先算出<b>这面墙的面积</b>。'},
+  {id:6,t:'农田播种',d:'农民伯伯要种水稻。种子按面积计算——这块田<b>里面有多大</b>，就需要多少种子。'},
+  {id:7,t:'手机贴膜',d:'给新手机贴一张保护膜。膜要做多大？——刚好<b>盖住屏幕</b>的大小，就是屏幕的面积。'},
+];
+var sf=0,sg=document.getElementById('scenes'),scDiscovered=[],scAnimId=[],scAnimP=[];
+sc.forEach(function(s,i){scDiscovered[i]=false;scAnimId[i]=null;scAnimP[i]=0});
+
+var CW=240,CH=160;
+function drawScene(ctx,i,trace){
+  var w=CW,h=CH;ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#faf8f4';ctx.fillRect(0,0,w,h);
+  if(trace===undefined)trace=0;
+  switch(i){
+  case 0: // 铺地板砖 — top-down room with tiles
+    ctx.fillStyle='#e8dcc8';ctx.fillRect(20,16,w-40,h-32);
+    // Wood tiles
+    for(var tx=24;tx<w-24;tx+=16)for(var ty=20;ty<h-20;ty+=16){
+      ctx.fillStyle=(tx+ty)%32===0?'#c9a96e':'#d4b67c';ctx.fillRect(tx,ty,15,15);
+      ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=.4;ctx.strokeRect(tx,ty,15,15);
+    }
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(20,16,w-40,h-32);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('铺满地砖 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(100,80,50,.3)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(20,16,w-40,h-32);ctx.setLineDash([]);
+    }
+    break;
+  case 1: // 贴墙纸 — wall with wallpaper
+    ctx.fillStyle='#fff3e0';ctx.fillRect(30,12,w-60,h-24);
+    // Wallpaper pattern
+    for(var wx=36;wx<w-36;wx+=20)for(var wy=16;wy<h-16;wy+=18){
+      ctx.fillStyle=(wx+wy)%40===0?'#fce4ec':'#fff8e1';
+      ctx.fillRect(wx,wy,19,17);
+      ctx.fillStyle='rgba(200,150,100,.15)';ctx.beginPath();ctx.arc(wx+9,wy+8,5,0,Math.PI*2);ctx.fill();
+    }
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(30,12,w-60,h-24);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('贴满墙纸 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(180,160,140,.35)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(30,12,w-60,h-24);ctx.setLineDash([]);
+    }
+    break;
+  case 2: // 种草坪 — garden lawn
+    ctx.fillStyle='#c8e6c9';ctx.fillRect(18,14,w-36,h-28);
+    // Grass texture
+    for(var gx=22;gx<w-22;gx+=6)for(var gy=18;gy<h-18;gy+=6){
+      if((gx+gy)%12===0){ctx.fillStyle='#a5d6a7';ctx.fillRect(gx,gy,2,4);ctx.fillStyle='#81c784';ctx.fillRect(gx+2,gy+1,2,3)}
+    }
+    // Flowers
+    var flowers=[{x:55,y:40,c:'#e91e63'},{x:170,y:50,c:'#ff9800'},{x:100,y:85,c:'#9c27b0'},{x:190,y:95,c:'#f44336'},{x:130,y:65,c:'#ff5722'},
+                 {x:75,y:75,c:'#fdd835'},{x:155,y:35,c:'#e91e63'},{x:45,y:100,c:'#ff9800'}];
+    flowers.forEach(function(f){ctx.fillStyle=f.c;ctx.beginPath();ctx.arc(f.x,f.y,4,0,Math.PI*2);ctx.fill()});
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(18,14,w-36,h-28);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('种满草坪 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(100,160,100,.35)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(18,14,w-36,h-28);ctx.setLineDash([]);
+    }
+    break;
+  case 3: // 买桌布 — table with cloth
+    ctx.fillStyle='#d7a86e';ctx.fillRect(30,30,w-60,h-60);
+    // Table surface
+    ctx.fillStyle='#f5e6d3';ctx.fillRect(25,24,w-50,h-52);
+    ctx.strokeStyle='#c9955e';ctx.lineWidth=1.5;ctx.strokeRect(25,24,w-50,h-52);
+    // Plate
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(w/2,h/2-2,22,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#ddd';ctx.lineWidth=1;ctx.beginPath();ctx.arc(w/2,h/2-2,22,0,Math.PI*2);ctx.stroke();
+    // Cup
+    ctx.fillStyle='#e57373';ctx.beginPath();ctx.arc(w/2+30,h/2-10,8,0,Math.PI*2);ctx.fill();
+    // Legs
+    ctx.fillStyle='#a0724a';ctx.fillRect(34,h-34,8,14);ctx.fillRect(w-42,h-34,8,14);
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(25,24,w-50,h-52);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('桌面大小 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(180,130,70,.35)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(25,24,w-50,h-52);ctx.setLineDash([]);
+    }
+    break;
+  case 4: // 铺地毯 — room with carpet
+    ctx.fillStyle='#eceff1';ctx.fillRect(15,15,w-30,h-30);
+    ctx.fillStyle='#ffcc80';ctx.fillRect(20,20,w-40,h-40);
+    // Carpet pattern
+    ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;
+    for(var cx=28;cx<w-28;cx+=24){ctx.beginPath();ctx.moveTo(cx,20);ctx.lineTo(cx,h-20);ctx.stroke()}
+    for(var cy=28;cy<h-28;cy+=24){ctx.beginPath();ctx.moveTo(20,cy);ctx.lineTo(w-20,cy);ctx.stroke()}
+    // Border
+    ctx.strokeStyle='#e65100';ctx.lineWidth=3;ctx.strokeRect(20,20,w-40,h-40);
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(20,20,w-40,h-40);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('地毯铺满 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(230,81,0,.3)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(20,20,w-40,h-40);ctx.setLineDash([]);
+    }
+    break;
+  case 5: // 刷墙壁 — painted wall
+    ctx.fillStyle='#e3f2fd';ctx.fillRect(25,10,w-50,h-20);
+    // Paint stroke effect
+    ctx.fillStyle='rgba(25,118,210,.08)';
+    for(var p=0;p<8;p++){ctx.fillRect(28+p*24,14,22,h-28)}
+    // Paint roller
+    ctx.fillStyle='#1565c0';ctx.fillRect(w-40,18,8,h-28);
+    ctx.fillStyle='#0d47a1';ctx.fillRect(w-36,16,8,4);ctx.fillRect(w-36,h-10,8,4);
+    // Roller handle
+    ctx.strokeStyle='#555';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(w-32,20);ctx.lineTo(w-24,8);ctx.stroke();
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(25,10,w-50,h-20);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('刷满墙壁 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(30,100,180,.3)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(25,10,w-50,h-20);ctx.setLineDash([]);
+    }
+    break;
+  case 6: // 农田播种 — farmland
+    ctx.fillStyle='#aed581';ctx.fillRect(16,14,w-32,h-28);
+    // Crop rows
+    for(var fy=20;fy<h-14;fy+=14){
+      ctx.fillStyle='#7cb342';ctx.fillRect(20,fy,w-40,5);
+    }
+    // Tractor or barn
+    ctx.fillStyle='#d32f2f';ctx.fillRect(w-55,h-40,20,14);ctx.fillStyle='#fff';ctx.fillRect(w-50,h-44,10,6);
+    ctx.fillStyle='#5d4037';ctx.fillRect(w-48,h-44,4,6);
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(16,14,w-32,h-28);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('田地面积 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(100,140,60,.35)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(16,14,w-32,h-28);ctx.setLineDash([]);
+    }
+    break;
+  case 7: // 手机贴膜 — phone with screen protector
+    ctx.fillStyle='#37474f';ctx.beginPath();ctx.roundRect(55,12,w-110,h-24,14);ctx.fill();
+    ctx.fillStyle='#263238';ctx.beginPath();ctx.roundRect(58,15,w-116,h-30,12);ctx.fill();
+    // Screen
+    ctx.fillStyle='#e3f2fd';ctx.fillRect(80,28,w-160,h-68);
+    // App icons
+    var apps=[{x:90,y:38,c:'#4caf50'},{x:115,y:38,c:'#2196f3'},{x:140,y:38,c:'#ff9800'},{x:165,y:38,c:'#e91e63'},
+              {x:90,y:58,c:'#9c27b0'},{x:115,y:58,c:'#00bcd4'},{x:140,y:58,c:'#f44336'},{x:165,y:58,c:'#607d8b'}];
+    apps.forEach(function(a){ctx.fillStyle=a.c;ctx.fillRect(a.x,a.y,18,14);ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillRect(a.x+3,a.y+2,5,3)});
+    // Home button
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(w/2,h-18,8,0,Math.PI*2);ctx.stroke();
+    if(trace>0){
+      ctx.save();ctx.shadowColor='rgba(39,174,96,.5)';ctx.shadowBlur=8;
+      ctx.strokeStyle='#27ae60';ctx.lineWidth=3.5;ctx.strokeRect(80,28,w-160,h-68);
+      ctx.restore();
+      ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.fillText('屏幕大小 = 面积',w/2,h-4);
+    }else{
+      ctx.strokeStyle='rgba(30,100,180,.3)';ctx.lineWidth=2;ctx.setLineDash([2,3]);ctx.strokeRect(80,28,w-160,h-68);ctx.setLineDash([]);
+    }
+    break;
+  }
+  ctx.setLineDash([]);
+}
+
+sc.forEach(function(s,i){
+  var d=document.createElement('div');d.className='sc';d.setAttribute('data-idx',i);
+  var c=document.createElement('canvas');c.width=CW;c.height=CH;
+  d.appendChild(c);
+  var tl=document.createElement('div');tl.className='t';tl.textContent=s.t;
+  d.appendChild(tl);
+  var de=document.createElement('div');de.className='de';de.innerHTML=s.d;
+  d.appendChild(de);
+  var ctx=c.getContext('2d');drawScene(ctx,i,0);
+  d.onclick=function(){
+    var wasExpanded=d.classList.contains('pick');
+    document.querySelectorAll('#scenes .sc').forEach(function(x){x.classList.remove('pick')});
+    if(!wasExpanded){
+      d.classList.add('pick');sfxOK();
+      if(scAnimId[i])cancelAnimationFrame(scAnimId[i]);
+      scAnimP[i]=0;
+      (function anim(){
+        scAnimP[i]+=.012;if(scAnimP[i]>1)scAnimP[i]=1;
+        drawScene(ctx,i,scAnimP[i]);
+        if(scAnimP[i]<1)scAnimId[i]=requestAnimationFrame(anim);
+        else scAnimId[i]=null;
+      })();
+      if(!scDiscovered[i]){
+        scDiscovered[i]=true;sf++;
+        document.getElementById('sceneCount').innerHTML='已发现：<b>'+sf+'/8</b>';
+        if(sf>=8){document.getElementById('nameReveal').style.display='block';md(0)}
+      }
+    }else{
+      drawScene(ctx,i,0);
+    }
+  };
+  sg.appendChild(d);
+});
+
+// ===== STATION 2: Unit squares =====
+var sqCnt=0;
+// A 6×4 rectangle = 24 squares, displayed in a grid of 6 cols × 4 rows
+var sqCols=6,sqRows=4;
+var allSqNeeded=sqCols*sqRows;
+document.getElementById('sqtotal').textContent=allSqNeeded;
+function addSq(){if(sqCnt<allSqNeeded){sqCnt++;dSq()}}
+function addSqs(n){sqCnt=Math.min(allSqNeeded,n);dSq()}
+function resetSq(){sqCnt=0;dSq()}
+function dSq(){
+  var h='';
+  for(var i=0;i<allSqNeeded;i++){
+    h+='<div class="sqcell '+(i<sqCnt?'on':'off')+'"></div>';
+  }
+  // Break into rows for visual effect
+  var rows='';
+  for(var r=0;r<sqRows;r++){
+    rows+='<div style="display:flex;gap:1px;justify-content:center">';
+    for(var c=0;c<sqCols;c++)rows+='<div class="sqcell '+(r*sqCols+c<sqCnt?'on':'off')+'"></div>';
+    rows+='</div>';
+  }
+  document.getElementById('sqstrip').innerHTML=rows;
+  document.getElementById('sqcnt').textContent=sqCnt;
+  if(sqCnt>=allSqNeeded){md(1);sfxDone()}
+}
+
+// ===== STATION 2: Grid counting =====
+var gridIdx=0;
+var grids=[
+  {n:'长方形',w:7,h:4,color:'#e67e22'},
+  {n:'正方形',w:5,h:5,color:'#2980b9'},
+  {n:'L 形',w:8,h:6,lshape:!0,color:'#27ae60'},
+];
+function pickGrid(n){
+  gridIdx=n;document.getElementById('g0').className='btn'+(n===0?' gr':'');document.getElementById('g1').className='btn'+(n===1?' gr':'');document.getElementById('g2').className='btn'+(n===2?' gr':'');
+  drawGrid();
+}
+function drawGrid(){
+  var c=document.getElementById('gridCv');if(!c)return;
+  var ctx=c.getContext('2d'),g=grids[gridIdx];
+  ctx.clearRect(0,0,440,300);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,300);
+  var cell=40,ox=(440-g.w*cell)/2,oy=(300-g.h*cell)/2;
+  if(g.lshape){
+    // L-shape: outer 8×6 with 3×2 cutout from top-right
+    var cutW=3,cutH=2;
+    for(var r=0;r<g.h;r++){
+      for(var c=0;c<g.w;c++){
+        var isHole=c>=(g.w-cutW)&&r<cutH;
+        if(isHole)continue;
+        var x=ox+c*cell,y=oy+r*cell;
+        ctx.fillStyle='rgba(39,174,96,.12)';ctx.fillRect(x,y,cell,cell);
+        ctx.strokeStyle='#27ae60';ctx.lineWidth=1;ctx.strokeRect(x,y,cell,cell);
+        ctx.fillStyle='#2e7d32';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(''+(r*g.w+c+1),x+cell/2,y+cell/2+4);
+      }
+    }
+    // Draw dashed outline of cutout
+    ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1;ctx.setLineDash([3,4]);
+    ctx.strokeRect(ox+(g.w-cutW)*cell,oy,cutW*cell,cutH*cell);ctx.setLineDash([]);
+    var total=g.w*g.h-cutW*cutH;
+    document.getElementById('gridInfo').textContent='L 形 = 大长方形 '+g.w+'×'+g.h+' = '+g.w*g.h+'，减去缺角 '+cutW+'×'+cutH+' = '+cutW*cutH+'，面积 = '+total+' cm²';
+  }else{
+    for(var r=0;r<g.h;r++){
+      for(var c=0;c<g.w;c++){
+        var x=ox+c*cell,y=oy+r*cell;
+        ctx.fillStyle='rgba(230,126,34,.1)';ctx.fillRect(x,y,cell,cell);
+        ctx.strokeStyle=g.color;ctx.lineWidth=1;ctx.strokeRect(x,y,cell,cell);
+        ctx.fillStyle='#555';ctx.font='bold 10px sans-serif';ctx.textAlign='center';ctx.fillText(''+(r*g.w+c+1),x+cell/2,y+cell/2+4);
+      }
+    }
+    // Highlight rows and columns
+    ctx.fillStyle=g.color;ctx.font='bold 13px sans-serif';ctx.textAlign='center';
+    for(var c=0;c<g.w;c++)ctx.fillText(''+(c+1),ox+c*cell+cell/2,oy-6);
+    for(var r=0;r<g.h;r++)ctx.fillText(''+(r+1),ox-14,oy+r*cell+cell/2+5);
+    // Row count label
+    if(g.w===g.h){
+      document.getElementById('gridInfo').textContent='正方形 '+g.w+'×'+g.w+' = 每行 '+g.w+' 格 × '+g.h+' 行 = '+g.w*g.h+' cm²';
+    }else{
+      document.getElementById('gridInfo').textContent='长方形 '+g.w+'×'+g.h+' = 每行 '+g.w+' 格 × '+g.h+' 行 = '+g.w*g.h+' cm²';
+    }
+  }
+}
+pickGrid(0);
+
+// ===== STATION 3: Unit quiz =====
+var unitAnswered=!1;
+function answerUnit(idx,btn){
+  if(unitAnswered)return;
+  var opts=document.querySelectorAll('#unitQuiz .qopt');
+  opts.forEach(function(o){o.disabled=true});
+  if(idx===1){
+    btn.classList.add('good');sfxOK();
+    document.getElementById('unitFeedback').innerHTML='<span class="g">✅ 正确！</span> 面积量的是<b>面的大小</b>，当然用面积单位 <b>cm²</b>！';
+    setTimeout(function(){document.getElementById('unitReveal').style.display='block';md(2)},600);
+  }else{
+    btn.classList.add('bad');sfxNO();
+    var msgs=['<span class="r">❌ cm 是长度单位</span>——量「一圈多长」用的。面积是「面的大小」，不用长度单位。',
+              '<span class="r">❌ "个"不是标准测量单位</span>——就像不能说身高是"170个"，面积需要标准面积单位。',
+              '<span class="r">❌ m 也是长度单位</span>——量距离用的。面积单位要有 ²！'];
+    document.getElementById('unitFeedback').innerHTML=msgs[idx<=1?idx-1:idx-2>=0?idx-2:0];
+    opts[1].classList.add('good');
+    setTimeout(function(){document.getElementById('unitReveal').style.display='block';md(2)},1200);
+  }
+  unitAnswered=!0;
+}
+
+// ===== STATION 4: Formula discovery — rectangle grid =====
+var gridL=6,gridW=4,gridState=0; // 0=count row, 1=count rows, 2=quiz
+var rowClicked=false,rowsClicked=false;
+function newGrid(){
+  gridL=Math.floor(Math.random()*5)+4; // 4~8
+  gridW=Math.floor(Math.random()*4)+2; // 2~5
+  if(gridL<=gridW)gridL=gridW+1;
+  gridState=0;rowClicked=false;rowsClicked=false;
+  updateFormUI();drawForm();
+}
+function updateFormUI(){
+  document.getElementById('dL').textContent=gridL;document.getElementById('dW').textContent=gridW;
+  var dots=document.querySelectorAll('#stepDots .qd');
+  dots.forEach(function(d,i){d.className='qd'+(i===gridState?' cur':'')+(i<gridState?' ok':'')});
+  var hints=['👆 点击一行格子（横排），看这一行有几个格子','👆 数一数总共有几行','🤔 根据发现，选出正确的面积公式'];
+  document.getElementById('stepHint').textContent=hints[gridState];
+  document.getElementById('stepSum').textContent=gridState>=1?('每行 '+gridL+' 个格子 × '+gridW+' 行 = '+gridL*gridW+' cm²'):'';
+  if(gridState>=2){
+    showFormulaQuiz();
+  }else{
+    document.getElementById('formulaQuiz').style.display='none';
+  }
+}
+function drawForm(){
+  var c=document.getElementById('formCv');if(!c)return;
+  var ctx=c.getContext('2d'),cell=46,ox=(440-gridL*cell)/2,oy=(280-gridW*cell)/2;
+  ctx.clearRect(0,0,440,280);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,280);
+  for(var r=0;r<gridW;r++){
+    for(var co=0;co<gridL;co++){
+      var x=ox+co*cell,y=oy+r*cell;
+      var highlight=gridState===0&&rowClicked&&r===0;
+      ctx.fillStyle=highlight?'rgba(230,126,34,.2)':'rgba(39,174,96,.06)';
+      ctx.fillRect(x,y,cell,cell);
+      ctx.strokeStyle='#aaa';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);
+      ctx.fillStyle='#555';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(''+(r*gridL+co+1),x+cell/2,y+cell/2+4);
+    }
+  }
+  // Column and row labels
+  if(gridState>=1||rowClicked){
+    ctx.fillStyle='#e67e22';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
+    for(var co=0;co<gridL;co++)ctx.fillText(''+(co+1),ox+co*cell+cell/2,oy-6);
+    // Arrow: "每行 X 格"
+    ctx.fillStyle='#e67e22';ctx.font='bold 13px sans-serif';
+    ctx.fillText('每行 '+gridL+' 格 ←',ox+gridL*cell+12,oy+cell/2);
+  }
+  if(gridState>=2||rowsClicked){
+    ctx.fillStyle='#2980b9';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
+    for(var r=0;r<gridW;r++)ctx.fillText(''+(r+1),ox-14,oy+r*cell+cell/2+5);
+    ctx.fillStyle='#2980b9';ctx.font='bold 13px sans-serif';
+    ctx.fillText(gridW+' 行 ↓',ox-30,oy+gridW*cell+18);
+  }
+}
+function handleFormClick(e){
+  var c=document.getElementById('formCv');if(!c)return;
+  var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(280/r.height);
+  var cell=46,ox=(440-gridL*cell)/2,oy=(280-gridW*cell)/2;
+  if(gridState===0){
+    // Click any cell in the first row to discover "每行X格"
+    if(y>=oy&&y<oy+cell){rowClicked=true;gridState=1;sfxOK();updateFormUI();drawForm()}
+  }else if(gridState===1){
+    // Click to expand all rows
+    rowsClicked=true;gridState=2;sfxOK();updateFormUI();drawForm();
+  }
+}
+function showFormulaQuiz(){
+  var h='<p style="font-size:.82em;color:#555;font-weight:bold;margin-bottom:6px">这个长方形的面积应该是？</p>';
+  h+='<button class="qopt" onclick="formAnswer(0,this)">A. '+gridL+'+'+gridW+' = '+(gridL+gridW)+' cm²（长+宽）</button>';
+  h+='<button class="qopt" onclick="formAnswer(1,this)">B. '+gridL+'×'+gridW+' = '+gridL*gridW+' cm²（长×宽）</button>';
+  h+='<button class="qopt" onclick="formAnswer(2,this)">C. ('+gridL+'+'+gridW+')×2 = '+(gridL+gridW)*2+' cm²（周长公式）</button>';
+  document.getElementById('formulaQuiz').innerHTML=h;document.getElementById('formulaQuiz').style.display='block';
+}
+var formQuizDone=false;
+function formAnswer(idx,btn){
+  if(formQuizDone)return;
+  formQuizDone=true;
+  var opts=document.querySelectorAll('#formulaQuiz .qopt');
+  opts.forEach(function(o){o.disabled=true});
+  if(idx===1){
+    btn.classList.add('good');sfxOK();
+    document.getElementById('formulaExplain').innerHTML='✅ <b>正确！</b> 每行 '+gridL+' 格 × '+gridW+' 行 = <b>长 × 宽 = '+gridL*gridW+' cm²</b>。面积公式就是从「数格子」推出来的！';
+    document.getElementById('formulaExplain').style.display='block';
+    document.getElementById('formulaDone').style.display='block';
+    md(3);
+  }else if(idx===2){
+    btn.classList.add('bad');sfxNO();
+    opts[1].classList.add('good');
+    document.getElementById('formulaExplain').innerHTML='<span class="r">❌ (长+宽)×2 是<b>周长公式</b></span>！面积不是绕一圈，而是里面有多大。正确答案是 <b>长×宽</b>。';
+    document.getElementById('formulaExplain').style.display='block';
+    document.getElementById('formulaDone').style.display='block';
+    md(3);
+  }else{
+    btn.classList.add('bad');sfxNO();
+    opts[1].classList.add('good');
+    document.getElementById('formulaExplain').innerHTML='<span class="r">❌ 长+宽 没有意义</span>——既不是周长也不是面积。面积必须是 <b>长×宽</b>——数格子的结果！';
+    document.getElementById('formulaExplain').style.display='block';
+    document.getElementById('formulaDone').style.display='block';
+    md(3);
+  }
+}
+// Bind events
+document.addEventListener('DOMContentLoaded',function(){
+  var fc=document.getElementById('formCv');
+  fc.onclick=function(e){handleFormClick(e)};
+  fc.ontouchend=function(e){e.preventDefault();handleFormClick(e.changedTouches[0])};
+});
+
+// ===== STATION 4: Square grid =====
+var sqSide=5,sqState=0,sqRowDone=false;
+function newSqGrid(){sqSide=Math.floor(Math.random()*4)+3;sqState=0;sqRowDone=false;updateSqUI();drawSqForm()}
+function updateSqUI(){
+  document.getElementById('dS').textContent=sqSide;
+  var dots=document.querySelectorAll('#sqDots .qd');
+  dots.forEach(function(d,i){d.className='qd'+(i===sqState?' cur':'')+(i<sqState?' ok':'')});
+  var hints=['👆 点击一行，看每行几个格子','🤔 根据发现，选出正确的面积公式'];
+  document.getElementById('sqHint').textContent=hints[sqState];
+  document.getElementById('sqSum').textContent=sqState>=1?('每行 '+sqSide+' 格 × '+sqSide+' 行 = '+sqSide*sqSide+' cm²'):'';
+  if(sqState>=1){
+    showSqFormulaQuiz();
+  }else{
+    document.getElementById('sqFormulaQuiz').style.display='none';
+  }
+}
+function drawSqForm(){
+  var c=document.getElementById('sqFormCv');if(!c)return;
+  var ctx=c.getContext('2d'),cell=50,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;
+  ctx.clearRect(0,0,440,240);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,240);
+  for(var r=0;r<sqSide;r++){
+    for(var co=0;co<sqSide;co++){
+      var x=ox+co*cell,y=oy+r*cell;
+      ctx.fillStyle='rgba(41,128,185,.08)';ctx.fillRect(x,y,cell,cell);
+      ctx.strokeStyle='#aaa';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);
+      ctx.fillStyle='#555';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(''+(r*sqSide+co+1),x+cell/2,y+cell/2+4);
+    }
+  }
+  if(sqState>=1||sqRowDone){
+    ctx.fillStyle='#2980b9';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
+    for(var co=0;co<sqSide;co++)ctx.fillText(''+(co+1),ox+co*cell+cell/2,oy-6);
+    for(var r=0;r<sqSide;r++)ctx.fillText(''+(r+1),ox-14,oy+r*cell+cell/2+5);
+    ctx.fillStyle='#2980b9';ctx.font='bold 13px sans-serif';
+    ctx.fillText('每行 '+sqSide+' 格',ox+sqSide*cell+12,oy+cell/2);
+    ctx.fillText(sqSide+' 行',ox-30,oy+sqSide*cell+16);
+    // Badge
+    ctx.fillStyle='#2980b9';ctx.font='bold 13px sans-serif';
+    ctx.fillText('正方形 = 长=宽相等',440/2,oy+sqSide*cell+38);
+  }
+}
+function handleSqClick(e){
+  var c=document.getElementById('sqFormCv');if(!c)return;
+  var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(240/r.height);
+  var cell=50,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;
+  if(sqState===0&&y>=oy&&y<oy+cell){sqRowDone=true;sqState=1;sfxOK();updateSqUI();drawSqForm()}
+}
+function showSqFormulaQuiz(){
+  var h='<p style="font-size:.82em;color:#555;font-weight:bold;margin-bottom:6px">这个正方形的面积应该是？</p>';
+  h+='<button class="qopt" onclick="sqFormAnswer(0,this)">A. '+sqSide+'×4 = '+sqSide*4+' cm²（边长×4 — 这是周长！）</button>';
+  h+='<button class="qopt" onclick="sqFormAnswer(1,this)">B. '+sqSide+'×'+sqSide+' = '+sqSide*sqSide+' cm²（边长×边长 ✓）</button>';
+  h+='<button class="qopt" onclick="sqFormAnswer(2,this)">C. '+sqSide+'+'+sqSide+' = '+sqSide*2+' cm²（边长+边长）</button>';
+  document.getElementById('sqFormulaQuiz').innerHTML=h;document.getElementById('sqFormulaQuiz').style.display='block';
+}
+var sqFormQuizDone=false;
+function sqFormAnswer(idx,btn){
+  if(sqFormQuizDone)return;sqFormQuizDone=true;
+  var opts=document.querySelectorAll('#sqFormulaQuiz .qopt');
+  opts.forEach(function(o){o.disabled=true});
+  if(idx===1){
+    btn.classList.add('good');sfxOK();
+    document.getElementById('sqDone').style.display='block';
+  }else{
+    btn.classList.add('bad');sfxNO();opts[1].classList.add('good');
+    document.getElementById('sqDone').style.display='block';
+  }
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var sc=document.getElementById('sqFormCv');
+  sc.onclick=function(e){handleSqClick(e)};
+  sc.ontouchend=function(e){e.preventDefault();handleSqClick(e.changedTouches[0])};
+});
+
+// ===== STATION 4: Reverse problems =====
+var revProblems=[{a:24,k:6,side:'长',unk:'宽',expect:4},{a:30,k:5,side:'宽',unk:'长',expect:6},{a:18,k:3,side:'长',unk:'宽',expect:6},{a:40,k:8,side:'宽',unk:'长',expect:5},{a:12,k:4,side:'长',unk:'宽',expect:3}];
+var revIdx=0;
+function newRev(){revIdx=(revIdx+1)%revProblems.length;drawRev()}
+function drawRev(){
+  var p=revProblems[revIdx];
+  document.getElementById('revArea').textContent=p.a;document.getElementById('revKnown').textContent=p.k+'（'+p.side+'）';
+  document.getElementById('revQ').textContent='已知面积 = '+p.a+' cm²，'+p.side+' = '+p.k+' cm。求：'+p.unk+' = ？';
+  var c=document.getElementById('revCv');if(!c)return;
+  var ctx=c.getContext('2d');
+  ctx.clearRect(0,0,440,200);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,200);
+  var knownW,knownH;if(p.side==='长'){knownW=p.k*36;knownH=20}else{knownW=20;knownH=p.k*24}
+  var ox=(440-knownW)/2,oy=(200-knownH)/2;
+  if(p.side==='长'){
+    // Known length (orange), unknown width (blue dashed)
+    ctx.fillStyle='rgba(230,126,34,.15)';ctx.fillRect(ox,oy,knownW,knownH);
+    ctx.strokeStyle='#e67e22';ctx.lineWidth=3;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+knownW,oy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox,oy+knownH);ctx.lineTo(ox+knownW,oy+knownH);ctx.stroke();
+    ctx.fillStyle='#e67e22';ctx.font='bold 12px sans-serif';ctx.fillText(p.k+' cm（长）',ox+knownW/2-20,oy-8);
+    // Right dashed (unknown width)
+    ctx.strokeStyle='#2980b9';ctx.lineWidth=3;ctx.setLineDash([5,5]);
+    ctx.beginPath();ctx.moveTo(ox+knownW,oy);ctx.lineTo(ox+knownW,oy+knownH);ctx.stroke();
+    ctx.fillStyle='#2980b9';ctx.fillText('？',ox+knownW+8,oy+knownH/2+5);
+    // Dashed extension
+    ctx.setLineDash([3,5]);
+    ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+knownW+40,oy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox,oy+knownH);ctx.lineTo(ox+knownW+40,oy+knownH);ctx.stroke();
+    ctx.setLineDash([]);
+  }else{
+    ctx.fillStyle='rgba(41,128,185,.1)';ctx.fillRect(ox,oy,knownW,knownH);
+    ctx.strokeStyle='#2980b9';ctx.lineWidth=3;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox,oy+knownH);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox+knownW,oy);ctx.lineTo(ox+knownW,oy+knownH);ctx.stroke();
+    ctx.fillStyle='#2980b9';ctx.font='bold 12px sans-serif';ctx.fillText(p.k+' cm（宽）',ox-40,oy+knownH/2+5);
+    ctx.strokeStyle='#e67e22';ctx.lineWidth=3;ctx.setLineDash([5,5]);
+    ctx.beginPath();ctx.moveTo(ox,oy+knownH);ctx.lineTo(ox+knownW,oy+knownH);ctx.stroke();
+    ctx.fillStyle='#e67e22';ctx.fillText('？',ox+knownW/2-6,oy+knownH+16);
+    ctx.setLineDash([3,5]);
+    ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox,oy+knownH+30);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox+knownW,oy);ctx.lineTo(ox+knownW,oy+knownH+30);ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  document.getElementById('revFeedback').innerHTML='';
+  document.getElementById('revInput').value='';
+}
+function checkRev(){
+  var p=revProblems[revIdx],v=parseInt(document.getElementById('revInput').value);
+  if(v===p.expect){
+    sfxOK();
+    document.getElementById('revFeedback').innerHTML='<span class="g">✅ 正确！</span> '+p.a+' ÷ '+p.k+' = <b>'+p.expect+' cm</b>（'+p.unk+'）';
+  }else if(isNaN(v)){
+    document.getElementById('revFeedback').innerHTML='请输入数字';
+  }else{
+    sfxNO();
+    document.getElementById('revFeedback').innerHTML='<span class="r">❌ 再想想</span>——'+p.a+' ÷ '+p.k+' = ？';
+  }
+}
+
+// ===== STATION 4: Composite shapes =====
+var compShapes=[{w:8,h:5,cutW:2,cutH:2},{w:7,h:6,cutW:3,cutH:2},{w:9,h:4,cutW:2,cutH:3}];
+var compIdx=0,compShowSplit=false;
+function newComp(){compIdx=(compIdx+1)%compShapes.length;compShowSplit=false;drawComp()}
+function toggleCompSplit(){compShowSplit=!compShowSplit;drawComp()}
+function drawComp(){
+  var sh=compShapes[compIdx],c=document.getElementById('compCv'),ctx=c.getContext('2d');
+  ctx.clearRect(0,0,440,260);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,260);
+  var cell=32,ox=(440-sh.w*cell)/2,oy=(260-sh.h*cell)/2;
+  // Draw full grid
+  for(var r=0;r<sh.h;r++){
+    for(var co=0;co<sh.w;co++){
+      var isCut=co<(sh.w-sh.cutW)&&r<sh.cutH;
+      var x=ox+co*cell,y=oy+r*cell;
+      ctx.fillStyle=isCut?'rgba(39,174,96,.15)':'rgba(231,76,60,.08)';
+      ctx.fillRect(x,y,cell,cell);
+      ctx.strokeStyle='#bbb';ctx.lineWidth=.5;ctx.strokeRect(x,y,cell,cell);
+    }
+  }
+  if(compShowSplit){
+    // Show split line
+    ctx.strokeStyle='#e67e22';ctx.lineWidth=2.5;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(ox+(sh.w-sh.cutW)*cell,oy);ctx.lineTo(ox+(sh.w-sh.cutW)*cell,oy+sh.h*cell);ctx.stroke();
+    ctx.setLineDash([]);
+    // Label parts
+    var part1=sh.w*(sh.h-sh.cutH),part2=(sh.w-sh.cutW)*sh.cutH,total=part1+part2;
+    ctx.fillStyle='#e67e22';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
+    ctx.fillText('A: '+sh.w+'×'+(sh.h-sh.cutH)+' = '+part1,ox+sh.w*cell/2,oy+sh.h*cell+22);
+    ctx.fillText('B: '+(sh.w-sh.cutW)+'×'+sh.cutH+' = '+part2,ox+sh.w*cell/2,oy+sh.h*cell+40);
+    document.getElementById('compSum').textContent='面积 = '+part1+' + '+part2+' = '+total+' cm²';
+  }else{
+    var total=sh.w*sh.h-(sh.w-sh.cutW)*sh.cutH;
+    document.getElementById('compSum').textContent='面积 = '+sh.w+'×'+sh.h+' − '+sh.cutW+'×'+sh.cutH+' = '+total+' cm²';
+  }
+  document.getElementById('compInfo').textContent=compShowSplit?'切成两块，分别算面积再相加':'大长方形减缺角';
+}
+newComp();
+
+// ===== STATION 5: Trap 1 — same perimeter, different area =====
+function drawTrap1(){
+  var L=parseInt(document.getElementById('trapL').value),W=10-L;
+  document.getElementById('trapLv').textContent=L+' cm';
+  var c=document.getElementById('trap1Cv'),ctx=c.getContext('2d');
+  ctx.clearRect(0,0,440,200);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,200);
+  var sc=28,ox=(440-L*sc)/2,oy=(200-W*sc)/2;
+  ctx.fillStyle='rgba(39,174,96,.2)';ctx.fillRect(ox,oy,L*sc,W*sc);
+  ctx.strokeStyle='#27ae60';ctx.lineWidth=3;ctx.strokeRect(ox,oy,L*sc,W*sc);
+  // Length labels
+  ctx.fillStyle='#e67e22';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
+  ctx.fillText(L+' cm',ox+L*sc/2,oy-6);
+  ctx.fillStyle='#2980b9';ctx.textAlign='left';
+  ctx.fillText(W+' cm',ox+L*sc+6,oy+W*sc/2+5);
+  // Perimeter and area info
+  var p=2*(L+W),a=L*W;
+  document.getElementById('trap1Info').innerHTML='周长 = 2×('+L+'+'+W+') = <b>'+p+' cm</b>（不变！）&nbsp;&nbsp;|&nbsp;&nbsp;面积 = '+L+'×'+W+' = <b>'+a+' cm²</b>';
+}
+drawTrap1();
+
+// ===== STATION 5: Joining =====
+var joinMode=0;
+function compJ(n){
+  joinMode=n;document.getElementById('jb0').className='btn'+(n===0?' gr':'');document.getElementById('jb1').className='btn'+(n===1?' gr':'');
+  drawJoin();
+}
+function drawJoin(){
+  var c=document.getElementById('jv'),ctx=c.getContext('2d'),sq=55,ox=60,oy=(190-sq)/2;
+  ctx.clearRect(0,0,440,190);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,190);
+  var side=4; // 4cm squares
+  if(joinMode===0){
+    // Two separate squares
+    ctx.fillStyle='rgba(230,126,34,.2)';ctx.fillRect(ox,oy,sq,sq);ctx.strokeStyle='#e67e22';ctx.lineWidth=2.5;ctx.strokeRect(ox,oy,sq,sq);
+    ctx.fillRect(ox+sq+40,oy,sq,sq);ctx.strokeStyle='#e67e22';ctx.strokeRect(ox+sq+40,oy,sq,sq);
+    ctx.fillStyle='#e67e22';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+    ctx.fillText(side+' cm',ox+sq/2,oy-6);ctx.fillText(side+' cm',ox+sq/2-28,oy+sq/2+5);
+    ctx.fillText(side+' cm',ox+sq+40+sq/2,oy-6);ctx.fillText(side+' cm',ox+sq+40+sq/2-28,oy+sq/2+5);
+    document.getElementById('jInfo').innerHTML='两个分开：面积 = '+side*side+' + '+side*side+' = <b>'+(side*side*2)+' cm²</b>（直接相加）';
+  }else{
+    // Joined — 2×1 rectangle
+    ctx.fillStyle='rgba(39,174,96,.2)';ctx.fillRect(ox,oy,sq*2,sq);
+    ctx.strokeStyle='#27ae60';ctx.lineWidth=2.5;ctx.strokeRect(ox,oy,sq*2,sq);
+    // Dashed center line (the "disappeared" edge)
+    ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1;ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.moveTo(ox+sq,oy);ctx.lineTo(ox+sq,oy+sq);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#27ae60';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+    ctx.fillText((side*2)+' cm',ox+sq,oy-6);
+    ctx.fillText(side+' cm',ox-22,oy+sq/2+5);
+    document.getElementById('jInfo').innerHTML='拼在一起：面积 = '+(side*2)+'×'+side+' = <b>'+(side*side*2)+' cm²</b>（不变！里面的格子一个没少）';
+  }
+}
+compJ(0);
+
+// ===== STATION 6: Quiz =====
+var quizData=[
+  {q:'面积量的是？',o:['图形里面有多大','图形一圈多长','图形有多重','图形有几个角'],a:0,x:'面积 = 封闭图形<b>里面</b>有多大。'},
+  {q:'下面哪个是面积单位？',o:['cm','cm²','kg','个'],a:1,x:'面积用面积单位——<b>cm²（平方厘米）</b>。'},
+  {q:'长方形长 5 cm、宽 3 cm，面积是？',o:['8 cm²','15 cm²','16 cm²','10 cm²'],a:1,x:'5×3 = <b>15 cm²</b>。面积 = 长 × 宽。'},
+  {q:'正方形边长 4 cm，面积是？',o:['16 cm','16 cm²','8 cm²','12 cm²'],a:1,x:'4×4 = <b>16 cm²</b>。正方形面积 = 边长×边长。'},
+  {q:'正方形边长 4 cm，周长是？',o:['16 cm','16 cm²','8 cm','8 cm²'],a:0,x:'周长 = 4×4 = <b>16 cm</b>。注意：周长用 cm，不是 cm²！'},
+  {q:'长方形周长 20 cm，长 6 cm，宽是多少？',o:['3 cm','4 cm','5 cm','7 cm'],a:1,x:'(20÷2)−6 = <b>4 cm</b>。周长÷2−长 = 宽。'},
+  {q:'长方形面积 24 cm²，长 6 cm，宽是多少？',o:['3 cm','4 cm','6 cm','18 cm'],a:1,x:'24÷6 = <b>4 cm</b>。面积÷长 = 宽。'},
+  {q:'两个正方形拼在一起，面积会？',o:['变大','变小','不变','消失'],a:2,x:'拼起来面积<b>不变</b>——里面的格子一个没少。周长会变小（中间那条边消失了）。'},
+  {q:'面积用哪个公式？',o:['长×宽','(长+宽)×2','边长×4','长+宽'],a:0,x:'面积 = <b>长×宽</b>。(长+宽)×2 是周长公式！'},
+  {q:'长方形长 8 cm、宽 2 cm，周长和面积各是多少？',o:['周长 20 cm，面积 16 cm²','周长 16 cm，面积 20 cm²','周长 20 cm²，面积 16 cm','周长 10 cm，面积 16 cm²'],a:0,x:'周长 = (8+2)×2 = <b>20 cm</b>，面积 = 8×2 = <b>16 cm²</b>。'},
+  {q:'1 平方厘米（cm²）是什么？',o:['边长 1 cm 的小线段','边长 1 cm 的小方块','重 1 克的方块','长 1 cm 的绳子'],a:1,x:'cm² = <b>边长 1 cm 的小方块</b>。铺了几个这样的方块就是几 cm²。'},
+  {q:'正方形边长 5 cm，面积是？',o:['20 cm²','10 cm²','25 cm²','25 cm'],a:2,x:'5×5 = <b>25 cm²</b>。注意：25 cm 是周长（5×4=20，也不对），面积单位加 ²！'},
+  {q:'下面哪个说法是正确的？',o:['面积大周长一定大','周长大面积一定大','两个可以完全没关系','面积=周长'],a:2,x:'面积和周长<b>没有必然关系</b>。周长一样时面积可以差很多。'},
+  {q:'L 形图形的面积怎么算？',o:['切成小块分别算再相加','周长÷2×宽','当成正方形算','数一圈有几条边'],a:0,x:'组合图形 = <b>切成几块长方形，分别算面积再相加</b>。'},
+  {q:'长方形长 7 cm、宽 3 cm，面积是？',o:['10 cm²','20 cm²','21 cm²','21 cm'],a:2,x:'7×3 = <b>21 cm²</b>。'},
+  {q:'教室地面面积大约用哪个单位？',o:['cm²','m²','km²','cm'],a:1,x:'教室地面用 <b>m²（平方米）</b>——cm² 太小了。'},
+  {q:'长方形面积 36 cm²，宽 4 cm，长是多少？',o:['9 cm','32 cm','8 cm','40 cm'],a:0,x:'36÷4 = <b>9 cm</b>。'},
+  {q:'正方形面积 49 cm²，边长是多少？',o:['6 cm','7 cm','8 cm','24.5 cm'],a:1,x:'边长×边长=49 → 7×7=49 → 边长 = <b>7 cm</b>。'},
+  {q:'面积本质是什么？',o:['数一数绕了几圈','数一数里面有几个单位小方块','量一量有多重','看一看什么颜色'],a:1,x:'面积本质 = <b>数一数里面能铺多少个 1cm² 小方块</b>。'},
+  {q:'长方形长 10 cm、宽 1 cm，面积和周长？',o:['面积 10 cm²，周长 22 cm','面积 10 cm²，周长 20 cm','面积 11 cm²，周长 22 cm','面积 10 cm，周长 22 cm'],a:0,x:'面积 = 10×1 = <b>10 cm²</b>，周长 = (10+1)×2 = <b>22 cm</b>。长条形：面积小但周长长！'},
+  {q:'正方形是特殊的长方形，因为？',o:['它有 4 条边','它长和宽相等','它是红色的','它比较小'],a:1,x:'正方形 = <b>长=宽</b> 的长方形。所以面积 = 长×宽 = 边长×边长，都对！'},
+  {q:'下面哪个是周长公式？',o:['长×宽','边长×边长','(长+宽)×2','长+宽'],a:2,x:'<b>(长+宽)×2</b> 是周长公式。长×宽是面积公式。'},
+  {q:'长方形长 9 cm、宽 4 cm，面积是多少？',o:['13 cm²','26 cm²','36 cm²','36 cm'],a:2,x:'9×4 = <b>36 cm²</b>。'},
+  {q:'一面墙长 3 m、高 2 m，面积是多少？',o:['6 m','6 m²','5 m²','10 m²'],a:1,x:'3×2 = <b>6 m²</b>。注意单位：m×m=m²。'},
+  {q:'正方形边长 6 cm，周长和面积各是多少？',o:['周长 24 cm，面积 36 cm²','周长 24 cm²，面积 36 cm','周长 36 cm，面积 24 cm²','周长 24 cm，面积 24 cm²'],a:0,x:'周长 = 6×4 = <b>24 cm</b>，面积 = 6×6 = <b>36 cm²</b>。单位不一样！'},
+];
+var qPool=[],qCount=10,qi=0,qscore=0,qAnswers=[];
+function shuffle(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=arr[i];arr[i]=arr[j];arr[j]=t}return arr}
+function pickQuiz(){qPool=shuffle(quizData.slice()).slice(0,qCount);qi=0;qscore=0;qAnswers=[];renderQuiz()}
+function renderQuiz(){
+  var q=qPool[qi],done=qAnswers[qi]!==undefined;
+  document.getElementById('qqq').textContent='第 '+(qi+1)+'/'+qCount+' 题：'+q.q;
+  var d='';for(var i=0;i<qCount;i++)d+='<div class="qd'+(i===qi?' cur':'')+(qAnswers[i]!==undefined?(qAnswers[i]===qPool[i].a?' ok':' no'):'')+'"></div>';
+  document.getElementById('qds').innerHTML=d;
+  var h='';
+  if(done){
+    q.o.forEach(function(o,i){
+      var cls='qopt';
+      if(i===q.a)cls+=' good';
+      else if(i===qAnswers[qi])cls+=' bad';
+      h+='<button class="'+cls+'" disabled>'+['A','B','C','D'][i]+'. '+o+'</button>';
+    });
+  }else{
+    q.o.forEach(function(o,i){
+      h+='<button class="qopt" onclick="answerQ('+i+',this)">'+['A','B','C','D'][i]+'. '+o+'</button>';
+    });
+  }
+  document.getElementById('qos').innerHTML=h;
+  document.getElementById('qex').innerHTML=done?('💡 '+q.x.replace('<b>','<b style="color:#2e7d32">')):'';
+  document.getElementById('qpr').disabled=qi===0;
+  document.getElementById('qnx').textContent=(qAnswers.length>=qCount)?'查看成绩 🎯':'下一题 ▶';
+  document.getElementById('qnx').className='btn go';
+}
+function answerQ(idx,btn){
+  if(qAnswers[qi]!==undefined)return;
+  qAnswers[qi]=idx;
+  var q=qPool[qi];
+  if(idx===q.a){qscore++;sfxOK()}else{sfxNO()}
+  renderQuiz();
+}
+function qpr(){if(qi>0){qi--;renderQuiz()}}
+function qnx(){
+  if(qAnswers.length>=qCount){showScore();return}
+  qi++;renderQuiz();
+}
+function showScore(){
+  document.getElementById('qnv').style.display='none';document.getElementById('qds').style.display='none';
+  document.getElementById('qqq').style.display='none';document.getElementById('qos').style.display='none';
+  document.getElementById('qex').style.display='none';
+  var sc=document.getElementById('qsc');sc.style.display='block';
+  var emo,msg;
+  if(qscore>=10){emo='🏆';msg='太厉害了！面积小达人！'}
+  else if(qscore>=7){emo='🎉';msg='很棒！面积基本都掌握了！'}
+  else if(qscore>=4){emo='💪';msg='还不错，再看看讲解会更棒！'}
+  else{emo='📚';msg='没关系，再学一遍你就是面积高手！'}
+  document.getElementById('semo').textContent=emo;
+  document.getElementById('snum').textContent=qscore+'/10';
+  document.getElementById('smsg').textContent=msg;
+  if(qscore===10)sfxDone();
+  md(5);
+}
+function qrw(){
+  // Review mode: go back to first wrong answer
+  for(var i=0;i<qCount;i++){if(qAnswers[i]!==qPool[i].a){qi=i;break}}
+  document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';
+  document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';
+  document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';
+  renderQuiz();
+}
+function qrs(){
+  document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';
+  document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';
+  document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';
+  pickQuiz();
+}
+
+// ===== Init =====
+document.addEventListener('DOMContentLoaded',function(){
+  updateFormUI();drawForm();
+  updateSqUI();drawSqForm();
+  newRev();
+  // Lazy init quiz
+  var s6=document.getElementById('s6');
+  var obs=new IntersectionObserver(function(e){if(e[0].isIntersecting){pickQuiz();obs.unobserve(s6)}},{threshold:.3});
+  obs.observe(s6);
+  var r=s6.getBoundingClientRect();
+  if(r.top<window.innerHeight&&r.bottom>0)setTimeout(pickQuiz,400);
+});
+</script>
+</body>
+</html>
