@@ -49,10 +49,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .cv{background:#f0ede6;border-radius:14px;overflow:hidden;margin:10px 0;border:1px solid #e0dcd4}
 .cv canvas{display:block;max-width:100%;touch-action:none}
 
-.shape-sel{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0}
-.shape-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 16px;border-radius:14px;border:2px solid #ddd;background:#fafaf7;cursor:pointer;font-size:.75em;color:#666;transition:all .25s;font-family:inherit;min-width:64px}
+.shape-sel{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0;align-items:flex-end}
+.shape-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;border-radius:14px;border:2px solid #ddd;background:#fafaf7;cursor:pointer;font-size:.73em;color:#666;transition:all .25s;font-family:inherit;min-width:60px}
 .shape-btn:active,.shape-btn.pick{border-color:#27ae60;background:#f0faf4;color:#2e7d32}
-.shape-btn .sicon{font-size:1.6em;line-height:1}
+.shape-btn .sicon{font-size:1.5em;line-height:1}
+.rot-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:2px solid #e67e22;background:#fff3e0;color:#e65100;cursor:pointer;font-size:1em;transition:all .2s;margin-top:2px}
+.rot-btn:active{background:#ffe0b2;transform:rotate(90deg)}
 .stat-bar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.8em;color:#666;margin:6px 0}
 .stat-bar span{background:#faf8f4;padding:6px 12px;border-radius:8px}
 
@@ -82,11 +84,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .ir-tab{padding:8px 14px;border-radius:20px;border:2px solid #ddd;background:#fafaf7;font-size:.78em;cursor:pointer;font-family:inherit;color:#666;transition:all .2s}
 .ir-tab.active{background:#27ae60;color:#fff;border-color:#27ae60}
 
-.guide-step{background:#fffbf0;border:2px solid #ffe082;border-radius:12px;padding:14px;margin:8px 0;display:none}
-.guide-step.active{display:block}
-.guide-step .gs-q{font-size:.84em;color:#555;margin-bottom:8px;font-weight:bold}
-.guide-step .gs-inputs{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
-.guide-step .gs-fb{font-size:.78em;min-height:20px;text-align:center;margin-top:6px}
+.gs-block{background:#fffbf0;border:2px solid #ffe082;border-radius:12px;padding:14px;margin:8px 0}
+.gs-block .gs-q{font-size:.83em;color:#555;margin-bottom:8px;font-weight:bold}
+.gs-block .gs-inputs{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
+.gs-block .gs-fb{font-size:.77em;min-height:20px;text-align:center;margin-top:6px}
+.gs-done{opacity:.7}
 
 .qdots{display:flex;gap:4px;justify-content:center;margin:8px 0;flex-wrap:wrap}
 .qd{width:10px;height:10px;border-radius:50%;background:#e0dcd4;transition:all .3s}
@@ -104,7 +106,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .sb{text-align:center;padding:16px 0}
 .sb .se{font-size:3.5em}.sb .sn{font-size:2.8em;font-weight:bold;color:#2e7d32}
 .foot{text-align:center;padding:20px 0 40px;font-size:.68em;color:#bbb}
-
 @media(max-width:380px){.hero h1{font-size:1.35em}.sec{padding:16px 10px}.sc-card canvas{height:120px}}
 </style>
 </head>
@@ -116,76 +117,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <!-- ===== STEP 1 ===== -->
 <div class="sec" id="s1">
 <h2>🔍 第一步：感受「面积」——物体表面整体有多大？</h2>
-<p>下面这些场景，都在做同一件事：<b>完整地遮盖一个表面</b>。点开看看，你发现了什么？</p>
+<p>下面这些场景，都在做同一件事：<b>完整地遮盖一个表面</b>。点开看看。</p>
 <div class="scenes-g" id="scenesG"></div>
 <p style="text-align:center;font-size:.78em;color:#777;min-height:22px" id="sceneCnt">已打开：0/6</p>
-<div class="reveal" id="s1Reveal" style="display:none">
-  <p style="font-size:.8em;color:#aaa">全部看完了！你发现了吗——</p>
-  <p style="font-size:.95em;color:#555;line-height:1.7;margin:8px 0">不管是刷墙、铺桌布、种草坪还是贴瓷砖……<br><span class="b">都是在完整地遮盖一个表面，测量这个表面整体有多大。</span></p>
-  <div class="big">📐 面 积</div>
-  <p class="sub">封闭图形<b>整个面</b>的大小，就是它的面积。面积说的是「面」，不是边线！</p>
-</div>
+<div class="reveal" id="s1Reveal" style="display:none"><p style="font-size:.95em;color:#555;line-height:1.7;margin:8px 0">都是在完整地遮盖一个表面。<br><span class="b">测量这个表面整体有多大。</span></p><div class="big">📐 面 积</div></div>
 </div>
 
 <!-- ===== STEP 2: Lab ===== -->
 <div class="sec" id="s2">
 <h2>🧪 第二步：怎么量面积？——亲手实验！</h2>
-<p>下面是一块<b>空白的待测平面</b>。挑选不同形状的工具，<b>亲手铺上去比一比</b>！</p>
 <div class="shape-sel" id="shapeSel">
   <button class="shape-btn pick" data-shape="square" onclick="pickShape('square')"><span class="sicon">◼</span>正方形</button>
   <button class="shape-btn" data-shape="circle" onclick="pickShape('circle')"><span class="sicon">●</span>圆形</button>
-  <button class="shape-btn" data-shape="triangle" onclick="pickShape('triangle')"><span class="sicon">◣</span>三角形</button>
+  <button class="shape-btn" data-shape="triangle" onclick="pickShape('triangle')"><span class="sicon">◣</span>三角形<span class="rot-btn" id="triRotBtn" onclick="event.stopPropagation();triRotate()" title="旋转三角形">↻</span></button>
   <button class="shape-btn" data-shape="rect" onclick="pickShape('rect')"><span class="sicon">▬</span>长方形</button>
 </div>
 <div class="cv"><canvas id="labCv" width="440" height="360"></canvas></div>
-<div class="stat-bar">
-  <span id="labCount">已用：0 个</span>
-  <span id="labGap" style="color:#e67e22"></span>
-  <span id="labHint" style="color:#2980b9;font-size:.72em"></span>
-</div>
-<div class="btn-row">
-  <button class="btn gr" onclick="labClear()">🔄 全部清空</button>
-  <button class="btn blu" onclick="labCompare()">📊 对比四种图形</button>
-</div>
+<div class="stat-bar"><span id="labCount">已用：0 个</span><span id="labGap" style="color:#e67e22"></span></div>
+<div class="btn-row"><button class="btn gr" onclick="labClear()">🔄 全部清空</button><button class="btn blu" onclick="labCompare()">📊 对比四种图形</button></div>
 <div id="labCompPanel" style="display:none">
-  <div class="reveal open" style="margin-top:12px"><p style="font-size:.85em;font-weight:bold;color:#2e7d32">📊 你用四种图形测量的结果</p><div id="labCompTbl" style="font-size:.78em;color:#555;line-height:1.8;margin:8px 0"></div></div>
-  <div class="disc-panel" id="labDisc"><h4>🤔 想一想：哪种形状最适合做「面积测量单位」？</h4><div class="opt-row">
-    <button class="opt-btn" onclick="discA(0,this)">圆形——因为没有尖角</button>
-    <button class="opt-btn" onclick="discA(1,this)">三角形——因为三角形最稳定</button>
-    <button class="opt-btn" onclick="discA(2,this)">正方形——因为能紧密铺满、不留空隙</button>
-    <button class="opt-btn" onclick="discA(3,this)">长方形——因为和要测的形状一样</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
+  <div class="reveal open" style="margin-top:12px"><p style="font-size:.85em;font-weight:bold;color:#2e7d32">📊 四种图形测量对比</p><div id="labCompTbl" style="font-size:.78em;color:#555;line-height:1.8;margin:8px 0"></div></div>
+  <div class="disc-panel" id="labDisc"><h4>🤔 哪种形状最适合做面积测量单位？</h4><div class="opt-row">
+    <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形——紧密铺满不留空隙</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 </div>
 </div>
 
 <!-- ===== STEP 3 ===== -->
 <div class="sec" id="s3">
 <h2>⚖️ 第三步：为什么叫「平方」厘米？</h2>
-<p>上一步我们发现：<b>正方形</b>最适合做面积测量单位。那为什么面积单位都叫「平方××」？</p>
-<h3>🔍 「平方」的秘密</h3>
 <div class="unit-compare">
-  <div class="uc"><canvas id="ucLine" width="100" height="80"></canvas><div class="ucl">1 厘米（cm）</div><div class="ucd">一条<b>线段</b>的长度<br>👉 只能量「长短」</div></div>
+  <div class="uc"><canvas id="ucLine" width="100" height="80"></canvas><div class="ucl">1 厘米（cm）</div><div class="ucd">一条<b>线段</b>的长度</div></div>
   <div style="align-self:center;font-size:2em;color:#bbb">→</div>
-  <div class="uc hl"><canvas id="ucSq" width="100" height="80"></canvas><div class="ucl">1 平方厘米（cm²）</div><div class="ucd">一个<b>正方形面</b>的大小<br>👉 用来量「面的大小」</div></div>
+  <div class="uc hl"><canvas id="ucSq" width="100" height="80"></canvas><div class="ucl">1 平方厘米（cm²）</div><div class="ucd">一个<b>正方形面</b>的大小</div></div>
 </div>
-<p style="text-align:center;font-size:.9em"><b>「平方」= 正方形</b>。<br>用这个正方形去铺——铺了几个，面积就是几<b>平方厘米</b>。</p>
-<h3>🤔 选一选：下面该用哪个单位？</h3>
+<p style="text-align:center;font-size:.9em"><b>「平方」= 正方形</b>。铺了几个，面积就是几<b>平方厘米</b>。</p>
 <div class="qo" id="unitQuiz">
-  <button class="qopt" onclick="ansU(0,this)">A. 课桌面的大小 —— cm（厘米）</button>
-  <button class="qopt" onclick="ansU(1,this)">B. 课桌面的大小 —— cm²（平方厘米）</button>
-  <button class="qopt" onclick="ansU(2,this)">C. 操场一圈的长度 —— m²（平方米）</button>
-  <button class="qopt" onclick="ansU(3,this)">D. 教室地面的面积 —— m（米）</button>
+  <button class="qopt" onclick="ansU(0,this)">A. 课桌面的大小 —— cm</button>
+  <button class="qopt" onclick="ansU(1,this)">B. 课桌面的大小 —— cm²</button>
+  <button class="qopt" onclick="ansU(2,this)">C. 操场一圈的长度 —— m²</button>
+  <button class="qopt" onclick="ansU(3,this)">D. 教室地面的面积 —— m</button>
 </div>
 <p id="unitFB" style="text-align:center;font-size:.85em;min-height:24px;margin:8px 0"></p>
-<div id="unitRev" style="display:none"><div class="reveal open" style="margin-top:8px"><div class="big">量长度 → 长度单位（cm、m）<br>量面积 → 面积单位（cm²、m²）</div></div></div>
+<div id="unitRev" style="display:none"><div class="reveal open"><div class="big">量长度 → cm / m<br>量面积 → cm² / m²</div></div></div>
 </div>
 
-<!-- ===== STEP 4: Formula ===== -->
+<!-- ===== STEP 4 ===== -->
 <div class="sec" id="s4">
-<h2>🔬 第四步：找规律——不用每次都一块块数！</h2>
-<p>每次都一块块铺太慢了。<b>仔细观察，你能找到快速计算的方法吗？</b></p>
+<h2>🔬 第四步：找规律</h2>
 
-<!-- Rectangle -->
-<h3>📐 长方形：亲手铺一铺，自己找规律</h3>
+<h3>📐 长方形</h3>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
   <span style="font-size:.78em;color:#888">长 <b id="fL"></b> cm &nbsp; 宽 <b id="fW"></b> cm</span>
   <button class="btn org" id="fModeBtn" onclick="fToggleMode()" style="min-height:32px;padding:4px 12px;font-size:.72em">⬇ 列铺</button>
@@ -195,14 +175,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <p id="fHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold"></p>
 <div id="fQuiz" style="display:none;margin:10px 0">
   <p class="fq">一共有多少个 <b>1 cm²</b> 的小方块？</p>
-  <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap"><span style="font-size:1.1em"><b id="fqA"></b></span><span style="font-size:1.1em">×</span><span style="font-size:1.1em"><b id="fqB"></b></span><span>=</span><input type="number" class="form-input" id="fTotal" placeholder="?"><button class="btn go" onclick="fChk()">✅</button></div>
+  <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap"><span style="font-size:1.1em"><b id="fqA"></b></span><span>×</span><span style="font-size:1.1em"><b id="fqB"></b></span><span>=</span><input type="number" class="form-input" id="fTotal" placeholder="?"><button class="btn go" onclick="fChk()">✅</button></div>
   <p id="fFB" style="text-align:center;font-size:.8em;min-height:20px;margin-top:6px"></p>
 </div>
-<div id="fFormula" style="display:none;margin:8px 0"><p class="fq">你是怎样算出来的？</p><div class="btn-row" id="fFormulaBtns"></div><div class="reveal open" id="fFinal" style="display:none;margin-top:8px"><div class="big">长方形面积 = 长 × 宽</div><p class="sub">铺出来的规律：每行格子数(长) × 行数(宽) = 总格子数 = 面积。</p></div></div>
+<div id="fFormula" style="display:none;margin:8px 0"><p class="fq">你是怎样算出来的？</p><div class="btn-row" id="fFormulaBtns"></div><div class="reveal open" id="fFinal" style="display:none;margin-top:8px"><div class="big">长方形面积 = 长 × 宽</div></div></div>
 <div id="fHistory" style="margin-top:12px"></div>
 
-<!-- Square -->
-<h3 style="margin-top:18px">⬛ 正方形：同样铺一铺！</h3>
+<h3 style="margin-top:18px">⬛ 正方形</h3>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
   <span style="font-size:.78em;color:#888">边长 <b id="sqS"></b> cm</span>
   <button class="btn org" id="sqModeBtn" onclick="sqToggleMode()" style="min-height:32px;padding:4px 12px;font-size:.72em">⬇ 列铺</button>
@@ -212,66 +191,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <p id="sqHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold"></p>
 <div id="sqQuiz" style="display:none;margin:10px 0">
   <p class="fq">一共有多少个 <b>1 cm²</b> 的小方块？</p>
-  <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap"><span style="font-size:1.1em"><b id="sqA"></b></span><span style="font-size:1.1em">×</span><span style="font-size:1.1em"><b id="sqB"></b></span><span>=</span><input type="number" class="form-input" id="sqTotal" placeholder="?"><button class="btn go" onclick="sqChk()">✅</button></div>
+  <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap"><span style="font-size:1.1em"><b id="sqA"></b></span><span>×</span><span style="font-size:1.1em"><b id="sqB"></b></span><span>=</span><input type="number" class="form-input" id="sqTotal" placeholder="?"><button class="btn go" onclick="sqChk()">✅</button></div>
   <p id="sqFB" style="text-align:center;font-size:.8em;min-height:20px;margin-top:6px"></p>
-  <div class="reveal open" id="sqFinal" style="display:none;margin-top:8px"><div class="big">正方形面积 = 边长 × 边长</div><p class="sub">长=宽=边长，所以长×宽 = 边长×边长。</p></div>
+  <div class="reveal open" id="sqFinal" style="display:none;margin-top:8px"><div class="big">正方形面积 = 边长 × 边长</div></div>
 </div>
 
-<!-- Reverse -->
-<h3 style="margin-top:18px">🔄 反过来：已知面积，求边长</h3>
-<p>知道面积和其中一条边，另一条边怎么求？铺格子试一试——</p>
-<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px">
-  <button class="btn blu" onclick="revNew()" style="min-height:32px;padding:4px 12px;font-size:.72em">🔄 换一题</button>
-</div>
+<h3 style="margin-top:18px">🔄 反过来：已知面积求边长</h3>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px"><button class="btn blu" onclick="revNew()" style="min-height:32px;padding:4px 12px;font-size:.72em">🔄 换一题</button></div>
 <div class="cv"><canvas id="revCv" width="440" height="190"></canvas></div>
 <p id="revQ" style="text-align:center;font-size:.84em;color:#555;font-weight:bold;min-height:20px"></p>
 <div style="display:flex;gap:6px;justify-content:center;align-items:center;margin:8px 0"><input type="number" id="revIn" style="width:80px;height:40px;border:2px solid #ddd;border-radius:10px;text-align:center;font-size:1em;font-family:inherit" placeholder="?"><button class="btn go" onclick="revChk()">✅ 检查</button></div>
 <p id="revFB" style="text-align:center;font-size:.82em;min-height:22px"></p>
 </div>
 
-<!-- ===== STEP 5: Irregular + Step Guide ===== -->
+<!-- ===== STEP 5: Irregular ===== -->
 <div class="sec" id="s5">
-<h2>✂️ 第五步：不规则的图形怎么算？——亲手割补！</h2>
-<p>遇到<b>L形、凹形、阶梯形</b>怎么办？<br><span class="b">核心方法：你自己动手画线来切！</span></p>
+<h2>✂️ 第五步：不规则图形——亲手割补</h2>
 <div class="ir-tabs" id="irTabs"></div>
 <div class="cv"><canvas id="irCv" width="440" height="340"></canvas></div>
-<div class="tip-box">👆 <b>按住鼠标在图形上划动</b>，线条会自动对齐网格。<br>把图形切成几块长方形，然后——</div>
+<div class="tip-box">👆 <b>按住鼠标划动</b>，线条自动对齐网格。<br>把图形切成规则小块，然后选一种方法计算——</div>
 <div class="btn-row">
-  <button class="btn gr" onclick="irUndo()">↩ 撤销上一条</button>
-  <button class="btn gr" onclick="irReset()">🔄 全部清除</button>
-  <button class="btn go" id="irCalcBtn" onclick="startIrCalc()" disabled>📐 开始计算面积</button>
+  <button class="btn gr" onclick="irUndo()">↩ 撤销</button>
+  <button class="btn gr" onclick="irReset()">🔄 清除</button>
+  <button class="btn go" id="irCalcBtn" onclick="startIrCalc()" disabled>📐 开始计算</button>
 </div>
-<div id="irGuide" style="display:none">
-  <div class="guide-step active" id="irGs0">
-    <div class="gs-q">第1步：你画的切割线把图形分成了<b>几块</b>规则图形？</div>
-    <div class="gs-inputs"><input type="number" class="form-input" id="irPieces" placeholder="?" min="1" max="8"><button class="btn go" onclick="irGsNext(0)">✅</button></div>
-    <div class="gs-fb" id="irFb0"></div>
-  </div>
-  <div id="irPieceSteps"></div>
-  <div class="guide-step" id="irGsSum">
-    <div class="gs-q" id="irSumQ"></div>
-    <div class="gs-inputs"><input type="number" class="form-input" id="irSum" placeholder="?"><button class="btn go" onclick="irGsSumChk()">✅</button></div>
-    <div class="gs-fb" id="irFbSum"></div>
-  </div>
-</div>
+
+<div id="irGuide"></div>
 
 <div style="margin-top:14px"><h3>⚠️ 周长 vs 面积：三大易错点</h3>
 <div style="background:#fdecea;border-radius:12px;padding:12px;font-size:.78em;color:#666;line-height:1.7;margin:8px 0">
-  <p><span class="r">❌ 陷阱一：</span>周长一样，面积不一定一样。</p>
-  <p><span class="r">❌ 陷阱二：</span>拼起来面积不变，周长反而可能变小。</p>
-  <p><span class="r">❌ 陷阱三：</span>用错单位！边线用cm，面积用cm²。</p>
+  <p><span class="r">❌</span> 周长一样，面积不一定一样。</p>
+  <p><span class="r">❌</span> 拼起来面积不变，周长可能变小。</p>
+  <p><span class="r">❌</span> 边线用cm，面积用cm²。</p>
 </div></div>
 </div>
 
-<!-- ===== STEP 6: Quiz ===== -->
+<!-- ===== STEP 6 ===== -->
 <div class="sec" id="s6">
 <h2>🏆 第六步：综合闯关</h2>
-<p>25题题库，随机抽 <span class="b">10 题</span>。</p>
+<p>25题题库随机抽 <span class="b">10 题</span>。</p>
 <div class="qdots" id="qds"></div><div class="qq" id="qqq"></div><div class="qo" id="qos"></div><div class="qexp" id="qex"></div>
 <div class="qnav" id="qnv"><button class="btn" id="qpr" onclick="qpr()" disabled>◀ 上一题</button><button class="btn go" id="qnx" onclick="qnx()">下一题 ▶</button></div>
 <div id="qsc" style="display:none"><div class="sb"><div class="se" id="semo"></div><div class="sn" id="snum"></div><p id="smsg" style="font-size:.92em;color:#555;margin:8px 0"></p><div class="btn-row"><button class="btn blu" onclick="qrw()">🔍 回顾错题</button><button class="btn go" onclick="qrs()">🔄 再来一组</button></div></div></div>
 </div>
-<div class="foot">🛠 由 AI 辅助制作 · 持续改进中<br>如有 bug 请留言反馈 ❤️</div>
+<div class="foot">🛠 由 AI 辅助制作 · 持续改进中</div>
 </div>
 
 <script>
@@ -283,218 +246,108 @@ function sfxOK(){beep(660,.12);setTimeout(function(){beep(880,.15)},120)}
 function sfxNO(){beep(200,.2,'triangle')}
 function sfxDone(){beep(523,.1);setTimeout(function(){beep(659,.1)},100);setTimeout(function(){beep(784,.1)},200);setTimeout(function(){beep(1047,.25)},300)}
 
-// ===== PROGRESS =====
 var sd=[!1,!1,!1,!1,!1,!1];
 function md(n){if(sd[n])return;sd[n]=!0;var ds=document.querySelectorAll('#prog .pd');for(var i=0;i<6;i++){ds[i].className='pd';if(sd[i])ds[i].classList.add('done')}var cur=n<5?n+1:n;if(cur<6&&!sd[cur])ds[cur].classList.add('cur');else if(sd.every(function(x){return x}))ds[5].classList.add('cur')}
 document.querySelectorAll('.sec').forEach(function(s){new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.add('reached');var n=parseInt(s.id.replace('s',''))-1;document.querySelectorAll('#prog .pd').forEach(function(d,i){d.classList.remove('cur')});if(!sd[n])document.querySelectorAll('#prog .pd')[n].classList.add('cur')}},{threshold:.3}).observe(s)});
 
-// ===== STEP 1: SCENES — TABLE CLOTH FULL COVERAGE FIX =====
-var sceneData=[
-  {t:'刷墙壁',d:'滚刷从左到右，整面墙一起变蓝。测量<b>墙面的面积</b>。',shape:'rect',color:'#1565c0',icon:'🖌️'},
-  {t:'铺桌布',d:'桌布<b>完整覆盖整个圆桌</b>，包括中心——没有留白。',shape:'circle',color:'#e91e63',icon:'🍽️'},
-  {t:'种花坛',d:'<b>整个花坛里面</b>都种满鲜花，不是只种边上。',shape:'triangle',color:'#e67e22',icon:'🌸'},
-  {t:'贴瓷砖',d:'瓷砖<b>完整铺满整片地面</b>，一块挨一块。',shape:'square',color:'#8d6e63',icon:'🔲'},
-  {t:'铺草坪',d:'L形院子<b>完整盖住</b>每一寸土地。',shape:'lshape',color:'#4caf50',icon:'🌿'},
-  {t:'手机贴膜',d:'膜<b>刚好完全盖住</b>整个屏幕。',shape:'phone',color:'#37474f',icon:'📱'},
-];
-var scenesOpened=0,sceneOpenedArr=[],sceneAnims=[],sceneProgress=[];
-
+// ===== STEP 1: UNIFORM TABLE CLOTH =====
+var scData=[{t:'刷墙壁',shape:'rect',color:'#1565c0',icon:'🖌️'},{t:'铺桌布',shape:'circle',color:'#e91e63',icon:'🍽️'},{t:'种花坛',shape:'triangle',color:'#e67e22',icon:'🌸'},{t:'贴瓷砖',shape:'square',color:'#8d6e63',icon:'🔲'},{t:'铺草坪',shape:'lshape',color:'#4caf50',icon:'🌿'},{t:'手机贴膜',shape:'phone',color:'#37474f',icon:'📱'}];
+var scOpen=[],scAnims=[],scProg=[],scCnt=0;
 if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){if(typeof r==='number')r={tl:r,tr:r,br:r,bl:r};this.beginPath();this.moveTo(x+r.tl,y);this.lineTo(x+w-r.tr,y);this.quadraticCurveTo(x+w,y,x+w,y+r.tr);this.lineTo(x+w,y+h-r.br);this.quadraticCurveTo(x+w,y+h,x+w-r.br,y+h);this.lineTo(x+r.bl,y+h);this.quadraticCurveTo(x,y+h,x,y+h-r.bl);this.lineTo(x,y+r.tl);this.quadraticCurveTo(x,y,x+r.tl,y);this.closePath()}}
 
-function drawSceneCard(ctx,w,h,data,p){
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='#faf8f4';ctx.fillRect(0,0,w,h);
-  var t=Math.min(1,p),cx=w/2,cy=h/2;
-  if(data.shape==='rect'){
-    var rw=w-40,rh=h-30,rx=(w-rw)/2,ry=(h-rh)/2;
-    ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.strokeRect(rx,ry,rw,rh);
-    if(t>0){ctx.fillStyle='rgba(21,101,192,'+(0.35*t)+')';ctx.fillRect(rx,ry,rw*t,rh)}
-    ctx.fillStyle='#1565c0';ctx.fillRect(rx+rw*t-4,ry+4,8,rh-8);ctx.fillStyle='#555';ctx.fillRect(rx+rw*t-6,ry+rh/2-2,10,3);
-  }else if(data.shape==='circle'){
-    // FIXED: tablecloth fully covers table, plate drawn on top with clear rim
-    var r=Math.min(w,h)*.32;
-    // Table surface
-    ctx.fillStyle='#d7a86e';ctx.beginPath();ctx.arc(cx,cy,r+8,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='#b8956a';ctx.lineWidth=1.5;ctx.stroke();
-    // Tablecloth covers entire table
+function drawSC(ctx,w,h,d,p){
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='#faf8f4';ctx.fillRect(0,0,w,h);var t=Math.min(1,p),cx=w/2,cy=h/2;
+  if(d.shape==='rect'){
+    var rw=w-40,rh=h-30,rx=(w-rw)/2,ry=(h-rh)/2;ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.strokeRect(rx,ry,rw,rh);
+    if(t>0){ctx.fillStyle='rgba(21,101,192,'+(0.35*t)+')';ctx.fillRect(rx,ry,rw*t,rh)}ctx.fillStyle='#1565c0';ctx.fillRect(rx+rw*t-4,ry+4,8,rh-8);
+  }else if(d.shape==='circle'){
+    var r=Math.min(w,h)*.32;ctx.fillStyle='#d7a86e';ctx.beginPath();ctx.arc(cx,cy,r+8,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#b8956a';ctx.lineWidth=1.5;ctx.stroke();
+    // Uniform single-color tablecloth, no plate
     if(t>0){ctx.fillStyle='rgba(233,30,99,'+(0.6*t)+')';ctx.beginPath();ctx.arc(cx,cy,(r+8)*t,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#c2185b';ctx.lineWidth=2;ctx.stroke()}
-    // Small plate on top (clearly a plate, not a hole)
-    if(t>0.5){
-      ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,r*.32,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='#bbb';ctx.lineWidth=1.5;ctx.stroke();
-      ctx.fillStyle='#e0e0e0';ctx.beginPath();ctx.arc(cx,cy,r*.25,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='#ccc';ctx.lineWidth=1;ctx.stroke();
-    }
-  }else if(data.shape==='triangle'){
-    var tx=cx,ty=cy-48,bh=h-48,rw2=w-40;
-    ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.stroke();
+  }else if(d.shape==='triangle'){
+    var tx=cx,ty=cy-48,bh=h-48,rw2=w-40;ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.stroke();
     if(t>0){ctx.save();ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.clip();ctx.fillStyle='rgba(230,126,34,'+(0.5*t)+')';ctx.fillRect(tx-rw2/2,ty,rw2*t,bh);if(t>.5)for(var fx=tx-rw2/2+5;fx<tx+rw2/2;fx+=12)for(var fy=ty+5;fy<ty+bh;fy+=12){ctx.fillStyle='#e91e63';ctx.beginPath();ctx.arc(fx,fy,3,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffeb3b';ctx.beginPath();ctx.arc(fx,fy,1.5,0,Math.PI*2);ctx.fill()}ctx.restore();ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=1.5;ctx.stroke()}
-  }else if(data.shape==='square'){
-    var sqs=w-40,sx=(w-sqs)/2,sy=(h-sqs)/2;ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.strokeRect(sx,sy,sqs,sqs);
-    var cols=Math.floor(sqs/16),total=cols*cols,drawn=Math.floor(total*t);
-    for(var tr=0;tr<cols;tr++)for(var tc=0;tc<cols;tc++){if(tr*cols+tc>=drawn)continue;ctx.fillStyle=(tc+tr)%2===0?'#d4b67c':'#c9a96e';ctx.fillRect(sx+tc*16,sy+tr*16,15,15);ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=.4;ctx.strokeRect(sx+tc*16,sy+tr*16,15,15)}
-  }else if(data.shape==='lshape'){
-    var ow=w-50,oh=h-40,ox=(w-ow)/2,oy=(h-oh)/2,cutW=Math.floor(ow*.35),cutH=Math.floor(oh*.4);
-    ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.strokeRect(ox+cutW,oy,ow-cutW,cutH);ctx.setLineDash([]);
-    ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+ow,oy);ctx.lineTo(ox+ow,oy+oh);ctx.lineTo(ox+cutW,oy+oh);ctx.lineTo(ox+cutW,oy+cutH);ctx.lineTo(ox,oy+cutH);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=2;ctx.stroke();
-    if(t>0){ctx.save();ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+ow,oy);ctx.lineTo(ox+ow,oy+oh);ctx.lineTo(ox+cutW,oy+oh);ctx.lineTo(ox+cutW,oy+cutH);ctx.lineTo(ox,oy+cutH);ctx.closePath();ctx.clip();ctx.fillStyle='rgba(76,175,80,'+(0.55*t)+')';ctx.fillRect(ox,oy,ow*t,oh);if(t>.4)for(var gx=ox+2;gx<ox+ow;gx+=6)for(var gy=oy+2;gy<oy+oh;gy+=6)if((gx+gy)%12===0){ctx.fillStyle='#388e3c';ctx.fillRect(gx,gy,2,3)}ctx.restore()}
-  }else{
-    ctx.fillStyle='#37474f';ctx.roundRect(cx-60,cy-45,120,90,14);ctx.fill();ctx.fillStyle='#263238';ctx.roundRect(cx-57,cy-42,114,84,12);ctx.fill();
-    if(t>0){ctx.fillStyle='rgba(255,255,255,'+(0.5*t)+')';ctx.fillRect(cx-50,cy-38,100*t,76);if(t>.3)for(var ai=0;ai<4;ai++){ctx.fillStyle='#4fc3f7';ctx.beginPath();ctx.arc(cx-30+ai*20,cy-20,5,0,Math.PI*2);ctx.fill()}}
-  }
+  }else if(d.shape==='square'){
+    var sqs=w-40,sx=(w-sqs)/2,sy=(h-sqs)/2;ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.strokeRect(sx,sy,sqs,sqs);var cols=Math.floor(sqs/16),total=cols*cols,drawn=Math.floor(total*t);
+    for(var tr=0;tr<cols;tr++)for(var tc=0;tc<cols;tc++){if(tr*cols+tc>=drawn)continue;ctx.fillStyle=(tc+tr)%2===0?'#d4b67c':'#c9a96e';ctx.fillRect(sx+tc*16,sy+tr*16,15,15)}
+  }else if(d.shape==='lshape'){
+    var ow=w-50,oh=h-40,ox=(w-ow)/2,oy=(h-oh)/2,cW=Math.floor(ow*.35),cH=Math.floor(oh*.4);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.strokeRect(ox+cW,oy,ow-cW,cH);ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+ow,oy);ctx.lineTo(ox+ow,oy+oh);ctx.lineTo(ox+cW,oy+oh);ctx.lineTo(ox+cW,oy+cH);ctx.lineTo(ox,oy+cH);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=2;ctx.stroke();
+    if(t>0){ctx.save();ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+ow,oy);ctx.lineTo(ox+ow,oy+oh);ctx.lineTo(ox+cW,oy+oh);ctx.lineTo(ox+cW,oy+cH);ctx.lineTo(ox,oy+cH);ctx.closePath();ctx.clip();ctx.fillStyle='rgba(76,175,80,'+(0.55*t)+')';ctx.fillRect(ox,oy,ow*t,oh);if(t>.4)for(var gx=ox+2;gx<ox+ow;gx+=6)for(var gy=oy+2;gy<oy+oh;gy+=6)if((gx+gy)%12===0){ctx.fillStyle='#388e3c';ctx.fillRect(gx,gy,2,3)}ctx.restore()}
+  }else{ctx.fillStyle='#37474f';ctx.roundRect(cx-60,cy-45,120,90,14);ctx.fill();ctx.fillStyle='#263238';ctx.roundRect(cx-57,cy-42,114,84,12);ctx.fill();if(t>0){ctx.fillStyle='rgba(255,255,255,'+(0.5*t)+')';ctx.fillRect(cx-50,cy-38,100*t,76)}}
 }
 
 var sg=document.getElementById('scenesG');
-sceneData.forEach(function(s,i){
-  sceneOpenedArr[i]=false;sceneProgress[i]=0;sceneAnims[i]=null;
-  var d=document.createElement('div');d.className='sc-card';
-  var c=document.createElement('canvas');c.width=260;c.height=150;d.appendChild(c);
+scData.forEach(function(s,i){scOpen[i]=false;scProg[i]=0;scAnims[i]=null;
+  var d=document.createElement('div');d.className='sc-card';var c=document.createElement('canvas');c.width=260;c.height=150;d.appendChild(c);
   var t=document.createElement('div');t.className='sc-label';t.textContent=s.icon+' '+s.t;d.appendChild(t);
-  var de=document.createElement('div');de.className='sc-desc';de.innerHTML=s.d;d.appendChild(de);
-  var ctx=c.getContext('2d');drawSceneCard(ctx,260,150,s,0);
-  d.onclick=function(){
-    d.classList.toggle('open');
-    if(d.classList.contains('open')){
-      sfxOK();sceneProgress[i]=0;if(sceneAnims[i])cancelAnimationFrame(sceneAnims[i]);
-      (function anim(){sceneProgress[i]+=.025;if(sceneProgress[i]>1)sceneProgress[i]=1;drawSceneCard(ctx,260,150,s,sceneProgress[i]);if(sceneProgress[i]<1)sceneAnims[i]=requestAnimationFrame(anim);else sceneAnims[i]=null})();
-      if(!sceneOpenedArr[i]){sceneOpenedArr[i]=true;scenesOpened++;document.getElementById('sceneCnt').innerHTML='已打开：<b>'+scenesOpened+'/6</b>'}
-      if(scenesOpened>=6){document.getElementById('s1Reveal').style.display='block';md(0)}
-    }else{if(sceneAnims[i]){cancelAnimationFrame(sceneAnims[i]);sceneAnims[i]=null}sceneProgress[i]=0;drawSceneCard(ctx,260,150,s,0)}
-  };
+  var de=document.createElement('div');de.className='sc-desc';de.innerHTML='完整遮盖表面 → 测量里面的大小';d.appendChild(de);
+  var ctx=c.getContext('2d');drawSC(ctx,260,150,s,0);
+  d.onclick=function(){d.classList.toggle('open');
+    if(d.classList.contains('open')){sfxOK();scProg[i]=0;if(scAnims[i])cancelAnimationFrame(scAnims[i]);
+      (function anim(){scProg[i]+=.025;if(scProg[i]>1)scProg[i]=1;drawSC(ctx,260,150,s,scProg[i]);if(scProg[i]<1)scAnims[i]=requestAnimationFrame(anim);else scAnims[i]=null})();
+      if(!scOpen[i]){scOpen[i]=true;scCnt++;document.getElementById('sceneCnt').innerHTML='已打开：<b>'+scCnt+'/6</b>'}if(scCnt>=6){document.getElementById('s1Reveal').style.display='block';md(0)}
+    }else{if(scAnims[i]){cancelAnimationFrame(scAnims[i]);scAnims[i]=null}scProg[i]=0;drawSC(ctx,260,150,s,0)}}
   sg.appendChild(d);
 });
 
-// ===== STEP 2: LAB — GHOST PREVIEW + FREE TRIANGLE ROTATION =====
-var labShape='square',labPlaced=[];
-var labTarget={x:55,y:35,w:330,h:290},labSnap=5;
-var labMouse={x:-100,y:-100}; // current mouse position for ghost
-var labRotIdx=-1; // -1=none, >=0 = index of triangle being rotated
+// ===== STEP 2: PERFECT GRID + TRI ROTATE BUTTON =====
+var labShape='square',labPlaced=[],labTriRot=0;
+// Target now 11×9 squares: 330×270, each square 30px
+var labT={x:55,y:42,w:330,h:270},labSnap=5,labMouse={x:-100,y:-100};
 
-function pickShape(s){
-  labShape=s;labRotIdx=-1;
-  document.querySelectorAll('#shapeSel .shape-btn').forEach(function(b){b.classList.remove('pick')});
-  var btn=document.querySelector('#shapeSel [data-shape="'+s+'"]');if(btn)btn.classList.add('pick');
-  document.getElementById('labHint').textContent='';
-  updateLabStats();drawLab();
-}
-function labClear(){labPlaced=[];labRotIdx=-1;drawLab();updateLabStats()}
+function pickShape(s){labShape=s;document.querySelectorAll('#shapeSel .shape-btn').forEach(function(b){b.classList.remove('pick')});var btn=document.querySelector('#shapeSel [data-shape="'+s+'"]');if(btn)btn.classList.add('pick');document.getElementById('triRotBtn').style.display=s==='triangle'?'inline-flex':'none';updateLabStats();drawLab()}
+function triRotate(){labTriRot=(labTriRot+1)%4;sfxOK();drawLab()}
+function labClear(){labPlaced=[];drawLab();updateLabStats()}
 
 function drawLab(){
-  var c=document.getElementById('labCv'),ctx=c.getContext('2d'),t=labTarget;
+  var c=document.getElementById('labCv'),ctx=c.getContext('2d'),t=labT;
   ctx.clearRect(0,0,440,360);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,360);
-  // Snap grid dots
-  ctx.fillStyle='rgba(0,0,0,.04)';
-  for(var gx=t.x;gx<=t.x+t.w;gx+=labSnap)for(var gy=t.y;gy<=t.y+t.h;gy+=labSnap)ctx.fillRect(gx,gy,1,1);
-  // Target area
-  ctx.fillStyle='#faf8f4';ctx.fillRect(t.x,t.y,t.w,t.h);
-  ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=2;ctx.strokeRect(t.x,t.y,t.w,t.h);
-  ctx.fillStyle='#999';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('待测平面',t.x+t.w/2,t.y-8);
-  // Placed shapes
-  labPlaced.forEach(function(p,i){
-    ctx.save();
-    if(p.shape==='square'){
-      ctx.globalAlpha=i===labRotIdx?.7:1;ctx.fillStyle='rgba(39,174,96,.35)';ctx.fillRect(p.x,p.y,30,30);ctx.strokeStyle=i===labRotIdx?'#e67e22':'#27ae60';ctx.lineWidth=i===labRotIdx?3:1.5;ctx.strokeRect(p.x,p.y,30,30);
-    }else if(p.shape==='circle'){
-      ctx.fillStyle='rgba(233,30,99,.3)';ctx.beginPath();ctx.arc(p.x+15,p.y+15,15,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e91e63';ctx.lineWidth=1.5;ctx.stroke();
-    }else if(p.shape==='triangle'){
-      var rot=p.rot||0;ctx.globalAlpha=i===labRotIdx?.7:1;
-      ctx.translate(p.x+15,p.y+15);ctx.rotate(rot);
-      ctx.fillStyle='rgba(230,126,34,.3)';ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(-15,15);ctx.lineTo(15,15);ctx.closePath();ctx.fill();
-      ctx.strokeStyle=i===labRotIdx?'#e67e22':'#e67e22';ctx.lineWidth=i===labRotIdx?3:1.5;ctx.stroke();
-    }else if(p.shape==='rect'){
-      ctx.fillStyle='rgba(33,150,243,.3)';ctx.fillRect(p.x,p.y,60,30);ctx.strokeStyle='#2196f3';ctx.lineWidth=1.5;ctx.strokeRect(p.x,p.y,60,30);
-    }
+  ctx.fillStyle='rgba(0,0,0,.04)';for(var gx=t.x;gx<=t.x+t.w;gx+=labSnap)for(var gy=t.y;gy<=t.y+t.h;gy+=labSnap)ctx.fillRect(gx,gy,1,1);
+  ctx.fillStyle='#faf8f4';ctx.fillRect(t.x,t.y,t.w,t.h);ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=2;ctx.strokeRect(t.x,t.y,t.w,t.h);
+  ctx.fillStyle='#999';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('待测平面 ('+Math.round(t.w/30)+'×'+Math.round(t.h/30)+')',t.x+t.w/2,t.y-8);
+  labPlaced.forEach(function(p){ctx.save();
+    if(p.shape==='square'){ctx.fillStyle='rgba(39,174,96,.35)';ctx.fillRect(p.x,p.y,30,30);ctx.strokeStyle='#27ae60';ctx.lineWidth=1.5;ctx.strokeRect(p.x,p.y,30,30)}
+    else if(p.shape==='circle'){ctx.fillStyle='rgba(233,30,99,.3)';ctx.beginPath();ctx.arc(p.x+15,p.y+15,15,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e91e63';ctx.lineWidth=1.5;ctx.stroke()}
+    else if(p.shape==='triangle'){var rot=p.rot||0;ctx.translate(p.x+15,p.y+15);ctx.rotate(rot);ctx.fillStyle='rgba(230,126,34,.3)';ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(-15,15);ctx.lineTo(15,15);ctx.closePath();ctx.fill();ctx.strokeStyle='#e67e22';ctx.lineWidth=1.5;ctx.stroke()}
+    else if(p.shape==='rect'){ctx.fillStyle='rgba(33,150,243,.3)';ctx.fillRect(p.x,p.y,60,30);ctx.strokeStyle='#2196f3';ctx.lineWidth=1.5;ctx.strokeRect(p.x,p.y,60,30)}
     ctx.restore();
   });
-  // Ghost preview (follows mouse when not rotating)
-  if(labRotIdx<0&&labMouse.x>=t.x&&labMouse.x<=t.x+t.w&&labMouse.y>=t.y&&labMouse.y<=t.y+t.h){
-    var mx=Math.round(labMouse.x/labSnap)*labSnap,my=Math.round(labMouse.y/labSnap)*labSnap;
-    var sz=labShape==='rect'?60:30;
+  // Ghost preview
+  if(labMouse.x>=t.x&&labMouse.x<=t.x+t.w&&labMouse.y>=t.y&&labMouse.y<=t.y+t.h){
+    var sz=labShape==='rect'?60:30,mx=Math.round(labMouse.x/labSnap)*labSnap,my=Math.round(labMouse.y/labSnap)*labSnap;
     mx=Math.max(t.x,Math.min(t.x+t.w-sz,mx-sz/2));my=Math.max(t.y,Math.min(t.y+t.h-sz,my-sz/2));
     ctx.globalAlpha=.4;
     if(labShape==='square'){ctx.fillStyle='rgba(39,174,96,.25)';ctx.fillRect(mx,my,30,30);ctx.strokeStyle='#27ae60';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.strokeRect(mx,my,30,30);ctx.setLineDash([])}
-    else if(labShape==='circle'){ctx.fillStyle='rgba(233,30,99,.2)';ctx.beginPath();ctx.arc(mx+15,my+15,15,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e91e63';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([])}
-    else if(labShape==='triangle'){ctx.fillStyle='rgba(230,126,34,.2)';ctx.beginPath();ctx.moveTo(mx+15,my);ctx.lineTo(mx,my+30);ctx.lineTo(mx+30,my+30);ctx.closePath();ctx.fill();ctx.strokeStyle='#e67e22';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([])}
-    else if(labShape==='rect'){ctx.fillStyle='rgba(33,150,243,.2)';ctx.fillRect(mx,my,60,30);ctx.strokeStyle='#2196f3';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.strokeRect(mx,my,60,30);ctx.setLineDash([])}
+    else if(labShape==='circle'){ctx.fillStyle='rgba(233,30,99,.2)';ctx.beginPath();ctx.arc(mx+15,my+15,15,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e91e63';ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([])}
+    else if(labShape==='triangle'){ctx.save();ctx.translate(mx+15,my+15);ctx.rotate(labTriRot*Math.PI/2);ctx.fillStyle='rgba(230,126,34,.2)';ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(-15,15);ctx.lineTo(15,15);ctx.closePath();ctx.fill();ctx.strokeStyle='#e67e22';ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);ctx.restore()}
+    else if(labShape==='rect'){ctx.fillStyle='rgba(33,150,243,.2)';ctx.fillRect(mx,my,60,30);ctx.strokeStyle='#2196f3';ctx.setLineDash([3,3]);ctx.strokeRect(mx,my,60,30);ctx.setLineDash([])}
     ctx.globalAlpha=1;
   }
 }
 
-function updateLabStats(){
-  var cnt=labPlaced.length;document.getElementById('labCount').textContent='已用：'+cnt+' 个';
-  if(labShape==='circle')document.getElementById('labGap').textContent='⚠ 圆形间有空隙';
-  else if(labShape==='triangle')document.getElementById('labGap').textContent='⚠ 点击已放的三角形可旋转';
-  else if(labShape==='rect')document.getElementById('labGap').textContent='⚠ 长方形方向受限';
-  else document.getElementById('labGap').textContent='✅ 正方形紧密贴合！';
-  if(labRotIdx>=0)document.getElementById('labHint').textContent='🔧 移动鼠标旋转三角形，点击确认';
-  else document.getElementById('labHint').textContent='';
-}
+function updateLabStats(){document.getElementById('labCount').textContent='已用：'+labPlaced.length+' 个';document.getElementById('labGap').textContent=labShape==='circle'?'⚠ 圆形间有空隙':labShape==='triangle'?'⚠ 三角形间有缝隙（↻旋转调角度）':labShape==='rect'?'⚠ 长方形方向受限':'✅ 正方形紧密贴合！';}
+function labGetPos(e){var c=document.getElementById('labCv');if(!c)return null;var r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*(440/r.width),y:(e.clientY-r.top)*(360/r.height)}}
 
-// Find placed shape at position
-function labHitTest(x,y){
-  for(var i=labPlaced.length-1;i>=0;i--){
-    var p=labPlaced[i],sz=p.shape==='rect'?60:30;
-    if(x>=p.x&&x<=p.x+sz&&y>=p.y&&y<=p.y+sz)return i;
-  }
-  return -1;
-}
+function handleLabMove(e){labMouse=labGetPos(e)||labMouse;drawLab()}
 
-function labGetPos(e){
-  var c=document.getElementById('labCv');if(!c)return null;
-  var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*(440/r.width),y=(e.clientY-r.top)*(360/r.height);
-  return {x:x,y:y};
-}
-
-function handleLabMove(e){
-  var pos=labGetPos(e);if(!pos)return;
-  labMouse=pos;
-  if(labRotIdx>=0){
-    var p=labPlaced[labRotIdx],cx=p.x+15,cy=p.y+15;
-    p.rot=Math.atan2(pos.y-cy,pos.x-cx)-Math.PI/2;
-  }
-  drawLab();updateLabStats();
-}
-
-function handleLabDown(e){
-  var pos=labGetPos(e);if(!pos)return;
-  var t=labTarget;
-  // Check if clicking on existing triangle
-  var hit=labHitTest(pos.x,pos.y);
-  if(hit>=0&&labPlaced[hit].shape==='triangle'&&labRotIdx<0){
-    labRotIdx=hit;labPlaced[hit].rot=labPlaced[hit].rot||0;
-    sfxOK();drawLab();updateLabStats();return;
-  }
-  // If rotating, confirm rotation
-  if(labRotIdx>=0){labRotIdx=-1;sfxOK();drawLab();updateLabStats();return}
-  // Place shape
-  if(pos.x<t.x||pos.x>t.x+t.w||pos.y<t.y||pos.y>t.y+t.h)return;
-  var sz=labShape==='rect'?60:30;
-  var mx=Math.round(pos.x/labSnap)*labSnap,my=Math.round(pos.y/labSnap)*labSnap;
+function handleLabClick(e){
+  var pos=labGetPos(e);if(!pos)return;var t=labT;if(pos.x<t.x||pos.x>t.x+t.w||pos.y<t.y||pos.y>t.y+t.h)return;
+  var sz=labShape==='rect'?60:30,mx=Math.round(pos.x/labSnap)*labSnap,my=Math.round(pos.y/labSnap)*labSnap;
   mx=Math.max(t.x,Math.min(t.x+t.w-sz,mx-sz/2));my=Math.max(t.y,Math.min(t.y+t.h-sz,my-sz/2));
-  var entry={shape:labShape,x:mx,y:my};
-  if(labShape==='triangle')entry.rot=0;
-  labPlaced.push(entry);sfxOK();
-  drawLab();updateLabStats();
-  if(labPlaced.length>=3)md(1);
-}
-
-function handleLabUp(e){
-  // If rotating and released outside, keep rotation
-  if(labRotIdx>=0){
-    // Keep rotating until explicit click
-  }
+  var e2={shape:labShape,x:mx,y:my};if(labShape==='triangle')e2.rot=labTriRot*Math.PI/2;
+  labPlaced.push(e2);sfxOK();drawLab();updateLabStats();if(labPlaced.length>=3)md(1);
 }
 
 function labCompare(){
-  var t=labTarget,sqSize=30,sqCols=Math.floor(t.w/sqSize),sqRows=Math.floor(t.h/sqSize),sqTotal=sqCols*sqRows;
-  var h='<table style="width:100%;border-collapse:collapse;text-align:center">';
-  h+='<tr style="background:#f0faf4"><th style="padding:8px;font-size:.78em">形状</th><th style="padding:8px;font-size:.78em">铺满大约需要</th><th style="padding:8px;font-size:.78em">效果</th></tr>';
-  [{n:'正方形',need:sqTotal+' 个',note:'完美铺满，无空隙',cls:'background:#f0faf4'},{n:'圆形',need:'约 '+Math.ceil(sqTotal/0.785)+' 个',note:'有<b style="color:#e74c3c">空隙</b>',cls:''},{n:'三角形',need:'约 '+sqTotal*2+' 个',note:'<b style="color:#e74c3c">很多个</b>+缝隙',cls:''},{n:'长方形 2×1',need:'约 '+Math.ceil(sqTotal/2)+' 个',note:'遇不规则就<b style="color:#e74c3c">不好用</b>',cls:''}].forEach(function(x){h+='<tr style="border-bottom:1px solid #eee;'+x.cls+'"><td style="padding:8px;font-size:.78em"><b>'+x.n+'</b></td><td style="padding:8px;font-size:.78em">'+x.need+'</td><td style="padding:8px;font-size:.7em;text-align:left">'+x.note+'</td></tr>'});
+  var t=labT,sqCols=Math.round(t.w/30),sqRows=Math.round(t.h/30),sqTotal=sqCols*sqRows;
+  var h='<table style="width:100%;border-collapse:collapse;text-align:center"><tr style="background:#f0faf4"><th style="padding:8px;font-size:.78em">形状</th><th style="padding:8px;font-size:.78em">铺满需要</th><th style="padding:8px;font-size:.78em">效果</th></tr>';
+  [{n:'正方形',need:sqTotal+' 个',note:'完美铺满，无空隙',bg:'#f0faf4'},{n:'圆形',need:'约 '+Math.ceil(sqTotal/0.785)+' 个',note:'有<b style="color:#e74c3c">空隙</b>',bg:''},{n:'三角形',need:'约 '+sqTotal*2+' 个',note:'缝+<b style="color:#e74c3c">很多个</b>',bg:''},{n:'长方形2×1',need:'约 '+Math.ceil(sqTotal/2)+' 个',note:'不规则就<b style="color:#e74c3c">不好用</b>',bg:''}].forEach(function(x){h+='<tr style="border-bottom:1px solid #eee;'+x.bg+'"><td style="padding:8px;font-size:.78em"><b>'+x.n+'</b></td><td style="padding:8px;font-size:.78em">'+x.need+'</td><td style="padding:8px;font-size:.7em;text-align:left">'+x.note+'</td></tr>'});
   h+='</table>';document.getElementById('labCompTbl').innerHTML=h;document.getElementById('labCompPanel').style.display='block';
 }
 function discA(idx,btn){
   var all=document.querySelectorAll('#labDisc .opt-btn');all.forEach(function(o){o.disabled=true;o.classList.remove('chosen','wrong')});
-  if(idx===2){btn.classList.add('chosen');sfxDone();document.getElementById('discFB').innerHTML='<span class="green">✅ 完全正确！</span>正方形能<b>紧密铺满、不留空隙</b>。';md(1)}
-  else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想——</span>正方形能严丝合缝地铺满任何形状。';}
+  if(idx===2){btn.classList.add('chosen');sfxDone();document.getElementById('discFB').innerHTML='<span class="green">✅</span> 正方形能<b>紧密铺满、不留空隙</b>。';md(1)}
+  else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想</span>——正方形能严丝合缝铺满任何形状。';}
 }
 
 // ===== STEP 3 =====
@@ -502,336 +355,169 @@ function drawUnitCanvases(){
   var c1=document.getElementById('ucLine'),ctx1=c1.getContext('2d');ctx1.clearRect(0,0,100,80);ctx1.fillStyle='#1565c0';ctx1.fillRect(10,38,80,4);ctx1.font='bold 12px sans-serif';ctx1.textAlign='center';ctx1.fillText('1 cm',50,68);
   var c2=document.getElementById('ucSq'),ctx2=c2.getContext('2d');ctx2.clearRect(0,0,100,80);ctx2.fillStyle='rgba(39,174,96,.3)';ctx2.fillRect(15,10,70,55);ctx2.strokeStyle='#27ae60';ctx2.lineWidth=2.5;ctx2.strokeRect(15,10,70,55);ctx2.fillStyle='#2e7d32';ctx2.font='bold 11px sans-serif';ctx2.textAlign='center';ctx2.fillText('1 cm',50,44);ctx2.fillText('1 cm²',50,78);
 }
-var unitDone=false;
-function ansU(idx,btn){
-  if(unitDone)return;var opts=document.querySelectorAll('#unitQuiz .qopt');opts.forEach(function(o){o.disabled=true});
-  var msgs=['<span class="r">❌ 桌面大小是面积</span>——该用cm²，不是cm。','<span class="green">✅ 正确！</span>桌面大小是<b>面积</b>——用面积单位<b>cm²</b>。','<span class="r">❌ 操场一圈是长度</span>——该用m，不是m²。','<span class="r">❌ 教室地面是面积</span>——该用m²，不是m。'];
-  document.getElementById('unitFB').innerHTML=msgs[idx];
-  if(idx===1){btn.classList.add('good');sfxOK();opts[1].classList.add('good')}else{btn.classList.add('bad');sfxNO();opts[1].classList.add('good')}
-  setTimeout(function(){document.getElementById('unitRev').style.display='block';md(2)},800);unitDone=true;
-}
+var uDone=false;
+function ansU(idx,btn){if(uDone)return;var opts=document.querySelectorAll('#unitQuiz .qopt');opts.forEach(function(o){o.disabled=true});document.getElementById('unitFB').innerHTML=idx===1?'<span class="green">✅ 正确！</span> 桌面大小是面积→用<b>cm²</b>。':'<span class="r">❌</span> ';if(idx===1){btn.classList.add('good');sfxOK();opts[1].classList.add('good')}else{btn.classList.add('bad');sfxNO();opts[1].classList.add('good')}setTimeout(function(){document.getElementById('unitRev').style.display='block';md(2)},800);uDone=true;}
 
-// ===== STEP 4: FORMULA — RECTANGLE + SQUARE + REVERSE =====
-var fL=6,fW=4,fCells=[],fMode='row',fFilled=0,fComplete=false,fHistory=[];
-
-function fReset(){
-  fCells=[];fFilled=0;fComplete=false;
-  for(var i=0;i<fL*fW;i++)fCells[i]=false;
-  document.getElementById('fQuiz').style.display='none';document.getElementById('fFormula').style.display='none';document.getElementById('fFinal').style.display='none';document.getElementById('fFB').innerHTML='';document.getElementById('fTotal').value='';
-  updateFHint();drawForm();
-}
-function fNew(){
-  if(fComplete&&fFilled>=fL*fW){fHistory.push({L:fL,W:fW,total:fL*fW,formula:fMode==='row'?(fL+'×'+fW):(fW+'×'+fL)});renderFHistory()}
-  fL=Math.floor(Math.random()*5)+4;fW=Math.floor(Math.random()*4)+2;if(fL<=fW)fL=fW+1;fReset();
-}
+// ===== STEP 4: FORMULA =====
+var fL=6,fW=4,fCells=[],fMode='row',fFilled=0,fComp=false,fHist=[];
+function fReset(){fCells=[];fFilled=0;fComp=false;for(var i=0;i<fL*fW;i++)fCells[i]=false;document.getElementById('fQuiz').style.display='none';document.getElementById('fFormula').style.display='none';document.getElementById('fFinal').style.display='none';document.getElementById('fFB').innerHTML='';document.getElementById('fTotal').value='';updateFHint();drawForm()}
+function fNew(){if(fComp){fHist.push({L:fL,W:fW,total:fL*fW});renderFHist()}fL=Math.floor(Math.random()*5)+4;fW=Math.floor(Math.random()*4)+2;if(fL<=fW)fL=fW+1;fReset()}
 function fToggleMode(){fMode=fMode==='row'?'col':'row';document.getElementById('fModeBtn').textContent=fMode==='row'?'⬇ 列铺':'➡ 行铺';fReset()}
-function renderFHistory(){
-  var h='';fHistory.forEach(function(x,i){h+='<div class="history-item">📝 第'+(i+1)+'题：'+x.L+'×'+x.W+' → <span class="hres">'+x.formula+' = '+x.total+' cm²</span></div>'});
-  document.getElementById('fHistory').innerHTML=h?'<p style="font-size:.75em;color:#999;margin-top:8px">📋 已完成的练习：</p>'+h:'';
-}
+function renderFHist(){var h='';fHist.forEach(function(x,i){h+='<div class="history-item">📝 '+(i+1)+'：'+x.L+'×'+x.W+' = <span class="hres">'+x.total+' cm²</span></div>'});document.getElementById('fHistory').innerHTML=h?'<p style="font-size:.75em;color:#999;margin-top:8px">📋 已完成：</p>'+h:'';}
 
 function drawForm(){
-  var c=document.getElementById('fCv');if(!c)return;
-  var ctx=c.getContext('2d'),cell=42,ox=(440-fL*cell)/2,oy=(280-fW*cell)/2;
+  var c=document.getElementById('fCv');if(!c)return;var ctx=c.getContext('2d'),cell=42,ox=(440-fL*cell)/2,oy=(280-fW*cell)/2;
   ctx.clearRect(0,0,440,280);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,280);
-  for(var r=0;r<fW;r++)for(var co=0;co<fL;co++){
-    var idx=r*fL+co,x=ox+co*cell,y=oy+r*cell,isF=fCells[idx];
-    if(isF){ctx.fillStyle='rgba(39,174,96,.3)';ctx.fillRect(x+1,y+1,cell-2,cell-2);ctx.strokeStyle='#27ae60';ctx.lineWidth=1.5;ctx.strokeRect(x+1,y+1,cell-2,cell-2);ctx.fillStyle='#2e7d32';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,x+cell/2,y+cell/2+4)}
-    else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);ctx.fillStyle='rgba(0,0,0,.12)';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.fillText('+',x+cell/2,y+cell/2+3)}
-  }
+  for(var r=0;r<fW;r++)for(var co=0;co<fL;co++){var idx=r*fL+co,x=ox+co*cell,y=oy+r*cell,isF=fCells[idx];if(isF){ctx.fillStyle='rgba(39,174,96,.3)';ctx.fillRect(x+1,y+1,cell-2,cell-2);ctx.strokeStyle='#27ae60';ctx.lineWidth=1.5;ctx.strokeRect(x+1,y+1,cell-2,cell-2);ctx.fillStyle='#2e7d32';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,x+cell/2,y+cell/2+4)}else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);ctx.fillStyle='rgba(0,0,0,.12)';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.fillText('+',x+cell/2,y+cell/2+3)}}
   ctx.fillStyle='#2980b9';ctx.font='bold 11px sans-serif';ctx.textAlign='right';for(var r=0;r<fW;r++)ctx.fillText('第'+(r+1)+'行',ox-6,oy+r*cell+cell/2+4);
   ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';for(var co=0;co<fL;co++)ctx.fillText(co+1,ox+co*cell+cell/2,oy-4);
 }
+function handleFormClick(e){if(fComp)return;var c=document.getElementById('fCv');if(!c)return;var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(280/rect.height);var cell=42,ox=(440-fL*cell)/2,oy=(280-fW*cell)/2;for(var row=0;row<fW;row++)for(var co=0;co<fL;co++){if(x>=ox+co*cell&&x<ox+(co+1)*cell&&y>=oy+row*cell&&y<oy+(row+1)*cell){if(fMode==='row'){for(var cc=0;cc<fL;cc++){var ri=row*fL+cc;if(!fCells[ri]){fCells[ri]=true;fFilled++}}}else{for(var rr=0;rr<fW;rr++){var ci=rr*fL+co;if(!fCells[ci]){fCells[ci]=true;fFilled++}}}sfxOK();drawForm();updateFHint();if(fFilled>=fL*fW){fComp=true;sfxDone();showFQuiz();md(3)}return;}}}
+function updateFHint(){document.getElementById('fL').textContent=fL;document.getElementById('fW').textContent=fW;if(fComp)document.getElementById('fHint').textContent='✅ 铺满了！'+(fMode==='row'?'每行 '+fL+' 个，共 '+fW+' 行':'每列 '+fW+' 个，共 '+fL+' 列')+'.';else if(fFilled>0)document.getElementById('fHint').textContent='继续铺！';else document.getElementById('fHint').textContent='👆 点击格子铺满';}
+function showFQuiz(){document.getElementById('fQuiz').style.display='block';if(fMode==='row'){document.getElementById('fqA').textContent=fL;document.getElementById('fqB').textContent=fW}else{document.getElementById('fqA').textContent=fW;document.getElementById('fqB').textContent=fL}document.getElementById('fTotal').value='';}
+function fChk(){var ans=parseInt(document.getElementById('fTotal').value),correct=fL*fW;if(ans===correct){sfxDone();document.getElementById('fFB').innerHTML='<span class="green">✅ '+ans+' 正确！</span>';showFF()}else{sfxNO();document.getElementById('fFB').innerHTML='<span class="r">❌</span>'}}
+function showFF(){document.getElementById('fFormula').style.display='block';var a=fMode==='row'?fL:fW,b=fMode==='row'?fW:fL;document.getElementById('fFormulaBtns').innerHTML='<button class="btn" onclick="fPickF(0)">'+a+'+'+b+'</button><button class="btn" onclick="fPickF(1)">'+a+'×'+b+' = '+(a*b)+'</button><button class="btn" onclick="fPickF(2)">('+a+'+'+b+')×2</button>';}
+function fPickF(idx){var btns=document.querySelectorAll('#fFormulaBtns .btn');btns.forEach(function(b){b.disabled=true});if(idx===1){btns[1].classList.add('good');sfxDone();document.getElementById('fFinal').style.display='block';md(3)}else{btns[idx].classList.add('bad');sfxNO();btns[1].classList.add('good');document.getElementById('fFinal').style.display='block';md(3)}}
 
-function handleFormClick(e){
-  if(fComplete)return;var c=document.getElementById('fCv');if(!c)return;
-  var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(280/rect.height);
-  var cell=42,ox=(440-fL*cell)/2,oy=(280-fW*cell)/2;
-  for(var row=0;row<fW;row++)for(var co=0;co<fL;co++){
-    if(x>=ox+co*cell&&x<ox+(co+1)*cell&&y>=oy+row*cell&&y<oy+(row+1)*cell){
-      if(fMode==='row'){for(var cc=0;cc<fL;cc++){var ri=row*fL+cc;if(!fCells[ri]){fCells[ri]=true;fFilled++}}}
-      else{for(var rr=0;rr<fW;rr++){var ci=rr*fL+co;if(!fCells[ci]){fCells[ci]=true;fFilled++}}}
-      sfxOK();drawForm();updateFHint();
-      if(fFilled>=fL*fW){fComplete=true;sfxDone();showFQuiz();md(3)}return;
-    }
-  }
-}
-function updateFHint(){
-  document.getElementById('fL').textContent=fL;document.getElementById('fW').textContent=fW;
-  if(fComplete)document.getElementById('fHint').textContent='✅ 铺满了！'+(fMode==='row'?'每行 '+fL+' 个，共 '+fW+' 行':'每列 '+fW+' 个，共 '+fL+' 列')+'。';
-  else if(fFilled>0)document.getElementById('fHint').textContent='继续铺！点击'+(fMode==='row'?'每行':'每列')+'来铺~';
-  else document.getElementById('fHint').textContent='👆 点击格子，按'+(fMode==='row'?'行':'列')+'来铺';
-}
-function showFQuiz(){
-  document.getElementById('fQuiz').style.display='block';
-  if(fMode==='row'){document.getElementById('fqA').textContent=fL;document.getElementById('fqB').textContent=fW;}
-  else{document.getElementById('fqA').textContent=fW;document.getElementById('fqB').textContent=fL;}
-  document.getElementById('fTotal').value='';document.getElementById('fFB').innerHTML='';
-}
-function fChk(){
-  var ans=parseInt(document.getElementById('fTotal').value),correct=fL*fW;
-  if(ans===correct){sfxDone();document.getElementById('fFB').innerHTML='<span class="green">✅ '+ans+' 正确！</span>';showFFormula();}
-  else{sfxNO();document.getElementById('fFB').innerHTML='<span class="r">❌ 再数数——</span>'+(fMode==='row'?'每行'+fL+'个，共'+fW+'行':'每列'+fW+'个，共'+fL+'列')+'。';}
-}
-function showFFormula(){
-  document.getElementById('fFormula').style.display='block';
-  var a=fMode==='row'?fL:fW,b=fMode==='row'?fW:fL;
-  document.getElementById('fFormulaBtns').innerHTML='<button class="btn" onclick="fPickF(0)">'+a+'+'+b+' = '+(a+b)+'</button><button class="btn" onclick="fPickF(1)">'+a+'×'+b+' = '+(a*b)+'</button><button class="btn" onclick="fPickF(2)">('+a+'+'+b+')×2 = '+((a+b)*2)+'</button>';
-}
-function fPickF(idx){
-  var btns=document.querySelectorAll('#fFormulaBtns .btn');btns.forEach(function(b){b.disabled=true});
-  if(idx===1){btns[1].classList.add('good');sfxDone();document.getElementById('fFinal').style.display='block';md(3);}
-  else{btns[idx].classList.add('bad');sfxNO();btns[1].classList.add('good');document.getElementById('fFinal').style.display='block';md(3);}
-}
+// ===== SQUARE: capped side, row/col toggle =====
+var sqSide=5,sqCells=[],sqMode='row',sqFilled=0,sqComp=false;
+var SQ_MAX=5; // max side to fit 440×240 canvas with cell=42
+function sqReset(){sqCells=[];sqFilled=0;sqComp=false;for(var i=0;i<sqSide*sqSide;i++)sqCells[i]=false;document.getElementById('sqQuiz').style.display='none';document.getElementById('sqFinal').style.display='none';document.getElementById('sqFB').innerHTML='';document.getElementById('sqTotal').value='';updateSqHint();drawSq()}
+function sqNew(){sqSide=Math.floor(Math.random()*(SQ_MAX-2))+3;sqReset()} // 3-5
+function sqToggleMode(){sqMode=sqMode==='row'?'col':'row';document.getElementById('sqModeBtn').textContent=sqMode==='row'?'⬇ 列铺':'➡ 行铺';sqReset()}
+function drawSq(){var c=document.getElementById('sqCv');if(!c)return;var ctx=c.getContext('2d'),cell=42,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;ctx.clearRect(0,0,440,240);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,240);for(var r=0;r<sqSide;r++)for(var co=0;co<sqSide;co++){var idx=r*sqSide+co,x=ox+co*cell,y=oy+r*cell,isF=sqCells[idx];if(isF){ctx.fillStyle='rgba(41,128,185,.25)';ctx.fillRect(x+1,y+1,cell-2,cell-2);ctx.strokeStyle='#2980b9';ctx.lineWidth=1.5;ctx.strokeRect(x+1,y+1,cell-2,cell-2);ctx.fillStyle='#1565c0';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,x+cell/2,y+cell/2+4)}else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);ctx.fillStyle='rgba(0,0,0,.12)';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.fillText('+',x+cell/2,y+cell/2+3)}}ctx.fillStyle='#2980b9';ctx.font='bold 11px sans-serif';ctx.textAlign='right';for(var r=0;r<sqSide;r++)ctx.fillText('第'+(r+1)+'行',ox-6,oy+r*cell+cell/2+4);ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';for(var co=0;co<sqSide;co++)ctx.fillText(co+1,ox+co*cell+cell/2,oy-4)}
+function handleSqClick(e){if(sqComp)return;var c=document.getElementById('sqCv');if(!c)return;var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(240/rect.height);var cell=42,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;for(var row=0;row<sqSide;row++)for(var co=0;co<sqSide;co++){if(x>=ox+co*cell&&x<ox+(co+1)*cell&&y>=oy+row*cell&&y<oy+(row+1)*cell){if(sqMode==='row'){for(var cc=0;cc<sqSide;cc++){var ri=row*sqSide+cc;if(!sqCells[ri]){sqCells[ri]=true;sqFilled++}}}else{for(var rr=0;rr<sqSide;rr++){var ci=rr*sqSide+co;if(!sqCells[ci]){sqCells[ci]=true;sqFilled++}}}sfxOK();drawSq();updateSqHint();if(sqFilled>=sqSide*sqSide){sqComp=true;sfxDone();showSqQuiz()}return;}}}
+function updateSqHint(){document.getElementById('sqS').textContent=sqSide;if(sqComp)document.getElementById('sqHint').textContent='✅ 铺满了！'+(sqMode==='row'?'每行 '+sqSide+' 个，共 '+sqSide+' 行':'每列 '+sqSide+' 个，共 '+sqSide+' 列')+'.';else if(sqFilled>0)document.getElementById('sqHint').textContent='继续铺~';else document.getElementById('sqHint').textContent='👆 点击铺满';}
+function showSqQuiz(){document.getElementById('sqQuiz').style.display='block';document.getElementById('sqA').textContent=sqSide;document.getElementById('sqB').textContent=sqSide;document.getElementById('sqTotal').value='';}
+function sqChk(){var ans=parseInt(document.getElementById('sqTotal').value),correct=sqSide*sqSide;if(ans===correct){sfxDone();document.getElementById('sqFB').innerHTML='<span class="green">✅ '+ans+' 正确！</span>';document.getElementById('sqFinal').style.display='block';md(3)}else{sfxNO();document.getElementById('sqFB').innerHTML='<span class="r">❌</span>'}}
 
-// ===== SQUARE with row/col toggle =====
-var sqSide=5,sqCells=[],sqMode='row',sqFilled=0,sqComplete=false;
-function sqReset(){
-  sqCells=[];sqFilled=0;sqComplete=false;
-  for(var i=0;i<sqSide*sqSide;i++)sqCells[i]=false;
-  document.getElementById('sqQuiz').style.display='none';document.getElementById('sqFinal').style.display='none';document.getElementById('sqFB').innerHTML='';document.getElementById('sqTotal').value='';
-  updateSqHint();drawSq();
-}
-function sqNew(){sqSide=Math.floor(Math.random()*4)+3;sqReset();}
-function sqToggleMode(){sqMode=sqMode==='row'?'col':'row';document.getElementById('sqModeBtn').textContent=sqMode==='row'?'⬇ 列铺':'➡ 行铺';sqReset();}
-
-function drawSq(){
-  var c=document.getElementById('sqCv');if(!c)return;
-  var ctx=c.getContext('2d'),cell=42,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;
-  ctx.clearRect(0,0,440,240);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,240);
-  for(var r=0;r<sqSide;r++)for(var co=0;co<sqSide;co++){
-    var idx=r*sqSide+co,x=ox+co*cell,y=oy+r*cell,isF=sqCells[idx];
-    if(isF){ctx.fillStyle='rgba(41,128,185,.25)';ctx.fillRect(x+1,y+1,cell-2,cell-2);ctx.strokeStyle='#2980b9';ctx.lineWidth=1.5;ctx.strokeRect(x+1,y+1,cell-2,cell-2);ctx.fillStyle='#1565c0';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,x+cell/2,y+cell/2+4)}
-    else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);ctx.fillStyle='rgba(0,0,0,.12)';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.fillText('+',x+cell/2,y+cell/2+3)}
-  }
-  ctx.fillStyle='#2980b9';ctx.font='bold 11px sans-serif';ctx.textAlign='right';for(var r=0;r<sqSide;r++)ctx.fillText('第'+(r+1)+'行',ox-6,oy+r*cell+cell/2+4);
-  ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';for(var co=0;co<sqSide;co++)ctx.fillText(co+1,ox+co*cell+cell/2,oy-4);
-}
-function handleSqClick(e){
-  if(sqComplete)return;var c=document.getElementById('sqCv');if(!c)return;
-  var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(240/rect.height);
-  var cell=42,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;
-  for(var row=0;row<sqSide;row++)for(var co=0;co<sqSide;co++){
-    if(x>=ox+co*cell&&x<ox+(co+1)*cell&&y>=oy+row*cell&&y<oy+(row+1)*cell){
-      if(sqMode==='row'){for(var cc=0;cc<sqSide;cc++){var ri=row*sqSide+cc;if(!sqCells[ri]){sqCells[ri]=true;sqFilled++}}}
-      else{for(var rr=0;rr<sqSide;rr++){var ci=rr*sqSide+co;if(!sqCells[ci]){sqCells[ci]=true;sqFilled++}}}
-      sfxOK();drawSq();updateSqHint();
-      if(sqFilled>=sqSide*sqSide){sqComplete=true;sfxDone();showSqQuiz();}return;
-    }
-  }
-}
-function updateSqHint(){
-  document.getElementById('sqS').textContent=sqSide;
-  if(sqComplete)document.getElementById('sqHint').textContent='✅ 铺满了！'+(sqMode==='row'?'每行 '+sqSide+' 个，共 '+sqSide+' 行':'每列 '+sqSide+' 个，共 '+sqSide+' 列')+'。';
-  else if(sqFilled>0)document.getElementById('sqHint').textContent='继续铺！每'+(sqMode==='row'?'行':'列')+'都是 <b>'+sqSide+'</b> 个。';
-  else document.getElementById('sqHint').textContent='👆 点击格子——按'+(sqMode==='row'?'行':'列')+'来铺';
-}
-function showSqQuiz(){
-  document.getElementById('sqQuiz').style.display='block';document.getElementById('sqA').textContent=sqSide;document.getElementById('sqB').textContent=sqSide;
-  document.getElementById('sqTotal').value='';document.getElementById('sqFB').innerHTML='';
-}
-function sqChk(){
-  var ans=parseInt(document.getElementById('sqTotal').value),correct=sqSide*sqSide;
-  if(ans===correct){sfxDone();document.getElementById('sqFB').innerHTML='<span class="green">✅ '+ans+' 正确！</span>';document.getElementById('sqFinal').style.display='block';md(3);}
-  else{sfxNO();document.getElementById('sqFB').innerHTML='<span class="r">❌ 再数数——</span>每'+sqSide+'个，共'+sqSide+(sqMode==='row'?'行':'列')+'。';}
-}
-
-// ===== REVERSE (with 换一个 button) =====
+// ===== REVERSE: auto-mode from known side =====
 var revData=[{a:24,k:6,side:'长',exp:4},{a:30,k:5,side:'宽',exp:6},{a:18,k:3,side:'长',exp:6},{a:20,k:4,side:'宽',exp:5},{a:12,k:3,side:'长',exp:4}];
-var revI=0,revCells=[],revFilled=0;
-function revNew(){revI=(revI+1)%revData.length;revReset();revDraw();}
-function revReset(){var p=revData[revI];revCells=[];revFilled=0;for(var i=0;i<p.a;i++)revCells[i]=false;}
+var revI=0,revCells=[],revFilled=0,revMode='row'; // auto-set based on known side
+function revNew(){revI=(revI+1)%revData.length;revReset();revDraw()}
+function revReset(){var p=revData[revI];revCells=[];revFilled=0;revMode=p.side==='宽'?'col':'row';for(var i=0;i<p.a;i++)revCells[i]=false}
 function revDraw(){
   var p=revData[revI],unk=p.side==='长'?'宽':'长';
-  document.getElementById('revQ').textContent='面积 = '+p.a+' cm²，已知 '+p.side+' = '+p.k+' cm。'+unk+' = ? cm（点击铺满来推算）';
-  var c=document.getElementById('revCv'),ctx=c.getContext('2d');
-  ctx.clearRect(0,0,440,190);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,190);
+  document.getElementById('revQ').textContent='面积='+p.a+'cm²，已知'+p.side+'='+p.k+'cm。'+unk+'=?（点击'+(revMode==='row'?'行':'列')+'来铺满推算）';
+  var c=document.getElementById('revCv'),ctx=c.getContext('2d');ctx.clearRect(0,0,440,190);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,190);
   var rw2=p.side==='长'?p.k:p.exp,rh2=p.side==='宽'?p.k:p.exp,sc=22,ox=(440-rw2*sc)/2,oy=(190-rh2*sc)/2;
-  for(var r=0;r<rh2;r++)for(var co=0;co<rw2;co++){
-    var xx=ox+co*sc,yy=oy+r*sc,idx=r*rw2+co,isF=revCells[idx];
-    if(isF){ctx.fillStyle='rgba(39,174,96,.25)';ctx.fillRect(xx,yy,sc,sc);ctx.strokeStyle='#27ae60';ctx.lineWidth=1;ctx.strokeRect(xx,yy,sc,sc);ctx.fillStyle='#2e7d32';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,xx+sc/2,yy+sc/2+3)}
-    else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(xx,yy,sc,sc);ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=.5;ctx.strokeRect(xx,yy,sc,sc);ctx.fillStyle='rgba(0,0,0,.15)';ctx.font='7px sans-serif';ctx.textAlign='center';ctx.fillText('+',xx+sc/2,yy+sc/2+3)}
-  }
+  for(var r=0;r<rh2;r++)for(var co=0;co<rw2;co++){var xx=ox+co*sc,yy=oy+r*sc,idx=r*rw2+co,isF=revCells[idx];if(isF){ctx.fillStyle='rgba(39,174,96,.25)';ctx.fillRect(xx,yy,sc,sc);ctx.strokeStyle='#27ae60';ctx.lineWidth=1;ctx.strokeRect(xx,yy,sc,sc);ctx.fillStyle='#2e7d32';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,xx+sc/2,yy+sc/2+3)}else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(xx,yy,sc,sc);ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=.5;ctx.strokeRect(xx,yy,sc,sc);ctx.fillStyle='rgba(0,0,0,.15)';ctx.font='7px sans-serif';ctx.textAlign='center';ctx.fillText('+',xx+sc/2,yy+sc/2+3)}}
   ctx.strokeStyle='#27ae60';ctx.lineWidth=2;ctx.strokeRect(ox,oy,rw2*sc,rh2*sc);
-  if(p.side==='长'){ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(p.k+' cm（已知）',ox+rw2*sc/2,oy-4);}
-  else{ctx.fillStyle='#2980b9';ctx.font='bold 11px sans-serif';ctx.textAlign='right';ctx.fillText(p.k+' cm（已知）',ox-4,oy+rh2*sc/2+4);}
-  var unkC=p.side==='长'?'#2980b9':'#e67e22';
-  if(p.side==='长'){ctx.fillStyle=unkC;ctx.font='bold 12px sans-serif';ctx.textAlign='right';ctx.fillText('？cm',ox-4,oy+rh2*sc/2+4);}
-  else{ctx.fillStyle=unkC;ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.fillText('？cm',ox+rw2*sc/2,oy+rh2*sc+14);}
+  if(p.side==='长'){ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(p.k+'cm（已知）',ox+rw2*sc/2,oy-4)}else{ctx.fillStyle='#2980b9';ctx.font='bold 11px sans-serif';ctx.textAlign='right';ctx.fillText(p.k+'cm（已知）',ox-4,oy+rh2*sc/2+4)}
+  var unkC=p.side==='长'?'#2980b9':'#e67e22';if(p.side==='长'){ctx.fillStyle=unkC;ctx.font='bold 12px sans-serif';ctx.textAlign='right';ctx.fillText('？cm',ox-4,oy+rh2*sc/2+4)}else{ctx.fillStyle=unkC;ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.fillText('？cm',ox+rw2*sc/2,oy+rh2*sc+14)}
   document.getElementById('revFB').innerHTML='';document.getElementById('revIn').value='';
 }
 function handleRevClick(e){
-  var p=revData[revI],rw2=p.side==='长'?p.k:p.exp,rh2=p.side==='宽'?p.k:p.exp;
-  var c=document.getElementById('revCv');if(!c)return;
+  var p=revData[revI],rw2=p.side==='长'?p.k:p.exp,rh2=p.side==='宽'?p.k:p.exp;var c=document.getElementById('revCv');if(!c)return;
   var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(190/rect.height);
   var sc=22,ox=(440-rw2*sc)/2,oy=(190-rh2*sc)/2;
   for(var row=0;row<rh2;row++)for(var co=0;co<rw2;co++){
     if(x>=ox+co*sc&&x<ox+(co+1)*sc&&y>=oy+row*sc&&y<oy+(row+1)*sc){
-      for(var cc=0;cc<rw2;cc++){var ri=row*rw2+cc;if(!revCells[ri]){revCells[ri]=true;revFilled++;}}
-      sfxOK();revDraw();
-      if(revFilled>=p.a){sfxDone();document.getElementById('revFB').innerHTML='<span class="green">铺满了！</span> 未知边 = <b>'+(p.a/p.k)+' cm</b>';}return;
+      if(revMode==='row'){for(var cc=0;cc<rw2;cc++){var ri=row*rw2+cc;if(!revCells[ri]){revCells[ri]=true;revFilled++}}}
+      else{for(var rr=0;rr<rh2;rr++){var ci=rr*rw2+co;if(!revCells[ci]){revCells[ci]=true;revFilled++}}}
+      sfxOK();revDraw();if(revFilled>=p.a){sfxDone();document.getElementById('revFB').innerHTML='<span class="green">铺满了！</span> 未知边=<b>'+(p.a/p.k)+' cm</b>'}return;
     }
   }
 }
-function revChk(){var p=revData[revI],v=parseInt(document.getElementById('revIn').value);if(v===p.exp){sfxOK();document.getElementById('revFB').innerHTML='<span class="green">✅ 正确！</span> '+p.a+'÷'+p.k+'=<b>'+p.exp+' cm</b>';}else if(isNaN(v))document.getElementById('revFB').innerHTML='请输入数字';else{sfxNO();document.getElementById('revFB').innerHTML='<span class="r">❌ 再想想</span>';}}
+function revChk(){var p=revData[revI],v=parseInt(document.getElementById('revIn').value);if(v===p.exp){sfxOK();document.getElementById('revFB').innerHTML='<span class="green">✅ '+p.a+'÷'+p.k+'=<b>'+p.exp+' cm</b></span>'}else if(isNaN(v))document.getElementById('revFB').innerHTML='输入数字';else{sfxNO();document.getElementById('revFB').innerHTML='<span class="r">❌</span>'}}
 
-// ===== STEP 5: FREEHAND + SNAP + STEP GUIDE =====
-var irShapes=[
-  {name:'L 形',w:7,h:5,holes:[{x:5,y:0,w:2,h:2}]},
-  {name:'凹 形',w:7,h:5,holes:[{x:2,y:0,w:3,h:2}]},
-  {name:'阶梯形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:3,w:2,h:2}]},
-  {name:'缺角形',w:7,h:5,holes:[{x:0,y:3,w:3,h:2}]},
-  {name:'T 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2}]},
-  {name:'凸 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2},{x:0,y:3,w:2,h:2},{x:5,y:3,w:2,h:2}]},
-  {name:'回 形',w:7,h:5,holes:[{x:2,y:1,w:3,h:3}]},
-  {name:'闪电形',w:7,h:5,holes:[{x:0,y:0,w:3,h:2},{x:4,y:3,w:3,h:2}]},
-];
-var irIdx=0,irLines=[],irDrawing=false,irCurLine=null;
-var irCell=40; // grid cell size for snapping
-var irPieces=0,irPieceData=[]; // for step guide
+// ===== STEP 5: STACKED GUIDE + METHOD CHOICE =====
+var irShapes=[{name:'L 形',w:7,h:5,holes:[{x:5,y:0,w:2,h:2}]},{name:'凹 形',w:7,h:5,holes:[{x:2,y:0,w:3,h:2}]},{name:'阶梯形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:3,w:2,h:2}]},{name:'缺角形',w:7,h:5,holes:[{x:0,y:3,w:3,h:2}]},{name:'T 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2}]},{name:'凸 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2},{x:0,y:3,w:2,h:2},{x:5,y:3,w:2,h:2}]},{name:'回 形',w:7,h:5,holes:[{x:2,y:1,w:3,h:3}]},{name:'闪电形',w:7,h:5,holes:[{x:0,y:0,w:3,h:2},{x:4,y:3,w:3,h:2}]}];
+var irIdx=0,irLines=[],irDrawing=false,irCurLine=null,irCell=40,irMethod=''; // 'add' or 'sub'
+var irPieces=0,irPieceData=[];
 
-function pickIr(n){irIdx=n;irLines=[];irDrawing=false;irCurLine=null;irPieces=0;irPieceData=[];resetIrGuide();
-  document.querySelectorAll('#irTabs .ir-tab').forEach(function(t,i){t.classList.toggle('active',i===n)});
-  document.getElementById('irCalcBtn').disabled=true;drawIr();}
-function irUndo(){irLines.pop();irPieces=0;irPieceData=[];resetIrGuide();document.getElementById('irCalcBtn').disabled=irLines.length===0;drawIr();}
-function irReset(){irLines=[];irDrawing=false;irCurLine=null;irPieces=0;irPieceData=[];resetIrGuide();document.getElementById('irCalcBtn').disabled=true;drawIr();}
-
-function resetIrGuide(){
-  document.getElementById('irGuide').style.display='none';
-  document.querySelectorAll('#irGuide .guide-step').forEach(function(s){s.classList.remove('active')});
-  document.getElementById('irPieceSteps').innerHTML='';
-  document.getElementById('irGs0').classList.add('active');
-}
+function pickIr(n){irIdx=n;irLines=[];irDrawing=false;irCurLine=null;irMethod='';irPieces=0;irPieceData=[];document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=true;document.querySelectorAll('#irTabs .ir-tab').forEach(function(t,i){t.classList.toggle('active',i===n)});drawIr()}
+function irUndo(){irLines.pop();irMethod='';document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=irLines.length===0;drawIr()}
+function irReset(){irLines=[];irDrawing=false;irCurLine=null;irMethod='';irPieces=0;irPieceData=[];document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=true;drawIr()}
 
 function drawIr(){
-  var s=irShapes[irIdx],c=document.getElementById('irCv'),ctx=c.getContext('2d');
-  ctx.clearRect(0,0,440,340);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,340);
+  var s=irShapes[irIdx],c=document.getElementById('irCv'),ctx=c.getContext('2d');ctx.clearRect(0,0,440,340);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,340);
   var cell=irCell,ox=(440-s.w*cell)/2,oy=(340-s.h*cell)/2;
-  // Grid dots
-  ctx.fillStyle='rgba(0,0,0,.03)';
-  for(var gx=ox;gx<=ox+s.w*cell;gx+=cell)for(var gy=oy;gy<=oy+s.h*cell;gy+=cell)ctx.fillRect(gx-1,gy-1,2,2);
-  // Filled cells
-  for(var r=0;r<s.h;r++)for(var co=0;co<s.w;co++){
-    var isHole=false;
-    for(var hi=0;hi<s.holes.length;hi++){var hh=s.holes[hi];if(co>=hh.x&&co<hh.x+hh.w&&r>=hh.y&&r<hh.y+hh.h){isHole=true;break}}
-    if(isHole)continue;
-    var x=ox+co*cell,y=oy+r*cell;
-    ctx.fillStyle='rgba(39,174,96,.18)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='#bbb';ctx.lineWidth=.5;ctx.strokeRect(x,y,cell,cell);
-  }
-  // Holes
+  ctx.fillStyle='rgba(0,0,0,.03)';for(var gx=ox;gx<=ox+s.w*cell;gx+=cell)for(var gy=oy;gy<=oy+s.h*cell;gy+=cell)ctx.fillRect(gx-1,gy-1,2,2);
+  for(var r=0;r<s.h;r++)for(var co=0;co<s.w;co++){var isH=false;for(var hi=0;hi<s.holes.length;hi++){var hh=s.holes[hi];if(co>=hh.x&&co<hh.x+hh.w&&r>=hh.y&&r<hh.y+hh.h){isH=true;break}}if(isH)continue;var x=ox+co*cell,y=oy+r*cell;ctx.fillStyle='rgba(39,174,96,.18)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='#bbb';ctx.lineWidth=.5;ctx.strokeRect(x,y,cell,cell)}
   for(var hi=0;hi<s.holes.length;hi++){var hh=s.holes[hi];ctx.strokeStyle='rgba(231,76,60,.3)';ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.strokeRect(ox+hh.x*cell,oy+hh.y*cell,hh.w*cell,hh.h*cell);ctx.setLineDash([])}
-  // Drawn lines
-  irLines.forEach(function(line){
-    if(line.points.length<2)return;
-    ctx.strokeStyle='#e67e22';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
-    ctx.beginPath();ctx.moveTo(line.points[0].x,line.points[0].y);
-    for(var i=1;i<line.points.length;i++)ctx.lineTo(line.points[i].x,line.points[i].y);
-    ctx.stroke();
-  });
-  if(irCurLine&&irCurLine.points.length>=2){
-    ctx.strokeStyle='rgba(230,126,34,.5)';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
-    ctx.beginPath();ctx.moveTo(irCurLine.points[0].x,irCurLine.points[0].y);
-    for(var i=1;i<irCurLine.points.length;i++)ctx.lineTo(irCurLine.points[i].x,irCurLine.points[i].y);
-    ctx.stroke();
-  }
+  irLines.forEach(function(l){if(l.points.length<2)return;ctx.strokeStyle='#e67e22';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(l.points[0].x,l.points[0].y);for(var i=1;i<l.points.length;i++)ctx.lineTo(l.points[i].x,l.points[i].y);ctx.stroke()});
+  if(irCurLine&&irCurLine.points.length>=2){ctx.strokeStyle='rgba(230,126,34,.5)';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(irCurLine.points[0].x,irCurLine.points[0].y);for(var i=1;i<irCurLine.points.length;i++)ctx.lineTo(irCurLine.points[i].x,irCurLine.points[i].y);ctx.stroke()}
 }
 
-function irSnap(pos){
-  var s=irShapes[irIdx],cell=irCell,ox=(440-s.w*cell)/2,oy=(340-s.h*cell)/2;
-  // Snap to nearest grid line (cell boundary)
-  return {
-    x:ox+Math.round((pos.x-ox)/cell)*cell,
-    y:oy+Math.round((pos.y-oy)/cell)*cell
-  };
-}
+function irSnap(pos){var s=irShapes[irIdx],cell=irCell,ox=(440-s.w*cell)/2,oy=(340-s.h*cell)/2;return{x:ox+Math.round((pos.x-ox)/cell)*cell,y:oy+Math.round((pos.y-oy)/cell)*cell}}
+function irGetPos(e){var c=document.getElementById('irCv');if(!c)return null;var rect=c.getBoundingClientRect();return irSnap({x:(e.clientX-rect.left)*(440/rect.width),y:(e.clientY-rect.top)*(340/rect.height)})}
+function irStart(e){e.preventDefault();var pos=irGetPos(e);if(!pos)return;irDrawing=true;irCurLine={points:[pos]};drawIr()}
+function irMove(e){if(!irDrawing||!irCurLine)return;e.preventDefault();var pos=irGetPos(e);if(!pos)return;var last=irCurLine.points[irCurLine.points.length-1];if(pos.x!==last.x||pos.y!==last.y)irCurLine.points.push(pos);drawIr()}
+function irEnd(e){if(!irDrawing)return;irDrawing=false;if(irCurLine&&irCurLine.points.length>=2){irLines.push(irCurLine);document.getElementById('irCalcBtn').disabled=false}irCurLine=null;drawIr()}
 
-function irGetPos(e){
-  var c=document.getElementById('irCv');if(!c)return null;
-  var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(340/rect.height);
-  return irSnap({x:x,y:y});
-}
-
-function irStart(e){e.preventDefault();var pos=irGetPos(e);if(!pos)return;irDrawing=true;irCurLine={points:[pos]};drawIr();}
-function irMove(e){if(!irDrawing||!irCurLine)return;e.preventDefault();var pos=irGetPos(e);if(!pos)return;var last=irCurLine.points[irCurLine.points.length-1];if(pos.x!==last.x||pos.y!==last.y)irCurLine.points.push(pos);drawIr();}
-function irEnd(e){if(!irDrawing)return;irDrawing=false;if(irCurLine&&irCurLine.points.length>=2){irLines.push(irCurLine);document.getElementById('irCalcBtn').disabled=false;}irCurLine=null;drawIr();}
-
-// ===== STEP 5: CALCULATION GUIDE =====
+// ===== STEP 5: STACKED GUIDE =====
 function startIrCalc(){
-  irPieces=0;irPieceData=[];resetIrGuide();
-  document.getElementById('irGuide').style.display='block';
-  document.getElementById('irGs0').classList.add('active');
-  document.getElementById('irFb0').innerHTML='';
-  document.getElementById('irPieces').value='';
+  var g=document.getElementById('irGuide');
+  g.innerHTML='<div class="gs-block" id="irMethodBlock"><div class="gs-q">你想用什么方法计算？</div><div class="gs-inputs"><button class="btn" onclick="irSetMethod(\'add\')">✂️ 分割求和——切成几块分别算再加起来</button><button class="btn org" onclick="irSetMethod(\'sub\')">🧩 补全求差——补成完整长方形再减去多余部分</button></div><div class="gs-fb" id="irMfb"></div></div>';
 }
 
-function irGsNext(step){
-  if(step===0){
-    var n=parseInt(document.getElementById('irPieces').value);
-    if(isNaN(n)||n<1){document.getElementById('irFb0').innerHTML='<span class="r">请输入一个数字</span>';return;}
-    irPieces=n;irPieceData=[];
-    document.getElementById('irFb0').innerHTML='<span class="green">✅ 分成了 '+n+' 块！</span>';
-    document.getElementById('irGs0').classList.remove('active');
-    // Build piece steps
-    var h='';
-    for(var i=0;i<n;i++){
-      h+='<div class="guide-step active" id="irGsP'+(i+1)+'" style="display:none">';
-      h+='<div class="gs-q">第'+(i+1)+'块：这块是什么形状？长=？宽=？面积=？</div>';
-      h+='<div class="gs-inputs">';
-      h+='<select id="irShape'+(i+1)+'" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select>';
-      h+='<span>长</span><input type="number" class="form-input" id="irL'+(i+1)+'" placeholder="?" style="width:60px">';
-      h+='<span>宽</span><input type="number" class="form-input" id="irW'+(i+1)+'" placeholder="?" style="width:60px">';
-      h+='<span>=</span><input type="number" class="form-input" id="irA'+(i+1)+'" placeholder="?" style="width:70px">';
-      h+='<button class="btn go" onclick="irPieceChk('+(i+1)+')">✅</button></div>';
-      h+='<div class="gs-fb" id="irFbP'+(i+1)+'"></div></div>';
-    }
-    document.getElementById('irPieceSteps').innerHTML=h;
-    // Show first piece
-    if(n>=1)document.getElementById('irGsP1').style.display='block';
-  }
+function irSetMethod(m){
+  irMethod=m;document.getElementById('irMfb').innerHTML='<span class="green">✅ 选择：'+(m==='add'?'分割求和':'补全求差')+'</span>';
+  if(m==='add')irAddFlow();else irSubFlow();
 }
 
-function irPieceChk(idx){
-  var shape=document.getElementById('irShape'+idx).value;
-  var L=parseInt(document.getElementById('irL'+idx).value);
-  var W=parseInt(document.getElementById('irW'+idx).value);
-  var A=parseInt(document.getElementById('irA'+idx).value);
-  var expectedArea=L*W;
-  var fb=document.getElementById('irFbP'+idx);
-  if(isNaN(L)||isNaN(W)||isNaN(A)){fb.innerHTML='<span class="r">请填写所有数字</span>';return;}
-  if(A===expectedArea){
-    fb.innerHTML='<span class="green">✅ 第'+idx+'块：'+L+'×'+W+' = '+A+' cm² 正确！</span>';
-    sfxOK();irPieceData[idx-1]={L:L,W:W,A:A};
-    document.getElementById('irGsP'+idx).style.display='none';
-    document.getElementById('irGsP'+idx).classList.remove('active');
-    // Check if all done
-    if(irPieceData.filter(function(x){return x}).length>=irPieces){
-      // Show sum step
-      var sumQ='把各块面积加起来：';
-      var sumExpected=0;
-      for(var i=0;i<irPieces;i++){if(i>0)sumQ+=' + ';sumQ+=irPieceData[i].A;sumExpected+=irPieceData[i].A;}
-      sumQ+=' = ？';
-      document.getElementById('irSumQ').textContent=sumQ;
-      document.getElementById('irGsSum').classList.add('active');
-      document.getElementById('irGsSum').style.display='block';
-      document.getElementById('irSum').value='';
-      document.getElementById('irFbSum').innerHTML='';
-      // Store expected sum
-      document.getElementById('irGsSum').setAttribute('data-expected',sumExpected);
-    }else{
-      // Show next piece
-      document.getElementById('irGsP'+(idx+1)).style.display='block';
-      document.getElementById('irGsP'+(idx+1)).classList.add('active');
-    }
-  }else{
-    fb.innerHTML='<span class="r">❌ '+L+'×'+W+' = '+expectedArea+'，不是 '+A+'。再算算？</span>';sfxNO();
-  }
+function irAddFlow(){
+  var g=document.getElementById('irGuide');irPieces=0;irPieceData=[];
+  g.innerHTML+='<div class="gs-block" id="irPcBlock"><div class="gs-q">第1步：你画的线把图形分成了<b>几块</b>规则图形？</div><div class="gs-inputs"><input type="number" class="form-input" id="irPc" placeholder="?" min="1" max="8"><button class="btn go" onclick="irPcNext()">✅</button></div><div class="gs-fb" id="irPcfb"></div></div>';
+  document.getElementById('irPcBlock').scrollIntoView({behavior:'smooth'});
 }
 
-function irGsSumChk(){
-  var expected=parseInt(document.getElementById('irGsSum').getAttribute('data-expected'));
+function irPcNext(){
+  var n=parseInt(document.getElementById('irPc').value);if(isNaN(n)||n<1){document.getElementById('irPcfb').innerHTML='<span class="r">输入数字</span>';return}
+  irPieces=n;irPieceData=[];document.getElementById('irPcfb').innerHTML='<span class="green">✅ 分成了 '+n+' 块</span>';
+  var g=document.getElementById('irGuide'),h='';
+  for(var i=0;i<n;i++){h+='<div class="gs-block" id="irPb'+i+'"><div class="gs-q">第'+(i+1)+'块：形状？长？宽？面积？</div><div class="gs-inputs"><select id="irSh'+i+'" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select><span>长</span><input type="number" class="form-input" id="irL'+i+'" placeholder="?" style="width:60px"><span>宽</span><input type="number" class="form-input" id="irW'+i+'" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irPbChk('+i+')">✅</button></div><div class="gs-fb" id="irFb'+i+'"></div></div>'}
+  g.innerHTML+=h;document.getElementById('irPb0').scrollIntoView({behavior:'smooth'});
+}
+
+function irPbChk(idx){
+  var L=parseInt(document.getElementById('irL'+idx).value),W=parseInt(document.getElementById('irW'+idx).value),A=parseInt(document.getElementById('irA'+idx).value);
+  if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irFb'+idx).innerHTML='<span class="r">填写所有数字</span>';return}
+  if(A===L*W){document.getElementById('irFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块：'+L+'×'+W+'='+A+' cm²</span>';sfxOK();irPieceData[idx]={L:L,W:W,A:A};
+    var allDone=irPieceData.filter(function(x){return x}).length>=irPieces;
+    if(allDone){var sumQ='',sumE=0;for(var i=0;i<irPieces;i++){if(i>0)sumQ+=' + ';sumQ+=irPieceData[i].A;sumE+=irPieceData[i].A}
+      var g=document.getElementById('irGuide');g.innerHTML+='<div class="gs-block" id="irSumBlock"><div class="gs-q">把各块面积加起来：'+sumQ+' = ？</div><div class="gs-inputs"><input type="number" class="form-input" id="irSum" placeholder="?"><button class="btn go" onclick="irSumChk('+sumE+')">✅</button></div><div class="gs-fb" id="irSmfb"></div></div>';
+      document.getElementById('irSumBlock').scrollIntoView({behavior:'smooth'});
+    }else{for(var i=idx+1;i<irPieces;i++){if(!irPieceData[i]){document.getElementById('irPb'+i).scrollIntoView({behavior:'smooth'});break}}}
+  }else{document.getElementById('irFb'+idx).innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'，不是'+A+'</span>';sfxNO()}
+}
+
+function irSumChk(expected){
   var ans=parseInt(document.getElementById('irSum').value);
-  if(ans===expected){sfxDone();document.getElementById('irFbSum').innerHTML='<span class="green">🏆 完全正确！总面积 = '+expected+' cm²。</span>';md(4);}
-  else{sfxNO();document.getElementById('irFbSum').innerHTML='<span class="r">❌ 再算算——</span>把各块面积加起来。';}
+  if(ans===expected){sfxDone();document.getElementById('irSmfb').innerHTML='<span class="green">🏆 总面积 = '+expected+' cm²</span>';md(4)}
+  else{sfxNO();document.getElementById('irSmfb').innerHTML='<span class="r">❌ 再算算</span>'}
+}
+
+function irSubFlow(){
+  var g=document.getElementById('irGuide');
+  g.innerHTML+='<div class="gs-block" id="irSubL"><div class="gs-q">第1步：补上缺口后变成的大长方形——长=？宽=？面积=？</div><div class="gs-inputs"><span>长</span><input type="number" class="form-input" id="irBL" placeholder="?" style="width:60px"><span>宽</span><input type="number" class="form-input" id="irBW" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irBA" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubBig()">✅</button></div><div class="gs-fb" id="irSubBfb"></div></div>';
+  document.getElementById('irSubL').scrollIntoView({behavior:'smooth'});
+}
+
+function irSubBig(){
+  var L=parseInt(document.getElementById('irBL').value),W=parseInt(document.getElementById('irBW').value),A=parseInt(document.getElementById('irBA').value);
+  if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irSubBfb').innerHTML='<span class="r">填写所有数字</span>';return}
+  if(A===L*W){document.getElementById('irSubBfb').innerHTML='<span class="green">✅ 大长方形：'+L+'×'+W+'='+A+' cm²</span>';sfxOK();
+    var g=document.getElementById('irGuide');g.innerHTML+='<div class="gs-block" id="irSubH"><div class="gs-q">第2步：补上去的缺口——长=？宽=？面积=？</div><div class="gs-inputs"><span>长</span><input type="number" class="form-input" id="irHL" placeholder="?" style="width:60px"><span>宽</span><input type="number" class="form-input" id="irHW" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irHA" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubHole()">✅</button></div><div class="gs-fb" id="irSubHfb"></div></div>';
+    document.getElementById('irSubH').scrollIntoView({behavior:'smooth'});window._irBig=A;
+  }else{document.getElementById('irSubBfb').innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'</span>';sfxNO()}
+}
+
+function irSubHole(){
+  var L=parseInt(document.getElementById('irHL').value),W=parseInt(document.getElementById('irHW').value),A=parseInt(document.getElementById('irHA').value);
+  if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irSubHfb').innerHTML='<span class="r">填写所有数字</span>';return}
+  if(A===L*W){document.getElementById('irSubHfb').innerHTML='<span class="green">✅ 缺口：'+L+'×'+W+'='+A+' cm²</span>';sfxOK();
+    var big=window._irBig||0;var expected=big-A;
+    var g=document.getElementById('irGuide');g.innerHTML+='<div class="gs-block" id="irSubF"><div class="gs-q">第3步：大长方形 − 缺口 = '+big+' − '+A+' = ？</div><div class="gs-inputs"><input type="number" class="form-input" id="irSubA" placeholder="?"><button class="btn go" onclick="irSubFin('+expected+')">✅</button></div><div class="gs-fb" id="irSubFfb"></div></div>';
+    document.getElementById('irSubF').scrollIntoView({behavior:'smooth'});
+  }else{document.getElementById('irSubHfb').innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'</span>';sfxNO()}
+}
+
+function irSubFin(expected){
+  var ans=parseInt(document.getElementById('irSubA').value);
+  if(ans===expected){sfxDone();document.getElementById('irSubFfb').innerHTML='<span class="green">🏆 总面积 = '+expected+' cm²</span>';md(4)}
+  else{sfxNO();document.getElementById('irSubFfb').innerHTML='<span class="r">❌ 再算算</span>'}
 }
 
 // Build IR tabs
@@ -840,85 +526,34 @@ irShapes.forEach(function(s,i){var b=document.createElement('button');b.classNam
 
 // ===== STEP 6: QUIZ =====
 var quizData=[
-  {q:'面积量的是？',o:['图形里面有多大','图形一圈多长','图形有多重','图形有几个角'],a:0,x:'面积=封闭图形<b>里面</b>有多大。'},
-  {q:'"平方厘米"的"平方"是什么意思？',o:['两次方','正方形','很平','分成两块'],a:1,x:'<b>平方=正方形</b>。1cm²=边长1cm的正方形。'},
-  {q:'为什么正方形最适合做面积单位？',o:['因为它好看','能紧密铺满、不留空隙','因为它最大','因为最简单'],a:1,x:'能<b>紧密铺满</b>，不留空隙。'},
-  {q:'长方形长5cm、宽3cm，面积是？',o:['8 cm²','15 cm²','16 cm²','15 cm'],a:1,x:'5×3=<b>15 cm²</b>。'},
-  {q:'正方形边长4cm，面积是？',o:['16 cm','16 cm²','8 cm²','12 cm²'],a:1,x:'4×4=<b>16 cm²</b>。'},
-  {q:'正方形边长4cm，周长是？',o:['16 cm','16 cm²','8 cm','8 cm²'],a:0,x:'周长=4×4=<b>16 cm</b>。周长cm，面积cm²！'},
-  {q:'长方形面积24cm²，长6cm，宽是多少？',o:['3 cm','4 cm','18 cm','30 cm'],a:1,x:'24÷6=<b>4 cm</b>。'},
-  {q:'下面哪个是面积单位？',o:['cm','cm²','kg','个'],a:1,x:'面积用面积单位——<b>cm²</b>。'},
-  {q:'L形图形的面积怎么算？',o:['切成几块长方形分别算','周长÷2','当成正方形算','绕一圈量'],a:0,x:'<b>切分成几块长方形</b>，分别算再相加。'},
-  {q:'面积公式「长×宽」是怎么来的？',o:['老师说的','每行格子数×行数','长+宽','绕圈数出来的'],a:1,x:'<b>每行格子数×行数</b>。'},
-  {q:'长方形长8cm、宽2cm，面积是？',o:['20 cm²','10 cm²','16 cm²','16 cm'],a:2,x:'8×2=<b>16 cm²</b>。'},
-  {q:'正方形边长5cm，面积是？',o:['20 cm²','10 cm²','25 cm²','25 cm'],a:2,x:'5×5=<b>25 cm²</b>。'},
-  {q:'1 cm²是什么？',o:['1 cm长的线段','边长1 cm的正方形','重1g的方块'],a:1,x:'<b>边长1cm的正方形</b>的大小。'},
-  {q:'正方形面积36cm²，边长是？',o:['6 cm','9 cm','12 cm','18 cm'],a:0,x:'边长×边长=36→<b>6 cm</b>。'},
-  {q:'教室地面面积大约用哪个单位？',o:['cm²','m²','km²','cm'],a:1,x:'教室地面用<b>m²（平方米）</b>。'},
-  {q:'长方形长7cm、宽3cm，面积是？',o:['10 cm²','20 cm²','21 cm²','21 cm'],a:2,x:'7×3=<b>21 cm²</b>。'},
-  {q:'正方形是特殊的长方形，因为？',o:['它长和宽相等','它有4条边','它更小'],a:0,x:'正方形=<b>长=宽</b>的长方形。'},
-  {q:'面积和周长有必然关系吗？',o:['面积大周长一定大','周长大面积一定大','没有必然关系'],a:2,x:'面积和周长<b>没有必然关系</b>。'},
-  {q:'长方形长9cm、宽4cm，面积是？',o:['13 cm²','26 cm²','36 cm²','36 cm'],a:2,x:'9×4=<b>36 cm²</b>。'},
-  {q:'一面墙长3m、高2m，面积是？',o:['6 m','6 m²','5 m²','10 m²'],a:1,x:'3×2=<b>6 m²</b>。'},
-  {q:'正方形边长6cm，周长和面积？',o:['周长24cm，面积36cm²','周长24cm²，面积36cm','周长36cm，面积24cm²'],a:0,x:'周长24<b>cm</b>，面积36<b>cm²</b>。'},
-  {q:'面积本质是什么？',o:['数一数有几个单位小方块','量一量一圈多长','测一测有多重'],a:0,x:'面积本质=<b>铺满多少个1cm²小方块</b>。'},
-  {q:'长方形面积30cm²，宽5cm，长是？',o:['6 cm','25 cm','35 cm','5 cm'],a:0,x:'30÷5=<b>6 cm</b>。'},
-  {q:'两个正方形拼起来，面积会？',o:['变大','变小','不变','变成0'],a:2,x:'面积<b>不变</b>，周长会变小。'},
-  {q:'割补法的核心是？',o:['切成/补成长方形','乱猜一个数','用周长公式'],a:0,x:'<b>切一切+补一补</b>，变成长方形。'},
-];
+  {q:'面积量的是？',o:['图形里面有多大','一圈多长','有多重','几个角'],a:0},{q:'"平方厘米"的"平方"是什么？',o:['两次方','正方形','很平'],a:1},{q:'正方形最适合做面积单位因为？',o:['好看','紧密铺满不留空隙','最大'],a:1},{q:'长方形长5cm宽3cm，面积？',o:['8 cm²','15 cm²','16 cm²'],a:1},{q:'正方形边长4cm，面积？',o:['16 cm','16 cm²','8 cm²'],a:1},{q:'正方形边长4cm，周长？',o:['16 cm','16 cm²','8 cm'],a:0},{q:'面积24cm²长6cm，宽？',o:['3 cm','4 cm','18 cm'],a:1},{q:'面积单位是？',o:['cm','cm²','kg'],a:1},{q:'L形面积怎么算？',o:['切成几块分别算','周长÷2','绕一圈量'],a:0},{q:'长×宽怎么来的？',o:['老师说的','每行格子数×行数','长+宽'],a:1},{q:'长方形长8cm宽2cm面积？',o:['20','10','16 cm²'],a:2},{q:'正方形边长5cm面积？',o:['20','10','25 cm²'],a:2},{q:'1cm²是什么？',o:['1cm线段','边长1cm的正方形','重1g'],a:1},{q:'正方形面积36cm²边长？',o:['6 cm','9 cm','12 cm'],a:0},{q:'教室地面面积用？',o:['cm²','m²','km²'],a:1},{q:'长方形7×3面积？',o:['10','20','21 cm²'],a:2},{q:'正方形是特殊长方形因为？',o:['长宽相等','4条边','更小'],a:0},{q:'面积周长有关系吗？',o:['有','没有必然关系','相等'],a:1},{q:'9×4面积？',o:['13','26','36 cm²'],a:2},{q:'墙3m×2m面积？',o:['6 m','6 m²','5 m²'],a:1},{q:'边长6cm周长面积？',o:['24cm 36cm²','24cm² 36cm'],a:0},{q:'面积本质？',o:['数单位小方块','量一圈','测重量'],a:0},{q:'30cm²宽5cm长？',o:['6 cm','25 cm','35 cm'],a:0},{q:'两正方拼起面积？',o:['变大','变小','不变'],a:2},{q:'割补法核心？',o:['切/补成长方形','乱猜','用周长'],a:0}];
 var qPool=[],qCount=10,qi=0,qscore=0,qAnswers=[];
 function shuffle(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=arr[i];arr[i]=arr[j];arr[j]=t}return arr}
 function pickQuiz(){qPool=shuffle(quizData.slice()).slice(0,qCount);qi=0;qscore=0;qAnswers=[];renderQuiz()}
-function renderQuiz(){
-  var q=qPool[qi],done=qAnswers[qi]!==undefined;
-  document.getElementById('qqq').textContent='第'+(qi+1)+'/'+qCount+'题：'+q.q;
-  var d='';for(var i=0;i<qCount;i++)d+='<div class="qd'+(i===qi?' cur':'')+(qAnswers[i]!==undefined?(qAnswers[i]===qPool[i].a?' ok':' no'):'')+'"></div>';
-  document.getElementById('qds').innerHTML=d;
-  var h='';if(done){q.o.forEach(function(o,i){var cls='qopt';if(i===q.a)cls+=' good';else if(i===qAnswers[qi])cls+=' bad';h+='<button class="'+cls+'" disabled>'+['A','B','C','D'][i]+'. '+o+'</button>'})}
-  else{q.o.forEach(function(o,i){h+='<button class="qopt" onclick="answerQ('+i+',this)">'+['A','B','C','D'][i]+'. '+o+'</button>'})}
-  document.getElementById('qos').innerHTML=h;document.getElementById('qex').innerHTML=done?('💡 '+q.x):'';document.getElementById('qpr').disabled=qi===0;document.getElementById('qnx').textContent=(qAnswers.length>=qCount)?'查看成绩 🎯':'下一题 ▶';document.getElementById('qnx').className='btn go';
-}
+function renderQuiz(){var q=qPool[qi],done=qAnswers[qi]!==undefined;document.getElementById('qqq').textContent='第'+(qi+1)+'/'+qCount+'题：'+q.q;var d='';for(var i=0;i<qCount;i++)d+='<div class="qd'+(i===qi?' cur':'')+(qAnswers[i]!==undefined?(qAnswers[i]===qPool[i].a?' ok':' no'):'')+'"></div>';document.getElementById('qds').innerHTML=d;var h='';if(done){var letters=['A','B','C','D'];q.o.forEach(function(o,i){var cls='qopt';if(i===q.a)cls+=' good';else if(i===qAnswers[qi])cls+=' bad';h+='<button class="'+cls+'" disabled>'+letters[i]+'. '+o+'</button>'})}else q.o.forEach(function(o,i){h+='<button class="qopt" onclick="answerQ('+i+',this)">'+['A','B','C','D'][i]+'. '+o+'</button>'});document.getElementById('qos').innerHTML=h;document.getElementById('qex').innerHTML=done?'💡':'';document.getElementById('qpr').disabled=qi===0;document.getElementById('qnx').textContent=(qAnswers.length>=qCount)?'查看成绩 🎯':'下一题 ▶';document.getElementById('qnx').className='btn go'}
 function answerQ(idx,btn){if(qAnswers[qi]!==undefined)return;qAnswers[qi]=idx;if(idx===qPool[qi].a){qscore++;sfxOK()}else sfxNO();renderQuiz()}
 function qpr(){if(qi>0){qi--;renderQuiz()}}
 function qnx(){if(qAnswers.length>=qCount){showScore();return}qi++;renderQuiz()}
-function showScore(){
-  document.getElementById('qnv').style.display='none';document.getElementById('qds').style.display='none';document.getElementById('qqq').style.display='none';document.getElementById('qos').style.display='none';document.getElementById('qex').style.display='none';
-  var sc=document.getElementById('qsc');sc.style.display='block';var emo=qscore>=10?'🏆':qscore>=7?'🎉':qscore>=4?'💪':'📚';
-  document.getElementById('semo').textContent=emo;document.getElementById('snum').textContent=qscore+'/10';document.getElementById('smsg').textContent=qscore>=10?'太厉害了！面积小达人！':qscore>=7?'很棒！面积基本都掌握了！':qscore>=4?'还不错！':'再学一遍你就是高手！';
-  if(qscore===10)sfxDone();md(5);
-}
+function showScore(){document.getElementById('qnv').style.display='none';document.getElementById('qds').style.display='none';document.getElementById('qqq').style.display='none';document.getElementById('qos').style.display='none';document.getElementById('qex').style.display='none';var sc=document.getElementById('qsc');sc.style.display='block';document.getElementById('semo').textContent=qscore>=10?'🏆':qscore>=7?'🎉':'💪';document.getElementById('snum').textContent=qscore+'/10';document.getElementById('smsg').textContent=qscore>=10?'太厉害了！':qscore>=7?'很棒！':'再学一遍！';if(qscore===10)sfxDone();md(5)}
 function qrw(){for(var i=0;i<qCount;i++){if(qAnswers[i]!==qPool[i].a){qi=i;break}}document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';renderQuiz()}
 function qrs(){document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';pickQuiz()}
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded',function(){
   drawUnitCanvases();
-  // Lab events
-  var labCv=document.getElementById('labCv');
-  labCv.onmousemove=function(e){handleLabMove(e)};
-  labCv.onmousedown=function(e){handleLabDown(e)};
-  labCv.onmouseup=function(e){handleLabUp(e)};
-  labCv.ontouchmove=function(e){e.preventDefault();handleLabMove(e.changedTouches[0])};
-  labCv.ontouchstart=function(e){e.preventDefault();handleLabDown(e.changedTouches[0])};
-  labCv.ontouchend=function(e){e.preventDefault();handleLabUp(e.changedTouches[0])};
+  // Lab
+  var labCv=document.getElementById('labCv');labCv.onmousemove=function(e){handleLabMove(e)};labCv.onclick=function(e){handleLabClick(e)};labCv.ontouchmove=function(e){e.preventDefault();handleLabMove(e.changedTouches[0])};labCv.ontouchend=function(e){e.preventDefault();handleLabClick(e.changedTouches[0])};
   // Form
-  document.getElementById('fCv').onclick=function(e){handleFormClick(e)};
-  document.getElementById('fCv').ontouchend=function(e){e.preventDefault();handleFormClick(e.changedTouches[0])};
+  document.getElementById('fCv').onclick=function(e){handleFormClick(e)};document.getElementById('fCv').ontouchend=function(e){e.preventDefault();handleFormClick(e.changedTouches[0])};
   // Square
-  document.getElementById('sqCv').onclick=function(e){handleSqClick(e)};
-  document.getElementById('sqCv').ontouchend=function(e){e.preventDefault();handleSqClick(e.changedTouches[0])};
+  document.getElementById('sqCv').onclick=function(e){handleSqClick(e)};document.getElementById('sqCv').ontouchend=function(e){e.preventDefault();handleSqClick(e.changedTouches[0])};
   // Reverse
-  document.getElementById('revCv').onclick=function(e){handleRevClick(e)};
-  document.getElementById('revCv').ontouchend=function(e){e.preventDefault();handleRevClick(e.changedTouches[0])};
+  document.getElementById('revCv').onclick=function(e){handleRevClick(e)};document.getElementById('revCv').ontouchend=function(e){e.preventDefault();handleRevClick(e.changedTouches[0])};
   // IR
-  var irCv=document.getElementById('irCv');
-  irCv.onmousedown=function(e){irStart(e)};irCv.onmousemove=function(e){irMove(e)};irCv.onmouseup=function(e){irEnd(e)};irCv.onmouseleave=function(e){irEnd(e)};
-  irCv.ontouchstart=function(e){irStart(e.changedTouches[0])};irCv.ontouchmove=function(e){irMove(e.changedTouches[0])};irCv.ontouchend=function(e){irEnd(e.changedTouches[0])};
+  var irCv=document.getElementById('irCv');irCv.onmousedown=function(e){irStart(e)};irCv.onmousemove=function(e){irMove(e)};irCv.onmouseup=function(e){irEnd(e)};irCv.onmouseleave=function(e){irEnd(e)};irCv.ontouchstart=function(e){irStart(e.changedTouches[0])};irCv.ontouchmove=function(e){irMove(e.changedTouches[0])};irCv.ontouchend=function(e){irEnd(e.changedTouches[0])};
 
-  labClear();fReset();drawForm();updateFHint();sqReset();drawSq();updateSqHint();revReset();revDraw();pickIr(0);
-  // Quiz
-  var s6=document.getElementById('s6');var obs=new IntersectionObserver(function(e){if(e[0].isIntersecting){pickQuiz();obs.unobserve(s6)}},{threshold:.3});obs.observe(s6);
-  setTimeout(function(){var r2=s6.getBoundingClientRect();if(r2.top<window.innerHeight&&r2.bottom>0)pickQuiz()},400);
+  labClear();document.getElementById('triRotBtn').style.display='none';fReset();drawForm();updateFHint();sqReset();drawSq();updateSqHint();revReset();revDraw();pickIr(0);
+  var s6=document.getElementById('s6');var obs=new IntersectionObserver(function(e){if(e[0].isIntersecting){pickQuiz();obs.unobserve(s6)}},{threshold:.3});obs.observe(s6);setTimeout(function(){var r2=s6.getBoundingClientRect();if(r2.top<window.innerHeight&&r2.bottom>0)pickQuiz()},400);
 });
 </script>
 </body>
