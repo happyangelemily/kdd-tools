@@ -152,10 +152,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 </div>
 <p style="text-align:center;font-size:.9em"><b>「平方」= 正方形</b>。铺了几个，面积就是几<b>平方厘米</b>。</p>
 <div class="qo" id="unitQuiz">
-  <button class="qopt" onclick="ansU(0,this)">A. 课桌面的大小 —— cm</button>
-  <button class="qopt" onclick="ansU(1,this)">B. 课桌面的大小 —— cm²</button>
-  <button class="qopt" onclick="ansU(2,this)">C. 操场一圈的长度 —— m²</button>
-  <button class="qopt" onclick="ansU(3,this)">D. 教室地面的面积 —— m</button>
+  <button class="qopt" onclick="ansU(0,this)">A. 量课桌面——用厘米（cm）</button>
+  <button class="qopt" onclick="ansU(1,this)">B. 量课桌面——用平方厘米（cm²）</button>
+  <button class="qopt" onclick="ansU(2,this)">C. 量操场一圈——用平方米（m²）</button>
+  <button class="qopt" onclick="ansU(3,this)">D. 量教室地面——用米（m）</button>
 </div>
 <p id="unitFB" style="text-align:center;font-size:.85em;min-height:24px;margin:8px 0"></p>
 <div id="unitRev" style="display:none"><div class="reveal open"><div class="big">量长度 → cm / m<br>量面积 → cm² / m²</div></div></div>
@@ -315,8 +315,9 @@ function drawLab(){
   });
   // Ghost preview
   if(labMouse.x>=t.x&&labMouse.x<=t.x+t.w&&labMouse.y>=t.y&&labMouse.y<=t.y+t.h){
-    var szW=labShape==='rect'?60:30,szH=labShape==='rect'?30:30,mx=Math.round(labMouse.x/labSnap)*labSnap,my=Math.round(labMouse.y/labSnap)*labSnap;
-    mx=Math.max(t.x,Math.min(t.x+t.w-szW,mx-szW/2));my=Math.max(t.y,Math.min(t.y+t.h-szH,my-szH/2));
+    var szW=labShape==='rect'?60:30,szH=labShape==='rect'?30:30;
+    var mx=t.x+Math.round((labMouse.x-t.x)/szW)*szW,my=t.y+Math.round((labMouse.y-t.y)/szH)*szH;
+    mx=Math.max(t.x,Math.min(t.x+t.w-szW,mx));my=Math.max(t.y,Math.min(t.y+t.h-szH,my));
     ctx.globalAlpha=.4;
     if(labShape==='square'){ctx.fillStyle='rgba(39,174,96,.25)';ctx.fillRect(mx,my,30,30);ctx.strokeStyle='#27ae60';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.strokeRect(mx,my,30,30);ctx.setLineDash([])}
     else if(labShape==='circle'){ctx.fillStyle='rgba(233,30,99,.2)';ctx.beginPath();ctx.arc(mx+15,my+15,15,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e91e63';ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([])}
@@ -333,8 +334,10 @@ function handleLabMove(e){labMouse=labGetPos(e)||labMouse;drawLab()}
 
 function handleLabClick(e){
   var pos=labGetPos(e);if(!pos)return;var t=labT;if(pos.x<t.x||pos.x>t.x+t.w||pos.y<t.y||pos.y>t.y+t.h)return;
-  var szW=labShape==='rect'?60:30,szH=labShape==='rect'?30:30,mx=Math.round(pos.x/labSnap)*labSnap,my=Math.round(pos.y/labSnap)*labSnap;
-  mx=Math.max(t.x,Math.min(t.x+t.w-szW,mx-szW/2));my=Math.max(t.y,Math.min(t.y+t.h-szH,my-szH/2));
+  var szW=labShape==='rect'?60:30,szH=labShape==='rect'?30:30;
+  // Snap to shape-size grid from target origin to prevent row overlap
+  var mx=t.x+Math.round((pos.x-t.x)/szW)*szW,my=t.y+Math.round((pos.y-t.y)/szH)*szH;
+  mx=Math.max(t.x,Math.min(t.x+t.w-szW,mx));my=Math.max(t.y,Math.min(t.y+t.h-szH,my));
   var e2={shape:labShape,x:mx,y:my};if(labShape==='triangle')e2.rot=labTriRot*Math.PI/2;
   labPlaced.push(e2);sfxOK();drawLab();updateLabStats();if(labPlaced.length>=3)md(1);
 }
@@ -423,7 +426,7 @@ function handleRevClick(e){
 function revChk(){var p=revData[revI],v=parseInt(document.getElementById('revIn').value);if(v===p.exp){sfxOK();document.getElementById('revFB').innerHTML='<span class="green">✅ '+p.a+'÷'+p.k+'=<b>'+p.exp+' cm</b></span>'}else if(isNaN(v))document.getElementById('revFB').innerHTML='输入数字';else{sfxNO();document.getElementById('revFB').innerHTML='<span class="r">❌</span>'}}
 
 // ===== STEP 5: STACKED GUIDE + METHOD CHOICE =====
-var irShapes=[{name:'L 形',w:7,h:5,holes:[{x:5,y:0,w:2,h:2}]},{name:'凹 形',w:7,h:5,holes:[{x:2,y:0,w:3,h:2}]},{name:'阶梯形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:3,w:2,h:2}]},{name:'缺角形',w:7,h:5,holes:[{x:0,y:3,w:3,h:2}]},{name:'T 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2}]},{name:'凸 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2},{x:0,y:3,w:2,h:2},{x:5,y:3,w:2,h:2}]},{name:'回 形',w:7,h:5,holes:[{x:2,y:1,w:3,h:3}]},{name:'闪电形',w:7,h:5,holes:[{x:0,y:0,w:3,h:2},{x:4,y:3,w:3,h:2}]}];
+var irShapes=[{name:'L 形',w:7,h:5,holes:[{x:5,y:0,w:2,h:2}],total:31},{name:'凹 形',w:7,h:5,holes:[{x:2,y:0,w:3,h:2}],total:29},{name:'阶梯形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:3,w:2,h:2}],total:27},{name:'缺角形',w:7,h:5,holes:[{x:0,y:3,w:3,h:2}],total:29},{name:'T 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2}],total:27},{name:'凸 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2},{x:0,y:3,w:2,h:2},{x:5,y:3,w:2,h:2}],total:19},{name:'回 形',w:7,h:5,holes:[{x:2,y:1,w:3,h:3}],total:26},{name:'闪电形',w:7,h:5,holes:[{x:0,y:0,w:3,h:2},{x:4,y:3,w:3,h:2}],total:23}];
 var irIdx=0,irLines=[],irDrawing=false,irCurLine=null,irCell=40,irMethod=''; // 'add' or 'sub'
 var irPieces=0,irPieceData=[];
 
@@ -468,14 +471,23 @@ function irPcNext(){
   var n=parseInt(document.getElementById('irPc').value);if(isNaN(n)||n<1){document.getElementById('irPcfb').innerHTML='<span class="r">输入数字</span>';return}
   irPieces=n;irPieceData=[];document.getElementById('irPcfb').innerHTML='<span class="green">✅ 分成了 '+n+' 块</span>';
   var g=document.getElementById('irGuide'),h='';
-  for(var i=0;i<n;i++){h+='<div class="gs-block" id="irPb'+i+'"><div class="gs-q">第'+(i+1)+'块：形状？长？宽？面积？</div><div class="gs-inputs"><select id="irSh'+i+'" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select><span>长</span><input type="number" class="form-input" id="irL'+i+'" placeholder="?" style="width:60px"><span>宽</span><input type="number" class="form-input" id="irW'+i+'" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irPbChk('+i+')">✅</button></div><div class="gs-fb" id="irFb'+i+'"></div></div>'}
+  for(var i=0;i<n;i++){h+='<div class="gs-block" id="irPb'+i+'"><div class="gs-q">第'+(i+1)+'块：形状？尺寸？面积？</div><div class="gs-inputs"><select id="irSh'+i+'" onchange="irLabelUp('+i+')" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select><span id="irLb'+i+'">长</span><input type="number" class="form-input" id="irL'+i+'" placeholder="?" style="width:60px"><span id="irWb'+i+'">宽</span><input type="number" class="form-input" id="irW'+i+'" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irPbChk('+i+')">✅</button></div><div class="gs-fb" id="irFb'+i+'"></div></div>'}
   g.innerHTML+=h;document.getElementById('irPb0').scrollIntoView({behavior:'smooth'});
 }
 
+function irLabelUp(idx){
+  var sel=document.getElementById('irSh'+idx).value;
+  var lb=document.getElementById('irLb'+idx),wb=document.getElementById('irWb'+idx);
+  if(sel==='square'){lb.textContent='边长';wb.textContent='（同）';document.getElementById('irW'+idx).disabled=true;document.getElementById('irW'+idx).value=''}
+  else{lb.textContent='长';wb.textContent='宽';document.getElementById('irW'+idx).disabled=false}
+}
+
 function irPbChk(idx){
-  var L=parseInt(document.getElementById('irL'+idx).value),W=parseInt(document.getElementById('irW'+idx).value),A=parseInt(document.getElementById('irA'+idx).value);
+  var L=parseInt(document.getElementById('irL'+idx).value),A=parseInt(document.getElementById('irA'+idx).value);
+  var sel=document.getElementById('irSh'+idx).value,W;
+  if(sel==='square'){W=L}else{W=parseInt(document.getElementById('irW'+idx).value)}
   if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irFb'+idx).innerHTML='<span class="r">填写所有数字</span>';return}
-  if(A===L*W){document.getElementById('irFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块：'+L+'×'+W+'='+A+' cm²</span>';sfxOK();irPieceData[idx]={L:L,W:W,A:A};
+  if(A===L*W){document.getElementById('irFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块：'+(sel==='square'?L+'×'+L:L+'×'+W)+'='+A+' cm²</span>';sfxOK();irPieceData[idx]={L:L,W:W,A:A};
     var allDone=irPieceData.filter(function(x){return x}).length>=irPieces;
     if(allDone){var sumQ='',sumE=0;for(var i=0;i<irPieces;i++){if(i>0)sumQ+=' + ';sumQ+=irPieceData[i].A;sumE+=irPieceData[i].A}
       var g=document.getElementById('irGuide');g.innerHTML+='<div class="gs-block" id="irSumBlock"><div class="gs-q">把各块面积加起来：'+sumQ+' = ？</div><div class="gs-inputs"><input type="number" class="form-input" id="irSum" placeholder="?"><button class="btn go" onclick="irSumChk('+sumE+')">✅</button></div><div class="gs-fb" id="irSmfb"></div></div>';
@@ -486,8 +498,11 @@ function irPbChk(idx){
 
 function irSumChk(expected){
   var ans=parseInt(document.getElementById('irSum').value);
-  if(ans===expected){sfxDone();document.getElementById('irSmfb').innerHTML='<span class="green">🏆 总面积 = '+expected+' cm²</span>';md(4)}
-  else{sfxNO();document.getElementById('irSmfb').innerHTML='<span class="r">❌ 再算算</span>'}
+  var shapeTotal=irShapes[irIdx].total;
+  if(isNaN(ans)){document.getElementById('irSmfb').innerHTML='<span class="r">输入数字</span>';return}
+  if(ans!==expected){document.getElementById('irSmfb').innerHTML='<span class="r">❌ 各块面积加起来的和是 '+expected+'，不是 '+ans+'</span>';sfxNO();return}
+  if(ans!==shapeTotal){document.getElementById('irSmfb').innerHTML='<span class="r">❌ 计算结果是 '+ans+'，但这个图形的实际面积是 '+shapeTotal+' cm²。检查每块的尺寸填对了吗？</span>';sfxNO();return}
+  sfxDone();document.getElementById('irSmfb').innerHTML='<span class="green">🏆 总面积 = '+expected+' cm²，完全正确！</span>';md(4)
 }
 
 function irSubFlow(){
