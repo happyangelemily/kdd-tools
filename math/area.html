@@ -111,21 +111,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>面积彻底搞懂</h1><p class="sub">亲手操作、自己发现——五步掌握「面积」的本质</p></div>
+<div class="hero"><h1>一起来认识「面积」</h1><p class="sub">不用背，不用记——亲手试试，答案自己跑出来 ✨</p></div>
 <div class="prog" id="prog"><div class="pd cur"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>
 
 <!-- ===== STEP 1 ===== -->
 <div class="sec" id="s1">
-<h2>🔍 第一步：感受「面积」——物体表面整体有多大？</h2>
-<p>下面这些场景，都在做同一件事：<b>完整地遮盖一个表面</b>。点开看看。</p>
+<h2>🔍 第一步：看到「面」了吗？</h2>
+<p>刷墙、铺桌布、种花、贴瓷砖……这些事有什么<b>共同点</b>？点开看看——</p>
 <div class="scenes-g" id="scenesG"></div>
 <p style="text-align:center;font-size:.78em;color:#777;min-height:22px" id="sceneCnt">已打开：0/6</p>
-<div class="reveal" id="s1Reveal" style="display:none"><p style="font-size:.95em;color:#555;line-height:1.7;margin:8px 0">都是在完整地遮盖一个表面。<br><span class="b">测量这个表面整体有多大。</span></p><div class="big">📐 面 积</div></div>
+<div class="reveal" id="s1Reveal" style="display:none"><p style="font-size:.95em;color:#555;line-height:1.7;margin:8px 0">原来都是在<b>盖住一个面</b>！<br>那这个面到底有多大？怎么把它<b>量出来</b>？</p></div>
 </div>
 
 <!-- ===== STEP 2: Lab ===== -->
 <div class="sec" id="s2">
-<h2>🧪 第二步：怎么量面积？——亲手实验！</h2>
+<h2>🧪 第二步：用什么来量这个「面」？</h2>
 <div class="shape-sel" id="shapeSel">
   <button class="shape-btn pick" data-shape="square" onclick="pickShape('square')"><span class="sicon">◼</span>正方形</button>
   <button class="shape-btn" data-shape="circle" onclick="pickShape('circle')"><span class="sicon">●</span>圆形</button>
@@ -137,42 +137,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <div class="btn-row"><button class="btn gr" onclick="labUndo()">↩ 撤销上一步</button><button class="btn gr" onclick="labClear()">🔄 全部清空</button><button class="btn blu" onclick="labCompare()">📊 对比四种图形</button></div>
 <div id="labCompPanel" style="display:none">
   <div class="reveal open" style="margin-top:12px"><p style="font-size:.85em;font-weight:bold;color:#2e7d32">📊 四种图形测量对比</p><div id="labCompTbl" style="font-size:.78em;color:#555;line-height:1.8;margin:8px 0"></div></div>
-  <div class="disc-panel" id="labDisc"><h4>🤔 哪种形状最适合做面积测量单位？</h4><div class="opt-row">
+  <div class="disc-panel" id="labDisc"><h4>🤔 比比看——哪种形状当「测量单位」最方便？</h4><div class="opt-row">
     <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形——紧密铺满不留空隙</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 </div>
 
 <div id="gridCountPanel">
   <div class="cv"><canvas id="gcCv" width="440" height="360"></canvas></div>
-  <p style="text-align:center;font-size:.85em;color:#555;margin:8px 0" id="gcQ">数一数，这个图形占了多少个<b>格子</b>？面积 = ？cm²</p>
+  <p style="text-align:center;font-size:.85em;color:#555;margin:8px 0" id="gcQ">不摆了，直接<b>数格子</b>——你看到几个？</p>
   <div style="display:flex;gap:8px;justify-content:center;align-items:center"><input type="number" class="form-input" id="gcAns" placeholder="?" style="width:80px"><span style="font-size:.9em">cm²</span><button class="btn go" onclick="gcChk()">✅</button></div>
   <p id="gcFB" style="text-align:center;font-size:.82em;min-height:24px;margin:8px 0"></p>
   <div class="btn-row"><button class="btn blu" onclick="gcNext()">🔄 换一个</button></div>
-  <div class="reveal open" id="gcDone" style="display:none"><div class="big">✨ 数格子就是数面积！<br>一个格子 = 1 cm²</div><p style="font-size:.8em;color:#666;margin-top:4px">正方形最适合做单位——严丝合缝，一个都不浪费。</p></div>
+  <div class="reveal open" id="gcDone" style="display:none"><div class="big">✨ 你发现了！<br>一个格子 = 1 cm²，数格子就是数面积</div><p style="font-size:.8em;color:#666;margin-top:4px">正方形为什么最合适？因为它能一个挨一个<b>紧紧排满</b>，不留一点点缝。</p></div>
 </div>
 </div>
 
 <!-- ===== STEP 3 ===== -->
 <div class="sec" id="s3">
-<h2>⚖️ 第三步：为什么叫「平方」厘米？</h2>
+<h2>⚖️ 第三步：「平方」是什么意思？</h2>
 <div class="unit-compare">
   <div class="uc"><canvas id="ucLine" width="100" height="80"></canvas><div class="ucl">1 厘米（cm）</div><div class="ucd">一条<b>线段</b>的长度</div></div>
   <div style="align-self:center;font-size:2em;color:#bbb">→</div>
   <div class="uc hl"><canvas id="ucSq" width="100" height="80"></canvas><div class="ucl">1 平方厘米（cm²）</div><div class="ucd">一个<b>正方形面</b>的大小</div></div>
 </div>
-<p style="text-align:center;font-size:.9em"><b>「平方」= 正方形</b>。铺了几个，面积就是几<b>平方厘米</b>。</p>
+<p style="text-align:center;font-size:.9em">刚才数的每一个小格子，都是边长<b>1厘米的正方形</b>。<br>它有一个专门的名字——</p>
 <div class="qo" id="unitQuiz">
-  <button class="qopt" onclick="ansU(0,this)">A. 量课桌面——用厘米（cm）</button>
-  <button class="qopt" onclick="ansU(1,this)">B. 量课桌面——用平方厘米（cm²）</button>
-  <button class="qopt" onclick="ansU(2,this)">C. 量操场一圈——用平方米（m²）</button>
-  <button class="qopt" onclick="ansU(3,this)">D. 量教室地面——用米（m）</button>
+  <button class="qopt" onclick="ansU(0,this)">A. 量课桌有多长——用厘米（cm）</button>
+  <button class="qopt" onclick="ansU(1,this)">B. 量课桌面有多大——用平方厘米（cm²）</button>
+  <button class="qopt" onclick="ansU(2,this)">C. 量操场有多大——用平方米（m²）</button>
+  <button class="qopt" onclick="ansU(3,this)">D. 量教室有多长——用米（m）</button>
 </div>
 <p id="unitFB" style="text-align:center;font-size:.85em;min-height:24px;margin:8px 0"></p>
-<div id="unitRev" style="display:none"><div class="reveal open"><div class="big">量长度 → cm / m<br>量面积 → cm² / m²</div></div></div>
+<div id="unitRev" style="display:none"><div class="reveal open"><div class="big">量长短 → cm / m<br>量面的大小 → cm² / m²</div><p style="font-size:.78em;color:#888;margin-top:4px">多出来的小「²」就是在提醒你：<b>这是正方形！</b></p></div></div>
 </div>
 
 <!-- ===== STEP 4 ===== -->
 <div class="sec" id="s4">
-<h2>🔬 第四步：找规律</h2>
+<h2>🔬 第四步：有没有更快的办法？</h2>
 
 <h3>📐 长方形</h3>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
@@ -181,31 +181,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <button class="btn blu" onclick="fNew()" style="min-height:32px;padding:4px 12px;font-size:.72em">🔄 换一个</button>
 </div>
 <div class="cv"><canvas id="fCv" width="440" height="280"></canvas></div>
-<p id="fHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold"></p>
+<p id="fHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold">👆 点击格子试试——看能不能铺满？</p>
 <div id="fQuiz" style="display:none;margin:10px 0">
-  <p class="fq">一共有多少个 <b>1 cm²</b> 的小方块？</p>
+  <p class="fq">铺满以后，一共有多少个格子？</p>
   <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap"><span style="font-size:1.1em"><b id="fqA"></b></span><span>×</span><span style="font-size:1.1em"><b id="fqB"></b></span><span>=</span><input type="number" class="form-input" id="fTotal" placeholder="?"><button class="btn go" onclick="fChk()">✅</button></div>
   <p id="fFB" style="text-align:center;font-size:.8em;min-height:20px;margin-top:6px"></p>
 </div>
-<div id="fFormula" style="display:none;margin:8px 0"><p class="fq">你是怎样算出来的？</p><div class="btn-row" id="fFormulaBtns"></div><div class="reveal open" id="fFinal" style="display:none;margin-top:8px"><div class="big">长方形面积 = 长 × 宽</div></div></div>
+<div id="fFormula" style="display:none;margin:8px 0"><p class="fq">不用一个一个数——你是怎样算出来的？</p><div class="btn-row" id="fFormulaBtns"></div><div class="reveal open" id="fFinal" style="display:none;margin-top:8px"><div class="big">🎉 你找到了！<br>每行格子数 × 行数 = 长 × 宽</div></div></div>
 <div id="fHistory" style="margin-top:12px"></div>
 
-<h3 style="margin-top:18px">⬛ 正方形</h3>
+<h3 style="margin-top:18px">⬛ 那正方形呢？</h3>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
   <span style="font-size:.78em;color:#888">边长 <b id="sqS"></b> cm</span>
   <button class="btn org" id="sqModeBtn" onclick="sqToggleMode()" style="min-height:32px;padding:4px 12px;font-size:.72em">⬇ 列铺</button>
   <button class="btn blu" onclick="sqNew()" style="min-height:32px;padding:4px 12px;font-size:.72em">🔄 换一个</button>
 </div>
 <div class="cv"><canvas id="sqCv" width="440" height="240"></canvas></div>
-<p id="sqHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold"></p>
+<p id="sqHint" style="text-align:center;font-size:.85em;color:#555;min-height:24px;font-weight:bold">👆 正方形每条边都一样长——试试看？</p>
 <div id="sqQuiz" style="display:none;margin:10px 0">
-  <p class="fq">一共有多少个 <b>1 cm²</b> 的小方块？</p>
+  <p class="fq">铺满以后，一共有多少个格子？</p>
   <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap"><span style="font-size:1.1em"><b id="sqA"></b></span><span>×</span><span style="font-size:1.1em"><b id="sqB"></b></span><span>=</span><input type="number" class="form-input" id="sqTotal" placeholder="?"><button class="btn go" onclick="sqChk()">✅</button></div>
   <p id="sqFB" style="text-align:center;font-size:.8em;min-height:20px;margin-top:6px"></p>
-  <div class="reveal open" id="sqFinal" style="display:none;margin-top:8px"><div class="big">正方形面积 = 边长 × 边长</div></div>
+  <div class="reveal open" id="sqFinal" style="display:none;margin-top:8px"><div class="big">🎉 对啦！<br>正方形面积 = 边长 × 边长</div></div>
 </div>
 
-<h3 style="margin-top:18px">🔄 反过来：已知面积求边长</h3>
+<h3 style="margin-top:18px">🔄 反过来想想——</h3>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px"><button class="btn blu" onclick="revNew()" style="min-height:32px;padding:4px 12px;font-size:.72em">🔄 换一题</button></div>
 <div class="cv"><canvas id="revCv" width="440" height="190"></canvas></div>
 <p id="revQ" style="text-align:center;font-size:.84em;color:#555;font-weight:bold;min-height:20px"></p>
@@ -215,13 +215,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
 <!-- ===== STEP 5: Irregular ===== -->
 <div class="sec" id="s5">
-<h2>✂️ 第五步：不规则图形——亲手割补</h2>
+<h2>✂️ 第五步：遇到不规则的图形怎么办？</h2>
 <div class="ir-tabs" id="irTabs"></div>
 <div class="cv"><canvas id="irCv" width="440" height="340"></canvas></div>
-<div class="tip-box">👆 <b>先选模式</b>：切割或补缺。按住鼠标在图形上划线，线条自动对齐网格。</div>
+<div class="tip-box">💡 想想办法：是把它<b>切开</b>变成几块规则的？还是<b>补上缺口</b>变成完整图形？想好了就动手画线——</div>
 <div class="btn-row" style="margin-bottom:4px">
-  <button class="btn pick" id="irModeCutBtn" onclick="irSetMode('cut')">✂️ 切割模式——把图形切成小块</button>
-  <button class="btn" id="irModeFillBtn" onclick="irSetMode('fill')">🧩 补缺模式——补上缺口拼成完整图形</button>
+  <button class="btn pick" id="irModeCutBtn" onclick="irSetMode('cut')">✂️ 切开算——分成几块规则的</button>
+  <button class="btn" id="irModeFillBtn" onclick="irSetMode('fill')">🧩 补上算——拼成完整图形再减掉</button>
 </div>
 <div class="btn-row">
   <button class="btn gr" onclick="irUndo()">↩ 撤销</button>
@@ -235,8 +235,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
 <!-- ===== STEP 6 ===== -->
 <div class="sec" id="s6">
-<h2>🏆 第六步：综合闯关</h2>
-<p>25题题库随机抽 <span class="b">10 题</span>。</p>
+<h2>🏆 第六步：来挑战一下自己！</h2>
+<p>随机抽 <span class="b">10 道题</span>，看看前面学的都记住了吗？</p>
 <div class="qdots" id="qds"></div><div class="qq" id="qqq"></div><div class="qo" id="qos"></div><div class="qexp" id="qex"></div>
 <div class="qnav" id="qnv"><button class="btn" id="qpr" onclick="qpr()" disabled>◀ 上一题</button><button class="btn go" id="qnx" onclick="qnx()">下一题 ▶</button></div>
 <div id="qsc" style="display:none"><div class="sb"><div class="se" id="semo"></div><div class="sn" id="snum"></div><p id="smsg" style="font-size:.92em;color:#555;margin:8px 0"></p><div class="btn-row"><button class="btn blu" onclick="qrw()">🔍 回顾错题</button><button class="btn go" onclick="qrs()">🔄 再来一组</button></div></div></div>
@@ -312,7 +312,7 @@ function drawLab(){
   ctx.clearRect(0,0,440,360);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,360);
   ctx.fillStyle='rgba(0,0,0,.04)';for(var gx=t.x;gx<=t.x+t.w;gx+=labSnap)for(var gy=t.y;gy<=t.y+t.h;gy+=labSnap)ctx.fillRect(gx,gy,1,1);
   ctx.fillStyle='#faf8f4';ctx.fillRect(t.x,t.y,t.w,t.h);ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=2;ctx.strokeRect(t.x,t.y,t.w,t.h);
-  ctx.fillStyle='#999';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('待测平面 ('+Math.round(t.w/30)+'×'+Math.round(t.h/30)+')',t.x+t.w/2,t.y-8);
+  ctx.fillStyle='#999';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('来，把图形放进来试试——',t.x+t.w/2,t.y-8);
   labPlaced.forEach(function(p){ctx.save();
     if(p.shape==='square'){ctx.fillStyle='rgba(39,174,96,.35)';ctx.fillRect(p.x,p.y,30,30);ctx.strokeStyle='#27ae60';ctx.lineWidth=1.5;ctx.strokeRect(p.x,p.y,30,30)}
     else if(p.shape==='circle'){ctx.fillStyle='rgba(233,30,99,.3)';ctx.beginPath();ctx.arc(p.x+15,p.y+15,15,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e91e63';ctx.lineWidth=1.5;ctx.stroke()}
@@ -334,7 +334,7 @@ function drawLab(){
   }
 }
 
-function updateLabStats(){document.getElementById('labCount').textContent='已用：'+labPlaced.length+' 个';document.getElementById('labGap').textContent=labShape==='circle'?'⚠ 圆形间有空隙':labShape==='triangle'?'⚠ 三角形间有缝隙（↻旋转调角度）':labShape==='rect'?'⚠ 长方形方向受限':'✅ 正方形紧密贴合！';}
+function updateLabStats(){document.getElementById('labCount').textContent='放了：'+labPlaced.length+' 个';document.getElementById('labGap').textContent=labShape==='circle'?'🤔 圆形之间塞不满——有空隙':labShape==='triangle'?'🤔 三角形之间有缝（试试 ↻ 转一下？）':labShape==='rect'?'🤔 长方形只能横着放——不太灵活':'✅ 正方形一个挨一个，严丝合缝！';}
 function labGetPos(e){var c=document.getElementById('labCv');if(!c)return null;var r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*(440/r.width),y:(e.clientY-r.top)*(360/r.height)}}
 
 function handleLabMove(e){labMouse=labGetPos(e)||labMouse;drawLab()}
@@ -352,13 +352,13 @@ function handleLabClick(e){
 function labCompare(){
   var t=labT,sqCols=Math.round(t.w/30),sqRows=Math.round(t.h/30),sqTotal=sqCols*sqRows;
   var h='<table style="width:100%;border-collapse:collapse;text-align:center"><tr style="background:#f0faf4"><th style="padding:8px;font-size:.78em">形状</th><th style="padding:8px;font-size:.78em">铺满需要</th><th style="padding:8px;font-size:.78em">效果</th></tr>';
-  [{n:'正方形',need:sqTotal+' 个',note:'完美铺满，无空隙',bg:'#f0faf4'},{n:'圆形',need:'约 '+Math.ceil(sqTotal/0.785)+' 个',note:'有<b style="color:#e74c3c">空隙</b>',bg:''},{n:'三角形',need:'约 '+sqTotal*2+' 个',note:'缝+<b style="color:#e74c3c">很多个</b>',bg:''},{n:'长方形2×1',need:'约 '+Math.ceil(sqTotal/2)+' 个',note:'不规则就<b style="color:#e74c3c">不好用</b>',bg:''}].forEach(function(x){h+='<tr style="border-bottom:1px solid #eee;'+x.bg+'"><td style="padding:8px;font-size:.78em"><b>'+x.n+'</b></td><td style="padding:8px;font-size:.78em">'+x.need+'</td><td style="padding:8px;font-size:.7em;text-align:left">'+x.note+'</td></tr>'});
+  [{n:'正方形',need:sqTotal+' 个',note:'👍 一个挨一个，刚刚好',bg:'#f0faf4'},{n:'圆形',need:'约 '+Math.ceil(sqTotal/0.785)+' 个',note:'😕 中间塞不满，有<b style="color:#e74c3c">空隙</b>',bg:''},{n:'三角形',need:'约 '+sqTotal*2+' 个',note:'😕 缝比图形还多',bg:''},{n:'长方形2×1',need:'约 '+Math.ceil(sqTotal/2)+' 个',note:'😕 换个方向就<b style="color:#e74c3c">不好摆了</b>',bg:''}].forEach(function(x){h+='<tr style="border-bottom:1px solid #eee;'+x.bg+'"><td style="padding:8px;font-size:.78em"><b>'+x.n+'</b></td><td style="padding:8px;font-size:.78em">'+x.need+'</td><td style="padding:8px;font-size:.7em;text-align:left">'+x.note+'</td></tr>'});
   h+='</table>';document.getElementById('labCompTbl').innerHTML=h;document.getElementById('labCompPanel').style.display='block';
 }
 function discA(idx,btn){
   var all=document.querySelectorAll('#labDisc .opt-btn');all.forEach(function(o){o.disabled=true;o.classList.remove('chosen','wrong')});
-  if(idx===2){btn.classList.add('chosen');sfxDone();document.getElementById('discFB').innerHTML='<span class="green">✅</span> 正方形能<b>紧密铺满、不留空隙</b>。';md(1)}
-  else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想</span>——正方形能严丝合缝铺满任何形状。';}
+  if(idx===2){btn.classList.add('chosen');sfxDone();document.getElementById('discFB').innerHTML='<span class="green">✅ 对！</span> 正方形能一个挨一个<b>紧紧铺满</b>，一点缝都不留——用它当测量单位刚刚好！';md(1)}
+  else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想？</span> 圆形有空隙、三角形对不齐……正方形才能<b>一个挨一个铺满</b>哦！';}
 }
 
 // ===== STEP 2 ADVANCED: GRID COUNTING =====
@@ -398,15 +398,15 @@ function drawGc(){
   // Label
   ctx.fillStyle='#555';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
   ctx.fillText(s.name+' — 数一数有几个格子？',220,oy-10);
-  document.getElementById('gcQ').innerHTML='这个<b>'+s.name+'</b>占了多少个格子？面积 = ？cm²'+(s.hint?' <span style="font-size:.72em;color:#e67e22">（提示：'+s.hint+'）</span>':'');
+  document.getElementById('gcQ').innerHTML='这个<b>'+s.name+'</b>，你数出来几个格子？'+(s.hint?' <span style="font-size:.72em;color:#e67e22">（💡 '+s.hint+'）</span>':'');
   document.getElementById('gcAns').value='';document.getElementById('gcFB').innerHTML='';
 }
 
 function gcChk(){
   var ans=parseInt(document.getElementById('gcAns').value),s=gcShapes[gcIdx];
   if(isNaN(ans)){document.getElementById('gcFB').innerHTML='<span class="r">输入数字</span>';return}
-  if(ans===s.ans){sfxOK();document.getElementById('gcFB').innerHTML='<span class="green">✅ 正确！'+s.ans+' cm²</span>';gcDone++;if(gcDone>=3&&!document.getElementById('gcDone').style.display.match(/block/)){document.getElementById('gcDone').style.display='block';sfxDone()}}
-  else{sfxNO();document.getElementById('gcFB').innerHTML='<span class="r">❌ 再数数看？</span>'}
+  if(ans===s.ans){sfxOK();document.getElementById('gcFB').innerHTML='<span class="green">✅ 对啦！就是 '+s.ans+' cm²</span>';gcDone++;if(gcDone>=3&&!document.getElementById('gcDone').style.display.match(/block/)){document.getElementById('gcDone').style.display='block';sfxDone()}}
+  else{sfxNO();document.getElementById('gcFB').innerHTML='<span class="r">🤔 不太对哦，再仔细数数？</span>'}
 }
 
 function gcNext(){
@@ -436,7 +436,7 @@ function drawForm(){
   ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';for(var co=0;co<fL;co++)ctx.fillText(co+1,ox+co*cell+cell/2,oy-4);
 }
 function handleFormClick(e){if(fComp)return;var c=document.getElementById('fCv');if(!c)return;var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(280/rect.height);var cell=42,ox=(440-fL*cell)/2,oy=(280-fW*cell)/2;for(var row=0;row<fW;row++)for(var co=0;co<fL;co++){if(x>=ox+co*cell&&x<ox+(co+1)*cell&&y>=oy+row*cell&&y<oy+(row+1)*cell){if(fMode==='row'){for(var cc=0;cc<fL;cc++){var ri=row*fL+cc;if(!fCells[ri]){fCells[ri]=true;fFilled++}}}else{for(var rr=0;rr<fW;rr++){var ci=rr*fL+co;if(!fCells[ci]){fCells[ci]=true;fFilled++}}}sfxOK();drawForm();updateFHint();if(fFilled>=fL*fW){fComp=true;sfxDone();showFQuiz();md(3)}return;}}}
-function updateFHint(){document.getElementById('fL').textContent=fL;document.getElementById('fW').textContent=fW;if(fComp)document.getElementById('fHint').textContent='✅ 铺满了！'+(fMode==='row'?'每行 '+fL+' 个，共 '+fW+' 行':'每列 '+fW+' 个，共 '+fL+' 列')+'.';else if(fFilled>0)document.getElementById('fHint').textContent='继续铺！';else document.getElementById('fHint').textContent='👆 点击格子铺满';}
+function updateFHint(){document.getElementById('fL').textContent=fL;document.getElementById('fW').textContent=fW;if(fComp)document.getElementById('fHint').textContent='✅ 铺满了！'+(fMode==='row'?'每行有 '+fL+' 个格子，一共 '+fW+' 行':'每列有 '+fW+' 个格子，一共 '+fL+' 列')+'——你发现了什么？';else if(fFilled>0)document.getElementById('fHint').textContent='继续点——把所有格子都铺满！';else document.getElementById('fHint').textContent='👆 点一下格子试试？';}
 function showFQuiz(){document.getElementById('fQuiz').style.display='block';if(fMode==='row'){document.getElementById('fqA').textContent=fL;document.getElementById('fqB').textContent=fW}else{document.getElementById('fqA').textContent=fW;document.getElementById('fqB').textContent=fL}document.getElementById('fTotal').value='';}
 function fChk(){var ans=parseInt(document.getElementById('fTotal').value),correct=fL*fW;if(ans===correct){sfxDone();document.getElementById('fFB').innerHTML='<span class="green">✅ '+ans+' 正确！</span>';showFF()}else{sfxNO();document.getElementById('fFB').innerHTML='<span class="r">❌</span>'}}
 function showFF(){document.getElementById('fFormula').style.display='block';var a=fMode==='row'?fL:fW,b=fMode==='row'?fW:fL;document.getElementById('fFormulaBtns').innerHTML='<button class="btn" onclick="fPickF(0)">'+a+'+'+b+'</button><button class="btn" onclick="fPickF(1)">'+a+'×'+b+' = '+(a*b)+'</button><button class="btn" onclick="fPickF(2)">('+a+'+'+b+')×2</button>';}
@@ -450,7 +450,7 @@ function sqNew(){sqSide=Math.floor(Math.random()*(SQ_MAX-2))+3;sqReset()} // 3-5
 function sqToggleMode(){sqMode=sqMode==='row'?'col':'row';document.getElementById('sqModeBtn').textContent=sqMode==='row'?'⬇ 列铺':'➡ 行铺';sqReset()}
 function drawSq(){var c=document.getElementById('sqCv');if(!c)return;var ctx=c.getContext('2d'),cell=42,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;ctx.clearRect(0,0,440,240);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,240);for(var r=0;r<sqSide;r++)for(var co=0;co<sqSide;co++){var idx=r*sqSide+co,x=ox+co*cell,y=oy+r*cell,isF=sqCells[idx];if(isF){ctx.fillStyle='rgba(41,128,185,.25)';ctx.fillRect(x+1,y+1,cell-2,cell-2);ctx.strokeStyle='#2980b9';ctx.lineWidth=1.5;ctx.strokeRect(x+1,y+1,cell-2,cell-2);ctx.fillStyle='#1565c0';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,x+cell/2,y+cell/2+4)}else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.6;ctx.strokeRect(x,y,cell,cell);ctx.fillStyle='rgba(0,0,0,.12)';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.fillText('+',x+cell/2,y+cell/2+3)}}ctx.fillStyle='#2980b9';ctx.font='bold 11px sans-serif';ctx.textAlign='right';for(var r=0;r<sqSide;r++)ctx.fillText('第'+(r+1)+'行',ox-6,oy+r*cell+cell/2+4);ctx.fillStyle='#e67e22';ctx.font='bold 11px sans-serif';ctx.textAlign='center';for(var co=0;co<sqSide;co++)ctx.fillText(co+1,ox+co*cell+cell/2,oy-4)}
 function handleSqClick(e){if(sqComp)return;var c=document.getElementById('sqCv');if(!c)return;var rect=c.getBoundingClientRect(),x=(e.clientX-rect.left)*(440/rect.width),y=(e.clientY-rect.top)*(240/rect.height);var cell=42,ox=(440-sqSide*cell)/2,oy=(240-sqSide*cell)/2;for(var row=0;row<sqSide;row++)for(var co=0;co<sqSide;co++){if(x>=ox+co*cell&&x<ox+(co+1)*cell&&y>=oy+row*cell&&y<oy+(row+1)*cell){if(sqMode==='row'){for(var cc=0;cc<sqSide;cc++){var ri=row*sqSide+cc;if(!sqCells[ri]){sqCells[ri]=true;sqFilled++}}}else{for(var rr=0;rr<sqSide;rr++){var ci=rr*sqSide+co;if(!sqCells[ci]){sqCells[ci]=true;sqFilled++}}}sfxOK();drawSq();updateSqHint();if(sqFilled>=sqSide*sqSide){sqComp=true;sfxDone();showSqQuiz()}return;}}}
-function updateSqHint(){document.getElementById('sqS').textContent=sqSide;if(sqComp)document.getElementById('sqHint').textContent='✅ 铺满了！'+(sqMode==='row'?'每行 '+sqSide+' 个，共 '+sqSide+' 行':'每列 '+sqSide+' 个，共 '+sqSide+' 列')+'.';else if(sqFilled>0)document.getElementById('sqHint').textContent='继续铺~';else document.getElementById('sqHint').textContent='👆 点击铺满';}
+function updateSqHint(){document.getElementById('sqS').textContent=sqSide;if(sqComp)document.getElementById('sqHint').textContent='✅ 铺满了！每行每列都是 '+sqSide+' 个——有什么规律？';else if(sqFilled>0)document.getElementById('sqHint').textContent='还没铺满，继续点！';else document.getElementById('sqHint').textContent='👆 点一下格子试试？正方形每条边都一样长哦';}
 function showSqQuiz(){document.getElementById('sqQuiz').style.display='block';document.getElementById('sqA').textContent=sqSide;document.getElementById('sqB').textContent=sqSide;document.getElementById('sqTotal').value='';}
 function sqChk(){var ans=parseInt(document.getElementById('sqTotal').value),correct=sqSide*sqSide;if(ans===correct){sfxDone();document.getElementById('sqFB').innerHTML='<span class="green">✅ '+ans+' 正确！</span>';document.getElementById('sqFinal').style.display='block';md(3)}else{sfxNO();document.getElementById('sqFB').innerHTML='<span class="r">❌</span>'}}
 
@@ -461,7 +461,7 @@ function revNew(){revI=(revI+1)%revData.length;revReset();revDraw()}
 function revReset(){var p=revData[revI];revCells=[];revFilled=0;revMode=p.side==='宽'?'col':'row';for(var i=0;i<p.a;i++)revCells[i]=false}
 function revDraw(){
   var p=revData[revI],unk=p.side==='长'?'宽':'长';
-  document.getElementById('revQ').textContent='面积='+p.a+'cm²，已知'+p.side+'='+p.k+'cm。'+unk+'=?（点击'+(revMode==='row'?'行':'列')+'来铺满推算）';
+  document.getElementById('revQ').textContent='面积是 '+p.a+' cm²，'+p.side+'是 '+p.k+' cm——那另一边该多长呢？（点击'+(revMode==='row'?'行':'列')+'来试试）';
   var c=document.getElementById('revCv'),ctx=c.getContext('2d');ctx.clearRect(0,0,440,190);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,190);
   var rw2=p.side==='长'?p.k:p.exp,rh2=p.side==='宽'?p.k:p.exp,sc=22,ox=(440-rw2*sc)/2,oy=(190-rh2*sc)/2;
   for(var r=0;r<rh2;r++)for(var co=0;co<rw2;co++){var xx=ox+co*sc,yy=oy+r*sc,idx=r*rw2+co,isF=revCells[idx];if(isF){ctx.fillStyle='rgba(39,174,96,.25)';ctx.fillRect(xx,yy,sc,sc);ctx.strokeStyle='#27ae60';ctx.lineWidth=1;ctx.strokeRect(xx,yy,sc,sc);ctx.fillStyle='#2e7d32';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.fillText(idx+1,xx+sc/2,yy+sc/2+3)}else{ctx.fillStyle='rgba(0,0,0,.02)';ctx.fillRect(xx,yy,sc,sc);ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=.5;ctx.strokeRect(xx,yy,sc,sc);ctx.fillStyle='rgba(0,0,0,.15)';ctx.font='7px sans-serif';ctx.textAlign='center';ctx.fillText('+',xx+sc/2,yy+sc/2+3)}}
