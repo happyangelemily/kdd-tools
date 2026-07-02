@@ -141,8 +141,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
     <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形——紧密铺满不留空隙</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 </div>
 
-<div class="btn-row" style="margin-top:12px"><button class="btn go" onclick="startGridCount()">🔢 进阶练习：数格子算面积</button></div>
-<div id="gridCountPanel" style="display:none">
+<div id="gridCountPanel">
   <div class="cv"><canvas id="gcCv" width="440" height="360"></canvas></div>
   <p style="text-align:center;font-size:.85em;color:#555;margin:8px 0" id="gcQ">数一数，这个图形占了多少个<b>格子</b>？面积 = ？cm²</p>
   <div style="display:flex;gap:8px;justify-content:center;align-items:center"><input type="number" class="form-input" id="gcAns" placeholder="?" style="width:80px"><span style="font-size:.9em">cm²</span><button class="btn go" onclick="gcChk()">✅</button></div>
@@ -384,11 +383,8 @@ var gcShapes=[
 var gcIdx=0,gcDone=0;
 
 function startGridCount(){
-  document.getElementById('gridCountPanel').style.display='block';
-  document.getElementById('gcDone').style.display='none';
   gcIdx=Math.floor(Math.random()*gcShapes.length);gcDone=0;
   drawGc();
-  document.getElementById('gridCountPanel').scrollIntoView({behavior:'smooth'});
 }
 
 function drawGc(){
@@ -644,20 +640,17 @@ function irSubHoles(){
   if(isNaN(n)||n<1){document.getElementById('irSubHfb2').innerHTML='<span class="r">输入数字</span>';return}
   if(n!==actual){document.getElementById('irSubHfb2').innerHTML='<span class="r">❌ 画布上实际有 '+actual+' 块缺口，不是 '+n+' 块</span>';sfxNO();return}
   sfxOK();document.getElementById('irSubHfb2').innerHTML='<span class="green">✅ 共 '+n+' 块独立缺口 — 和画布一致！</span>';
-  window._irHoles=n;window._irHoleData=[];window._irHoleTypes=[]; // track per-hole type
+  window._irHoles=n;window._irHoleData=[];window._irHoleTypes=[];
   var g=document.getElementById('irGuide'),h='';
   for(var i=0;i<n;i++){
-    var hole=shape.holes[i];
-    // Check if same-size hole appeared earlier
-    var sameAs=-1;
+    var hole=shape.holes[i],sameAs=-1;
     for(var j=0;j<i;j++){if(shape.holes[j].w===hole.w&&shape.holes[j].h===hole.h){sameAs=j;break}}
-    var isSquare=hole.w===hole.h;
-    h+='<div class="gs-block" id="irHole'+i+'"><div class="gs-q">第'+(i+1)+'块缺口：是<b>正方形</b>还是<b>长方形</b>？</div>';
-    h+='<div class="gs-inputs" style="flex-wrap:wrap;gap:4px" id="irHoleBtns'+i+'">';
-    h+='<button class="btn" onclick="irSubHolePickType('+i+',\'square\')">⬛ 正方形</button>';
-    h+='<button class="btn" onclick="irSubHolePickType('+i+',\'rect\')">▬ 长方形</button>';
+    var isSq=hole.w===hole.h;
+    h+='<div class="gs-block" id="irHole'+i+'"><div class="gs-q">第'+(i+1)+'块缺口：形状？尺寸？面积？</div>';
+    h+='<div class="gs-inputs"><select id="irHSh'+i+'" onchange="irHoleLabelUp('+i+')" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select>';
+    h+='<span id="irHLb'+i+'">长</span><input type="number" class="form-input" id="irHL'+i+'" placeholder="?" style="width:60px" oninput="irHoleFmUpdate('+i+')"><span id="irHWb'+i+'">宽</span><input type="number" class="form-input" id="irHW'+i+'" placeholder="?" style="width:60px" oninput="irHoleFmUpdate('+i+')"><b id="irHFm'+i+'" style="font-size:.9em;color:#2e7d32;min-width:70px;display:inline-block;text-align:center">长 × 宽</b><span>=</span><input type="number" class="form-input" id="irHA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubHoleChk('+i+')">✅</button>';
     if(sameAs>=0){
-      h+='<button class="btn blu" onclick="irSubHoleCopy('+i+','+sameAs+')">📋 和缺口'+(sameAs+1)+'相同'+(isSquare?'（边长'+hole.w+'）':'（'+hole.w+'×'+hole.h+'）')+'</button>';
+      h+='<button class="btn blu" onclick="irSubHoleCopy('+i+','+sameAs+')" style="margin-left:4px">📋 和缺口'+(sameAs+1)+'相同'+(isSq?'（边长'+hole.w+'）':'（'+hole.w+'×'+hole.h+'）')+'</button>';
     }
     h+='</div><div class="gs-fb" id="irHFb'+i+'"></div></div>';
   }
@@ -665,29 +658,41 @@ function irSubHoles(){
   if(n>0)document.getElementById('irHole0').scrollIntoView({behavior:'smooth'});
 }
 
-function irSubHolePickType(idx,t){
-  var shape=irShapes[irIdx],hole=shape.holes[idx];
-  window._irHoleTypes[idx]=t;
-  // Show dimension inputs with correct labels
-  var lblL=t==='square'?'边长':'长',lblW=t==='square'?'（同）':'宽',hint=t==='square'?'面积 = 边长 × 边长':'面积 = 长 × 宽';
-  var h='<div class="gs-q">第'+(idx+1)+'块缺口：<b>'+hint+'</b></div>';
-  h+='<div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irHL'+idx+'" placeholder="?" style="width:60px"><span>'+lblW+'</span><input type="number" class="form-input" id="irHW'+idx+'" placeholder="?" style="width:60px"'+((t==='square')?' disabled':'')+'><span>=</span><input type="number" class="form-input" id="irHA'+idx+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubHoleChk('+idx+')">✅</button></div>';
-  document.getElementById('irHole'+idx).innerHTML=h;
+function irHoleLabelUp(idx){
+  var sel=document.getElementById('irHSh'+idx).value;
+  var lb=document.getElementById('irHLb'+idx),wb=document.getElementById('irHWb'+idx),wi=document.getElementById('irHW'+idx),fm=document.getElementById('irHFm'+idx);
+  window._irHoleTypes[idx]=sel;
+  if(sel==='square'){lb.textContent='边长';wb.style.display='none';wi.style.display='none';wi.value='';if(fm)fm.textContent='边长 × 边长'}
+  else{lb.textContent='长';wb.style.display='';wi.style.display='';if(fm)fm.textContent='长 × 宽'}
+  irHoleFmUpdate(idx);
+}
+
+function irHoleFmUpdate(idx){
+  var sel=document.getElementById('irHSh'+idx).value;
+  var L=document.getElementById('irHL'+idx).value,W=document.getElementById('irHW'+idx).value,fm=document.getElementById('irHFm'+idx);
+  if(!fm)return;
+  if(sel==='square'){fm.textContent=L?L+'\u00d7'+L:'\u8fb9\u957f \u00d7 \u8fb9\u957f'}
+  else{if(L&&W)fm.textContent=L+'\u00d7'+W;else if(L)fm.textContent=L+'\u00d7?';else if(W)fm.textContent='?\u00d7'+W;else fm.textContent='\u957f \u00d7 \u5bbd'}
 }
 
 function irSubHoleCopy(idx,fromIdx){
-  // Copy type and prepopulate from previous hole
-  window._irHoleTypes[idx]=window._irHoleTypes[fromIdx];
-  var t=window._irHoleTypes[idx],shape=irShapes[irIdx],hole=shape.holes[idx];
-  var lblL=t==='square'?'边长':'长',hint=t==='square'?'面积 = 边长 × 边长':'面积 = 长 × 宽';
-  // Auto-fill dimensions from shape data
+  var fromType=window._irHoleTypes[fromIdx]||'rect',shape=irShapes[irIdx],hole=shape.holes[idx];
+  window._irHoleTypes[idx]=fromType;
   var vW=hole.w,vH=hole.h,vA=hole.w*hole.h;
-  var h='<div class="gs-q">第'+(idx+1)+'块缺口：<b>'+hint+'</b> — 和缺口'+(fromIdx+1)+'相同</div>';
-  h+='<div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irHL'+idx+'" value="'+vW+'" style="width:60px;background:#e8f5e9" readonly><span>'+(t==='square'?'（同）':'宽')+'</span><input type="number" class="form-input" id="irHW'+idx+'" value="'+vH+'" style="width:60px;background:#e8f5e9" readonly><span>=</span><input type="number" class="form-input" id="irHA'+idx+'" value="'+vA+'" style="width:70px;background:#e8f5e9" readonly></div>';
-  h+='<div class="gs-fb"><span class="green">✅ 自动填入：'+(t==='square'?vW+'×'+vW:vW+'×'+vH)+'='+vA+' cm²</span></div>';
-  document.getElementById('irHole'+idx).innerHTML=h;
-  window._irHoleData[idx]={L:vW,W:(t==='square'?vW:vH),A:vA};
-  // Check if all done
+  // Set the select and trigger label update
+  var sel=document.getElementById('irHSh'+idx);sel.value=fromType;irHoleLabelUp(idx);
+  // Auto-fill values as readonly
+  var li=document.getElementById('irHL'+idx);li.value=vW;li.readOnly=true;li.style.background='#e8f5e9';
+  if(fromType==='square'){
+    document.getElementById('irHW'+idx).style.display='none';
+    document.getElementById('irHWb'+idx).style.display='none';
+  }else{
+    var wi=document.getElementById('irHW'+idx);wi.value=vH;wi.readOnly=true;wi.style.background='#e8f5e9';
+  }
+  var ai=document.getElementById('irHA'+idx);ai.value=vA;ai.readOnly=true;ai.style.background='#e8f5e9';
+  irHoleFmUpdate(idx);
+  document.getElementById('irHFb'+idx).innerHTML='<span class="green">✅ 自动填入：'+(fromType==='square'?vW+'\u00d7'+vW:vW+'\u00d7'+vH)+'='+vA+' cm² — 和缺口'+(fromIdx+1)+'相同</span>';
+  window._irHoleData[idx]={L:vW,W:(fromType==='square'?vW:vH),A:vA};
   checkHolesDone();
 }
 
@@ -758,7 +763,7 @@ document.addEventListener('DOMContentLoaded',function(){
   // IR
   var irCv=document.getElementById('irCv');irCv.onmousedown=function(e){irStart(e)};irCv.onmousemove=function(e){irMove(e)};irCv.onmouseup=function(e){irEnd(e)};irCv.onmouseleave=function(e){irEnd(e)};irCv.ontouchstart=function(e){irStart(e.changedTouches[0])};irCv.ontouchmove=function(e){irMove(e.changedTouches[0])};irCv.ontouchend=function(e){irEnd(e.changedTouches[0])};
 
-  labClear();document.getElementById('triRotBtn').style.display='none';fReset();drawForm();updateFHint();sqReset();drawSq();updateSqHint();revReset();revDraw();pickIr(0);
+  labClear();document.getElementById('triRotBtn').style.display='none';fReset();drawForm();updateFHint();sqReset();drawSq();updateSqHint();revReset();revDraw();pickIr(0);startGridCount();
   var s6=document.getElementById('s6');var obs=new IntersectionObserver(function(e){if(e[0].isIntersecting){pickQuiz();obs.unobserve(s6)}},{threshold:.3});obs.observe(s6);setTimeout(function(){var r2=s6.getBoundingClientRect();if(r2.top<window.innerHeight&&r2.bottom>0)pickQuiz()},400);
 });
 </script>
