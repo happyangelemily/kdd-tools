@@ -521,7 +521,7 @@ function irSumChk(expected){
 
 function irSubFlow(){
   var g=document.getElementById('irGuide'),shape=irShapes[irIdx];
-  g.innerHTML='<div class="gs-block" id="irSubType\"><div class="gs-q">补上缺口后，完整的大图形是<b>正方形</b>还是<b>长方形</b>？</div><div class="gs-inputs"><button class="btn" onclick="irSubPickType(\'square\')">⬛ 正方形</button><button class="btn" onclick="irSubPickType(\'rect\')">▬ 长方形</button></div><div class="gs-fb" id="irSubTfb"></div></div>';
+  g.innerHTML='<div class="gs-block" id="irSubType"><div class="gs-q">补上缺口后，完整的大图形是<b>正方形</b>还是<b>长方形</b>？</div><div class="gs-inputs"><button class="btn" onclick="irSubPickType(\'square\')">⬛ 正方形</button><button class="btn" onclick="irSubPickType(\'rect\')">▬ 长方形</button></div><div class="gs-fb" id="irSubTfb"></div></div>';
   document.getElementById('irSubType').scrollIntoView({behavior:'smooth'});
 }
 
@@ -536,7 +536,7 @@ function irSubPickType(t){
   var g=document.getElementById('irGuide');
   var lblL=t==='square'?'边长':'长',lblW=t==='square'?'（同）':'宽';
   var hint=t==='square'?'面积 = 边长 × 边长':'面积 = 长 × 宽';
-  g.innerHTML+='<div class="gs-block" id="irSub1\"><div class="gs-q">大图形：<b>'+hint+'</b></div><div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irBL" placeholder="?" style="width:60px"><span id="irBWs">'+lblW+'</span><input type="number" class="form-input" id="irBW" placeholder="?" style="width:60px" '+((t==='square')?'disabled':'')+'><span>=</span><input type="number" class="form-input" id="irBA" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubBig()">✅</button></div><div class="gs-fb" id="irSubBfb"></div></div>';
+  g.innerHTML+='<div class="gs-block" id="irSub1"><div class="gs-q">大图形：<b>'+hint+'</b></div><div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irBL" placeholder="?" style="width:60px"><span id="irBWs">'+lblW+'</span><input type="number" class="form-input" id="irBW" placeholder="?" style="width:60px" '+((t==='square')?'disabled':'')+'><span>=</span><input type="number" class="form-input" id="irBA" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubBig()">✅</button></div><div class="gs-fb" id="irSubBfb"></div></div>';
   document.getElementById('irSub1').scrollIntoView({behavior:'smooth'});
 }
 
