@@ -134,7 +134,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <button class="btn" onclick="step2Ans(0,this)">不能，线段只能量长短</button>
 </div>
 <div id="step2Q2" style="display:none">
-  <p style="color:#2e7d32;font-weight:bold">✅ 对！线段只能量长短，量「面的大小」需要用小平面来铺。</p>
+  <p style="font-weight:bold" id="step2Q2Msg"></p>
   <p>那具体选用哪一种平面图形最合适呢？你来试试——</p>
 </div>
 <div class="shape-sel" id="shapeSel">
@@ -385,18 +385,20 @@ function discA(idx,btn){
 
 // ===== STEP 2 Q&A INTRO =====
 function step2Ans(correct,btn){
-  var btns=document.querySelectorAll('#step2Q1 .btn');
+  var btns=document.querySelectorAll('#step2Q1 .btn'),msg=document.getElementById('step2Q2Msg');
   btns.forEach(function(b){b.disabled=true});
   if(!correct){
-    // "不能" is the right answer — correct=0, highlight btns[1]
+    // "不能" is the right answer — correct=0
     btn.classList.add('good');sfxOK();
     btns[1].classList.add('sel');
+    msg.innerHTML='<span style="color:#2e7d32">✅ 对！</span>线段只能量长短，量「面的大小」需要用小平面来铺。';
     document.getElementById('step2Q2').style.display='block';
     document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
   }else{
-    // "能" is wrong — correct=1, highlight btns[1] as the correct one
+    // "能" is wrong — correct=1
     btn.classList.add('bad');sfxNO();
     btns[1].classList.add('sel');
+    msg.innerHTML='<span style="color:#e74c3c">❌ 不对哦！</span>线段只能量<b>长短</b>，量「面的大小」要用小平面来铺。';
     setTimeout(function(){
       document.getElementById('step2Q2').style.display='block';
       document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
