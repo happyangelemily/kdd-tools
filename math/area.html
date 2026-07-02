@@ -145,11 +145,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 </div>
 <div class="cv"><canvas id="labCv" width="440" height="360"></canvas></div>
 <div class="stat-bar"><span id="labCount">已用：0 个</span><span id="labGap" style="color:#e67e22"></span></div>
-<div class="btn-row"><button class="btn gr" onclick="labUndo()">↩ 撤销上一步</button><button class="btn gr" onclick="labClear()">🔄 全部清空</button></div>
-<div class="disc-panel" id="labDisc"><h4>🤔 想一想：量长度用1厘米长的小线段——量面积呢？</h4><div class="opt-row">
+<div class="btn-row"><button class="btn gr" onclick="labUndo()">↩ 撤销上一步</button><button class="btn gr" onclick="labClear()">🔄 全部清空</button><button class="btn blu" onclick="labCompare()">📊 对比四种图形</button></div>
+<div class="disc-panel" id="labDisc"><h4>🤔 选用什么图形来量面积是多少呢？</h4><div class="opt-row">
     <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 
-<div class="btn-row"><button class="btn blu" onclick="labCompare()">📊 对比四种图形</button></div>
 <div id="labCompPanel" style="display:none">
   <div class="reveal open" style="margin-top:12px"><p style="font-size:.85em;font-weight:bold;color:#2e7d32">📊 四种图形测量对比</p><div id="labCompTbl" style="font-size:.78em;color:#555;line-height:1.8;margin:8px 0"></div></div>
 </div>
