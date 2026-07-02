@@ -209,7 +209,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <h2>✂️ 第五步：不规则图形——亲手割补</h2>
 <div class="ir-tabs" id="irTabs"></div>
 <div class="cv"><canvas id="irCv" width="440" height="340"></canvas></div>
-<div class="tip-box">👆 <b>按住鼠标划动</b>，线条自动对齐网格。<br>把图形切成规则小块，然后选一种方法计算——</div>
+<div class="tip-box">👆 <b>先选模式</b>：切割或补缺。按住鼠标在图形上划线，线条自动对齐网格。</div>
+<div class="btn-row" style="margin-bottom:4px">
+  <button class="btn pick" id="irModeCutBtn" onclick="irSetMode('cut')">✂️ 切割模式——把图形切成小块</button>
+  <button class="btn" id="irModeFillBtn" onclick="irSetMode('fill')">🧩 补缺模式——补上缺口拼成完整图形</button>
+</div>
 <div class="btn-row">
   <button class="btn gr" onclick="irUndo()">↩ 撤销</button>
   <button class="btn gr" onclick="irReset()">🔄 清除</button>
@@ -313,10 +317,10 @@ function drawLab(){
     else if(p.shape==='rect'){ctx.fillStyle='rgba(33,150,243,.3)';ctx.fillRect(p.x,p.y,60,30);ctx.strokeStyle='#2196f3';ctx.lineWidth=1.5;ctx.strokeRect(p.x,p.y,60,30)}
     ctx.restore();
   });
-  // Ghost preview
+  // Ghost preview — free placement, centered on mouse
   if(labMouse.x>=t.x&&labMouse.x<=t.x+t.w&&labMouse.y>=t.y&&labMouse.y<=t.y+t.h){
     var szW=labShape==='rect'?60:30,szH=labShape==='rect'?30:30;
-    var mx=t.x+Math.round((labMouse.x-t.x)/szW)*szW,my=t.y+Math.round((labMouse.y-t.y)/szH)*szH;
+    var mx=labMouse.x-szW/2,my=labMouse.y-szH/2;
     mx=Math.max(t.x,Math.min(t.x+t.w-szW,mx));my=Math.max(t.y,Math.min(t.y+t.h-szH,my));
     ctx.globalAlpha=.4;
     if(labShape==='square'){ctx.fillStyle='rgba(39,174,96,.25)';ctx.fillRect(mx,my,30,30);ctx.strokeStyle='#27ae60';ctx.setLineDash([3,3]);ctx.lineWidth=1.5;ctx.strokeRect(mx,my,30,30);ctx.setLineDash([])}
@@ -335,8 +339,8 @@ function handleLabMove(e){labMouse=labGetPos(e)||labMouse;drawLab()}
 function handleLabClick(e){
   var pos=labGetPos(e);if(!pos)return;var t=labT;if(pos.x<t.x||pos.x>t.x+t.w||pos.y<t.y||pos.y>t.y+t.h)return;
   var szW=labShape==='rect'?60:30,szH=labShape==='rect'?30:30;
-  // Snap to shape-size grid from target origin to prevent row overlap
-  var mx=t.x+Math.round((pos.x-t.x)/szW)*szW,my=t.y+Math.round((pos.y-t.y)/szH)*szH;
+  // Free placement — center shape at click position, clamp to boundaries
+  var mx=pos.x-szW/2,my=pos.y-szH/2;
   mx=Math.max(t.x,Math.min(t.x+t.w-szW,mx));my=Math.max(t.y,Math.min(t.y+t.h-szH,my));
   var e2={shape:labShape,x:mx,y:my};if(labShape==='triangle')e2.rot=labTriRot*Math.PI/2;
   labPlaced.push(e2);sfxOK();drawLab();updateLabStats();if(labPlaced.length>=3)md(1);
@@ -425,14 +429,26 @@ function handleRevClick(e){
 }
 function revChk(){var p=revData[revI],v=parseInt(document.getElementById('revIn').value);if(v===p.exp){sfxOK();document.getElementById('revFB').innerHTML='<span class="green">✅ '+p.a+'÷'+p.k+'=<b>'+p.exp+' cm</b></span>'}else if(isNaN(v))document.getElementById('revFB').innerHTML='输入数字';else{sfxNO();document.getElementById('revFB').innerHTML='<span class="r">❌</span>'}}
 
-// ===== STEP 5: STACKED GUIDE + METHOD CHOICE =====
+// ===== STEP 5: MODE-LOCKED CUT/FILL + VALIDATION =====
 var irShapes=[{name:'L 形',w:7,h:5,holes:[{x:5,y:0,w:2,h:2}],total:31},{name:'凹 形',w:7,h:5,holes:[{x:2,y:0,w:3,h:2}],total:29},{name:'阶梯形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:3,w:2,h:2}],total:27},{name:'缺角形',w:7,h:5,holes:[{x:0,y:3,w:3,h:2}],total:29},{name:'T 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2}],total:27},{name:'凸 形',w:7,h:5,holes:[{x:0,y:0,w:2,h:2},{x:5,y:0,w:2,h:2},{x:0,y:3,w:2,h:2},{x:5,y:3,w:2,h:2}],total:19},{name:'回 形',w:7,h:5,holes:[{x:2,y:1,w:3,h:3}],total:26},{name:'闪电形',w:7,h:5,holes:[{x:0,y:0,w:3,h:2},{x:4,y:3,w:3,h:2}],total:23}];
-var irIdx=0,irLines=[],irDrawing=false,irCurLine=null,irCell=40,irMethod=''; // 'add' or 'sub'
+var irIdx=0,irLines=[],irDrawing=false,irCurLine=null,irCell=40,irMode='cut'; // 'cut' or 'fill'
 var irPieces=0,irPieceData=[];
 
-function pickIr(n){irIdx=n;irLines=[];irDrawing=false;irCurLine=null;irMethod='';irPieces=0;irPieceData=[];document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=true;document.querySelectorAll('#irTabs .ir-tab').forEach(function(t,i){t.classList.toggle('active',i===n)});drawIr()}
-function irUndo(){irLines.pop();irMethod='';document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=irLines.length===0;drawIr()}
-function irReset(){irLines=[];irDrawing=false;irCurLine=null;irMethod='';irPieces=0;irPieceData=[];document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=true;drawIr()}
+function irSetMode(m){
+  // Switching mode clears all lines — operation must match method
+  if(irLines.length>0&&irMode!==m){irLines=[];irCurLine=null;irDrawing=false}
+  irMode=m;
+  document.getElementById('irModeCutBtn').classList.toggle('pick',m==='cut');
+  document.getElementById('irModeFillBtn').classList.toggle('pick',m==='fill');
+  document.getElementById('irGuide').innerHTML='';
+  document.getElementById('irCalcBtn').disabled=irLines.length===0;
+  irPieces=0;irPieceData=[];
+  drawIr();
+}
+
+function pickIr(n){irIdx=n;irLines=[];irDrawing=false;irCurLine=null;irPieces=0;irPieceData=[];irMode='cut';document.getElementById('irModeCutBtn').classList.add('pick');document.getElementById('irModeFillBtn').classList.remove('pick');document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=true;document.querySelectorAll('#irTabs .ir-tab').forEach(function(t,i){t.classList.toggle('active',i===n)});drawIr()}
+function irUndo(){irLines.pop();document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=irLines.length===0;irPieces=0;irPieceData=[];drawIr()}
+function irReset(){irLines=[];irDrawing=false;irCurLine=null;irPieces=0;irPieceData=[];document.getElementById('irGuide').innerHTML='';document.getElementById('irCalcBtn').disabled=true;drawIr()}
 
 function drawIr(){
   var s=irShapes[irIdx],c=document.getElementById('irCv'),ctx=c.getContext('2d');ctx.clearRect(0,0,440,340);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,340);
@@ -440,30 +456,26 @@ function drawIr(){
   ctx.fillStyle='rgba(0,0,0,.03)';for(var gx=ox;gx<=ox+s.w*cell;gx+=cell)for(var gy=oy;gy<=oy+s.h*cell;gy+=cell)ctx.fillRect(gx-1,gy-1,2,2);
   for(var r=0;r<s.h;r++)for(var co=0;co<s.w;co++){var isH=false;for(var hi=0;hi<s.holes.length;hi++){var hh=s.holes[hi];if(co>=hh.x&&co<hh.x+hh.w&&r>=hh.y&&r<hh.y+hh.h){isH=true;break}}if(isH)continue;var x=ox+co*cell,y=oy+r*cell;ctx.fillStyle='rgba(39,174,96,.18)';ctx.fillRect(x,y,cell,cell);ctx.strokeStyle='#bbb';ctx.lineWidth=.5;ctx.strokeRect(x,y,cell,cell)}
   for(var hi=0;hi<s.holes.length;hi++){var hh=s.holes[hi];ctx.strokeStyle='rgba(231,76,60,.3)';ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.strokeRect(ox+hh.x*cell,oy+hh.y*cell,hh.w*cell,hh.h*cell);ctx.setLineDash([])}
-  irLines.forEach(function(l){if(l.points.length<2)return;ctx.strokeStyle='#e67e22';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(l.points[0].x,l.points[0].y);for(var i=1;i<l.points.length;i++)ctx.lineTo(l.points[i].x,l.points[i].y);ctx.stroke()});
-  if(irCurLine&&irCurLine.points.length>=2){ctx.strokeStyle='rgba(230,126,34,.5)';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(irCurLine.points[0].x,irCurLine.points[0].y);for(var i=1;i<irCurLine.points.length;i++)ctx.lineTo(irCurLine.points[i].x,irCurLine.points[i].y);ctx.stroke()}
+  // Draw lines — color by mode: cut=orange, fill=blue
+  irLines.forEach(function(l){if(l.points.length<2)return;var isFill=l.mode==='fill';ctx.strokeStyle=isFill?'#2196f3':'#e67e22';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';if(isFill)ctx.setLineDash([6,3]);ctx.beginPath();ctx.moveTo(l.points[0].x,l.points[0].y);for(var i=1;i<l.points.length;i++)ctx.lineTo(l.points[i].x,l.points[i].y);ctx.stroke();if(isFill)ctx.setLineDash([])});
+  if(irCurLine&&irCurLine.points.length>=2){var isFill=irCurLine.mode==='fill';ctx.strokeStyle=isFill?'rgba(33,150,243,.5)':'rgba(230,126,34,.5)';ctx.lineWidth=3;ctx.lineCap='round';if(isFill)ctx.setLineDash([6,3]);ctx.beginPath();ctx.moveTo(irCurLine.points[0].x,irCurLine.points[0].y);for(var i=1;i<irCurLine.points.length;i++)ctx.lineTo(irCurLine.points[i].x,irCurLine.points[i].y);ctx.stroke();if(isFill)ctx.setLineDash([])}
 }
 
 function irSnap(pos){var s=irShapes[irIdx],cell=irCell,ox=(440-s.w*cell)/2,oy=(340-s.h*cell)/2;return{x:ox+Math.round((pos.x-ox)/cell)*cell,y:oy+Math.round((pos.y-oy)/cell)*cell}}
 function irGetPos(e){var c=document.getElementById('irCv');if(!c)return null;var rect=c.getBoundingClientRect();return irSnap({x:(e.clientX-rect.left)*(440/rect.width),y:(e.clientY-rect.top)*(340/rect.height)})}
-function irStart(e){e.preventDefault();var pos=irGetPos(e);if(!pos)return;irDrawing=true;irCurLine={points:[pos]};drawIr()}
+function irStart(e){e.preventDefault();var pos=irGetPos(e);if(!pos)return;irDrawing=true;irCurLine={points:[pos],mode:irMode};drawIr()}
 function irMove(e){if(!irDrawing||!irCurLine)return;e.preventDefault();var pos=irGetPos(e);if(!pos)return;var last=irCurLine.points[irCurLine.points.length-1];if(pos.x!==last.x||pos.y!==last.y)irCurLine.points.push(pos);drawIr()}
 function irEnd(e){if(!irDrawing)return;irDrawing=false;if(irCurLine&&irCurLine.points.length>=2){irLines.push(irCurLine);document.getElementById('irCalcBtn').disabled=false}irCurLine=null;drawIr()}
 
-// ===== STEP 5: STACKED GUIDE =====
+// ===== STEP 5: MODE-AUTO-LOCKED CALC =====
 function startIrCalc(){
-  var g=document.getElementById('irGuide');
-  g.innerHTML='<div class="gs-block" id="irMethodBlock"><div class="gs-q">你想用什么方法计算？</div><div class="gs-inputs"><button class="btn" onclick="irSetMethod(\'add\')">✂️ 分割求和——切成几块分别算再加起来</button><button class="btn org" onclick="irSetMethod(\'sub\')">🧩 补全求差——补成完整长方形再减去多余部分</button></div><div class="gs-fb" id="irMfb"></div></div>';
-}
-
-function irSetMethod(m){
-  irMethod=m;document.getElementById('irMfb').innerHTML='<span class="green">✅ 选择：'+(m==='add'?'分割求和':'补全求差')+'</span>';
-  if(m==='add')irAddFlow();else irSubFlow();
+  // Auto-detect method from drawing mode — no manual choice
+  if(irMode==='cut')irAddFlow();else irSubFlow();
 }
 
 function irAddFlow(){
   var g=document.getElementById('irGuide');irPieces=0;irPieceData=[];
-  g.innerHTML+='<div class="gs-block" id="irPcBlock"><div class="gs-q">第1步：你画的线把图形分成了<b>几块</b>规则图形？</div><div class="gs-inputs"><input type="number" class="form-input" id="irPc" placeholder="?" min="1" max="8"><button class="btn go" onclick="irPcNext()">✅</button></div><div class="gs-fb" id="irPcfb"></div></div>';
+  g.innerHTML='<div class="gs-block" id="irPcBlock"><div class="gs-q">你画的切割线把图形分成了<b>几块</b>规则图形？</div><div class="gs-inputs"><input type="number" class="form-input" id="irPc" placeholder="?" min="1" max="8"><button class="btn go" onclick="irPcNext()">✅</button></div><div class="gs-fb" id="irPcfb"></div></div>';
   document.getElementById('irPcBlock').scrollIntoView({behavior:'smooth'});
 }
 
@@ -484,9 +496,11 @@ function irLabelUp(idx){
 
 function irPbChk(idx){
   var L=parseInt(document.getElementById('irL'+idx).value),A=parseInt(document.getElementById('irA'+idx).value);
-  var sel=document.getElementById('irSh'+idx).value,W;
+  var sel=document.getElementById('irSh'+idx).value,W,shape=irShapes[irIdx];
   if(sel==='square'){W=L}else{W=parseInt(document.getElementById('irW'+idx).value)}
   if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irFb'+idx).innerHTML='<span class="r">填写所有数字</span>';return}
+  // Validate dimensions don't exceed shape bounds
+  if(L>shape.w||W>shape.h){document.getElementById('irFb'+idx).innerHTML='<span class="r">❌ 尺寸超出图形范围！图形最大 '+shape.w+'×'+shape.h+'</span>';sfxNO();return}
   if(A===L*W){document.getElementById('irFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块：'+(sel==='square'?L+'×'+L:L+'×'+W)+'='+A+' cm²</span>';sfxOK();irPieceData[idx]={L:L,W:W,A:A};
     var allDone=irPieceData.filter(function(x){return x}).length>=irPieces;
     if(allDone){var sumQ='',sumE=0;for(var i=0;i<irPieces;i++){if(i>0)sumQ+=' + ';sumQ+=irPieceData[i].A;sumE+=irPieceData[i].A}
@@ -506,25 +520,51 @@ function irSumChk(expected){
 }
 
 function irSubFlow(){
+  var g=document.getElementById('irGuide'),shape=irShapes[irIdx];
+  g.innerHTML='<div class="gs-block" id="irSubType\"><div class="gs-q">补上缺口后，完整的大图形是<b>正方形</b>还是<b>长方形</b>？</div><div class="gs-inputs"><button class="btn" onclick="irSubPickType(\'square\')">⬛ 正方形</button><button class="btn" onclick="irSubPickType(\'rect\')">▬ 长方形</button></div><div class="gs-fb" id="irSubTfb"></div></div>';
+  document.getElementById('irSubType').scrollIntoView({behavior:'smooth'});
+}
+
+function irSubPickType(t){
+  window._irSubType=t;var shape=irShapes[irIdx];
+  // Validate: if shape is not square, user can't pick square
+  var vMsg='';
+  if(t==='square'&&shape.w!==shape.h)vMsg='<span class="r">❌ 这个图形的整体是 '+shape.w+'×'+shape.h+'，不是正方形哦！</span>';
+  document.getElementById('irSubTfb').innerHTML=vMsg||'<span class="green">✅ 选择：'+(t==='square'?'正方形':'长方形')+'</span>';
+  if(vMsg){sfxNO();return}
+  sfxOK();
   var g=document.getElementById('irGuide');
-  g.innerHTML+='<div class="gs-block" id="irSub1"><div class="gs-q">第1步：补上缺口后，完整的大图形是什么形状？</div><div class="gs-inputs"><span>长</span><input type="number" class="form-input" id="irBL" placeholder="?" style="width:60px"><span>宽</span><input type="number" class="form-input" id="irBW" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irBA" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubBig()">✅</button></div><div class="gs-fb" id="irSubBfb"></div></div>';
+  var lblL=t==='square'?'边长':'长',lblW=t==='square'?'（同）':'宽';
+  var hint=t==='square'?'面积 = 边长 × 边长':'面积 = 长 × 宽';
+  g.innerHTML+='<div class="gs-block" id="irSub1\"><div class="gs-q">大图形：<b>'+hint+'</b></div><div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irBL" placeholder="?" style="width:60px"><span id="irBWs">'+lblW+'</span><input type="number" class="form-input" id="irBW" placeholder="?" style="width:60px" '+((t==='square')?'disabled':'')+'><span>=</span><input type="number" class="form-input" id="irBA" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubBig()">✅</button></div><div class="gs-fb" id="irSubBfb"></div></div>';
   document.getElementById('irSub1').scrollIntoView({behavior:'smooth'});
 }
 
 function irSubBig(){
   var L=parseInt(document.getElementById('irBL').value),W=parseInt(document.getElementById('irBW').value),A=parseInt(document.getElementById('irBA').value);
+  var shape=irShapes[irIdx],st=window._irSubType||'rect';
   if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irSubBfb').innerHTML='<span class="r">填写所有数字</span>';return}
-  if(A===L*W){document.getElementById('irSubBfb').innerHTML='<span class="green">✅ 大图形：'+L+'×'+W+'='+A+' cm²</span>';sfxOK();window._irBig=A;
-    var g=document.getElementById('irGuide');
-    g.innerHTML+='<div class="gs-block" id="irSub2"><div class="gs-q">第2步：缺口是<b>几块</b>互不相连的独立区域？</div><div class="gs-inputs"><input type="number" class="form-input" id="irHoles" placeholder="?" min="1" max="8"><button class="btn go" onclick="irSubHoles()">✅</button></div><div class="gs-fb" id="irSubHfb2"></div></div>';
-    document.getElementById('irSub2').scrollIntoView({behavior:'smooth'});
-  }else{document.getElementById('irSubBfb').innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'</span>';sfxNO()}
+  // Layer 1: Validate dimensions match actual shape grid size
+  var expL=shape.w,expW=shape.h;
+  if(st==='square'){
+    if(L!==expL||W!==expL){document.getElementById('irSubBfb').innerHTML='<span class="r">❌ 大图形边长应为 '+expL+'，你在画布上看到的是 '+expL+'×'+expL+' 的图形</span>';sfxNO();return}
+  }else{
+    if(L!==expL||W!==expW){document.getElementById('irSubBfb').innerHTML='<span class="r">❌ 大图形应为 '+expL+'×'+expW+'，你在画布上看到的是这个尺寸</span>';sfxNO();return}
+  }
+  // Layer 2: Validate area calculation
+  if(A!==L*W){document.getElementById('irSubBfb').innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'，不是'+A+'</span>';sfxNO();return}
+  document.getElementById('irSubBfb').innerHTML='<span class="green">✅ 大图形：'+L+'×'+W+'='+A+' cm² — 和画布尺寸一致！</span>';sfxOK();window._irBig=A;
+  var g=document.getElementById('irGuide');
+  g.innerHTML+='<div class="gs-block" id="irSub2"><div class="gs-q">第2步：缺口是<b>几块</b>互不相连的独立区域？</div><div class="gs-inputs"><input type="number" class="form-input" id="irHoles" placeholder="?" min="1" max="8"><button class="btn go" onclick="irSubHoles()">✅</button></div><div class="gs-fb" id="irSubHfb2"></div></div>';
+  document.getElementById('irSub2').scrollIntoView({behavior:'smooth'});
 }
 
 function irSubHoles(){
-  var n=parseInt(document.getElementById('irHoles').value);
+  var n=parseInt(document.getElementById('irHoles').value),shape=irShapes[irIdx],actual=shape.holes.length;
   if(isNaN(n)||n<1){document.getElementById('irSubHfb2').innerHTML='<span class="r">输入数字</span>';return}
-  document.getElementById('irSubHfb2').innerHTML='<span class="green">✅ 共 '+n+' 块独立缺口</span>';
+  // Validate against actual hole count from shape data
+  if(n!==actual){document.getElementById('irSubHfb2').innerHTML='<span class="r">❌ 画布上实际有 '+actual+' 块缺口，不是 '+n+' 块</span>';sfxNO();return}
+  sfxOK();document.getElementById('irSubHfb2').innerHTML='<span class="green">✅ 共 '+n+' 块独立缺口 — 和画布一致！</span>';
   window._irHoles=n;window._irHoleData=[];
   var g=document.getElementById('irGuide'),h='';
   for(var i=0;i<n;i++){
@@ -536,27 +576,34 @@ function irSubHoles(){
 
 function irSubHoleChk(idx){
   var L=parseInt(document.getElementById('irHL'+idx).value),W=parseInt(document.getElementById('irHW'+idx).value),A=parseInt(document.getElementById('irHA'+idx).value);
+  var shape=irShapes[irIdx],hole=shape.holes[idx];
   if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irHFb'+idx).innerHTML='<span class="r">填写所有数字</span>';return}
-  if(A===L*W){document.getElementById('irHFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块缺口：'+L+'×'+W+'='+A+' cm²</span>';sfxOK();window._irHoleData[idx]={L:L,W:W,A:A};
-    var n=window._irHoles||0;
-    var done=window._irHoleData.filter(function(x){return x}).length;
-    if(done>=n){
-      var big=window._irBig||0,sumH=0,expr='';
-      for(var i=0;i<n;i++){if(i>0)expr+=' + ';expr+=window._irHoleData[i].A;sumH+=window._irHoleData[i].A}
-      var expected=big-sumH;
-      var g=document.getElementById('irGuide');
-      g.innerHTML+='<div class="gs-block" id="irSubF"><div class="gs-q">第3步：大图形面积 − 缺口总面积 = '+big+' − ('+expr+') = '+big+' − '+sumH+' = ？</div><div class="gs-inputs"><input type="number" class="form-input" id="irSubA" placeholder="?"><button class="btn go" onclick="irSubFin('+expected+')">✅</button></div><div class="gs-fb" id="irSubFfb"></div></div>';
-      document.getElementById('irSubF').scrollIntoView({behavior:'smooth'});
-    }else{
-      for(var i=idx+1;i<n;i++){if(!window._irHoleData[i]){document.getElementById('irHole'+i).scrollIntoView({behavior:'smooth'});break}}
-    }
-  }else{document.getElementById('irHFb'+idx).innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'，不是'+A+'</span>';sfxNO()}
+  // Layer 1: Validate hole dimensions match actual shape data
+  if(L!==hole.w||W!==hole.h){document.getElementById('irHFb'+idx).innerHTML='<span class="r">❌ 第'+(idx+1)+'块缺口在画布上是 '+hole.w+'×'+hole.h+'，你填的不对</span>';sfxNO();return}
+  // Layer 2: Validate area calculation
+  if(A!==L*W){document.getElementById('irHFb'+idx).innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'，不是'+A+'</span>';sfxNO();return}
+  document.getElementById('irHFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块缺口：'+L+'×'+W+'='+A+' cm² — 和画布一致！</span>';sfxOK();window._irHoleData[idx]={L:L,W:W,A:A};
+  var n=window._irHoles||0;
+  var done=window._irHoleData.filter(function(x){return x}).length;
+  if(done>=n){
+    var big=window._irBig||0,sumH=0,expr='';
+    for(var i=0;i<n;i++){if(i>0)expr+=' + ';expr+=window._irHoleData[i].A;sumH+=window._irHoleData[i].A}
+    var expected=big-sumH;
+    var g=document.getElementById('irGuide');
+    g.innerHTML+='<div class="gs-block" id="irSubF"><div class="gs-q">第3步：大图形面积 − 缺口总面积 = '+big+' − ('+expr+') = '+big+' − '+sumH+' = ？</div><div class="gs-inputs"><input type="number" class="form-input" id="irSubA" placeholder="?"><button class="btn go" onclick="irSubFin('+expected+')">✅</button></div><div class="gs-fb" id="irSubFfb"></div></div>';
+    document.getElementById('irSubF').scrollIntoView({behavior:'smooth'});
+  }else{
+    for(var i=idx+1;i<n;i++){if(!window._irHoleData[i]){document.getElementById('irHole'+i).scrollIntoView({behavior:'smooth'});break}}
+  }
 }
 
 function irSubFin(expected){
-  var ans=parseInt(document.getElementById('irSubA').value);
-  if(ans===expected){sfxDone();document.getElementById('irSubFfb').innerHTML='<span class="green">🏆 总面积 = '+expected+' cm²</span>';md(4)}
-  else{sfxNO();document.getElementById('irSubFfb').innerHTML='<span class="r">❌ 再算算</span>'}
+  var ans=parseInt(document.getElementById('irSubA').value),shapeTotal=irShapes[irIdx].total;
+  if(isNaN(ans)){document.getElementById('irSubFfb').innerHTML='<span class="r">输入数字</span>';return}
+  // Layer 3: Validate both the computed expected and the shape's actual total
+  if(ans!==expected){document.getElementById('irSubFfb').innerHTML='<span class="r">❌ 计算结果应该是 '+expected+'，不是 '+ans+'</span>';sfxNO();return}
+  if(ans!==shapeTotal){document.getElementById('irSubFfb').innerHTML='<span class="r">❌ 你的计算结果是 '+ans+'，但这个图形的实际面积是 '+shapeTotal+' cm²。检查每块的尺寸填对了吗？</span>';sfxNO();return}
+  sfxDone();document.getElementById('irSubFfb').innerHTML='<span class="green">🏆 总面积 = '+expected+' cm²，完全正确！画布验证通过！</span>';md(4)
 }
 
 // Build IR tabs
