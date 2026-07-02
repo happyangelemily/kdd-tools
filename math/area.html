@@ -562,27 +562,69 @@ function irSubBig(){
 function irSubHoles(){
   var n=parseInt(document.getElementById('irHoles').value),shape=irShapes[irIdx],actual=shape.holes.length;
   if(isNaN(n)||n<1){document.getElementById('irSubHfb2').innerHTML='<span class="r">输入数字</span>';return}
-  // Validate against actual hole count from shape data
   if(n!==actual){document.getElementById('irSubHfb2').innerHTML='<span class="r">❌ 画布上实际有 '+actual+' 块缺口，不是 '+n+' 块</span>';sfxNO();return}
   sfxOK();document.getElementById('irSubHfb2').innerHTML='<span class="green">✅ 共 '+n+' 块独立缺口 — 和画布一致！</span>';
-  window._irHoles=n;window._irHoleData=[];
+  window._irHoles=n;window._irHoleData=[];window._irHoleTypes=[]; // track per-hole type
   var g=document.getElementById('irGuide'),h='';
   for(var i=0;i<n;i++){
-    h+='<div class="gs-block" id="irHole'+i+'"><div class="gs-q">第'+(i+1)+'块缺口：长=？宽=？面积=？</div><div class="gs-inputs"><span>长</span><input type="number" class="form-input" id="irHL'+i+'" placeholder="?" style="width:60px"><span>宽</span><input type="number" class="form-input" id="irHW'+i+'" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irHA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubHoleChk('+i+')">✅</button></div><div class="gs-fb" id="irHFb'+i+'"></div></div>';
+    var hole=shape.holes[i];
+    // Check if same-size hole appeared earlier
+    var sameAs=-1;
+    for(var j=0;j<i;j++){if(shape.holes[j].w===hole.w&&shape.holes[j].h===hole.h){sameAs=j;break}}
+    var isSquare=hole.w===hole.h;
+    h+='<div class="gs-block" id="irHole'+i+'"><div class="gs-q">第'+(i+1)+'块缺口：是<b>正方形</b>还是<b>长方形</b>？</div>';
+    h+='<div class="gs-inputs" style="flex-wrap:wrap;gap:4px" id="irHoleBtns'+i+'">';
+    h+='<button class="btn" onclick="irSubHolePickType('+i+',\\'square\\')">⬛ 正方形</button>';
+    h+='<button class="btn" onclick="irSubHolePickType('+i+',\\'rect\\')">▬ 长方形</button>';
+    if(sameAs>=0){
+      h+='<button class="btn blu" onclick="irSubHoleCopy('+i+','+sameAs+')">📋 和缺口'+(sameAs+1)+'相同'+(isSquare?'（边长'+hole.w+'）':'（'+hole.w+'×'+hole.h+'）')+'</button>';
+    }
+    h+='</div><div class="gs-fb" id="irHFb'+i+'"></div></div>';
   }
   g.innerHTML+=h;
   if(n>0)document.getElementById('irHole0').scrollIntoView({behavior:'smooth'});
 }
 
+function irSubHolePickType(idx,t){
+  var shape=irShapes[irIdx],hole=shape.holes[idx];
+  window._irHoleTypes[idx]=t;
+  // Show dimension inputs with correct labels
+  var lblL=t==='square'?'边长':'长',lblW=t==='square'?'（同）':'宽',hint=t==='square'?'面积 = 边长 × 边长':'面积 = 长 × 宽';
+  var h='<div class="gs-q">第'+(idx+1)+'块缺口：<b>'+hint+'</b></div>';
+  h+='<div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irHL'+idx+'" placeholder="?" style="width:60px"><span>'+lblW+'</span><input type="number" class="form-input" id="irHW'+idx+'" placeholder="?" style="width:60px"'+((t==='square')?' disabled':'')+'><span>=</span><input type="number" class="form-input" id="irHA'+idx+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irSubHoleChk('+idx+')">✅</button></div>';
+  document.getElementById('irHole'+idx).innerHTML=h;
+}
+
+function irSubHoleCopy(idx,fromIdx){
+  // Copy type and prepopulate from previous hole
+  window._irHoleTypes[idx]=window._irHoleTypes[fromIdx];
+  var t=window._irHoleTypes[idx],shape=irShapes[irIdx],hole=shape.holes[idx];
+  var lblL=t==='square'?'边长':'长',hint=t==='square'?'面积 = 边长 × 边长':'面积 = 长 × 宽';
+  // Auto-fill dimensions from shape data
+  var vW=hole.w,vH=hole.h,vA=hole.w*hole.h;
+  var h='<div class="gs-q">第'+(idx+1)+'块缺口：<b>'+hint+'</b> — 和缺口'+(fromIdx+1)+'相同</div>';
+  h+='<div class="gs-inputs"><span>'+lblL+'</span><input type="number" class="form-input" id="irHL'+idx+'" value="'+vW+'" style="width:60px;background:#e8f5e9" readonly><span>'+(t==='square'?'（同）':'宽')+'</span><input type="number" class="form-input" id="irHW'+idx+'" value="'+vH+'" style="width:60px;background:#e8f5e9" readonly><span>=</span><input type="number" class="form-input" id="irHA'+idx+'" value="'+vA+'" style="width:70px;background:#e8f5e9" readonly></div>';
+  h+='<div class="gs-fb"><span class="green">✅ 自动填入：'+(t==='square'?vW+'×'+vW:vW+'×'+vH)+'='+vA+' cm²</span></div>';
+  document.getElementById('irHole'+idx).innerHTML=h;
+  window._irHoleData[idx]={L:vW,W:(t==='square'?vW:vH),A:vA};
+  // Check if all done
+  checkHolesDone();
+}
+
 function irSubHoleChk(idx){
   var L=parseInt(document.getElementById('irHL'+idx).value),W=parseInt(document.getElementById('irHW'+idx).value),A=parseInt(document.getElementById('irHA'+idx).value);
-  var shape=irShapes[irIdx],hole=shape.holes[idx];
+  var shape=irShapes[irIdx],hole=shape.holes[idx],t=window._irHoleTypes[idx]||'rect';
+  if(t==='square')W=L; // square: W follows L
   if(isNaN(L)||isNaN(W)||isNaN(A)){document.getElementById('irHFb'+idx).innerHTML='<span class="r">填写所有数字</span>';return}
   // Layer 1: Validate hole dimensions match actual shape data
   if(L!==hole.w||W!==hole.h){document.getElementById('irHFb'+idx).innerHTML='<span class="r">❌ 第'+(idx+1)+'块缺口在画布上是 '+hole.w+'×'+hole.h+'，你填的不对</span>';sfxNO();return}
   // Layer 2: Validate area calculation
   if(A!==L*W){document.getElementById('irHFb'+idx).innerHTML='<span class="r">❌ '+L+'×'+W+'='+(L*W)+'，不是'+A+'</span>';sfxNO();return}
   document.getElementById('irHFb'+idx).innerHTML='<span class="green">✅ 第'+(idx+1)+'块缺口：'+L+'×'+W+'='+A+' cm² — 和画布一致！</span>';sfxOK();window._irHoleData[idx]={L:L,W:W,A:A};
+  checkHolesDone();
+}
+
+function checkHolesDone(){
   var n=window._irHoles||0;
   var done=window._irHoleData.filter(function(x){return x}).length;
   if(done>=n){
@@ -592,8 +634,6 @@ function irSubHoleChk(idx){
     var g=document.getElementById('irGuide');
     g.innerHTML+='<div class="gs-block" id="irSubF"><div class="gs-q">第3步：大图形面积 − 缺口总面积 = '+big+' − ('+expr+') = '+big+' − '+sumH+' = ？</div><div class="gs-inputs"><input type="number" class="form-input" id="irSubA" placeholder="?"><button class="btn go" onclick="irSubFin('+expected+')">✅</button></div><div class="gs-fb" id="irSubFfb"></div></div>';
     document.getElementById('irSubF').scrollIntoView({behavior:'smooth'});
-  }else{
-    for(var i=idx+1;i<n;i++){if(!window._irHoleData[i]){document.getElementById('irHole'+i).scrollIntoView({behavior:'smooth'});break}}
   }
 }
 
