@@ -574,8 +574,8 @@ function irSubHoles(){
     var isSquare=hole.w===hole.h;
     h+='<div class="gs-block" id="irHole'+i+'"><div class="gs-q">第'+(i+1)+'块缺口：是<b>正方形</b>还是<b>长方形</b>？</div>';
     h+='<div class="gs-inputs" style="flex-wrap:wrap;gap:4px" id="irHoleBtns'+i+'">';
-    h+='<button class="btn" onclick="irSubHolePickType('+i+',\\'square\\')">⬛ 正方形</button>';
-    h+='<button class="btn" onclick="irSubHolePickType('+i+',\\'rect\\')">▬ 长方形</button>';
+    h+='<button class="btn" onclick="irSubHolePickType('+i+',\'square\')">⬛ 正方形</button>';
+    h+='<button class="btn" onclick="irSubHolePickType('+i+',\'rect\')">▬ 长方形</button>';
     if(sameAs>=0){
       h+='<button class="btn blu" onclick="irSubHoleCopy('+i+','+sameAs+')">📋 和缺口'+(sameAs+1)+'相同'+(isSquare?'（边长'+hole.w+'）':'（'+hole.w+'×'+hole.h+'）')+'</button>';
     }
