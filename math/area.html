@@ -140,6 +140,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <div class="disc-panel" id="labDisc"><h4>🤔 哪种形状最适合做面积测量单位？</h4><div class="opt-row">
     <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形——紧密铺满不留空隙</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 </div>
+
+<div class="btn-row" style="margin-top:12px"><button class="btn go" onclick="startGridCount()">🔢 进阶练习：数格子算面积</button></div>
+<div id="gridCountPanel" style="display:none">
+  <div class="cv"><canvas id="gcCv" width="440" height="360"></canvas></div>
+  <p style="text-align:center;font-size:.85em;color:#555;margin:8px 0" id="gcQ">数一数，这个图形占了多少个<b>格子</b>？面积 = ？cm²</p>
+  <div style="display:flex;gap:8px;justify-content:center;align-items:center"><input type="number" class="form-input" id="gcAns" placeholder="?" style="width:80px"><span style="font-size:.9em">cm²</span><button class="btn go" onclick="gcChk()">✅</button></div>
+  <p id="gcFB" style="text-align:center;font-size:.82em;min-height:24px;margin:8px 0"></p>
+  <div class="btn-row"><button class="btn blu" onclick="gcNext()">🔄 换一个</button></div>
+  <div class="reveal open" id="gcDone" style="display:none"><div class="big">✨ 数格子就是数面积！<br>一个格子 = 1 cm²</div><p style="font-size:.8em;color:#666;margin-top:4px">正方形最适合做单位——严丝合缝，一个都不浪费。</p></div>
+</div>
 </div>
 
 <!-- ===== STEP 3 ===== -->
@@ -358,6 +368,61 @@ function discA(idx,btn){
   else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想</span>——正方形能严丝合缝铺满任何形状。';}
 }
 
+// ===== STEP 2 ADVANCED: GRID COUNTING =====
+var gcShapes=[
+  {name:'长方形',grid:['111111','111111','111111','111111'],ans:24},
+  {name:'正方形',grid:['1111','1111','1111','1111'],ans:16},
+  {name:'L 形',grid:['11000','11000','11111','11111','11111'],ans:19},
+  {name:'阶梯形',grid:['11100','11100','00111','00111'],ans:12},
+  {name:'T 形',grid:['11111','00100','00100','00100'],ans:8},
+  {name:'十字形',grid:['00100','00100','11111','00100','00100'],ans:9},
+  {name:'三角形',grid:['00001','00011','00111','01111','11111'],ans:15,hint:'试试按行数：第1行几个？第2行几个？'},
+  {name:'长方形2',grid:['11111111','11111111','11111111'],ans:24},
+  {name:'正方形2',grid:['11111','11111','11111','11111','11111'],ans:25},
+  {name:'缺角形',grid:['11111','11111','11000','11000'],ans:14}
+];
+var gcIdx=0,gcDone=0;
+
+function startGridCount(){
+  document.getElementById('gridCountPanel').style.display='block';
+  document.getElementById('gcDone').style.display='none';
+  gcIdx=Math.floor(Math.random()*gcShapes.length);gcDone=0;
+  drawGc();
+  document.getElementById('gridCountPanel').scrollIntoView({behavior:'smooth'});
+}
+
+function drawGc(){
+  var s=gcShapes[gcIdx],c=document.getElementById('gcCv'),ctx=c.getContext('2d');
+  var cell=28,rows=s.grid.length,cols=s.grid[0].length;
+  var ox=(440-cols*cell)/2,oy=(360-rows*cell)/2;
+  ctx.clearRect(0,0,440,360);ctx.fillStyle='#f0ede6';ctx.fillRect(0,0,440,360);
+  // Draw grid
+  ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.5;
+  for(var r=0;r<=rows;r++){ctx.beginPath();ctx.moveTo(ox,oy+r*cell);ctx.lineTo(ox+cols*cell,oy+r*cell);ctx.stroke()}
+  for(var co=0;co<=cols;co++){ctx.beginPath();ctx.moveTo(ox+co*cell,oy);ctx.lineTo(ox+co*cell,oy+rows*cell);ctx.stroke()}
+  // Draw shape
+  ctx.fillStyle='rgba(39,174,96,.35)';ctx.strokeStyle='#27ae60';ctx.lineWidth=2;
+  for(var r=0;r<rows;r++)for(var co=0;co<cols;co++){
+    if(s.grid[r][co]==='1'){ctx.fillRect(ox+co*cell+1,oy+r*cell+1,cell-2,cell-2);ctx.strokeRect(ox+co*cell+1,oy+r*cell+1,cell-2,cell-2)}
+  }
+  // Label
+  ctx.fillStyle='#555';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
+  ctx.fillText(s.name+' — 数一数有几个格子？',220,oy-10);
+  document.getElementById('gcQ').innerHTML='这个<b>'+s.name+'</b>占了多少个格子？面积 = ？cm²'+(s.hint?' <span style="font-size:.72em;color:#e67e22">（提示：'+s.hint+'）</span>':'');
+  document.getElementById('gcAns').value='';document.getElementById('gcFB').innerHTML='';
+}
+
+function gcChk(){
+  var ans=parseInt(document.getElementById('gcAns').value),s=gcShapes[gcIdx];
+  if(isNaN(ans)){document.getElementById('gcFB').innerHTML='<span class="r">输入数字</span>';return}
+  if(ans===s.ans){sfxOK();document.getElementById('gcFB').innerHTML='<span class="green">✅ 正确！'+s.ans+' cm²</span>';gcDone++;if(gcDone>=3&&!document.getElementById('gcDone').style.display.match(/block/)){document.getElementById('gcDone').style.display='block';sfxDone()}}
+  else{sfxNO();document.getElementById('gcFB').innerHTML='<span class="r">❌ 再数数看？</span>'}
+}
+
+function gcNext(){
+  gcIdx=Math.floor(Math.random()*gcShapes.length);drawGc();
+}
+
 // ===== STEP 3 =====
 function drawUnitCanvases(){
   var c1=document.getElementById('ucLine'),ctx1=c1.getContext('2d');ctx1.clearRect(0,0,100,80);ctx1.fillStyle='#1565c0';ctx1.fillRect(10,38,80,4);ctx1.font='bold 12px sans-serif';ctx1.textAlign='center';ctx1.fillText('1 cm',50,68);
@@ -483,15 +548,30 @@ function irPcNext(){
   var n=parseInt(document.getElementById('irPc').value);if(isNaN(n)||n<1){document.getElementById('irPcfb').innerHTML='<span class="r">输入数字</span>';return}
   irPieces=n;irPieceData=[];document.getElementById('irPcfb').innerHTML='<span class="green">✅ 分成了 '+n+' 块</span>';
   var g=document.getElementById('irGuide'),h='';
-  for(var i=0;i<n;i++){h+='<div class="gs-block" id="irPb'+i+'"><div class="gs-q">第'+(i+1)+'块：形状？尺寸？面积？</div><div class="gs-inputs"><select id="irSh'+i+'" onchange="irLabelUp('+i+')" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select><span id="irLb'+i+'">长</span><input type="number" class="form-input" id="irL'+i+'" placeholder="?" style="width:60px"><span id="irWb'+i+'">宽</span><input type="number" class="form-input" id="irW'+i+'" placeholder="?" style="width:60px"><span>=</span><input type="number" class="form-input" id="irA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irPbChk('+i+')">✅</button></div><div class="gs-fb" id="irFb'+i+'"></div></div>'}
+  for(var i=0;i<n;i++){h+='<div class="gs-block" id="irPb'+i+'"><div class="gs-q">第'+(i+1)+'块：形状？尺寸？面积？</div><div class="gs-inputs"><select id="irSh'+i+'" onchange="irLabelUp('+i+')" style="height:40px;border:2px solid #ddd;border-radius:10px;font-size:.85em;font-family:inherit;padding:0 8px"><option value="rect">长方形</option><option value="square">正方形</option></select><span id="irLb'+i+'">长</span><input type="number" class="form-input" id="irL'+i+'" placeholder="?" style="width:60px" oninput="irFmUpdate('+i+')"><span id="irWb'+i+'">宽</span><input type="number" class="form-input" id="irW'+i+'" placeholder="?" style="width:60px" oninput="irFmUpdate('+i+')"><b id="irFm'+i+'" style="font-size:.9em;color:#2e7d32;min-width:70px;display:inline-block;text-align:center">长 × 宽</b><span>=</span><input type="number" class="form-input" id="irA'+i+'" placeholder="?" style="width:70px"><button class="btn go" onclick="irPbChk('+i+')">✅</button></div><div class="gs-fb" id="irFb'+i+'"></div></div>'}
   g.innerHTML+=h;document.getElementById('irPb0').scrollIntoView({behavior:'smooth'});
 }
 
 function irLabelUp(idx){
   var sel=document.getElementById('irSh'+idx).value;
-  var lb=document.getElementById('irLb'+idx),wb=document.getElementById('irWb'+idx);
-  if(sel==='square'){lb.textContent='边长';wb.textContent='（同）';document.getElementById('irW'+idx).disabled=true;document.getElementById('irW'+idx).value=''}
-  else{lb.textContent='长';wb.textContent='宽';document.getElementById('irW'+idx).disabled=false}
+  var lb=document.getElementById('irLb'+idx),wb=document.getElementById('irWb'+idx),fm=document.getElementById('irFm'+idx);
+  if(sel==='square'){lb.textContent='边长';wb.textContent='（同）';document.getElementById('irW'+idx).disabled=true;document.getElementById('irW'+idx).value='';if(fm)fm.textContent='边长 × 边长'}
+  else{lb.textContent='长';wb.textContent='宽';document.getElementById('irW'+idx).disabled=false;if(fm)fm.textContent='长 × 宽'}
+  irFmUpdate(idx);
+}
+
+function irFmUpdate(idx){
+  var sel=document.getElementById('irSh'+idx).value;
+  var L=document.getElementById('irL'+idx).value,W=document.getElementById('irW'+idx).value,fm=document.getElementById('irFm'+idx);
+  if(!fm)return;
+  if(sel==='square'){
+    fm.textContent=L?L+'\u00d7'+L:'\u8fb9\u957f \u00d7 \u8fb9\u957f';
+  }else{
+    if(L&&W)fm.textContent=L+'\u00d7'+W;
+    else if(L)fm.textContent=L+'\u00d7?';
+    else if(W)fm.textContent='?\u00d7'+W;
+    else fm.textContent='\u957f \u00d7 \u5bbd';
+  }
 }
 
 function irPbChk(idx){
