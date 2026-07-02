@@ -126,6 +126,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <!-- ===== STEP 2: Lab ===== -->
 <div class="sec" id="s2">
 <h2>📏 第二步：怎么量出「里面有多大」？</h2>
+<p>现在我们要怎么量出图形里面有多大呢？回想一下：量周长是依靠<b>线段</b>去测量——那量面积，还能继续用线段吗？</p>
+<div class="btn-row" id="step2Q1">
+  <button class="btn" onclick="step2Ans(1,this)">能，继续用线段量</button>
+  <button class="btn" onclick="step2Ans(0,this)">不能，线段只能量长短</button>
+</div>
+<div id="step2Q2" style="display:none">
+  <p style="color:#2e7d32;font-weight:bold">✅ 对！线段只能量长短，量「面的大小」需要用小平面来铺。</p>
+  <p>那具体选用哪一种平面图形最合适呢？你来试试——</p>
+</div>
 <div class="shape-sel" id="shapeSel">
   <button class="shape-btn pick" data-shape="square" onclick="pickShape('square')"><span class="sicon">◼</span>正方形</button>
   <button class="shape-btn" data-shape="circle" onclick="pickShape('circle')"><span class="sicon">●</span>圆形</button>
@@ -138,7 +147,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <div id="labCompPanel" style="display:none">
   <div class="reveal open" style="margin-top:12px"><p style="font-size:.85em;font-weight:bold;color:#2e7d32">📊 四种图形测量对比</p><div id="labCompTbl" style="font-size:.78em;color:#555;line-height:1.8;margin:8px 0"></div></div>
   <div class="disc-panel" id="labDisc"><h4>🤔 想一想：量长度用1厘米长的小线段——量面积呢？</h4><div class="opt-row">
-    <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形——紧密铺满不留空隙</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
+    <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 </div>
 
 <div id="gridCountPanel">
@@ -216,9 +225,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <!-- ===== STEP 5: Irregular ===== -->
 <div class="sec" id="s5">
 <h2>🧩 第五步：不规整的形状怎么算？</h2>
+<p>我们已经学会了长方形、正方形面积计算。但是生活里还存在很多外形不整齐的图形，比如 <b>L 型、凹型、阶梯型</b> 这类图形，该如何计算面积呢？</p>
 <div class="ir-tabs" id="irTabs"></div>
 <div class="cv"><canvas id="irCv" width="440" height="340"></canvas></div>
-<div class="tip-box">学会了长方形和正方形。但生活中很多形状不整齐——<b>L 形、凹形、阶梯形</b>，怎么办？<br>💡 <b>核心方法：切一切，分成小块</b>。把不规则图形切成几块长方形，分别算面积，再加起来。或者补上缺口，拼成完整图形再减掉。想好办法就动手画线——</div>
+<div class="tip-box">💡 <b>核心解题方法：可以切一切，把图形分割成小块分别计算；或者补上缺口，拼成一个完整的图形再减掉空缺部分。</b></div>
 <div class="btn-row" style="margin-bottom:4px">
   <button class="btn pick" id="irModeCutBtn" onclick="irSetMode('cut')">✂️ 分割法——切成几块长方形</button>
   <button class="btn" id="irModeFillBtn" onclick="irSetMode('fill')">🧩 补全法——补成完整长方形再减</button>
@@ -275,8 +285,14 @@ function drawSC(ctx,w,h,d,p){
     var tx=cx,ty=cy-48,bh=h-48,rw2=w-40;ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.stroke();
     if(t>0){ctx.save();ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.clip();ctx.fillStyle='rgba(230,126,34,'+(0.5*t)+')';ctx.fillRect(tx-rw2/2,ty,rw2*t,bh);if(t>.5)for(var fx=tx-rw2/2+5;fx<tx+rw2/2;fx+=12)for(var fy=ty+5;fy<ty+bh;fy+=12){ctx.fillStyle='#e91e63';ctx.beginPath();ctx.arc(fx,fy,3,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffeb3b';ctx.beginPath();ctx.arc(fx,fy,1.5,0,Math.PI*2);ctx.fill()}ctx.restore();ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-rw2/2,ty+bh);ctx.lineTo(tx+rw2/2,ty+bh);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=1.5;ctx.stroke()}
   }else if(d.shape==='square'){
-    var sqs=w-40,sx=(w-sqs)/2,sy=(h-sqs)/2;ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=1.5;ctx.strokeRect(sx,sy,sqs,sqs);var cols=Math.floor(sqs/16),total=cols*cols,drawn=Math.floor(total*t);
-    for(var tr=0;tr<cols;tr++)for(var tc=0;tc<cols;tc++){if(tr*cols+tc>=drawn)continue;ctx.fillStyle=(tc+tr)%2===0?'#d4b67c':'#c9a96e';ctx.fillRect(sx+tc*16,sy+tr*16,15,15)}
+    var cellSz=15,sqs=Math.min(w-40,h-30),cols=Math.floor(sqs/cellSz),total=cols*cols,drawn=Math.floor(total*t);
+    var tx=(w-cols*cellSz)/2,ty=(h-cols*cellSz)/2;
+    // Draw crisp outer border first
+    ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=2.5;ctx.strokeRect(tx-1,ty-1,cols*cellSz+2,cols*cellSz+2);
+    // Draw tiles exactly filling the bordered area
+    for(var tr=0;tr<cols;tr++)for(var tc=0;tc<cols;tc++){if(tr*cols+tc>=drawn)continue;ctx.fillStyle=(tc+tr)%2===0?'#d4b67c':'#c9a96e';ctx.fillRect(tx+tc*cellSz+1,ty+tr*cellSz+1,cellSz-2,cellSz-2)}
+    // Redraw border on top when fully tiled to keep it crisp
+    if(t>=1){ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=2.5;ctx.strokeRect(tx-1,ty-1,cols*cellSz+2,cols*cellSz+2)}
   }else if(d.shape==='lshape'){
     var ow=w-50,oh=h-40,ox=(w-ow)/2,oy=(h-oh)/2,cW=Math.floor(ow*.35),cH=Math.floor(oh*.4);ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.strokeRect(ox+cW,oy,ow-cW,cH);ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+ow,oy);ctx.lineTo(ox+ow,oy+oh);ctx.lineTo(ox+cW,oy+oh);ctx.lineTo(ox+cW,oy+cH);ctx.lineTo(ox,oy+cH);ctx.closePath();ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=2;ctx.stroke();
     if(t>0){ctx.save();ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+ow,oy);ctx.lineTo(ox+ow,oy+oh);ctx.lineTo(ox+cW,oy+oh);ctx.lineTo(ox+cW,oy+cH);ctx.lineTo(ox,oy+cH);ctx.closePath();ctx.clip();ctx.fillStyle='rgba(76,175,80,'+(0.55*t)+')';ctx.fillRect(ox,oy,ow*t,oh);if(t>.4)for(var gx=ox+2;gx<ox+ow;gx+=6)for(var gy=oy+2;gy<oy+oh;gy+=6)if((gx+gy)%12===0){ctx.fillStyle='#388e3c';ctx.fillRect(gx,gy,2,3)}ctx.restore()}
@@ -357,8 +373,25 @@ function labCompare(){
 }
 function discA(idx,btn){
   var all=document.querySelectorAll('#labDisc .opt-btn');all.forEach(function(o){o.disabled=true;o.classList.remove('chosen','wrong')});
-  if(idx===2){btn.classList.add('chosen');sfxDone();document.getElementById('discFB').innerHTML='<span class="green">✅ 对！</span> 应该用<b>边长1厘米的小方块</b>！量面积就是看里面能铺几个这样的小方块。';md(1)}
-  else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想？</span> 量面积用的是<b>小方块</b>——边长1厘米的正方形。它能一个挨一个、铺得严丝合缝！';}
+  if(idx===2){btn.classList.add('chosen');sfxDone();document.getElementById('discFB').innerHTML='<span class="green">✅ 正方形！</span> 正方形能<b>紧密铺满、不留空隙</b>——用边长1厘米的小方块当测量单位，刚刚好！';md(1)}
+  else{btn.classList.add('wrong');sfxNO();all[2].classList.add('chosen');document.getElementById('discFB').innerHTML='<span class="r">再想想？</span> 圆形有空隙、三角形对不齐……只有<b>正方形</b>能一个挨一个铺得严丝合缝！';}
+}
+
+// ===== STEP 2 Q&A INTRO =====
+function step2Ans(correct,btn){
+  var btns=document.querySelectorAll('#step2Q1 .btn');
+  btns.forEach(function(b){b.disabled=true});
+  if(!correct){
+    btn.classList.add('bad');sfxNO();
+    btns[1].classList.add('sel'); // highlight correct answer
+    document.getElementById('step2Q2').style.display='block';
+    document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
+  }else{
+    btn.classList.add('bad');sfxNO();
+    btns[0].classList.add('sel');
+    document.getElementById('step2Q2').style.display='block';
+    document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
+  }
 }
 
 // ===== STEP 2 ADVANCED: GRID COUNTING =====
@@ -732,16 +765,27 @@ irShapes.forEach(function(s,i){var b=document.createElement('button');b.classNam
 // ===== STEP 6: QUIZ =====
 var quizData=[
   {q:'面积量的是？',o:['图形里面有多大','一圈多长','有多重','几个角'],a:0},{q:'"平方厘米"的"平方"是什么？',o:['两次方','正方形','很平'],a:1},{q:'正方形最适合做面积单位因为？',o:['好看','紧密铺满不留空隙','最大'],a:1},{q:'长方形长5cm宽3cm，面积？',o:['8 cm²','15 cm²','16 cm²'],a:1},{q:'正方形边长4cm，面积？',o:['16 cm','16 cm²','8 cm²'],a:1},{q:'正方形边长4cm，周长？',o:['16 cm','16 cm²','8 cm'],a:0},{q:'面积24cm²长6cm，宽？',o:['3 cm','4 cm','18 cm'],a:1},{q:'面积单位是？',o:['cm','cm²','kg'],a:1},{q:'L形面积怎么算？',o:['切成几块分别算','周长÷2','绕一圈量'],a:0},{q:'长×宽怎么来的？',o:['老师说的','每行格子数×行数','长+宽'],a:1},{q:'长方形长8cm宽2cm面积？',o:['20','10','16 cm²'],a:2},{q:'正方形边长5cm面积？',o:['20','10','25 cm²'],a:2},{q:'1cm²是什么？',o:['1cm线段','边长1cm的正方形','重1g'],a:1},{q:'正方形面积36cm²边长？',o:['6 cm','9 cm','12 cm'],a:0},{q:'教室地面面积用？',o:['cm²','m²','km²'],a:1},{q:'长方形7×3面积？',o:['10','20','21 cm²'],a:2},{q:'正方形是特殊长方形因为？',o:['长宽相等','4条边','更小'],a:0},{q:'面积周长有关系吗？',o:['有','没有必然关系','相等'],a:1},{q:'9×4面积？',o:['13','26','36 cm²'],a:2},{q:'墙3m×2m面积？',o:['6 m','6 m²','5 m²'],a:1},{q:'边长6cm周长面积？',o:['24cm 36cm²','24cm² 36cm'],a:0},{q:'面积本质？',o:['数单位小方块','量一圈','测重量'],a:0},{q:'30cm²宽5cm长？',o:['6 cm','25 cm','35 cm'],a:0},{q:'两正方拼起面积？',o:['变大','变小','不变'],a:2},{q:'割补法核心？',o:['切/补成长方形','乱猜','用周长'],a:0}];
-var qPool=[],qCount=10,qi=0,qscore=0,qAnswers=[];
+var qPool=[],qCount=10,qi=0,qscore=0,qAnswers=[],qReviewMode=false,qWrongIndices=[];
 function shuffle(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=arr[i];arr[i]=arr[j];arr[j]=t}return arr}
 function pickQuiz(){qPool=shuffle(quizData.slice()).slice(0,qCount);qi=0;qscore=0;qAnswers=[];renderQuiz()}
-function renderQuiz(){var q=qPool[qi],done=qAnswers[qi]!==undefined;document.getElementById('qqq').textContent='第'+(qi+1)+'/'+qCount+'题：'+q.q;var d='';for(var i=0;i<qCount;i++)d+='<div class="qd'+(i===qi?' cur':'')+(qAnswers[i]!==undefined?(qAnswers[i]===qPool[i].a?' ok':' no'):'')+'"></div>';document.getElementById('qds').innerHTML=d;var h='';if(done){var letters=['A','B','C','D'];q.o.forEach(function(o,i){var cls='qopt';if(i===q.a)cls+=' good';else if(i===qAnswers[qi])cls+=' bad';h+='<button class="'+cls+'" disabled>'+letters[i]+'. '+o+'</button>'})}else q.o.forEach(function(o,i){h+='<button class="qopt" onclick="answerQ('+i+',this)">'+['A','B','C','D'][i]+'. '+o+'</button>'});document.getElementById('qos').innerHTML=h;document.getElementById('qex').innerHTML=done?'💡':'';document.getElementById('qpr').disabled=qi===0;document.getElementById('qnx').textContent=(qAnswers.length>=qCount)?'查看成绩 🎯':'下一题 ▶';document.getElementById('qnx').className='btn go'}
+function renderQuiz(){var q=qPool[qi],done=qAnswers[qi]!==undefined;document.getElementById('qqq').textContent='第'+(qi+1)+'/'+qCount+'题：'+q.q;var d='';for(var i=0;i<qCount;i++)d+='<div class="qd'+(i===qi?' cur':'')+(qAnswers[i]!==undefined?(qAnswers[i]===qPool[i].a?' ok':' no'):'')+'"></div>';document.getElementById('qds').innerHTML=d;var h='';if(done){var letters=['A','B','C','D'];q.o.forEach(function(o,i){var cls='qopt';if(i===q.a)cls+=' good';else if(i===qAnswers[qi])cls+=' bad';h+='<button class="'+cls+'" disabled>'+letters[i]+'. '+o+'</button>'})}else q.o.forEach(function(o,i){h+='<button class="qopt" onclick="answerQ('+i+',this)">'+['A','B','C','D'][i]+'. '+o+'</button>'});document.getElementById('qos').innerHTML=h;document.getElementById('qex').innerHTML=done?'💡':'';if(qReviewMode){document.getElementById('qpr').disabled=qWrongIndices.indexOf(qi)<=0;var ci=qWrongIndices.indexOf(qi);document.getElementById('qnx').textContent=ci<qWrongIndices.length-1?'下一错题 ▶':'返回成绩 🎯';document.getElementById('qnx').className='btn go';document.getElementById('qqq').textContent='🔍 错题回顾 '+(ci+1)+'/'+qWrongIndices.length+'：'+qPool[qi].q}else{document.getElementById('qpr').disabled=qi===0;document.getElementById('qnx').textContent=(qAnswers.length>=qCount)?'查看成绩 🎯':'下一题 ▶';document.getElementById('qnx').className='btn go'}}
 function answerQ(idx,btn){if(qAnswers[qi]!==undefined)return;qAnswers[qi]=idx;if(idx===qPool[qi].a){qscore++;sfxOK()}else sfxNO();renderQuiz()}
-function qpr(){if(qi>0){qi--;renderQuiz()}}
-function qnx(){if(qAnswers.length>=qCount){showScore();return}qi++;renderQuiz()}
+function qpr(){
+  if(qReviewMode){
+    var curIdx=qWrongIndices.indexOf(qi);
+    if(curIdx>0){qi=qWrongIndices[curIdx-1];renderQuiz()}
+  }else{if(qi>0){qi--;renderQuiz()}}
+}
+function qnx(){
+  if(qReviewMode){
+    var curIdx=qWrongIndices.indexOf(qi);
+    if(curIdx<qWrongIndices.length-1){qi=qWrongIndices[curIdx+1];renderQuiz()}
+    else{showScore()} // all wrong answers reviewed
+  }else{if(qAnswers.length>=qCount){showScore();return}qi++;renderQuiz()}
+}
 function showScore(){document.getElementById('qnv').style.display='none';document.getElementById('qds').style.display='none';document.getElementById('qqq').style.display='none';document.getElementById('qos').style.display='none';document.getElementById('qex').style.display='none';var sc=document.getElementById('qsc');sc.style.display='block';document.getElementById('semo').textContent=qscore>=10?'🏆':qscore>=7?'🎉':'💪';document.getElementById('snum').textContent=qscore+'/10';document.getElementById('smsg').textContent=qscore>=10?'太厉害了！':qscore>=7?'很棒！':'再学一遍！';if(qscore===10)sfxDone();md(5)}
-function qrw(){for(var i=0;i<qCount;i++){if(qAnswers[i]!==qPool[i].a){qi=i;break}}document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';renderQuiz()}
-function qrs(){document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';pickQuiz()}
+function qrw(){qReviewMode=true;qWrongIndices=[];for(var i=0;i<qCount;i++){if(qAnswers[i]!==qPool[i].a)qWrongIndices.push(i)}if(qWrongIndices.length===0){alert('没有错题，太棒了！');return}qi=qWrongIndices[0];document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';renderQuiz()}
+function qrs(){qReviewMode=false;qWrongIndices=[];document.getElementById('qsc').style.display='none';document.getElementById('qnv').style.display='flex';document.getElementById('qds').style.display='flex';document.getElementById('qqq').style.display='block';document.getElementById('qos').style.display='flex';document.getElementById('qex').style.display='block';pickQuiz()}
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded',function(){
