@@ -44,6 +44,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .btn.blu{background:#e3f2fd;border-color:#90caf9;color:#1565c0}
 .btn.org{background:#fff3e0;border-color:#ffcc80;color:#e65100}
 .btn.sel,.btn.active,.btn.pick{background:#e8f5e9;border-color:#27ae60;color:#2e7d32;font-weight:bold}
+.btn.good{background:#e8f5e9;border-color:#27ae60;color:#2e7d32;font-weight:bold}
+.btn.bad{background:#fdecea;border-color:#e74c3c;color:#c0392b}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 
 .cv{background:#f0ede6;border-radius:14px;overflow:hidden;margin:10px 0;border:1px solid #e0dcd4}
@@ -386,15 +388,15 @@ function step2Ans(correct,btn){
   var btns=document.querySelectorAll('#step2Q1 .btn');
   btns.forEach(function(b){b.disabled=true});
   if(!correct){
-    // "不能" is the right answer — correct=0
+    // "不能" is the right answer — correct=0, highlight btns[1]
     btn.classList.add('good');sfxOK();
-    btns[0].classList.add('sel');
+    btns[1].classList.add('sel');
     document.getElementById('step2Q2').style.display='block';
     document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
   }else{
-    // "能" is wrong — correct=1
+    // "能" is wrong — correct=1, highlight btns[1] as the correct one
     btn.classList.add('bad');sfxNO();
-    btns[0].classList.add('sel'); // highlight "不能" as correct
+    btns[1].classList.add('sel');
     setTimeout(function(){
       document.getElementById('step2Q2').style.display='block';
       document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
