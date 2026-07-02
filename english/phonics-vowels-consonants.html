@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>元音和辅音 — Vowels & Consonants</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  background:linear-gradient(135deg,#08081a 0%,#0d0d2b 30%,#12102a 60%,#0a0a1e 100%);
+  color:#e0dcd0;min-height:100vh;line-height:1.7;overflow-x:hidden;
+}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.container{max-width:960px;margin:0 auto;padding:12px 16px;position:relative;z-index:1}
+
+/* Header */
+.header{text-align:center;padding:24px 0 8px}
+.header h1{font-size:2em;background:linear-gradient(135deg,#ffd200,#f7971e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.header .sub{font-size:.95em;color:#888;margin-top:2px}
+
+/* Navigation */
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 20px}
+.nav-btn{
+  padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.035);color:#999;cursor:pointer;font-size:.92em;
+  transition:all .25s;white-space:nowrap;user-select:none
+}
+.nav-btn:hover{background:rgba(255,255,255,.06);color:#ccc;border-color:rgba(255,255,255,.15)}
+.nav-btn.active{background:rgba(255,210,0,.12);color:#ffd200;border-color:rgba(255,210,0,.35);font-weight:600}
+
+/* Sections */
+.sec{display:none;animation:fadeIn .4s ease}
+.sec.active{display:block}
+
+/* Glass panel */
+.glass{
+  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;padding:22px 20px;margin-bottom:18px;
+  backdrop-filter:blur(6px)
+}
+.glass h2{font-size:1.4em;margin-bottom:14px;color:#ffd200}
+.glass h3{font-size:1.15em;color:#81c784;margin:14px 0 8px}
+.glass p{color:#bbb;margin-bottom:10px;font-size:.95em}
+
+/* Speaker buttons */
+.spk{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.06);color:#ffd200;cursor:pointer;
+  font-size:1em;transition:all .2s;flex-shrink:0;user-select:none
+}
+.spk:hover{background:rgba(255,210,0,.15);border-color:rgba(255,210,0,.4)}
+.spk.on{background:rgba(255,210,0,.25);border-color:#ffd200;animation:pulse .6s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
+/* ===== TAB 1: STORY ===== */
+.train-demo{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.train-car{
+  min-width:50px;padding:12px 16px;border-radius:10px;text-align:center;font-size:1.2em;font-weight:700;
+  transition:all .4s ease;position:relative
+}
+.train-car.v{background:rgba(255,210,0,.15);border:2px solid #ffd200;color:#ffd200}
+.train-car.c{background:rgba(79,195,247,.1);border:2px solid #4fc3f7;color:#4fc3f7}
+.train-connector{width:24px;height:3px;background:rgba(255,255,255,.2);flex-shrink:0}
+.train-word{text-align:center;margin-top:8px;font-size:1.1em}
+.train-label{font-size:.7em;color:#888;margin-top:2px}
+
+.word-machine{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0;font-size:1.4em}
+.machine-letter{
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  border-radius:8px;font-weight:700;transition:all .5s ease
+}
+.machine-letter.vl{background:rgba(255,210,0,.2);border:2px solid #ffd200;color:#ffd200}
+.machine-letter.cn{background:rgba(79,195,247,.15);border:2px solid #4fc3f7;color:#4fc3f7}
+.machine-letter.ghost{opacity:0;transform:scale(0);width:0;margin:0;border:0;padding:0}
+
+.toggle-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.toggle-btn{
+  padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.03);color:#aaa;cursor:pointer;font-size:.9em;transition:all .2s
+}
+.toggle-btn:hover{color:#fff;border-color:rgba(255,255,255,.25)}
+.toggle-btn.on{background:rgba(255,210,0,.12);color:#ffd200;border-color:#ffd200}
+
+.story-comparison{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.story-comp-card{
+  flex:1;min-width:200px;max-width:280px;padding:16px;
+  border-radius:10px;text-align:center;transition:all .4s
+}
+.story-comp-card.bad{background:rgba(244,67,54,.08);border:1px solid rgba(244,67,54,.2)}
+.story-comp-card.good{background:rgba(129,199,132,.06);border:1px solid rgba(129,199,132,.2)}
+
+/* ===== TAB 2: CLASSIFICATION ===== */
+.letter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:14px 0}
+.letter-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;padding:10px;text-align:center;transition:all .25s;cursor:default
+}
+.letter-card:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.letter-card.vowel{border-color:rgba(255,210,0,.25);background:rgba(255,210,0,.04)}
+.letter-card.consonant{border-color:rgba(79,195,247,.15);background:rgba(79,195,247,.03)}
+.letter-card.semi{border-color:rgba(129,199,132,.2);background:rgba(129,199,132,.03)}
+.letter-card .big{font-size:2em;font-weight:800;line-height:1.2}
+.letter-card.vowel .big{color:#ffd200}
+.letter-card.consonant .big{color:#4fc3f7}
+.letter-card.semi .big{color:#81c784}
+.letter-card .row{display:flex;align-items:center;justify-content:center;gap:4px;margin:3px 0;font-size:.82em}
+.letter-card .label{font-size:.68em;color:#777;margin-top:2px}
+.letter-card .tag{font-size:.65em;padding:2px 8px;border-radius:12px;display:inline-block;margin-top:4px}
+.tag-v{background:rgba(255,210,0,.12);color:#ffd200}
+.tag-c{background:rgba(79,195,247,.1);color:#4fc3f7}
+.tag-s{background:rgba(129,199,132,.1);color:#81c784}
+
+.airflow-demo{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.airflow-card{
+  flex:1;min-width:180px;max-width:260px;
+  padding:18px 14px;border-radius:12px;text-align:center
+}
+.airflow-card.vowel{border:2px solid rgba(255,210,0,.35);background:rgba(255,210,0,.04)}
+.airflow-card.consonant{border:2px solid rgba(79,195,247,.25);background:rgba(79,195,247,.03)}
+.airflow-icon{font-size:2.4em;margin-bottom:8px}
+
+/* ===== TAB 3: CORE STATUS ===== */
+.proof-card{
+  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:18px;margin-bottom:16px;transition:all .3s
+}
+.proof-card:hover{border-color:rgba(255,210,0,.2)}
+.proof-card .proof-num{
+  display:inline-block;width:32px;height:32px;border-radius:50%;
+  background:rgba(255,210,0,.15);color:#ffd200;text-align:center;
+  line-height:32px;font-weight:700;font-size:.95em;margin-right:8px
+}
+.proof-card h3{display:inline;font-size:1.1em}
+
+.proof-demo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.proof-letter{
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  border-radius:8px;font-weight:700;font-size:1.2em;transition:all .4s ease
+}
+.proof-letter.vl{background:rgba(255,210,0,.2);border:2px solid #ffd200;color:#ffd200}
+.proof-letter.cn{background:rgba(79,195,247,.15);border:2px solid #4fc3f7;color:#4fc3f7}
+.proof-letter.gone{opacity:0;transform:scale(0);width:0;margin:0;border:0;padding:0}
+
+.result-label{text-align:center;font-size:1.1em;min-height:32px;margin:8px 0;transition:all .3s}
+
+.bridge-demo{display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.bridge-island{
+  width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+  border-radius:10px;font-weight:700;font-size:1.3em;transition:all .4s
+}
+.bridge-island.c{background:rgba(79,195,247,.15);border:2px solid #4fc3f7;color:#4fc3f7}
+.bridge-island.v{background:rgba(255,210,0,.2);border:2px solid #ffd200;color:#ffd200}
+.bridge-gap{font-size:1.2em;color:#666;transition:all .4s}
+.bridge-gap.broken{color:rgba(244,67,54,.5)}
+
+.standalone-demo{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.standalone-word{
+  padding:12px 24px;border-radius:10px;font-size:1.3em;font-weight:700;text-align:center;min-width:60px
+}
+.standalone-word.ok{background:rgba(129,199,132,.08);border:2px solid #81c784;color:#81c784}
+.standalone-word.no{background:rgba(244,67,54,.06);border:2px solid #f44336;color:#f44336}
+
+/* ===== TAB 4: SORT GAME ===== */
+.sort-hint{text-align:center;color:#888;font-size:.88em;margin-bottom:10px}
+.sort-bins{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.sort-bin{
+  flex:1;min-width:180px;min-height:100px;border:2px dashed rgba(255,255,255,.1);
+  border-radius:12px;padding:12px;transition:all .3s;text-align:center
+}
+.sort-bin h4{font-size:.95em;margin-bottom:8px}
+.sort-bin.vowel-bin{border-color:rgba(255,210,0,.25)}
+.sort-bin.vowel-bin h4{color:#ffd200}
+.sort-bin.consonant-bin{border-color:rgba(79,195,247,.2)}
+.sort-bin.consonant-bin h4{color:#4fc3f7}
+.sort-bin.drag-over{background:rgba(255,210,0,.06);border-color:#ffd200}
+.sort-pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:50px;margin-bottom:16px}
+.sort-item{
+  padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:#ccc;cursor:grab;font-size:1em;font-weight:600;
+  transition:all .2s;user-select:none;touch-action:none
+}
+.sort-item:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.07)}
+.sort-item.selected{border-color:#ffd200;background:rgba(255,210,0,.08);color:#ffd200}
+.sort-item.placed{opacity:.3;pointer-events:none}
+.sort-bin .sort-item{opacity:1!important;cursor:default;font-size:.85em;padding:4px 10px}
+.sort-item.wrong{animation:shake .4s ease;border-color:#f44336!important;background:rgba(244,67,54,.1)!important}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+.sort-feedback{text-align:center;min-height:30px;font-size:.95em;margin:8px 0;transition:all .3s}
+.sort-feedback.correct{color:#81c784}
+.sort-feedback.wrong{color:#f44336}
+
+.sort-score{text-align:center;font-size:1.1em;margin:12px 0;color:#ffd200}
+
+/* ===== TAB 5: QUIZ ===== */
+.quiz-progress{display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.quiz-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s}
+.quiz-dot.current{background:#4fc3f7;box-shadow:0 0 8px rgba(79,195,247,.4)}
+.quiz-dot.done{background:#81c784}
+.quiz-dot.wrong-q{background:#f44336}
+.quiz-question{font-size:1.1em;text-align:center;margin-bottom:14px;color:#eee}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:520px;margin:0 auto 16px}
+.quiz-opt{
+  padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);color:#ccc;cursor:pointer;font-size:.95em;
+  transition:all .2s;text-align:center;user-select:none
+}
+.quiz-opt:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.05)}
+.quiz-opt.chosen-correct{background:rgba(129,199,132,.12);border-color:#81c784;color:#81c784}
+.quiz-opt.chosen-wrong{background:rgba(244,67,54,.1);border-color:#f44336;color:#f44336}
+.quiz-opt.show-correct{background:rgba(129,199,132,.06);border-color:rgba(129,199,132,.4)}
+.quiz-opt:disabled{opacity:.7;cursor:not-allowed}
+.quiz-explanation{text-align:center;font-size:.88em;color:#888;min-height:24px;margin-bottom:12px}
+.quiz-nav{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+.quiz-nav button{
+  padding:10px 24px;border-radius:8px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:#aaa;cursor:pointer;font-size:.92em;transition:all .2s
+}
+.quiz-nav button:hover{color:#fff;border-color:rgba(255,255,255,.25)}
+.quiz-nav button.go-btn{background:rgba(255,210,0,.1);border-color:rgba(255,210,0,.3);color:#ffd200}
+.quiz-score{text-align:center;font-size:1.3em;color:#ffd200;margin:16px 0}
+.quiz-emoji{font-size:3em;text-align:center;margin:10px 0}
+
+/* Buttons */
+.btn{
+  display:inline-block;padding:10px 20px;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#aaa;cursor:pointer;font-size:.92em;transition:all .2s
+}
+.btn:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+.btn-primary{background:rgba(255,210,0,.1);border-color:rgba(255,210,0,.3);color:#ffd200}
+.btn-primary:hover{background:rgba(255,210,0,.18)}
+
+.highlight{color:#ffd200;font-weight:600}
+.hl-blue{color:#4fc3f7;font-weight:600}
+.hl-green{color:#81c784;font-weight:600}
+.hl-red{color:#f44336;font-weight:600}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Mobile */
+@media(max-width:768px){
+  .header h1{font-size:1.5em}
+  .nav-btn{padding:8px 11px;font-size:.82em}
+  .glass{padding:14px 12px}
+  .letter-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-options{grid-template-columns:1fr}
+  .sort-bins{flex-direction:column}
+  .sort-bin{min-height:60px}
+  .train-car{min-width:38px;padding:8px 10px;font-size:1em}
+  .word-machine{font-size:1.1em}
+  .machine-letter{width:36px;height:36px;font-size:1em}
+  .nav{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .spk{width:44px;height:44px}
+}
+@media(max-width:480px){
+  .container{padding:8px}
+  .header{padding:16px 0 4px}
+  .header h1{font-size:1.3em}
+  .nav{gap:4px}
+  .nav-btn{padding:7px 9px;font-size:.75em;border-radius:6px}
+  .letter-grid{grid-template-columns:1fr 1fr;gap:5px}
+  .story-comparison{flex-direction:column;align-items:center}
+  .proof-letter{width:32px;height:32px;font-size:1em}
+}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="container">
+
+<div class="header">
+  <h1>✨ 元音和辅音</h1>
+  <div class="sub">Vowels &amp; Consonants — 自然拼读的地基</div>
+</div>
+
+<div class="nav" id="nav">
+  <button class="nav-btn active" data-tab="0">🎪 故事·入门</button>
+  <button class="nav-btn" data-tab="1">🔍 认识元音和辅音</button>
+  <button class="nav-btn" data-tab="2">💡 元音核心地位</button>
+  <button class="nav-btn" data-tab="3">🎯 分类闯关</button>
+  <button class="nav-btn" data-tab="4">🏆 综合闯关</button>
+</div>
+
+<!-- TAB 0: 故事·入门 -->
+<div class="sec active" id="tab0">
+  <div class="glass">
+    <h2>🚂 字母小火车</h2>
+    <p>想象一下：每个英文单词都是一列<span class="highlight">小火车</span>。火车要跑起来，最重要的是什么？</p>
+    <p>对，是<span class="highlight">火车头</span>（发动机）！没有火车头，车厢再多也动不了。</p>
+    <p>在英文单词这列火车里，<span class="highlight">元音（a e i o u）就是火车头</span>🚂——它们是每个单词的"发动机"。辅音就像车厢🚃，要挂在火车头后面才能跑。</p>
+  </div>
+
+  <div class="glass">
+    <h3>🔧 拼一个词试试看</h3>
+    <p style="text-align:center">下面这个单词 <b class="highlight">cat</b>（猫🐱），就是一列小火车：</p>
+    <div class="train-demo">
+      <div class="train-car c">c<span class="train-label">辅音·车厢</span></div>
+      <div class="train-connector"></div>
+      <div class="train-car v">a<span class="train-label">元音·火车头</span></div>
+      <div class="train-connector"></div>
+      <div class="train-car c">t<span class="train-label">辅音·车厢</span></div>
+    </div>
+    <p style="text-align:center;color:#888">c 和 t 是两节车厢，a 在中间当火车头，拉着整列火车跑起来！</p>
+  </div>
+
+  <div class="glass">
+    <h3>🔬 实验：拿走火车头会怎样？</h3>
+    <p style="text-align:center">点击按钮，看看去掉元音或辅音后，单词变成什么样：</p>
+
+    <div class="word-machine" id="wordMachine">
+      <div class="machine-letter cn" id="ml0">d</div>
+      <div class="machine-letter vl" id="ml1">o</div>
+      <div class="machine-letter cn" id="ml2">g</div>
+    </div>
+    <p style="text-align:center;font-size:1.2em;min-height:28px" id="machineLabel">dog（狗🐶）</p>
+
+    <div class="toggle-row">
+      <button class="toggle-btn" onclick="machineToggle('vowels')">🔥 去掉元音（火车头）</button>
+      <button class="toggle-btn" onclick="machineToggle('consonants')">💨 去掉辅音（车厢）</button>
+      <button class="toggle-btn" onclick="machineToggle('all')">🔄 恢复全部</button>
+    </div>
+    <p style="text-align:center;color:#888;font-size:.85em;margin-top:6px" id="machineVerdict"></p>
+
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn btn-primary" onclick="machineSwitch()">🔀 换一个词</button>
+    </div>
+  </div>
+
+  <div class="glass" style="text-align:center">
+    <h3>🌟 核心道理</h3>
+    <p style="font-size:1.15em">
+      <span class="highlight">每个英文单词至少需要一个元音。</span><br>
+      元音是单词的<span class="highlight">心脏</span>❤️、<span class="highlight">发动机</span>🚂、<span class="highlight">灵魂</span>✨。<br>
+      没有元音，辅音就像没有火车头的车厢——散落一地，拼不出词。
+    </p>
+  </div>
+</div>
+
+<!-- TAB 1: 认识元音和辅音 -->
+<div class="sec" id="tab1">
+  <div class="glass">
+    <h2>🟡 5 个元音字母</h2>
+    <p>英文一共有 <span class="highlight">26 个字母</span>，其中只有 <span class="highlight">5 个是元音</span>。数量虽少，却是英文的灵魂！</p>
+    <div class="letter-grid" id="vowelGrid"></div>
+    <p style="color:#888;font-size:.85em;text-align:center;margin-top:8px">
+      🔸 元音发音时，<span class="highlight">嘴巴张开，气流顺畅</span>，声音响亮悠长<br>
+      🔸 Y 比较特殊，有时也当元音用（比如 <b class="hl-green">fly, baby, happy</b>），我们叫它"候补元音"
+    </p>
+  </div>
+
+  <div class="glass">
+    <h2>🔵 21 个辅音字母（+ 候补 Y）</h2>
+    <p>剩下的字母都是<span class="hl-blue">辅音</span>。辅音就像车厢，需要挂在元音火车头后面。</p>
+    <div class="letter-grid" id="consonantGrid"></div>
+    <p style="color:#888;font-size:.85em;text-align:center;margin-top:8px">
+      🔹 辅音发音时，<span class="hl-blue">嘴唇、牙齿或舌头挡住气流</span>，声音短促<br>
+    </p>
+  </div>
+
+  <div class="glass">
+    <h3>🫁 用你的身体感受元音 vs 辅音</h3>
+    <div class="airflow-demo">
+      <div class="airflow-card vowel">
+        <div class="airflow-icon">😮</div>
+        <p><b class="highlight">元音</b></p>
+        <p style="font-size:.85em">说 /æ/ (a) 的时候——<br>嘴巴张大，气流<span class="highlight">直接冲出</span>，没有任何阻挡</p>
+        <p style="font-size:.78em;color:#999">像打开大门，风直接吹进来 🌬️</p>
+      </div>
+      <div class="airflow-card consonant">
+        <div class="airflow-icon">🫢</div>
+        <p><b class="hl-blue">辅音</b></p>
+        <p style="font-size:.85em">说 /p/ 的时候——<br>嘴唇先闭合，<span class="hl-blue">堵住气流</span>，再突然放开</p>
+        <p style="font-size:.78em;color:#999">像先把门关上，再猛地推开 🚪</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: 元音核心地位 -->
+<div class="sec" id="tab2">
+  <div class="glass">
+    <h2>💡 为什么元音这么重要？</h2>
+    <p>我们来用四个实验，一个一个<b class="highlight">证明</b>元音的核心地位。</p>
+    <p style="color:#888;font-size:.85em">每个实验都可以动手操作——点按钮、看变化，用眼睛看到"元音就是不一样"。</p>
+  </div>
+
+  <!-- 证据1 -->
+  <div class="proof-card">
+    <span class="proof-num">1</span><h3>每个英文单词必须至少有一个元音</h3>
+    <p style="margin-top:6px">试试看：输入几个字母，机器会告诉你——能不能拼成一个英文单词。</p>
+    <p style="color:#888;font-size:.82em">规则：没有 a e i o u（或 Y 当元音），就不可能是英文单词。</p>
+
+    <div class="proof-demo" id="proof1Demo">
+      <!-- filled by JS -->
+    </div>
+    <div class="result-label" id="proof1Result"></div>
+
+    <div style="text-align:center;margin:8px 0">
+      <button class="btn btn-primary" onclick="proof1New()">🔀 换一组字母</button>
+      <button class="btn" onclick="proof1Check()">🔍 检查</button>
+    </div>
+
+    <p style="color:#888;font-size:.82em;margin-top:4px">
+      💡 例外提示：Y 有时候当元音用。比如 <b class="hl-green">fly, sky, happy</b> 里，Y 就扮演了元音的角色——发出 /aɪ/ 或 /ɪ/ 的音。
+    </p>
+  </div>
+
+  <!-- 证据2 -->
+  <div class="proof-card">
+    <span class="proof-num">2</span><h3>去掉元音 → 读不出；去掉辅音 → 还能猜</h3>
+    <p style="margin-top:6px">同一个单词，试试去掉所有元音，和去掉所有辅音——哪个还能认出原词？</p>
+
+    <div class="story-comparison">
+      <div class="story-comp-card bad" id="compareNoVowel">
+        <p style="font-size:.8em;color:#f44336">🔥 去掉元音</p>
+        <p style="font-size:2em;font-weight:800;letter-spacing:4px" id="noVowelText">bt</p>
+        <p style="font-size:.85em;color:#888" id="noVowelHint">?</p>
+      </div>
+      <div class="story-comp-card good" id="compareNoConsonant">
+        <p style="font-size:.8em;color:#81c784">✅ 去掉辅音</p>
+        <p style="font-size:2em;font-weight:800;letter-spacing:4px" id="noConsonantText">a</p>
+        <p style="font-size:.85em;color:#888" id="noConsonantHint">?</p>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:.95em" id="compareAnswer"></p>
+    <div style="text-align:center">
+      <button class="btn btn-primary" onclick="proof2Switch()">🔀 换一个词</button>
+    </div>
+    <p style="color:#888;font-size:.82em;text-align:center;margin-top:6px">
+      元音是单词的<span class="highlight">"骨架"</span>——有骨架，形状还在；没了骨架，塌成一团。
+    </p>
+  </div>
+
+  <!-- 证据3 -->
+  <div class="proof-card">
+    <span class="proof-num">3</span><h3>元音桥 — 辅音要靠元音来连接</h3>
+    <p style="margin-top:6px">两个辅音之间如果没有元音当"桥"，就没办法拼到一起。</p>
+
+    <div class="bridge-demo" style="margin:16px 0">
+      <div class="bridge-island c">b</div>
+      <div class="bridge-gap">~~~~</div>
+      <div class="bridge-island v">a</div>
+      <div class="bridge-gap">~~~~</div>
+      <div class="bridge-island c">t</div>
+    </div>
+    <p style="text-align:center;margin-bottom:8px">
+      ✅ 有元音桥 → 能拼出 <b class="highlight">bat</b> 🦇
+    </p>
+
+    <div class="bridge-demo" style="margin:16px 0">
+      <div class="bridge-island c">b</div>
+      <div class="bridge-gap broken">❌</div>
+      <div class="bridge-island c">t</div>
+    </div>
+    <p style="text-align:center">
+      ❌ 没有元音桥 → <b class="hl-red">bt</b> 拼不出来
+    </p>
+
+    <p style="color:#888;font-size:.82em;text-align:center;margin-top:8px">
+      这就是<span class="highlight">CVC（辅-元-辅）</span>结构的秘密！两边是辅音面包🍞，中间是元音馅料🧀，元音把两片面包粘在一起！
+    </p>
+  </div>
+
+  <!-- 证据4 -->
+  <div class="proof-card">
+    <span class="proof-num">4</span><h3>元音可以单独成词，辅音不行</h3>
+    <p style="margin-top:6px">英语里，有些单词只有一个字母——它们都是元音。</p>
+
+    <div class="standalone-demo">
+      <div class="standalone-word ok">A<div style="font-size:.65em;color:#888">一个</div></div>
+      <div class="standalone-word ok">I<div style="font-size:.65em;color:#888">我</div></div>
+      <div class="standalone-word no">B<div style="font-size:.65em;color:#888">❌ 不是词</div></div>
+      <div class="standalone-word no">D<div style="font-size:.65em;color:#888">❌ 不是词</div></div>
+      <div class="standalone-word no">T<div style="font-size:.65em;color:#888">❌ 不是词</div></div>
+    </div>
+
+    <p style="text-align:center;margin-top:8px">
+      <b class="highlight">A</b> 和 <b class="highlight">I</b> 是真正的英文单词（"一个"和"我"）。<br>
+      而 <span class="hl-blue">B、D、T</span>……单独一个辅音字母，什么都不是。
+    </p>
+    <p style="color:#888;font-size:.82em;text-align:center;margin-top:4px">
+      元音就像一个人也能撑起一部戏的主角🎭；辅音不行，必须和别人一起登场。
+    </p>
+  </div>
+
+  <div class="glass" style="text-align:center">
+    <h3>🏁 总结：元音的四项铁证</h3>
+    <p style="line-height:2.4">
+      ✅ 每个单词至少有一个元音<br>
+      ✅ 元音决定单词能否被读懂<br>
+      ✅ 元音是辅音之间的"桥"<br>
+      ✅ 元音可以独立成词，辅音不能
+    </p>
+    <p style="font-size:1.1em;margin-top:8px">
+      所以：<span class="highlight">元音是英文的绝对核心</span>！<br>
+      学好元音，自然拼读就成功了一半 ✨
+    </p>
+  </div>
+</div>
+
+<!-- TAB 3: 分类闯关 -->
+<div class="sec" id="tab3">
+  <div class="glass">
+    <h2>🎯 分类闯关</h2>
+    <p class="sort-hint">点击字母再点框，或直接拖拽到对应框中</p>
+    <div class="sort-bins" id="sortBins"></div>
+    <div class="sort-feedback" id="sortFeedback"></div>
+    <div class="sort-score" id="sortScore"></div>
+    <div class="sort-pool" id="sortPool"></div>
+    <div style="text-align:center;margin-top:12px">
+      <button class="btn" onclick="resetSort()">🔄 重新开始</button>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: 综合闯关 -->
+<div class="sec" id="tab4">
+  <div class="glass">
+    <h2>🏆 综合闯关</h2>
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-explanation" id="quizExplanation"></div>
+    <div class="quiz-nav" id="quizNav">
+      <button onclick="prevQ()">◀ 上一题</button>
+      <button class="go-btn" onclick="nextQ()" id="quizNextBtn">下一题 ▶</button>
+    </div>
+    <div class="quiz-score" id="quizScoreScreen" style="display:none"></div>
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<script>
+// ============ AUDIO SYSTEM ============
+var AUDIO_BASE = 'audio/';
+var audioCache = {};
+
+var PHONEMES = {
+  '/æ/':'phonemes/cat.mp3','/e/':'phonemes/head.mp3','/ɪ/':'phonemes/ship.mp3',
+  '/ɒ/':'phonemes/sock.mp3','/ʌ/':'phonemes/cup.mp3',
+  '/eɪ/':'phonemes/day_ei.mp3','/iː/':'phonemes/sheep.mp3','/aɪ/':'phonemes/eye.mp3',
+  '/əʊ/':'phonemes/nose.mp3','/uː/':'phonemes/blue.mp3','/juː/':'words/you.mp3',
+  '/ɑː/':'phonemes/father.mp3','/ɔː/':'phonemes/horse.mp3','/ɜː/':'phonemes/bird.mp3',
+  '/ʊ/':'phonemes/book.mp3','/ə/':'phonemes/above.mp3',
+  '/aʊ/':'phonemes/mouth.mp3','/ɪə/':'phonemes/ear.mp3','/eə/':'phonemes/hair.mp3',
+  '/ɔɪ/':'phonemes/boy.mp3','/ʊə/':'phonemes/pure.mp3',
+  '/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/hat.mp3',
+  '/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3',
+  '/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3',
+  '/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3',
+  '/ʃ/':'phonemes/ship.mp3','/ʒ/':'phonemes/vision.mp3','/h/':'phonemes/hand.mp3',
+  '/tʃ/':'phonemes/ch.mp3','/dʒ/':'phonemes/jump.mp3','/m/':'phonemes/moon.mp3',
+  '/n/':'phonemes/nose.mp3','/ŋ/':'phonemes/sing.mp3','/l/':'phonemes/look.mp3',
+  '/r/':'phonemes/run.mp3','/j/':'phonemes/yes.mp3','/w/':'phonemes/we.mp3',
+  '/hw/':'phonemes/wh.mp3',
+  // Fallback for missing isolated phonemes
+  '/d/':'phonemes/day_d.mp3',
+};
+
+var LETTER_NAMES = {
+  '/eɪ/':'letter-names/letter-a.mp3','/biː/':'letter-names/letter-b.mp3',
+  '/siː/':'letter-names/letter-c.mp3','/diː/':'letter-names/letter-d.mp3',
+  '/iː/':'letter-names/letter-e.mp3','/ef/':'letter-names/letter-f.mp3',
+  '/dʒiː/':'letter-names/letter-g.mp3','/eɪtʃ/':'letter-names/letter-h.mp3',
+  '/aɪ/':'letter-names/letter-i.mp3','/dʒeɪ/':'letter-names/letter-j.mp3',
+  '/keɪ/':'letter-names/letter-k.mp3','/el/':'letter-names/letter-l.mp3',
+  '/em/':'letter-names/letter-m.mp3','/en/':'letter-names/letter-n.mp3',
+  '/əʊ/':'letter-names/letter-o.mp3','/piː/':'letter-names/letter-p.mp3',
+  '/kjuː/':'letter-names/letter-q.mp3','/ɑː/':'letter-names/letter-r.mp3',
+  '/es/':'letter-names/letter-s.mp3','/tiː/':'letter-names/letter-t.mp3',
+  '/juː/':'letter-names/letter-u.mp3','/viː/':'letter-names/letter-v.mp3',
+  '/ˈdʌbljuː/':'letter-names/letter-w.mp3','/eks/':'letter-names/letter-x.mp3',
+  '/waɪ/':'letter-names/letter-y.mp3','/zed/':'letter-names/letter-z.mp3'
+};
+
+function preloadAudio(path) {
+  var full = AUDIO_BASE + path;
+  if (audioCache[full]) return;
+  var a = new Audio();
+  a.preload = 'auto';
+  a.src = full;
+  a.load();
+  audioCache[full] = a;
+}
+
+function playAudio(path, el) {
+  if (el && el.classList.contains('on')) return;
+  var full = AUDIO_BASE + path;
+  var a = audioCache[full];
+  if (!a) { a = new Audio(full); audioCache[full] = a; }
+  a.currentTime = 0;
+  if (el) { el.classList.add('on'); el._playing = true; }
+  var done = function() {
+    if (el && el._playing) { el.classList.remove('on'); el._playing = false; }
+  };
+  a.onended = done;
+  a.onerror = function(e) { done(); if (el) { el.style.opacity = '0.5'; } };
+  a.play().catch(function(e) { done(); });
+}
+
+function normalizeIpa(ipa) {
+  return ipa.replace(/\//g,'').replace(/[()]/g,'')
+    .replace(/\u02c8/g,'').replace(/\u02d0/g,'');
+}
+
+function getPhonemePath(ipa) {
+  // Try exact first
+  if (PHONEMES[ipa]) return PHONEMES[ipa];
+  var n = '/' + normalizeIpa(ipa) + '/';
+  if (PHONEMES[n]) return PHONEMES[n];
+  // Try partial
+  for (var k in PHONEMES) {
+    if (k.indexOf(normalizeIpa(ipa)) !== -1) return PHONEMES[k];
+  }
+  return null;
+}
+
+function spkPhoneme(ipa, el) {
+  var p = getPhonemePath(ipa);
+  if (p) playAudio(p, el);
+  else if (el) { el.style.opacity = '0.5'; setTimeout(function() { el.style.opacity = ''; }, 800); }
+}
+
+function spkLetterName(ipa, el) {
+  var n = '/' + normalizeIpa(ipa) + '/';
+  if (LETTER_NAMES[n]) playAudio(LETTER_NAMES[n], el);
+  else if (el) { el.style.opacity = '0.5'; setTimeout(function() { el.style.opacity = ''; }, 800); }
+}
+
+function spkWord(word, el) {
+  playAudio('words/' + word.toLowerCase() + '.mp3', el);
+}
+
+(function preloadAll() {
+  var seen = {};
+  for (var k in PHONEMES) { if (!seen[PHONEMES[k]]) { seen[PHONEMES[k]] = true; preloadAudio(PHONEMES[k]); } }
+  for (var k in LETTER_NAMES) { if (!seen[LETTER_NAMES[k]]) { seen[LETTER_NAMES[k]] = true; preloadAudio(LETTER_NAMES[k]); } }
+})();
+
+// ============ NAVIGATION ============
+var currentTab = 0;
+document.getElementById('nav').addEventListener('click', function(e) {
+  if (!e.target.classList.contains('nav-btn')) return;
+  var t = parseInt(e.target.dataset.tab);
+  showTab(t);
+});
+
+function showTab(t) {
+  currentTab = t;
+  var btns = document.querySelectorAll('.nav-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle('active', parseInt(btns[i].dataset.tab) === t);
+  }
+  var secs = document.querySelectorAll('.sec');
+  for (var i = 0; i < secs.length; i++) {
+    secs[i].classList.toggle('active', i === t);
+  }
+  if (t === 3 && sortBuilt === false) buildSort();
+  if (t === 4 && quizStarted === false) pickQuiz();
+}
+
+// ============ TAB 0: STORY ============
+var machineWords = [
+  {w:'dog', emoji:'🐶', vowelIdx:[1], consIdx:[0,2], ipa:'/dɒg/'},
+  {w:'cat', emoji:'🐱', vowelIdx:[1], consIdx:[0,2], ipa:'/kæt/'},
+  {w:'bus', emoji:'🚌', vowelIdx:[1], consIdx:[0,2], ipa:'/bʌs/'},
+  {w:'pig', emoji:'🐷', vowelIdx:[1], consIdx:[0,2], ipa:'/pɪg/'},
+  {w:'bed', emoji:'🛏️', vowelIdx:[1], consIdx:[0,2], ipa:'/bed/'},
+  {w:'fun', emoji:'🎉', vowelIdx:[1], consIdx:[0,2], ipa:'/fʌn/'},
+];
+var machineIdx = 0;
+
+function renderMachine() {
+  var w = machineWords[machineIdx];
+  var h = '';
+  for (var i = 0; i < w.w.length; i++) {
+    h += '<div class="machine-letter ' + (w.vowelIdx.indexOf(i) !== -1 ? 'vl' : 'cn') + '" id="ml' + i + '">' + w.w[i] + '</div>';
+  }
+  document.getElementById('wordMachine').innerHTML = h;
+  document.getElementById('machineLabel').textContent = w.w + '（' + w.emoji + '）';
+  document.getElementById('machineVerdict').textContent = '';
+  // Reset toggle buttons
+  var btns = document.querySelectorAll('#tab0 .toggle-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+}
+
+function machineToggle(mode) {
+  var w = machineWords[machineIdx];
+  var btns = document.querySelectorAll('#tab0 .toggle-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+
+  // Reset all
+  for (var i = 0; i < w.w.length; i++) {
+    var el = document.getElementById('ml' + i);
+    if (!el) continue;
+    el.classList.remove('ghost');
+    el.classList.remove('vl', 'cn');
+    el.classList.add(w.vowelIdx.indexOf(i) !== -1 ? 'vl' : 'cn');
+  }
+
+  if (mode === 'vowels') {
+    for (var i = 0; i < w.vowelIdx.length; i++) {
+      var el = document.getElementById('ml' + w.vowelIdx[i]);
+      if (el) el.classList.add('ghost');
+    }
+    document.getElementById('machineLabel').textContent = '?' + w.w.replace(/[aeiou]/gi, '_').replace(/[^_]/g, '') + ' → 这是啥？不认识！';
+    document.getElementById('machineVerdict').textContent = '😵 没有元音，完全看不懂是什么词！';
+    document.querySelectorAll('#tab0 .toggle-btn')[0].classList.add('on');
+  } else if (mode === 'consonants') {
+    for (var i = 0; i < w.consIdx.length; i++) {
+      var el = document.getElementById('ml' + w.consIdx[i]);
+      if (el) el.classList.add('ghost');
+    }
+    document.getElementById('machineLabel').textContent = w.w.replace(/[^aeiou]/gi, '') + ' → 好像还能猜出来？';
+    document.getElementById('machineVerdict').textContent = '🤔 只剩下元音，形状还在，也许能猜到是 ' + w.w + '？';
+    document.querySelectorAll('#tab0 .toggle-btn')[1].classList.add('on');
+  } else {
+    document.getElementById('machineLabel').textContent = w.w + '（' + w.emoji + '）';
+    document.getElementById('machineVerdict').textContent = '';
+  }
+}
+
+function machineSwitch() {
+  machineIdx = (machineIdx + 1) % machineWords.length;
+  renderMachine();
+}
+
+renderMachine();
+
+// ============ TAB 1: CLASSIFICATION ============
+var vowelLetters = [
+  {l:'A', ln:'/eɪ/', p:'/æ/', w:'apple'},
+  {l:'E', ln:'/iː/', p:'/e/', w:'egg'},
+  {l:'I', ln:'/aɪ/', p:'/ɪ/', w:'igloo'},
+  {l:'O', ln:'/əʊ/', p:'/ɒ/', w:'octopus'},
+  {l:'U', ln:'/juː/', p:'/ʌ/', w:'umbrella'},
+  {l:'Y', ln:'/waɪ/', p:'/aɪ/ /ɪ/', w:'yellow', semi:true},
+];
+
+var consonantLetters = [
+  {l:'B', ln:'/biː/', p:'/b/'},
+  {l:'C', ln:'/siː/', p:'/k/'},
+  {l:'D', ln:'/diː/', p:'/d/'},
+  {l:'F', ln:'/ef/', p:'/f/'},
+  {l:'G', ln:'/dʒiː/', p:'/g/'},
+  {l:'H', ln:'/eɪtʃ/', p:'/h/'},
+  {l:'J', ln:'/dʒeɪ/', p:'/dʒ/'},
+  {l:'K', ln:'/keɪ/', p:'/k/'},
+  {l:'L', ln:'/el/', p:'/l/'},
+  {l:'M', ln:'/em/', p:'/m/'},
+  {l:'N', ln:'/en/', p:'/n/'},
+  {l:'P', ln:'/piː/', p:'/p/'},
+  {l:'Q', ln:'/kjuː/', p:'/kw/'},
+  {l:'R', ln:'/ɑː/', p:'/r/'},
+  {l:'S', ln:'/es/', p:'/s/'},
+  {l:'T', ln:'/tiː/', p:'/t/'},
+  {l:'V', ln:'/viː/', p:'/v/'},
+  {l:'W', ln:'/ˈdʌbljuː/', p:'/w/'},
+  {l:'X', ln:'/eks/', p:'/ks/'},
+  {l:'Z', ln:'/zed/', p:'/z/'},
+];
+
+function buildLetterCard(d, cls) {
+  var h = '<div class="letter-card ' + cls + '">';
+  h += '<div class="big">' + d.l + '</div>';
+  h += '<div class="row">' + d.ln + ' <span class="spk" onclick="event.stopPropagation();spkLetterName(\x27' + d.ln + '\x27,this)" title="字母名">🔊</span></div>';
+  h += '<div class="row">' + d.p + ' <span class="spk" onclick="event.stopPropagation();spkPhoneme(\x27' + d.p.split(' ')[0] + '\x27,this)" title="字母音">🔊</span></div>';
+  if (d.w) {
+    h += '<div class="row">' + d.w + ' <span class="spk" onclick="event.stopPropagation();spkWord(\x27' + d.w + '\x27,this)" title="例词">🔊</span></div>';
+  }
+  if (d.semi) h += '<span class="tag tag-s">候补元音</span>';
+  else if (cls === 'vowel') h += '<span class="tag tag-v">元音</span>';
+  else h += '<span class="tag tag-c">辅音</span>';
+  h += '</div>';
+  return h;
+}
+
+function renderClassCards() {
+  var vh = '';
+  for (var i = 0; i < vowelLetters.length; i++) {
+    vh += buildLetterCard(vowelLetters[i], vowelLetters[i].semi ? 'semi' : 'vowel');
+  }
+  document.getElementById('vowelGrid').innerHTML = vh;
+
+  var ch = '';
+  for (var i = 0; i < consonantLetters.length; i++) {
+    ch += buildLetterCard(consonantLetters[i], 'consonant');
+  }
+  document.getElementById('consonantGrid').innerHTML = ch;
+}
+
+renderClassCards();
+
+// ============ TAB 2: CORE STATUS ============
+
+// Proof 1: Word validator
+var proof1Pool = [
+  {letters:'c a t', isWord:true, note:'✅ 有 a → 能拼出 cat 🐱'},
+  {letters:'b t', isWord:false, note:'❌ 没有元音 → bt 不是英文单词'},
+  {letters:'d o g', isWord:true, note:'✅ 有 o → 能拼出 dog 🐶'},
+  {letters:'f l y', isWord:true, note:'✅ Y 当元音 /aɪ/ → 能拼出 fly ✈️'},
+  {letters:'m p', isWord:false, note:'❌ 没有元音 → mp 不是英文单词'},
+  {letters:'s k y', isWord:true, note:'✅ Y 当元音 /aɪ/ → 能拼出 sky ☁️'},
+  {letters:'t r', isWord:false, note:'❌ 没有元音 → tr 不是英文单词'},
+  {letters:'p e n', isWord:true, note:'✅ 有 e → 能拼出 pen 🖊️'},
+];
+var proof1Idx = 0;
+
+function renderProof1() {
+  var d = proof1Pool[proof1Idx];
+  var parts = d.letters.split(' ');
+  var h = '';
+  for (var i = 0; i < parts.length; i++) {
+    var isV = /[aeiou]/i.test(parts[i]) || (parts[i].toLowerCase() === 'y' && (d.letters.indexOf('a') === -1 && d.letters.indexOf('e') === -1 && d.letters.indexOf('i') === -1 && d.letters.indexOf('o') === -1 && d.letters.indexOf('u') === -1));
+    h += '<div class="proof-letter ' + (isV ? 'vl' : 'cn') + '">' + parts[i] + '</div>';
+  }
+  document.getElementById('proof1Demo').innerHTML = h;
+  document.getElementById('proof1Result').textContent = '';
+  document.getElementById('proof1Result').style.color = '';
+}
+
+function proof1Check() {
+  var d = proof1Pool[proof1Idx];
+  if (d.isWord) {
+    document.getElementById('proof1Result').textContent = d.note;
+    document.getElementById('proof1Result').style.color = '#81c784';
+  } else {
+    document.getElementById('proof1Result').textContent = d.note;
+    document.getElementById('proof1Result').style.color = '#f44336';
+  }
+}
+
+function proof1New() {
+  proof1Idx = (proof1Idx + 1) % proof1Pool.length;
+  renderProof1();
+}
+
+renderProof1();
+
+// Proof 2: Remove vowels vs consonants
+var proof2Words = [
+  {w:'cat', v:'a', c:'ct', hint:'没元音 → ct？不认识。有元音 → "a" 可能是 cat！'},
+  {w:'dog', v:'o', c:'dg', hint:'没元音 → dg？不认识。有元音 → "o" 可能是 dog！'},
+  {w:'fish', v:'i', c:'fsh', hint:'没元音 → fsh？啥？有元音 → "i" 可能是 fish？'},
+  {w:'jump', v:'u', c:'jmp', hint:'没元音 → jmp？读不出。有元音 → "u" 可能是 jump？'},
+  {w:'bed', v:'e', c:'bd', hint:'没元音 → bd？不认识。有元音 → "e" 可能是 bed！'},
+];
+var proof2Idx = 0;
+
+function renderProof2() {
+  var d = proof2Words[proof2Idx];
+  document.getElementById('noVowelText').textContent = d.c;
+  document.getElementById('noConsonantText').textContent = d.v;
+  document.getElementById('noVowelHint').textContent = '这读什么？';
+  document.getElementById('noConsonantHint').textContent = '好像能猜到！';
+  document.getElementById('compareAnswer').textContent = '原词：' + d.w.toUpperCase();
+  document.getElementById('compareAnswer').style.color = '#ffd200';
+  document.getElementById('noVowelHint').style.color = '#f44336';
+  document.getElementById('noConsonantHint').style.color = '#81c784';
+}
+
+function proof2Switch() {
+  proof2Idx = (proof2Idx + 1) % proof2Words.length;
+  renderProof2();
+}
+
+renderProof2();
+
+// ============ TAB 3: SORT GAME ============
+var sortBuilt = false;
+var sortLettersArr = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'.split(' ');
+var sortItems = [];
+var selectedWord = null;
+var sortCorrectCount = 0;
+
+function shuffle(a) {
+  var arr = a.slice();
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function buildSort() {
+  sortBuilt = true;
+  sortCorrectCount = 0;
+  selectedWord = null;
+  sortItems = [];
+  document.getElementById('sortFeedback').textContent = '';
+  document.getElementById('sortFeedback').className = 'sort-feedback';
+  document.getElementById('sortScore').textContent = '';
+
+  // Create bins
+  var bh = '';
+  bh += '<div class="sort-bin vowel-bin" id="binV"><h4>🟡 元音</h4><div class="sort-pool" id="binVItems"></div></div>';
+  bh += '<div class="sort-bin consonant-bin" id="binC"><h4>🔵 辅音</h4><div class="sort-pool" id="binCItems"></div></div>';
+  document.getElementById('sortBins').innerHTML = bh;
+
+  // Setup bins for drag
+  setupBins();
+
+  // Build pool
+  var poolHtml = '';
+  var shuffled = shuffle(sortLettersArr);
+  for (var i = 0; i < shuffled.length; i++) {
+    var l = shuffled[i];
+    var isVowel = 'AEIOU'.indexOf(l) !== -1;
+    var isY = l === 'Y';
+    var t = isVowel ? 'V' : isY ? 'V' : 'C';
+    sortItems.push({letter:l, type:t, placed:false});
+    poolHtml += '<div class="sort-item" data-letter="' + l + '" data-type="' + t + '" onclick="selWord(this)" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)">' + l + '</div>';
+  }
+  document.getElementById('sortPool').innerHTML = poolHtml;
+}
+
+function setupBins() {
+  var bins = document.querySelectorAll('.sort-bin');
+  for (var i = 0; i < bins.length; i++) {
+    bins[i].addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('drag-over'); });
+    bins[i].addEventListener('dragleave', function(e) { this.classList.remove('drag-over'); });
+    bins[i].addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      var letter = e.dataTransfer.getData('text/plain');
+      var type = this.id === 'binV' ? 'V' : 'C';
+      dropToBin(letter, type);
+    });
+    bins[i].onclick = function(e) {
+      if (selectedWord) {
+        var type = this.id === 'binV' ? 'V' : 'C';
+        clickToBin(type);
+        e.stopPropagation();
+      }
+    };
+  }
+}
+
+function selWord(el) {
+  if (el.classList.contains('placed')) return;
+  // Deselect
+  var all = document.querySelectorAll('#sortPool .sort-item');
+  for (var i = 0; i < all.length; i++) all[i].classList.remove('selected');
+  el.classList.add('selected');
+  selectedWord = {el:el, letter:el.dataset.letter, type:el.dataset.type};
+}
+
+function clickToBin(type) {
+  if (!selectedWord) {
+    document.getElementById('sortFeedback').textContent = '👆 先点一个字母，再点框';
+    document.getElementById('sortFeedback').className = 'sort-feedback wrong';
+    return;
+  }
+  dropToBin(selectedWord.letter, type);
+  selectedWord = null;
+}
+
+function dropToBin(letter, type) {
+  // Find item
+  var item = null;
+  for (var i = 0; i < sortItems.length; i++) {
+    if (sortItems[i].letter === letter && !sortItems[i].placed) { item = sortItems[i]; break; }
+  }
+  if (!item) return;
+
+  var correct = item.type;
+  var isCorrect = type === correct;
+
+  if (isCorrect) {
+    sortCorrectCount++;
+    document.getElementById('sortFeedback').textContent = '✅ 正确！' + letter + ' 是' + (type === 'V' ? '元音' : '辅音');
+    document.getElementById('sortFeedback').className = 'sort-feedback correct';
+    item.placed = true;
+
+    // Move to bin
+    var binId = type === 'V' ? 'binVItems' : 'binCItems';
+    var bin = document.getElementById(binId);
+    var newEl = document.createElement('div');
+    newEl.className = 'sort-item';
+    newEl.textContent = letter;
+    newEl.style.pointerEvents = 'none';
+    bin.appendChild(newEl);
+
+    // Remove from pool
+    var poolEls = document.querySelectorAll('#sortPool .sort-item');
+    for (var j = 0; j < poolEls.length; j++) {
+      if (poolEls[j].dataset.letter === letter) {
+        poolEls[j].classList.add('placed');
+        break;
+      }
+    }
+
+    // Deselect
+    var all = document.querySelectorAll('#sortPool .sort-item');
+    for (var k = 0; k < all.length; k++) all[k].classList.remove('selected');
+    selectedWord = null;
+
+    document.getElementById('sortScore').textContent = '已分类：' + sortCorrectCount + ' / 26';
+
+    if (sortCorrectCount === 26) {
+      document.getElementById('sortFeedback').textContent = '🎉 太棒了！全部正确！你已经完全掌握元音和辅音的分类啦！';
+      document.getElementById('sortFeedback').className = 'sort-feedback correct';
+    }
+  } else {
+    document.getElementById('sortFeedback').textContent = '❌ ' + letter + ' 不是' + (type === 'V' ? '元音' : '辅音') + '，再试试！';
+    document.getElementById('sortFeedback').className = 'sort-feedback wrong';
+    // Flash the clicked item
+    var poolEls = document.querySelectorAll('#sortPool .sort-item');
+    for (var j = 0; j < poolEls.length; j++) {
+      if (poolEls[j].dataset.letter === letter) {
+        poolEls[j].classList.add('wrong');
+        setTimeout(function(el) { el.classList.remove('wrong'); }, 400, poolEls[j]);
+        break;
+      }
+    }
+  }
+}
+
+function dragStart(e) {
+  e.dataTransfer.setData('text/plain', this.dataset.letter);
+  this.style.opacity = '0.5';
+}
+
+function dragEnd(e) {
+  this.style.opacity = '';
+  var bins = document.querySelectorAll('.sort-bin');
+  for (var i = 0; i < bins.length; i++) bins[i].classList.remove('drag-over');
+}
+
+// Touch drag
+var touchClone = null, touchOffsetX = 0, touchOffsetY = 0, touchLetter = '', touchStartEl = null;
+function touchStart(e) {
+  if (this.classList.contains('placed')) return;
+  var t = e.touches[0];
+  touchLetter = this.dataset.letter;
+  touchStartEl = this;
+  var rect = this.getBoundingClientRect();
+  touchOffsetX = t.clientX - rect.left;
+  touchOffsetY = t.clientY - rect.top;
+}
+
+function touchMove(e) {
+  if (!touchLetter) return;
+  e.preventDefault();
+  var t = e.touches[0];
+  if (!touchClone) {
+    touchClone = document.createElement('div');
+    touchClone.className = 'sort-item';
+    touchClone.textContent = touchLetter;
+    touchClone.style.position = 'fixed';
+    touchClone.style.zIndex = '9999';
+    touchClone.style.opacity = '0.85';
+    touchClone.style.pointerEvents = 'none';
+    document.body.appendChild(touchClone);
+  }
+  touchClone.style.left = (t.clientX - touchOffsetX) + 'px';
+  touchClone.style.top = (t.clientY - touchOffsetY) + 'px';
+
+  // Highlight bin under finger
+  var bins = document.querySelectorAll('.sort-bin');
+  for (var i = 0; i < bins.length; i++) bins[i].classList.remove('drag-over');
+  var el = document.elementFromPoint(t.clientX, t.clientY);
+  for (var i = 0; i < bins.length; i++) {
+    if (bins[i].contains(el)) { bins[i].classList.add('drag-over'); break; }
+  }
+}
+
+function touchEnd(e) {
+  if (touchClone) { document.body.removeChild(touchClone); touchClone = null; }
+  var bins = document.querySelectorAll('.sort-bin');
+  for (var i = 0; i < bins.length; i++) bins[i].classList.remove('drag-over');
+
+  if (!touchLetter) return;
+  var t = e.changedTouches[0];
+  var el = document.elementFromPoint(t.clientX, t.clientY);
+  for (var i = 0; i < bins.length; i++) {
+    if (bins[i].contains(el)) {
+      var type = bins[i].id === 'binV' ? 'V' : 'C';
+      dropToBin(touchLetter, type);
+      break;
+    }
+  }
+  touchLetter = '';
+}
+
+function resetSort() {
+  sortBuilt = false;
+  buildSort();
+}
+
+// ============ TAB 4: QUIZ ============
+var quizStarted = false;
+var quizData = [
+  {q:'下面哪个字母是元音？', o:['B','C','A','D'], a:2, x:'A 是元音。只有 A E I O U 是元音字母。'},
+  {q:'下面哪个字母是辅音？', o:['A','E','M','O'], a:2, x:'M 是辅音。除了 A E I O U（和有时候的 Y），其余都是辅音。'},
+  {q:'哪个字母既是辅音，有时又能当元音？', o:['B','Y','P','G'], a:1, x:'Y 是"候补元音"。比如 fly 里的 y 发 /aɪ/，happy 里的 y 发 /ɪ/。'},
+  {q:'英文一共有几个元音字母？（不含 Y）', o:['3个','5个','7个','10个'], a:1, x:'A E I O U — 正好 5 个元音字母。虽然少，但它们是英文的核心！'},
+  {q:'每个英文单词必须至少有几个元音？', o:['0个','1个','2个','3个'], a:1, x:'每个英文单词至少要有 1 个元音（或 Y 当元音）。没有元音就拼不出词。'},
+  {q:'单独一个字母能成为英文单词的是？', o:['B','D','I','T'], a:2, x:'I 是一个真正的英文单词（"我"）。A（"一个"）也是。辅音字母单独不能成词。'},
+  {q:'去掉所有元音后，"cat" 变成什么？', o:['ca','at','ct','c_t'], a:2, x:'c_t → ct，完全看不懂是什么。元音是单词的骨架！'},
+  {q:'元音发音时，气流是怎样的？', o:['被嘴唇挡住','被牙齿挡住','顺畅流出','先堵住再放开'], a:2, x:'元音发音时，嘴巴张开，气流顺畅流出，没有阻挡。辅音才需要堵住气流。'},
+  {q:'"fly" 这个词里，为什么没有 a e i o u 还能是单词？', o:['它不算英文单词','Y 在这里当元音','f 是元音','l 是元音'], a:1, x:'fly 里的 y 发 /aɪ/，扮演了元音的角色。Y 是唯一能"兼职"当元音的辅音字母。'},
+  {q:'辅音的作用像什么？', o:['火车头','发动机','车厢','方向盘'], a:2, x:'辅音像车厢🚃，要挂在元音火车头后面才能组成单词。元音是发动机！'},
+  {q:'哪个是"元音桥"的正确例子？', o:['b → t（可以拼）','a → b（可以拼）','u → p（可以拼）','b → a → t（可以拼）'], a:3, x:'b-a-t 中间有元音 a 当桥，才能拼出 bat。两个辅音直接靠在一起（bt）拼不出来。'},
+  {q:'单词 "happy" 里，y 发什么音？', o:['/aɪ/（长音 i）','/ɪ/（短音 i）','/j/（辅音 y）','不发音'], a:1, x:'happy 里的 y 在词尾，发 /ɪ/（短音），扮演元音角色。这是 Y 最常见的元音用法。'},
+  {q:'下面哪个说法是正确的？', o:['元音和辅音一样重要','辅音比元音重要','元音是单词的核心，辅音辅助','元音可以没有，辅音必须有'], a:2, x:'元音是单词的核心（心脏、发动机），辅音辅助。没有元音就拼不出完整的英文单词。'},
+  {q:'辅音发音时，通常会发生什么？', o:['嘴巴张很大','气流被挡住','舌头不动','声带不振动'], a:1, x:'辅音发音时，嘴唇、牙齿或舌头会挡住气流（比如 /p/ 嘴唇先闭合再放开）。元音则一路通畅。'},
+  {q:'单词 "sky" 里，哪个字母当了元音？', o:['s','k','y','都不是'], a:2, x:'sky 里的 y 发 /aɪ/，扮演元音角色。和 fly 一样，Y 在 CVC 结构里也能当元音。'},
+  {q:'元音可以独立成词，下面哪个可以？', o:['B','I','F','M'], a:1, x:'I（我）是一个真正的英文单词。A（一个）也可以。这两个都是元音字母。'},
+  {q:'如果"dog"去掉 d 和 g，剩下什么？', o:['什么都没了','o','do','og'], a:1, x:'剩下 o。虽然只有一个字母，但你也许能猜到原词是 dog！元音是单词的灵魂。'},
+  {q:'CVC 结构中，中间是什么字母？', o:['一定是辅音','一定是元音','可以是任何字母','一定是 Y'], a:1, x:'CVC = 辅音+元音+辅音。中间的 V 就是元音——它是连接两边的"桥"！'},
+  {q:'字母 Y 什么时候发辅音 /j/？', o:['在词尾','在词首','永不','在任何位置'], a:1, x:'Y 在词首时发辅音 /j/，比如 yes、yellow。在词尾时通常当元音（fly→/aɪ/，happy→/ɪ/）。'},
+  {q:'"元音是单词的心脏"是什么意思？', o:['元音可以替换成任何字母','没了元音，单词就读不出来了','元音决定了单词的长度','元音就是字母名'], a:1, x:'就像人没了心脏就活不了，单词没了元音就"死"了——读不出来，认不出来。元音是单词的生命！'},
+];
+
+var qPool = [], qIdx = 0, qScore = 0, qAnswers = [];
+
+function shuffleArr(a) {
+  var arr = a.slice();
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function pickQuiz() {
+  quizStarted = true;
+  qPool = shuffleArr(quizData).slice(0, 10);
+  qIdx = 0; qScore = 0;
+  qAnswers = new Array(qPool.length).fill(-1);
+  document.getElementById('quizScoreScreen').style.display = 'none';
+  document.getElementById('quizNav').style.display = 'flex';
+  renderQuiz();
+}
+
+function renderQuiz() {
+  if (qIdx >= qPool.length) { showScore(); return; }
+  var q = qPool[qIdx];
+  document.getElementById('quizQuestion').textContent = '第 ' + (qIdx+1) + ' / ' + qPool.length + ' 题：' + q.q;
+
+  // Progress dots
+  var dots = '';
+  for (var i = 0; i < qPool.length; i++) {
+    var cls = 'quiz-dot';
+    if (i === qIdx) cls += ' current';
+    if (qAnswers[i] >= 0) {
+      cls += ' ' + (qAnswers[i] === qPool[i].a ? 'done' : 'wrong-q');
+    }
+    dots += '<div class="' + cls + '"></div>';
+  }
+  document.getElementById('quizProgress').innerHTML = dots;
+
+  // Options
+  var optHtml = '';
+  var answered = qAnswers[qIdx] >= 0;
+  for (var i = 0; i < q.o.length; i++) {
+    var cls = 'quiz-opt';
+    if (answered) {
+      if (i === q.a) cls += ' show-correct';
+      if (i === qAnswers[qIdx] && i !== q.a) cls += ' chosen-wrong';
+      if (i === qAnswers[qIdx] && i === q.a) cls += ' chosen-correct';
+    }
+    optHtml += '<button class="' + cls + '" onclick="answerQ(' + i + ')" ' + (answered ? 'disabled' : '') + '>' + q.o[i] + '</button>';
+  }
+  document.getElementById('quizOptions').innerHTML = optHtml;
+
+  // Explanation
+  if (answered) {
+    document.getElementById('quizExplanation').textContent = (qAnswers[qIdx] === q.a ? '✅ ' : '❌ ') + q.x;
+    document.getElementById('quizExplanation').style.color = qAnswers[qIdx] === q.a ? '#81c784' : '#f44336';
+  } else {
+    document.getElementById('quizExplanation').textContent = '';
+  }
+
+  // Nav buttons
+  var allDone = true;
+  for (var i = 0; i < qAnswers.length; i++) { if (qAnswers[i] < 0) { allDone = false; break; } }
+  document.getElementById('quizNextBtn').textContent = allDone ? '查看成绩 🎯' : '下一题 ▶';
+}
+
+function answerQ(i) {
+  if (qAnswers[qIdx] >= 0) return;
+  qAnswers[qIdx] = i;
+  if (i === qPool[qIdx].a) qScore++;
+
+  // Play sound effect
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (i === qPool[qIdx].a) {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523, ctx.currentTime);
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.12);
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.24);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.35);
+    } else {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(180, ctx.currentTime);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.25);
+    }
+  } catch(e) {}
+
+  renderQuiz();
+}
+
+function prevQ() {
+  if (qIdx > 0) { qIdx--; renderQuiz(); }
+}
+
+function nextQ() {
+  var allDone = true;
+  for (var i = 0; i < qAnswers.length; i++) { if (qAnswers[i] < 0) { allDone = false; break; } }
+  if (allDone) { showScore(); return; }
+  if (qIdx < qPool.length - 1) { qIdx++; renderQuiz(); }
+}
+
+function showScore() {
+  document.getElementById('quizProgress').innerHTML = '';
+  document.getElementById('quizQuestion').textContent = '';
+  document.getElementById('quizOptions').innerHTML = '';
+  document.getElementById('quizExplanation').textContent = '';
+  document.getElementById('quizNav').style.display = 'none';
+
+  var emoji, msg;
+  if (qScore === 10) { emoji = '🏆🌟'; msg = '太厉害了！元音辅音小达人！'; }
+  else if (qScore >= 7) { emoji = '🎉👏'; msg = '很棒！基本都掌握了！'; }
+  else if (qScore >= 4) { emoji = '💪😊'; msg = '还不错，再看看讲解会更棒！'; }
+  else { emoji = '📚✨'; msg = '没关系，再学一遍你就是高手！'; }
+
+  document.getElementById('quizScoreScreen').style.display = 'block';
+  document.getElementById('quizScoreScreen').innerHTML =
+    '<div class="quiz-emoji">' + emoji + '</div>' +
+    '<div>' + msg + '</div>' +
+    '<div style="margin:10px 0;font-size:2em;font-weight:800">' + qScore + ' / ' + qPool.length + '</div>' +
+    '<button class="btn btn-primary" onclick="pickQuiz()" style="margin-top:8px">🔄 再闯一次</button>';
+}
+
+// ============ STARS ============
+(function() {
+  var c = document.getElementById('stars');
+  var ctx = c.getContext('2d');
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+  var stars = [];
+  for (var i = 0; i < 120; i++) {
+    stars.push({
+      x: Math.random() * c.width, y: Math.random() * c.height,
+      r: Math.random() * 1.3 + 0.3, a: Math.random() * 0.5 + 0.3,
+      s: Math.random() * 0.008 + 0.002
+    });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.a += s.s;
+      var alpha = 0.3 + Math.sin(s.a) * 0.3;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + alpha + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', function() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+  });
+})();
+</script>
+
+</body>
+</html>
