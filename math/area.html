@@ -143,11 +143,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 </div>
 <div class="cv"><canvas id="labCv" width="440" height="360"></canvas></div>
 <div class="stat-bar"><span id="labCount">已用：0 个</span><span id="labGap" style="color:#e67e22"></span></div>
-<div class="btn-row"><button class="btn gr" onclick="labUndo()">↩ 撤销上一步</button><button class="btn gr" onclick="labClear()">🔄 全部清空</button><button class="btn blu" onclick="labCompare()">📊 对比四种图形</button></div>
+<div class="btn-row"><button class="btn gr" onclick="labUndo()">↩ 撤销上一步</button><button class="btn gr" onclick="labClear()">🔄 全部清空</button></div>
+<div class="disc-panel" id="labDisc"><h4>🤔 想一想：量长度用1厘米长的小线段——量面积呢？</h4><div class="opt-row">
+    <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
+
+<div class="btn-row"><button class="btn blu" onclick="labCompare()">📊 对比四种图形</button></div>
 <div id="labCompPanel" style="display:none">
   <div class="reveal open" style="margin-top:12px"><p style="font-size:.85em;font-weight:bold;color:#2e7d32">📊 四种图形测量对比</p><div id="labCompTbl" style="font-size:.78em;color:#555;line-height:1.8;margin:8px 0"></div></div>
-  <div class="disc-panel" id="labDisc"><h4>🤔 想一想：量长度用1厘米长的小线段——量面积呢？</h4><div class="opt-row">
-    <button class="opt-btn" onclick="discA(0,this)">圆形</button><button class="opt-btn" onclick="discA(1,this)">三角形</button><button class="opt-btn" onclick="discA(2,this)">正方形</button><button class="opt-btn" onclick="discA(3,this)">长方形</button></div><div id="discFB" style="font-size:.82em;margin-top:10px;min-height:22px"></div></div>
 </div>
 
 <div id="gridCountPanel">
@@ -228,7 +230,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <p>我们已经学会了长方形、正方形面积计算。但是生活里还存在很多外形不整齐的图形，比如 <b>L 型、凹型、阶梯型</b> 这类图形，该如何计算面积呢？</p>
 <div class="ir-tabs" id="irTabs"></div>
 <div class="cv"><canvas id="irCv" width="440" height="340"></canvas></div>
-<div class="tip-box">💡 <b>核心解题方法：可以切一切，把图形分割成小块分别计算；或者补上缺口，拼成一个完整的图形再减掉空缺部分。</b></div>
+<div class="tip-box">💡 核心解题方法：<b>切一切，把图形分割成小块分别计算</b>；或者<b>补上缺口，拼成一个完整的图形再减掉空缺部分</b>。</div>
 <div class="btn-row" style="margin-bottom:4px">
   <button class="btn pick" id="irModeCutBtn" onclick="irSetMode('cut')">✂️ 分割法——切成几块长方形</button>
   <button class="btn" id="irModeFillBtn" onclick="irSetMode('fill')">🧩 补全法——补成完整长方形再减</button>
@@ -369,7 +371,9 @@ function labCompare(){
   var t=labT,sqCols=Math.round(t.w/30),sqRows=Math.round(t.h/30),sqTotal=sqCols*sqRows;
   var h='<table style="width:100%;border-collapse:collapse;text-align:center"><tr style="background:#f0faf4"><th style="padding:8px;font-size:.78em">形状</th><th style="padding:8px;font-size:.78em">铺满需要</th><th style="padding:8px;font-size:.78em">效果</th></tr>';
   [{n:'正方形',need:sqTotal+' 个',note:'👍 一个挨一个，严丝合缝',bg:'#f0faf4'},{n:'圆形',need:'约 '+Math.ceil(sqTotal/0.785)+' 个',note:'😕 中间有<b style="color:#e74c3c">空隙</b>，铺不满',bg:''},{n:'三角形',need:'约 '+sqTotal*2+' 个',note:'😕 总有缝，对不齐',bg:''},{n:'长方形2×1',need:'约 '+Math.ceil(sqTotal/2)+' 个',note:'😕 方向固定，<b style="color:#e74c3c">不灵活</b>',bg:''}].forEach(function(x){h+='<tr style="border-bottom:1px solid #eee;'+x.bg+'"><td style="padding:8px;font-size:.78em"><b>'+x.n+'</b></td><td style="padding:8px;font-size:.78em">'+x.need+'</td><td style="padding:8px;font-size:.7em;text-align:left">'+x.note+'</td></tr>'});
-  h+='</table>';document.getElementById('labCompTbl').innerHTML=h;document.getElementById('labCompPanel').style.display='block';
+  h+='</table>';document.getElementById('labCompTbl').innerHTML=h;
+  var p=document.getElementById('labCompPanel');p.style.display=p.style.display==='block'?'none':'block';
+  if(p.style.display==='block')p.scrollIntoView({behavior:'smooth'});
 }
 function discA(idx,btn){
   var all=document.querySelectorAll('#labDisc .opt-btn');all.forEach(function(o){o.disabled=true;o.classList.remove('chosen','wrong')});
@@ -382,15 +386,19 @@ function step2Ans(correct,btn){
   var btns=document.querySelectorAll('#step2Q1 .btn');
   btns.forEach(function(b){b.disabled=true});
   if(!correct){
-    btn.classList.add('bad');sfxNO();
-    btns[1].classList.add('sel'); // highlight correct answer
-    document.getElementById('step2Q2').style.display='block';
-    document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
-  }else{
-    btn.classList.add('bad');sfxNO();
+    // "不能" is the right answer — correct=0
+    btn.classList.add('good');sfxOK();
     btns[0].classList.add('sel');
     document.getElementById('step2Q2').style.display='block';
     document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
+  }else{
+    // "能" is wrong — correct=1
+    btn.classList.add('bad');sfxNO();
+    btns[0].classList.add('sel'); // highlight "不能" as correct
+    setTimeout(function(){
+      document.getElementById('step2Q2').style.display='block';
+      document.getElementById('step2Q2').scrollIntoView({behavior:'smooth'});
+    },600);
   }
 }
 
