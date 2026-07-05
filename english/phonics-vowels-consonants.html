@@ -213,6 +213,7 @@ function spkLetterName(letter,el){var ipa=LETTER_IPA[letter.toLowerCase()];var p
 
 // ===== NAV =====
 const NM={story:'故事',classify:'分分类',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本'};
+function goClassify(){showS('classify')}
 function showS(n){
   document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
   document.getElementById('sec-'+n).classList.add('active');
@@ -260,9 +261,22 @@ function renderMixQ(){
 }
 function answerMix(choice){
   if(mDone)return;
-  if(choice===mixPool[mIdx].a)mScore++;
+  var correct=choice===mixPool[mIdx].a;
+  if(correct){mScore++;sfxOK()}else sfxNO();
+  // Highlight & disable buttons
+  var btns=document.querySelectorAll('#mixQuiz .q-opt-btn');
+  for(var i=0;i<btns.length;i++)btns[i].classList.add('locked');
+  var correctIdx=mixPool[mIdx].a==='v'?0:1;
+  btns[correctIdx].classList.add('correct');
+  if(!correct){var wrongIdx=choice==='v'?0:1;btns[wrongIdx].classList.add('wrong')}
+  // Feedback text (use existing quiz-explain style via new inline div)
+  var fb=document.createElement('div');fb.style.cssText='text-align:center;margin-top:8px;font-size:.9em;min-height:24px';
+  fb.innerHTML=correct?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ';
+  document.getElementById('mixQuiz').appendChild(fb);
   mIdx++;
-  if(mIdx>=mixPool.length){mDone=true;showMixResult()}else renderMixQ();
+  setTimeout(function(){
+    if(mIdx>=mixPool.length){mDone=true;showMixResult()}else renderMixQ();
+  },900);
 }
 function showMixResult(){
   document.getElementById('mixQuiz').innerHTML='<div class="reveal-box"><p>✅ 你答对了 <b style="color:#ffd200">'+mScore+'/'+mixPool.length+'</b> 题！</p></div>';
@@ -271,7 +285,7 @@ function showMixResult(){
   rh+='<div class="story-speech"><p>🥁 <b style="color:#4fc3f7">辅音</b>发音时，嘴唇、牙齿、舌头<b>挡住气流</b>，声音短促、无法拉长——试试发「p」，一下子就没了。</p></div>';
 
   rh+='<p class="footnote">⚠️ 严谨地说：元音 / 辅音指的是<b>发音音素</b>（声音层面），而 A E I O U 是<b>元音字母</b>（书写符号）。二者概念不同。</p>';
-  rh+='<div style="text-align:center;margin-top:14px"><button class="btn btn-gold" onclick="showS(\'classify\')">📋 接下来：看看字母怎么分类 →</button></div>';
+  rh+='<div style="text-align:center;margin-top:14px"><button class="btn btn-gold" onclick="goClassify()">📋 接下来：看看字母怎么分类 →</button></div>';
   rh+='</div>';
   document.getElementById('storyReveal').innerHTML=rh;
 }
@@ -391,12 +405,23 @@ let cp=0;const bp_=[
 {s:'👋',t:'See You Tomorrow!',x:'"<span class="sc">S</span><span class="sv">e</span><span class="sv">e</span> <span class="sy">y</span><span class="sv">o</span><span class="sv">u</span> <span class="sc">t</span><span class="sv">o</span><span class="sc">m</span><span class="sv">o</span><span class="sc">r</span><span class="sc">r</span><span class="sv">o</span><span class="sc">w</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>.<br>"<span class="sc">B</span><span class="sy">y</span><span class="sv">e</span> <span class="sc">b</span><span class="sy">y</span><span class="sv">e</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">f</span><span class="sc">r</span><span class="sv">i</span><span class="sv">e</span><span class="sc">n</span><span class="sc">d</span><span class="sc">s</span>.<br><span class="sc">G</span><span class="sv">o</span><span class="sv">o</span><span class="sc">d</span> <span class="sc">f</span><span class="sc">r</span><span class="sv">i</span><span class="sv">e</span><span class="sc">n</span><span class="sc">d</span><span class="sc">s</span> <span class="sv">a</span><span class="sc">r</span><span class="sv">e</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">b</span><span class="sv">e</span><span class="sc">s</span><span class="sc">t</span>!'},
 {s:'📖',t:'Words We Met',x:'<p style="color:#aaa;margin-bottom:10px">Here are the vowel words from our story — listen to each one:</p><div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center"><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">c<span class="sv">a</span>t</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27cat\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">h<span class="sv">e</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27hen\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">r<span class="sv">e</span>d</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27red\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">p<span class="sv">i</span>g</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27pig\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">d<span class="sv">o</span>g</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27dog\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">h<span class="sv">o</span>t</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27hot\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">s<span class="sv">u</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27sun\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">r<span class="sv">u</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27run\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">f<span class="sv">u</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27fun\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">h<span class="sv">a</span>pp<span class="sv">y</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27happy\x27)">🔊</span></div><p style="color:#888;font-size:.85em;margin-top:12px">The <span style="color:#ffd200;font-weight:bold">yellow letters</span> are our five vowel friends — A, E, I, O, U (and Y too!)</p>'}
 ];
-var bookReading=false;
-function readPageUK(){spkBookTTS('en-GB')}
-function readPageUS(){spkBookTTS('en-US')}
-function spkBookTTS(lang){if(bookReading){speechSynthesis.cancel();bookReading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}bookReading=true;document.querySelectorAll('.pron-btn').forEach(function(b){b.classList.remove('playing')});document.querySelectorAll('.pron-btn.'+(lang==='en-GB'?'uk':'us')).forEach(function(b){b.classList.add('playing')});var text=bp_[cp].x.replace(/<[^>]+>/g,'');var u=new SpeechSynthesisUtterance(text);u.rate=0.85;u.lang=lang;var voices=speechSynthesis.getVoices();var v=voices.find(function(x){return x.lang.startsWith(lang)&&x.name.includes('Google')})||voices.find(function(x){return x.lang.startsWith(lang)})||voices.find(function(x){return x.lang.startsWith('en')&&x.name.includes('Google')})||voices.find(function(x){return x.lang.startsWith('en')});if(v)u.voice=v;u.onend=function(){bookReading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})};window._bookUtt=u;speechSynthesis.resume();setTimeout(function(){speechSynthesis.speak(u)},80)}
+var bookTTS=false,bookAudio=null;
+function readPageUK(){playBookAu('uk')}
+function readPageUS(){playBookAu('us')}
+function playBookAu(accent){
+  if(bookAudio){bookAudio.pause();bookAudio=null;bookTTS=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bookTTS=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){
+    if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')
+  });
+  bookAudio=new Audio(AUDIO_BASE+'book/vc-page'+(cp+1)+'-'+accent+'.mp3');
+  bookAudio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bookTTS=false;bookAudio=null};
+  bookAudio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bookTTS=false;bookAudio=null};
+  bookAudio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bookTTS=false;bookAudio=null})
+}
 function renderP(){
-  if(bookReading){speechSynthesis.cancel();bookReading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  if(bookAudio){bookAudio.pause();bookAudio=null;bookTTS=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
   var p=bp_[cp];document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;document.getElementById('pn').textContent=(cp+1)+'/'+bp_.length;
   document.getElementById('bp').style.visibility=cp===0?'hidden':'visible';document.getElementById('bn').style.visibility=cp===bp_.length-1?'hidden':'visible';
   var g=cp===bp_.length-1;
