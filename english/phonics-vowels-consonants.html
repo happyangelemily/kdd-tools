@@ -251,7 +251,7 @@ function playLoopC(i){if(!loopC)return;if(i>=consIpa.length){setTimeout(function
 
 // Mixed quiz
 var mixPool=[{p:'/æ/',a:'v'},{p:'/k/',a:'c'},{p:'/iː/',a:'v'},{p:'/t/',a:'c'},{p:'/ɒ/',a:'v'}];
-var mIdx=0,mScore=0,mDone=false;
+var mIdx=0,mScore=0,mDone=false,mLocked=false;
 function initMixQuiz(){mIdx=0;mScore=0;mDone=false;renderMixQ();}
 function renderMixQ(){
   var h='<h4>🤔 综合闯关：点击 🔊 听发音，判断它是元音还是辅音？（'+(mIdx+1)+'/'+mixPool.length+'）</h4>';
@@ -260,23 +260,38 @@ function renderMixQ(){
   document.getElementById('mixQuiz').innerHTML=h;
 }
 function answerMix(choice){
-  if(mDone)return;
+  if(mDone||mLocked)return;
   var correct=choice===mixPool[mIdx].a;
-  if(correct){mScore++;sfxOK()}else sfxNO();
-  // Highlight & disable buttons
   var btns=document.querySelectorAll('#mixQuiz .q-opt-btn');
-  for(var i=0;i<btns.length;i++)btns[i].classList.add('locked');
-  var correctIdx=mixPool[mIdx].a==='v'?0:1;
-  btns[correctIdx].classList.add('correct');
-  if(!correct){var wrongIdx=choice==='v'?0:1;btns[wrongIdx].classList.add('wrong')}
-  // Feedback text (use existing quiz-explain style via new inline div)
-  var fb=document.createElement('div');fb.style.cssText='text-align:center;margin-top:8px;font-size:.9em;min-height:24px';
-  fb.innerHTML=correct?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ';
-  document.getElementById('mixQuiz').appendChild(fb);
-  mIdx++;
-  setTimeout(function(){
-    if(mIdx>=mixPool.length){mDone=true;showMixResult()}else renderMixQ();
-  },900);
+  mLocked=true;
+  if(correct){
+    mScore++;sfxOK();
+    for(var i=0;i<btns.length;i++)btns[i].classList.add('locked');
+    var ci=mixPool[mIdx].a==='v'?0:1;
+    btns[ci].classList.add('correct');
+    var fb=document.createElement('div');fb.style.cssText='text-align:center;margin-top:8px;font-size:.9em;min-height:24px';
+    fb.innerHTML='<span style="color:#69f0ae">✅ 正确！</span> ';
+    document.getElementById('mixQuiz').appendChild(fb);
+    mIdx++;
+    setTimeout(function(){
+      mLocked=false;
+      if(mIdx>=mixPool.length){mDone=true;showMixResult()}else renderMixQ();
+    },900);
+  }else{
+    sfxNO();
+    var wi=choice==='v'?0:1,ci=mixPool[mIdx].a==='v'?0:1;
+    btns[wi].classList.add('wrong');btns[ci].classList.add('correct');
+    for(var i=0;i<btns.length;i++)btns[i].classList.add('locked');
+    var fb=document.createElement('div');fb.style.cssText='text-align:center;margin-top:8px;font-size:.9em;min-height:24px';
+    fb.innerHTML='<span style="color:#ff5252">❌ 不对哦～ 再听听，重新选一次！</span> ';
+    document.getElementById('mixQuiz').appendChild(fb);
+    setTimeout(function(){
+      var divs=document.querySelectorAll('#mixQuiz > div');
+      for(var j=divs.length-1;j>=0;j--){var t=divs[j].textContent||'';if(t.indexOf('不对')>=0||t.indexOf('正确')>=0){divs[j].remove();break}}
+      for(var k=0;k<btns.length;k++)btns[k].classList.remove('locked','correct','wrong');
+      mLocked=false;
+    },1200);
+  }
 }
 function showMixResult(){
   document.getElementById('mixQuiz').innerHTML='<div class="reveal-box"><p>✅ 你答对了 <b style="color:#ffd200">'+mScore+'/'+mixPool.length+'</b> 题！</p></div>';
