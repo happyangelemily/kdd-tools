@@ -10,69 +10,42 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
-.nav{position:sticky;top:0;z-index:10;background:rgba(10,10,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
-.nav-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px}
-.nav-back{color:#ffd200;text-decoration:none;font-size:.9em;display:inline-flex;align-items:center;gap:6px}
-.nav-back:hover{color:#fff}
 .container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px 20px 60px}
 .hero{text-align:center;padding:24px 0}
 .hero h1{font-size:1.8em;background:linear-gradient(135deg,#42a5f5,#80deea);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subcat{margin:20px 0 12px}
-.subcat-title{font-size:1em;color:#888;margin-bottom:10px;padding-left:4px;display:flex;align-items:center;gap:8px}
-.subcat-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
-/* ★ 添加子分类：复制整个 .subcat 块 ★ */
-.tools{display:flex;flex-direction:column;gap:8px}
-.tool{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;text-decoration:none;color:#e0e0e0;transition:all .2s}
-.tool:hover{border-color:rgba(66,165,245,.4);background:rgba(66,165,245,.05)}
-.tool-icon{font-size:1.8em;flex-shrink:0}
-.tool-info{flex:1;min-width:0}
-.tool-name{font-size:1em;font-weight:600;color:#42a5f5;margin-bottom:2px}
-.tool-desc{font-size:.8em;color:#888;line-height:1.4}
-.tool-arrow{color:#555;font-size:1.1em}
-/* ★ 添加工具：在 .tools 内加 <a class="tool"> ★ */
-.placeholder{color:#555;font-size:.85em;text-align:center;padding:30px 0}
+.hero p{color:#777;font-size:.9em;margin-top:8px}
+.boards{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.board{display:flex;align-items:center;gap:14px;padding:20px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;text-decoration:none;color:#e0e0e0;transition:all .25s}
+.board:hover{border-color:rgba(66,165,245,.45);background:rgba(66,165,245,.06);transform:translateY(-2px)}
+.board-icon{font-size:2.2em;flex-shrink:0}
+.board-info{flex:1;min-width:0}
+.board-name{font-size:1.15em;font-weight:700;color:#42a5f5;margin-bottom:3px}
+.board-desc{font-size:.82em;color:#888;line-height:1.4}
+.board-arrow{color:#555;font-size:1.2em}
 .footer{text-align:center;color:#444;font-size:.78em;margin-top:40px}
 @media(max-width:500px){
-  .nav-inner{padding:0 14px;height:48px}
   .hero h1{font-size:1.4em}.container{padding:16px 14px 50px}
-  .tool{padding:14px}
+  .board{padding:16px 14px}
+  .board-icon{font-size:1.9em}
+  .board-name{font-size:1.05em}
 }
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 <div class="container">
-  <div class="hero"><h1>🔤 英语</h1><p style="color:#777;font-size:.9em;margin-top:8px">跟随公众号进度 · 工具持续更新中 🌱</p></div>
+  <div class="hero"><h1>🔤 英语</h1><p>跟随公众号进度 · 工具持续更新中 🌱</p></div>
 
-  <!-- 子分类：自然拼读 -->
-  <div class="subcat">
-    <div class="subcat-title">🔡 自然拼读</div>
-    <div class="tools">
-      <a class="tool" href="phonics-letter-names-sounds.html">
-        <span class="tool-icon">🔤</span>
-        <span class="tool-info">
-          <span class="tool-name">⭐ 入门：字母名 vs 字母音</span>
-          <span class="tool-desc">26个字母的名字和声音全辨析 · 理解自然拼读的意义</span>
-        </span>
-        <span class="tool-arrow">→</span>
-      </a>
-      <a class="tool" href="phonics-vowels-consonants.html">
-        <span class="tool-icon">🎤</span>
-        <span class="tool-info">
-          <span class="tool-name">分清元音和辅音</span>
-          <span class="tool-desc">元音是主唱🎤、辅音是伴奏🥁 · 听音辨别、字母分类、元音桥拼读、双音绘本</span>
-        </span>
-        <span class="tool-arrow">→</span>
-      </a>
-      <a class="tool" href="phonics-cvc.html">
-        <span class="tool-icon">🧱</span>
-        <span class="tool-info">
-          <span class="tool-name">CVC 短元音单词</span>
-          <span class="tool-desc">辅音+元音+辅音 · 自然拼读最基础的结构，点击听发音、分拣闯关</span>
-        </span>
-        <span class="tool-arrow">→</span>
-      </a>
-    </div>
+  <!-- ★ 添加新板块：复制一个 <a class="board"> 块，改图标/名称/描述/链接 ★ -->
+  <div class="boards">
+    <a class="board" href="phonics.html">
+      <span class="board-icon">🔡</span>
+      <span class="board-info">
+        <span class="board-name">自然拼读</span>
+        <span class="board-desc">从字母到自主阅读 · 6 阶体系配套互动工具（字母名音 · 元辅音 · CVC…）</span>
+      </span>
+      <span class="board-arrow">→</span>
+    </a>
   </div>
 
   <div class="footer">关注公众号「可豆妈妈」获取最新英语工具</div>
