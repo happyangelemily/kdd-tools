@@ -10,66 +10,50 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
-.nav{position:sticky;top:0;z-index:10;background:rgba(10,10,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
-.nav-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px}
-.nav-back{color:#ffd200;text-decoration:none;font-size:.9em;display:inline-flex;align-items:center;gap:6px}
-.nav-back:hover{color:#fff}
 .container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px 20px 60px}
 .hero{text-align:center;padding:24px 0}
 .hero h1{font-size:1.8em;background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subcat{margin:20px 0 12px}
-.subcat-title{font-size:1em;color:#888;margin-bottom:10px;padding-left:4px;display:flex;align-items:center;gap:8px}
-.subcat-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
-.tools{display:flex;flex-direction:column;gap:8px}
-.tool{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;text-decoration:none;color:#e0e0e0;transition:all .2s}
-.tool:hover{border-color:rgba(255,210,0,.4);background:rgba(255,210,0,.05)}
-.tool-icon{font-size:1.8em;flex-shrink:0}
-.tool-info{flex:1;min-width:0}
-.tool-name{font-size:1em;font-weight:600;color:#f7971e;margin-bottom:2px}
-.tool-desc{font-size:.8em;color:#888;line-height:1.4}
-.tool-arrow{color:#555;font-size:1.1em}
-.placeholder{color:#555;font-size:.85em;text-align:center;padding:30px 0}
+.hero p{color:#777;font-size:.9em;margin-top:8px}
+.boards{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.board{display:flex;align-items:center;gap:14px;padding:20px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;text-decoration:none;color:#e0e0e0;transition:all .25s}
+.board:hover{border-color:rgba(247,151,30,.45);background:rgba(247,151,30,.06);transform:translateY(-2px)}
+.board-icon{font-size:2.2em;flex-shrink:0}
+.board-info{flex:1;min-width:0}
+.board-name{font-size:1.15em;font-weight:700;color:#f7971e;margin-bottom:3px}
+.board-desc{font-size:.82em;color:#888;line-height:1.4}
+.board-arrow{color:#555;font-size:1.2em}
 .footer{text-align:center;color:#444;font-size:.78em;margin-top:40px}
 @media(max-width:500px){
-  .nav-inner{padding:0 14px;height:48px}
   .hero h1{font-size:1.4em}.container{padding:16px 14px 50px}
-  .tool{padding:14px}
+  .board{padding:16px 14px}
+  .board-icon{font-size:1.9em}
+  .board-name{font-size:1.05em}
 }
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 <div class="container">
-  <div class="hero"><h1>📐 数学</h1></div>
+  <div class="hero"><h1>📐 数学</h1><p>跟随公众号进度 · 工具持续更新中 🌱</p></div>
 
-  <!-- ★ 子分类：日历与时间 ★ -->
-  <div class="subcat">
-    <div class="subcat-title">📅 日历与时间</div>
-    <div class="tools">
-      <a class="tool" href="leapyear.html">
-        <span class="tool-icon">🌍</span>
-        <span class="tool-info">
-          <div class="tool-name">平年与闰年的秘密</div>
-          <div class="tool-desc">双轨对比动画 + 日历管理员角色扮演。亲手推导「四年一闰、百年不闰、四百年再闰」</div>
-        </span>
-        <span class="tool-arrow">▸</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- ★ 子分类：几何 ★ -->
-  <div class="subcat">
-    <div class="subcat-title">📏 几何</div>
-    <div class="tools">
-      <a class="tool" href="perimeter.html">
-        <span class="tool-icon">📏</span>
-        <span class="tool-info">
-          <div class="tool-name">周长彻底搞懂</div>
-          <div class="tool-desc">6步互动探索：描图形→选单位→推导公式→凹形拖拽→拼接靠墙→闯关测试</div>
-        </span>
-        <span class="tool-arrow">▸</span>
-      </a>
-    </div>
+  <!-- ★ 添加新板块：复制一个 <a class="board"> 块，改图标/名称/描述/链接 ★ -->
+  <div class="boards">
+    <a class="board" href="calendar.html">
+      <span class="board-icon">📅</span>
+      <span class="board-info">
+        <span class="board-name">日历与时间</span>
+        <span class="board-desc">闰年、时间…把抽象的历法规律变成看得见、玩得懂的互动</span>
+      </span>
+      <span class="board-arrow">→</span>
+    </a>
+    <a class="board" href="geometry.html">
+      <span class="board-icon">📏</span>
+      <span class="board-info">
+        <span class="board-name">几何</span>
+        <span class="board-desc">周长、面积…看清图形本身，公式自己推导出来</span>
+      </span>
+      <span class="board-arrow">→</span>
+    </a>
   </div>
 
   <div class="footer">关注公众号「可豆妈妈」获取最新数学工具</div>
