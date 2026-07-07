@@ -94,6 +94,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
 .foot{text-align:center;color:#c3bbac;font-size:.78em;margin:28px 0 10px;line-height:1.7}
 @media(max-width:420px){.hero h1{font-size:1.16em}.asp{grid-template-columns:1fr}.hs .dot{width:34px;height:34px;font-size:1.05em}}
+
+.sortwrap{margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:14px;min-height:40px}
+.chip{padding:9px 15px;border-radius:18px;background:#fff;border:1.5px solid #d8cfbe;font-size:.88em;font-weight:600;color:#5b5348;cursor:pointer;transition:all .15s}
+.chip:active{transform:scale(.94)}
+.chip.sel{border-color:#d35400;background:#fff3e6;box-shadow:0 0 10px rgba(212,83,0,.3)}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bin{border-radius:14px;padding:11px 10px;min-height:82px;border:2px dashed #ddd4c4;cursor:pointer;transition:all .15s;background:#fcfaf6}
+.bin.know{border-color:#a9cce3}.bin.measure{border-color:#f0c090}.bin.move{border-color:#a6dcb8}.bin.where{border-color:#cdb0dd}
+.bin.wrong{animation:sh .4s;border-color:#e67e22}
+.bin-hd{font-size:.84em;font-weight:700;margin-bottom:7px}
+.bin.know .bin-hd{color:#2980b9}.bin.measure .bin-hd{color:#e67e22}.bin.move .bin-hd{color:#27ae60}.bin.where .bin-hd{color:#8e44ad}
+.bin-items{display:flex;flex-wrap:wrap;gap:5px}
+.placed{padding:4px 11px;border-radius:12px;font-size:.78em;font-weight:600;background:#fff;border:1px solid #e6dfd2;color:#5b5348}
+.placed a{text-decoration:none;color:#d35400}
+.sortfb{text-align:center;font-size:.9em;font-weight:700;min-height:24px;margin-top:12px;line-height:1.5}
+.journey{position:relative;margin:4px 0}
+.jstart{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff3e0,#fff8f0);border:1.5px solid #f0d0a8;border-radius:14px;padding:12px 14px;margin-bottom:2px}
+.jstart .je{font-size:1.9em}.jstart .jt{font-weight:800;color:#d35400;font-size:.98em}.jstart .js{font-size:.76em;color:#a98b6a}
+.jitem{position:relative;padding:9px 0 9px 30px;margin-left:20px;border-left:2px solid #e5ddcd}
+.jitem .jdot{position:absolute;left:-9px;top:12px;width:15px;height:15px;border-radius:50%;background:#fff;border:2.5px solid #ccc}
+.jitem .jname{font-weight:700;font-size:.9em;color:#5b5348}
+.jitem .jtag{display:inline-block;font-size:.64em;color:#fff;padding:1px 8px;border-radius:8px;margin-left:7px;vertical-align:middle}
+.jd-know{background:#2980b9}.jd-measure{background:#e67e22}.jd-move{background:#27ae60}.jd-where{background:#8e44ad}
+.jt-know{background:#2980b9}.jt-measure{background:#e67e22}.jt-move{background:#27ae60}.jt-where{background:#8e44ad}
+.jvista-hd{margin:14px 0 8px 20px;font-size:.8em;color:#b7ae9e;font-weight:600}
+.jvista{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;margin:0 0 8px 20px;background:#f6f2ea;border:1.5px dashed #ddd4c4;border-radius:12px;opacity:.9}
+.jvista .ve{font-size:1.7em}.jvista .vt{font-weight:700;font-size:.86em;color:#9b8f7c}.jvista .vs{font-size:.74em;color:#b7ae9e;line-height:1.5}
 </style></head><body>
 <div class="page">
 
@@ -181,11 +209,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
   <div class="play" id="play"></div>
 
-  <div class="section-hd"><h2>📐 这四件事，就是整个几何</h2><div class="hd-sub">点开卡片，看每个角度都管哪些知识</div></div>
-  <div class="asp" id="aspectCards"></div>
+  <div class="section-hd"><h2>🎮 给几何知识找个「家」</h2><div class="hd-sub">造小屋你学会了这 4 件事，把下面的知识送回它属于的那件事～</div></div>
+  <div class="sortwrap"><div class="chips" id="chips"></div><div class="bins" id="bins"></div><div class="sortfb" id="sortfb"></div></div>
 
-  <div class="section-hd"><h2>🗺️ 几何学习路线图</h2><div class="hd-sub">从小学一路到高中，心里有整张地图</div></div>
-  <div class="road" id="road"></div>
+  <div class="section-hd"><h2>🗺️ 几何这条路，你才刚起步</h2><div class="hd-sub">造小屋学的 4 件事，会一路陪你到高中～</div></div>
+  <div class="journey" id="journey"></div>
 
   <div class="foot">小熊的小屋造好啦，几何地图也拿到手 ✨<br>以后学到任何几何，想想它是小屋的哪个零件～<br><br>可豆妈妈 · 更多几何互动工具陆续上线 🌱</div>
 </div>
@@ -288,23 +316,44 @@ function placeBook(el){
 }
 
 /* 展开卡片 */
-var ASPECTS=[
-  {icon:'👀',name:'它长什么样？',cls:'c-know',subs:[['长方形·正方形',''],['三角形',''],['圆',''],['点·线·角',''],['长方体·圆柱','']]},
-  {icon:'📏',name:'它有多大？',cls:'c-measure',subs:[['长度·角度',''],['周长',' perimeter.html'],['面积',' area.html'],['体积','']]},
-  {icon:'🔄',name:'它怎么动？',cls:'c-move',subs:[['平移',''],['旋转',''],['轴对称',''],['放大缩小','']]},
-  {icon:'🧭',name:'它在哪里？',cls:'c-where',subs:[['方向',''],['数对',''],['路线图','']]}
-];
-(function(){var h='';ASPECTS.forEach(function(a,i){
-  h+='<div class="asp-card" onclick="tAsp(this)"><div class="asp-top"><span class="asp-em">'+a.icon+'</span><span class="asp-name '+a.cls+'">'+a.name+'</span><span class="asp-arrow">▼</span></div><div class="asp-body">';
-  a.subs.forEach(function(s){var l=s[1].trim();if(l)h+='<a class="asp-link" href="'+l+'">'+s[0]+' 🔗</a>';else h+='<span class="asp-soon">'+s[0]+'</span>'});
-  h+='</div></div>';});
-  document.getElementById('aspectCards').innerHTML=h;})();
-function tAsp(el){el.classList.toggle('open')}
+/* 分类小游戏 */
+var BINS=[{a:'know',icon:'👀',name:'长什么样'},{a:'measure',icon:'📏',name:'有多大'},{a:'move',icon:'🔄',name:'怎么动'},{a:'where',icon:'🧭',name:'在哪里'}];
+var CHIPS=[{t:'长方形',a:'know'},{t:'三角形',a:'know'},{t:'周长',a:'measure',l:'perimeter.html'},{t:'面积',a:'measure',l:'area.html'},{t:'对称',a:'move'},{t:'旋转',a:'move'},{t:'方向',a:'where'},{t:'数对',a:'where'}];
+function shuf(x){for(var i=x.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=x[i];x[i]=x[j];x[j]=t}return x}
+var order=shuf(CHIPS.map(function(_,i){return i}));
+var placedIn={},selIdx=-1;
+function renderSort(){
+  var ch='';order.forEach(function(i){if(placedIn[i]===undefined){ch+='<div class="chip'+(selIdx===i?' sel':'')+'" onclick="selChip('+i+')">'+CHIPS[i].t+'</div>'}});
+  if(ch==='')ch='<div style="color:#27ae60;font-weight:700;font-size:.9em">全部分好啦 🎉</div>';
+  document.getElementById('chips').innerHTML=ch;
+  var bh='';BINS.forEach(function(b){
+    var items='';CHIPS.forEach(function(c,i){if(placedIn[i]===b.a){items+='<span class="placed">'+(c.l?'<a href="'+c.l+'">'+c.t+' 🔗</a>':c.t)+'</span>'}});
+    bh+='<div class="bin '+b.a+'" id="bin-'+b.a+'" onclick="dropBin(\''+b.a+'\')"><div class="bin-hd">'+b.icon+' '+b.name+'</div><div class="bin-items">'+items+'</div></div>';
+  });
+  document.getElementById('bins').innerHTML=bh;
+}
+function selChip(i){selIdx=(selIdx===i?-1:i);sfxTap();renderSort()}
+function dropBin(a){
+  var fb=document.getElementById('sortfb');
+  if(selIdx<0){fb.innerHTML='<span class="no">👆 先点一个上面的知识词</span>';return}
+  if(CHIPS[selIdx].a===a){placedIn[selIdx]=a;selIdx=-1;sfxOK();renderSort();
+    var left=order.filter(function(i){return placedIn[i]===undefined}).length;
+    if(left===0)fb.innerHTML='<span class="ok">🎉 太棒了！你已经会给几何知识「定位」了——<br>以后学到任何新知识，都能想想它属于哪件事。</span>';
+    else fb.innerHTML='<span class="ok">✅ 对！</span>';
+  }else{var el=document.getElementById('bin-'+a);el.classList.add('wrong');setTimeout(function(){el.classList.remove('wrong')},420);sfxNO();
+    fb.innerHTML='<span class="no">再想想～这个知识是在问「哪件事」？</span>';}
+}
+renderSort();
 
-/* 路线图 */
-var STOPS=[['小学低段','认形状','here'],['小学中段','周长·面积','next'],['小学高段','体积·运动·位置','future'],['初中','证明·勾股·圆','future'],['高中','坐标·立体','future']];
-(function(){var h='<div class="road-line"></div><div class="road-stops">';
-  STOPS.forEach(function(s){var c=s[2]==='here'?' here':(s[2]==='future'?' future':'');
-    h+='<div class="road-stop'+c+'"><div class="rs-dot"></div><div class="rs-stage">'+s[0]+'</div><div class="rs-name">'+s[1]+'</div>'+(s[2]==='here'?'<div class="rs-flag">你在这里</div>':'')+'</div>';});
-  h+='</div>';document.getElementById('road').innerHTML=h;})();
+/* 旅程路线图 */
+var JLE=[{n:'认识图形（立体·平面）',a:'know'},{n:'方向与位置',a:'where'},{n:'周长',a:'measure'},{n:'角 · 平行与垂直',a:'know'},{n:'面积',a:'measure'},{n:'平移 · 旋转 · 对称',a:'move'},{n:'圆的认识',a:'know'},{n:'体积 · 数对',a:'measure'}];
+var TAGN={know:'长什么样',measure:'有多大',move:'怎么动',where:'在哪里'};
+(function(){
+  var h='<div class="jstart"><span class="je">🐻🏠</span><span><span class="jt">你在这里 · 正在造小屋</span><br><span class="js">小学阶段，把这 4 件事一样样学会</span></span></div>';
+  JLE.forEach(function(x){h+='<div class="jitem"><span class="jdot jd-'+x.a+'"></span><span class="jname">'+x.n+'</span><span class="jtag jt-'+x.a+'">'+TAGN[x.a]+'</span></div>'});
+  h+='<div class="jvista-hd">🏔️ 远处的风景（以后才到，现在瞄一眼就好 😌）</div>';
+  h+='<div class="jvista"><span class="ve">🏛️</span><span><span class="vt">初中</span><br><span class="vs">几何证明 · 勾股定理 · 圆<br>——学会讲清楚「为什么牢」</span></span></div>';
+  h+='<div class="jvista"><span class="ve">🏙️</span><span><span class="vt">高中</span><br><span class="vs">立体几何 · 坐标几何<br>——在立体空间里造大世界</span></span></div>';
+  document.getElementById('journey').innerHTML=h;
+})();
 </script></body></html>
