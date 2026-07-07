@@ -168,6 +168,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .meanbox{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ece3d5;border-radius:12px;padding:10px 12px;animation:pop .3s}
 .meanbox svg{flex-shrink:0}
 .meantx{font-size:.82em;color:#5b5348;line-height:1.5}
+.rcell{cursor:pointer}
 </style></head><body>
 <div class="page">
 
@@ -207,7 +208,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
       <!-- 烟囱 -->
       <rect x="346" y="30" width="28" height="56" rx="3" fill="#c96a48"/><rect x="342" y="26" width="36" height="12" rx="3" fill="#b05a3a"/>
       <!-- 窗 -->
-      <rect x="292" y="182" width="46" height="46" rx="4" fill="#dff0fb" stroke="#c9a878" stroke-width="3"/>
+      <rect id="winShape" x="292" y="182" width="46" height="46" rx="4" fill="#dff0fb" stroke="#c9a878" stroke-width="3"/>
       <line x1="315" y1="182" x2="315" y2="228" stroke="#c9a878" stroke-width="2.5"/>
       <line x1="292" y1="205" x2="338" y2="205" stroke="#c9a878" stroke-width="2.5"/>
       <polygon points="294,184 336,184 294,226" fill="#ffffff" opacity=".35"/>
@@ -224,15 +225,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
       <!-- 书架 -->
       <g id="shelfG">
-        <rect x="352" y="196" width="42" height="110" rx="3" fill="#c9a878" stroke="#a07850" stroke-width="2"/>
+        <rect id="shelfBox" x="352" y="196" width="42" height="110" rx="3" fill="#c9a878" stroke="#a07850" stroke-width="2"/>
         <line x1="352" y1="232" x2="394" y2="232" stroke="#a07850" stroke-width="2"/>
         <line x1="352" y1="269" x2="394" y2="269" stroke="#a07850" stroke-width="2"/>
       </g>
 
       <!-- 地毯 -->
-      <g id="rugG"><rect x="70" y="286" width="200" height="26" rx="8" fill="#efd9b3" stroke="#d8bd8e" stroke-width="1.5" stroke-dasharray="3 4"/>
+      <g id="rugG"><rect id="rugRect" x="70" y="286" width="200" height="26" rx="8" fill="#efd9b3" stroke="#d8bd8e" stroke-width="1.5" stroke-dasharray="3 4"/>
       <g fill="#d8bd8e"><rect x="96" y="291" width="9" height="16"/><rect x="124" y="291" width="9" height="16"/><rect x="152" y="291" width="9" height="16"/><rect x="180" y="291" width="9" height="16"/><rect x="208" y="291" width="9" height="16"/><rect x="236" y="291" width="9" height="16"/></g></g>
 
+      <!-- 时钟(圆) -->
+      <g id="clockG"><circle id="clockShape" cx="172" cy="184" r="13" fill="#fff8ee" stroke="#b5794a" stroke-width="2.5"/><line x1="172" y1="184" x2="172" y2="176" stroke="#8a5a38" stroke-width="1.6"/><line x1="172" y1="184" x2="178" y2="187" stroke="#8a5a38" stroke-width="1.6"/></g>
+      <g id="ruler" opacity="0"><line x1="262" y1="222" x2="262" y2="310" stroke="#e67e22" stroke-width="2.5"/><line x1="257" y1="222" x2="267" y2="222" stroke="#e67e22" stroke-width="2.5"/><line x1="257" y1="310" x2="267" y2="310" stroke="#e67e22" stroke-width="2.5"/><text x="270" y="270" font-size="12" fill="#d35400">门高</text></g>
+      <g id="rugCells" opacity="0"><rect class="rcell" x="74" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="98" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="122" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="146" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="170" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="194" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="218" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="242" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/></g>
+      <line id="winAxis" x1="315" y1="178" x2="315" y2="232" stroke="#d63a2f" stroke-width="1.2" stroke-dasharray="3 3" opacity="0"/>
+      <g id="winFlower" opacity="0" style="transition:opacity .5s"><g fill="#d94436"><ellipse cx="315" cy="193" rx="4.5" ry="9"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(45 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(90 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(135 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(180 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(225 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(270 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(315 315 205)"/></g><circle cx="315" cy="205" r="4.5" fill="#f2d7b0"/></g>
+      <g id="sofa" style="transition:transform .9s ease"><rect x="252" y="322" width="54" height="16" rx="5" fill="#e08a5a"/><rect x="250" y="308" width="12" height="30" rx="5" fill="#d47a4a"/><rect x="296" y="308" width="12" height="30" rx="5" fill="#d47a4a"/><rect x="258" y="312" width="40" height="13" rx="4" fill="#f0a878"/></g>
       <!-- 小熊 -->
       <g>
         <ellipse cx="96" cy="315" rx="17" ry="15" fill="#c69a6c"/>
@@ -287,81 +295,52 @@ function openPlay(a){
   else if(a==='size')p.innerHTML=sizeHTML();
   else if(a==='move'){p.innerHTML=moveHTML();}
   else if(a==='where')p.innerHTML=whereHTML();
-  p.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.getElementById('sceneBox').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* 1 形状：认出3个形状 */
-var shapeQ=[{part:'屋顶',emoji:'🔺',ans:'三角形'},{part:'窗户',emoji:'🪟',ans:'正方形'},{part:'时钟',emoji:'🕐',ans:'圆'}];
+/* ===== 小屋交互（效果都作用在小屋上）===== */
+function glowEl(id,col){var e=document.getElementById(id);if(!e)return;var os=e.getAttribute('stroke'),ow=e.getAttribute('stroke-width');e.setAttribute('stroke',col||'#ffcf3f');e.setAttribute('stroke-width','5');setTimeout(function(){e.setAttribute('stroke',os||'none');e.setAttribute('stroke-width',ow||'1')},1700);}
+var shapeQ=[{part:'屋顶',emoji:'🔺',ans:'三角形',el:'roofShape'},{part:'窗户',emoji:'🪟',ans:'正方形',el:'winShape'},{part:'时钟',emoji:'🕐',ans:'圆',el:'clockShape'}];
 var shapeDone=[0,0,0];
-function shapeHTML(){
-  shapeDone=[0,0,0];
-  var h='<div class="pq" style="color:#2980b9">👀 它长什么样？——认形状</div><div class="pw">小屋上藏着好多形状！每个是什么形状，点一点～</div>';
-  shapeQ.forEach(function(q,i){
-    h+='<div class="qrow" id="srow'+i+'"><span class="qrow-l">'+q.emoji+' '+q.part+'</span>';
-    ['三角形','正方形','圆'].forEach(function(o){h+='<button class="miniopt" onclick="pickShapeM('+i+',\''+o+'\',this)">'+o+'</button>'});
-    h+='</div>';
-  });
-  return h+'<div class="pfb" id="pfb"></div>';
-}
-function pickShapeM(i,o,btn){
-  if(shapeDone[i])return;
-  if(o===shapeQ[i].ans){shapeDone[i]=1;btn.classList.add('good');sfxOK();
-    btn.parentNode.querySelectorAll('.miniopt').forEach(function(b){b.disabled=true});
-    if(shapeDone.every(function(x){return x}))document.getElementById('pfb').innerHTML='<span class="ok">✅ 全认对啦！三角形、正方形、圆……<br>认出形状，就是几何的第一件事：<b style="color:#2980b9">长什么样</b>。</span>';
-  }else{btn.classList.add('bad');sfxNO();setTimeout(function(){btn.classList.remove('bad')},450);}
-}
-
-/* 2 有多大：三种量法 */
-var sizeSeen={},filled=0;
-function sizeHTML(){
-  sizeSeen={};filled=0;
-  return '<div class="pq" style="color:#e67e22">📏 它有多大？——量大小</div><div class="pw">同一个小屋，能量出好几种「大小」！三个都点点看～</div>'
-  +'<div class="mbtns"><button class="mbtn" onclick="showSize(\'len\',this)">📏 门有多高</button><button class="mbtn" onclick="showSize(\'peri\',this)">⭕ 地毯绕一圈</button><button class="mbtn" onclick="showSize(\'area\',this)">🟨 地毯铺满</button></div>'
-  +'<div id="sizedemo"></div><div class="pfb" id="pfb2"></div>';
-}
-function showSize(t,btn){
-  sfxTap();var d=document.getElementById('sizedemo');
-  if(t==='len'){sizeSeen.len=1;d.innerHTML='<div class="demo"><svg viewBox="0 0 120 40" width="150"><line x1="12" y1="20" x2="108" y2="20" stroke="#e67e22" stroke-width="3"/><line x1="12" y1="11" x2="12" y2="29" stroke="#e67e22" stroke-width="3"/><line x1="108" y1="11" x2="108" y2="29" stroke="#e67e22" stroke-width="3"/></svg><div class="demot"><b>长度</b>：有多长，用尺子量～</div></div>';chkSize();}
-  else if(t==='peri'){sizeSeen.peri=1;d.innerHTML='<div class="demo"><svg viewBox="0 0 110 60" width="140"><rect x="12" y="14" width="86" height="34" rx="6" fill="none" stroke="#e67e22" stroke-width="3" stroke-dasharray="5 3"/></svg><div class="demot"><b>周长</b>：绕地毯一圈的总长～</div></div>';chkSize();}
-  else{var g='';for(var i=0;i<12;i++)g+='<div class="cell" onclick="fillCell(this)"></div>';d.innerHTML='<div class="demot" style="margin-bottom:6px"><b>面积</b>：铺满地毯的大小——点格子铺满看看！</div><div class="fillgrid">'+g+'</div><div class="cellcount" id="cc">已铺 0 / 12 块</div>';filled=0;}
-}
-function fillCell(el){if(el.classList.contains('f'))return;el.classList.add('f');filled++;sfxTap();var cc=document.getElementById('cc');if(cc)cc.textContent='已铺 '+filled+' / 12 块';if(filled>=12){sfxOK();sizeSeen.area=1;chkSize();}}
-function chkSize(){if(sizeSeen.len&&sizeSeen.peri&&sizeSeen.area){document.getElementById('pfb2').innerHTML='<span class="ok">✅ 长度、周长、面积——量「大小」有好几种问法，<br>这就是几何的<b style="color:#e67e22">有多大</b>。</span>';markDone('size');}}
-
-/* 3 怎么动：三种运动 */
-var doorOpen=false,moveSeen={};
+function shapeHTML(){shapeDone=[0,0,0];
+  var h='<div class="pq" style="color:#2980b9">👀 它长什么样？——认形状</div><div class="pw">小屋上藏着好多形状！选对了，小屋上那个部件会亮起来～</div>';
+  shapeQ.forEach(function(q,i){h+='<div class="qrow" id="srow'+i+'"><span class="qrow-l">'+q.emoji+' '+q.part+'</span>';['三角形','正方形','圆'].forEach(function(o){h+='<button class="miniopt" onclick="pickShapeM('+i+',\''+o+'\',this)">'+o+'</button>'});h+='</div>';});
+  return h+'<div class="pfb" id="pfb"></div>';}
+function pickShapeM(i,o,btn){if(shapeDone[i])return;
+  if(o===shapeQ[i].ans){shapeDone[i]=1;btn.classList.add('good');sfxOK();glowEl(shapeQ[i].el);btn.parentNode.querySelectorAll('.miniopt').forEach(function(b){b.disabled=true});
+    if(shapeDone.every(function(x){return x}))document.getElementById('pfb').innerHTML='<span class="ok">✅ 全认对啦！三角形·正方形·圆——<br>认出形状，就是几何的第一件事：<b style="color:#2980b9">长什么样</b>。</span>';
+  }else{btn.classList.add('bad');sfxNO();setTimeout(function(){btn.classList.remove('bad')},450);}}
+var sizeSeen={},rfilled=0;
+function sizeHTML(){sizeSeen={};rfilled=0;resetRug();
+  return '<div class="pq" style="color:#e67e22">📏 它有多大？——量大小</div><div class="pw">看小屋！同一样东西能量出好几种「大小」，三个都点点～</div>'
+  +'<div class="mbtns"><button class="mbtn" onclick="showSize(\'len\')">📏 量门有多高</button><button class="mbtn" onclick="showSize(\'peri\')">⭕ 地毯绕一圈</button><button class="mbtn" onclick="showSize(\'area\')">🟨 地毯铺满</button></div>'
+  +'<div class="pfb" id="pfb2"></div>';}
+function resetRug(){var g=document.getElementById('rugCells');if(g)g.setAttribute('opacity','0');document.querySelectorAll('.rcell').forEach(function(c){c.setAttribute('fill','#f2b76a');c.setAttribute('opacity','0');c.removeAttribute('data-f')});var r=document.getElementById('ruler');if(r)r.setAttribute('opacity','0');}
+function showSize(t){sfxTap();
+  if(t==='len'){sizeSeen.len=1;document.getElementById('ruler').setAttribute('opacity','1');document.getElementById('pfb2').innerHTML='<span class="ok">📏 量门有多高 = <b style="color:#e67e22">长度</b></span>';chkSize();}
+  else if(t==='peri'){sizeSeen.peri=1;glowEl('rugRect','#d35400');document.getElementById('pfb2').innerHTML='<span class="ok">⭕ 绕地毯一圈的长 = <b style="color:#e67e22">周长</b></span>';chkSize();}
+  else{document.getElementById('rugCells').setAttribute('opacity','1');document.querySelectorAll('.rcell').forEach(function(c){c.setAttribute('opacity','1')});document.getElementById('pfb2').innerHTML='<span class="no">👆 点小屋地毯上的格子，铺满看看！</span>';}}
+function fillRCell(el){if(el.getAttribute('data-f'))return;el.setAttribute('data-f','1');el.setAttribute('fill','#e6913a');sfxTap();rfilled++;if(rfilled>=8){sizeSeen.area=1;sfxOK();chkSize();}}
+function chkSize(){if(sizeSeen.len&&sizeSeen.peri&&sizeSeen.area){document.getElementById('pfb2').innerHTML='<span class="ok">✅ 长度·周长·面积——量「大小」有好几种问法，<br>这就是几何的<b style="color:#e67e22">有多大</b>。</span>';markDone('size');}}
+var moveSeen={},doorOpen=false,sofaOut=false;
 function moveHTML(){moveSeen={};
-  return '<div class="pq" style="color:#27ae60">🔄 它怎么动？——玩变形</div><div class="pw">图形能怎么动？三个都点点帮小熊试试～</div>'
-  +'<div class="mbtns"><button class="mbtn" onclick="showMove(\'rot\',this)">🚪 推开门</button><button class="mbtn" onclick="showMove(\'sym\',this)">🪞 剪窗花</button><button class="mbtn" onclick="showMove(\'tran\',this)">➡️ 推沙发</button></div>'
-  +'<div id="movedemo"></div><div class="pfb" id="pfb3"></div>';
-}
-function showMove(t,btn){
-  sfxTap();var d=document.getElementById('movedemo');
-  if(t==='rot'){moveSeen.rot=1;var dg=document.getElementById('doorG');dg.style.transform='scaleX(0.16)';setTimeout(function(){dg.style.transform='scaleX(1)'},1500);d.innerHTML='<div class="demo"><div class="demot">🚪 门绕着门轴转开 → <b>旋转</b>（转个方向）</div></div>';}
-  else if(t==='sym'){moveSeen.sym=1;d.innerHTML='<div class="demo"><svg viewBox="0 0 80 50" width="120"><line x1="40" y1="4" x2="40" y2="46" stroke="#27ae60" stroke-width="1.4" stroke-dasharray="3 3"/><polygon points="40,12 18,38 40,38" fill="#a6dcb8"/><polygon points="40,12 62,38 40,38" fill="#6cc48a"/></svg><div class="demot">🦋 对折，两边一模一样 → <b>轴对称</b></div></div>';}
-  else{moveSeen.tran=1;d.innerHTML='<div class="demo"><svg viewBox="0 0 130 40" width="160"><rect x="8" y="12" width="26" height="18" rx="3" fill="#cfe0cf" stroke="#27ae60" stroke-dasharray="3 2"/><rect x="78" y="12" width="26" height="18" rx="3" fill="#6cc48a"/><line x1="38" y1="21" x2="72" y2="21" stroke="#27ae60" stroke-width="2"/><polygon points="72,21 66,17 66,25" fill="#27ae60"/></svg><div class="demot">➡️ 整个推着走，方向不变 → <b>平移</b></div></div>';}
-  if(moveSeen.rot&&moveSeen.sym&&moveSeen.tran)document.getElementById('pfb3').innerHTML='<span class="ok">✅ 旋转、对称、平移——图形动起来的方法，<br>就是几何的<b style="color:#27ae60">怎么动</b>。</span>';markDone&&(moveSeen.rot&&moveSeen.sym&&moveSeen.tran)&&markDone('move');
-}
-
-/* 4 在哪里：数对 + 方向 */
-function whereHTML(){
+  return '<div class="pq" style="color:#27ae60">🔄 它怎么动？——玩变形</div><div class="pw">看小屋！点一下，让小屋上的东西真的动起来～</div>'
+  +'<div class="mbtns"><button class="mbtn" id="mvDoorBtn" onclick="mvDoor()">🚪 推开门</button><button class="mbtn" onclick="mvFlower()">🪞 剪窗花</button><button class="mbtn" id="mvSofaBtn" onclick="mvSofa()">➡️ 推沙发</button></div>'
+  +'<div class="pfb" id="pfb3"></div>';}
+function mvDoor(){doorOpen=!doorOpen;document.getElementById('doorG').style.transform=doorOpen?'scaleX(0.16)':'scaleX(1)';document.getElementById('mvDoorBtn').textContent=doorOpen?'👈 关上门':'🚪 推开门';sfxTap();if(doorOpen){moveSeen.rot=1;sfxOK();fb3('🚪 门绕门轴转开 → <b>旋转</b>');}}
+function mvFlower(){moveSeen.sym=1;sfxTap();sfxOK();document.getElementById('winAxis').setAttribute('opacity','1');document.getElementById('winFlower').setAttribute('opacity','1');fb3('🪞 沿中线对折剪出来，两边一模一样 → <b>轴对称</b>');}
+function mvSofa(){sofaOut=!sofaOut;document.getElementById('sofa').style.transform=sofaOut?'translateX(150px)':'translateX(0)';document.getElementById('mvSofaBtn').textContent=sofaOut?'⬅️ 推回来':'➡️ 推沙发';sfxTap();if(sofaOut){moveSeen.tran=1;sfxOK();fb3('➡️ 沙发整个推着走，方向不变 → <b>平移</b>');}}
+function fb3(t){var dn=moveSeen.rot&&moveSeen.sym&&moveSeen.tran;document.getElementById('pfb3').innerHTML='<span class="ok">'+(dn?'✅ 旋转·对称·平移——图形动起来的方法，就是几何的<b style="color:#27ae60">怎么动</b>。':t)+'</span>';if(dn)markDone('move');}
+function whereHTML(){glowEl('shelfBox','#8e44ad');
   var g='';for(var r=1;r<=3;r++)for(var col=1;col<=3;col++)g+='<div class="scell" data-r="'+r+'" data-c="'+col+'" onclick="placeBook(this)"></div>';
-  return '<div class="pq" style="color:#8e44ad">🧭 它在哪里？——找位置</div>'
-  +'<div class="pw">把小熊的书 📕 放到 <b>第 2 排、从左数第 3 个</b>～</div>'
-  +'<div class="rowlab">↓ 从上往下数排，从左往右数个 ↓</div><div class="shelfgrid">'+g+'</div>'
-  +'<div class="pfb" id="pfb4"></div><div id="dirq"></div>';
-}
-function placeBook(el){
-  if(document.querySelector('.scell.good'))return;
+  return '<div class="pq" style="color:#8e44ad">🧭 它在哪里？——找位置</div><div class="pw">小屋里的书架有 3 排格子（看，它亮了）。把书 📕 放到 <b>第 2 排、从左数第 3 个</b>～</div><div class="rowlab">↓ 从上往下数排，从左往右数个 ↓</div><div class="shelfgrid">'+g+'</div><div class="pfb" id="pfb4"></div><div id="dirq"></div>';}
+function placeBook(el){if(document.querySelector('.scell.good'))return;
   var r=el.getAttribute('data-r'),col=el.getAttribute('data-c');
   if(r==='2'&&col==='3'){el.classList.add('good');el.textContent='📕';sfxOK();
     document.getElementById('pfb4').innerHTML='<span class="ok">✅ 找对啦！你用「第 2 排、第 3 个」找到了它——<br>这在数学里就叫 <b style="color:#8e44ad">数对 (3, 2)</b>：先说第几列，再说第几排。</span>';
     document.getElementById('dirq').innerHTML='<div class="pw" style="margin-top:14px">再想想——小屋的门朝哪个方向开呢？</div><div class="mbtns"><button class="mbtn" onclick="pickDir(this)">⬇️ 南</button><button class="mbtn" onclick="pickDir(this)">⬆️ 北</button><button class="mbtn" onclick="pickDir(this)">➡️ 东</button></div>';
-  }else{el.classList.add('bad');sfxNO();setTimeout(function(){el.classList.remove('bad')},450);
-    document.getElementById('pfb4').innerHTML='<span class="no">不对哦～第 2 排（上往下第 2 行），从左数第 3 个。</span>';}
-}
-function pickDir(btn){btn.parentNode.querySelectorAll('.mbtn').forEach(function(b){b.disabled=true});sfxOK();
-  document.getElementById('dirq').insertAdjacentHTML('beforeend','<div class="pfb"><span class="ok">✅ 用「方向」加「第几排第几个」说清位置——<br>这就是几何的 <b style="color:#8e44ad">在哪里</b>。</span></div>');markDone('where');}
+  }else{el.classList.add('bad');sfxNO();setTimeout(function(){el.classList.remove('bad')},450);document.getElementById('pfb4').innerHTML='<span class="no">不对哦～第 2 排（上往下第 2 行），从左数第 3 个。</span>';}}
+function pickDir(btn){btn.parentNode.querySelectorAll('.mbtn').forEach(function(b){b.disabled=true});sfxOK();document.getElementById('dirq').insertAdjacentHTML('beforeend','<div class="pfb"><span class="ok">✅ 用「方向」加「第几排第几个」说清位置——<br>这就是几何的 <b style="color:#8e44ad">在哪里</b>。</span></div>');markDone('where');}
 
 /* 每一类大家庭 */
 var FAM=[
