@@ -170,6 +170,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .meantx{font-size:.82em;color:#5b5348;line-height:1.5}
 .rcell{cursor:pointer}
 .mbtn.gd{background:#e6f6ec;border-color:#27ae60;color:#27ae60}.mbtn.bad2{border-color:#e67e22;animation:sh .4s}
+
+.vcard{background:#f6f2ea;border:1.5px dashed #ddd4c4;border-radius:13px;padding:12px 14px;margin-bottom:9px}
+.vcard.vfar{background:linear-gradient(135deg,#efeaf5,#f6f2ea);border-color:#cdc0dd}
+.vtop{font-weight:800;font-size:.88em;color:#8f8474;margin-bottom:8px}
+.vline{font-size:.78em;color:#8a8172;padding:3.5px 0;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+.vtag{flex-shrink:0;font-size:.9em;font-weight:700;padding:1px 8px;border-radius:8px;color:#fff;white-space:nowrap}
+.vtag.know{background:#7ea9c9}.vtag.measure{background:#e0a56a}.vtag.move{background:#77c091}.vtag.where{background:#b191c4}
+.vfar-txt{font-size:.82em;color:#8a8172;line-height:1.65}
 </style></head><body>
 <div class="page">
 
@@ -409,6 +417,8 @@ function dropBin(a){
 renderSort();
 
 /* 旅程路线图（4主线，完整版）*/
+function vcard(top,sub,lines){var TIC={know:'👀',measure:'📏',move:'🔄',where:'🧭'},TNM={know:'长什么样',measure:'有多大',move:'怎么动',where:'在哪里'};var h='<div class="vcard"><div class="vtop">'+top+' · '+sub+'</div>';lines.forEach(function(l){h+='<div class="vline"><span class="vtag '+l[0]+'">'+TIC[l[0]]+' '+TNM[l[0]]+'</span><span>'+l[1]+'</span></div>'});return h+'</div>';}
+
 var TRACKS=[
  {a:'know',icon:'👀',name:'长什么样',steps:['直观辨认立体·平面图形，图形拼搭组合','认识线段','认识角（直角·锐角·钝角）· 从不同角度观察物体','线段·射线·直线，认识平行与垂直','三角形·平行四边形·梯形的特征','圆·扇形的特征']},
  {a:'measure',icon:'📏',name:'有多大',steps:['认识厘米·米，学会量长短','长度单位：毫米·分米·千米','长方形·正方形的周长','长方形·正方形的面积（面积单位）','平行四边形·三角形·梯形的面积','长方体·正方体的表面积·体积','圆的周长·圆的面积','圆柱·圆锥的表面积·体积']},
@@ -423,8 +433,9 @@ var TRACKS=[
     h+='</div>';
   });
   h+='<div class="jvista-hd">🏔️ 远处的风景（以后才到，现在瞄一眼就好 😌）</div>';
-  h+='<div class="jvista"><span class="ve">🏛️</span><span><span class="vt">初中</span><br><span class="vs">几何证明 · 勾股定理 · 圆<br>——学会讲清楚「为什么牢」</span></span></div>';
-  h+='<div class="jvista"><span class="ve">🏙️</span><span><span class="vt">高中</span><br><span class="vs">立体几何 · 坐标几何<br>——在立体空间里造大世界</span></span></div>';
+  h+=vcard('🏛️ 初中','把小屋搭得更结实，弄懂为什么牢',[['know','吃透三角形、圆的特性'],['measure','勾股定理，用比例算大小'],['move','精准旋转、缩放图形'],['where','用坐标精准定位']]);
+  h+=vcard('🏙️ 高中','从小屋盖到大楼，走进立体大世界',[['know','立体图形、曲线家族'],['measure','算空间里的角度、体积'],['move','用方程描述运动'],['where','三维空间定位']]);
+  h+='<div class="vcard vfar"><div class="vtop">🌌 更远的世界</div><div class="vfar-txt">做动画、造机器人、建大桥都要用到～<br>还有「弯曲空间」「橡皮几何」这些神奇的几何等着你！</div></div>';
   document.getElementById('journey').innerHTML=h;
 })();
 </script></body></html>
