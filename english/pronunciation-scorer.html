@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔊 英语发音练习 - 录音打分</title>
+<style>
+  :root {
+    --primary: #6C5CE7;
+    --primary-light: #A29BFE;
+    --success: #00B894;
+    --success-light: #55EFC4;
+    --warning: #FDCB6E;
+    --danger: #E17055;
+    --bg: #F8F9FA;
+    --card: #FFFFFF;
+    --text: #2D3436;
+    --text-light: #636E72;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 520px;
+    width: 100%;
+  }
+
+  /* ─── 标题 ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .header p {
+    font-size: 14px;
+    color: var(--text-light);
+  }
+
+  /* ─── 目标文本卡片 ─── */
+  .target-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 28px 24px 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .target-card.active {
+    border: 3px solid var(--primary-light);
+    box-shadow: 0 0 0 8px rgba(108,92,231,0.1);
+  }
+  .target-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+  .target-word {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    word-break: break-word;
+  }
+  .target-word.small {
+    font-size: 32px;
+  }
+  .btn-speaker {
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+  }
+  .btn-speaker:hover { transform: scale(1.1); }
+  .btn-speaker:active { transform: scale(0.95); }
+  .btn-speaker.speaking {
+    background: var(--primary-light);
+    animation: pulse 0.8s infinite;
+  }
+
+  /* ─── 录音区域 ─── */
+  .record-area {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .btn-record {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--primary);
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    position: relative;
+  }
+  .btn-record:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(108,92,231,0.25);
+  }
+  .btn-record.recording {
+    background: var(--danger);
+    border-color: var(--danger);
+    animation: record-pulse 1.2s infinite;
+    box-shadow: 0 0 0 0 rgba(225,112,85,0.5);
+  }
+  .btn-record.recording .mic-icon { filter: brightness(10); }
+  .btn-record.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @keyframes record-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(225,112,85,0.5); }
+    70% { box-shadow: 0 0 0 24px rgba(225,112,85,0); }
+    100% { box-shadow: 0 0 0 0 rgba(225,112,85,0); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  .record-hint {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--text-light);
+  }
+  .record-hint.recording {
+    color: var(--danger);
+    font-weight: 600;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* 音量条 */
+  .volume-bar-wrap {
+    margin-top: 20px;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .volume-bar-wrap.visible { opacity: 1; }
+  .volume-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--success-light), var(--success), var(--primary));
+    border-radius: 4px;
+    transition: width 0.1s linear;
+  }
+
+  /* ─── 结果区域 ─── */
+  .result-area {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 0;
+    box-shadow: var(--shadow);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease, margin 0.5s ease;
+    margin-bottom: 0;
+  }
+  .result-area.show {
+    max-height: 600px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .result-heard {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .result-heard strong {
+    color: var(--primary);
+    font-size: 24px;
+  }
+  .result-target {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+  .result-target span {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .score-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .score-number {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .score-stars {
+    font-size: 32px;
+    letter-spacing: 4px;
+  }
+  .score-msg {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .score-bar-wrap {
+    height: 10px;
+    background: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.6s ease;
+  }
+
+  /* ─── 预设单词 ─── */
+  .presets-area {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+  .presets-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+  }
+  .preset-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .preset-group-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 2px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .preset-group-btn:hover { border-color: var(--primary-light); }
+  .preset-group-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+  .preset-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .preset-word {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid #eee;
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .preset-word:hover {
+    border-color: var(--primary-light);
+    background: #f0edff;
+  }
+  .preset-word.selected {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* ─── 自定义输入 ─── */
+  .custom-area {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+  .custom-area label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .custom-input-row {
+    display: flex;
+    gap: 8px;
+  }
+  .custom-input-row input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 2px solid #ddd;
+    font-size: 18px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .custom-input-row input:focus {
+    border-color: var(--primary-light);
+  }
+  .custom-input-row button {
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .custom-input-row button:hover { background: #5a4bd1; }
+
+  /* ─── 历史 ─── */
+  .history-area {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .history-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .history-clear {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .history-clear:hover { background: #fff0ed; }
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+  }
+  .history-item .hi-score {
+    font-size: 20px;
+    font-weight: 700;
+    min-width: 40px;
+  }
+  .history-item .hi-target {
+    font-size: 14px;
+    color: var(--text);
+    flex: 1;
+  }
+  .history-item .hi-heard {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .history-item .hi-retry {
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.15s;
+    flex-shrink: 0;
+  }
+  .history-item .hi-retry:hover { transform: scale(1.15); }
+  .history-empty {
+    text-align: center;
+    color: #ccc;
+    font-size: 14px;
+    padding: 20px;
+  }
+
+  /* ─── 不支持提示 ─── */
+  .unsupported {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    color: #856404;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .unsupported strong { display: block; margin-bottom: 8px; font-size: 16px; }
+
+  /* ─── 响应式 ─── */
+  @media (max-width: 480px) {
+    .target-word { font-size: 36px; }
+    .target-word.small { font-size: 26px; }
+    .btn-record { width: 80px; height: 80px; font-size: 34px; }
+    .score-number { font-size: 44px; }
+    .preset-word { font-size: 14px; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 标题 -->
+  <div class="header">
+    <h1>🎤 英语发音练习</h1>
+    <p>读出来，看看你有多棒！</p>
+  </div>
+
+  <!-- 目标文本卡片 -->
+  <div class="target-card" id="targetCard">
+    <div class="target-label">👇 试着读这个</div>
+    <div class="target-word" id="targetWord">cat</div>
+    <button class="btn-speaker" id="btnSpeaker" title="听标准发音">🔊</button>
+  </div>
+
+  <!-- 录音区域 -->
+  <div class="record-area" id="recordArea">
+    <button class="btn-record" id="btnRecord" title="点击开始录音">
+      <span class="mic-icon">🎤</span>
+    </button>
+    <div class="record-hint" id="recordHint">点击麦克风开始录音</div>
+    <div class="volume-bar-wrap" id="volumeWrap">
+      <div class="volume-bar" id="volumeBar"></div>
+    </div>
+  </div>
+
+  <!-- 结果 -->
+  <div class="result-area" id="resultArea">
+    <div class="result-heard">
+      我听到的是：<strong id="resultHeard">—</strong>
+    </div>
+    <div class="result-target">
+      应该是：<span id="resultTarget">—</span>
+    </div>
+    <div class="score-display">
+      <div class="score-number" id="scoreNumber">0</div>
+      <div class="score-stars" id="scoreStars">—</div>
+    </div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <div class="score-bar-wrap">
+      <div class="score-bar" id="scoreBar"></div>
+    </div>
+  </div>
+
+  <!-- 预设单词 -->
+  <div class="presets-area">
+    <div class="presets-title">📚 选一个来练</div>
+    <div class="preset-groups" id="presetGroups"></div>
+    <div class="preset-words" id="presetWords"></div>
+  </div>
+
+  <!-- 自定义 -->
+  <div class="custom-area">
+    <label>✏️ 或者自己写一个</label>
+    <div class="custom-input-row">
+      <input type="text" id="customInput" placeholder="输入单词或句子…" maxlength="100">
+      <button id="btnCustom">确定</button>
+    </div>
+  </div>
+
+  <!-- 不支持提示（默认隐藏） -->
+  <div class="unsupported" id="unsupported" style="display:none">
+    <strong>😔 浏览器不支持语音识别</strong>
+    请使用 <b>Chrome 浏览器</b> 打开此页面。<br>
+    SpeechRecognition 需要联网使用（会将音频发送到服务器识别）。
+  </div>
+
+  <!-- 历史记录 -->
+  <div class="history-area">
+    <div class="history-title">
+      <span>📋 练习记录</span>
+      <button class="history-clear" id="btnClearHistory">清空</button>
+    </div>
+    <div class="history-list" id="historyList">
+      <div class="history-empty">还没有练习记录哦～</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// 全局状态
+// ═══════════════════════════════════════════
+let currentTarget = 'cat';
+let isRecording = false;
+let recognition = null;
+let audioCtx = null;
+let analyser = null;
+let animationId = null;
+let history = [];
+
+// ═══════════════════════════════════════════
+// 预设数据
+// ═══════════════════════════════════════════
+const presetGroups = {
+  'CVC单词': ['cat','dog','big','red','sun','hat','run','sit','bed','cup','fox','jam'],
+  '长元音': ['cake','bike','home','cute','rain','tree','boat','moon','read','play'],
+  '混合音': ['ship','chin','this','thin','sing','fish','chick','math','bath','ring'],
+  '短句': ['I like cats','The dog is big','She can run','He has a hat','We go home','It is sunny'],
+};
+
+// ═══════════════════════════════════════════
+// DOM 引用
+// ═══════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const targetWord = $('targetWord');
+const targetCard = $('targetCard');
+const btnSpeaker = $('btnSpeaker');
+const btnRecord = $('btnRecord');
+const recordHint = $('recordHint');
+const volumeWrap = $('volumeWrap');
+const volumeBar = $('volumeBar');
+const resultArea = $('resultArea');
+const resultHeard = $('resultHeard');
+const resultTarget = $('resultTarget');
+const scoreNumber = $('scoreNumber');
+const scoreStars = $('scoreStars');
+const scoreMsg = $('scoreMsg');
+const scoreBar = $('scoreBar');
+const customInput = $('customInput');
+const historyList = $('historyList');
+const unsupported = $('unsupported');
+
+// ═══════════════════════════════════════════
+// 初始化
+// ═══════════════════════════════════════════
+function init() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    unsupported.style.display = 'block';
+    btnRecord.classList.add('disabled');
+    return;
+  }
+
+  initPresets();
+  loadHistory();
+  renderHistory();
+  updateTargetWord('cat');
+
+  // 事件绑定
+  btnRecord.addEventListener('click', toggleRecording);
+  btnSpeaker.addEventListener('click', speakTarget);
+  $('btnCustom').addEventListener('click', setCustomWord);
+  $('btnClearHistory').addEventListener('click', clearHistory);
+  customInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') setCustomWord();
+  });
+
+  // 键盘快捷键：空格键录音
+  document.addEventListener('keydown', e => {
+    if (e.key === ' ' && e.target === document.body) {
+      e.preventDefault();
+      toggleRecording();
+    }
+  });
+}
+
+// ═══════════════════════════════════════════
+// 预设单词
+// ═══════════════════════════════════════════
+function initPresets() {
+  const groupsEl = $('presetGroups');
+  const wordsEl = $('presetWords');
+  const groupNames = Object.keys(presetGroups);
+
+  groupNames.forEach((name, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'preset-group-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = name;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-group-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPresetWords(name);
+    });
+    groupsEl.appendChild(btn);
+  });
+
+  renderPresetWords(groupNames[0]);
+}
+
+function renderPresetWords(groupName) {
+  const wordsEl = $('presetWords');
+  wordsEl.innerHTML = '';
+  const words = presetGroups[groupName];
+  words.forEach(w => {
+    const el = document.createElement('button');
+    el.className = 'preset-word';
+    if (w === currentTarget) el.classList.add('selected');
+    el.textContent = w;
+    el.addEventListener('click', () => {
+      updateTargetWord(w);
+      document.querySelectorAll('.preset-word').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+    });
+    wordsEl.appendChild(el);
+  });
+}
+
+function setCustomWord() {
+  const val = customInput.value.trim();
+  if (!val) return;
+  updateTargetWord(val);
+  customInput.value = '';
+  document.querySelectorAll('.preset-word').forEach(b => b.classList.remove('selected'));
+}
+
+// ═══════════════════════════════════════════
+// 目标文本更新
+// ═══════════════════════════════════════════
+function updateTargetWord(word) {
+  currentTarget = word;
+  targetWord.textContent = word;
+
+  // 长文本用小字号
+  if (word.length > 20) {
+    targetWord.classList.add('small');
+  } else {
+    targetWord.classList.remove('small');
+  }
+
+  // 隐藏旧结果
+  resultArea.classList.remove('show');
+  document.querySelectorAll('.preset-word').forEach(b => {
+    b.classList.toggle('selected', b.textContent === word);
+  });
+}
+
+// ═══════════════════════════════════════════
+// 标准发音 (TTS)
+// ═══════════════════════════════════════════
+function speakTarget() {
+  if (!('speechSynthesis' in window)) return;
+
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(currentTarget);
+  utter.lang = 'en-US';
+  utter.rate = 0.85;
+
+  btnSpeaker.classList.add('speaking');
+  utter.onend = () => btnSpeaker.classList.remove('speaking');
+  utter.onerror = () => btnSpeaker.classList.remove('speaking');
+
+  window.speechSynthesis.speak(utter);
+}
+
+// ═══════════════════════════════════════════
+// 录音 / 语音识别
+// ═══════════════════════════════════════════
+async function toggleRecording() {
+  if (isRecording) {
+    stopRecording();
+    return;
+  }
+
+  // 请求麦克风权限（用于音量可视化）
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    setupVolumeMeter(stream);
+  } catch (e) {
+    // 音量条获取失败，不影响语音识别
+    console.warn('音量可视化失败:', e);
+  }
+
+  startRecognition();
+}
+
+function startRecognition() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.interimResults = true;
+  recognition.continuous = false;
+  recognition.maxAlternatives = 3;
+
+  let finalTranscript = '';
+
+  recognition.onresult = (event) => {
+    let interim = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript = event.results[i][0].transcript;
+      } else {
+        interim += event.results[i][0].transcript;
+      }
+    }
+
+    // 实时显示临时结果
+    if (interim) {
+      showInterimResult(interim);
+    }
+  };
+
+  recognition.onend = () => {
+    // 自动停止后打分
+    if (finalTranscript) {
+      showResult(finalTranscript);
+    } else {
+      // 没有识别到任何内容
+      showNoResult();
+    }
+    resetRecordingUI();
+  };
+
+  recognition.onerror = (event) => {
+    console.error('识别错误:', event.error);
+    if (event.error === 'no-speech') {
+      showNoResult();
+    } else if (event.error === 'aborted') {
+      // 手动停止，不处理
+    } else {
+      recordHint.textContent = '出错了，再试一次吧 😅';
+      recordHint.classList.remove('recording');
+    }
+    resetRecordingUI();
+  };
+
+  recognition.onaudiostart = () => {
+    recordHint.textContent = '正在听… 🎧';
+  };
+
+  recognition.onsoundstart = () => {
+    volumeWrap.classList.add('visible');
+  };
+
+  recognition.onsoundend = () => {
+    volumeWrap.classList.remove('visible');
+  };
+
+  recognition.start();
+  isRecording = true;
+
+  // UI 更新
+  btnRecord.classList.add('recording');
+  targetCard.classList.add('active');
+  recordHint.textContent = '准备中…';
+  recordHint.classList.add('recording');
+  resultArea.classList.remove('show');
+}
+
+function stopRecording() {
+  if (recognition) {
+    recognition.abort();
+    recognition = null;
+  }
+  resetRecordingUI();
+}
+
+function resetRecordingUI() {
+  isRecording = false;
+  btnRecord.classList.remove('recording');
+  targetCard.classList.remove('active');
+  recordHint.textContent = '点击麦克风开始录音';
+  recordHint.classList.remove('recording');
+  volumeWrap.classList.remove('visible');
+
+  // 停止音量动画
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+    animationId = null;
+  }
+  if (audioCtx) {
+    audioCtx.close().catch(() => {});
+    audioCtx = null;
+    analyser = null;
+  }
+}
+
+// ═══════════════════════════════════════════
+// 音量可视化
+// ═══════════════════════════════════════════
+function setupVolumeMeter(stream) {
+  if (audioCtx) {
+    audioCtx.close().catch(() => {});
+  }
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  const source = audioCtx.createMediaStreamSource(stream);
+  source.connect(analyser);
+
+  const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+  function update() {
+    if (!analyser) return;
+    analyser.getByteFrequencyData(dataArray);
+    let sum = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+      sum += dataArray[i];
+    }
+    const avg = sum / dataArray.length;
+    const pct = Math.min(100, Math.round((avg / 128) * 100));
+    volumeBar.style.width = pct + '%';
+    animationId = requestAnimationFrame(update);
+  }
+  update();
+}
+
+// ═══════════════════════════════════════════
+// 临时结果显示（识别进行中）
+// ═══════════════════════════════════════════
+function showInterimResult(text) {
+  resultArea.classList.add('show');
+  resultHeard.textContent = text;
+  resultTarget.textContent = currentTarget;
+  scoreNumber.textContent = '…';
+  scoreStars.textContent = '👂';
+  scoreMsg.textContent = '还在听…';
+  scoreMsg.style.color = '#636E72';
+  scoreBar.style.width = '0%';
+  scoreBar.style.background = '#ddd';
+}
+
+// ═══════════════════════════════════════════
+// 无结果
+// ═══════════════════════════════════════════
+function showNoResult() {
+  resultArea.classList.add('show');
+  resultHeard.textContent = '(没听清)';
+  resultTarget.textContent = currentTarget;
+  scoreNumber.textContent = '0';
+  scoreStars.textContent = '🤔';
+  scoreMsg.textContent = '没听清呢，再试一次吧！';
+  scoreMsg.style.color = '#E17055';
+  scoreBar.style.width = '10%';
+  scoreBar.style.background = '#E17055';
+
+  addHistory('(没听清)', 0);
+}
+
+// ═══════════════════════════════════════════
+// 打分逻辑
+// ═══════════════════════════════════════════
+function showResult(heard) {
+  const cleanHeard = normalizeText(heard);
+  const cleanTarget = normalizeText(currentTarget);
+
+  if (!cleanHeard) {
+    showNoResult();
+    return;
+  }
+
+  const similarity = calcSimilarity(cleanHeard, cleanTarget);
+  const pct = Math.round(similarity * 100);
+
+  // UI
+  resultArea.classList.add('show');
+  resultHeard.textContent = heard;
+  resultTarget.textContent = currentTarget;
+  scoreNumber.textContent = pct;
+  scoreNumber.style.color = scoreColor(pct);
+
+  const stars = scoreStarsEmoji(pct);
+  const msg = scoreMessage(pct);
+
+  scoreStars.textContent = stars;
+  scoreMsg.textContent = msg;
+  scoreMsg.style.color = scoreColor(pct);
+  scoreBar.style.width = pct + '%';
+  scoreBar.style.background = scoreColor(pct);
+
+  addHistory(heard, pct);
+}
+
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .replace(/[.,!?;:'"()\-—]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function calcSimilarity(a, b) {
+  if (!a && !b) return 1;
+  if (!a || !b) return 0;
+
+  const maxLen = Math.max(a.length, b.length);
+  const dist = levenshtein(a, b);
+  return 1 - (dist / maxLen);
+}
+
+function levenshtein(a, b) {
+  const m = a.length;
+  const n = b.length;
+  // 滚动数组优化
+  let prev = new Array(n + 1);
+  let curr = new Array(n + 1);
+
+  for (let j = 0; j <= n; j++) prev[j] = j;
+
+  for (let i = 1; i <= m; i++) {
+    curr[0] = i;
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      curr[j] = Math.min(
+        prev[j] + 1,       // 删除
+        curr[j - 1] + 1,   // 插入
+        prev[j - 1] + cost // 替换
+      );
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[n];
+}
+
+function scoreColor(pct) {
+  if (pct >= 90) return '#00B894';
+  if (pct >= 70) return '#00CEC9';
+  if (pct >= 50) return '#FDCB6E';
+  return '#E17055';
+}
+
+function scoreStarsEmoji(pct) {
+  if (pct >= 95) return '⭐⭐⭐⭐⭐';
+  if (pct >= 85) return '⭐⭐⭐⭐⭐';
+  if (pct >= 70) return '⭐⭐⭐⭐';
+  if (pct >= 50) return '⭐⭐⭐';
+  if (pct >= 30) return '⭐⭐';
+  return '⭐';
+}
+
+function scoreMessage(pct) {
+  if (pct === 100) return '完美！发音一模一样！🎉';
+  if (pct >= 95)  return '太厉害了！几乎完美！🌟';
+  if (pct >= 85)  return '非常棒！继续加油！👏';
+  if (pct >= 70)  return '很好！再练练就更好了！💪';
+  if (pct >= 50)  return '不错哦，再试一次！😊';
+  if (pct >= 30)  return '别灰心，多听几遍再读～🔊';
+  return '先听听标准发音，再试试吧！💡';
+}
+
+// ═══════════════════════════════════════════
+// 历史记录
+// ═══════════════════════════════════════════
+function addHistory(heard, pct) {
+  history.unshift({
+    target: currentTarget,
+    heard: heard,
+    score: pct,
+    time: new Date().toISOString(),
+  });
+  // 最多保留50条
+  if (history.length > 50) history.length = 50;
+  saveHistory();
+  renderHistory();
+}
+
+function renderHistory() {
+  if (history.length === 0) {
+    historyList.innerHTML = '<div class="history-empty">还没有练习记录哦～</div>';
+    return;
+  }
+
+  historyList.innerHTML = history.map((h, i) => `
+    <div class="history-item">
+      <div class="hi-score" style="color:${scoreColor(h.score)}">${h.score}%</div>
+      <div>
+        <div class="hi-target">${escapeHtml(h.target)}</div>
+        <div class="hi-heard">→ ${escapeHtml(h.heard)}</div>
+      </div>
+      <button class="hi-retry" data-index="${i}" title="再练一次">🔄</button>
+    </div>
+  `).join('');
+
+  // 绑定重试按钮
+  historyList.querySelectorAll('.hi-retry').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.index);
+      if (history[idx]) {
+        updateTargetWord(history[idx].target);
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+}
+
+function saveHistory() {
+  try {
+    localStorage.setItem('pron-scorer-history', JSON.stringify(history));
+  } catch (e) { /* localStorage full */ }
+}
+
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem('pron-scorer-history');
+    if (raw) history = JSON.parse(raw);
+  } catch (e) {
+    history = [];
+  }
+}
+
+function clearHistory() {
+  history = [];
+  saveHistory();
+  renderHistory();
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ═══════════════════════════════════════════
+// 启动
+// ═══════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
