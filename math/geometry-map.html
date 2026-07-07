@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>几何到底学什么？· 5分钟看懂 | 可豆妈妈</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;min-height:100vh;font-size:16px}
+.wrap{max-width:540px;margin:0 auto;padding:0 12px 70px}
+.hero{text-align:center;padding:28px 10px 12px}
+.hero h1{font-size:1.5em;color:#d35400;line-height:1.35;margin-bottom:14px}
+.def{background:#fff;border:1px solid #efe9dd;border-radius:18px;padding:18px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:1.05em;line-height:1.7}
+.def b{color:#e67e22}
+.guide{color:#8a8378;font-size:.86em;text-align:center;margin:16px 4px 6px;line-height:1.6}
+.sec-tag{display:inline-block;background:#f0ebe0;color:#a9a094;font-size:.72em;padding:3px 12px;border-radius:20px;margin:26px 0 4px}
+h2{font-size:1.12em;color:#5b5348;margin:6px 0 12px;text-align:center}
+
+/* 翻转卡片 */
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qcard{perspective:900px;height:132px;cursor:pointer}
+.qcard-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.qcard.flipped .qcard-inner{transform:rotateY(180deg)}
+.qface{position:absolute;width:100%;height:100%;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 10px;text-align:center;border:1px solid #efe9dd;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.qfront{background:#fff}
+.qfront .qemoji{font-size:2.1em;margin-bottom:6px}
+.qfront .qq{font-size:1.06em;font-weight:700;color:#5b5348}
+.qhint{font-size:.68em;color:#c3bbac;margin-top:8px}
+.qback{transform:rotateY(180deg);color:#fff}
+.qback .qname{font-size:1.15em;font-weight:800;margin-bottom:6px}
+.qback .qdesc{font-size:.76em;line-height:1.5;opacity:.96}
+.qb-know{background:linear-gradient(135deg,#4a90d9,#2980b9)}
+.qb-measure{background:linear-gradient(135deg,#f0913a,#e67e22)}
+.qb-move{background:linear-gradient(135deg,#3fb86a,#27ae60)}
+.qb-where{background:linear-gradient(135deg,#a069c9,#8e44ad)}
+.allflip{background:#fff8ef;border:1.5px dashed #e6a860;border-radius:14px;padding:14px;text-align:center;color:#c8631e;font-weight:700;font-size:.96em;margin-top:14px;display:none;line-height:1.6}
+.allflip.show{display:block;animation:pop .4s}
+@keyframes pop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* 定位器 */
+.loc-intro{color:#8a8378;font-size:.9em;text-align:center;margin-bottom:14px;line-height:1.6}
+.locgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.locbtn{background:#fff;border:1.5px solid #e6dfd2;border-radius:14px;padding:15px 8px;font-size:1.05em;font-weight:700;color:#5b5348;cursor:pointer;transition:all .15s;min-height:52px;font-family:inherit}
+.locbtn:active{transform:scale(.96)}
+.locbtn.on{background:#fff3e6;border-color:#e67e22;color:#d35400}
+.result{margin-top:16px;border-radius:18px;padding:18px 16px;color:#fff;display:none;animation:pop .35s}
+.result.show{display:block}
+.result .r-pick{font-size:.8em;opacity:.9;margin-bottom:2px}
+.result .r-title{font-size:1.5em;font-weight:800;margin-bottom:12px}
+.r-row{background:rgba(255,255,255,.16);border-radius:12px;padding:11px 13px;margin:8px 0;font-size:.9em;line-height:1.5}
+.r-row .r-lbl{font-weight:700;font-size:.82em;opacity:.92;display:block;margin-bottom:2px}
+.r-belong{font-size:1.02em;font-weight:700}
+.r-jump{display:inline-block;margin-top:12px;background:#fff;color:#333;font-weight:800;padding:11px 22px;border-radius:24px;text-decoration:none;font-size:.95em}
+.r-soon{margin-top:12px;font-size:.82em;opacity:.9;background:rgba(255,255,255,.16);border-radius:20px;padding:9px 16px;display:inline-block}
+
+/* 秘诀 */
+.secret{background:linear-gradient(135deg,#fff3e0,#fff8f0);border:1px solid #f0d9b8;border-radius:18px;padding:20px 16px;text-align:center;line-height:1.7;font-size:1.02em}
+.secret .big{font-size:1.14em;font-weight:800;color:#d35400;display:block;margin-top:6px}
+.coming{text-align:center;color:#a9a094;font-size:.82em;margin-top:18px;line-height:1.7}
+.footer{text-align:center;color:#c3bbac;font-size:.76em;margin-top:30px}
+@media(max-width:400px){.hero h1{font-size:1.3em}.qcard{height:124px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 模块1 开场 -->
+  <div class="hero">
+    <h1>几何，到底是学什么的？🤔</h1>
+    <div class="def">几何，就是研究各种<b>形状</b>——<br>它们<b>长啥样</b>、<b>有多大</b>、<b>怎么动</b>、<b>待在哪儿</b>。</div>
+  </div>
+  <p class="guide">其实呀，只要搞懂 4 个问题，几何就全明白啦 👇<br>点一点下面的卡片，翻开看看～</p>
+
+  <!-- 模块2 四个问题 -->
+  <div class="sec-tag" style="display:block;text-align:center;margin-left:auto;margin-right:auto;width:fit-content">形状的 4 个问题</div>
+  <div class="qgrid" id="qgrid">
+    <div class="qcard" data-k="know" onclick="flip(this)">
+      <div class="qcard-inner">
+        <div class="qface qfront"><div class="qemoji">👀</div><div class="qq">它长什么样？</div><div class="qhint">点我翻开</div></div>
+        <div class="qface qback qb-know"><div class="qname">认形状</div><div class="qdesc">从方块、圆球，<br>到线条、尖尖的角</div></div>
+      </div>
+    </div>
+    <div class="qcard" data-k="measure" onclick="flip(this)">
+      <div class="qcard-inner">
+        <div class="qface qfront"><div class="qemoji">📏</div><div class="qq">它有多大？</div><div class="qhint">点我翻开</div></div>
+        <div class="qface qback qb-measure"><div class="qname">量大小</div><div class="qdesc">多长、一圈多长、<br>面多大、能装多少</div></div>
+      </div>
+    </div>
+    <div class="qcard" data-k="move" onclick="flip(this)">
+      <div class="qcard-inner">
+        <div class="qface qfront"><div class="qemoji">🔄</div><div class="qq">它怎么动？</div><div class="qhint">点我翻开</div></div>
+        <div class="qface qback qb-move"><div class="qname">玩变形</div><div class="qdesc">推一推、转一转、<br>对折后两边一样</div></div>
+      </div>
+    </div>
+    <div class="qcard" data-k="where" onclick="flip(this)">
+      <div class="qcard-inner">
+        <div class="qface qfront"><div class="qemoji">🧭</div><div class="qq">它在哪里？</div><div class="qhint">点我翻开</div></div>
+        <div class="qface qback qb-where"><div class="qname">找位置</div><div class="qdesc">上下左右、<br>在第几排第几个</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="allflip" id="allflip">🎉 你发现了吗——<br>以后学的所有几何，都逃不出这 4 个问题！</div>
+
+  <!-- 模块3 定位器 -->
+  <div class="sec-tag" style="display:block;text-align:center;margin-left:auto;margin-right:auto;width:fit-content">🧭 我的知识定位器</div>
+  <h2>你正在学的，是哪个问题？</h2>
+  <p class="loc-intro">点一点你最近在学的知识，看看它在几何里的位置～</p>
+  <div class="locgrid" id="locgrid"></div>
+  <div class="result" id="result"></div>
+
+  <!-- 模块4 秘诀 -->
+  <div class="sec-tag" style="display:block;text-align:center;margin-left:auto;margin-right:auto;width:fit-content">✨ 学几何的小秘诀</div>
+  <div class="secret">记住一句话就够啦——<span class="big">学几何，多动手！ 🖐️</span>剪一剪、拼一拼、画一画，<br>比死记公式管用多啦～</div>
+  <div class="coming">🚧 这是一张「几何地图」<br>每一块，我都会慢慢做成好玩的小工具，陆续加进来～</div>
+
+  <div class="footer">可豆妈妈 · 陪娃一起想办法</div>
+</div>
+
+<script>
+// ===== 音效 =====
+function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
+function sfxTap(){beep(620,.12)}
+function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
+
+// ===== 模块2 翻卡 =====
+var flipped={};
+function flip(el){
+  var k=el.getAttribute('data-k');
+  if(el.classList.contains('flipped'))return;
+  el.classList.add('flipped');flipped[k]=1;sfxTap();
+  if(Object.keys(flipped).length===4){setTimeout(function(){document.getElementById('allflip').classList.add('show');sfxOK()},450)}
+}
+
+// ===== 模块3 定位器 =====
+var QMETA={
+  know:{q:'它长什么样？',icon:'👀',color:'#2980b9'},
+  measure:{q:'它有多大？',icon:'📏',color:'#e67e22'},
+  move:{q:'它怎么动？',icon:'🔄',color:'#27ae60'},
+  where:{q:'它在哪里？',icon:'🧭',color:'#8e44ad'}
+};
+var LOC={
+  '周长':{k:'measure',what:'量一圈有多长',pre:'认识线段、会用尺子量长度',next:'面积（量一个面有多大）',tool:'perimeter.html'},
+  '面积':{k:'measure',what:'量一个面有多大',pre:'周长、认识长方形',next:'体积（量能装多少）',tool:'area.html'},
+  '体积':{k:'measure',what:'量能装下多少东西',pre:'面积、认识长方体',next:'更多立体图形的体积',tool:''},
+  '角度':{k:'measure',what:'量一个角张开多大',pre:'认识角、认识直线',next:'三角形里的角',tool:''},
+  '长方形':{k:'know',what:'认识四四方方的形状',pre:'认识线段和直角',next:'长方形的周长、面积',tool:''},
+  '三角形':{k:'know',what:'认识三条边的形状',pre:'认识线段和角',next:'三角形的面积',tool:''},
+  '平移':{k:'move',what:'把图形整个推着走',pre:'认识常见的图形',next:'旋转、轴对称',tool:''},
+  '方向':{k:'where',what:'用东南西北找位置',pre:'认识上下左右、前后',next:'第几排第几个（数对）',tool:''}
+};
+var ORDER=['周长','面积','长方形','三角形','平移','方向','角度','体积'];
+(function(){
+  var h='';ORDER.forEach(function(n){h+='<button class="locbtn" data-n="'+n+'" onclick="locate(this,\x27'+n+'\x27)">'+n+'</button>'});
+  document.getElementById('locgrid').innerHTML=h;
+})();
+function locate(btn,name){
+  document.querySelectorAll('.locbtn').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');sfxOK();
+  var d=LOC[name],m=QMETA[d.k];
+  var jump=d.tool?'<a class="r-jump" href="'+d.tool+'">去玩一玩 →</a>':'<div class="r-soon">🚧 这个小工具马上就来啦～</div>';
+  var html='<div class="r-pick">📌 你选的是</div>'
+    +'<div class="r-title">'+name+'</div>'
+    +'<div class="r-row"><span class="r-lbl">它属于哪个问题</span><span class="r-belong">'+m.icon+' 「'+m.q+'」</span> —— '+d.what+'</div>'
+    +'<div class="r-row"><span class="r-lbl">🔻 学它之前，要先会</span>'+d.pre+'</div>'
+    +'<div class="r-row"><span class="r-lbl">🔺 学完它，接下来学</span>'+d.next+'</div>'
+    +jump;
+  var r=document.getElementById('result');
+  r.style.background='linear-gradient(135deg,'+m.color+',#0006)';
+  r.style.background=m.color;
+  r.innerHTML=html;r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
