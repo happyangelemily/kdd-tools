@@ -1,175 +1,310 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>几何到底学什么？· 5分钟看懂 | 可豆妈妈</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>几何 · 帮小熊造小屋 | 可豆妈妈</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;min-height:100vh;font-size:16px}
-.wrap{max-width:540px;margin:0 auto;padding:0 12px 70px}
-.hero{text-align:center;padding:28px 10px 12px}
-.hero h1{font-size:1.5em;color:#d35400;line-height:1.35;margin-bottom:14px}
-.def{background:#fff;border:1px solid #efe9dd;border-radius:18px;padding:18px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:1.05em;line-height:1.7}
-.def b{color:#e67e22}
-.guide{color:#8a8378;font-size:.86em;text-align:center;margin:16px 4px 6px;line-height:1.6}
-.sec-tag{display:inline-block;background:#f0ebe0;color:#a9a094;font-size:.72em;padding:3px 12px;border-radius:20px;margin:26px 0 4px}
-h2{font-size:1.12em;color:#5b5348;margin:6px 0 12px;text-align:center}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
+.page{max-width:560px;margin:0 auto;padding:8px 14px 80px}
+.hero{text-align:center;padding:24px 8px 14px}
+.hero h1{font-size:1.32em;color:#d35400;margin-bottom:14px;line-height:1.4}
+.ws{font-size:.86em;color:#9b9183;line-height:1.65;padding:0 4px}
+.ws b{color:#775540;font-weight:600}
+.tiphint{text-align:center;font-size:.82em;color:#c99a5a;margin:10px 0 6px;font-weight:600}
 
-/* 翻转卡片 */
-.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.qcard{perspective:900px;height:132px;cursor:pointer}
-.qcard-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
-.qcard.flipped .qcard-inner{transform:rotateY(180deg)}
-.qface{position:absolute;width:100%;height:100%;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 10px;text-align:center;border:1px solid #efe9dd;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.qfront{background:#fff}
-.qfront .qemoji{font-size:2.1em;margin-bottom:6px}
-.qfront .qq{font-size:1.06em;font-weight:700;color:#5b5348}
-.qhint{font-size:.68em;color:#c3bbac;margin-top:8px}
-.qback{transform:rotateY(180deg);color:#fff}
-.qback .qname{font-size:1.15em;font-weight:800;margin-bottom:6px}
-.qback .qdesc{font-size:.76em;line-height:1.5;opacity:.96}
-.qb-know{background:linear-gradient(135deg,#4a90d9,#2980b9)}
-.qb-measure{background:linear-gradient(135deg,#f0913a,#e67e22)}
-.qb-move{background:linear-gradient(135deg,#3fb86a,#27ae60)}
-.qb-where{background:linear-gradient(135deg,#a069c9,#8e44ad)}
-.allflip{background:#fff8ef;border:1.5px dashed #e6a860;border-radius:14px;padding:14px;text-align:center;color:#c8631e;font-weight:700;font-size:.96em;margin-top:14px;display:none;line-height:1.6}
-.allflip.show{display:block;animation:pop .4s}
-@keyframes pop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
+/* 场景 */
+.scene-box{position:relative;margin:6px 0 8px;border-radius:20px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.06)}
+.scene-box svg{display:block;width:100%;height:auto}
+.hs{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;cursor:pointer;z-index:3}
+.hs .dot{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:1.25em;box-shadow:0 2px 10px rgba(0,0,0,.18);animation:pp 2s ease-in-out infinite}
+.hs:nth-child(2) .dot{animation-delay:.5s}.hs:nth-child(3) .dot{animation-delay:1s}.hs:nth-child(4) .dot{animation-delay:1.5s}
+@keyframes pp{0%,100%{transform:scale(1);box-shadow:0 2px 10px rgba(0,0,0,.18)}50%{transform:scale(1.12);box-shadow:0 3px 18px rgba(212,83,0,.4)}}
+.hs .lb{margin-top:3px;font-size:.62em;font-weight:700;color:#fff;background:rgba(60,50,40,.72);padding:2px 7px;border-radius:8px;white-space:nowrap}
+.hs.done .dot{background:#e6f6ec;border-color:#27ae60}
+.hs.done .lb{background:#27ae60}
 
-/* 定位器 */
-.loc-intro{color:#8a8378;font-size:.9em;text-align:center;margin-bottom:14px;line-height:1.6}
-.locgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.locbtn{background:#fff;border:1.5px solid #e6dfd2;border-radius:14px;padding:15px 8px;font-size:1.05em;font-weight:700;color:#5b5348;cursor:pointer;transition:all .15s;min-height:52px;font-family:inherit}
-.locbtn:active{transform:scale(.96)}
-.locbtn.on{background:#fff3e6;border-color:#e67e22;color:#d35400}
-.result{margin-top:16px;border-radius:18px;padding:18px 16px;color:#fff;display:none;animation:pop .35s}
-.result.show{display:block}
-.result .r-pick{font-size:.8em;opacity:.9;margin-bottom:2px}
-.result .r-title{font-size:1.5em;font-weight:800;margin-bottom:12px}
-.r-row{background:rgba(255,255,255,.16);border-radius:12px;padding:11px 13px;margin:8px 0;font-size:.9em;line-height:1.5}
-.r-row .r-lbl{font-weight:700;font-size:.82em;opacity:.92;display:block;margin-bottom:2px}
-.r-belong{font-size:1.02em;font-weight:700}
-.r-jump{display:inline-block;margin-top:12px;background:#fff;color:#333;font-weight:800;padding:11px 22px;border-radius:24px;text-decoration:none;font-size:.95em}
-.r-soon{margin-top:12px;font-size:.82em;opacity:.9;background:rgba(255,255,255,.16);border-radius:20px;padding:9px 16px;display:inline-block}
+/* 玩法区 */
+.play{background:#fff;border:1px solid #efe4d4;border-radius:16px;padding:16px;margin-top:8px;min-height:60px;display:none}
+.play.show{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.play .pq{font-size:1.02em;font-weight:700;margin-bottom:4px}
+.play .pw{font-size:.82em;color:#9b9183;margin-bottom:12px;line-height:1.5}
+.play .pfb{margin-top:12px;font-size:.9em;font-weight:700;min-height:22px;line-height:1.5}
+.ok{color:#27ae60}.no{color:#e67e22}
 
-/* 秘诀 */
-.secret{background:linear-gradient(135deg,#fff3e0,#fff8f0);border:1px solid #f0d9b8;border-radius:18px;padding:20px 16px;text-align:center;line-height:1.7;font-size:1.02em}
-.secret .big{font-size:1.14em;font-weight:800;color:#d35400;display:block;margin-top:6px}
-.coming{text-align:center;color:#a9a094;font-size:.82em;margin-top:18px;line-height:1.7}
-.footer{text-align:center;color:#c3bbac;font-size:.76em;margin-top:30px}
-@media(max-width:400px){.hero h1{font-size:1.3em}.qcard{height:124px}}
-</style>
-</head>
-<body>
-<div class="wrap">
+/* 形状选择 */
+.shape-opts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.shape-opt{width:74px;height:74px;border:2px solid #e6dfd2;border-radius:14px;background:#fcf9f4;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.shape-opt:active{transform:scale(.94)}
+.shape-opt.good{border-color:#27ae60;background:#e6f6ec}
+.shape-opt.bad{border-color:#e67e22;background:#fdeee0;animation:sh .4s}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shape-opt svg{width:46px;height:46px}
 
-  <!-- 模块1 开场 -->
+/* 铺格子 */
+.fillgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:230px;margin:0 auto}
+.cell{aspect-ratio:1;border:1.5px dashed #d8cfbe;border-radius:6px;background:#fcf9f4;cursor:pointer;transition:all .12s}
+.cell.f{background:#f2b76a;border-style:solid;border-color:#e6913a}
+.cellcount{text-align:center;font-size:.9em;color:#8a7e6e;margin-top:10px;font-weight:600}
+
+/* 开门 */
+.doorbtn{display:block;margin:4px auto 0;padding:11px 26px;border:none;border-radius:24px;background:linear-gradient(135deg,#3fb86a,#27ae60);color:#fff;font-size:1em;font-weight:700;cursor:pointer;font-family:inherit}
+.doorbtn:active{transform:scale(.96)}
+
+/* 放书格 */
+.shelfgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:200px;margin:0 auto;background:#c9a878;padding:8px;border-radius:8px}
+.scell{aspect-ratio:1.1;background:#f5ecd7;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4em;transition:all .12s}
+.scell:active{transform:scale(.93)}
+.scell.good{background:#e6f6ec}
+.scell.bad{background:#fdeee0;animation:sh .4s}
+.rowlab{text-align:center;font-size:.75em;color:#a99;margin-bottom:6px}
+
+.section-hd{text-align:center;margin:34px 0 12px}
+.section-hd h2{font-size:1.08em;color:#5b5348}
+.section-hd .hd-sub{font-size:.76em;color:#bcb4a8;margin-top:4px}
+
+/* 展开卡片 */
+.asp{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.asp-card{background:#fff;border:1.5px solid #ece3d5;border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s}
+.asp-top{display:flex;align-items:center;gap:8px;padding:13px 12px}
+.asp-em{font-size:1.5em}.asp-name{font-size:.9em;font-weight:700;color:#5b5348;flex:1}
+.asp-arrow{font-size:.72em;color:#c3bbac;transition:transform .25s}
+.asp-card.open .asp-arrow{transform:rotate(180deg)}
+.asp-body{display:none;padding:0 13px 13px}
+.asp-card.open .asp-body{display:block}
+.asp-link,.asp-soon{display:inline-block;margin:5px 4px 0 0;padding:5px 12px;border-radius:15px;font-size:.78em;font-weight:600}
+.asp-link{text-decoration:none;background:#fdf6ed;color:#d35400;border:1px solid #f0cca8}
+.asp-soon{color:#bcb4a8;background:#f9f6f1;border:1px dashed #ddd8cc}
+.c-know{color:#2980b9}.c-measure{color:#e67e22}.c-move{color:#27ae60}.c-where{color:#8e44ad}
+
+/* 路线图 */
+.road{position:relative;margin:6px 0;padding:26px 6px 8px}
+.road-line{position:absolute;top:46px;left:9%;right:9%;height:3px;background:linear-gradient(to right,#2980b9,#27ae60,#e67e22,#8e44ad);border-radius:2px;opacity:.3}
+.road-stops{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.road-stop{text-align:center;min-width:58px;z-index:1}
+.rs-dot{width:14px;height:14px;border-radius:50%;margin:0 auto 6px;border:2px solid #ccc;background:#fff}
+.rs-stage{font-size:.63em;color:#bcb4a8;margin-bottom:1px}
+.rs-name{font-size:.76em;font-weight:700;color:#5b5348}
+.road-stop.here .rs-dot{width:17px;height:17px;border-color:#d35400;background:#fff3e0;box-shadow:0 0 9px rgba(212,83,0,.4)}
+.road-stop.here .rs-name{color:#d35400}
+.road-stop.here .rs-flag{font-size:.6em;color:#d35400;font-weight:700;margin-top:2px}
+.road-stop.future .rs-dot{border-style:dashed;background:transparent}
+.road-stop.future .rs-name{color:#c3bbac;font-weight:400}
+
+.foot{text-align:center;color:#c3bbac;font-size:.78em;margin:28px 0 10px;line-height:1.7}
+@media(max-width:420px){.hero h1{font-size:1.16em}.asp{grid-template-columns:1fr}.hs .dot{width:34px;height:34px;font-size:1.05em}}
+</style></head><body>
+<div class="page">
+
   <div class="hero">
-    <h1>几何，到底是学什么的？🤔</h1>
-    <div class="def">几何，就是研究各种<b>形状</b>——<br>它们<b>长啥样</b>、<b>有多大</b>、<b>怎么动</b>、<b>待在哪儿</b>。</div>
+    <h1>🏠 帮小熊造一间梦想小屋</h1>
+    <div class="ws">造小屋要<b>选形状</b>、<b>量大小</b>、让门<b>转开</b>、把东西<b>摆对位置</b>——<br>这四件事，就是整个几何！</div>
   </div>
-  <p class="guide">其实呀，只要搞懂 4 个问题，几何就全明白啦 👇<br>点一点下面的卡片，翻开看看～</p>
+  <div class="tiphint">👇 点小屋上发光的圆点，动手帮小熊造～</div>
 
-  <!-- 模块2 四个问题 -->
-  <div class="sec-tag" style="display:block;text-align:center;margin-left:auto;margin-right:auto;width:fit-content">形状的 4 个问题</div>
-  <div class="qgrid" id="qgrid">
-    <div class="qcard" data-k="know" onclick="flip(this)">
-      <div class="qcard-inner">
-        <div class="qface qfront"><div class="qemoji">👀</div><div class="qq">它长什么样？</div><div class="qhint">点我翻开</div></div>
-        <div class="qface qback qb-know"><div class="qname">认形状</div><div class="qdesc">从方块、圆球，<br>到线条、尖尖的角</div></div>
-      </div>
-    </div>
-    <div class="qcard" data-k="measure" onclick="flip(this)">
-      <div class="qcard-inner">
-        <div class="qface qfront"><div class="qemoji">📏</div><div class="qq">它有多大？</div><div class="qhint">点我翻开</div></div>
-        <div class="qface qback qb-measure"><div class="qname">量大小</div><div class="qdesc">多长、一圈多长、<br>面多大、能装多少</div></div>
-      </div>
-    </div>
-    <div class="qcard" data-k="move" onclick="flip(this)">
-      <div class="qcard-inner">
-        <div class="qface qfront"><div class="qemoji">🔄</div><div class="qq">它怎么动？</div><div class="qhint">点我翻开</div></div>
-        <div class="qface qback qb-move"><div class="qname">玩变形</div><div class="qdesc">推一推、转一转、<br>对折后两边一样</div></div>
-      </div>
-    </div>
-    <div class="qcard" data-k="where" onclick="flip(this)">
-      <div class="qcard-inner">
-        <div class="qface qfront"><div class="qemoji">🧭</div><div class="qq">它在哪里？</div><div class="qhint">点我翻开</div></div>
-        <div class="qface qback qb-where"><div class="qname">找位置</div><div class="qdesc">上下左右、<br>在第几排第几个</div></div>
-      </div>
-    </div>
+  <div class="scene-box" id="sceneBox">
+    <svg viewBox="0 0 560 400" id="scene">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe8fb"/><stop offset="1" stop-color="#eef7fd"/></linearGradient>
+        <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe08c"/><stop offset="1" stop-color="#a9d472"/></linearGradient>
+        <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbeacb"/><stop offset="1" stop-color="#f3d8a5"/></linearGradient>
+        <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8845f"/><stop offset="1" stop-color="#c85a3a"/></linearGradient>
+        <linearGradient id="door" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b5794a"/><stop offset="1" stop-color="#9c6238"/></linearGradient>
+        <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#ffd45e"/></radialGradient>
+        <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.15"/></filter>
+      </defs>
+
+      <rect x="0" y="0" width="560" height="400" fill="url(#sky)"/>
+      <circle cx="490" cy="66" r="34" fill="url(#sun)"/>
+      <rect x="0" y="300" width="560" height="100" fill="url(#grass)"/>
+      <!-- 云 -->
+      <g fill="#ffffff" opacity=".85"><ellipse cx="110" cy="70" rx="34" ry="18"/><ellipse cx="140" cy="66" rx="26" ry="16"/><ellipse cx="80" cy="66" rx="22" ry="14"/></g>
+      <!-- 树 -->
+      <rect x="42" y="228" width="14" height="82" rx="5" fill="#a9784e"/>
+      <circle cx="49" cy="212" r="34" fill="#8ec26a"/><circle cx="30" cy="228" r="22" fill="#9fce7a"/><circle cx="68" cy="228" r="22" fill="#9fce7a"/>
+
+      <!-- 房子 -->
+      <g filter="url(#sh)">
+        <rect x="150" y="150" width="252" height="160" rx="6" fill="url(#wall)"/>
+      </g>
+      <!-- 屋顶 (可高亮) -->
+      <polygon id="roofShape" points="132,154 276,52 420,154" fill="url(#roof)" stroke="#a6522f" stroke-width="2"/>
+      <!-- 烟囱 -->
+      <rect x="346" y="30" width="28" height="56" rx="3" fill="#c96a48"/><rect x="342" y="26" width="36" height="12" rx="3" fill="#b05a3a"/>
+      <!-- 窗 -->
+      <rect x="292" y="182" width="46" height="46" rx="4" fill="#dff0fb" stroke="#c9a878" stroke-width="3"/>
+      <line x1="315" y1="182" x2="315" y2="228" stroke="#c9a878" stroke-width="2.5"/>
+      <line x1="292" y1="205" x2="338" y2="205" stroke="#c9a878" stroke-width="2.5"/>
+      <polygon points="294,184 336,184 294,226" fill="#ffffff" opacity=".35"/>
+
+      <!-- 门洞(深色) -->
+      <rect x="188" y="222" width="64" height="88" rx="4" fill="#5a3d28"/>
+      <!-- 门 (可转开) -->
+      <g id="doorG" style="transform-box:fill-box;transform-origin:0% 50%;transition:transform .7s ease">
+        <rect x="188" y="222" width="64" height="88" rx="4" fill="url(#door)" stroke="#7d5030" stroke-width="2"/>
+        <rect x="196" y="232" width="48" height="30" rx="3" fill="none" stroke="#8a5c38" stroke-width="2"/>
+        <rect x="196" y="268" width="48" height="34" rx="3" fill="none" stroke="#8a5c38" stroke-width="2"/>
+        <circle cx="240" cy="270" r="4" fill="#ffd45e"/>
+      </g>
+
+      <!-- 书架 -->
+      <g id="shelfG">
+        <rect x="352" y="196" width="42" height="110" rx="3" fill="#c9a878" stroke="#a07850" stroke-width="2"/>
+        <line x1="352" y1="232" x2="394" y2="232" stroke="#a07850" stroke-width="2"/>
+        <line x1="352" y1="269" x2="394" y2="269" stroke="#a07850" stroke-width="2"/>
+      </g>
+
+      <!-- 地毯 -->
+      <g id="rugG"><rect x="70" y="286" width="200" height="26" rx="8" fill="#efd9b3" stroke="#d8bd8e" stroke-width="1.5" stroke-dasharray="3 4"/>
+      <g fill="#d8bd8e"><rect x="96" y="291" width="9" height="16"/><rect x="124" y="291" width="9" height="16"/><rect x="152" y="291" width="9" height="16"/><rect x="180" y="291" width="9" height="16"/><rect x="208" y="291" width="9" height="16"/><rect x="236" y="291" width="9" height="16"/></g></g>
+
+      <!-- 小熊 -->
+      <g>
+        <ellipse cx="96" cy="315" rx="17" ry="15" fill="#c69a6c"/>
+        <rect x="84" y="300" width="24" height="26" rx="10" fill="#c69a6c"/>
+        <circle cx="96" cy="286" r="19" fill="#cfa274"/>
+        <circle cx="83" cy="274" r="8" fill="#cfa274"/><circle cx="109" cy="274" r="8" fill="#cfa274"/>
+        <circle cx="83" cy="274" r="4" fill="#b0855e"/><circle cx="109" cy="274" r="4" fill="#b0855e"/>
+        <ellipse cx="96" cy="292" rx="9" ry="7" fill="#eaddc8"/>
+        <circle cx="90" cy="284" r="2.6" fill="#3a2c1e"/><circle cx="102" cy="284" r="2.6" fill="#3a2c1e"/>
+        <circle cx="96" cy="290" r="2.4" fill="#3a2c1e"/>
+        <path d="M92 294 Q96 298 100 294" stroke="#3a2c1e" stroke-width="1.4" fill="none"/>
+      </g>
+    </svg>
+
+    <div class="hs" data-a="shape" style="left:49%;top:22%"><div class="dot">🔺</div><div class="lb">长什么样</div></div>
+    <div class="hs" data-a="size" style="left:30%;top:76%"><div class="dot">📏</div><div class="lb">有多大</div></div>
+    <div class="hs" data-a="move" style="left:39%;top:66%"><div class="dot">🔄</div><div class="lb">怎么动</div></div>
+    <div class="hs" data-a="where" style="left:66%;top:63%"><div class="dot">🧭</div><div class="lb">在哪里</div></div>
   </div>
-  <div class="allflip" id="allflip">🎉 你发现了吗——<br>以后学的所有几何，都逃不出这 4 个问题！</div>
 
-  <!-- 模块3 定位器 -->
-  <div class="sec-tag" style="display:block;text-align:center;margin-left:auto;margin-right:auto;width:fit-content">🧭 我的知识定位器</div>
-  <h2>你正在学的，是哪个问题？</h2>
-  <p class="loc-intro">点一点你最近在学的知识，看看它在几何里的位置～</p>
-  <div class="locgrid" id="locgrid"></div>
-  <div class="result" id="result"></div>
+  <div class="play" id="play"></div>
 
-  <!-- 模块4 秘诀 -->
-  <div class="sec-tag" style="display:block;text-align:center;margin-left:auto;margin-right:auto;width:fit-content">✨ 学几何的小秘诀</div>
-  <div class="secret">记住一句话就够啦——<span class="big">学几何，多动手！ 🖐️</span>剪一剪、拼一拼、画一画，<br>比死记公式管用多啦～</div>
-  <div class="coming">🚧 这是一张「几何地图」<br>每一块，我都会慢慢做成好玩的小工具，陆续加进来～</div>
+  <div class="section-hd"><h2>📐 这四件事，就是整个几何</h2><div class="hd-sub">点开卡片，看每个角度都管哪些知识</div></div>
+  <div class="asp" id="aspectCards"></div>
 
-  <div class="footer">可豆妈妈 · 陪娃一起想办法</div>
+  <div class="section-hd"><h2>🗺️ 几何学习路线图</h2><div class="hd-sub">从小学一路到高中，心里有整张地图</div></div>
+  <div class="road" id="road"></div>
+
+  <div class="foot">小熊的小屋造好啦，几何地图也拿到手 ✨<br>以后学到任何几何，想想它是小屋的哪个零件～<br><br>可豆妈妈 · 更多几何互动工具陆续上线 🌱</div>
 </div>
 
 <script>
-// ===== 音效 =====
 function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
-function sfxTap(){beep(620,.12)}
 function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
+function sfxNO(){beep(200,.18,'triangle')}
+function sfxTap(){beep(560,.09)}
 
-// ===== 模块2 翻卡 =====
-var flipped={};
-function flip(el){
-  var k=el.getAttribute('data-k');
-  if(el.classList.contains('flipped'))return;
-  el.classList.add('flipped');flipped[k]=1;sfxTap();
-  if(Object.keys(flipped).length===4){setTimeout(function(){document.getElementById('allflip').classList.add('show');sfxOK()},450)}
+var done={};
+function markDone(a){done[a]=1;var el=document.querySelector('.hs[data-a="'+a+'"]');if(el)el.classList.add('done')}
+
+document.querySelectorAll('.hs').forEach(function(el){
+  el.onclick=function(){openPlay(el.getAttribute('data-a'))};
+});
+
+function openPlay(a){
+  sfxTap();
+  var p=document.getElementById('play');p.className='play show';
+  if(a==='shape')p.innerHTML=shapeHTML();
+  else if(a==='size')p.innerHTML=sizeHTML();
+  else if(a==='move'){p.innerHTML=moveHTML();}
+  else if(a==='where')p.innerHTML=whereHTML();
+  p.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-// ===== 模块3 定位器 =====
-var QMETA={
-  know:{q:'它长什么样？',icon:'👀',color:'#2980b9'},
-  measure:{q:'它有多大？',icon:'📏',color:'#e67e22'},
-  move:{q:'它怎么动？',icon:'🔄',color:'#27ae60'},
-  where:{q:'它在哪里？',icon:'🧭',color:'#8e44ad'}
-};
-var LOC={
-  '周长':{k:'measure',what:'量一圈有多长',pre:'认识线段、会用尺子量长度',next:'面积（量一个面有多大）',tool:'perimeter.html'},
-  '面积':{k:'measure',what:'量一个面有多大',pre:'周长、认识长方形',next:'体积（量能装多少）',tool:'area.html'},
-  '体积':{k:'measure',what:'量能装下多少东西',pre:'面积、认识长方体',next:'更多立体图形的体积',tool:''},
-  '角度':{k:'measure',what:'量一个角张开多大',pre:'认识角、认识直线',next:'三角形里的角',tool:''},
-  '长方形':{k:'know',what:'认识四四方方的形状',pre:'认识线段和直角',next:'长方形的周长、面积',tool:''},
-  '三角形':{k:'know',what:'认识三条边的形状',pre:'认识线段和角',next:'三角形的面积',tool:''},
-  '平移':{k:'move',what:'把图形整个推着走',pre:'认识常见的图形',next:'旋转、轴对称',tool:''},
-  '方向':{k:'where',what:'用东南西北找位置',pre:'认识上下左右、前后',next:'第几排第几个（数对）',tool:''}
-};
-var ORDER=['周长','面积','长方形','三角形','平移','方向','角度','体积'];
-(function(){
-  var h='';ORDER.forEach(function(n){h+='<button class="locbtn" data-n="'+n+'" onclick="locate(this,\x27'+n+'\x27)">'+n+'</button>'});
-  document.getElementById('locgrid').innerHTML=h;
-})();
-function locate(btn,name){
-  document.querySelectorAll('.locbtn').forEach(function(b){b.classList.remove('on')});
-  btn.classList.add('on');sfxOK();
-  var d=LOC[name],m=QMETA[d.k];
-  var jump=d.tool?'<a class="r-jump" href="'+d.tool+'">去玩一玩 →</a>':'<div class="r-soon">🚧 这个小工具马上就来啦～</div>';
-  var html='<div class="r-pick">📌 你选的是</div>'
-    +'<div class="r-title">'+name+'</div>'
-    +'<div class="r-row"><span class="r-lbl">它属于哪个问题</span><span class="r-belong">'+m.icon+' 「'+m.q+'」</span> —— '+d.what+'</div>'
-    +'<div class="r-row"><span class="r-lbl">🔻 学它之前，要先会</span>'+d.pre+'</div>'
-    +'<div class="r-row"><span class="r-lbl">🔺 学完它，接下来学</span>'+d.next+'</div>'
-    +jump;
-  var r=document.getElementById('result');
-  r.style.background='linear-gradient(135deg,'+m.color+',#0006)';
-  r.style.background=m.color;
-  r.innerHTML=html;r.classList.add('show');
-  r.scrollIntoView({behavior:'smooth',block:'center'});
+/* 1 形状 */
+function shapeHTML(){
+  return '<div class="pq" style="color:#2980b9">🔺 它长什么样？——认形状</div>'
+  +'<div class="pw">小熊的屋顶该用哪个形状？点一个试试～</div>'
+  +'<div class="shape-opts">'
+  +'<div class="shape-opt" onclick="pickShape(this,1)"><svg viewBox="0 0 46 46"><polygon points="23,4 44,42 2,42" fill="#e8845f"/></svg></div>'
+  +'<div class="shape-opt" onclick="pickShape(this,0)"><svg viewBox="0 0 46 46"><rect x="6" y="6" width="34" height="34" rx="3" fill="#6ba9d8"/></svg></div>'
+  +'<div class="shape-opt" onclick="pickShape(this,0)"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="19" fill="#9fce7a"/></svg></div>'
+  +'</div><div class="pfb" id="pfb"></div>';
 }
-</script>
-</body>
-</html>
+function pickShape(el,ok){
+  if(ok){el.classList.add('good');sfxOK();
+    document.getElementById('roofShape').setAttribute('stroke','#ffd45e');
+    document.getElementById('roofShape').setAttribute('stroke-width','5');
+    document.getElementById('pfb').innerHTML='<span class="ok">✅ 对！屋顶是三角形。</span><br><span style="font-weight:400;color:#8a7e6e">认得出形状，才挑得对零件——这就是几何的第一件事：<b style="color:#2980b9">认形状</b>。</span>';
+    markDone('shape');
+  }else{el.classList.add('bad');sfxNO();setTimeout(function(){el.classList.remove('bad')},450);
+    document.getElementById('pfb').innerHTML='<span class="no">再想想～屋顶是尖尖的哦。</span>';}
+}
+
+/* 2 铺地毯(面积) */
+function sizeHTML(){
+  var g='';for(var i=0;i<12;i++)g+='<div class="cell" onclick="fillCell(this)"></div>';
+  return '<div class="pq" style="color:#e67e22">📏 它有多大？——量大小</div>'
+  +'<div class="pw">帮小熊把地毯铺满地板！点一点每个格子～</div>'
+  +'<div class="fillgrid">'+g+'</div>'
+  +'<div class="cellcount" id="cc">已铺 0 / 12 块</div><div class="pfb" id="pfb2"></div>';
+}
+var filled=0;
+function fillCell(el){
+  if(el.classList.contains('f'))return;
+  el.classList.add('f');filled++;sfxTap();
+  document.getElementById('cc').textContent='已铺 '+filled+' / 12 块';
+  if(filled>=12){sfxOK();
+    document.getElementById('pfb2').innerHTML='<span class="ok">✅ 铺满啦！</span><br><span style="font-weight:400;color:#8a7e6e">铺满用了 12 块 = <b style="color:#e67e22">面积</b>；绕地毯一圈的长 = <b style="color:#e67e22">周长</b>。量大小，就是几何的第二件事。</span>';
+    markDone('size');filled=0;}
+}
+
+/* 3 开门(旋转) */
+var doorOpen=false;
+function moveHTML(){
+  return '<div class="pq" style="color:#27ae60">🔄 它怎么动？——玩变形</div>'
+  +'<div class="pw">小熊要进屋，帮它把门推开～</div>'
+  +'<button class="doorbtn" onclick="swingDoor()" id="db">👉 推开门</button>'
+  +'<div class="pfb" id="pfb3"></div>';
+}
+function swingDoor(){
+  doorOpen=!doorOpen;
+  var g=document.getElementById('doorG');
+  g.style.transform=doorOpen?'scaleX(0.16)':'scaleX(1)';
+  document.getElementById('db').textContent=doorOpen?'👈 关上门':'👉 推开门';
+  sfxTap();
+  if(doorOpen){sfxOK();
+    document.getElementById('pfb3').innerHTML='<span class="ok">✅ 门转开啦，小熊进屋咯！</span><br><span style="font-weight:400;color:#8a7e6e">门绕着门轴<b style="color:#27ae60">转</b>——这就是几何的第三件事：<b style="color:#27ae60">图形怎么动</b>（平移、旋转、对称）。</span>';
+    markDone('move');}
+}
+
+/* 4 放书(位置) */
+function whereHTML(){
+  var g='';for(var r=1;r<=3;r++)for(var col=1;col<=3;col++)g+='<div class="scell" data-r="'+r+'" data-c="'+col+'" onclick="placeBook(this)"></div>';
+  return '<div class="pq" style="color:#8e44ad">🧭 它在哪里？——找位置</div>'
+  +'<div class="pw">把小熊的书 📕 放到 <b>第 2 排、从左数第 3 个</b> 格子～</div>'
+  +'<div class="rowlab">↓ 从上往下数排，从左往右数个 ↓</div>'
+  +'<div class="shelfgrid">'+g+'</div><div class="pfb" id="pfb4"></div>';
+}
+function placeBook(el){
+  var r=el.getAttribute('data-r'),col=el.getAttribute('data-c');
+  if(r==='2'&&col==='3'){el.classList.add('good');el.textContent='📕';sfxOK();
+    document.getElementById('pfb4').innerHTML='<span class="ok">✅ 找对啦！第 2 排第 3 个。</span><br><span style="font-weight:400;color:#8a7e6e">说清"第几排第几个"，就是几何的第四件事：<b style="color:#8e44ad">图形在哪里</b>（方向、数对）。</span>';
+    markDone('where');
+  }else{el.classList.add('bad');sfxNO();setTimeout(function(){el.classList.remove('bad')},450);
+    document.getElementById('pfb4').innerHTML='<span class="no">不对哦～第 2 排（上往下第2行），从左数第 3 个。</span>';}
+}
+
+/* 展开卡片 */
+var ASPECTS=[
+  {icon:'👀',name:'它长什么样？',cls:'c-know',subs:[['长方形·正方形',''],['三角形',''],['圆',''],['点·线·角',''],['长方体·圆柱','']]},
+  {icon:'📏',name:'它有多大？',cls:'c-measure',subs:[['长度·角度',''],['周长',' perimeter.html'],['面积',' area.html'],['体积','']]},
+  {icon:'🔄',name:'它怎么动？',cls:'c-move',subs:[['平移',''],['旋转',''],['轴对称',''],['放大缩小','']]},
+  {icon:'🧭',name:'它在哪里？',cls:'c-where',subs:[['方向',''],['数对',''],['路线图','']]}
+];
+(function(){var h='';ASPECTS.forEach(function(a,i){
+  h+='<div class="asp-card" onclick="tAsp(this)"><div class="asp-top"><span class="asp-em">'+a.icon+'</span><span class="asp-name '+a.cls+'">'+a.name+'</span><span class="asp-arrow">▼</span></div><div class="asp-body">';
+  a.subs.forEach(function(s){var l=s[1].trim();if(l)h+='<a class="asp-link" href="'+l+'">'+s[0]+' 🔗</a>';else h+='<span class="asp-soon">'+s[0]+'</span>'});
+  h+='</div></div>';});
+  document.getElementById('aspectCards').innerHTML=h;})();
+function tAsp(el){el.classList.toggle('open')}
+
+/* 路线图 */
+var STOPS=[['小学低段','认形状','here'],['小学中段','周长·面积','next'],['小学高段','体积·运动·位置','future'],['初中','证明·勾股·圆','future'],['高中','坐标·立体','future']];
+(function(){var h='<div class="road-line"></div><div class="road-stops">';
+  STOPS.forEach(function(s){var c=s[2]==='here'?' here':(s[2]==='future'?' future':'');
+    h+='<div class="road-stop'+c+'"><div class="rs-dot"></div><div class="rs-stage">'+s[0]+'</div><div class="rs-name">'+s[1]+'</div>'+(s[2]==='here'?'<div class="rs-flag">你在这里</div>':'')+'</div>';});
+  h+='</div>';document.getElementById('road').innerHTML=h;})();
+</script></body></html>
