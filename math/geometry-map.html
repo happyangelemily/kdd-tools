@@ -122,6 +122,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .jvista-hd{margin:14px 0 8px 20px;font-size:.8em;color:#b7ae9e;font-weight:600}
 .jvista{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;margin:0 0 8px 20px;background:#f6f2ea;border:1.5px dashed #ddd4c4;border-radius:12px;opacity:.9}
 .jvista .ve{font-size:1.7em}.jvista .vt{font-weight:700;font-size:.86em;color:#9b8f7c}.jvista .vs{font-size:.74em;color:#b7ae9e;line-height:1.5}
+
+.fam{display:flex;flex-direction:column;gap:8px}
+.famcard{border-radius:14px;border:1.5px solid #e6dfd2;overflow:hidden;background:#fff;transition:all .2s}
+.famcard.know{border-color:#a9cce3}.famcard.measure{border-color:#f0c090}.famcard.move{border-color:#a6dcb8}.famcard.where{border-color:#cdb0dd}
+.fhd{display:flex;align-items:center;gap:9px;padding:13px 14px;cursor:pointer;font-weight:700;font-size:.94em}
+.famcard.know .fhd{color:#2980b9}.famcard.measure .fhd{color:#e67e22}.famcard.move .fhd{color:#27ae60}.famcard.where .fhd{color:#8e44ad}
+.fhd .fem{font-size:1.35em}
+.fhd .fcue{margin-left:auto;font-size:.72em;color:#bcb4a8;font-weight:400}
+.fhd .farr{font-size:.7em;color:#c3bbac;transition:transform .25s;margin-left:6px}
+.famcard.open .farr{transform:rotate(180deg)}
+.fbody{display:none;flex-wrap:wrap;gap:7px;padding:0 14px 14px}
+.famcard.open .fbody{display:flex}
+.fmem{padding:7px 13px;border-radius:15px;background:#faf7f1;border:1px solid #e6dfd2;font-size:.84em;font-weight:600;color:#5b5348;animation:pop .35s both}
+.famcard.know .fmem{border-left:3px solid #2980b9}.famcard.measure .fmem{border-left:3px solid #e67e22}.famcard.move .fmem{border-left:3px solid #27ae60}.famcard.where .fmem{border-left:3px solid #8e44ad}
 </style></head><body>
 <div class="page">
 
@@ -209,7 +223,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
   <div class="play" id="play"></div>
 
-  <div class="section-hd"><h2>🎮 给几何知识找个「家」</h2><div class="hd-sub">造小屋你学会了这 4 件事，把下面的知识送回它属于的那件事～</div></div>
+  <div class="section-hd"><h2>📂 每一类，还有哪些成员？</h2><div class="hd-sub">造小屋只是举了个例子～点开每一类，看看它的大家庭（🏠=小屋里玩过的）</div></div>
+  <div class="fam" id="fam"></div>
+
+  <div class="section-hd"><h2>🎮 考考你：给知识找个「家」</h2><div class="hd-sub">认识了这么多成员，把下面的知识送回它属于的那件事～</div></div>
   <div class="sortwrap"><div class="chips" id="chips"></div><div class="bins" id="bins"></div><div class="sortfb" id="sortfb"></div></div>
 
   <div class="section-hd"><h2>🗺️ 几何这条路，你才刚起步</h2><div class="hd-sub">造小屋学的 4 件事，会一路陪你到高中～</div></div>
@@ -316,6 +333,23 @@ function placeBook(el){
 }
 
 /* 展开卡片 */
+/* 每一类大家庭 */
+var FAM=[
+ {a:'know',icon:'👀',name:'长什么样',mem:[['三角形',1],['长方形',0],['圆',0],['角',0],['长方体·圆柱',0]]},
+ {a:'measure',icon:'📏',name:'有多大',mem:[['长度',0],['周长',1],['面积',1],['体积',0],['角度',0]]},
+ {a:'move',icon:'🔄',name:'怎么动',mem:[['平移',0],['旋转',1],['轴对称',0],['放大缩小',0]]},
+ {a:'where',icon:'🧭',name:'在哪里',mem:[['方向',0],['数对',1],['路线图',0]]}
+];
+(function(){
+  var h='';FAM.forEach(function(f){
+    h+='<div class="famcard '+f.a+'" id="fam-'+f.a+'"><div class="fhd" onclick="toggleFam(\''+f.a+'\')"><span class="fem">'+f.icon+'</span><span>'+f.name+'</span><span class="fcue">点开看大家庭</span><span class="farr">▼</span></div><div class="fbody">';
+    f.mem.forEach(function(m,i){h+='<span class="fmem" style="animation-delay:'+(i*0.05)+'s">'+m[0]+(m[1]?' 🏠':'')+'</span>'});
+    h+='</div></div>';
+  });
+  document.getElementById('fam').innerHTML=h;
+})();
+function toggleFam(a){var el=document.getElementById('fam-'+a);el.classList.toggle('open');sfxTap();}
+
 /* 分类小游戏 */
 var BINS=[{a:'know',icon:'👀',name:'长什么样'},{a:'measure',icon:'📏',name:'有多大'},{a:'move',icon:'🔄',name:'怎么动'},{a:'where',icon:'🧭',name:'在哪里'}];
 var CHIPS=[{t:'长方形',a:'know'},{t:'三角形',a:'know'},{t:'周长',a:'measure',l:'perimeter.html'},{t:'面积',a:'measure',l:'area.html'},{t:'对称',a:'move'},{t:'旋转',a:'move'},{t:'方向',a:'where'},{t:'数对',a:'where'}];
