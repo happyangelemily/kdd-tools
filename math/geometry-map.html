@@ -169,6 +169,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .meanbox svg{flex-shrink:0}
 .meantx{font-size:.82em;color:#5b5348;line-height:1.5}
 .rcell{cursor:pointer}
+.mbtn.gd{background:#e6f6ec;border-color:#27ae60;color:#27ae60}.mbtn.bad2{border-color:#e67e22;animation:sh .4s}
 </style></head><body>
 <div class="page">
 
@@ -192,6 +193,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
       <rect x="0" y="0" width="560" height="400" fill="url(#sky)"/>
       <circle cx="490" cy="66" r="34" fill="url(#sun)"/>
+      <g id="moveCloud" style="transition:transform 1s ease"><ellipse cx="235" cy="70" rx="30" ry="16" fill="#fff"/><ellipse cx="258" cy="64" rx="22" ry="13" fill="#fff"/><ellipse cx="214" cy="64" rx="17" ry="11" fill="#fff"/></g>
       <rect x="0" y="300" width="560" height="100" fill="url(#grass)"/>
       <!-- 云 -->
       <g fill="#ffffff" opacity=".85"><ellipse cx="110" cy="70" rx="34" ry="18"/><ellipse cx="140" cy="66" rx="26" ry="16"/><ellipse cx="80" cy="66" rx="22" ry="14"/></g>
@@ -231,16 +233,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
       </g>
 
       <!-- 地毯 -->
-      <g id="rugG"><rect id="rugRect" x="70" y="286" width="200" height="26" rx="8" fill="#efd9b3" stroke="#d8bd8e" stroke-width="1.5" stroke-dasharray="3 4"/>
-      <g fill="#d8bd8e"><rect x="96" y="291" width="9" height="16"/><rect x="124" y="291" width="9" height="16"/><rect x="152" y="291" width="9" height="16"/><rect x="180" y="291" width="9" height="16"/><rect x="208" y="291" width="9" height="16"/><rect x="236" y="291" width="9" height="16"/></g></g>
+      <g id="rugG"><rect id="rugRect" x="150" y="322" width="160" height="46" rx="8" fill="#efd9b3" stroke="#d8bd8e" stroke-width="1.6"/></g>
 
       <!-- 时钟(圆) -->
       <g id="clockG"><circle id="clockShape" cx="172" cy="184" r="13" fill="#fff8ee" stroke="#b5794a" stroke-width="2.5"/><line x1="172" y1="184" x2="172" y2="176" stroke="#8a5a38" stroke-width="1.6"/><line x1="172" y1="184" x2="178" y2="187" stroke="#8a5a38" stroke-width="1.6"/></g>
       <g id="ruler" opacity="0"><line x1="262" y1="222" x2="262" y2="310" stroke="#e67e22" stroke-width="2.5"/><line x1="257" y1="222" x2="267" y2="222" stroke="#e67e22" stroke-width="2.5"/><line x1="257" y1="310" x2="267" y2="310" stroke="#e67e22" stroke-width="2.5"/><text x="270" y="270" font-size="12" fill="#d35400">门高</text></g>
-      <g id="rugCells" opacity="0"><rect class="rcell" x="74" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="98" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="122" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="146" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="170" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="194" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="218" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="242" y="289" width="22" height="18" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/></g>
+      <g id="rugCells" opacity="0"><rect class="rcell" x="154" y="325" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="192" y="325" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="230" y="325" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="268" y="325" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="154" y="346" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="192" y="346" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="230" y="346" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/><rect class="rcell" x="268" y="346" width="36" height="19" rx="2" fill="#f2b76a" opacity="0" onclick="fillRCell(this)"/></g>
       <line id="winAxis" x1="315" y1="178" x2="315" y2="232" stroke="#d63a2f" stroke-width="1.2" stroke-dasharray="3 3" opacity="0"/>
       <g id="winFlower" opacity="0" style="transition:opacity .5s"><g fill="#d94436"><ellipse cx="315" cy="193" rx="4.5" ry="9"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(45 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(90 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(135 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(180 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(225 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(270 315 205)"/><ellipse cx="315" cy="193" rx="4.5" ry="9" transform="rotate(315 315 205)"/></g><circle cx="315" cy="205" r="4.5" fill="#f2d7b0"/></g>
-      <g id="sofa" style="transition:transform .9s ease"><rect x="252" y="322" width="54" height="16" rx="5" fill="#e08a5a"/><rect x="250" y="308" width="12" height="30" rx="5" fill="#d47a4a"/><rect x="296" y="308" width="12" height="30" rx="5" fill="#d47a4a"/><rect x="258" y="312" width="40" height="13" rx="4" fill="#f0a878"/></g>
       <!-- 小熊 -->
       <g>
         <ellipse cx="96" cy="315" rx="17" ry="15" fill="#c69a6c"/>
@@ -322,14 +322,14 @@ function showSize(t){sfxTap();
   else{document.getElementById('rugCells').setAttribute('opacity','1');document.querySelectorAll('.rcell').forEach(function(c){c.setAttribute('opacity','1')});document.getElementById('pfb2').innerHTML='<span class="no">👆 点小屋地毯上的格子，铺满看看！</span>';}}
 function fillRCell(el){if(el.getAttribute('data-f'))return;el.setAttribute('data-f','1');el.setAttribute('fill','#e6913a');sfxTap();rfilled++;if(rfilled>=8){sizeSeen.area=1;sfxOK();chkSize();}}
 function chkSize(){if(sizeSeen.len&&sizeSeen.peri&&sizeSeen.area){document.getElementById('pfb2').innerHTML='<span class="ok">✅ 长度·周长·面积——量「大小」有好几种问法，<br>这就是几何的<b style="color:#e67e22">有多大</b>。</span>';markDone('size');}}
-var moveSeen={},doorOpen=false,sofaOut=false;
+var moveSeen={},doorOpen=false,cloudOut=false;
 function moveHTML(){moveSeen={};
   return '<div class="pq" style="color:#27ae60">🔄 它怎么动？——玩变形</div><div class="pw">看小屋！点一下，让小屋上的东西真的动起来～</div>'
-  +'<div class="mbtns"><button class="mbtn" id="mvDoorBtn" onclick="mvDoor()">🚪 推开门</button><button class="mbtn" onclick="mvFlower()">🪞 剪窗花</button><button class="mbtn" id="mvSofaBtn" onclick="mvSofa()">➡️ 推沙发</button></div>'
+  +'<div class="mbtns"><button class="mbtn" id="mvDoorBtn" onclick="mvDoor()">🚪 推开门</button><button class="mbtn" onclick="mvFlower()">🪞 剪窗花</button><button class="mbtn" id="mvCloudBtn" onclick="mvCloud()">☁️ 吹云朵</button></div>'
   +'<div class="pfb" id="pfb3"></div>';}
 function mvDoor(){doorOpen=!doorOpen;document.getElementById('doorG').style.transform=doorOpen?'scaleX(0.16)':'scaleX(1)';document.getElementById('mvDoorBtn').textContent=doorOpen?'👈 关上门':'🚪 推开门';sfxTap();if(doorOpen){moveSeen.rot=1;sfxOK();fb3('🚪 门绕门轴转开 → <b>旋转</b>');}}
 function mvFlower(){moveSeen.sym=1;sfxTap();sfxOK();document.getElementById('winAxis').setAttribute('opacity','1');document.getElementById('winFlower').setAttribute('opacity','1');fb3('🪞 沿中线对折剪出来，两边一模一样 → <b>轴对称</b>');}
-function mvSofa(){sofaOut=!sofaOut;document.getElementById('sofa').style.transform=sofaOut?'translateX(150px)':'translateX(0)';document.getElementById('mvSofaBtn').textContent=sofaOut?'⬅️ 推回来':'➡️ 推沙发';sfxTap();if(sofaOut){moveSeen.tran=1;sfxOK();fb3('➡️ 沙发整个推着走，方向不变 → <b>平移</b>');}}
+function mvCloud(){cloudOut=!cloudOut;document.getElementById('moveCloud').style.transform=cloudOut?'translateX(190px)':'translateX(0)';document.getElementById('mvCloudBtn').textContent=cloudOut?'⬅️ 吹回来':'☁️ 吹云朵';sfxTap();if(cloudOut){moveSeen.tran=1;sfxOK();fb3('☁️ 云朵整个飘着走，样子不变 → <b>平移</b>');}}
 function fb3(t){var dn=moveSeen.rot&&moveSeen.sym&&moveSeen.tran;document.getElementById('pfb3').innerHTML='<span class="ok">'+(dn?'✅ 旋转·对称·平移——图形动起来的方法，就是几何的<b style="color:#27ae60">怎么动</b>。':t)+'</span>';if(dn)markDone('move');}
 function whereHTML(){glowEl('shelfBox','#8e44ad');
   var g='';for(var r=1;r<=3;r++)for(var col=1;col<=3;col++)g+='<div class="scell" data-r="'+r+'" data-c="'+col+'" onclick="placeBook(this)"></div>';
@@ -338,9 +338,9 @@ function placeBook(el){if(document.querySelector('.scell.good'))return;
   var r=el.getAttribute('data-r'),col=el.getAttribute('data-c');
   if(r==='2'&&col==='3'){el.classList.add('good');el.textContent='📕';sfxOK();
     document.getElementById('pfb4').innerHTML='<span class="ok">✅ 找对啦！你用「第 2 排、第 3 个」找到了它——<br>这在数学里就叫 <b style="color:#8e44ad">数对 (3, 2)</b>：先说第几列，再说第几排。</span>';
-    document.getElementById('dirq').innerHTML='<div class="pw" style="margin-top:14px">再想想——小屋的门朝哪个方向开呢？</div><div class="mbtns"><button class="mbtn" onclick="pickDir(this)">⬇️ 南</button><button class="mbtn" onclick="pickDir(this)">⬆️ 北</button><button class="mbtn" onclick="pickDir(this)">➡️ 东</button></div>';
+    document.getElementById('dirq').innerHTML='<div class="pw" style="margin-top:14px">🧭 记住「上北 下南」。小屋的门朝下、朝着我们开——那是哪个方向？</div><div class="mbtns"><button class="mbtn" onclick="pickDir(this,1)">⬇️ 南</button><button class="mbtn" onclick="pickDir(this,0)">⬆️ 北</button><button class="mbtn" onclick="pickDir(this,0)">➡️ 东</button></div>';
   }else{el.classList.add('bad');sfxNO();setTimeout(function(){el.classList.remove('bad')},450);document.getElementById('pfb4').innerHTML='<span class="no">不对哦～第 2 排（上往下第 2 行），从左数第 3 个。</span>';}}
-function pickDir(btn){btn.parentNode.querySelectorAll('.mbtn').forEach(function(b){b.disabled=true});sfxOK();document.getElementById('dirq').insertAdjacentHTML('beforeend','<div class="pfb"><span class="ok">✅ 用「方向」加「第几排第几个」说清位置——<br>这就是几何的 <b style="color:#8e44ad">在哪里</b>。</span></div>');markDone('where');}
+function pickDir(btn,ok){if(document.querySelector('#dirq .mbtn.gd'))return;if(ok){btn.classList.add('gd');btn.parentNode.querySelectorAll('.mbtn').forEach(function(b){b.disabled=true});sfxOK();document.getElementById('dirq').insertAdjacentHTML('beforeend','<div class="pfb"><span class="ok">✅ 对！门朝下、朝着我们，就是朝<b>南</b>。<br>用「方向」加「第几排第几个」说清位置——这就是几何的 <b style="color:#8e44ad">在哪里</b>。</span></div>');markDone('where');}else{btn.classList.add('bad2');sfxNO();setTimeout(function(){btn.classList.remove('bad2')},450);}}
 
 /* 每一类大家庭 */
 var FAM=[
