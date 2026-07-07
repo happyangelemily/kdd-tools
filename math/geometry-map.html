@@ -136,6 +136,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .famcard.open .fbody{display:flex}
 .fmem{padding:7px 13px;border-radius:15px;background:#faf7f1;border:1px solid #e6dfd2;font-size:.84em;font-weight:600;color:#5b5348;animation:pop .35s both}
 .famcard.know .fmem{border-left:3px solid #2980b9}.famcard.measure .fmem{border-left:3px solid #e67e22}.famcard.move .fmem{border-left:3px solid #27ae60}.famcard.where .fmem{border-left:3px solid #8e44ad}
+
+.jstart2{background:linear-gradient(135deg,#fff3e0,#fff8f0);border:1.5px solid #f0d0a8;border-radius:14px;padding:12px 14px;margin-bottom:10px;font-size:.86em;color:#a9713a;line-height:1.6;text-align:center;font-weight:600}
+.track{border-radius:13px;padding:11px 13px 8px;margin-bottom:9px;border-left:4px solid #ccc;background:#fff}
+.track.know{border-color:#2980b9;background:linear-gradient(135deg,rgba(41,128,185,.06),rgba(41,128,185,.01))}
+.track.measure{border-color:#e67e22;background:linear-gradient(135deg,rgba(230,126,34,.06),rgba(230,126,34,.01))}
+.track.move{border-color:#27ae60;background:linear-gradient(135deg,rgba(39,174,96,.06),rgba(39,174,96,.01))}
+.track.where{border-color:#8e44ad;background:linear-gradient(135deg,rgba(142,68,173,.06),rgba(142,68,173,.01))}
+.track-hd{display:flex;align-items:center;gap:7px;font-weight:800;font-size:.94em;margin-bottom:8px}
+.track.know .track-hd{color:#2980b9}.track.measure .track-hd{color:#e67e22}.track.move .track-hd{color:#27ae60}.track.where .track-hd{color:#8e44ad}
+.tstep{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:.81em;color:#5b5348;line-height:1.45}
+.tstep .tn{flex-shrink:0;width:19px;height:19px;border-radius:50%;font-size:.62em;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.track.know .tn{background:#2980b9}.track.measure .tn{background:#e67e22}.track.move .tn{background:#27ae60}.track.where .tn{background:#8e44ad}
 </style></head><body>
 <div class="page">
 
@@ -379,12 +391,20 @@ function dropBin(a){
 }
 renderSort();
 
-/* 旅程路线图 */
-var JLE=[{n:'认识图形（立体·平面）',a:'know'},{n:'方向与位置',a:'where'},{n:'周长',a:'measure'},{n:'角 · 平行与垂直',a:'know'},{n:'面积',a:'measure'},{n:'平移 · 旋转 · 对称',a:'move'},{n:'圆的认识',a:'know'},{n:'体积 · 数对',a:'measure'}];
-var TAGN={know:'长什么样',measure:'有多大',move:'怎么动',where:'在哪里'};
+/* 旅程路线图（4主线，完整版）*/
+var TRACKS=[
+ {a:'know',icon:'👀',name:'长什么样',steps:['直观辨认立体·平面图形，图形拼搭组合','认识线段','认识角（直角·锐角·钝角）· 从不同角度观察物体','线段·射线·直线，认识平行与垂直','三角形·平行四边形·梯形的特征','圆·扇形的特征']},
+ {a:'measure',icon:'📏',name:'有多大',steps:['认识厘米·米，学会量长短','长度单位：毫米·分米·千米','长方形·正方形的周长','长方形·正方形的面积（面积单位）','平行四边形·三角形·梯形的面积','长方体·正方体的表面积·体积','圆的周长·圆的面积','圆柱·圆锥的表面积·体积']},
+ {a:'move',icon:'🔄',name:'怎么动',steps:['感知平移·对称·旋转（生活实例）','轴对称图形补全·平移作图','图形旋转90°作图·设计图案','图形放大·缩小，理解比例尺']},
+ {a:'where',icon:'🧭',name:'在哪里',steps:['前后·左右·上下','东南西北·八个方向·看路线图','方向+距离，精准定位物体','数对（列·行）标记点位','结合比例尺，画/读综合路线图']}
+];
 (function(){
-  var h='<div class="jstart"><span class="je">🐻🏠</span><span><span class="jt">你在这里 · 正在造小屋</span><br><span class="js">小学阶段，把这 4 件事一样样学会</span></span></div>';
-  JLE.forEach(function(x){h+='<div class="jitem"><span class="jdot jd-'+x.a+'"></span><span class="jname">'+x.n+'</span><span class="jtag jt-'+x.a+'">'+TAGN[x.a]+'</span></div>'});
+  var h='<div class="jstart2">🐻🏠 你在这里 · 正在造小屋<br>小学阶段，这 4 条主线会一路加深 ↓</div>';
+  TRACKS.forEach(function(t){
+    h+='<div class="track '+t.a+'"><div class="track-hd">'+t.icon+' '+t.name+'</div>';
+    t.steps.forEach(function(st,i){h+='<div class="tstep"><span class="tn">'+(i+1)+'</span><span>'+st+'</span></div>'});
+    h+='</div>';
+  });
   h+='<div class="jvista-hd">🏔️ 远处的风景（以后才到，现在瞄一眼就好 😌）</div>';
   h+='<div class="jvista"><span class="ve">🏛️</span><span><span class="vt">初中</span><br><span class="vs">几何证明 · 勾股定理 · 圆<br>——学会讲清楚「为什么牢」</span></span></div>';
   h+='<div class="jvista"><span class="ve">🏙️</span><span><span class="vt">高中</span><br><span class="vs">立体几何 · 坐标几何<br>——在立体空间里造大世界</span></span></div>';
