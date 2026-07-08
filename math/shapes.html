@@ -48,192 +48,28 @@ h2{font-size:1.08em;color:#2980b9;text-align:center;margin:4px 0 8px}
 .lcard .ld{font-size:.72em;color:#a9a094;margin-top:3px;line-height:1.4}
 .lcard.sel{border-color:#d35400;box-shadow:0 0 0 2px rgba(212,83,0,.2)}
 
-/* 闯关 */
-.qwrap{max-width:400px;margin:10px auto}
-.qcard{background:#fff;border:1px solid #ece3d5;border-radius:16px;padding:16px;margin:8px 0}
-.qq{font-size:.95em;font-weight:700;margin-bottom:10px}
-.qrow{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.qbtn{padding:8px 16px;border-radius:18px;border:1.5px solid #d8cfbe;background:#fcf9f4;font-size:.84em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
-.qbtn:active{transform:scale(.94)}
-.qbtn.lkd{pointer-events:none}
-.qbtn.r{background:#e6f6ec;border-color:#27ae60;color:#27ae60}
-.qbtn.w{background:#fdeee0;border-color:#e67e22;color:#e67e22}
-.qexp{margin-top:8px;font-size:.82em;min-height:20px}
-.qnav{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:10px}
-.qnav .qdot{width:12px;height:12px;border-radius:50%;border:1.5px solid #d8cfbe;background:#fff}
-.qnav .qdot.r{background:#27ae60;border-color:#27ae60}
-.qnav .qdot.w{background:#e67e22;border-color:#e67e22}
-.qnav .qdot.cur{border-color:#d35400;box-shadow:0 0 6px rgba(212,83,0,.3)}
-.qfinal{text-align:center;padding:16px;background:#fff8ef;border:1.5px solid #f0d0a8;border-radius:16px;margin-top:12px;display:none}
-.qfinal.show{display:block}
-.foot{text-align:center;color:#c3bbac;font-size:.78em;margin:30px 0 10px;line-height:1.6}
-@keyframes pop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
-@media(max-width:420px){.hero h1{font-size:1.16em}.s3dcard{min-width:66px;padding:10px 6px}}
-</style></head><body>
-<div class="page">
-  <div class="hero">
-    <h1>🔍 小侦探找形状</h1>
-    <div class="sub">图形是怎么来的？从<b>摸得到</b>走到<b>看得见</b>，<br>一步一步发现所有的秘密！</div>
-  </div>
-
-  <!-- 步骤1 -->
-  <div class="step-tag">步骤 1</div>
-  <h2>🧊 摸一摸——这些立体的东西</h2>
-  <div class="guide">我们周围的东西，好多是"站得起来"的立体图形～<br>点一点下面的，看看它们身上藏着哪些<b>平面图形</b>？</div>
-  <div class="shape3d">
-    <div class="s3dcard" onclick="revealFlat(this,0)"><span class="s3emoji">🟦</span><span class="s3name">正方体</span></div>
-    <div class="s3dcard" onclick="revealFlat(this,1)"><span class="s3emoji">🟫</span><span class="s3name">长方体</span></div>
-    <div class="s3dcard" onclick="revealFlat(this,2)"><span class="s3emoji">🔵</span><span class="s3name">球</span></div>
-    <div class="s3dcard" onclick="revealFlat(this,3)"><span class="s3emoji">🥫</span><span class="s3name">圆柱</span></div>
-  </div>
-  <div class="flat-reveal" id="flatRev"></div>
-  <div class="hint" id="flatHint"></div>
-
-  <!-- 步骤2 -->
-  <div class="step-tag">步骤 2</div>
-  <h2>🔺 分一分——这些扁扁的图形</h2>
-  <div class="guide">认识的平面图形越来越多了！<br>把它们<b>拖进或点进</b>对应的筐里～</div>
-  <canvas id="sortCanvas" width="440" height="300"></canvas>
-  <div class="bin-row">
-    <div class="bin" id="binTri"><span style="font-size:1.3em">🔺</span> 三角形<i id="cntTri">0/4</i></div>
-    <div class="bin" id="binSq"><span style="font-size:1.3em">🟦</span> 四边形<i id="cntSq">0/4</i></div>
-    <div class="bin" id="binCir"><span style="font-size:1.3em">⚪</span> 圆形<i id="cntCir">0/4</i></div>
-  </div>
-  <div class="guide" id="sortFb"></div>
-
-  <!-- 步骤3 -->
-  <div class="step-tag">步骤 3</div>
-  <h2>📐 角的秘密——张开多大？</h2>
-  <div class="guide">角就是两条边张开的"口子"～<br>拖动那条活动边，看看角怎么变大变小！</div>
-  <div class="angle-wrap">
-    <canvas id="angleCanvas" width="340" height="220"></canvas>
-    <div class="angle-val" id="angleVal"></div>
-    <div class="angle-info" id="angleInfo"></div>
-  </div>
-
-  <!-- 步骤4 -->
-  <div class="step-tag">步骤 4</div>
-  <h2>➖ 线条三兄弟</h2>
-  <div class="guide">点一下，看它们仨有什么不一样～</div>
-  <div class="lines">
-    <div class="lcard" onclick="pickLine(this,'线段')"><svg viewBox="0 0 60 20" width="70"><circle cx="10" cy="10" r="3" fill="#d35400"/><line x1="13" y1="10" x2="47" y2="10" stroke="#d35400" stroke-width="2.5"/><circle cx="50" cy="10" r="3" fill="#d35400"/></svg><div class="ln">线段</div><div class="ld">两头都有终点</div></div>
-    <div class="lcard" onclick="pickLine(this,'射线')"><svg viewBox="0 0 60 20" width="70"><circle cx="10" cy="10" r="3" fill="#27ae60"/><line x1="13" y1="10" x2="55" y2="10" stroke="#27ae60" stroke-width="2.5"/><polygon points="55,7 60,10 55,13" fill="#27ae60"/></svg><div class="ln">射线</div><div class="ld">一头有终点<br>另一头无限远</div></div>
-    <div class="lcard" onclick="pickLine(this,'直线')"><svg viewBox="0 0 60 20" width="70"><line x1="3" y1="10" x2="57" y2="10" stroke="#8e44ad" stroke-width="2.5"/><polygon points="3,7 0,10 3,13" fill="#8e44ad"/><polygon points="57,7 60,10 57,13" fill="#8e44ad"/></svg><div class="ln">直线</div><div class="ld">两头都<br>没有终点</div></div>
-  </div>
-  <div class="guide" id="lineFb" style="min-height:20px"></div>
-
-  <!-- 闯关 -->
-  <div class="step-tag">🏆 闯关挑战</div>
-  <div class="qwrap">
-    <div class="qnav" id="qdots"></div>
-    <div id="qbody"></div>
-    <div class="qfinal" id="qfinal"></div>
-  </div>
-
-  <div class="foot">可豆妈妈 · 更多图形小工具陆续上线 🌱</div>
-</div>
-
-<script>
-function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
-function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
-function sfxNO(){beep(200,.18,'triangle')}
-function sfxTap(){beep(560,.08)}
-
-/* step1 立体→平面 */
-var flatData=[{n:'正方体',f:['正方形'],e:'正方形 🟧'},{n:'长方体',f:['长方形','正方形'],e:'长方形 🟨 + 正方形 🟧'},{n:'球',f:['圆'],e:'圆 ⚪ （球从哪看都是圆）'},{n:'圆柱',f:['圆','长方形'],e:'上下两个圆 ⚪ + 卷起来的长方形 🟨'}];
-function revealFlat(el,i){
-  document.querySelectorAll('.s3dcard').forEach(function(c){c.classList.remove('show')});
-  el.classList.add('show');
-  var d=flatData[i],r=document.getElementById('flatRev');
-  var emoji='';d.f.forEach(function(f){emoji+='<span class="femoji">'+(f==='正方形'?'🟧':f==='长方形'?'🟨':'⚪')+'</span>'});
-  r.innerHTML='<b>'+d.n+'</b> 拆开看看 → 它的每个面都是：<br>'+d.e;r.classList.add('on');
-  document.getElementById('flatHint').innerHTML='💡 所以呀——<b>每个立体的东西，都是由扁扁的平面图形拼成的</b>！';
-  sfxTap();
+/* 闯关（独立数据，避免嵌套引用）*/
+var quizData=[{q:'正方体的每个面是什么形状？',o:['三角形','正方形','圆'],a:1,x:'正方体的 6 个面都是正方形'},{q:'球从哪个方向看都是什么？',o:['正方形','三角形','圆'],a:2,x:'球从哪看都是圆'},{q:'圆柱有几个圆形的面？',o:['1个','2个','3个'],a:1,x:'圆柱上下两个面都是圆'},{q:'哪个角等于 90°？',o:['锐角','直角','钝角'],a:1,x:'直角方方正正 90°，像课桌角'},{q:'线段和直线的区别？',o:['线段有头有尾','线段更长','一样'],a:0,x:'线段有头有尾（能量长度）；直线没头没尾'},{q:'射线有几头有终点？',o:['两头都有','一头有','都没有'],a:1,x:'射线一头有起点，另一头无限射出去'},{q:'以下哪个是平面图形？',o:['正方体','球','三角形'],a:2,x:'三角形是扁扁的平面图形；正方体和球是立体的'},{q:'一个角张开 105° 叫什么？',o:['锐角','直角','钝角'],a:2,x:'大于 90° 的就是钝角！'}];
+var quizQs=[],quizCur=0,quizAs=[];
+function initQuiz(){
+  var pool=quizData.slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
+  quizQs=pool.slice(0,5);quizCur=0;quizAs=[void 0,void 0,void 0,void 0,void 0];renderQuiz()
 }
-
-/* step2 分一分 */
-var sortCanvas=document.getElementById('sortCanvas'),sctx=sortCanvas.getContext('2d'),SW=440,SH=300;
-var items=[{t:'tri',label:'三角形',c:'#e0a060'},{t:'tri',label:'三角形',c:'#e0a060'},{t:'tri',label:'三角形',c:'#e0a060'},{t:'tri',label:'三角形',c:'#e0a060'},{t:'sq',label:'四边形',c:'#6ba9d8'},{t:'sq',label:'四边形',c:'#6ba9d8'},{t:'sq',label:'四边形',c:'#6ba9d8'},{t:'sq',label:'四边形',c:'#6ba9d8'},{t:'cir',label:'圆形',c:'#7fca7f'},{t:'cir',label:'圆形',c:'#7fca7f'},{t:'cir',label:'圆形',c:'#7fca7f'},{t:'cir',label:'圆形',c:'#7fca7f'}];
-function shuf(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=arr[i];arr[i]=arr[j];arr[j]=t}return arr}
-var pool=shuf(items.map(function(_,i){return i})),placed={},dragIdx=-1,dragX=0,dragY=0,itemX=[],itemY=[];
-var cnt={tri:0,sq:0,cir:0};
-function drawSort(){
-  sctx.clearRect(0,0,SW,SH);
-  sctx.fillStyle='#fcf9f4';sctx.fillRect(0,0,SW,SH);
-  var cols=4,x0=(SW-cols*88)/2,y0=20,gap=16;
-  pool.forEach(function(idx,i){if(placed[idx])return;var col=i%cols,row=Math.floor(i/cols);var x=x0+col*88,y=y0+row*80;itemX[idx]=x;itemY[idx]=y;drawShape(x+14,y+20,items[idx].t,items[idx].c,true);});
-}
-function drawShape(cx,cy,t,c,highlight){
-  sctx.save();sctx.translate(cx,cy);
-  sctx.fillStyle=c||'#6ba9d8';sctx.strokeStyle='#3a3530';sctx.lineWidth=1.8;
-  if(t==='tri'){sctx.beginPath();sctx.moveTo(20,4);sctx.lineTo(38,32);sctx.lineTo(2,32);sctx.closePath();sctx.fill();sctx.stroke();}
-  else if(t==='sq'){sctx.fillRect(2,4,36,28);sctx.strokeRect(2,4,36,28);}
-  else if(t==='cir'){sctx.beginPath();sctx.arc(20,17,14,0,Math.PI*2);sctx.fill();sctx.stroke();}
-  if(highlight){sctx.fillStyle='#3a3530';sctx.font='8px sans-serif';sctx.textAlign='center';sctx.fillText(items[items.length-1].label,20,44);}
-  sctx.restore();
-}
-function updateCount(i){cnt[i]++;document.getElementById('cnt'+i.charAt(0).toUpperCase()+i.slice(1)).textContent=cnt[i]+'/4';}
-function placeSort(idx,bintype){
-  if(placed[idx])return;
-  if(items[idx].t===bintype){placed[idx]=bintype;updateCount(bintype);sfxOK();drawSort();
-    document.getElementById('sortFb').innerHTML='<span style="color:#27ae60">✅ 对！</span>';
-    if(Object.keys(placed).length===12)document.getElementById('sortFb').innerHTML='<span style="color:#d35400">🎉 全部分好啦！三角形·四边形·圆，都是平面图形～</span>';
-  }else{sfxNO();document.getElementById('sortFb').innerHTML='<span style="color:#e67e22">❌ 不对哦，再想想！</span>';}
-}
-drawSort();
-sortCanvas.addEventListener('mousedown',function(e){var r=sortCanvas.getBoundingClientRect();var mx=e.clientX-r.left,my=e.clientY-r.top;pool.forEach(function(idx){if(!placed[idx]&&mx>=itemX[idx]&&mx<=itemX[idx]+80&&my>=itemY[idx]&&my<=itemY[idx]+60){dragIdx=idx;dragX=mx;dragY=my;sortCanvas.style.cursor='grabbing'}})});
-sortCanvas.addEventListener('touchstart',function(e){e.preventDefault();var r=sortCanvas.getBoundingClientRect();var mx=e.touches[0].clientX-r.left,my=e.touches[0].clientY-r.top;pool.forEach(function(idx){if(!placed[idx]&&mx>=itemX[idx]&&mx<=itemX[idx]+80&&my>=itemY[idx]&&my<=itemY[idx]+60){dragIdx=idx;dragX=mx;dragY=my}})});
-function getBinAt(mx,my){var bins=document.querySelectorAll('.bin');for(var i=0;i<bins.length;i++){var br=bins[i].getBoundingClientRect();if(mx>=br.left&&mx<=br.right&&my>=br.top&&my<=br.bottom)return bins[i];}return null}
-function endDrag(mx,my){if(dragIdx<0)return;sortCanvas.style.cursor='default';var bin=getBinAt(mx,my);var bt=null;if(bin){if(bin.id==='binTri')bt='tri';else if(bin.id==='binSq')bt='sq';else bt='cir';}if(bt)placeSort(dragIdx,bt);dragIdx=-1;['binTri','binSq','binCir'].forEach(function(id){document.getElementById(id).classList.remove('drop')});}
-sortCanvas.addEventListener('mouseup',function(e){var r=sortCanvas.getBoundingClientRect();endDrag(e.clientX-r.left,e.clientY-r.top)});
-sortCanvas.addEventListener('touchend',function(e){if(dragIdx<0)return;endDrag(e.changedTouches[0].clientX,e.changedTouches[0].clientY)});
-sortCanvas.addEventListener('mousemove',function(e){if(dragIdx<0)return;var r=sortCanvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;var bin=getBinAt(e.clientX,e.clientY);['binTri','binSq','binCir'].forEach(function(id){document.getElementById(id).classList.toggle('drop',bin&&bin.id===id)})});
-sortCanvas.addEventListener('touchmove',function(e){e.preventDefault();if(dragIdx<0)return;var bin=getBinAt(e.touches[0].clientX,e.touches[0].clientY);['binTri','binSq','binCir'].forEach(function(id){document.getElementById(id).classList.toggle('drop',bin&&bin.id===id)})});
-
-/* step3 角 */
-var aCanvas=document.getElementById('angleCanvas'),actx=aCanvas.getContext('2d'),AW=340,AH=220;
-var angleDeg=45,origin=[AW/2,AH-40];
-function drawAngle(){
-  actx.clearRect(0,0,AW,AH);actx.fillStyle='#fcf9f4';actx.fillRect(0,0,AW,AH);
-  var rad=angleDeg*Math.PI/180,ox=origin[0],oy=origin[1],len=130;
-  actx.strokeStyle='#d35400';actx.lineWidth=3;
-  actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len,oy);actx.stroke(); // fixed: left
-  actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len*Math.cos(rad),oy-len*Math.sin(rad));actx.stroke(); // movable
-  actx.fillStyle='#d35400';actx.beginPath();actx.arc(ox,oy,22,Math.PI+rad,Math.PI);actx.fill();
-  var cls;if(angleDeg<85)cls='锐角（<90°）';else if(angleDeg<95)cls='直角（=90°）';else cls='钝角（>90°）';
-  document.getElementById('angleVal').textContent=Math.round(angleDeg)+'°';
-  document.getElementById('angleInfo').innerHTML='这是一个 <b>'+cls+'</b><br><span style="font-size:.8em">直角就像桌角——方方正正的 90°</span>';
-}
-drawAngle();
-aCanvas.addEventListener('mousedown',function(e){e.preventDefault();aCanvas.style.cursor='grabbing'});
-aCanvas.addEventListener('mousemove',function(e){if(e.buttons!==1)return;var r=aCanvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;angleDeg=Math.max(10,Math.min(170,Math.round((Math.atan2(origin[1]-my,mx-origin[0])+Math.PI)/Math.PI*180)));drawAngle()});
-aCanvas.addEventListener('mouseup',function(){aCanvas.style.cursor='default'});
-aCanvas.addEventListener('touchstart',function(e){e.preventDefault()});
-aCanvas.addEventListener('touchmove',function(e){e.preventDefault();var r=aCanvas.getBoundingClientRect(),mx=e.touches[0].clientX-r.left,my=e.touches[0].clientY-r.top;angleDeg=Math.max(10,Math.min(170,Math.round((Math.atan2(origin[1]-my,mx-origin[0])+Math.PI)/Math.PI*180)));drawAngle()});
-
-/* step4 线 */
-function pickLine(el,name){document.querySelectorAll('.lcard').forEach(function(c){c.classList.remove('sel')});el.classList.add('sel');sfxTap();document.getElementById('lineFb').innerHTML='<span style="font-weight:700;color:#d35400">'+name+'</span> — '+(name==='线段'?'有头有尾，能量出有多长':name==='射线'?'有头没尾，往一个方向无限射出去':'没头没尾，往两边无限延伸')}
-
-/* 闯关 */
-var Q=[{q:'正方体的每个面是什么形状？',o:['三角形','正方形','圆'],a:1,x:'正方体的 6 个面都是正方形 🟧'},{q:'球从哪个方向看都是什么？',o:['正方形','三角形','圆'],a:2,x:'球叫"球体"，从哪看都是圆 ⚪'},{q:'圆柱有几个圆形的面？',o:['1个','2个','3个'],a:1,x:'圆柱上下两个面都是圆 ⚪'},{q:'哪个角等于 90°？',o:['锐角','直角','钝角'],a:1,x:'直角就是方方正正的 90°，像课桌的角'},{q:'线段和直线的区别？',o:['线段有头有尾','线段更长','一样'],a:0,x:'线段有头有尾（能量长度）；直线没头没尾（无限长）'},{q:'射线有几头有终点？',o:['两头都有','一头有','都没有'],a:1,x:'射线一头有起点，另一头无限射出去！'},{q:'以下哪个是平面图形？',o:['正方体','球','三角形'],a:2,x:'三角形是扁扁的平面图形；正方体和球是立体的'},{q:'一个角张开 105° 叫什么？',o:['锐角','直角','钝角'],a:2,x:'大于 90° 的就是钝角！'}];
-var qS={qs:shuf(Q.map(function(q,i){return{q:q,oi:i}})).slice(0,5),cur:0,as:new Array(5).fill(-1)};
-function renderQ(){
-  var q=qS.qs[qS.cur],c=qS.as[qS.cur];
-  var h='';for(var i=0;i<5;i++){var dt='qdot';if(i===qS.cur)dt+=' cur';if(qS.as[i]>=0)dt+=(qS.as[i]===qS.qs[i].q.a?' r':' w');h+='<div class="'+dt+'"></div>';}
+function renderQuiz(){
+  var q=quizQs[quizCur],c=quizAs[quizCur];
+  var h='';for(var i=0;i<5;i++){var cls='qdot';if(i===quizCur)cls+=' cur';if(quizAs[i]!==undefined)cls+=(quizAs[i]===quizQs[i].a?' r':' w');h+='<div class="'+cls+'"></div>'}
   document.getElementById('qdots').innerHTML=h;
-  h='<div class="qcard"><div class="qq">❓ '+(qS.cur+1)+'/5. '+q.q+'</div><div class="qrow">';
-  q.q.o.forEach(function(o,i){var cls='qbtn'+(c>=0?' lkd':'');if(c>=0){if(i===q.q.a)cls+=' r';else if(i===c)cls+=' w'}h+='<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>';});
-  h+='</div><div class="qexp">'+(c>=0?((c===q.q.a?'<span style="color:#27ae60">✅ 对！</span> ':'<span style="color:#e67e22">❌ 不对～</span> ')+'<span style="color:#8a7e6e">💡 '+q.x+'</span>'):'')+'</div></div>';
+  h='<div class="qcard"><div class="qq">❓ '+(quizCur+1)+'/5. '+q.q+'</div><div class="qrow">';
+  q.o.forEach(function(o,i){var cls='qbtn'+(c!==undefined?' lkd':'');if(c!==undefined){if(i===q.a)cls+=' r';else if(i===c)cls+=' w'}h+='<button class="'+cls+'" onclick="ansQuiz('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'});
+  h+='</div><div class="qexp">'+(c!==undefined?((c===q.a?'<span style="color:#27ae60">✅ 对！</span> ':'<span style="color:#e67e22">❌ 不对～</span> ')+'<span style="color:#8a7e6e">💡 '+q.x+'</span>'):'')+'</div></div>';
   document.getElementById('qbody').innerHTML=h;
-  var allDone=qS.as.every(function(x){return x>=0});
-  if(allDone)document.getElementById('qbody').insertAdjacentHTML('beforeend','<div style="text-align:center;margin-top:8px"><button class="qbtn" onclick="showQF()">🎯 查看成绩</button></div>');
+  if(quizAs.every(function(x){return x!==undefined}))document.getElementById('qbody').insertAdjacentHTML('beforeend','<div style="text-align:center;margin-top:8px"><button class="qbtn" onclick="showFinal()">查看成绩</button></div>')
 }
-function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].q.q.a===i)sfxOK();else sfxNO();renderQ()}
-function showQF(){
-  var s=0;qS.as.forEach(function(a,i){if(a===qS.qs[i].q.q.a)s++});
-  document.getElementById('qfinal').className='qfinal show';
-  document.getElementById('qfinal').innerHTML='<div style="font-size:2.2em">'+(s>=5?'🎉🌟':s>=3?'👍😊':'📖✨')+'</div><div style="font-size:1.3em;color:#d35400;margin:6px 0">'+s+'/5</div><p style="color:#8a7e6e;font-size:.88em">'+(s>=5?'你是图形侦探王！':s>=3?'很不错，再练练就全对啦！':'没关系，再来一次～')+'</p><button class="qbtn" onclick="initQ();document.getElementById(\'qfinal\').className=\'qfinal\'">🔄 再来一次</button>';
+function ansQuiz(i){if(quizAs[quizCur]!==undefined)return;quizAs[quizCur]=i;if(quizQs[quizCur].a===i)sfxOK();else sfxNO();renderQuiz()}
+function showFinal(){
+  var s=0;quizAs.forEach(function(a,i){if(a===quizQs[i].a)s++});
+  var f=document.getElementById('qfinal');f.className='qfinal show';
+  f.innerHTML='<div style="font-size:2.2em">'+(s>=5?'🎉🌟':s>=3?'👍😊':'📖✨')+'</div><div style="font-size:1.3em;color:#d35400;margin:6px 0">'+s+'/5</div><p style="color:#8a7e6e;font-size:.88em">'+(s>=5?'你是图形侦探王！':s>=3?'很不错！':'再来一次～')+'</p><button class="qbtn" onclick="initQuiz();document.getElementById(\'qfinal\').className=\'qfinal\'">🔄 再来一次</button>'
 }
-function initQ(){var arr=Q.map(function(q,i){return{q:q,oi:i}});for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=arr[i];arr[i]=arr[j];arr[j]=t}qS={qs:arr.slice(0,5),cur:0,as:[void 0,void 0,void 0,void 0,void 0]};renderQ()}
-setTimeout(initQ,200);
-</script></body></html>
+initQuiz();</script></body></html>
