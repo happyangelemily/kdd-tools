@@ -192,6 +192,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .wbtn.back{background:#fff;border:1.5px solid #d8cfbe;color:#8a7e6e}
 .wbtn:disabled{opacity:.4}
 #walkhint{font-size:.8em;color:#b0a696;font-weight:600;min-width:64px;text-align:center}
+
+.gcard{background:#fff;border:1.5px solid #ece3d5;border-radius:14px;padding:12px 14px;box-shadow:0 1px 5px rgba(0,0,0,.05)}
+.gcard-hd{font-weight:800;font-size:1.06em;color:#d35400;margin-bottom:9px}
+.gtopic{display:flex;align-items:flex-start;gap:8px;font-size:.82em;color:#4a443c;padding:4px 0;line-height:1.45}
+.gtag{flex-shrink:0;font-size:.72em;font-weight:700;color:#fff;padding:2px 8px;border-radius:8px;white-space:nowrap;margin-top:1px}
+.gtag.know{background:#2980b9}.gtag.measure{background:#e67e22}.gtag.move{background:#27ae60}.gtag.where{background:#8e44ad}
 </style></head><body>
 <div class="page">
 
@@ -441,15 +447,18 @@ var TRACKS=[
 ];
 function trackHTML(t){var h='<div class="track '+t.a+'"><div class="track-hd">'+t.icon+' '+t.name+'</div>';t.steps.forEach(function(st,i){h+='<div class="tstep"><span class="tn">'+(i+1)+'</span><span>'+st+'</span></div>'});return h+'</div>';}
 var STOPS=[
- {ic:'👀',nm:'长什么样',kind:'track',ti:0},
- {ic:'📏',nm:'有多大',kind:'track',ti:1},
- {ic:'🔄',nm:'怎么动',kind:'track',ti:2},
- {ic:'🧭',nm:'在哪里',kind:'track',ti:3},
+ {ic:'1️⃣',nm:'一年级',kind:'grade',tp:[['know','认识立体图形（正方体·球·圆柱）'],['know','认识平面图形（长方形·三角形·圆）'],['where','位置：上下·前后·左右']]},
+ {ic:'2️⃣',nm:'二年级',kind:'grade',tp:[['measure','认识厘米·米，会量长度'],['know','认识角（直角·锐角·钝角）'],['know','观察物体（换个角度看）'],['where','方向：东南西北']]},
+ {ic:'3️⃣',nm:'三年级',kind:'grade',tp:[['know','长方形·正方形的特征'],['measure','周长'],['measure','面积 · 面积单位'],['measure','长度单位：毫米·分米·千米']]},
+ {ic:'4️⃣',nm:'四年级',kind:'grade',tp:[['know','线段·射线·直线'],['measure','角的度量（量角器）'],['know','平行与垂直'],['know','三角形（特性·内角和）']]},
+ {ic:'5️⃣',nm:'五年级',kind:'grade',tp:[['measure','平行四边形·三角形·梯形的面积'],['move','平移·旋转·轴对称'],['know','观察物体（三视图）']]},
+ {ic:'6️⃣',nm:'六年级',kind:'grade',tp:[['know','圆·扇形的认识'],['measure','圆的周长·面积'],['measure','长方体·圆柱的表面积·体积'],['where','数对（第几列·第几排）'],['move','图形放大缩小·比例尺']]},
  {ic:'🏛️',nm:'初中',kind:'vista',vt:['🏛️ 初中','把小屋搭得更结实，弄懂为什么牢',[['know','吃透三角形、圆的特性'],['measure','勾股定理，用比例算大小'],['move','精准旋转、缩放图形'],['where','用坐标精准定位']]]},
  {ic:'🏙️',nm:'高中',kind:'vista',vt:['🏙️ 高中','从小屋盖到大楼，走进立体大世界',[['know','立体图形、曲线家族'],['measure','算空间里的角度、体积'],['move','用方程描述运动'],['where','三维空间定位']]]},
  {ic:'🌌',nm:'更远的世界',kind:'far'}
 ];
-function stopContent(i){var st=STOPS[i];if(st.kind==='track')return trackHTML(TRACKS[st.ti]);if(st.kind==='vista')return vcard(st.vt[0],st.vt[1],st.vt[2]);return '<div class="vcard vfar"><div class="vtop">🌌 更远的世界</div><div class="vfar-txt">做动画、造机器人、建大桥都要用到～<br>还有「弯曲空间」「橡皮几何」这些神奇的几何等着你！</div></div>';}
+function gradeHTML(st){var TNM={know:'长什么样',measure:'有多大',move:'怎么动',where:'在哪里'};var h='<div class="gcard"><div class="gcard-hd">'+st.ic+' '+st.nm+'</div>';st.tp.forEach(function(t){h+='<div class="gtopic"><span class="gtag '+t[0]+'">'+TNM[t[0]]+'</span><span>'+t[1]+'</span></div>'});return h+'</div>';}
+function stopContent(i){var st=STOPS[i];if(st.kind==='grade')return gradeHTML(st);if(st.kind==='vista')return vcard(st.vt[0],st.vt[1],st.vt[2]);return '<div class="vcard vfar"><div class="vtop">🌌 更远的世界</div><div class="vfar-txt">做动画、造机器人、建大桥都要用到～<br>还有「弯曲空间」「橡皮几何」这些神奇的几何等着你！</div></div>';}
 var maxReached=0,bearAt=0;
 function renderTrail(scroll){
   var h='',last=STOPS.length-1;
@@ -470,6 +479,6 @@ function renderTrail(scroll){
 }
 function walkFwd(){var last=STOPS.length-1;if(bearAt<maxReached){bearAt++;}else if(maxReached<last){maxReached++;bearAt++;}else{return;}sfxOK();renderTrail(true);}
 function walkBack(){if(bearAt>0){bearAt--;sfxTap();renderTrail(true);}}
-document.getElementById('journey').innerHTML='<div class="jintro">🐻 陪小熊一站一站，走完几何这条路！<br>点「往前走」出发——每走到一站，就点亮那里学什么～</div><div id="trail"></div><div class="walkctrl"><button class="wbtn back" id="backbtn" onclick="walkBack()">◀ 往回看</button><span id="walkhint"></span><button class="wbtn fwd" id="fwdbtn" onclick="walkFwd()">陪小熊往前走 ▶</button></div>';
+document.getElementById('journey').innerHTML='<div class="jintro">🐻 陪小熊一年级一年级往前走，走完几何这条路！<br>点「往前走」出发，每到一个年级就点亮那年学什么～<br><span style="font-size:.92em">（彩色小标签 = 那 4 件事：<b style="color:#2980b9">长啥样</b> <b style="color:#e67e22">有多大</b> <b style="color:#27ae60">怎么动</b> <b style="color:#8e44ad">在哪儿</b>）</span></div><div id="trail"></div><div class="walkctrl"><button class="wbtn back" id="backbtn" onclick="walkBack()">◀ 往回看</button><span id="walkhint"></span><button class="wbtn fwd" id="fwdbtn" onclick="walkFwd()">陪小熊往前走 ▶</button></div>';
 renderTrail(false);
 </script></body></html>
