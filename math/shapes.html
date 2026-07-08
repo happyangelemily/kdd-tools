@@ -222,15 +222,15 @@ function renderQ(){
   var h='';for(var i=0;i<5;i++){var dt='qdot';if(i===qS.cur)dt+=' cur';if(qS.as[i]>=0)dt+=(qS.as[i]===qS.qs[i].q.a?' r':' w');h+='<div class="'+dt+'"></div>';}
   document.getElementById('qdots').innerHTML=h;
   h='<div class="qcard"><div class="qq">❓ '+(qS.cur+1)+'/5. '+q.q+'</div><div class="qrow">';
-  q.o.forEach(function(o,i){var cls='qbtn'+(c>=0?' lkd':'');if(c>=0){if(i===q.q.a)cls+=' r';else if(i===c)cls+=' w'}h+='<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>';});
+  q.q.o.forEach(function(o,i){var cls='qbtn'+(c>=0?' lkd':'');if(c>=0){if(i===q.q.a)cls+=' r';else if(i===c)cls+=' w'}h+='<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>';});
   h+='</div><div class="qexp">'+(c>=0?((c===q.q.a?'<span style="color:#27ae60">✅ 对！</span> ':'<span style="color:#e67e22">❌ 不对～</span> ')+'<span style="color:#8a7e6e">💡 '+q.x+'</span>'):'')+'</div></div>';
   document.getElementById('qbody').innerHTML=h;
   var allDone=qS.as.every(function(x){return x>=0});
   if(allDone)document.getElementById('qbody').insertAdjacentHTML('beforeend','<div style="text-align:center;margin-top:8px"><button class="qbtn" onclick="showQF()">🎯 查看成绩</button></div>');
 }
-function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].q.a===i)sfxOK();else sfxNO();renderQ()}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].q.q.a===i)sfxOK();else sfxNO();renderQ()}
 function showQF(){
-  var s=0;qS.as.forEach(function(a,i){if(a===qS.qs[i].q.a)s++});
+  var s=0;qS.as.forEach(function(a,i){if(a===qS.qs[i].q.q.a)s++});
   document.getElementById('qfinal').className='qfinal show';
   document.getElementById('qfinal').innerHTML='<div style="font-size:2.2em">'+(s>=5?'🎉🌟':s>=3?'👍😊':'📖✨')+'</div><div style="font-size:1.3em;color:#d35400;margin:6px 0">'+s+'/5</div><p style="color:#8a7e6e;font-size:.88em">'+(s>=5?'你是图形侦探王！':s>=3?'很不错，再练练就全对啦！':'没关系，再来一次～')+'</p><button class="qbtn" onclick="initQ();document.getElementById(\'qfinal\').className=\'qfinal\'">🔄 再来一次</button>';
 }
