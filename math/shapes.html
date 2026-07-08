@@ -234,6 +234,6 @@ function showQF(){
   document.getElementById('qfinal').className='qfinal show';
   document.getElementById('qfinal').innerHTML='<div style="font-size:2.2em">'+(s>=5?'🎉🌟':s>=3?'👍😊':'📖✨')+'</div><div style="font-size:1.3em;color:#d35400;margin:6px 0">'+s+'/5</div><p style="color:#8a7e6e;font-size:.88em">'+(s>=5?'你是图形侦探王！':s>=3?'很不错，再练练就全对啦！':'没关系，再来一次～')+'</p><button class="qbtn" onclick="initQ();document.getElementById(\'qfinal\').className=\'qfinal\'">🔄 再来一次</button>';
 }
-function initQ(){var pool=shuf(Q.map(function(q,i){return{q:q,oi:i}}));qS={qs:pool.slice(0,5),cur:0,as:new Array(5).fill(-1)};renderQ()}
+function initQ(){var pool=Q.slice().sort(function(){return Math.random()-.5});var qs=pool.slice(0,5).map(function(q,qi){return{q:q,oi:Q.indexOf(q)}});qS={qs:qs,cur:0,as:new Array(5).fill(-1)};renderQ()}
 initQ();
 </script></body></html>
