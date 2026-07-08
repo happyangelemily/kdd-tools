@@ -178,6 +178,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .vtag{flex-shrink:0;font-size:.9em;font-weight:700;padding:1px 8px;border-radius:8px;color:#fff;white-space:nowrap}
 .vtag.know{background:#7ea9c9}.vtag.measure{background:#e0a56a}.vtag.move{background:#77c091}.vtag.where{background:#b191c4}
 .vfar-txt{font-size:.77em;color:#948b7c;line-height:1.6}
+
+.jintro{text-align:center;font-size:.85em;color:#a9713a;background:linear-gradient(135deg,#ffe6bd,#fff3e0);border:2px solid #eeb877;border-radius:16px;padding:13px 15px;margin-bottom:13px;font-weight:600;line-height:1.6}
+.stopwrap{margin-bottom:9px}
+.bearhere{display:inline-block;background:#d35400;color:#fff;font-size:.74em;font-weight:700;padding:4px 13px;border-radius:20px;margin-bottom:7px;animation:pop .35s}
+.stopwrap.cur .track,.stopwrap.cur .vcard{box-shadow:0 0 0 2.5px #f0a860}
+.lockstop{display:flex;align-items:center;gap:8px;background:#f2efe9;border:1.5px dashed #e0d8c8;border-radius:12px;padding:11px 14px;margin-bottom:8px;color:#c3bbac;font-size:.84em;font-weight:600}
+.lockstop span{flex:1}
+.walkctrl{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px}
+.wbtn{padding:12px 18px;border:none;border-radius:24px;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit}
+.wbtn:active{transform:scale(.96)}
+.wbtn.fwd{background:linear-gradient(135deg,#f0913a,#e67e22);color:#fff;box-shadow:0 3px 10px rgba(230,126,34,.3)}
+.wbtn.back{background:#fff;border:1.5px solid #d8cfbe;color:#8a7e6e}
+.wbtn:disabled{opacity:.4}
+#walkhint{font-size:.8em;color:#b0a696;font-weight:600;min-width:64px;text-align:center}
 </style></head><body>
 <div class="page">
 
@@ -425,17 +439,37 @@ var TRACKS=[
  {a:'move',icon:'🔄',name:'怎么动',steps:['感知平移·对称·旋转（生活实例）','轴对称图形补全·平移作图','图形旋转90°作图·设计图案','图形放大·缩小，理解比例尺']},
  {a:'where',icon:'🧭',name:'在哪里',steps:['前后·左右·上下','东南西北·八个方向·看路线图','方向+距离，精准定位物体','数对（列·行）标记点位','结合比例尺，画/读综合路线图']}
 ];
-(function(){
-  var h='<div class="jstart2"><span class="big">🐻 小学 · 你正在这里</span><span class="sub">把下面这 4 条主线一步步走完，几何地基就稳啦 ↓</span></div>';
-  TRACKS.forEach(function(t){
-    h+='<div class="track '+t.a+'"><div class="track-hd">'+t.icon+' '+t.name+'</div>';
-    t.steps.forEach(function(st,i){h+='<div class="tstep"><span class="tn">'+(i+1)+'</span><span>'+st+'</span></div>'});
-    h+='</div>';
-  });
-  h+='<div class="jvista-hd">🏔️ 远处的风景（以后才到，现在瞄一眼就好 😌）</div>';
-  h+=vcard('🏛️ 初中','把小屋搭得更结实，弄懂为什么牢',[['know','吃透三角形、圆的特性'],['measure','勾股定理，用比例算大小'],['move','精准旋转、缩放图形'],['where','用坐标精准定位']]);
-  h+=vcard('🏙️ 高中','从小屋盖到大楼，走进立体大世界',[['know','立体图形、曲线家族'],['measure','算空间里的角度、体积'],['move','用方程描述运动'],['where','三维空间定位']]);
-  h+='<div class="vcard vfar"><div class="vtop">🌌 更远的世界</div><div class="vfar-txt">做动画、造机器人、建大桥都要用到～<br>还有「弯曲空间」「橡皮几何」这些神奇的几何等着你！</div></div>';
-  document.getElementById('journey').innerHTML=h;
-})();
+function trackHTML(t){var h='<div class="track '+t.a+'"><div class="track-hd">'+t.icon+' '+t.name+'</div>';t.steps.forEach(function(st,i){h+='<div class="tstep"><span class="tn">'+(i+1)+'</span><span>'+st+'</span></div>'});return h+'</div>';}
+var STOPS=[
+ {ic:'👀',nm:'长什么样',kind:'track',ti:0},
+ {ic:'📏',nm:'有多大',kind:'track',ti:1},
+ {ic:'🔄',nm:'怎么动',kind:'track',ti:2},
+ {ic:'🧭',nm:'在哪里',kind:'track',ti:3},
+ {ic:'🏛️',nm:'初中',kind:'vista',vt:['🏛️ 初中','把小屋搭得更结实，弄懂为什么牢',[['know','吃透三角形、圆的特性'],['measure','勾股定理，用比例算大小'],['move','精准旋转、缩放图形'],['where','用坐标精准定位']]]},
+ {ic:'🏙️',nm:'高中',kind:'vista',vt:['🏙️ 高中','从小屋盖到大楼，走进立体大世界',[['know','立体图形、曲线家族'],['measure','算空间里的角度、体积'],['move','用方程描述运动'],['where','三维空间定位']]]},
+ {ic:'🌌',nm:'更远的世界',kind:'far'}
+];
+function stopContent(i){var st=STOPS[i];if(st.kind==='track')return trackHTML(TRACKS[st.ti]);if(st.kind==='vista')return vcard(st.vt[0],st.vt[1],st.vt[2]);return '<div class="vcard vfar"><div class="vtop">🌌 更远的世界</div><div class="vfar-txt">做动画、造机器人、建大桥都要用到～<br>还有「弯曲空间」「橡皮几何」这些神奇的几何等着你！</div></div>';}
+var maxReached=0,bearAt=0;
+function renderTrail(scroll){
+  var h='',last=STOPS.length-1;
+  for(var i=0;i<STOPS.length;i++){
+    if(i<=maxReached){
+      var badge=(i===bearAt)?'<div class="bearhere">🐻 你在这里 · 第 '+(i+1)+' 站</div>':'';
+      h+='<div class="stopwrap'+(i===bearAt?' cur':'')+'">'+badge+stopContent(i)+'</div>';
+    }else{
+      h+='<div class="lockstop">'+STOPS[i].ic+' <span>'+STOPS[i].nm+'</span> 🔒 还没走到</div>';
+    }
+  }
+  document.getElementById('trail').innerHTML=h;
+  document.getElementById('walkhint').textContent='第 '+(bearAt+1)+' / '+(last+1)+' 站';
+  var fb=document.getElementById('fwdbtn'),bb=document.getElementById('backbtn');
+  if(bearAt>=last){fb.textContent='🎉 走完啦！';fb.disabled=true;}else{fb.textContent='陪小熊往前走 ▶';fb.disabled=false;}
+  bb.disabled=(bearAt<=0);
+  if(scroll){var cur=document.querySelector('.stopwrap.cur');if(cur)cur.scrollIntoView({behavior:'smooth',block:'center'});}
+}
+function walkFwd(){var last=STOPS.length-1;if(bearAt<maxReached){bearAt++;}else if(maxReached<last){maxReached++;bearAt++;}else{return;}sfxOK();renderTrail(true);}
+function walkBack(){if(bearAt>0){bearAt--;sfxTap();renderTrail(true);}}
+document.getElementById('journey').innerHTML='<div class="jintro">🐻 陪小熊一站一站，走完几何这条路！<br>点「往前走」出发——每走到一站，就点亮那里学什么～</div><div id="trail"></div><div class="walkctrl"><button class="wbtn back" id="backbtn" onclick="walkBack()">◀ 往回看</button><span id="walkhint"></span><button class="wbtn fwd" id="fwdbtn" onclick="walkFwd()">陪小熊往前走 ▶</button></div>';
+renderTrail(false);
 </script></body></html>
