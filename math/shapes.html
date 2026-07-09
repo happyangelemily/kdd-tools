@@ -108,9 +108,9 @@ c1.addEventListener('click',function(e){
 });
 
 /* ===== 第2步 ===== */
-(function(){var h='',names=['长方体','球','圆柱','圆锥'],ids=['a','b','c','d'];
+setTimeout(function(){var h='',names=['长方体','球','圆柱','圆锥'],ids=['a','b','c','d'];
   for(var i=0;i<4;i++)h+='<div class="card" id="gc-'+ids[i]+'" onclick="ta('+"'"+ids[i]+"'"+',this)"><span class="em">'+names[i].charAt(0)+'</span><span class="nm">'+names[i]+'</span></div>';
-  document.getElementById('geoRow').innerHTML=h;})();
+  document.getElementById('geoRow').innerHTML=h;},50);
 function ta(id,el){document.querySelectorAll('#geoRow .card').forEach(function(c){c.classList.remove('sel')});el.classList.add('sel');sfxTap();
   var d=RD.find(function(x){return x[0]===id});document.getElementById('fb2').innerHTML='<b style="color:#d35400">'+d[2]+'</b> 拆开 → '+d[4]+'<br><span style="color:#8a7e6e;font-size:.8em">立体图形，都是由扁扁的平面图形拼成的！</span>';}
 
