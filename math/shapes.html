@@ -2,139 +2,118 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>认识图形 · 从身边到几何 | 可豆妈妈</title>
+<title>认识图形 | 可豆妈妈</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
 .page{max-width:560px;margin:0 auto;padding:8px 14px 80px}
 .hero{text-align:center;padding:22px 8px 8px}
-.hero h1{font-size:1.3em;color:#d35400;margin-bottom:8px}
-.hero .sub{font-size:.84em;color:#9b9183;line-height:1.6}
-h2{font-size:1.02em;color:#2980b9;text-align:center;margin:12px 0 4px}
-.guide{text-align:center;font-size:.82em;color:#8a7e6e;margin-bottom:8px;line-height:1.5}
-.cvwrap{position:relative;margin:8px auto;max-width:500px;border-radius:16px;overflow:hidden;border:1px solid #e6dfd2;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.cvwrap canvas{display:block;width:100%;height:auto;touch-action:manipulation}
-.fb{text-align:center;font-size:.84em;min-height:24px;margin-top:4px;line-height:1.5;font-weight:600}
+.hero h1{font-size:1.3em;color:#d35400;margin-bottom:6px}
+.hero .sub{font-size:.84em;color:#9b9183}
+h2{font-size:1.02em;color:#2980b9;text-align:center;margin:16px 0 4px}
+.guide{text-align:center;font-size:.82em;color:#8a7e6e;margin-bottom:8px}
+.cvwrap{max-width:500px;margin:6px auto;border-radius:14px;overflow:hidden;border:1px solid #e6dfd2;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.cvwrap canvas{display:block;width:100%;touch-action:manipulation}
+.fb{text-align:center;font-size:.84em;min-height:24px;margin:4px 0;font-weight:600;line-height:1.5}
 .ok{color:#27ae60}.warn{color:#e67e22}
 .btnrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0}
-.btn{padding:10px 16px;border-radius:20px;border:1.5px solid #d8cfbe;background:#fff;font-size:.86em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348;transition:all .15s}
+.btn{padding:10px 16px;border-radius:20px;border:1.5px solid #d8cfbe;background:#fff;font-size:.86em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
 .btn:active{transform:scale(.95)}.btn.on{border-color:#d35400;background:#fff8ef;color:#d35400}
-.qwrap{max-width:420px;margin:10px auto}.qcard{background:#fff;border:1px solid #ece3d5;border-radius:16px;padding:16px;margin:8px 0}
-.qq{font-size:.9em;font-weight:700;margin-bottom:10px}.qrow{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.qbtn{padding:8px 16px;border-radius:18px;border:1.5px solid #d8cfbe;background:#fcf9f4;font-size:.8em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
-.qbtn:active{transform:scale(.94)}.qbtn.lkd{pointer-events:none}.qbtn.r{background:#e6f6ec;border-color:#27ae60;color:#27ae60}.qbtn.w{background:#fdeee0;border-color:#e67e22;color:#e67e22}
-.qexp{margin-top:8px;font-size:.78em;min-height:20px}
-.qnav{display:flex;gap:6px;justify-content:center;margin-bottom:6px}
-.qdot{width:11px;height:11px;border-radius:50%;border:1.5px solid #d8cfbe;background:#fff}.qdot.r{background:#27ae60;border-color:#27ae60}.qdot.w{background:#e67e22;border-color:#e67e22}.qdot.cur{border-color:#d35400;box-shadow:0 0 5px rgba(212,83,0,.3)}
-.qfinal{text-align:center;padding:16px;background:#fff8ef;border:1.5px solid #f0d0a8;border-radius:16px;margin-top:12px;display:none}.qfinal.show{display:block}
 .foot{text-align:center;color:#c3bbac;font-size:.74em;margin:28px 0 8px}
+@media(max-width:420px){.hero h1{font-size:1.14em}}
 </style></head><body>
 <div class="page">
-<div class="hero"><h1>🔍 小侦探找形状</h1>
-<div class="sub">你身边每样东西，都是一个<b>立体图形</b>。<br>把它拆开，里面还藏着一层一层的秘密～</div></div>
+<div class="hero">
+  <h1>🔍 小侦探找形状</h1>
+  <div class="sub">你身边每样东西，都是一个<b>立体图形</b>。<br>点一点，看看它们能拆出什么秘密～</div>
+</div>
 
 <h2>🏠 第一步：这些东西是什么立体图形？</h2>
-<div class="guide">左边是生活中的东西，右边是它的几何真身。<br>点右边的立体图形，看它叫什么——</div>
+<div class="guide">左边是生活中的东西，右边是它的几何真身。<br>点右边的几何立体，看它叫什么——</div>
 <div class="cvwrap"><canvas id="c1" width="500" height="340"></canvas></div>
 <div class="fb" id="fb1"></div>
 
-<h2 style="color:#e67e22">🔧 第二步：点图形，拆成平面！</h2>
-<div class="guide">每个立体图形都能「拆开」——里面全是扁扁的<b>平面图形</b>～</div>
-<div class="btnrow" id="geoBtns"></div>
+<h2 style="color:#e67e22">🔧 第二步：拆成平面图形</h2>
+<div class="guide">每个立体图形都能拆开——里面全是扁扁的<b>平面图形</b>～</div>
+<div class="btnrow">
+  <button class="btn" onclick="tapGeo('长方体：6个面——4个长方形 + 2个正方形')">长方体</button>
+  <button class="btn" onclick="tapGeo('圆柱：3个面——2个圆 + 1个长方形')">圆柱</button>
+  <button class="btn" onclick="tapGeo('球：从哪切都是圆')">球</button>
+  <button class="btn" onclick="tapGeo('圆锥：2个面——1个圆 + 1个扇形')">圆锥</button>
+</div>
 <div class="fb" id="fb2"></div>
 
-<h2 style="color:#d35400">📐 第三步：平面里的秘密——角</h2>
-<div class="guide">拆开的每个面里都有角！拖一拖，看角怎么变化～</div>
+<h2 style="color:#d35400">📐 第三步：角的秘密</h2>
+<div class="guide">拖一拖，看角怎么变大变小～<br>小于90°是锐角、等于90°是直角、大于90°是钝角</div>
 <div class="cvwrap"><canvas id="c2" width="340" height="220"></canvas></div>
-<div class="fb" id="fb3"></div>
+<div class="fb" id="fb3">拖动那条斜边试试～</div>
 
-<h2 style="color:#8e44ad">➖ 第四步：线</h2>
-<div class="guide">图形的边 = <b>线段</b>（有头有尾）。还有两个亲戚——</div>
+<h2 style="color:#8e44ad">➖ 第四步：线的三兄弟</h2>
+<div class="guide">图形的边是<b>线段</b>（有头有尾）。还有两个亲戚——</div>
 <div class="btnrow">
-  <div class="btn" onclick="pickLn(this,'线段','图形的边都是线段：有头有尾，能量多长')">━━ 线段（有头有尾）</div>
-  <div class="btn" onclick="pickLn(this,'射线','有头没尾，向一个方向无限射出去')">━→ 射线（一头无限）</div>
-  <div class="btn" onclick="pickLn(this,'直线','没头没尾，向两边无限延伸')">←→ 直线（两边无限）</div>
+  <button class="btn" onclick="pickLn(this,'线段：有头有尾，能量多长。图形的每条边都是线段！')">━━ 线段</button>
+  <button class="btn" onclick="pickLn(this,'射线：有头没尾，向一个方向无限射出去')">━→ 射线</button>
+  <button class="btn" onclick="pickLn(this,'直线：没头没尾，向两边无限延伸')">←→ 直线</button>
 </div>
 <div class="fb" id="fb4"></div>
 
-<h2>🏆 闯关挑战</h2>
-<div class="qwrap"><div class="qnav" id="qnav"></div><div id="qbody"></div><div class="qfinal" id="qfinal"></div></div>
 <div class="foot">可豆妈妈 · 更多图形小工具陆续上线 🌱</div>
 </div>
+
 <script>
+/* ===== 声音 ===== */
 function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
-function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}function sfxNO(){beep(200,.18,'triangle')}function sfxTap(){beep(560,.08)}
+function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
+function sfxTap(){beep(560,.08)}
 
 /* ===== 第1步：画布 ===== */
-var c1=document.getElementById('c1'),cx=c1.getContext('2d'),found={};
+var cx=document.getElementById('c1').getContext('2d'),found={};
 function drawAll(hl){
   cx.clearRect(0,0,500,340);
   var g=cx.createLinearGradient(0,0,0,340);g.addColorStop(0,'#fdf5e8');g.addColorStop(1,'#f0e8d8');cx.fillStyle=g;cx.fillRect(0,0,500,340);
   cx.strokeStyle='#ddd4c4';cx.lineWidth=1.4;cx.setLineDash([6,8]);cx.beginPath();cx.moveTo(240,16);cx.lineTo(240,324);cx.stroke();cx.setLineDash([]);
   cx.fillStyle='#b0a090';cx.font='11px sans-serif';cx.textAlign='center';cx.fillText('生活中的东西',120,18);cx.fillText('几何立体图形',370,18);
-
-  /* ------ 左半边：4个实物 ------ */
-  // A 纸巾盒
-  cx.fillStyle='#e8dcc8';cx.fillRect(30,100,72,46);
-  cx.strokeStyle='#c0a878';cx.lineWidth=2;cx.strokeRect(30,100,72,46);
-  cx.fillStyle='#f5efe0';cx.fillRect(36,86,20,18);cx.strokeStyle='#c0a878';cx.strokeRect(36,86,20,18);
-  cx.fillStyle='#8a7e6e';cx.font='12px sans-serif';cx.textAlign='center';cx.fillText('纸巾盒',66,170);
-  // B 易拉罐
-  cx.fillStyle='#e0c0a0';cx.fillRect(150,108,32,66);
-  cx.strokeStyle='#b09878';cx.lineWidth=2;cx.strokeRect(150,108,32,66);
-  cx.fillStyle='#d0a080';cx.beginPath();cx.ellipse(166,108,16,5);cx.fill();cx.strokeStyle='#b09878';cx.stroke();
-  cx.fillStyle='#8a7e6e';cx.fillText('易拉罐',166,196);
-  // C 皮球
-  cx.fillStyle='#8cc88c';cx.beginPath();cx.arc(110,250,30,0,Math.PI*2);cx.fill();cx.strokeStyle='#5a8a5a';cx.lineWidth=2;cx.stroke();
-  cx.fillStyle='#fff';cx.beginPath();cx.arc(100,242,7,0,Math.PI*2);cx.fill();cx.fillText('皮球',110,298);
-  // D 派对帽
-  cx.fillStyle='#e8a878';cx.beginPath();cx.moveTo(180,240);cx.lineTo(154,300);cx.lineTo(206,300);cx.closePath();cx.fill();cx.strokeStyle='#c08050';cx.lineWidth=2;cx.stroke();
-  cx.fillText('派对帽',180,318);
-
-  /* ------ 右半边：4个几何立体 ------ */
-  // a 长方体
-  var h1=(hl==='a')?4:0;cx.fillStyle='#d4a878';cx.fillRect(266-h1,68-h1,56+h1*2,40+h1*2);cx.strokeStyle='#a08050';cx.lineWidth=2;cx.strokeRect(266-h1,68-h1,56+h1*2,40+h1*2);
-  cx.fillStyle='#c09060';cx.fillRect(266,54,56,14);cx.strokeStyle='#a08050';cx.strokeRect(266,54,56,14);cx.fillStyle='#e0c0a0';cx.fillRect(260,78,6,22);cx.strokeStyle='#a08050';cx.strokeRect(260,78,6,22);
-  if(hl==='a'){cx.strokeStyle='#ffcf3f';cx.lineWidth=2.5;cx.setLineDash([4,3]);cx.strokeRect(262,64,64,48);cx.setLineDash([])}
-  // b 圆柱
-  var h2=(hl==='b')?4:0;cx.fillStyle='#f0e0b8';cx.fillRect(375-h2,68-h2,30+h2*2,42+h2*2);cx.strokeStyle='#c0a870';cx.lineWidth=2;cx.strokeRect(375-h2,68-h2,30+h2*2,42+h2*2);
-  cx.fillStyle='#e8c070';cx.beginPath();cx.ellipse(390,68,15,5);cx.fill();cx.strokeStyle='#c0a870';cx.stroke();cx.fillStyle='#e8c070';cx.beginPath();cx.ellipse(390,110,15,5);cx.fill();cx.strokeStyle='#c0a870';cx.stroke();
-  if(hl==='b'){cx.strokeStyle='#ffcf3f';cx.lineWidth=2.5;cx.setLineDash([4,3]);cx.strokeRect(371,64,38,50);cx.setLineDash([])}
-  // c 球
-  var h3=(hl==='c')?4:0;cx.fillStyle='#8cc88c';cx.beginPath();cx.arc(315,180,32+h3,0,Math.PI*2);cx.fill();cx.strokeStyle='#5a8a5a';cx.lineWidth=2;cx.stroke();cx.fillStyle='#fff';cx.beginPath();cx.arc(306,170,8,0,Math.PI*2);cx.fill();cx.strokeStyle='#aaccaa';cx.lineWidth=.7;cx.beginPath();cx.ellipse(315,180,32,8,0,0,Math.PI*2);cx.stroke();
-  // d 圆锥
-  var h4=(hl==='d')?4:0;cx.fillStyle='#e0a870';cx.beginPath();cx.moveTo(430-h4,154-h4*2);cx.lineTo(400,216);cx.lineTo(460,216);cx.closePath();cx.fill();cx.strokeStyle='#c08050';cx.lineWidth=2;cx.stroke();cx.fillStyle='#f0c090';cx.beginPath();cx.ellipse(430,216,30,8,0,0,Math.PI*2);cx.fill();cx.strokeStyle='#c08050';cx.stroke();
-  // 编号圈
-  [{x:294,y:66,id:'a',name:'长方体'},{x:390,y:66,id:'b',name:'圆柱'},{x:315,y:180,id:'c',name:'球'},{x:430,y:184,id:'d',name:'圆锥'}].forEach(function(g,i){
-    if(!found[g.id]){cx.fillStyle='rgba(255,255,255,.85)';cx.beginPath();cx.arc(g.x,g.y,11,0,Math.PI*2);cx.fill();cx.fillStyle='#d35400';cx.font='bold 10px sans-serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(i+1,g.x,g.y)}
-  });
+  /* 左边实物 */
+  cx.fillStyle='#e8dcc8';cx.fillRect(30,100,72,46);cx.strokeStyle='#c0a878';cx.lineWidth=2;cx.strokeRect(30,100,72,46);cx.fillStyle='#f5efe0';cx.fillRect(36,86,20,18);cx.strokeStyle='#c0a878';cx.strokeRect(36,86,20,18);cx.fillText('纸巾盒',66,170);
+  cx.fillStyle='#e0c0a0';cx.fillRect(150,108,32,66);cx.strokeStyle='#b09878';cx.lineWidth=2;cx.strokeRect(150,108,32,66);cx.fillStyle='#d0a080';cx.beginPath();cx.ellipse(166,108,16,5);cx.fill();cx.strokeStyle='#b09878';cx.stroke();cx.fillText('易拉罐',166,196);
+  cx.fillStyle='#8cc88c';cx.beginPath();cx.arc(110,250,30,0,Math.PI*2);cx.fill();cx.strokeStyle='#5a8a5a';cx.lineWidth=2;cx.stroke();cx.fillStyle='#fff';cx.beginPath();cx.arc(100,242,7,0,Math.PI*2);cx.fill();cx.fillText('皮球',110,298);
+  cx.fillStyle='#e8a878';cx.beginPath();cx.moveTo(180,240);cx.lineTo(154,300);cx.lineTo(206,300);cx.closePath();cx.fill();cx.strokeStyle='#c08050';cx.lineWidth=2;cx.stroke();cx.fillText('派对帽',180,318);
+  /* 右边几何 */
+  /* a 长方体 */var s=(hl==='a')?4:0;cx.fillStyle='#d4a878';cx.fillRect(266-s,68-s,56+s*2,40+s*2);cx.strokeStyle='#a08050';cx.lineWidth=2;cx.strokeRect(266-s,68-s,56+s*2,40+s*2);cx.fillStyle='#c09060';cx.fillRect(266,54,56,14);cx.strokeStyle='#a08050';cx.strokeRect(266,54,56,14);cx.fillStyle='#e0c0a0';cx.fillRect(260,78,6,22);cx.strokeStyle='#a08050';cx.strokeRect(260,78,6,22);
+  /* b 圆柱 */s=(hl==='b')?4:0;cx.fillStyle='#f0e0b8';cx.fillRect(375-s,68-s,30+s*2,42+s*2);cx.strokeStyle='#c0a870';cx.lineWidth=2;cx.strokeRect(375-s,68-s,30+s*2,42+s*2);cx.fillStyle='#e8c070';cx.beginPath();cx.ellipse(390,68,15,5);cx.fill();cx.strokeStyle='#c0a870';cx.stroke();cx.fillStyle='#e8c070';cx.beginPath();cx.ellipse(390,110,15,5);cx.fill();cx.strokeStyle='#c0a870';cx.stroke();
+  /* c 球 */s=(hl==='c')?4:0;cx.fillStyle='#8cc88c';cx.beginPath();cx.arc(315,180,30+s,0,Math.PI*2);cx.fill();cx.strokeStyle='#5a8a5a';cx.lineWidth=2;cx.stroke();cx.fillStyle='#fff';cx.beginPath();cx.arc(306,170,8,0,Math.PI*2);cx.fill();
+  /* d 圆锥 */s=(hl==='d')?4:0;cx.fillStyle='#e0a870';cx.beginPath();cx.moveTo(430,154);cx.lineTo(400-s,216);cx.lineTo(460+s,216);cx.closePath();cx.fill();cx.strokeStyle='#c08050';cx.lineWidth=2;cx.stroke();cx.fillStyle='#f0c090';cx.beginPath();cx.ellipse(430,216,30,8,0,0,Math.PI*2);cx.fill();cx.strokeStyle='#c08050';cx.stroke();
+  /* 金框高亮 */if(hl){cx.strokeStyle='#ffcf3f';cx.lineWidth=2.5;cx.setLineDash([4,3]);var bb={a:[262,64,64,48],b:[371,64,38,50],c:[285,150,60,60],d:[396,150,68,68]}[hl];if(bb)cx.strokeRect(bb[0],bb[1],bb[2],bb[3]);else if(hl==='c'){cx.beginPath();cx.arc(315,180,34,0,Math.PI*2);cx.stroke()}cx.setLineDash([])}
+  /* 编号圈 */[{x:294,y:66,id:'a',nm:'长方体'},{x:390,y:66,id:'b',nm:'圆柱'},{x:315,y:180,id:'c',nm:'球'},{x:430,y:184,id:'d',nm:'圆锥'}].forEach(function(g,i){if(!found[g.id]){cx.fillStyle='rgba(255,255,255,.85)';cx.beginPath();cx.arc(g.x,g.y,11,0,Math.PI*2);cx.fill();cx.fillStyle='#d35400';cx.font='bold 10px sans-serif';cx.fillText(i+1,g.x,g.y)}})
 }
 drawAll(null);
-c1.onclick=function(e){var r=c1.getBoundingClientRect(),mx=(e.clientX-r.left)*(500/r.width),my=(e.clientY-r.top)*(340/r.height);
-  var t=[{id:'a',x1:262,y1:64,x2:326,y2:112,name:'长方体'},{id:'b',x1:371,y1:64,x2:409,y2:114,name:'圆柱'},{id:'c',x1:283,y1:148,x2:347,y2:212,name:'球'},{id:'d',x1:400,y1:154,x2:460,y2:224,name:'圆锥'}];
-  t.forEach(function(t){if(!found[t.id]&&mx>=t.x1&&mx<=t.x2&&my>=t.y1&&my<=t.y2){found[t.id]=1;sfxOK();drawAll(t.id);document.getElementById('fb1').innerHTML='<span class="ok">✅</span> 这是 <b style="color:#d35400">'+t.name+'</b>！';if(Object.keys(found).length>=4)document.getElementById('fb1').innerHTML='<span class="ok">🎉 全认出来了！现在点下面的按钮，拆开看看～</span>';}})};
+document.getElementById('c1').onclick=function(e){
+  var r=this.getBoundingClientRect(),mx=(e.clientX-r.left)*(500/r.width),my=(e.clientY-r.top)*(340/r.height);
+  var hits=[{id:'a',x1:262,y1:64,x2:326,y2:112},{id:'b',x1:371,y1:64,x2:409,y2:114},{id:'c',x1:283,y1:148,x2:347,y2:212},{id:'d',x1:400,y1:154,x2:460,y2:224}];
+  var names={a:'长方体',b:'圆柱',c:'球',d:'圆锥'};
+  hits.forEach(function(h){if(!found[h.id]&&mx>=h.x1&&mx<=h.x2&&my>=h.y1&&my<=h.y2){found[h.id]=1;sfxOK();drawAll(h.id);document.getElementById('fb1').innerHTML='<span class="ok">✅</span> 这是 <b style="color:#d35400">'+names[h.id]+'</b>！';var n=Object.keys(found).length;if(n>=4)document.getElementById('fb1').innerHTML='<span class="ok">🎉 全认出来了！下面点按钮拆开看看～</span>'}})
+};
 
-/* ===== 第2步：按钮 ===== */
-var geos=[{id:'a',name:'长方体',faces:'4个长方形 + 2个正方形'},{id:'b',name:'圆柱',faces:'2个圆 + 1个长方形'},{id:'c',name:'球',faces:'从哪切都是圆'},{id:'d',name:'圆锥',faces:'1个圆 + 1个扇形'}];
-(function(){var h='';geos.forEach(function(g){h+='<button class="btn" onclick="tapGeo('+"'"+g.id+"'"+')">'+g.name+'</button>'});document.getElementById('geoBtns').innerHTML=h;})();
-function tapGeo(id){var g=geos.find(function(x){return x.id===id});sfxTap();document.getElementById('fb2').innerHTML='<b style="color:#d35400">'+g.name+'</b> 拆开 → '+g.faces+'<br><span style="color:#8a7e6e;font-size:.8em">每个立体图形都是由平面图形拼成的！</span>'}
+/* ===== 第2步 ===== */
+function tapGeo(t){sfxTap();document.getElementById('fb2').innerHTML='<span class="ok">拆开 →</span> '+t+'<br><span style="color:#8a7e6e;font-size:.8em">立体图形都是由平面图形拼成的！</span>'}
 
 /* ===== 第3步：角 ===== */
 var ac=document.getElementById('c2'),actx=ac.getContext('2d'),deg=38,o=[170,170];
-function drA(){actx.clearRect(0,0,340,220);actx.fillStyle='#fcf9f4';actx.fillRect(0,0,340,220);var r=deg*Math.PI/180,ox=o[0],oy=o[1],len=100;actx.strokeStyle='#d35400';actx.lineWidth=3;actx.lineCap='round';actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len,oy);actx.stroke();actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len*Math.cos(r),oy-len*Math.sin(r));actx.stroke();actx.fillStyle='#f0a860';actx.beginPath();actx.arc(ox,oy,16,Math.PI+r,Math.PI);actx.fill();var cls=deg<85?'锐角 (<90°)':deg<95?'直角 (=90°)':'钝角 (>90°)';document.getElementById('fb3').innerHTML='<span style="font-size:1.15em;font-weight:800">'+Math.round(deg)+'°</span> —— '+cls+'<br><span style="font-size:.76em;color:#8a7e6e">正方形有 4 个直角；三角形最多 1 个直角或钝角。</span>'}drA();
+function drawAng(){
+  actx.clearRect(0,0,340,220);actx.fillStyle='#fcf9f4';actx.fillRect(0,0,340,220);
+  var r=deg*Math.PI/180,ox=o[0],oy=o[1],len=100;
+  actx.strokeStyle='#d35400';actx.lineWidth=3;actx.lineCap='round';
+  actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len,oy);actx.stroke();
+  actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len*Math.cos(r),oy-len*Math.sin(r));actx.stroke();
+  actx.fillStyle='#f0a860';actx.beginPath();actx.arc(ox,oy,16,Math.PI+r,Math.PI);actx.fill();
+  var cls=deg<85?'锐角 (<90°)':deg<95?'直角 (=90°)':'钝角 (>90°)';
+  document.getElementById('fb3').innerHTML='<span style="font-size:1.15em;font-weight:800">'+Math.round(deg)+'°</span> —— '+cls+'<br><span style="font-size:.76em;color:#8a7e6e">正方形有4个直角；三角形最多1个直角或钝角</span>';
+}drawAng();
 ac.onmousedown=function(e){e.preventDefault()};
-ac.onmousemove=function(e){if(e.buttons!==1)return;var r=ac.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;deg=Math.max(5,Math.min(170,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));drA()};
+ac.onmousemove=function(e){if(e.buttons!==1)return;var r=ac.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;deg=Math.max(5,Math.min(170,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));drawAng()};
 ac.ontouchstart=function(e){e.preventDefault()};
-ac.ontouchmove=function(e){e.preventDefault();var r=ac.getBoundingClientRect(),mx=e.touches[0].clientX-r.left,my=e.touches[0].clientY-r.top;deg=Math.max(5,Math.min(170,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));drA()};
+ac.ontouchmove=function(e){e.preventDefault();var r=ac.getBoundingClientRect(),mx=e.touches[0].clientX-r.left,my=e.touches[0].clientY-r.top;deg=Math.max(5,Math.min(170,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));drawAng()};
 
-/* ===== 第4步：线 ===== */
-function pickLn(el,name,desc){document.querySelectorAll('.btn.on').forEach(function(b){b.classList.remove('on')});el.classList.add('on');sfxTap();document.getElementById('fb4').innerHTML='<b style="color:#8e44ad">'+name+'</b>：'+desc}
-
-/* ===== 闯关 ===== */
-var Q=[{q:'正方体有几个面？',o:['4个','6个','8个'],a:1,x:'正方体有 6 个面，都是正方形'},{q:'球切开是什么形状？',o:['三角形','正方形','圆'],a:2,x:'球从哪个方向切都是圆'},{q:'圆柱有几个圆形的面？',o:['1个','2个','3个'],a:1,x:'圆柱上下两个面都是圆'},{q:'三角形有几条边？',o:['2条','3条','4条'],a:1,x:'三角形有 3 条边'},{q:'90° 叫什么角？',o:['锐角','直角','钝角'],a:1,x:'直角方方正正 90°'},{q:'线段和直线有什么不同？',o:['线段有头有尾','线段更长','一样'],a:0,x:'线段有头有尾（能量长度）；直线没头没尾'},{q:'正方形有几条边几个直角？',o:['3条边','4条边4个直角','4条边3个直角'],a:1,x:'正方形 4 条一样长的边，4 个直角'},{q:'五边形有几条边？',o:['4条','5条','6条'],a:1,x:'五边形的"五"就是 5 条边'}];
-var qs=[],qi=0,qa=[];
-function iQ(){var p=Q.slice();for(var i=p.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=p[i];p[i]=p[j];p[j]=t}qs=p.slice(0,5);qi=0;qa=[void 0,void 0,void 0,void 0,void 0];rQ()}
-function rQ(){var q=qs[qi],c=qa[qi],h='';for(var i=0;i<5;i++){var cls='qdot';if(i===qi)cls+=' cur';if(qa[i]!==undefined)cls+=(qa[i]===qs[i].a?' r':' w');h+='<div class="'+cls+'"></div>'}document.getElementById('qnav').innerHTML=h;h='<div class="qcard"><div class="qq">❓ '+(qi+1)+'/5. '+q.q+'</div><div class="qrow">';q.o.forEach(function(o,i){var cls='qbtn'+(c!==undefined?' lkd':'');if(c!==undefined){if(i===q.a)cls+=' r';else if(i===c)cls+=' w'}h+='<button class="'+cls+'" onclick="aQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'});h+='</div><div class="qexp">'+(c!==undefined?((c===q.a?'<span style="color:#27ae60">✅ 对！</span> ':'<span style="color:#e67e22">❌ 不对～</span> ')+'<span style="color:#8a7e6e">💡 '+q.x+'</span>'):'')+'</div></div>';document.getElementById('qbody').innerHTML=h;if(qa.every(function(x){return x!==undefined}))document.getElementById('qbody').insertAdjacentHTML('beforeend','<div style="text-align:center;margin-top:8px"><button class="qbtn" onclick="sF()">查看成绩</button></div>')}
-function aQ(i){if(qa[qi]!==undefined)return;qa[qi]=i;if(qs[qi].a===i)sfxOK();else sfxNO();rQ()}
-function sF(){var s=0;qa.forEach(function(a,i){if(a===qs[i].a)s++});var f=document.getElementById('qfinal');f.className='qfinal show';f.innerHTML='<div style="font-size:2.2em">'+(s>=5?'🎉🌟':s>=3?'👍😊':'📖✨')+'</div><div style="font-size:1.3em;color:#d35400;margin:6px 0">'+s+'/5</div><p style="color:#8a7e6e;font-size:.88em">'+(s>=5?'你是图形侦探王！':s>=3?'很不错！':'再来一次～')+'</p><button class="qbtn" id="qRetryBtn">🔄 再来一次</button>';document.getElementById('qRetryBtn').onclick=function(){iQ();f.className='qfinal'}}setTimeout(iQ,500);
+/* ===== 第4步 ===== */
+function pickLn(el,txt){document.querySelectorAll('.btn.on').forEach(function(b){b.classList.remove('on')});el.classList.add('on');sfxTap();document.getElementById('fb4').innerHTML='<b style="color:#8e44ad">'+txt+'</b>'}
 </script></body></html>
