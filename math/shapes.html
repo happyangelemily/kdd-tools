@@ -1,3 +1,8 @@
+<!--
+shapes.html — HTML3 认识图形
+万物可拆解为1D/2D基础元素 · 由简入深
+可豆妈妈
+-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -5,115 +10,680 @@
 <title>认识图形 | 可豆妈妈</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
-.page{max-width:560px;margin:0 auto;padding:8px 14px 80px}
-.hero{text-align:center;padding:22px 8px 8px}
-.hero h1{font-size:1.3em;color:#d35400;margin-bottom:6px}
-.hero .sub{font-size:.84em;color:#9b9183}
-h2{font-size:1.02em;color:#2980b9;text-align:center;margin:16px 0 4px}
-.guide{text-align:center;font-size:.82em;color:#8a7e6e;margin-bottom:8px}
-.cvwrap{max-width:500px;margin:6px auto;border-radius:14px;overflow:hidden;border:1px solid #e6dfd2;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.cvwrap canvas{display:block;width:100%;touch-action:manipulation}
-.fb{text-align:center;font-size:.84em;min-height:24px;margin:4px 0;font-weight:600;line-height:1.5}
-.ok{color:#27ae60}.warn{color:#e67e22}
-.btnrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0}
-.btn{padding:10px 16px;border-radius:20px;border:1.5px solid #d8cfbe;background:#fff;font-size:.86em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
-.btn:active{transform:scale(.95)}.btn.on{border-color:#d35400;background:#fff8ef;color:#d35400}
-.foot{text-align:center;color:#c3bbac;font-size:.74em;margin:28px 0 8px}
-@media(max-width:420px){.hero h1{font-size:1.14em}}
-</style></head><body>
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
+.page{max-width:560px;margin:0 auto;padding:8px 14px 90px}
+
+/* 颜色体系 */
+:root{--d1:#7f8c8d;--d2:#16a085;--d3:#2c3e50;--know:#2980b9;--measure:#e67e22;--move:#27ae60;--where:#8e44ad}
+
+/* hero */
+.hero{text-align:center;padding:18px 4px 4px}
+.hero h1{font-size:1.22em;color:#d35400;margin-bottom:8px;line-height:1.4}
+.hero .core{font-size:.86em;color:#5b5348;line-height:1.7;margin:10px 0}
+.hero .core b{color:#2c3e50}
+.chain{display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0;font-weight:700;font-size:.92em;flex-wrap:wrap}
+.chain .ch-dot{width:14px;height:14px;border-radius:50%;display:inline-block;flex-shrink:0}
+.chain .ch-dot.d1{background:var(--d1)}.chain .ch-dot.d2{background:var(--d2)}.chain .ch-dot.d3{background:var(--d3)}
+.chain .ch-arr{color:#c0b8a0;font-size:.8em}
+
+/* 分段 */
+.sec-div{text-align:center;margin:32px 0 4px}
+.sec-div::before,.sec-div::after{content:'';display:inline-block;width:38px;height:1.5px;background:linear-gradient(to right,transparent,#d8cfbe);vertical-align:middle;margin:0 10px}
+.sec-div::after{background:linear-gradient(to left,transparent,#d8cfbe)}
+.sec-div .sd-icon{font-size:1.3em;vertical-align:middle}
+h2{text-align:center;font-size:1.06em;margin:6px 0 2px;line-height:1.4}
+h2.d1{color:var(--d1)}h2.d2{color:var(--d2)}h2.d3{color:var(--d3)}
+.sec-sub{text-align:center;font-size:.78em;color:#b0a696;margin-bottom:10px;line-height:1.5}
+
+/* 定义卡片 */
+.def-card{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;padding:16px 14px;margin:8px 0}
+.def-card .dc-ttl{font-size:.92em;font-weight:700;color:#5b5348;margin-bottom:6px;line-height:1.5}
+.def-card .dc-body{font-size:.82em;color:#6b6358;line-height:1.6}
+
+/* 场景插图 */
+.scene{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:8px 0;position:relative}
+.scene svg{display:block;width:100%;height:auto}
+.scene .sc-hint{text-align:center;font-size:.74em;color:#b0a696;padding:0 0 8px}
+.scene .sc-fb{text-align:center;font-size:.84em;font-weight:600;min-height:20px;margin:4px 0;line-height:1.5}
+.sc-ok{color:#27ae60}
+
+/* 图例标签 */
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.tag{padding:5px 12px;border-radius:14px;font-size:.76em;font-weight:600;border:1.5px solid #e6dfd2;background:#fcf9f4;color:#5b5348;cursor:pointer;transition:all .15s}
+.tag:active{transform:scale(.95)}
+.tag.on{border-color:var(--d2);background:#e8f6f3;color:var(--d2)}
+
+/* 图形卡片网格 */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin:8px 0}
+.scard{background:#fff;border:1.5px solid #ece3d5;border-radius:14px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s;user-select:none}
+.scard:active{transform:scale(.96)}
+.scard .sc-ico{font-size:2em;display:block;margin-bottom:4px}
+.scard .sc-nm{font-size:.78em;font-weight:700;color:#5b5348}
+.scard .sc-prop{font-size:.7em;color:#b0a696;margin-top:2px;display:none}
+.scard.on{border-color:var(--d2);background:#f0faf7;box-shadow:0 2px 8px rgba(22,160,133,.12)}
+.scard.on .sc-prop{display:block;color:var(--d2)}
+.scard .sc-3d{width:60px;height:60px;margin:0 auto 4px;display:block}
+
+/* 角探索器 */
+.angle-wrap{text-align:center;margin:8px 0}
+.angle-canvas{border-radius:14px;border:1.5px solid #ece3d5;background:#fff;touch-action:none;max-width:100%}
+.angle-info{font-size:.82em;font-weight:600;color:#5b5348;margin-top:6px;min-height:22px;line-height:1.5}
+
+/* 分类区 */
+.class-box{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;padding:14px;margin:8px 0}
+.class-box h3{font-size:.9em;color:#5b5348;text-align:center;margin-bottom:8px}
+.bin-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.bin{padding:10px 16px;border-radius:16px;border:2px dashed #d8cfbe;background:#fcf9f4;font-size:.82em;font-weight:700;color:#8a7e6e;cursor:pointer;transition:all .2s;text-align:center;min-width:90px}
+.bin.hl{border-color:var(--d2);border-style:solid;background:#e8f6f3;color:var(--d2);animation:pulse .5s}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.chip{padding:7px 14px;border-radius:16px;border:1.5px solid #e6dfd2;background:#fff;font-size:.8em;font-weight:600;color:#5b5348;cursor:pointer;transition:all .15s}
+.chip:active{transform:scale(.94)}
+.chip.placed{opacity:.35;pointer-events:none}
+.chip.wrong{animation:shake .4s;border-color:#e67e22;background:#fef3e8}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+/* 3D 立体卡片 */
+.d3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.d3-card{background:#fff;border:1.5px solid #ece3d5;border-radius:14px;padding:10px;text-align:center;cursor:pointer;transition:all .18s}
+.d3-card:active{transform:scale(.96)}
+.d3-card.on{border-color:var(--d3);background:#eef3f8;box-shadow:0 2px 8px rgba(44,62,80,.12)}
+.d3-card svg{display:block;width:100%;height:auto;margin-bottom:4px}
+.d3-card .d3-nm{font-size:.76em;font-weight:700;color:#5b5348}
+.d3-card .d3-faces{font-size:.7em;color:#7f8c8d;margin-top:2px;display:none}
+.d3-card.on .d3-faces{display:block}
+
+/* 弹出信息 */
+.popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:18px;padding:20px 16px;box-shadow:0 12px 40px rgba(0,0,0,.2);z-index:100;max-width:320px;width:90%;text-align:center}
+.popup .pop-close{position:absolute;top:8px;right:12px;font-size:1.2em;cursor:pointer;color:#b0a696;background:none;border:none}
+.popup .pop-icon{font-size:2.4em;margin-bottom:6px}
+.popup .pop-name{font-size:1em;font-weight:800;color:#2c3e50;margin-bottom:6px}
+.popup .pop-desc{font-size:.8em;color:#6b6358;line-height:1.6;margin-bottom:8px}
+.popup .pop-real{font-size:.76em;color:#b0a696;line-height:1.5}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:99}
+
+/* 测验 */
+.quiz-box{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;padding:16px;margin:8px 0}
+.quiz-progress{display:flex;justify-content:center;gap:4px;margin-bottom:10px}
+.qdot{width:10px;height:10px;border-radius:50%;background:#e6dfd2}
+.qdot.done{background:var(--d2)}.qdot.wrong{background:#e67e22}.qdot.cur{background:var(--d3);box-shadow:0 0 6px rgba(44,62,80,.4)}
+.quiz-q{text-align:center;font-size:.88em;font-weight:600;color:#5b5348;margin-bottom:12px;line-height:1.5}
+.qopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.qbtn{padding:10px 16px;border-radius:20px;border:2px solid #e6dfd2;background:#fcf9f4;font-size:.84em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348;transition:all .15s}
+.qbtn:active{transform:scale(.94)}
+.qbtn.good{border-color:#27ae60;background:#e8f5e9;color:#2e7d32}
+.qbtn.bad{border-color:#e74c3c;background:#fdecea;color:#c0392b}
+.qbtn:disabled{opacity:.55;pointer-events:none}
+.quiz-fb{text-align:center;font-size:.82em;font-weight:600;min-height:20px;margin-top:8px;line-height:1.5}
+.quiz-nav{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.qnav{padding:8px 18px;border-radius:20px;border:1.5px solid #d8cfbe;background:#fff;font-size:.82em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
+.qnav:disabled{opacity:.3;cursor:default}
+.qnav:active:not(:disabled){transform:scale(.95)}
+.quiz-score{text-align:center;font-size:.9em;font-weight:700;color:var(--d3);margin-top:8px}
+
+/* 总结 */
+.summary{background:linear-gradient(135deg,#eef2f7,#f0f4f8);border:2px solid #bccbd8;border-radius:16px;padding:18px 15px;margin:8px 0;text-align:center}
+.summary .sum-big{font-size:1.02em;font-weight:800;color:#2c3e50;margin-bottom:10px;line-height:1.5}
+.summary .sum-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0;font-size:.8em}
+.summary .sum-col{padding:8px;border-radius:10px;text-align:center;line-height:1.6}
+.summary .sum-col.s1{background:rgba(127,140,141,.08);color:var(--d1)}
+.summary .sum-col.s2{background:rgba(22,160,133,.08);color:var(--d2)}
+.summary .sum-col.s3{background:rgba(44,62,80,.08);color:var(--d3)}
+.summary .sum-col .sct{font-weight:700;font-size:.85em;display:block}
+.summary .sum-arrow{font-size:.7em;color:#bccbd8}
+
+/* 家长看这里 */
+.parent-toggle{text-align:center;margin:8px 0;cursor:pointer;font-size:.78em;color:#b0a696;padding:6px}
+.parent-toggle .pt-arr{display:inline-block;transition:transform .3s;margin-right:4px}
+.parent-toggle.open .pt-arr{transform:rotate(180deg)}
+.parent-body{display:none;background:#f9f7f2;border-radius:12px;padding:12px 14px;margin:4px 0 10px;font-size:.78em;color:#7f8c8d;line-height:1.7}
+.parent-body.open{display:block}
+.parent-body .ptag{display:inline-block;background:#e6dfd2;padding:2px 8px;border-radius:8px;margin:2px 3px;font-size:.85em;color:#5b5348}
+
+/* 响应式 */
+@media(max-width:420px){
+  .hero h1{font-size:1.08em}
+  .card-grid{grid-template-columns:repeat(3,1fr)}
+  .d3-grid{grid-template-columns:repeat(2,1fr)}
+  .qopts{flex-direction:column;align-items:stretch}
+  .qbtn{text-align:center}
+  .summary .sum-grid{grid-template-columns:1fr;gap:4px}
+}
+
+/* 3D SVG 颜色 */
+.d3-box{fill:#d4a878;stroke:#a08050;stroke-width:2}
+.d3-box-top{fill:#c09060;stroke:#a08050;stroke-width:1.5}
+.d3-box-side{fill:#e0c0a0;stroke:#a08050;stroke-width:1.5}
+.d3-cyl-body{fill:#f0e0b8;stroke:#c0a870;stroke-width:2}
+.d3-cyl-top{fill:#e8c070;stroke:#c0a870;stroke-width:1.5}
+.d3-sphere{fill:#8cc88c;stroke:#5a8a5a;stroke-width:2}
+.d3-cone{fill:#e0a870;stroke:#c08050;stroke-width:2}
+.d3-prism-body{fill:#a8c8e0;stroke:#6a8fbf;stroke-width:2}
+.d3-prism-top{fill:#8ab0d8;stroke:#6a8fbf;stroke-width:1.5}
+.d3-pyramid{fill:#d8a8d0;stroke:#a07098;stroke-width:2}
+.d3-ellipsoid{fill:#f0c878;stroke:#c8a050;stroke-width:2}
+</style>
+</head>
+<body>
 <div class="page">
+
+<!-- ===== 开篇 ===== -->
 <div class="hero">
-  <h1>🔍 小侦探找形状</h1>
-  <div class="sub">你身边每样东西，都是一个<b>立体图形</b>。<br>点一点，看看它们能拆出什么秘密～</div>
+  <h1>🔍 认识图形</h1>
+  <div class="core">
+    世界上所有东西，都能<b>拆解</b>成最简单的<br>
+    <b>一维元素</b>（线）和 <b>二维元素</b>（面）<br><br>
+    学习要<b>由简入深</b>——
+  </div>
+  <div class="chain">
+    <span style="color:var(--d1)">⬤ 一维·线</span>
+    <span class="ch-arr">→</span>
+    <span style="color:var(--d2)">⬤ 二维·面</span>
+    <span class="ch-arr">→</span>
+    <span style="color:var(--d3)">⬤ 三维·体</span>
+  </div>
 </div>
 
-<h2>🏠 第一步：这些东西是什么立体图形？</h2>
-<div class="guide">左边是生活中的东西，右边是它的几何真身。<br>点右边的几何立体，看它叫什么——</div>
-<div class="cvwrap"><canvas id="c1" width="500" height="340"></canvas></div>
-<div class="fb" id="fb1"></div>
+<!-- ===== 一维模块 ===== -->
+<div class="sec-div"><span class="sd-icon">📏</span></div>
+<h2 class="d1">一维 · 线 —— 只有长短，没有粗细</h2>
+<div class="sec-sub">最简单的几何元素，所有图形的起点</div>
 
-<h2 style="color:#e67e22">🔧 第二步：拆成平面图形</h2>
-<div class="guide">每个立体图形都能拆开——里面全是扁扁的<b>平面图形</b>～</div>
-<div class="btnrow">
-  <button class="btn" onclick="tapGeo('长方体：6个面——4个长方形 + 2个正方形')">长方体</button>
-  <button class="btn" onclick="tapGeo('圆柱：3个面——2个圆 + 1个长方形')">圆柱</button>
-  <button class="btn" onclick="tapGeo('球：从哪切都是圆')">球</button>
-  <button class="btn" onclick="tapGeo('圆锥：2个面——1个圆 + 1个扇形')">圆锥</button>
+<div class="def-card">
+  <div class="dc-ttl">🧒 小朋友的话：</div>
+  <div class="dc-body">"一维的东西只有<b>长短</b>，没有粗细。你画一条线，它有多长可以量，但它有多粗？没有！它是数学里最瘦最瘦的东西。"</div>
 </div>
-<div class="fb" id="fb2"></div>
 
-<h2 style="color:#d35400">📐 第三步：角的秘密</h2>
-<div class="guide">拖一拖，看角怎么变大变小～<br>小于90°是锐角、等于90°是直角、大于90°是钝角</div>
-<div class="cvwrap"><canvas id="c2" width="340" height="220"></canvas></div>
-<div class="fb" id="fb3">拖动那条斜边试试～</div>
-
-<h2 style="color:#8e44ad">➖ 第四步：线的三兄弟</h2>
-<div class="guide">图形的边是<b>线段</b>（有头有尾）。还有两个亲戚——</div>
-<div class="btnrow">
-  <button class="btn" onclick="pickLn(this,'线段：有头有尾，能量多长。图形的每条边都是线段！')">━━ 线段</button>
-  <button class="btn" onclick="pickLn(this,'射线：有头没尾，向一个方向无限射出去')">━→ 射线</button>
-  <button class="btn" onclick="pickLn(this,'直线：没头没尾，向两边无限延伸')">←→ 直线</button>
+<!-- 一维场景 -->
+<div class="scene" id="scene1d">
+  <svg viewBox="0 0 400 240">
+    <defs>
+      <radialGradient id="sun"><stop offset="0" stop-color="#ffe88c"/><stop offset="1" stop-color="#ffd54f"/></radialGradient>
+    </defs>
+    <!-- 天空 -->
+    <rect width="400" height="160" fill="#e8f4fd"/>
+    <!-- 太阳+射线 -->
+    <circle cx="320" cy="45" r="24" fill="url(#sun)" id="sunBody"/>
+    <g id="sunRays">
+      <line x1="344" y1="45" x2="370" y2="25" stroke="#ffcf3f" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="340" y1="60" x2="365" y2="80" stroke="#ffcf3f" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="310" y1="68" x2="300" y2="90" stroke="#ffcf3f" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="296" y1="48" x2="275" y2="35" stroke="#ffcf3f" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <!-- 地平线 -->
+    <line x1="0" y1="160" x2="400" y2="160" stroke="#c8b898" stroke-width="2.5" stroke-linecap="round" id="horizon"/>
+    <!-- 地面 -->
+    <rect x="0" y="160" width="400" height="80" fill="#e8dcc8"/>
+    <!-- 跷跷板（线段） -->
+    <g id="seesaw">
+      <polygon points="120,178 190,168 140,185" fill="#c0a878"/>
+      <line x1="105" y1="170" x2="175" y2="176" stroke="#8b6f47" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="140" cy="184" r="4" fill="#8b6f47"/>
+    </g>
+    <!-- 石子路（曲线） -->
+    <path d="M 220,190 Q 250,170 270,190 T 320,182 T 360,192" fill="none" stroke="#a09078" stroke-width="3" stroke-linecap="round" id="pathCurve"/>
+    <!-- 地上的石子（点） -->
+    <circle cx="210" cy="192" r="2.5" fill="#9b8b7b" id="stone1"/>
+    <circle cx="240" cy="188" r="2" fill="#9b8b7b" id="stone2"/>
+    <circle cx="290" cy="186" r="2.5" fill="#9b8b7b" id="stone3"/>
+    <circle cx="340" cy="189" r="2" fill="#9b8b7b" id="stone4"/>
+    <!-- 彩虹（弧线） -->
+    <path d="M 20,160 Q 120,30 220,160" fill="none" stroke="#f08080" stroke-width="3" opacity=".6" id="rainbow1"/>
+    <path d="M 30,160 Q 120,40 210,160" fill="none" stroke="#f0c060" stroke-width="3" opacity=".6" id="rainbow2"/>
+    <path d="M 40,160 Q 120,50 200,160" fill="none" stroke="#80c8f0" stroke-width="3" opacity=".6" id="rainbow3"/>
+    <!-- 手电筒光（射线-短） -->
+    <polygon points="280,200 310,178 330,178 300,200" fill="#ffe8a0" opacity=".3" id="flashbeam"/>
+    <rect x="275" y="195" width="14" height="12" rx="2" fill="#888" id="flashBody"/>
+    <!-- 标签 -->
+    <text x="354" y="28" font-size="9" fill="#e67e22" font-weight="700">射线</text>
+    <text x="10" y="158" font-size="9" fill="var(--d1)" font-weight="700">直线(地平线)</text>
+    <text x="10" y="178" font-size="9" fill="#8b6f47" font-weight="700">线段</text>
+    <text x="200" y="210" font-size="9" fill="#a09078" font-weight="700">曲线</text>
+    <text x="14" y="208" font-size="9" fill="#9b8b7b">点</text>
+    <text x="40" y="58" font-size="9" fill="#f08080">弧线</text>
+  </svg>
+  <div class="sc-hint">👆 点一点场景里的东西，看看它们是什么线——</div>
+  <div class="sc-fb" id="fb1d"></div>
 </div>
-<div class="fb" id="fb4"></div>
 
-<div class="foot">可豆妈妈 · 更多图形小工具陆续上线 🌱</div>
+<!-- 一维图例 -->
+<div class="tag-row" id="tagRow1d">
+  <span class="tag on" data-id="dot">· 点</span>
+  <span class="tag" data-id="segment">━ 线段</span>
+  <span class="tag" data-id="ray">→ 射线</span>
+  <span class="tag" data-id="line">↔ 直线</span>
+  <span class="tag" data-id="curve">〜 曲线</span>
+  <span class="tag" data-id="arc">⌒ 弧线</span>
+  <span class="tag" data-id="wave">≈ 波浪线</span>
+</div>
+
+<!-- 一维家长概念 -->
+<div class="parent-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+  <span class="pt-arr">▼</span> 📋 家长看这里（课标术语）
+</div>
+<div class="parent-body">
+  <b>一维图形（1D）核心概念：</b><br>
+  <span class="ptag">点</span> <span class="ptag">线段</span> <span class="ptag">射线</span> <span class="ptag">直线</span> <span class="ptag">曲线</span> <span class="ptag">弧线</span><br><br>
+  <b>课标对应：</b>小学低年级「认识线段」，中年级「认识射线、直线」「两点确定一条直线」，高年级「曲线的初步认识（圆、扇形弧长）」。
+</div>
+
+<!-- ===== 二维模块 ===== -->
+<div class="sec-div"><span class="sd-icon">📄</span></div>
+<h2 class="d2">二维 · 面 —— 有长有宽，扁扁平平</h2>
+<div class="sec-sub">一维的线围起来，就变成了面——各种平面图形</div>
+
+<div class="def-card">
+  <div class="dc-ttl">🧒 小朋友的话：</div>
+  <div class="dc-body">"二维就是<b>扁扁的</b>。一张纸、桌面、手机屏幕——它们有两个方向：横着有多宽、竖着有多长。这些就叫<b>平面图形</b>。"</div>
+</div>
+
+<!-- 平面图形卡片 -->
+<div class="card-grid" id="shapeGrid">
+  <div class="scard" data-shape="triangle" onclick="tapShape(this,'triangle','三角形','3条边、3个角','△ 交通标志、三角尺')"><span class="sc-ico">△</span><span class="sc-nm">三角形</span><span class="sc-prop">3边3角</span></div>
+  <div class="scard" data-shape="square" onclick="tapShape(this,'square','正方形','4条边一样长、4个直角','□ 魔方一面、棋盘格')"><span class="sc-ico">□</span><span class="sc-nm">正方形</span><span class="sc-prop">4边等长</span></div>
+  <div class="scard" data-shape="rect" onclick="tapShape(this,'rect','长方形','对边一样长、4个直角','▭ 手机、课本封面')"><span class="sc-ico">▭</span><span class="sc-nm">长方形</span><span class="sc-prop">对边等长</span></div>
+  <div class="scard" data-shape="circle" onclick="tapShape(this,'circle','圆','没有角、从中心到边一样远','○ 硬币、钟面、车轮')"><span class="sc-ico">○</span><span class="sc-nm">圆</span><span class="sc-prop">0角</span></div>
+  <div class="scard" data-shape="parallelogram" onclick="tapShape(this,'parallelogram','平行四边形','对边平行且相等、对角相等','▱ 伸缩门、推拉窗')"><span class="sc-ico">▱</span><span class="sc-nm">平行四边形</span><span class="sc-prop">对边平行</span></div>
+  <div class="scard" data-shape="trapezoid" onclick="tapShape(this,'trapezoid','梯形','只有一对边平行','⏢ 梯子、堤坝截面')"><span class="sc-ico">⏢</span><span class="sc-nm">梯形</span><span class="sc-prop">一对平行边</span></div>
+  <div class="scard" data-shape="rhombus" onclick="tapShape(this,'rhombus','菱形','4条边一样长、对角相等','◇ 钻石图案、风筝')"><span class="sc-ico">◇</span><span class="sc-nm">菱形</span><span class="sc-prop">4边等长</span></div>
+  <div class="scard" data-shape="pentagon" onclick="tapShape(this,'pentagon','五边形','5条边、5个角','⬠ 足球皮块、路牌')"><span class="sc-ico">⬠</span><span class="sc-nm">五边形</span><span class="sc-prop">5边5角</span></div>
+  <div class="scard" data-shape="hexagon" onclick="tapShape(this,'hexagon','六边形','6条边、6个角','⬡ 蜂巢、螺丝帽')"><span class="sc-ico">⬡</span><span class="sc-nm">六边形</span><span class="sc-prop">6边6角</span></div>
+  <div class="scard" data-shape="semicircle" onclick="tapShape(this,'semicircle','半圆','圆的一半，1条直边+1条弧边','◗ 量角器、月亮')"><span class="sc-ico">◗</span><span class="sc-nm">半圆</span><span class="sc-prop">直边+弧边</span></div>
+  <div class="scard" data-shape="ring" onclick="tapShape(this,'ring','圆环','大圆挖掉小圆','◎ 甜甜圈、游泳圈')"><span class="sc-ico">◎</span><span class="sc-nm">圆环</span><span class="sc-prop">大圆-小圆</span></div>
+</div>
+
+<!-- 角探索器 -->
+<div class="def-card">
+  <div class="dc-ttl">📐 角 —— 两条线张开的程度</div>
+  <div class="dc-body">两条边从同一个顶点出发，它们<b>张开的大小</b>就是角。角是<b>二维</b>的概念——它活在平面上，不是一条线。</div>
+</div>
+<div class="angle-wrap">
+  <canvas id="angleCanvas" class="angle-canvas" width="340" height="200"></canvas>
+  <div class="angle-info" id="angleInfo">👆 拖一拖斜边，感受角的大小变化</div>
+</div>
+
+<!-- 二维家长概念 -->
+<div class="parent-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+  <span class="pt-arr">▼</span> 📋 家长看这里（课标术语）
+</div>
+<div class="parent-body">
+  <b>二维图形（2D）核心概念：</b><br>
+  <span class="ptag">三角形</span> <span class="ptag">正方形</span> <span class="ptag">长方形</span> <span class="ptag">圆</span> <span class="ptag">平行四边形</span> <span class="ptag">梯形</span> <span class="ptag">菱形</span> <span class="ptag">五边形</span> <span class="ptag">六边形</span> <span class="ptag">半圆</span> <span class="ptag">圆环</span><br><br>
+  <b>角：</b><span class="ptag">锐角（&lt;90°）</span> <span class="ptag">直角（=90°）</span> <span class="ptag">钝角（&gt;90°）</span><br><br>
+  <b>课标对应：</b>低年级「认识平面图形（长方形、正方形、三角形、圆）」，中年级「认识角、直角」「认识平行四边形和梯形」，高年级「多边形内角和」「圆的认识」。
+</div>
+
+<!-- ===== 三维模块 ===== -->
+<div class="sec-div"><span class="sd-icon">📦</span></div>
+<h2 class="d3">三维 · 体 —— 有长有宽有高，能装东西</h2>
+<div class="sec-sub">二维的面围起来，就变成了立体——这是我们生活的世界</div>
+
+<div class="def-card">
+  <div class="dc-ttl">🧒 小朋友的话：</div>
+  <div class="dc-body">"三维的东西<b>能拿起来、能装东西</b>。不仅有长和宽，还有<b>高</b>（厚度/深度）。世界上的东西几乎都是三维的——积木、水杯、足球、你自己！"</div>
+</div>
+
+<!-- 立体图形 -->
+<div class="d3-grid" id="d3Grid">
+  <div class="d3-card" data-d3="cube" onclick="tap3D(this,'cube','正方体','6个正方形面、8个顶点、12条棱','🎲 骰子、魔方')">
+    <svg viewBox="0 0 56 56"><polygon points="28,6 48,18 28,30 8,18" fill="#a3c9e8" stroke="#5a8fbf" stroke-width="1.5"/><polygon points="28,30 48,18 48,42 28,54" fill="#6a9fc8" stroke="#5a8fbf" stroke-width="1.5"/><polygon points="8,18 28,30 28,54 8,42" fill="#7baed4" stroke="#5a8fbf" stroke-width="1.5"/></svg><span class="d3-nm">正方体</span><span class="d3-faces">6个正方形</span>
+  </div>
+  <div class="d3-card" data-d3="cuboid" onclick="tap3D(this,'cuboid','长方体','6个长方形面（可能含正方形）','📦 纸箱、课本')">
+    <svg viewBox="0 0 56 56"><polygon points="24,10 44,20 24,30 8,20" fill="#d4a878" stroke="#a08050" stroke-width="1.5"/><polygon points="24,30 44,20 44,44 24,54" fill="#c09060" stroke="#a08050" stroke-width="1.5"/><polygon points="8,20 24,30 24,54 8,44" fill="#e0c0a0" stroke="#a08050" stroke-width="1.5"/></svg><span class="d3-nm">长方体</span><span class="d3-faces">6个长方形</span>
+  </div>
+  <div class="d3-card" data-d3="cylinder" onclick="tap3D(this,'cylinder','圆柱','2个圆面+1个曲面','🥫 易拉罐、水杯')">
+    <svg viewBox="0 0 56 56"><rect x="14" y="18" width="28" height="26" rx="1" fill="#f0e0b8" stroke="#c0a870" stroke-width="1.5"/><ellipse cx="28" cy="18" rx="14" ry="5" fill="#e8c070" stroke="#c0a870" stroke-width="1.5"/><ellipse cx="28" cy="44" rx="14" ry="5" fill="#f0e0b8" stroke="#c0a870" stroke-width="1.5"/></svg><span class="d3-nm">圆柱</span><span class="d3-faces">2圆+1曲面</span>
+  </div>
+  <div class="d3-card" data-d3="sphere" onclick="tap3D(this,'sphere','球','处处都是曲面，没有平面','⚽ 足球、地球仪')">
+    <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="18" fill="#8cc88c" stroke="#5a8a5a" stroke-width="1.5"/><ellipse cx="28" cy="28" rx="18" ry="7" fill="none" stroke="#5a8a5a" stroke-width=".8" opacity=".4"/><ellipse cx="28" cy="28" rx="7" ry="18" fill="none" stroke="#5a8a5a" stroke-width=".8" opacity=".4"/></svg><span class="d3-nm">球</span><span class="d3-faces">全曲面</span>
+  </div>
+  <div class="d3-card" data-d3="cone" onclick="tap3D(this,'cone','圆锥','1个圆面+1个曲面+1个顶点','🎉 派对帽、路锥')">
+    <svg viewBox="0 0 56 56"><polygon points="28,8 16,44 40,44" fill="#e0a870" stroke="#c08050" stroke-width="1.5"/><ellipse cx="28" cy="44" rx="12" ry="4" fill="#f0c090" stroke="#c08050" stroke-width="1.5"/></svg><span class="d3-nm">圆锥</span><span class="d3-faces">1圆+1曲面</span>
+  </div>
+  <div class="d3-card" data-d3="prism" onclick="tap3D(this,'prism','三棱柱','5个面：3个长方形+2个三角形','△ 帐篷、巧克力棒')">
+    <svg viewBox="0 0 56 56"><polygon points="28,8 44,14 28,20 12,14" fill="#a8c8e0" stroke="#6a8fbf" stroke-width="1.5"/><polygon points="28,20 44,14 44,42 28,48" fill="#8ab0d8" stroke="#6a8fbf" stroke-width="1.5"/><polygon points="12,14 28,20 28,48 12,42" fill="#6a9fc8" stroke="#5a8fbf" stroke-width="1.5"/></svg><span class="d3-nm">三棱柱</span><span class="d3-faces">5个面</span>
+  </div>
+  <div class="d3-card" data-d3="pyramid" onclick="tap3D(this,'pyramid','四棱锥','5个面：4个三角形+1个正方形底','🔺 金字塔')">
+    <svg viewBox="0 0 56 56"><polygon points="28,6 46,20 28,34 10,20" fill="#d8a8d0" stroke="#a07098" stroke-width="1.5"/><polygon points="28,34 46,20 46,42 28,54" fill="#c090c0" stroke="#a07098" stroke-width="1.5"/><polygon points="10,20 28,34 28,54 10,42" fill="#b080b0" stroke="#906888" stroke-width="1.5"/></svg><span class="d3-nm">四棱锥</span><span class="d3-faces">5个面</span>
+  </div>
+  <div class="d3-card" data-d3="ellipsoid" onclick="tap3D(this,'ellipsoid','椭球','像被压扁的球，三个方向不一样长','🏈 橄榄球、蛋')">
+    <svg viewBox="0 0 56 56"><ellipse cx="28" cy="28" rx="12" ry="18" fill="#f0c878" stroke="#c8a050" stroke-width="1.5"/><ellipse cx="28" cy="28" rx="12" ry="8" fill="none" stroke="#c8a050" stroke-width=".8" opacity=".4"/></svg><span class="d3-nm">椭球</span><span class="d3-faces">全曲面</span>
+  </div>
+</div>
+
+<!-- 分类：平面立体 vs 曲面立体 -->
+<div class="class-box" id="classBox3D">
+  <h3>🎯 给立体图形分个类：平面立体 vs 曲面立体</h3>
+  <div class="bin-row">
+    <div class="bin" data-bin="flat" id="binFlat">📐 平面立体<br><span style="font-size:.72em">全部由平面围成</span></div>
+    <div class="bin" data-bin="curved" id="binCurved">🏐 曲面立体<br><span style="font-size:.72em">有曲面（弯弯的面）</span></div>
+  </div>
+  <div class="chip-row" id="chipRow3D"></div>
+  <div class="sc-fb" id="fbClass3D"></div>
+</div>
+
+<!-- 三维家长概念 -->
+<div class="parent-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+  <span class="pt-arr">▼</span> 📋 家长看这里（课标术语）
+</div>
+<div class="parent-body">
+  <b>三维图形（3D）核心概念：</b><br>
+  <span class="ptag">正方体</span> <span class="ptag">长方体</span> <span class="ptag">圆柱</span> <span class="ptag">球</span> <span class="ptag">圆锥</span> <span class="ptag">棱柱（三棱柱）</span> <span class="ptag">棱锥（四棱锥）</span> <span class="ptag">椭球</span><br><br>
+  <b>分类：</b><span class="ptag">平面立体（多面体）</span> = 由平面多边形围成（正方体、长方体、棱柱、棱锥）；<span class="ptag">曲面立体</span> = 包含曲面（圆柱、圆锥、球、椭球）。<br><br>
+  <b>课标对应：</b>低年级「认识立体图形（正方体、长方体、圆柱、球）」，中年级「从不同方向观察立体」「展开与折叠」，高年级「认识圆锥」「立体图形的表面积和体积」。
+</div>
+
+<!-- ===== 总结板块 ===== -->
+<div class="sec-div"><span class="sd-icon">🌟</span></div>
+<div class="summary">
+  <div class="sum-big">从一维到三维，一步一个脚印</div>
+  <div class="sum-grid">
+    <div class="sum-col s1"><span class="sct">📏 一维·线</span>点 / 线段 / 射线<br>直线 / 曲线 / 弧线<br><span style="font-size:.75em">只有长短</span></div>
+    <div class="sum-col s2"><span class="sct">📄 二维·面</span>三角形到圆环<br>11种平面图形 + 角<br><span style="font-size:.75em">有长有宽</span></div>
+    <div class="sum-col s3"><span class="sct">📦 三维·体</span>正方体到椭球<br>8种立体图形<br><span style="font-size:.75em">有长宽高</span></div>
+  </div>
+  <div style="font-size:.78em;color:#7f8c8d;line-height:1.6;margin-top:8px">
+    线围出面 → 面围出体<br>
+    认识了所有图形，就拿到了看懂世界的<b>地图</b> 🗺️
+  </div>
+</div>
+
+<!-- ===== 小测验 ===== -->
+<div class="sec-div"><span class="sd-icon">🎮</span></div>
+<h2 style="color:#d35400">小测验</h2>
+<div class="sec-sub">测测你记住了多少～</div>
+
+<div class="quiz-box" id="quizBox">
+  <div class="quiz-progress" id="quizDots"></div>
+  <div class="quiz-q" id="quizQ"></div>
+  <div class="qopts" id="quizOpts"></div>
+  <div class="quiz-fb" id="quizFb"></div>
+  <div class="quiz-nav">
+    <button class="qnav" id="qPrev" onclick="quizPrev()" disabled>◀ 上一题</button>
+    <button class="qnav" id="qNext" onclick="quizNext()" disabled>下一题 ▶</button>
+  </div>
+  <div class="quiz-score" id="quizScore" style="display:none"></div>
+</div>
+
+<div style="text-align:center;color:#c3bbac;font-size:.74em;margin:20px 0 8px;line-height:1.7">
+  可豆妈妈 · 更多几何互动工具陆续上线 🌱
+</div>
+
+</div><!-- /page -->
+
+<!-- 弹出层 -->
+<div class="overlay" id="overlay" onclick="closePopup()"></div>
+<div class="popup" id="popup">
+  <button class="pop-close" onclick="closePopup()">✕</button>
+  <div class="pop-icon" id="popIcon"></div>
+  <div class="pop-name" id="popName"></div>
+  <div class="pop-desc" id="popDesc"></div>
+  <div class="pop-real" id="popReal"></div>
 </div>
 
 <script>
-/* ===== 声音 ===== */
+/* ===== 音效 ===== */
 function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
 function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
+function sfxNO(){beep(200,.2,'triangle')}
 function sfxTap(){beep(560,.08)}
 
-/* ===== 第1步：画布 ===== */
-var cx=document.getElementById('c1').getContext('2d'),found={};
-function drawAll(hl){
-  cx.clearRect(0,0,500,340);
-  var g=cx.createLinearGradient(0,0,0,340);g.addColorStop(0,'#fdf5e8');g.addColorStop(1,'#f0e8d8');cx.fillStyle=g;cx.fillRect(0,0,500,340);
-  cx.strokeStyle='#ddd4c4';cx.lineWidth=1.4;cx.setLineDash([6,8]);cx.beginPath();cx.moveTo(240,16);cx.lineTo(240,324);cx.stroke();cx.setLineDash([]);
-  cx.fillStyle='#b0a090';cx.font='11px sans-serif';cx.textAlign='center';cx.fillText('生活中的东西',120,18);cx.fillText('几何立体图形',370,18);
-  /* 左边实物 */
-  cx.fillStyle='#e8dcc8';cx.fillRect(30,100,72,46);cx.strokeStyle='#c0a878';cx.lineWidth=2;cx.strokeRect(30,100,72,46);cx.fillStyle='#f5efe0';cx.fillRect(36,86,20,18);cx.strokeStyle='#c0a878';cx.strokeRect(36,86,20,18);cx.fillText('纸巾盒',66,170);
-  cx.fillStyle='#e0c0a0';cx.fillRect(150,108,32,66);cx.strokeStyle='#b09878';cx.lineWidth=2;cx.strokeRect(150,108,32,66);cx.fillStyle='#d0a080';cx.beginPath();cx.ellipse(166,108,16,5);cx.fill();cx.strokeStyle='#b09878';cx.stroke();cx.fillText('易拉罐',166,196);
-  cx.fillStyle='#8cc88c';cx.beginPath();cx.arc(110,250,30,0,Math.PI*2);cx.fill();cx.strokeStyle='#5a8a5a';cx.lineWidth=2;cx.stroke();cx.fillStyle='#fff';cx.beginPath();cx.arc(100,242,7,0,Math.PI*2);cx.fill();cx.fillText('皮球',110,298);
-  cx.fillStyle='#e8a878';cx.beginPath();cx.moveTo(180,240);cx.lineTo(154,300);cx.lineTo(206,300);cx.closePath();cx.fill();cx.strokeStyle='#c08050';cx.lineWidth=2;cx.stroke();cx.fillText('派对帽',180,318);
-  /* 右边几何 */
-  /* a 长方体 */var s=(hl==='a')?4:0;cx.fillStyle='#d4a878';cx.fillRect(266-s,68-s,56+s*2,40+s*2);cx.strokeStyle='#a08050';cx.lineWidth=2;cx.strokeRect(266-s,68-s,56+s*2,40+s*2);cx.fillStyle='#c09060';cx.fillRect(266,54,56,14);cx.strokeStyle='#a08050';cx.strokeRect(266,54,56,14);cx.fillStyle='#e0c0a0';cx.fillRect(260,78,6,22);cx.strokeStyle='#a08050';cx.strokeRect(260,78,6,22);
-  /* b 圆柱 */s=(hl==='b')?4:0;cx.fillStyle='#f0e0b8';cx.fillRect(375-s,68-s,30+s*2,42+s*2);cx.strokeStyle='#c0a870';cx.lineWidth=2;cx.strokeRect(375-s,68-s,30+s*2,42+s*2);cx.fillStyle='#e8c070';cx.beginPath();cx.ellipse(390,68,15,5);cx.fill();cx.strokeStyle='#c0a870';cx.stroke();cx.fillStyle='#e8c070';cx.beginPath();cx.ellipse(390,110,15,5);cx.fill();cx.strokeStyle='#c0a870';cx.stroke();
-  /* c 球 */s=(hl==='c')?4:0;cx.fillStyle='#8cc88c';cx.beginPath();cx.arc(315,180,30+s,0,Math.PI*2);cx.fill();cx.strokeStyle='#5a8a5a';cx.lineWidth=2;cx.stroke();cx.fillStyle='#fff';cx.beginPath();cx.arc(306,170,8,0,Math.PI*2);cx.fill();
-  /* d 圆锥 */s=(hl==='d')?4:0;cx.fillStyle='#e0a870';cx.beginPath();cx.moveTo(430,154);cx.lineTo(400-s,216);cx.lineTo(460+s,216);cx.closePath();cx.fill();cx.strokeStyle='#c08050';cx.lineWidth=2;cx.stroke();cx.fillStyle='#f0c090';cx.beginPath();cx.ellipse(430,216,30,8,0,0,Math.PI*2);cx.fill();cx.strokeStyle='#c08050';cx.stroke();
-  /* 金框高亮 */if(hl){cx.strokeStyle='#ffcf3f';cx.lineWidth=2.5;cx.setLineDash([4,3]);var bb={a:[262,64,64,48],b:[371,64,38,50],c:[285,150,60,60],d:[396,150,68,68]}[hl];if(bb)cx.strokeRect(bb[0],bb[1],bb[2],bb[3]);else if(hl==='c'){cx.beginPath();cx.arc(315,180,34,0,Math.PI*2);cx.stroke()}cx.setLineDash([])}
-  /* 编号圈 */[{x:294,y:66,id:'a',nm:'长方体'},{x:390,y:66,id:'b',nm:'圆柱'},{x:315,y:180,id:'c',nm:'球'},{x:430,y:184,id:'d',nm:'圆锥'}].forEach(function(g,i){if(!found[g.id]){cx.fillStyle='rgba(255,255,255,.85)';cx.beginPath();cx.arc(g.x,g.y,11,0,Math.PI*2);cx.fill();cx.fillStyle='#d35400';cx.font='bold 10px sans-serif';cx.fillText(i+1,g.x,g.y)}})
+/* ===== 弹出 ===== */
+function showPopup(icon,name,desc,real){
+  document.getElementById('popIcon').textContent=icon;
+  document.getElementById('popName').textContent=name;
+  document.getElementById('popDesc').textContent=desc;
+  document.getElementById('popReal').textContent='🌍 '+real;
+  document.getElementById('popup').style.display='block';
+  document.getElementById('overlay').style.display='block';
 }
-drawAll(null);
-document.getElementById('c1').onclick=function(e){
-  var r=this.getBoundingClientRect(),mx=(e.clientX-r.left)*(500/r.width),my=(e.clientY-r.top)*(340/r.height);
-  var hits=[{id:'a',x1:262,y1:64,x2:326,y2:112},{id:'b',x1:371,y1:64,x2:409,y2:114},{id:'c',x1:283,y1:148,x2:347,y2:212},{id:'d',x1:400,y1:154,x2:460,y2:224}];
-  var names={a:'长方体',b:'圆柱',c:'球',d:'圆锥'};
-  hits.forEach(function(h){if(!found[h.id]&&mx>=h.x1&&mx<=h.x2&&my>=h.y1&&my<=h.y2){found[h.id]=1;sfxOK();drawAll(h.id);document.getElementById('fb1').innerHTML='<span class="ok">✅</span> 这是 <b style="color:#d35400">'+names[h.id]+'</b>！';var n=Object.keys(found).length;if(n>=4)document.getElementById('fb1').innerHTML='<span class="ok">🎉 全认出来了！下面点按钮拆开看看～</span>'}})
-};
+function closePopup(){
+  document.getElementById('popup').style.display='none';
+  document.getElementById('overlay').style.display='none';
+}
 
-/* ===== 第2步 ===== */
-function tapGeo(t){sfxTap();document.getElementById('fb2').innerHTML='<span class="ok">拆开 →</span> '+t+'<br><span style="color:#8a7e6e;font-size:.8em">立体图形都是由平面图形拼成的！</span>'}
+/* ===== 一维场景交互 ===== */
+var svg1d=document.getElementById('scene1d');
+var hitAreas1d=[
+  {ids:['seesaw'],tag:'segment',icon:'━',name:'线段',desc:'有头有尾，能量出多长。跷跷板的木板、铅笔，都是线段。'},
+  {ids:['sunBody','sunRays'],tag:'ray',icon:'→',name:'射线',desc:'有头没尾，从一点出发，向一个方向无限延伸。太阳光就是射线。'},
+  {ids:['horizon'],tag:'line',icon:'↔',name:'直线',desc:'没头没尾，向两个方向无限延伸。远远的地平线看起来就是直线。'},
+  {ids:['pathCurve'],tag:'curve',icon:'〜',name:'曲线',desc:'会拐弯的线。弯弯的小路、滑梯，都是曲线。'},
+  {ids:['rainbow1','rainbow2','rainbow3'],tag:'arc',icon:'⌒',name:'弧线',desc:'圆的一部分。彩虹就是一条大弧线！'},
+  {ids:['stone1','stone2','stone3','stone4'],tag:'dot',icon:'·',name:'点',desc:'没有大小，只表示一个位置。地上的小石子、天上的星星，都可以看作点。'}
+];
+svg1d.addEventListener('click',function(e){
+  var el=e.target;
+  for(var i=0;i<hitAreas1d.length;i++){
+    var ha=hitAreas1d[i];
+    if(ha.ids.indexOf(el.id)>=0||(el.parentElement&&ha.ids.indexOf(el.parentElement.id)>=0)){
+      sfxTap();
+      // 高亮标签
+      document.querySelectorAll('#tagRow1d .tag').forEach(function(t){t.classList.remove('on')});
+      var tag=document.querySelector('#tagRow1d .tag[data-id="'+ha.tag+'"]');
+      if(tag)tag.classList.add('on');
+      document.getElementById('fb1d').innerHTML='<span class="sc-ok">✅ '+ha.name+'</span> —— '+ha.desc;
+      return;
+    }
+  }
+});
 
-/* ===== 第3步：角 ===== */
-var ac=document.getElementById('c2'),actx=ac.getContext('2d'),deg=38,o=[170,170];
-function drawAng(){
-  actx.clearRect(0,0,340,220);actx.fillStyle='#fcf9f4';actx.fillRect(0,0,340,220);
-  var r=deg*Math.PI/180,ox=o[0],oy=o[1],len=100;
-  actx.strokeStyle='#d35400';actx.lineWidth=3;actx.lineCap='round';
+/* 标签悬浮 */
+document.querySelectorAll('#tagRow1d .tag').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('#tagRow1d .tag').forEach(function(x){x.classList.remove('on')});
+    this.classList.add('on');
+    var id=this.getAttribute('data-id');
+    for(var i=0;i<hitAreas1d.length;i++){
+      if(hitAreas1d[i].tag===id){
+        document.getElementById('fb1d').innerHTML='<span class="sc-ok">'+hitAreas1d[i].icon+' '+hitAreas1d[i].name+'</span> —— '+hitAreas1d[i].desc;
+        break;
+      }
+    }
+  });
+});
+
+/* ===== 二维图形卡片 ===== */
+function tapShape(el,id,name,prop,real){
+  sfxTap();
+  document.querySelectorAll('#shapeGrid .scard').forEach(function(c){c.classList.remove('on')});
+  el.classList.add('on');
+  showPopup(el.querySelector('.sc-ico').textContent,name,prop,real);
+}
+
+/* ===== 角探索器 ===== */
+var ac=document.getElementById('angleCanvas'),actx=ac.getContext('2d'),deg=42,o=[170,160];
+function drwAng(){
+  actx.clearRect(0,0,340,200);
+  actx.fillStyle='#fcf9f4';actx.fillRect(0,0,340,200);
+  var r=deg*Math.PI/180,ox=o[0],oy=o[1],len=110;
+  // 水平边
+  actx.strokeStyle='#555';actx.lineWidth=3.5;actx.lineCap='round';
   actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len,oy);actx.stroke();
+  // 斜边
+  actx.strokeStyle='#d35400';actx.lineWidth=3.5;
   actx.beginPath();actx.moveTo(ox,oy);actx.lineTo(ox-len*Math.cos(r),oy-len*Math.sin(r));actx.stroke();
-  actx.fillStyle='#f0a860';actx.beginPath();actx.arc(ox,oy,16,Math.PI+r,Math.PI);actx.fill();
-  var cls=deg<85?'锐角 (<90°)':deg<95?'直角 (=90°)':'钝角 (>90°)';
-  document.getElementById('fb3').innerHTML='<span style="font-size:1.15em;font-weight:800">'+Math.round(deg)+'°</span> —— '+cls+'<br><span style="font-size:.76em;color:#8a7e6e">正方形有4个直角；三角形最多1个直角或钝角</span>';
-}drawAng();
-ac.onmousedown=function(e){e.preventDefault()};
-ac.onmousemove=function(e){if(e.buttons!==1)return;var r=ac.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;deg=Math.max(5,Math.min(170,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));drawAng()};
-ac.ontouchstart=function(e){e.preventDefault()};
-ac.ontouchmove=function(e){e.preventDefault();var r=ac.getBoundingClientRect(),mx=e.touches[0].clientX-r.left,my=e.touches[0].clientY-r.top;deg=Math.max(5,Math.min(170,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));drawAng()};
+  // 圆弧
+  actx.fillStyle='rgba(211,84,0,.18)';
+  actx.beginPath();actx.moveTo(ox,oy);actx.arc(ox,oy,28,Math.PI+r,Math.PI);actx.fill();
+  actx.strokeStyle='#d35400';actx.lineWidth=2;
+  actx.beginPath();actx.arc(ox,oy,28,Math.PI+r,Math.PI);actx.stroke();
+  // 顶点
+  actx.fillStyle='#d35400';actx.beginPath();actx.arc(ox,oy,5,0,Math.PI*2);actx.fill();
+  // 标签
+  var cls,emoji;
+  if(deg<85){cls='锐角 (<90°)';emoji='🔺'}
+  else if(deg<95){cls='直角 (=90°)';emoji='📐'}
+  else{cls='钝角 (>90°)';emoji='🔽'}
+  document.getElementById('angleInfo').innerHTML='<span style="font-size:1.4em;font-weight:800;color:#d35400">'+Math.round(deg)+'°</span> '+emoji+' <b>'+cls+'</b><br><span style="font-size:.76em;color:#8a7e6e">两条边张开的大小就是角——越大张得越开</span>';
+}
+drwAng();
+ac.addEventListener('mousedown',function(e){e.preventDefault()});
+ac.addEventListener('mousemove',function(e){if(e.buttons!==1)return;updAng(e.clientX,e.clientY)});
+ac.addEventListener('touchstart',function(e){e.preventDefault()});
+ac.addEventListener('touchmove',function(e){e.preventDefault();updAng(e.touches[0].clientX,e.touches[0].clientY)});
+function updAng(cx,cy){
+  var r=ac.getBoundingClientRect(),mx=cx-r.left,my=cy-r.top;
+  deg=Math.max(5,Math.min(175,Math.round((Math.atan2(o[1]-my,mx-o[0])+Math.PI)/Math.PI*180)));
+  drwAng();
+}
 
-/* ===== 第4步 ===== */
-function pickLn(el,txt){document.querySelectorAll('.btn.on').forEach(function(b){b.classList.remove('on')});el.classList.add('on');sfxTap();document.getElementById('fb4').innerHTML='<b style="color:#8e44ad">'+txt+'</b>'}
-</script></body></html>
+/* ===== 三维图形 ===== */
+function tap3D(el,id,name,prop,real){
+  sfxTap();
+  document.querySelectorAll('#d3Grid .d3-card').forEach(function(c){c.classList.remove('on')});
+  el.classList.add('on');
+  showPopup('📦',name,prop,real);
+}
+
+/* ===== 分类游戏 ===== */
+var class3D=[
+  {id:'cube',name:'正方体',bin:'flat'},
+  {id:'cuboid',name:'长方体',bin:'flat'},
+  {id:'cylinder',name:'圆柱',bin:'curved'},
+  {id:'sphere',name:'球',bin:'curved'},
+  {id:'cone',name:'圆锥',bin:'curved'},
+  {id:'prism',name:'三棱柱',bin:'flat'},
+  {id:'pyramid',name:'四棱锥',bin:'flat'},
+  {id:'ellipsoid',name:'椭球',bin:'curved'}
+];
+var classPlaced=[],classScore=0;
+function initClass3D(){
+  classPlaced=[];classScore=0;
+  document.getElementById('fbClass3D').innerHTML='';
+  document.getElementById('binFlat').classList.remove('hl');
+  document.getElementById('binCurved').classList.remove('hl');
+  var pool=class3D.slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
+  var h='';
+  pool.forEach(function(c){
+    h+='<span class="chip" data-cid="'+c.id+'" data-bin="'+c.bin+'" onclick="dropChip(this)">'+c.name+'</span>';
+  });
+  document.getElementById('chipRow3D').innerHTML=h;
+}
+initClass3D();
+function dropChip(el){
+  if(el.classList.contains('placed'))return;
+  var cid=el.getAttribute('data-cid'),correctBin=el.getAttribute('data-bin');
+  // 简化：点击chip自动归入正确分类（孩子先选bin再点chip太复杂）
+  // 改为：chip亮一下，自动归位
+  el.classList.add('placed');
+  el.style.color='#27ae60';el.style.borderColor='#27ae60';
+  el.textContent+=' ✓';
+  classScore++;
+  sfxOK();
+  // 高亮对应bin
+  document.getElementById('binFlat').classList.remove('hl');
+  document.getElementById('binCurved').classList.remove('hl');
+  document.getElementById(correctBin==='flat'?'binFlat':'binCurved').classList.add('hl');
+  setTimeout(function(){
+    document.getElementById('binFlat').classList.remove('hl');
+    document.getElementById('binCurved').classList.remove('hl');
+  },800);
+  if(classScore>=class3D.length){
+    document.getElementById('fbClass3D').innerHTML='<span class="sc-ok">🎉 全部分好了！</span><br><span style="font-size:.76em;color:#8a7e6e">平面立体：正方体、长方体、三棱柱、四棱锥 · 曲面立体：圆柱、球、圆锥、椭球</span>';
+    document.getElementById('binFlat').classList.add('hl');
+    document.getElementById('binCurved').classList.add('hl');
+    setTimeout(function(){sfxOK()},300);
+  }
+}
+
+/* ===== 测验 ===== */
+var quizData=[
+  {q:'下面哪个是「一维」的图形？',o:['三角形','线段','正方形','正方体'],a:1,x:'线段只有长短，是一维的。三角形和正方形是二维（有长有宽），正方体是三维。'},
+  {q:'角属于几维的概念？',o:['一维','二维','三维','零维'],a:1,x:'角由两条边在平面上张开形成，是二维概念。它需要「面」才能存在，不能只活在一条线上。'},
+  {q:'哪种线有头有尾、能量出长度？',o:['射线','直线','线段','曲线'],a:2,x:'线段有两个端点，能量出确定的长度。射线只有一个端点，直线没有端点——它们都无限延伸，量不出"全长"。'},
+  {q:'圆柱有几个圆面？',o:['0个','1个','2个','3个'],a:2,x:'圆柱有上下两个圆面（顶面和底面），中间是曲面。'},
+  {q:'下面哪个是「曲面立体」？',o:['正方体','长方体','球','三棱柱'],a:2,x:'球的表面全是曲面，没有平面。正方体、长方体、三棱柱都由平面围成，是平面立体。'},
+  {q:'正方形和长方形最大的共同点是什么？',o:['都是圆的','都有4条边和4个直角','都有3条边','都没有角'],a:1,x:'正方形和长方形都是四边形，都有4条边和4个直角。区别在于正方形4条边一样长，长方形对边相等。'},
+  {q:'平面图形里，哪种图形一条边都没有？',o:['三角形','正方形','圆','梯形'],a:2,x:'圆没有边——它是一条闭合的曲线，没有"边"也没有角。'},
+  {q:'四棱锥有几个面（不数底面）？',o:['3个','4个','5个','6个'],a:1,x:'四棱锥一共5个面：1个正方形底面+4个三角形侧面（不含底面就是4个）。'},
+  {q:'弧线是什么的一部分？',o:['线段','三角形','圆','正方形'],a:2,x:'弧线是圆（或曲线）的一部分。彩虹就是一条弧线——它是大圆的一段。'},
+  {q:'正方体有多少个面？',o:['4个','5个','6个','8个'],a:2,x:'正方体有6个面，每个面都是正方形。你可以拿一个骰子数一数！'}
+];
+var qPool=[],qIdx=0,qTotal=6,qResults=[];
+function initQuiz(){
+  var pool=quizData.slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
+  qPool=pool.slice(0,qTotal);
+  qIdx=0;qResults=[];
+  document.getElementById('quizScore').style.display='none';
+  renderDots();renderQ();
+}
+function renderDots(){
+  var h='';
+  for(var i=0;i<qTotal;i++){
+    var cls='qdot'+(i<qIdx?(qResults[i]!==undefined?(qResults[i]?'done':'wrong'):''):(i===qIdx?'cur':''));
+    h+='<div class="'+cls+'"></div>';
+  }
+  document.getElementById('quizDots').innerHTML=h;
+}
+function renderQ(){
+  if(qIdx>=qTotal){showScore();return}
+  var q=qPool[qIdx];
+  document.getElementById('quizQ').textContent='第'+(qIdx+1)+'题：'+q.q;
+  var h='';
+  q.o.forEach(function(o,i){
+    h+='<button class="qbtn" onclick="quizAnswer('+i+',this)">'+o+'</button>';
+  });
+  document.getElementById('quizOpts').innerHTML=h;
+  document.getElementById('quizFb').innerHTML='';
+  document.getElementById('qPrev').disabled=qIdx===0;
+  document.getElementById('qNext').disabled=qResults[qIdx]===undefined;
+}
+function quizAnswer(chosen,btn){
+  if(qResults[qIdx]!==undefined)return;
+  var q=qPool[qIdx],ok=(chosen===q.a);
+  qResults[qIdx]=ok;
+  // 标记所有按钮
+  document.querySelectorAll('#quizOpts .qbtn').forEach(function(b,i){
+    b.disabled=true;
+    if(i===q.a)b.classList.add('good');
+    if(i===chosen&&!ok)b.classList.add('bad');
+  });
+  if(ok){sfxOK();document.getElementById('quizFb').innerHTML='<span style="color:#27ae60">✅ 正确！</span> '+q.x}
+  else{sfxNO();document.getElementById('quizFb').innerHTML='<span style="color:#e67e22">❌ 不对哦。</span> '+q.x}
+  document.getElementById('qNext').disabled=false;
+  renderDots();
+}
+function quizPrev(){
+  if(qIdx>0){qIdx--;renderDots();renderQ();}
+}
+function quizNext(){
+  if(qIdx<qTotal-1){qIdx++;renderDots();renderQ();}
+  else if(qIdx===qTotal-1){qIdx++;showScore()}
+}
+function showScore(){
+  qIdx=qTotal;
+  var correct=qResults.filter(function(r){return r}).length;
+  document.getElementById('quizQ').textContent='';
+  document.getElementById('quizOpts').innerHTML='';
+  document.getElementById('quizFb').innerHTML='';
+  document.getElementById('qPrev').style.display='none';
+  document.getElementById('qNext').style.display='none';
+  var msg=correct===qTotal?'🎉 全对！你已经是图形小专家了！':correct>=qTotal/2?'👍 不错！再练一次会更厉害～':'💪 没关系，多看看上面的图形，再试一次吧！';
+  document.getElementById('quizScore').style.display='block';
+  document.getElementById('quizScore').innerHTML=msg+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+correct+' / '+qTotal+' 题</span><br><br><button class="qbtn" onclick="initQuiz()" style="border-color:#d35400;color:#d35400">🔄 再闯一次</button>';
+  renderDots();
+}
+initQuiz();
+
+/* ===== 3D 卡片的 bin 点击 ===== */
+document.getElementById('binFlat').addEventListener('click',function(){
+  // 高亮所有平面立体
+  document.querySelectorAll('#d3Grid .d3-card').forEach(function(c){
+    if(['cube','cuboid','prism','pyramid'].indexOf(c.getAttribute('data-d3'))>=0){
+      c.classList.toggle('on');sfxTap();
+    }
+  });
+});
+document.getElementById('binCurved').addEventListener('click',function(){
+  document.querySelectorAll('#d3Grid .d3-card').forEach(function(c){
+    if(['cylinder','sphere','cone','ellipsoid'].indexOf(c.getAttribute('data-d3'))>=0){
+      c.classList.toggle('on');sfxTap();
+    }
+  });
+});
+</script>
+</body>
+</html>
