@@ -671,16 +671,37 @@ function quizNext(){
 }
 function showScore(){
   qIdx=qTotal;
-  var correct=0;qResults.forEach(function(r){if(r&&r.ok)correct++});
+  var correct=0,wrongs=[];
+  qResults.forEach(function(r,i){if(r&&r.ok)correct++;else if(r)wrongs.push({q:qPool[i],chosen:r.chosen})});
   document.getElementById('quizQ').textContent='';
   document.getElementById('quizOpts').innerHTML='';
   document.getElementById('quizFb').innerHTML='';
   document.getElementById('qPrev').style.display='none';
   document.getElementById('qNext').style.display='none';
   var msg=correct===qTotal?'🎉 全对！你已经是图形小专家了！':correct>=qTotal/2?'👍 不错！再练一次会更厉害～':'💪 没关系，多看看上面的图形，再试一次吧！';
+  var btns='<button class="qbtn" onclick="initQuiz()" style="border-color:#d35400;color:#d35400">🔄 再闯一次</button>';
+  if(wrongs.length>0){
+    btns+=' <button class="qbtn" onclick="showWrongs()" style="border-color:#e67e22;color:#e67e22">🔍 查看错题 ('+wrongs.length+'题)</button>';
+  }
   document.getElementById('quizScore').style.display='block';
-  document.getElementById('quizScore').innerHTML=msg+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+correct+' / '+qTotal+' 题</span><br><br><button class="qbtn" onclick="initQuiz()" style="border-color:#d35400;color:#d35400">🔄 再闯一次</button>';
+  document.getElementById('quizScore').innerHTML=msg+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+correct+' / '+qTotal+' 题</span><br><br>'+btns+'<div id="wrongList" style="display:none;text-align:left;margin-top:8px"></div>';
   renderDots();
+  window._wrongs=wrongs;
+}
+function showWrongs(){
+  var wl=document.getElementById('wrongList'),w=window._wrongs||[];
+  if(wl.style.display==='block'){wl.style.display='none';return}
+  var h='';
+  w.forEach(function(wr,i){
+    var q=wr.q,userAns=q.o[wr.chosen],correctAns=q.o[q.a];
+    h+='<div style="background:#fef9f4;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.78em;line-height:1.5">';
+    h+='<b style="color:#e67e22">❌ 第'+(i+1)+'错：</b>'+q.q+'<br>';
+    h+='<span style="color:#c0392b">你的答案：'+userAns+'</span> → ';
+    h+='<span style="color:#27ae60">正确答案：'+correctAns+'</span><br>';
+    h+='<span style="color:#8a7e6e;font-size:.92em">'+q.x+'</span></div>';
+  });
+  wl.innerHTML=h;
+  wl.style.display='block';
 }
 initQuiz();
 
