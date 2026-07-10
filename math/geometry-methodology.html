@@ -1,0 +1,501 @@
+<!--
+geometry-methodology.html — HTML2 核心方法论 v4
+拆解与组装的几何思维 · 可豆妈妈
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>几何思维 · 拆解与组装 | 可豆妈妈</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
+.page{max-width:560px;margin:0 auto;padding:8px 14px 96px}
+:root{--d1:#7f8c8d;--d2:#16a085;--d3:#2c3e50;--know:#2980b9;--measure:#e67e22;--move:#27ae60;--where:#8e44ad;--know-l:#e8f2f9;--measure-l:#fef3e8;--move-l:#e8f6ed;--where-l:#f4edf7}
+
+.sec-div{text-align:center;margin:38px 0 6px}
+.sec-div::before,.sec-div::after{content:'';display:inline-block;width:42px;height:1.5px;background:linear-gradient(to right,transparent,#d8cfbe);vertical-align:middle;margin:0 10px}
+.sec-div::after{background:linear-gradient(to left,transparent,#d8cfbe)}
+.sec-div .sd-icon{font-size:1.4em;vertical-align:middle}
+.sec-hd{text-align:center;margin:8px 0 14px}
+.sec-hd h2{font-size:1.08em;color:#5b5348;line-height:1.4}
+.sec-hd .hd-sub{font-size:.76em;color:#bcb4a8;margin-top:4px;line-height:1.5}
+
+/* 开篇场景卡 */
+.scene-title{text-align:center;font-size:.86em;color:#8a7e6e;margin:24px 0 10px;line-height:1.5}
+.scene-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}
+.sc{background:#fff;border:1.5px solid #ece3d5;border-radius:14px;padding:14px 12px;text-align:center;transition:all .2s}
+.sc .se{font-size:2.4em;display:block;margin-bottom:6px}
+.sc .sn{font-size:.84em;font-weight:700;color:#5b5348}
+.sc .st{font-size:.7em;color:#b0a696;margin-top:2px}
+.sc.dim{background:linear-gradient(135deg,#f0f4f8,#f8f6f2)}
+.big-ask{text-align:center;margin:18px 0 10px;font-size:1.02em;font-weight:800;color:var(--d3);line-height:1.55}
+.big-ask b{color:#d35400}
+.big-ask .ba-hint{font-size:.72em;font-weight:400;color:#b0a696;margin-top:6px;display:block}
+
+/* 互动纸箱区 */
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.box-stage{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0;position:relative}
+.box-stage svg{display:block;width:100%;height:auto}
+.box-label{text-align:center;font-size:.76em;color:var(--d1);font-weight:600;margin:6px 0;line-height:1.5;min-height:38px}
+.box-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0}
+.box-btn{padding:12px 22px;border:none;border-radius:24px;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:#fff}
+.box-btn:active{transform:scale(.95)}
+.box-btn.openbtn{background:linear-gradient(135deg,#e67e22,#d35400);box-shadow:0 3px 10px rgba(230,126,34,.25)}
+.box-btn.foldbtn{background:linear-gradient(135deg,#16a085,#0e7c6b);box-shadow:0 3px 10px rgba(22,160,133,.25)}
+.box-btn:disabled{opacity:.35;cursor:default}
+.box-narrative{text-align:center;font-size:.84em;color:#5b5348;line-height:1.65;margin:10px 0;display:none;animation:fade .5s}
+.box-narrative.show{display:block}
+
+/* 演示区 */
+.demo-stage{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0}
+.demo-stage svg{display:block;width:100%;height:auto}
+.demo-label{text-align:center;font-size:.78em;color:var(--d1);font-weight:600;margin:4px 0 6px;line-height:1.5}
+.demo-label b{color:var(--d3)}
+.demo-step{display:inline-block;color:#fff;font-size:.68em;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:4px}
+.demo-step.fwd{background:linear-gradient(135deg,#e67e22,#d35400)}
+.demo-step.rev{background:linear-gradient(135deg,#16a085,#0e7c6b)}
+.demo-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:6px 0}
+.dbtn{padding:12px 20px;border:none;border-radius:24px;font-size:.88em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:#fff}
+.dbtn:active{transform:scale(.95)}
+.dbtn.fwd{background:linear-gradient(135deg,#e67e22,#d35400);box-shadow:0 3px 10px rgba(230,126,34,.25)}
+.dbtn.rev{background:linear-gradient(135deg,#16a085,#0e7c6b);box-shadow:0 3px 10px rgba(22,160,133,.25)}
+.dbtn:disabled{opacity:.35;cursor:default}
+.dbtn.reset{background:#fff;color:var(--d1);border:1.5px solid #d8cfbe;box-shadow:none}
+.demo-msg{text-align:center;font-size:.82em;font-weight:600;min-height:20px;margin-top:6px;line-height:1.5}
+.dir-intro{text-align:center;font-size:.84em;color:#5b5348;line-height:1.6;margin:6px 0}
+
+/* 四大专题卡 (保留) */
+.topic-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0}
+.tcard{border-radius:14px;border:2px solid #ece3d5;background:#fff;overflow:hidden;transition:all .2s}
+.tcard.know{border-color:#a9cce3}.tcard.measure{border-color:#f0c090}
+.tcard.move{border-color:#a6dcb8}.tcard.where{border-color:#cdb0dd}
+.thd{display:flex;align-items:center;gap:8px;padding:13px 14px;cursor:pointer;font-weight:700;font-size:.92em;user-select:none}
+.tcard.know .thd{color:var(--know)}.tcard.measure .thd{color:var(--measure)}
+.tcard.move .thd{color:var(--move)}.tcard.where .thd{color:var(--where)}
+.thd .tem{font-size:1.3em;flex-shrink:0}
+.thd .tcue{font-size:.7em;color:#bcb4a8;margin-left:auto;font-weight:400}
+.bodywrap{display:none}
+.tcard.open .bodywrap{display:block;animation:fade .3s}
+.tbody{padding:0 14px 14px}
+.tsubtitle{font-size:.82em;color:#5b5348;line-height:1.55;margin-bottom:8px}
+.tlist{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.titem{padding:6px 13px;border-radius:14px;font-size:.8em;font-weight:600;cursor:pointer;background:#faf7f1;border:1.5px solid #e6dfd2;color:#5b5348;transition:all .15s}
+.titem:active{transform:scale(.94)}
+.titem.sel{color:#fff}
+.tcard.know .titem.sel{background:var(--know);border-color:var(--know)}
+.tcard.measure .titem.sel{background:var(--measure);border-color:var(--measure)}
+.tcard.move .titem.sel{background:var(--move);border-color:var(--move)}
+.tcard.where .titem.sel{background:var(--where);border-color:var(--where)}
+.tinfo{margin-top:6px;padding:10px 12px;border-radius:10px;font-size:.78em;line-height:1.5;min-height:36px}
+.tcard.know .tinfo{background:var(--know-l);color:var(--know)}
+.tcard.measure .tinfo{background:var(--measure-l);color:var(--measure)}
+.tcard.move .tinfo{background:var(--move-l);color:var(--move)}
+.tcard.where .tinfo{background:var(--where-l);color:var(--where)}
+
+/* 闯关 (保留) */
+.quiz-box{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;padding:16px;margin:8px 0}
+.quiz-progress{display:flex;justify-content:center;gap:4px;margin-bottom:10px}
+.qdot{width:9px;height:9px;border-radius:50%;background:#e6dfd2}
+.qdot.done{background:var(--d2)}.qdot.wrong{background:#e67e22}.qdot.cur{background:var(--d3);box-shadow:0 0 6px rgba(44,62,80,.4)}
+.qs{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.qs .qse{font-size:2.2em;flex-shrink:0}
+.qs .qsd{font-size:.88em;color:#5b5348;line-height:1.45;font-weight:600}
+.qrl{font-size:.74em;color:#b0a696;font-weight:600;margin-bottom:6px;text-align:center}
+.qopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.qo{padding:10px 16px;border-radius:20px;border:2px solid #e6dfd2;background:#fcf9f4;font-size:.82em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348;transition:all .15s}
+.qo:active{transform:scale(.94)}
+.qo.sel{border-color:var(--d2);background:#e8f6f3;color:var(--d2)}
+.qo.d1{border-color:var(--d1)}.qo.d1.sel{background:#ecf0f1;color:var(--d1)}
+.qo.d2{border-color:var(--d2)}.qo.d2.sel{background:#e8f6f3;color:var(--d2)}
+.qo.d3{border-color:var(--d3)}.qo.d3.sel{background:#e0e4e8;color:var(--d3)}
+.qo.know{border-color:var(--know)}.qo.know.sel{background:var(--know-l);color:var(--know)}
+.qo.measure{border-color:var(--measure)}.qo.measure.sel{background:var(--measure-l);color:var(--measure)}
+.qo.move{border-color:var(--move)}.qo.move.sel{background:var(--move-l);color:var(--move)}
+.qo.where{border-color:var(--where)}.qo.where.sel{background:var(--where-l);color:var(--where)}
+.qo:disabled{opacity:.4;cursor:default}
+.qo.bad{animation:sh .4s;border-color:#e67e22}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.qfb{text-align:center;font-size:.82em;font-weight:600;min-height:20px;line-height:1.5;margin-top:6px}
+.q-ok{color:var(--d2)}.q-no{color:#e67e22}
+.qbtns{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.qscore{text-align:center;margin-top:14px;font-weight:700;font-size:.88em;color:var(--d3);line-height:1.6}
+.rv-box{margin-top:12px;text-align:left}
+.rv-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #f1ece2;font-size:.8em;line-height:1.45}
+.rv-item .ri-em{font-size:1.4em;flex-shrink:0}
+.rv-item .ri-ans{color:var(--d3);font-weight:600;margin-top:2px}
+
+.foot-msg{text-align:center;color:#c3bbac;font-size:.78em;margin:28px 0 10px;line-height:1.7}
+</style></head><body>
+<div class="page">
+
+<!-- ===== ① 开篇：生活场景 → 引出问题 ===== -->
+<div class="scene-title">先看看我们身边的世界——</div>
+<div class="scene-cards">
+  <div class="sc"><span class="se">🍎</span><div class="sn">苹果</div><div class="st">圆鼓鼓的</div></div>
+  <div class="sc"><span class="se">📦</span><div class="sn">快递箱</div><div class="st">方方正正的</div></div>
+  <div class="sc"><span class="se">⚽</span><div class="sn">足球</div><div class="st">滚来滚去的</div></div>
+  <div class="sc"><span class="se">🏔️</span><div class="sn">大山</div><div class="st">高高大大的</div></div>
+</div>
+
+<div class="big-ask">
+  它们全都是<b>鼓鼓的立体</b>（三维）。<br>
+  那为什么我们还要学<br><b>细细的线</b>、<b>平平的面</b>？
+  <span class="ba-hint">👇 用你最熟悉的东西来回答～</span>
+</div>
+
+<!-- ===== 互动纸箱：亲手拆 ===== -->
+<div class="box-stage">
+  <svg viewBox="0 0 420 300" id="svgBox">
+    <defs>
+      <linearGradient id="bt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde2c4"/><stop offset="1" stop-color="#f0b878"/></linearGradient>
+      <linearGradient id="bf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8875a"/><stop offset="1" stop-color="#c85a3a"/></linearGradient>
+      <linearGradient id="br" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d4734a"/><stop offset="1" stop-color="#b84a30"/></linearGradient>
+    </defs>
+    <!-- 完整纸箱(等距) -->
+    <g id="bx3d">
+      <polygon points="130,160 190,130 330,130 270,160" fill="url(#bt)" stroke="#c07030" stroke-width="2"/>
+      <polygon points="130,160 130,225 270,225 270,160" fill="url(#bf)" stroke="#a04020" stroke-width="2"/>
+      <polygon points="270,160 330,130 330,195 270,225" fill="url(#br)" stroke="#903018" stroke-width="2"/>
+      <text x="200" y="203" text-anchor="middle" font-size="16" fill="#fff" font-weight="700" opacity=".7">📦</text>
+    </g>
+    <!-- 相连展开图 -->
+    <g id="bxNet" opacity="0">
+      <!-- 顶面 -->
+      <rect x="120" y="8" width="100" height="62" rx="2" fill="url(#bt)" stroke="#c07030" stroke-width="1.8"/>
+      <text x="170" y="42" text-anchor="middle" font-size="10" fill="#c07030" font-weight="700">顶面</text>
+      <!-- 左面 -->
+      <rect x="15" y="70" width="62" height="100" rx="2" fill="#f5c98a" stroke="#c07030" stroke-width="1.8"/>
+      <!-- 前面 -->
+      <rect x="77" y="70" width="100" height="100" rx="2" fill="url(#bf)" stroke="#a04020" stroke-width="1.8"/>
+      <text x="127" y="125" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">前面</text>
+      <!-- 右面 -->
+      <rect x="177" y="70" width="62" height="100" rx="2" fill="url(#br)" stroke="#903018" stroke-width="1.8"/>
+      <!-- 后面 -->
+      <rect x="239" y="70" width="62" height="100" rx="2" fill="#f0d8b0" stroke="#c07030" stroke-width="1.8"/>
+      <!-- 底面 -->
+      <rect x="120" y="170" width="100" height="62" rx="2" fill="#e8a070" stroke="#a04020" stroke-width="1.8"/>
+      <text x="170" y="206" text-anchor="middle" font-size="10" fill="#a04020" font-weight="700">底面</text>
+      <!-- 棱（公共边）高亮 -->
+      <line x1="77" y1="120" x2="139" y2="120" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
+      <line x1="177" y1="120" x2="239" y2="120" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
+      <line x1="170" y1="70" x2="170" y2="8" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
+      <line x1="170" y1="170" x2="170" y2="232" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
+      <!-- 棱标签 -->
+      <text x="108" y="114" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
+      <text x="245" y="114" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
+      <text x="175" y="48" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
+      <text x="175" y="195" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
+    </g>
+  </svg>
+</div>
+<div class="box-label" id="boxLabel">👆 一个<b>鼓鼓的快递纸箱</b>（3个可见面）</div>
+<div class="box-btns">
+  <button class="box-btn openbtn" id="boxOpenBtn" onclick="openBox()">🔓 拆开看看</button>
+  <button class="box-btn foldbtn" id="boxFoldBtn" onclick="foldBox()" disabled>🔒 折回去</button>
+</div>
+<div class="box-narrative" id="boxNarr">
+  你看！6 个面全拆开了，但它们<b>还连在一起</b>——<br>
+  面和面之间的公共边，叫<b>棱</b>。<br>
+  每一条棱，同时属于相邻的两个面。<br><br>
+  反过来：沿着棱折起来 → 6 个面重新拼成一个<b>鼓鼓的立体</b>。<br>
+  这就是几何的核心——<b>拆解与组装</b> ✨
+</div>
+
+<!-- ===== ② 四种超能力卡 (保留) ===== -->
+<div class="sec-div"><span class="sd-icon">📂</span></div>
+<div class="sec-hd">
+  <h2>四种超能力，四种看懂世界的工具</h2>
+  <div class="hd-sub">点开每张卡片，里面有好多例子～</div>
+</div>
+
+<div class="topic-grid" id="topicGrid">
+  <!-- 认识图形 -->
+  <div class="tcard know" id="tcard-know">
+    <div class="thd" onclick="toggleTCard('know')"><span class="tem">👀</span><span>认识图形 —— 长什么样</span><span class="tcue">点开看例子</span></div>
+    <div class="bodywrap"><div class="tbody">
+      <div class="tsubtitle">认出东西是什么形状。分两大类：</div>
+      <div style="font-size:.78em;color:#8a7e6e;margin-bottom:6px">👇 点下面的例子，看它是平面还是立体</div>
+      <div class="tlist" id="tlist-know">
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔺 三角形：三条边围成的平面')">🔺 三角形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🟦 正方形：四条一样长的边')">🟦 正方形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','▭ 长方形：对边一样长')">▭ 长方形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🟡 圆形：弯弯的，没有角')">🟡 圆形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','🧊 正方体：六个一样大的正方形面')">🧊 正方体</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','📦 长方体：六个面，面对面一样大')">📦 长方体</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','🥫 圆柱：两个圆面 + 一个弯面')">🥫 圆柱</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','⚽ 球体：圆圆滚滚，没有平面')">⚽ 球体</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔷 菱形：四条边一样长，但不是直角')">🔷 菱形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','⬠ 五边形：五条边')">⬠ 五边形</span>
+      </div>
+      <div class="tinfo" id="tinfo-know">👆 点一个形状看看～</div>
+    </div></div>
+  </div>
+  <!-- 测量图形 -->
+  <div class="tcard measure" id="tcard-measure">
+    <div class="thd" onclick="toggleTCard('measure')"><span class="tem">📏</span><span>测量图形 —— 有多大</span><span class="tcue">点开看例子</span></div>
+    <div class="bodywrap"><div class="tbody">
+      <div class="tsubtitle">用数字说清图形的大小。五种问法：</div>
+      <div class="tlist" id="tlist-measure">
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📏 长度：一条边有多长？用尺子量。比如桌子的边是 1 米')">📏 长度</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','🔄 周长：绕图形一圈总共多长？比如操场跑一圈 400 米')">🔄 周长</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','🔲 面积：一个面铺满有多大？比如教室地面要铺多少块地砖')">🔲 面积</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📦 体积：立体里面能装多少东西？比如水杯能装多少水')">📦 体积</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📐 角度：角张开多大？用度数表示，比如直角是 90°')">📐 角度</span>
+      </div>
+      <div class="tinfo" id="tinfo-measure">👆 点一个看看什么意思～</div>
+    </div></div>
+  </div>
+  <!-- 图形运动 -->
+  <div class="tcard move" id="tcard-move">
+    <div class="thd" onclick="toggleTCard('move')"><span class="tem">🔄</span><span>图形的运动 —— 怎么动</span><span class="tcue">点开看例子</span></div>
+    <div class="bodywrap"><div class="tbody">
+      <div class="tsubtitle">图形可以动起来，四种动法：</div>
+      <div class="tlist" id="tlist-move">
+        <span class="titem" onclick="event.stopPropagation();selItem('move',this,'','➡️ 平移：整个推着走，样子和方向都不变。比如推桌子、电梯上下')">➡️ 平移</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('move',this,'','🔄 旋转：绕一个点或轴转圈。比如开门、风扇转、地球自转')">🔄 旋转</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('move',this,'','🪞 轴对称：对折后两边一模一样。比如蝴蝶翅膀、人脸、剪纸')">🪞 轴对称</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('move',this,'','🔍 放大缩小：样子不变只变大小。比如地图比例尺、放大照片')">🔍 放大缩小</span>
+      </div>
+      <div class="tinfo" id="tinfo-move">👆 点一个看看～</div>
+    </div></div>
+  </div>
+  <!-- 物体位置 -->
+  <div class="tcard where" id="tcard-where">
+    <div class="thd" onclick="toggleTCard('where')"><span class="tem">🧭</span><span>物体的位置 —— 在哪里</span><span class="tcue">点开看例子</span></div>
+    <div class="bodywrap"><div class="tbody">
+      <div class="tsubtitle">用方向和坐标说清东西在哪。四种方法：</div>
+      <div class="tlist" id="tlist-where">
+        <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','↕️ 上下前后左右：最基础的位置词。比如「书在桌子上面」')">↕️ 上下前后左右</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','🧭 方向：东南西北 + 东北/东南/西北/西南，共 8 个方向')">🧭 八个方向</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','🎯 数对：(列,排) 两个数字精准定位。比如电影院第 5 排第 3 座 = (3,5)')">🎯 数对</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','🗺️ 路线图：从哪出发、往哪走、走多远。比如「从家往东走 200 米到学校」')">🗺️ 路线图</span>
+      </div>
+      <div class="tinfo" id="tinfo-where">👆 点一个看看～</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== ③ 正向组装 ===== -->
+<div class="sec-div"><span class="sd-icon">🔨</span></div>
+<div class="sec-hd"><h2>正向组装：从简单变出复杂</h2><div class="hd-sub">点动成线 → 线动成面 → 面动成体</div></div>
+
+<div class="demo-stage">
+  <svg viewBox="0 0 400 240" id="svgMain">
+    <defs>
+      <linearGradient id="mpf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fde2c4"/><stop offset="1" stop-color="#f5c98a"/></linearGradient>
+      <linearGradient id="mtf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde2c4"/><stop offset="1" stop-color="#f0b878"/></linearGradient>
+    </defs>
+    <!-- ① 点动成线 -->
+    <circle id="mdot" cx="110" cy="105" r="6" fill="#e67e22"/>
+    <line id="mline" x1="110" y1="105" x2="110" y2="105" stroke="#e67e22" stroke-width="3" stroke-linecap="round" opacity="0"/>
+    <circle id="mend" cx="190" cy="105" r="5" fill="var(--d1)" opacity="0"/>
+    <!-- ② 线动成面：同一条线向下平移 -->
+    <line id="mghostL" x1="110" y1="105" x2="190" y2="105" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="5 3" opacity="0"/>
+    <line id="msweep" x1="110" y1="105" x2="190" y2="105" stroke="#e67e22" stroke-width="3" opacity="0"/>
+    <rect id="mplane" x="110" y="105" width="80" height="0" fill="url(#mpf)" rx="2" opacity="0"/>
+    <!-- ③ 面动成体：同一个矩形绕左边缘旋转 -->
+    <g id="s3" opacity="0">
+      <line x1="110" y1="55" x2="110" y2="220" stroke="#888" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <text x="102" y="238" text-anchor="end" font-size="10" fill="#999">轴</text>
+      <rect id="s3rect" x="110" y="105" width="80" height="70" rx="2" fill="#fde2c4" fill-opacity="0.35" stroke="#e67e22" stroke-width="2.5"/>
+      <rect id="s3g1" x="110" y="105" width="57" height="70" rx="1" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0" stroke-dasharray="3 2"/>
+      <rect id="s3g2" x="110" y="105" width="0" height="70" fill="none" stroke="#e67e22" stroke-width="2" opacity="0"/>
+      <rect id="s3g3" x="110" y="105" width="57" height="70" rx="1" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0" stroke-dasharray="3 2"/>
+      <rect id="s3g4" x="110" y="105" width="80" height="70" rx="2" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0" stroke-dasharray="3 2"/>
+      <ellipse id="s3topE" cx="110" cy="105" rx="80" ry="16" fill="none" stroke="#e67e22" stroke-width="1.8" opacity="0"/>
+      <ellipse id="s3botE" cx="110" cy="175" rx="80" ry="16" fill="none" stroke="#e67e22" stroke-width="1.8" opacity="0"/>
+      <line id="s3slL" x1="30" y1="105" x2="30" y2="175" stroke="#e67e22" stroke-width="1.5" opacity="0"/>
+      <line id="s3srL" x1="190" y1="105" x2="190" y2="175" stroke="#e67e22" stroke-width="1.5" opacity="0"/>
+      <path id="s3arc" d="M190 105 A80 16 0 0 1 30 105" fill="none" stroke="#e67e22" stroke-width="1.2" opacity="0" stroke-dasharray="4 3"/>
+      <path id="s3arc2" d="M190 175 A80 16 0 0 0 30 175" fill="none" stroke="#e67e22" stroke-width="1.2" opacity="0" stroke-dasharray="4 3"/>
+    </g>
+  </svg>
+</div>
+<div class="demo-label" id="mlabel">点动成线 → 线动成面 → 面动成体</div>
+<div class="demo-btns">
+  <button class="dbtn fwd" id="mb0" onclick="animM0()">① 点动成线</button>
+  <button class="dbtn fwd" id="mb1" onclick="animM1()" disabled>② 线动成面</button>
+  <button class="dbtn fwd" id="mb2" onclick="animM2()" disabled>③ 面动成体</button>
+  <button class="dbtn reset" onclick="resetMain()">↺ 重来</button>
+</div>
+<div class="demo-msg" id="mm"></div>
+
+<!-- ===== ④ 闯关 ===== -->
+<div class="sec-div"><span class="sd-icon">🎮</span></div>
+<div class="sec-hd"><h2>真实世界大闯关</h2><div class="hd-sub">每题先选维度，再选超能力。答错可以重选！</div></div>
+<div class="quiz-box">
+  <div class="quiz-progress" id="qd"></div>
+  <div class="qs" id="qs"></div>
+  <div class="qrl" id="qlb"></div>
+  <div class="qopts" id="qo"></div>
+  <div class="qfb" id="qfb"></div>
+  <div class="qbtns">
+    <button class="dbtn reset" id="qretry" onclick="retryQ()" style="display:none">🔄 重选本题</button>
+    <button class="dbtn fwd" id="qnext" onclick="nextQ()" disabled>下一题 ▶</button>
+  </div>
+  <div class="qscore" id="qsc" style="display:none"></div>
+  <div class="rv-box" id="qrev" style="display:none"></div>
+</div>
+
+<div class="foot-msg">学会了拆解与组装，你就拿到了几何的万能钥匙 🔑<br>无论多复杂的东西，都能一层层看懂它。<br><br>可豆妈妈 · 更多几何互动工具陆续上线 🌱</div>
+</div>
+
+<script>
+/* ===== 工具 ===== */
+function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
+function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
+function sfxNO(){beep(200,.18,'triangle')}
+function sfxTap(){beep(560,.09)}
+function $(id){return document.getElementById(id)}
+function SA(id,o){var e=$(id);if(e)for(var k in o)e.setAttribute(k,o[k])}
+function SO(id,v){var e=$(id);if(e)e.setAttribute('opacity',v)}
+function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+function smoothAnim(dur,cb,done){var s=null;function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/dur,1);cb(ease(p));if(p<1)requestAnimationFrame(step);else if(done)done()}requestAnimationFrame(step)}
+
+/* ===== 互动纸箱 ===== */
+var boxOpen=false;
+function openBox(){
+  if(boxOpen)return;boxOpen=true;sfxOK();
+  $('boxOpenBtn').disabled=true;$('boxFoldBtn').disabled=false;
+  SO('bx3d','0');SO('bxNet','1');
+  $('boxLabel').innerHTML='🔓 拆开了！6 个面全在——<b>沿着棱还连在一起</b>';
+  $('boxNarr').classList.add('show');
+}
+function foldBox(){
+  if(!boxOpen)return;boxOpen=false;sfxTap();
+  $('boxOpenBtn').disabled=false;$('boxFoldBtn').disabled=true;
+  SO('bx3d','1');SO('bxNet','0');
+  $('boxLabel').innerHTML='👆 一个<b>鼓鼓的快递纸箱</b>（3个可见面）';
+  $('boxNarr').classList.remove('show');
+}
+
+/* ===== 专题卡 ===== */
+function toggleTCard(a){sfxTap();$('tcard-'+a).classList.toggle('open')}
+function selItem(a,el,cat,txt){sfxTap();
+  document.querySelectorAll('#tlist-'+a+' .titem').forEach(function(it){it.classList.remove('sel')});
+  el.classList.add('sel');$('tinfo-'+a).innerHTML=cat?'<b>'+cat+'</b>：'+txt:txt;}
+
+/* ===== 正向组装动画 ===== */
+var mStep=0;
+function animM0(){if(mStep>=1)return;mStep=1;sfxOK();$('mb0').disabled=true;
+  SO('mline','1');
+  smoothAnim(900,function(p){var cx=110+p*80;SA('mdot',{cx:cx});SA('mline',{x2:cx})},function(){
+    SO('mend','1');$('mb1').disabled=false;
+    $('mlabel').innerHTML='✅ ① 点动成线（<b>一维</b>）';
+    $('mm').innerHTML='<span style="color:var(--d2)">点水平移动 → 轨迹形成线段</span>';
+  });
+}
+function animM1(){if(mStep>=2||mStep<1)return;mStep=2;sfxOK();$('mb1').disabled=true;
+  SO('mghostL','1');SO('msweep','1');SO('mplane','1');
+  smoothAnim(1000,function(p){
+    var y=105+p*70;SA('msweep',{y1:y,y2:y});SA('mplane',{height:p*70});
+  },function(){
+    $('mb2').disabled=false;
+    $('mlabel').innerHTML='✅ ② 线动成面（<b>二维</b>）';
+    $('mm').innerHTML='<span style="color:var(--d2)">线段向下平移 → 扫出矩形面</span>';
+  });
+}
+function animM2(){if(mStep>=3||mStep<2)return;mStep=3;sfxOK();$('mb2').disabled=true;
+  SO('s3','1');
+  // 矩形绕左边缘(x=110)旋转，完整 0°→360°
+  smoothAnim(4000,function(p){
+    var angle=p*Math.PI*2, cosA=Math.cos(angle), w=Math.abs(cosA)*80;
+    var x=cosA>=0?110:110-w;
+    SA('s3rect',{x:x,width:w});
+    // 幽灵轨迹留痕
+    if(p>.1){var c1=Math.cos(.1*Math.PI*2);SA('s3g1',{x:c1>=0?110:110-Math.abs(c1)*80,width:Math.abs(c1)*80});SO('s3g1','1')}
+    if(p>.25){SA('s3g2',{x:'110',width:'0'});SO('s3g2','1')}
+    if(p>.4){var c3=Math.cos(.4*Math.PI*2);SA('s3g3',{x:c3>=0?110:110-Math.abs(c3)*80,width:Math.abs(c3)*80});SO('s3g3','1')}
+    if(p>.55){SA('s3g4',{x:'30',width:'80'});SO('s3g4','1')}
+    // 圆柱线框
+    if(p>.3){SO('s3topE',1);SO('s3botE',1)}
+    if(p>.4){SO('s3slL','1');SO('s3srL','1')}
+    if(p>.5){SO('s3arc','1');SO('s3arc2','1')}
+    // 提示
+    if(p<.15)$('mm').innerHTML='<span style="color:#8a7e6e">矩形绕轴开始旋转…</span>';
+    else if(p<.3)$('mm').innerHTML='<span style="color:#8a7e6e">转到侧面，越来越窄…</span>';
+    else if(p<.35)$('mm').innerHTML='<span style="color:#8a7e6e">转过90°！翻到轴的另一边</span>';
+    else if(p<.6)$('mm').innerHTML='<span style="color:#8a7e6e">转出半圈，圆柱出现了…</span>';
+    else if(p<.8)$('mm').innerHTML='<span style="color:#8a7e6e">继续转，快回到原位…</span>';
+    else $('mm').innerHTML='<span style="color:#8a7e6e">转完一整圈！</span>';
+  },function(){
+    sfxOK();
+    $('mlabel').innerHTML='✅ ③ 面动成体：矩形绕轴转一整圈 → <b>圆柱</b>（三维）';
+    $('mm').innerHTML='<span style="color:var(--d2)">矩形绕轴旋转 → 扫过的空间变成一个圆柱体</span>';
+  });
+}
+function resetMain(){
+  mStep=0;$('mb0').disabled=false;$('mb1').disabled=true;$('mb2').disabled=true;
+  SA('mdot',{cx:'110'});SA('mline',{x2:'110'});SO('mline','0');SO('mend','0');
+  SO('mghostL','0');SO('msweep','0');SA('mplane',{height:'0'});SO('mplane','0');
+  SO('s3','0');
+  SA('s3rect',{x:'110',width:'80'});
+  ['s3g1','s3g2','s3g3','s3g4','s3topE','s3botE','s3slL','s3srL','s3arc','s3arc2'].forEach(function(id){SO(id,'0')});
+  $('mlabel').innerHTML='点动成线 → 线动成面 → 面动成体';
+  $('mm').innerHTML='';
+}
+
+/* ===== 闯关 ===== */
+var QUIZ=[
+  {s:'🎯',d:'排队时老师说"第3个小朋友出列"——队伍就是一条线',dim:'d1',ab:'where',dt:'一维·线',at:'物体的位置',x:'队伍里的第几个——用一维的「顺序」就能说清位置'},
+  {s:'🗺️',d:'手机上的电子地图——平平的一大片',dim:'d2',ab:'where',dt:'二维·面',at:'物体的位置',x:'地图是二维的，用坐标就能标出任何位置'},
+  {s:'🥛',d:'用量杯倒牛奶，看刻度线到200毫升——杯子是立体的',dim:'d3',ab:'measure',dt:'三维·体',at:'测量图形',x:'量杯装了多少——测量三维的容积'},
+  {s:'🪞',d:'镜子里的你——左右一模一样',dim:'d2',ab:'move',dt:'二维·面',at:'图形的运动',x:'镜像是轴对称——图形运动的经典例子'},
+  {s:'🎂',d:'生日蛋糕——圆圆的，从上往下看是个圆',dim:'d2',ab:'know',dt:'二维·面',at:'认识图形',x:'从上往下看蛋糕是圆形——认识平面图形'},
+  {s:'🏀',d:'篮球——圆滚滚的，能弹能滚',dim:'d3',ab:'know',dt:'三维·体',at:'认识图形',x:'篮球是球体——认识立体图形'},
+  {s:'📏',d:'用尺子量桌子的边有多长',dim:'d1',ab:'measure',dt:'一维·线',at:'测量图形',x:'量边的长度——测量一维的线段'},
+  {s:'📊',d:'看温度计——水银柱升到36°C那条线',dim:'d1',ab:'measure',dt:'一维·线',at:'测量图形',x:'温度计上读刻度——在一维的线上测量数值'},
+  {s:'🛞',d:'车轮转起来——绕着一个轴转圈',dim:'d2',ab:'move',dt:'二维·面',at:'图形的运动',x:'车轮转动是旋转——图形在二维平面上的运动'},
+  {s:'🏗️',d:'工地的塔吊——吊臂在空间里旋转',dim:'d3',ab:'move',dt:'三维·体',at:'图形的运动',x:'塔吊在三维空间旋转——立体图形的运动'},
+  {s:'🏢',d:'找同学的座位："她在2楼第3间教室"',dim:'d3',ab:'where',dt:'三维·体',at:'物体的位置',x:'楼号+房号——用两个数定位三维空间里的房间'},
+  {s:'🖼️',d:'给照片配一个正好大小的相框——量量照片多宽多长',dim:'d2',ab:'measure',dt:'二维·面',at:'测量图形',x:'照片的长和宽——测量二维的面积，才能配到合适的框'}
+];
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var qP=[],qi=0,qT=10,qDp=null,qR=0,qRes=[],qTried=false;
+function initQ(){
+  qP=shuffle(QUIZ.slice()).slice(0,qT);qi=0;qRes=[];qR=0;qDp=null;qTried=false;
+  $('qsc').style.display='none';$('qrev').style.display='none';$('qnext').style.display='inline-block';$('qretry').style.display='none';rDots();rQQ();
+}
+function rDots(){var h='';for(var i=0;i<qT;i++){h+='<div class="qdot'+(i<qi?(qRes[i].ok?' done':' wrong'):(i===qi?' cur':''))+'"></div>'} $('qd').innerHTML=h}
+function rQQ(){
+  if(qi>=qT){showSc();return}var q=qP[qi];qR=0;qDp=null;qTried=false;
+  $('qs').innerHTML='<span class="qse">'+q.s+'</span><div class="qsd">'+q.d+'</div>';
+  $('qlb').textContent='第①步：它是几维的？';$('qfb').innerHTML='';$('qnext').disabled=true;$('qretry').style.display='none';
+  $('qo').innerHTML='<button class="qo d1" onclick="pd(\'d1\',this)">📏 一维 · 线</button><button class="qo d2" onclick="pd(\'d2\',this)">📄 二维 · 面</button><button class="qo d3" onclick="pd(\'d3\',this)">📦 三维 · 体</button>';
+}
+function pd(d,btn){if(qR!==0)return;qDp=d;qR=1;sfxTap();document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('sel');b.disabled=true});btn.classList.add('sel');
+  $('qlb').textContent='第②步：它用到哪种超能力？';
+  $('qo').innerHTML='<button class="qo know" onclick="pa(\'know\',this)">👀 认识图形</button><button class="qo measure" onclick="pa(\'measure\',this)">📏 测量图形</button><button class="qo move" onclick="pa(\'move\',this)">🔄 图形的运动</button><button class="qo where" onclick="pa(\'where\',this)">🧭 物体的位置</button>';
+}
+function pa(a,btn){if(qR!==1)return;qR=2;sfxTap();document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('sel');b.disabled=true});btn.classList.add('sel');
+  var q=qP[qi],ok=(qDp===q.dim&&a===q.ab);
+  if(ok){sfxOK();$('qfb').innerHTML='<span class="q-ok">✅ 答对了！</span><br><span style="font-size:.76em;color:#5b5348">'+q.x+'</span>';$('qnext').disabled=false;$('qretry').style.display='none';qRes.push({ok:true,q:q,s:q.s,d:q.d});}
+  else{sfxNO();
+    if(!qTried){$('qfb').innerHTML='<span class="q-no">❌ 不对哦～再试一次！</span>';$('qretry').style.display='inline-block';qTried=true;qR=0;qDp=null;
+      document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('sel');b.disabled=false;b.classList.add('bad')});
+      setTimeout(function(){document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('bad')})},450);
+      $('qlb').textContent='第①步：它是几维的？（重选）';
+      $('qo').innerHTML='<button class="qo d1" onclick="pd(\'d1\',this)">📏 一维 · 线</button><button class="qo d2" onclick="pd(\'d2\',this)">📄 二维 · 面</button><button class="qo d3" onclick="pd(\'d3\',this)">📦 三维 · 体</button>';
+    }else{$('qfb').innerHTML='<span class="q-no">答案是：<b>'+q.dt+'</b> + <b>'+q.at+'</b></span><br><span style="font-size:.76em;color:#5b5348">'+q.x+'</span>';$('qnext').disabled=false;$('qretry').style.display='none';qRes.push({ok:false,q:q,s:q.s,d:q.d});}
+  }
+}
+function retryQ(){qR=0;qDp=null;qTried=true;$('qfb').innerHTML='';$('qretry').style.display='none';$('qnext').disabled=true;
+  $('qlb').textContent='第①步：它是几维的？（再试一次）';
+  $('qo').innerHTML='<button class="qo d1" onclick="pd(\'d1\',this)">📏 一维 · 线</button><button class="qo d2" onclick="pd(\'d2\',this)">📄 二维 · 面</button><button class="qo d3" onclick="pd(\'d3\',this)">📦 三维 · 体</button>';
+}
+function nextQ(){qi++;rDots();rQQ();}
+function showSc(){
+  var c=qRes.filter(function(r){return r.ok}).length;
+  $('qs').innerHTML='';$('qlb').textContent='';$('qo').innerHTML='';$('qfb').innerHTML='';$('qnext').style.display='none';$('qretry').style.display='none';
+  var m=c===qT?'🎉 全对！你已经是拆解大师！':c>=7?'👍 很不错！继续加油～':c>=4?'💪 还可以更好，再练一次～':'🌱 没关系，多练几次就熟了！';
+  $('qsc').style.display='block';$('qsc').innerHTML=m+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+c+' / '+qT+' 题</span><br><br><button class="dbtn reset" onclick="initQ()">🔄 重新闯关</button>';
+  var w=qRes.filter(function(r){return!r.ok});
+  if(w.length>0){var rh='<div style="font-weight:700;color:#e67e22;margin-top:4px">📋 错题回顾：</div>';
+    w.forEach(function(r){rh+='<div class="rv-item"><span class="ri-em">'+r.s+'</span><div><div>'+r.d+'</div><div class="ri-ans">答案：'+r.q.dt+' + '+r.q.at+' → '+r.q.x+'</div></div></div>'});
+    $('qrev').innerHTML=rh;$('qrev').style.display='block';}
+}
+initQ();
+</script>
+</body>
+</html>
