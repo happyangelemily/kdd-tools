@@ -592,50 +592,66 @@ function dropChip(el){
 var quizData=[
   {q:'下面哪个是「一维」的图形？',o:['三角形','线段','正方形','正方体'],a:1,x:'线段只有长短，是一维的。三角形和正方形是二维（有长有宽），正方体是三维。'},
   {q:'角属于几维的概念？',o:['一维','二维','三维','零维'],a:1,x:'角由两条边在平面上张开形成，是二维概念。它需要「面」才能存在，不能只活在一条线上。'},
-  {q:'哪种线有头有尾、能量出长度？',o:['射线','直线','线段','曲线'],a:2,x:'线段有两个端点，能量出确定的长度。射线只有一个端点，直线没有端点——它们都无限延伸，量不出"全长"。'},
+  {q:'哪种线有头有尾、能量出长度？',o:['射线','直线','线段','曲线'],a:2,x:'线段有两个端点，能量出确定的长度。射线和直线无限延伸，量不出全长。'},
   {q:'圆柱有几个圆面？',o:['0个','1个','2个','3个'],a:2,x:'圆柱有上下两个圆面（顶面和底面），中间是曲面。'},
-  {q:'下面哪个是「曲面立体」？',o:['正方体','长方体','球','三棱柱'],a:2,x:'球的表面全是曲面，没有平面。正方体、长方体、三棱柱都由平面围成，是平面立体。'},
-  {q:'正方形和长方形最大的共同点是什么？',o:['都是圆的','都有4条边和4个直角','都有3条边','都没有角'],a:1,x:'正方形和长方形都是四边形，都有4条边和4个直角。区别在于正方形4条边一样长，长方形对边相等。'},
-  {q:'平面图形里，哪种图形一条边都没有？',o:['三角形','正方形','圆','梯形'],a:2,x:'圆没有边——它是一条闭合的曲线，没有"边"也没有角。'},
-  {q:'四棱锥有几个面（不数底面）？',o:['3个','4个','5个','6个'],a:1,x:'四棱锥一共5个面：1个正方形底面+4个三角形侧面（不含底面就是4个）。'},
-  {q:'弧线是什么的一部分？',o:['线段','三角形','圆','正方形'],a:2,x:'弧线是圆（或曲线）的一部分。彩虹就是一条弧线——它是大圆的一段。'},
-  {q:'正方体有多少个面？',o:['4个','5个','6个','8个'],a:2,x:'正方体有6个面，每个面都是正方形。你可以拿一个骰子数一数！'}
+  {q:'下面哪个是「曲面立体」？',o:['正方体','长方体','球','三棱柱'],a:2,x:'球的表面全是曲面。正方体、长方体、三棱柱都由平面围成，是平面立体。'},
+  {q:'正方形和长方形最大的共同点是什么？',o:['都是圆的','都有4条边和4个直角','都有3条边','都没有角'],a:1,x:'正方形和长方形都是四边形，都有4条边和4个直角。'},
+  {q:'平面图形里，哪种图形没有边也没有角？',o:['三角形','正方形','圆','梯形'],a:2,x:'圆是一条闭合的曲线，没有边也没有角。'},
+  {q:'四棱锥的侧面有几个？',o:['3个','4个','5个','6个'],a:1,x:'四棱锥一共5个面：1个正方形底面+4个三角形侧面。'},
+  {q:'弧线是什么的一部分？',o:['线段','三角形','圆','正方形'],a:2,x:'弧线是圆（或曲线）的一部分。彩虹就是一条大弧线。'},
+  {q:'正方体有多少个面？',o:['4个','5个','6个','8个'],a:2,x:'正方体有6个面，每个面都是正方形。拿一个骰子数数看！'},
+  {q:'太阳光属于哪种线？',o:['线段','射线','直线','曲线'],a:1,x:'太阳光从太阳出发向外无限延伸，有头没尾——这是射线。'},
+  {q:'一个三角尺有几个直角？',o:['0个','1个','2个','3个'],a:1,x:'三角尺有一个直角（90°），另外两个是锐角（小于90°）。'},
+  {q:'长方形和正方形的区别是什么？',o:['长方形有角正方形没有','正方形4条边一样长','长方形不是四边形','正方形不是四边形'],a:1,x:'正方形是特殊的长方形——4条边一样长。'},
+  {q:'三棱柱有几个面？',o:['3个','5个','6个','8个'],a:1,x:'三棱柱有5个面：2个三角形底面+3个长方形侧面。'},
+  {q:'下面哪个不是立体图形？',o:['正方体','长方形','球','圆锥'],a:1,x:'长方形是二维平面图形，只能在纸上画出来。正方体、球、圆锥都是立体的。'}
 ];
-var qPool=[],qIdx=0,qTotal=6,qResults=[];
+var qPool=[],qIdx=0,qTotal=10,qResults=[];
 function initQuiz(){
   var pool=quizData.slice();
   for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
   qPool=pool.slice(0,qTotal);
-  qIdx=0;qResults=[];
+  qIdx=0;qResults=[];for(var i=0;i<qTotal;i++)qResults[i]=void 0;
   document.getElementById('quizScore').style.display='none';
+  document.getElementById('qPrev').style.display='';
+  document.getElementById('qNext').style.display='';
   renderDots();renderQ();
 }
 function renderDots(){
   var h='';
   for(var i=0;i<qTotal;i++){
-    var cls='qdot'+(i<qIdx?(qResults[i]!==undefined?(qResults[i]?'done':'wrong'):''):(i===qIdx?'cur':''));
+    var r=qResults[i],cls='qdot'+(i<qIdx?(r!==void 0?(r.ok?'done':'wrong'):''):(i===qIdx?'cur':''));
     h+='<div class="'+cls+'"></div>';
   }
   document.getElementById('quizDots').innerHTML=h;
 }
 function renderQ(){
   if(qIdx>=qTotal){showScore();return}
-  var q=qPool[qIdx];
+  var q=qPool[qIdx],r=qResults[qIdx],answered=r!==void 0;
   document.getElementById('quizQ').textContent='第'+(qIdx+1)+'题：'+q.q;
   var h='';
   q.o.forEach(function(o,i){
-    h+='<button class="qbtn" onclick="quizAnswer('+i+',this)">'+o+'</button>';
+    var cls='qbtn',dis='';
+    if(answered){
+      dis=' disabled';
+      if(i===q.a){cls+=' good'}
+      if(i===r.chosen&&!r.ok){cls+=' bad'}
+    }
+    h+='<button class="'+cls+'"'+dis+' onclick="quizAnswer('+i+',this)">'+o+'</button>';
   });
   document.getElementById('quizOpts').innerHTML=h;
-  document.getElementById('quizFb').innerHTML='';
+  if(answered){
+    document.getElementById('quizFb').innerHTML=r.ok?'<span style="color:#27ae60">✅ 正确！</span> '+q.x:'<span style="color:#e67e22">❌ 不对哦。</span> '+q.x;
+  }else{
+    document.getElementById('quizFb').innerHTML='';
+  }
   document.getElementById('qPrev').disabled=qIdx===0;
-  document.getElementById('qNext').disabled=qResults[qIdx]===undefined;
+  document.getElementById('qNext').disabled=qResults[qIdx]===void 0;
 }
 function quizAnswer(chosen,btn){
-  if(qResults[qIdx]!==undefined)return;
+  if(qResults[qIdx]!==void 0)return;
   var q=qPool[qIdx],ok=(chosen===q.a);
-  qResults[qIdx]=ok;
-  // 标记所有按钮
+  qResults[qIdx]={ok:ok,chosen:chosen};
   document.querySelectorAll('#quizOpts .qbtn').forEach(function(b,i){
     b.disabled=true;
     if(i===q.a)b.classList.add('good');
@@ -655,7 +671,7 @@ function quizNext(){
 }
 function showScore(){
   qIdx=qTotal;
-  var correct=qResults.filter(function(r){return r}).length;
+  var correct=0;qResults.forEach(function(r){if(r&&r.ok)correct++});
   document.getElementById('quizQ').textContent='';
   document.getElementById('quizOpts').innerHTML='';
   document.getElementById('quizFb').innerHTML='';
