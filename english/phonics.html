@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>自然拼读 · 可豆妈妈英语工具</title>
+<title>自然拼读完整路线 · 可豆妈妈英语工具</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
@@ -11,57 +11,263 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
 .container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px 20px 60px}
-.hero{text-align:center;padding:24px 0}
-.hero h1{font-size:1.8em;background:linear-gradient(135deg,#42a5f5,#80deea);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:#777;font-size:.9em;margin-top:8px}
-.tools{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.tool{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;text-decoration:none;color:#e0e0e0;transition:all .2s}
-.tool:hover{border-color:rgba(66,165,245,.4);background:rgba(66,165,245,.05)}
-.tool-icon{font-size:1.8em;flex-shrink:0}
-.tool-info{flex:1;min-width:0}
-.tool-name{font-size:1em;font-weight:600;color:#42a5f5;margin-bottom:2px}
-.tool-desc{font-size:.8em;color:#888;line-height:1.4}
-.tool-arrow{color:#555;font-size:1.1em}
-.footer{text-align:center;color:#444;font-size:.78em;margin-top:40px}
+
+/* Hero */
+.hero{text-align:center;padding:28px 0 20px}
+.hero h1{font-size:1.7em;background:linear-gradient(135deg,#42a5f5,#80deea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.hero .sub{color:#777;font-size:.85em}
+.hero .tagline{color:#66bb6a;font-size:.8em;margin-top:6px}
+
+/* Timeline */
+.timeline{position:relative;margin:0 0 0 28px;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,#42a5f5,#66bb6a,#ffb74d,#e57373,#ab47bc,#80deea);border-radius:1px}
+
+.stage{position:relative;margin-bottom:24px}
+.stage:last-child{margin-bottom:0}
+
+.stage-badge{
+  position:absolute;left:-36px;top:6px;
+  width:32px;height:32px;border-radius:50%;
+  background:#1a1a2e;border:2px solid #42a5f5;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85em;color:#42a5f5;
+  z-index:1
+}
+.stage:nth-child(1) .stage-badge{border-color:#42a5f5;color:#42a5f5}
+.stage:nth-child(2) .stage-badge{border-color:#66bb6a;color:#66bb6a}
+.stage:nth-child(3) .stage-badge{border-color:#ffb74d;color:#ffb74d}
+.stage:nth-child(4) .stage-badge{border-color:#e57373;color:#e57373}
+.stage:nth-child(5) .stage-badge{border-color:#ab47bc;color:#ab47bc}
+.stage:nth-child(6) .stage-badge{border-color:#80deea;color:#80deea}
+
+.stage-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:16px 18px;transition:border-color .2s;
+  border-left:4px solid #42a5f5;
+}
+.stage:nth-child(1) .stage-card{border-left-color:#42a5f5}
+.stage:nth-child(2) .stage-card{border-left-color:#66bb6a}
+.stage:nth-child(3) .stage-card{border-left-color:#ffb74d}
+.stage:nth-child(4) .stage-card{border-left-color:#e57373}
+.stage:nth-child(5) .stage-card{border-left-color:#ab47bc}
+.stage:nth-child(6) .stage-card{border-left-color:#80deea}
+
+.stage-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.stage-icon{font-size:1.5em;flex-shrink:0}
+.stage-title{font-size:1.05em;font-weight:700;color:#e8e8e8}
+.stage:nth-child(1) .stage-title{color:#42a5f5}
+.stage:nth-child(2) .stage-title{color:#66bb6a}
+.stage:nth-child(3) .stage-title{color:#ffb74d}
+.stage:nth-child(4) .stage-title{color:#e57373}
+.stage:nth-child(5) .stage-title{color:#ab47bc}
+.stage:nth-child(6) .stage-title{color:#80deea}
+
+.stage-path{font-size:.78em;color:#666;line-height:1.5;margin-bottom:12px}
+.stage-path .arr{color:#555;margin:0 2px}
+
+.stage-goal{font-size:.78em;color:#555;margin-bottom:12px;padding:8px 12px;background:rgba(255,255,255,.02);border-radius:8px;line-height:1.5}
+.stage-goal::before{content:'✅ '}
+
+/* Tools */
+.tools-list{display:flex;flex-direction:column;gap:6px}
+.tool-link{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;text-decoration:none;transition:all .2s;font-size:.88em}
+.tool-link.live{background:rgba(66,165,245,.08);border:1px solid rgba(66,165,245,.15);color:#e0e0e0}
+.tool-link.live:hover{background:rgba(66,165,245,.15);border-color:rgba(66,165,245,.35)}
+.tool-link.live .tool-dot{width:7px;height:7px;border-radius:50%;background:#66bb6a;flex-shrink:0;box-shadow:0 0 6px #66bb6a}
+.tool-link.live .tool-label{color:#42a5f5;font-weight:600}
+.tool-link.live .tool-desc{color:#888;font-size:.82em;margin-left:auto;text-align:right;flex-shrink:0}
+.tool-link.live .tool-go{color:#42a5f5;font-size:.8em;flex-shrink:0}
+
+.tool-link.soon{background:transparent;border:1px dashed rgba(255,255,255,.06);color:#555;cursor:default}
+.tool-link.soon .tool-dot{width:7px;height:7px;border-radius:50%;background:#444;flex-shrink:0}
+.tool-link.soon .soon-badge{font-size:.7em;background:rgba(255,255,255,.04);color:#555;padding:2px 8px;border-radius:10px;margin-left:auto;flex-shrink:0;white-space:nowrap}
+
+.stage:nth-child(1) .tool-link.live{border-color:rgba(66,165,245,.15)}
+.stage:nth-child(2) .tool-link.live{border-color:rgba(102,187,106,.15);background:rgba(102,187,106,.06)}
+.stage:nth-child(2) .tool-link.live .tool-label{color:#66bb6a}
+.stage:nth-child(2) .tool-link.live .tool-go{color:#66bb6a}
+.stage:nth-child(3) .tool-link.live{border-color:rgba(255,183,77,.15);background:rgba(255,183,77,.06)}
+.stage:nth-child(3) .tool-link.live .tool-label{color:#ffb74d}
+.stage:nth-child(3) .tool-link.live .tool-go{color:#ffb74d}
+
+/* Footer */
+.footer{text-align:center;margin-top:40px;padding:24px 0 0}
+.footer p{color:#555;font-size:.78em;line-height:1.6}
+.footer .highlight{color:#66bb6a;font-weight:600}
+
+.corner-note{text-align:center;color:#444;font-size:.75em;margin-top:10px}
+
 @media(max-width:500px){
-  .hero h1{font-size:1.4em}.container{padding:16px 14px 50px}
-  .tool{padding:14px}
+  .hero h1{font-size:1.35em}
+  .container{padding:16px 12px 50px}
+  .timeline{margin-left:24px;padding-left:16px}
+  .stage-badge{left:-32px;width:28px;height:28px;font-size:.75em}
+  .stage-card{padding:14px 12px}
+  .stage-title{font-size:.95em}
+  .tool-link{font-size:.82em;padding:8px 10px}
+  .tool-link.live .tool-desc{display:none}
 }
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 <div class="container">
-  <div class="hero"><h1>🔡 自然拼读</h1><p>从字母到自主阅读 · 工具持续更新中 🌱</p></div>
 
-  <div class="tools">
-    <a class="tool" href="phonics-letter-names-sounds.html">
-      <span class="tool-icon">🔤</span>
-      <span class="tool-info">
-        <span class="tool-name">⭐ 入门：字母名 vs 字母音</span>
-        <span class="tool-desc">26个字母的名字和声音全辨析 · 理解自然拼读的意义</span>
-      </span>
-      <span class="tool-arrow">→</span>
-    </a>
-    <a class="tool" href="phonics-vowels-consonants.html">
-      <span class="tool-icon">🎤</span>
-      <span class="tool-info">
-        <span class="tool-name">分清元音和辅音</span>
-        <span class="tool-desc">元音是主唱🎤、辅音是伴奏🥁 · 听音辨别、字母分类、元音桥拼读、双音绘本</span>
-      </span>
-      <span class="tool-arrow">→</span>
-    </a>
-    <a class="tool" href="phonics-cvc.html">
-      <span class="tool-icon">🧱</span>
-      <span class="tool-info">
-        <span class="tool-name">CVC 短元音单词</span>
-        <span class="tool-desc">辅音+元音+辅音 · 自然拼读最基础的结构，点击听发音、分拣闯关</span>
-      </span>
-      <span class="tool-arrow">→</span>
-    </a>
+  <div class="hero">
+    <h1>🗺️ 自然拼读完整学习路线</h1>
+    <p class="sub">6 阶体系 · 从零基础到自主阅读</p>
+    <p class="tagline">跟随公众号进度 · 工具持续更新中 🌱</p>
   </div>
 
-  <div class="footer">关注公众号「可豆妈妈」获取最新英语工具</div>
+  <div class="timeline">
+
+    <!-- 阶段一 -->
+    <div class="stage">
+      <div class="stage-badge">1</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🔰</span>
+          <span class="stage-title">入门预备与字母基础</span>
+        </div>
+        <div class="stage-path">磨耳朵 <span class="arr">→</span> 语音意识 <span class="arr">→</span> 26个字母名与字母音 <span class="arr">→</span> 元音和辅音</div>
+        <div class="stage-goal">耳朵有充足语感积累、能自主拆音；记牢 26 字母音形；分得清元音和辅音</div>
+        <div class="tools-list">
+          <a class="tool-link live" href="phonics-letter-names-sounds.html">
+            <span class="tool-dot"></span>
+            <span class="tool-label">字母名 vs 字母音</span>
+            <span class="tool-desc">26字母全辨析 · 44音素参考</span>
+            <span class="tool-go">→</span>
+          </a>
+          <a class="tool-link live" href="phonics-vowels-consonants.html">
+            <span class="tool-dot"></span>
+            <span class="tool-label">分清元音和辅音</span>
+            <span class="tool-desc">主唱🎤伴奏🥁 · 元音桥拼读</span>
+            <span class="tool-go">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段二 -->
+    <div class="stage">
+      <div class="stage-badge">2</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🧱</span>
+          <span class="stage-title">CVC 与辅音系统拓展</span>
+        </div>
+        <div class="stage-path">CVC 短元音 <span class="arr">→</span> 辅音二合音 (sh/ch/th/wh/ck/ng/ph) <span class="arr">→</span> 辅音连缀 (bl/str…) <span class="arr">→</span> CCVC / CVCC / CCVCC 综合</div>
+        <div class="stage-goal">任何带辅音组合的短元音单音节词，见词就能拼</div>
+        <div class="tools-list">
+          <a class="tool-link live" href="phonics-cvc.html">
+            <span class="tool-dot"></span>
+            <span class="tool-label">CVC 短元音单词</span>
+            <span class="tool-desc">拼读最基础结构 · 听音分拣</span>
+            <span class="tool-go">→</span>
+          </a>
+          <div class="tool-link soon">
+            <span class="tool-dot"></span>
+            <span>辅音二合音 · 辅音连缀 · CCVC/CVCC 综合拼读</span>
+            <span class="soon-badge">即将上线</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段三 -->
+    <div class="stage">
+      <div class="stage-badge">3</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">✨</span>
+          <span class="stage-title">元音变脸与长元音体系</span>
+        </div>
+        <div class="stage-path">魔法 e (CVCe) <span class="arr">→</span> 长元音二合音 (ai/ay, ee/ea, oa/ow) <span class="arr">→</span> 双元音与特殊元音 (oi/oy, ou/ow, au/aw, oo) <span class="arr">→</span> R 控制元音</div>
+        <div class="stage-goal">80% 的日常单音节词都能自主拼读</div>
+        <div class="tools-list">
+          <a class="tool-link live" href="phonics-five-vowels.html">
+            <span class="tool-dot"></span>
+            <span class="tool-label">五大元音变脸</span>
+            <span class="tool-desc">26字母→44音素 · 元音阵营全景</span>
+            <span class="tool-go">→</span>
+          </a>
+          <div class="tool-link soon">
+            <span class="tool-dot"></span>
+            <span>魔法 e · 长元音二合音 · 双元音 · R 控制元音（逐个上线）</span>
+            <span class="soon-badge">即将上线</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段四 -->
+    <div class="stage">
+      <div class="stage-badge">4</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">📐</span>
+          <span class="stage-title">特殊规则与词法拓展</span>
+        </div>
+        <div class="stage-path">c/g 软硬音 <span class="arr">→</span> 静音字母 (kn/wr/mb) <span class="arr">→</span> 隐形长音 (old/ild/ind) <span class="arr">→</span> -s/-es · -ed 三种发音 <span class="arr">→</span> tion/sion/ture</div>
+        <div class="stage-goal">单音节拼读无死角，熟练掌握常见词形变化、固定词尾发音</div>
+        <div class="tools-list">
+          <div class="tool-link soon">
+            <span class="tool-dot"></span>
+            <span>c/g 软硬音 · 静音字母 · 隐形长音 · 词尾变形 · tion/sion/ture</span>
+            <span class="soon-badge">即将上线</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段五 -->
+    <div class="stage">
+      <div class="stage-badge">5</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🔧</span>
+          <span class="stage-title">多音节拼读进阶</span>
+        </div>
+        <div class="stage-path">6 类音节类型 <span class="arr">→</span> 划分口诀（两分手、一归后、组合不拆分） <span class="arr">→</span> 双 / 三音节综合拼读</div>
+        <div class="stage-goal">遇到陌生长单词，可自主拆分、精准拼读，不用死记字母</div>
+        <div class="tools-list">
+          <div class="tool-link soon">
+            <span class="tool-dot"></span>
+            <span>音节划分 · 双/三音节综合拼读</span>
+            <span class="soon-badge">即将上线</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段六 -->
+    <div class="stage">
+      <div class="stage-badge">6</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🏁</span>
+          <span class="stage-title">专项巩固与阅读落地</span>
+        </div>
+        <div class="stage-path">高频词专项（全程并行） <span class="arr">→</span> 综合闯关 <span class="arr">→</span> 绘本解码 → 自主阅读</div>
+        <div class="stage-goal">可流利朗读对应难度分级绘本，具备完整的英语自主阅读能力</div>
+        <div class="tools-list">
+          <div class="tool-link soon">
+            <span class="tool-dot"></span>
+            <span>高频词 · 综合闯关 · 绘本解码</span>
+            <span class="soon-badge">即将上线</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>关注公众号「<span class="highlight">可豆妈妈</span>」</p>
+    <p>每次上新第一时间收到通知，陪孩子一步步走完拼读全程 👣</p>
+  </div>
+  <p class="corner-note">持续更新中 🌱 当前已上线 4 个工具 · 覆盖阶段一～三</p>
+
 </div>
 <script>
 (function(){
