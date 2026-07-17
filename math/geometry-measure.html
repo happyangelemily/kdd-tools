@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>测量图形 · 有多大 | 可豆妈妈</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:17px;line-height:1.6;-webkit-tap-highlight-color:transparent;user-select:none}
+.page{max-width:560px;margin:0 auto;padding:8px 14px 96px}
+
+/* 板块分隔 */
+.sec-div{text-align:center;margin:38px 0 6px}
+.sec-div::before,.sec-div::after{content:'';display:inline-block;width:42px;height:1.5px;background:linear-gradient(to right,transparent,#d8cfbe);vertical-align:middle;margin:0 10px}
+.sec-div::after{background:linear-gradient(to left,transparent,#d8cfbe)}
+.sec-div .sd-icon{font-size:1.4em;vertical-align:middle}
+
+.sec-hd{text-align:center;margin:8px 0 14px}
+.sec-hd h2{font-size:1.15em;color:#5b5348;line-height:1.4}
+.sec-hd .hd-sub{font-size:.76em;color:#bcb4a8;margin-top:4px;line-height:1.5}
+
+/* 引导语 */
+.guide{text-align:center;font-size:.82em;color:#8a7e6e;margin:10px 0 14px;line-height:1.6}
+.guide b{color:#d35400}
+
+/* ===== 第一板块：同一个动作 ===== */
+.action-stage{background:#fefcf8;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0;position:relative}
+.action-stage canvas{display:block;width:100%;height:auto;touch-action:none}
+.action-info{text-align:center;font-size:.78em;color:#5b5348;margin:8px 0;min-height:24px;line-height:1.5}
+.action-info b{color:#d35400}
+.action-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 12px}
+.action-btn{padding:10px 18px;border:none;border-radius:22px;font-size:.82em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:#fff}
+.action-btn:active{transform:scale(.95)}
+.action-btn:disabled{opacity:.45;pointer-events:none}
+.action-step{display:flex;justify-content:center;gap:16px;margin:10px 0}
+.action-step .step-dot{width:10px;height:10px;border-radius:50%;background:#e6dfd2;transition:all .3s}
+.action-step .step-dot.active{background:#d35400;box-shadow:0 0 0 4px rgba(211,84,0,.15)}
+.action-result{text-align:center;font-size:.9em;font-weight:700;color:#d35400;min-height:28px;margin:6px 0;line-height:1.5;transition:all .4s}
+
+/* 阶段过渡提示 */
+.stage-transition{text-align:center;font-size:.84em;color:#16a085;margin:10px 0;min-height:24px;line-height:1.5;font-weight:600;animation:fadeIn .5s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+
+/* ===== 第二板块：维度阶梯 ===== */
+.slider-wrap{background:#fefcf8;border:1.5px solid #ece3d5;border-radius:16px;padding:16px 14px;margin:10px 0;text-align:center}
+.slider-label{font-size:.82em;color:#5b5348;margin-bottom:10px;line-height:1.5}
+.dim-display{position:relative;height:160px;margin:8px 0;overflow:hidden}
+.dim-display canvas{display:block;margin:0 auto}
+.slider-track{position:relative;height:44px;margin:8px 20px;cursor:pointer}
+.slider-track-line{position:absolute;top:50%;left:0;right:0;height:4px;background:#ece3d5;border-radius:2px;transform:translateY(-50%)}
+.slider-thumb{position:absolute;top:50%;width:32px;height:32px;background:#d35400;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(211,84,0,.3);transition:left .15s;z-index:2}
+.slider-notch{position:absolute;top:50%;width:12px;height:12px;background:#d8cfbe;border-radius:50%;transform:translate(-50%,-50%)}
+.slider-num{position:absolute;top:0;transform:translateX(-50%);font-size:.7em;color:#bcb4a8;font-weight:700}
+.dim-desc{font-size:.85em;font-weight:700;color:#d35400;margin-top:8px;min-height:22px;line-height:1.4}
+
+/* 三层楼 */
+.building{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.floor-card{background:#fefcf8;border:1.5px solid #ece3d5;border-radius:14px;overflow:hidden;transition:all .3s}
+.floor-card.open{border-color:#d35400;box-shadow:0 2px 12px rgba(211,84,0,.1)}
+.floor-header{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.floor-icon{font-size:1.6em}
+.floor-title{font-size:.88em;font-weight:700;color:#5b5348}
+.floor-sub{font-size:.7em;color:#b0a696;margin-left:auto}
+.floor-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.floor-card.open .floor-body{max-height:600px}
+.floor-tags{padding:0 14px 14px;display:flex;flex-wrap:wrap;gap:6px}
+.floor-tag{background:#fef8f0;border:1px solid #f0e0c8;border-radius:16px;padding:5px 12px;font-size:.72em;color:#8a7e6e;cursor:pointer;transition:all .15s}
+.floor-tag:hover,.floor-tag.show{background:#d35400;color:#fff;border-color:#d35400}
+.floor-tag-info{font-size:.7em;color:#b0a696;text-align:center;min-height:18px;margin-bottom:6px;line-height:1.4}
+
+/* 拖拽归位游戏 */
+.drag-game{margin:16px 0}
+.drag-title{text-align:center;font-size:.82em;color:#8a7e6e;margin-bottom:10px;line-height:1.5}
+.drag-source{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;min-height:44px}
+.drag-item{background:#fff;border:1.5px solid #ece3d5;border-radius:18px;padding:8px 14px;font-size:.78em;color:#5b5348;cursor:grab;transition:all .2s;touch-action:none}
+.drag-item:active{cursor:grabbing;transform:scale(1.05)}
+.drag-item.placed{opacity:.35;pointer-events:none;background:#e8f6ed;border-color:#27ae60}
+.drag-item.wrong-flash{background:#fde8e8;border-color:#e74c3c;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.drag-targets{display:flex;gap:8px;justify-content:center}
+.drag-house{flex:1;max-width:150px;background:#fefcf8;border:2px dashed #ece3d5;border-radius:14px;padding:12px 8px;text-align:center;min-height:80px;transition:all .3s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.drag-house.highlight{border-color:#d35400;background:#fef8f0}
+.drag-house .dh-icon{font-size:1.6em}
+.drag-house .dh-label{font-size:.7em;font-weight:700;color:#8a7e6e}
+.drag-house .dh-items{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px}
+.drag-house .dh-placed{background:#e8f6ed;border:1px solid #27ae60;border-radius:12px;padding:3px 10px;font-size:.68em;color:#27ae60;animation:popIn .3s}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.drag-done{text-align:center;font-size:.85em;font-weight:700;color:#27ae60;margin-top:10px;min-height:24px;line-height:1.4}
+
+/* ===== 第三板块：未来 ===== */
+.path-scroll{overflow-x:auto;white-space:nowrap;padding:10px 0;margin:10px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.path-scroll::-webkit-scrollbar{display:none}
+.path-inner{display:inline-flex;gap:0;align-items:flex-start}
+.path-node{display:inline-flex;flex-direction:column;align-items:center;min-width:90px;cursor:pointer;position:relative;padding:0 8px}
+.path-node::after{content:'';position:absolute;top:28px;left:calc(50% + 45px);width:calc(100% - 8px);height:2px;background:#ece3d5}
+.path-node:last-child::after{display:none}
+.path-dot{width:28px;height:28px;border-radius:50%;background:#fefcf8;border:2px solid #d8cfbe;display:flex;align-items:center;justify-content:center;font-size:.85em;transition:all .3s;z-index:1;flex-shrink:0}
+.path-node.expanded .path-dot{background:#d35400;border-color:#d35400;color:#fff}
+.path-name{font-size:.68em;color:#8a7e6e;text-align:center;margin-top:6px;line-height:1.3;white-space:normal;max-width:80px}
+.path-detail{display:none;font-size:.7em;color:#5b5348;text-align:center;margin-top:4px;white-space:normal;max-width:90px;line-height:1.4;animation:fadeIn .3s}
+.path-node.expanded .path-detail{display:block}
+
+.scene-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.scene-card{aspect-ratio:1;perspective:600px;cursor:pointer}
+.scene-inner{width:100%;height:100%;position:relative;transition:transform .5s;transform-style:preserve-3d}
+.scene-card.flipped .scene-inner{transform:rotateY(180deg)}
+.scene-front,.scene-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center}
+.scene-front{background:#fefcf8;border:1.5px solid #ece3d5}
+.scene-back{background:#fef8f0;border:1.5px solid #d35400;transform:rotateY(180deg)}
+.scene-emoji{font-size:2.6em;margin-bottom:6px}
+.scene-name{font-size:.78em;font-weight:700;color:#5b5348}
+.scene-back .scene-desc{font-size:.74em;color:#8a7e6e;line-height:1.5}
+.scene-hint{font-size:.64em;color:#d0c8b8;margin-top:4px}
+
+/* ===== 第四板块：闯关 ===== */
+.quiz-wrap{background:#fefcf8;border:1.5px solid #ece3d5;border-radius:16px;padding:16px 14px;margin:10px 0}
+.quiz-progress{display:flex;gap:4px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+.quiz-dot{width:8px;height:8px;border-radius:50%;background:#ece3d5;transition:all .2s}
+.quiz-dot.done{background:#27ae60}
+.quiz-dot.wrong-dot{background:#e74c3c}
+.quiz-dot.current{background:#d35400;box-shadow:0 0 0 3px rgba(211,84,0,.2)}
+.quiz-q{font-size:.88em;color:#3a3530;margin-bottom:14px;line-height:1.6;text-align:center}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{padding:12px 14px;background:#fff;border:1.5px solid #ece3d5;border-radius:12px;font-size:.82em;color:#5b5348;cursor:pointer;text-align:left;font-family:inherit;transition:all .15s}
+.quiz-opt:active{transform:scale(.97)}
+.quiz-opt.correct{background:#e8f6ed;border-color:#27ae60;color:#27ae60}
+.quiz-opt.wrong{background:#fde8e8;border-color:#e74c3c;color:#e74c3c}
+.quiz-opt:disabled{pointer-events:none}
+.quiz-feedback{text-align:center;font-size:.82em;min-height:24px;margin-top:8px;line-height:1.5}
+.quiz-feedback.good{color:#27ae60}
+.quiz-feedback.bad{color:#e74c3c}
+.quiz-score{text-align:center;font-size:.9em;font-weight:700;color:#d35400;margin-top:10px}
+.quiz-retry{display:block;margin:12px auto 0;padding:10px 24px;background:#d35400;color:#fff;border:none;border-radius:20px;font-size:.82em;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* 页尾 */
+.foot-msg{text-align:center;font-size:.76em;color:#b0a696;margin:24px 0 12px;line-height:1.8}
+.foot-msg b{color:#5b5348}
+
+/* 弹窗 */
+.popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s}
+.popup-box{background:#fefcf8;border-radius:18px;padding:18px;max-width:340px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.popup-box .popup-emoji{font-size:2.4em;margin-bottom:6px}
+.popup-box .popup-title{font-size:.9em;font-weight:700;color:#5b5348;margin-bottom:4px}
+.popup-box .popup-grade{font-size:.72em;color:#b0a696}
+.popup-box .popup-desc{font-size:.78em;color:#8a7e6e;margin:8px 0;line-height:1.5}
+.popup-close{display:inline-block;margin-top:8px;padding:8px 20px;background:#d35400;color:#fff;border:none;border-radius:18px;font-size:.78em;font-weight:700;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 标题 -->
+<div style="text-align:center;margin:18px 0 6px">
+  <h1 style="font-size:1.25em;color:#3a3530;line-height:1.4">📏 有多大？<br>数一数就知道了</h1>
+  <p style="font-size:.76em;color:#b0a696;margin-top:6px">从一根线段到一个盒子——测量，就是铺满、然后数</p>
+</div>
+
+<!-- ==================== 第一板块 ==================== -->
+<div class="sec-div"><span class="sd-icon">🧱</span></div>
+<div class="sec-hd"><h2>同一个动作</h2><div class="hd-sub">下面有三个东西需要量一量。你来动手，看看自己是怎么量的。</div></div>
+
+<div class="action-stage" id="stageWrap">
+  <canvas id="actionCanvas"></canvas>
+</div>
+<div class="action-info" id="actionInfo">点击下面按钮，开始动手吧～</div>
+<div class="action-result" id="actionResult"></div>
+<div class="stage-transition" id="stageTrans"></div>
+<div class="action-step" id="stepDots">
+  <span class="step-dot active" data-step="0"></span>
+  <span class="step-dot" data-step="1"></span>
+  <span class="step-dot" data-step="2"></span>
+</div>
+<div class="action-bar" id="actionBtns">
+  <button class="action-btn" id="btnPlace" style="background:linear-gradient(135deg,#e67e22,#d35400)">🖐️ 放一个</button>
+  <button class="action-btn" id="btnAuto" style="background:linear-gradient(135deg,#27ae60,#1e8449)">⚡ 快速铺满</button>
+  <button class="action-btn" id="btnReset" style="background:#fff;color:#5b5348;border:1.5px solid #e6dfd2">↺ 重新来</button>
+</div>
+
+<!-- ==================== 第二板块 ==================== -->
+<div class="sec-div"><span class="sd-icon">🪜</span></div>
+<div class="sec-hd"><h2>为什么有平方和立方？</h2><div class="hd-sub">动一下滑块——看看单位是怎么「长」出来的</div></div>
+
+<div class="slider-wrap">
+  <div class="dim-display" id="dimDisplay">
+    <canvas id="dimCanvas" width="280" height="160"></canvas>
+  </div>
+  <div class="slider-track" id="sliderTrack">
+    <div class="slider-track-line"></div>
+    <div class="slider-notch" style="left:0"></div>
+    <div class="slider-num" style="left:0">一维</div>
+    <div class="slider-notch" style="left:50%"></div>
+    <div class="slider-num" style="left:50%">二维</div>
+    <div class="slider-notch" style="left:100%"></div>
+    <div class="slider-num" style="left:100%">三维</div>
+    <div class="slider-thumb" id="sliderThumb" style="left:0"></div>
+  </div>
+  <div class="dim-desc" id="dimDesc">1 厘米（cm）—— 一维 · 数线段</div>
+</div>
+
+<div class="guide"><b>👇 点开每一层楼，看看小学六年学过的所有测量知识</b></div>
+
+<div class="building" id="building">
+  <!-- 一楼：一维 -->
+  <div class="floor-card" data-floor="0">
+    <div class="floor-header" onclick="toggleFloor(0)">
+      <span class="floor-icon">📏</span><span class="floor-title">一楼 · 一维 —— 数线段</span><span class="floor-sub">点击展开 ▼</span>
+    </div>
+    <div class="floor-body">
+      <div class="floor-tag-info" id="tagInfo0"></div>
+      <div class="floor-tags" id="floorTags0"></div>
+    </div>
+  </div>
+  <!-- 二楼：二维 -->
+  <div class="floor-card" data-floor="1">
+    <div class="floor-header" onclick="toggleFloor(1)">
+      <span class="floor-icon">🔲</span><span class="floor-title">二楼 · 二维 —— 数方格</span><span class="floor-sub">点击展开 ▼</span>
+    </div>
+    <div class="floor-body">
+      <div class="floor-tag-info" id="tagInfo1"></div>
+      <div class="floor-tags" id="floorTags1"></div>
+    </div>
+  </div>
+  <!-- 三楼：三维 -->
+  <div class="floor-card" data-floor="2">
+    <div class="floor-header" onclick="toggleFloor(2)">
+      <span class="floor-icon">🧊</span><span class="floor-title">三楼 · 三维 —— 数方块</span><span class="floor-sub">点击展开 ▼</span>
+    </div>
+    <div class="floor-body">
+      <div class="floor-tag-info" id="tagInfo2"></div>
+      <div class="floor-tags" id="floorTags2"></div>
+    </div>
+  </div>
+</div>
+
+<div class="drag-game" id="dragGame">
+  <div class="drag-title"><b>三层楼都看完了吧？</b><br>把下面的知识拖进它们该去的楼里～</div>
+  <div class="drag-source" id="dragSource"></div>
+  <div class="drag-targets" id="dragTargets">
+    <div class="drag-house" data-house="0"><span class="dh-icon">📏</span><span class="dh-label">一维</span><div class="dh-items"></div></div>
+    <div class="drag-house" data-house="1"><span class="dh-icon">🔲</span><span class="dh-label">二维</span><div class="dh-items"></div></div>
+    <div class="drag-house" data-house="2"><span class="dh-icon">🧊</span><span class="dh-label">三维</span><div class="dh-items"></div></div>
+  </div>
+  <div class="drag-done" id="dragDone"></div>
+</div>
+
+<!-- ==================== 第三板块 ==================== -->
+<div class="sec-div"><span class="sd-icon">🔭</span></div>
+<div class="sec-hd"><h2>这把尺子能走多远</h2><div class="hd-sub">你现在拿到的「铺满、数一数」，是世界上最厉害的测量武器</div></div>
+
+<div class="guide"><b>👉 往后还会学什么？左右滑动看看</b></div>
+<div class="path-scroll" id="pathScroll">
+  <div class="path-inner" id="pathInner"></div>
+</div>
+
+<div class="guide" style="margin-top:16px"><b>👉 测量能做什么？点一下卡片翻过来看看</b></div>
+<div class="scene-cards" id="sceneCards"></div>
+
+<!-- ==================== 第四板块 ==================== -->
+<div class="sec-div"><span class="sd-icon">🏆</span></div>
+<div class="sec-hd"><h2>测测你是不是真懂了</h2><div class="hd-sub">走完上面三步，试试下面的题</div></div>
+
+<div class="quiz-wrap" id="quizWrap">
+  <div class="quiz-progress" id="quizDots"></div>
+  <div class="quiz-q" id="quizQ"></div>
+  <div class="quiz-opts" id="quizOpts"></div>
+  <div class="quiz-feedback" id="quizFB"></div>
+  <div class="quiz-score" id="quizScore" style="display:none"></div>
+  <button class="quiz-retry" id="quizRetry" style="display:none" onclick="startQuiz()">🔄 再来一次</button>
+</div>
+
+<!-- 页尾 -->
+<div class="foot-msg">
+  你发现了吗？从量一根铅笔，到量地球到月球的距离——<br>
+  都是同一件事：<b>找一个合适的单位，铺满，数一数。</b><br>
+  只是单位形状不同。<br><br>
+  这就是测量。<br><br>
+  可豆妈妈 · 更多几何互动工具陆续上线 🌱
+</div>
+
+<!-- 弹窗 -->
+<div class="popup-overlay" id="popupOverlay" style="display:none" onclick="closePopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <div class="popup-emoji" id="popupEmoji"></div>
+    <div class="popup-title" id="popupTitle"></div>
+    <div class="popup-grade" id="popupGrade"></div>
+    <div class="popup-desc" id="popupDesc"></div>
+    <button class="popup-close" onclick="closePopup()">知道啦</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ==================== 数据定义 ====================
+
+// 三层楼知识点
+const floorData = [
+  { // 一维
+    icon:'📏', name:'一维 · 数线段', unit:'cm、m、km',
+    tags:[
+      {t:'用尺子量长度',g:'一、二年级',d:'把尺子的 0 对齐一端，看另一端对着几——就是在数单位线段'},
+      {t:'画指定长度的线段',g:'二年级',d:'先点一个端点，量过去，再点另一个端点'},
+      {t:'认识 cm 和 m',g:'二年级',d:'1 米 = 100 厘米，只是单位线段变长了'},
+      {t:'周长概念',g:'三年级',d:'绕封闭图形一圈——还是数线段，只是拐了弯'},
+      {t:'长方形周长',g:'三年级',d:'2×(长+宽)，每段对应一个长度数值'},
+      {t:'正方形周长',g:'三年级',d:'4×边长，四段一样长'},
+      {t:'认识 km',g:'四年级',d:'1km=1000m，单位线段变得更长了'},
+      {t:'长度单位换算',g:'四年级',d:'单位越小，数出来的数越大——同一根线'},
+    ]
+  },
+  { // 二维
+    icon:'🔲', name:'二维 · 数方格', unit:'cm²、m²、km²',
+    tags:[
+      {t:'面积概念',g:'三年级',d:'物体表面或封闭图形的大小——铺满、数方格'},
+      {t:'长方形面积',g:'三年级',d:'长×宽 = 每行几个方格 × 一共几行'},
+      {t:'正方形面积',g:'三年级',d:'边长×边长，特殊的长方形'},
+      {t:'大面积单位',g:'四年级',d:'公顷、km²——方格变大了，逻辑不变'},
+      {t:'平行四边形面积',g:'五年级',d:'切一刀平移，方格总数不变——还是数方格'},
+      {t:'三角形面积',g:'五年级',d:'两个一样的三角形拼起来就是长方形，所以÷2'},
+      {t:'梯形面积',g:'五年级',d:'两个梯形拼成平行四边形，再÷2'},
+      {t:'组合图形面积',g:'五年级',d:'切一切补一补——回到数方格'},
+      {t:'不规则图形估算',g:'五年级',d:'没法完美铺满？近似数方格——回到最原始的方法'},
+      {t:'表面积',g:'五年级',d:'立体展开成平面，六个面各自数方格'},
+      {t:'圆的面积',g:'六年级',d:'方格铺不满——π 来帮忙，但思路还是「数」'},
+    ]
+  },
+  { // 三维
+    icon:'🧊', name:'三维 · 数方块', unit:'cm³、m³、L、mL',
+    tags:[
+      {t:'体积概念',g:'五年级',d:'物体所占空间的大小——填满、数方块'},
+      {t:'长方体体积',g:'五年级',d:'长×宽×高 = 每层几个方块 × 一共几层'},
+      {t:'正方体体积',g:'五年级',d:'棱长³，特殊的长方体'},
+      {t:'容积（L、mL）',g:'五年级',d:'里面能装多少——1L = 1dm³，只是换了名字'},
+      {t:'排水法',g:'五年级',d:'石头放进去，水升上来——把不规则的换成可以数的水'},
+    ]
+  }
+];
+
+// 拖拽归位标签
+const dragItems = [
+  {t:'长度',h:0},{t:'周长',h:0},
+  {t:'面积',h:1},{t:'表面积',h:1},{t:'不规则图形估算',h:1},{t:'圆的面积',h:1},
+  {t:'体积',h:2},{t:'容积',h:2},{t:'排水法',h:2}
+];
+
+// 未来路径节点
+const pathNodes = [
+  {icon:'🧩', name:'不规则图形', detail:'切一切、补一补，还是回到数方格'},
+  {icon:'⭕', name:'圆', detail:'方格铺不满，π 来帮忙——思路还是「数」'},
+  {icon:'🥫', name:'圆柱与棱锥', detail:'底面积×高——和长方体一个道理，只是底面形状不同'},
+  {icon:'⚽', name:'球', detail:'切成无数薄片，每片近似一个圆——还是数'},
+  {icon:'∫', name:'微积分', detail:'把不规则的切成无限小，然后还是数——从小学到大学，这条线没断过'}
+];
+
+// 场景卡片
+const sceneCards = [
+  {e:'🏗️',n:'建房子',d:'工程师量长度、算面积、算体积——和你铺方格是同一件事'},
+  {e:'🗺️',n:'导航地图',d:'从家到学校，就是在量一段长度。只是尺子变成了卫星'},
+  {e:'🏥',n:'CT 扫描',d:'把人切成无数薄片，量每片面积，拼出器官体积——和数方块一模一样'},
+  {e:'🌙',n:'地球到月球',d:'激光打过去算时间——还是在量长度。尺子换成了光'}
+];
+
+// 题库
+const quizBank = [
+  // 第一层：你数的是什么
+  {q:'量一支铅笔的长度，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几个点'],a:0,fb:'对！长度是一维的，数的是小线段。'},
+  {q:'量课桌桌面的大小，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几厘米'],a:1,fb:'对！桌面是二维的，数的是小方格。'},
+  {q:'量一个鞋盒能装多少东西，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几平方厘米'],a:2,fb:'对！鞋盒是三维的，数的是小方块。'},
+  {q:'小明说「我数了小方格，一共 24 个。」他量的最可能是？',o:['一根绳子的长度','一张纸的大小','一个杯子的容积','一支笔有多重'],a:1,fb:'对！小方格 → 二维 → 纸的大小。'},
+  {q:'小红说「我数了小方块，一共 60 个。」她量的最可能是？',o:['操场一圈多长','黑板面积','鱼缸能装多少水','书的厚度'],a:2,fb:'对！小方块 → 三维 → 鱼缸能装多少水。'},
+  // 第二层：单位怎么来的
+  {q:'1cm² 的小正方形，它的边长是？',o:['1cm','2cm','不确定','1cm²'],a:0,fb:'对！1cm² 的正方形，每条边都是 1cm。'},
+  {q:'1cm³ 的小正方体，它的每条棱长是？',o:['1cm','3cm','1cm³','不确定'],a:0,fb:'对！1cm³ 的正方体，每条棱都是 1cm。'},
+  {q:'为什么面积单位带「平方」？',o:['公式算出来的','你数的是小正方形，正方形是二维的','一种约定','老师规定的'],a:1,fb:'对！因为你数的是正方形单位——它是二维的。'},
+  {q:'为什么体积单位带「立方」？',o:['公式算出来的','你数的是小正方体，正方体是三维的','这是规定','为了和平方区分'],a:1,fb:'对！因为你数的是正方体单位——它是三维的。'},
+  {q:'下面哪个永远是错的？',o:['长度用 cm','面积用 cm²','面积用 cm³','体积用 m³'],a:2,fb:'对！面积永远不能用 cm³——cm³ 是三维的。'},
+  {q:'1m² = 10000cm²，为什么数字这么大？',o:['记住就行','1m=100cm，1m² 是 100×100 个 cm²','公式规定的','为了方便'],a:1,fb:'对！100 个 × 100 行 = 10000 个。'},
+  {q:'1m³ = 1000000cm³，比 1m² 多两个零。为什么？',o:['体积比较重要','三维比二维多乘了一个 100','巧合','人为规定'],a:1,fb:'对！三维多了一维，就多乘一个 100。'},
+  // 第三层：单位选择
+  {q:'教室地面的面积，最合适的单位是？',o:['cm²','m²','km²','公顷'],a:1,fb:'对！教室用 m² 最合适。'},
+  {q:'一本练习本的厚度，最合适的单位是？',o:['mm','cm','m','km'],a:0,fb:'对！练习本很薄，用 mm 最合适。'},
+  {q:'一个冰箱的容积，通常用什么单位？',o:['mL','L','cm³','m³'],a:1,fb:'对！冰箱用 L（升）最合适，1L=1dm³。'},
+  {q:'北京到上海的距离，最合适的单位是？',o:['m','km','km²','没法量'],a:1,fb:'对！城市间的距离用 km。'},
+  {q:'1L 和下面哪个是一样的？',o:['1cm³','1m³','1dm³','1mm³'],a:2,fb:'对！1L = 1dm³，容积和体积是同一回事。'},
+  {q:'一个魔方的体积大约是？',o:['200cm³','200m³','200L','200cm²'],a:0,fb:'对！魔方大约 200cm³。注意：cm² 是面积不是体积。'},
+  // 第四层：底层逻辑
+  {q:'长方形周长、面积，长方体体积——三个公式长得像，是因为？',o:['巧合','它们都在数单位，只是单位形状不同','数学家故意设计的','课本排版问题'],a:1,fb:'对！都是「铺满、数一数」，只是单位形状随维度变化。'},
+  {q:'如果将来有人告诉你「四维的测量」，你猜它的单位长什么样？',o:['跟三维一样是正方体','比正方体多一个维度，原理一样但我画不出来','不存在','回到线段'],a:1,fb:'对！每多一维，单位就多一个方向——只是我们画不出来。'},
+  {q:'排水法测石头体积，这个方法的本质是？',o:['做实验','把不规则的石头替换成等体积的水，水可以数','公式推导','估算'],a:1,fb:'对！把不好数的换成好数的——还是「数单位」的思路。'},
+  {q:'下面哪种情况也是在「数单位」？',o:['称体重','看时间','用尺子量身高','称体重和看时间也是，只是数的东西不一样'],a:3,fb:'对！称重、计时、量身高——都是找一个单位然后数，只是单位不同。'},
+  {q:'为什么学面积时先学「铺方格数一数」，再学「长×宽」？',o:['数方格好玩','先让你知道公式是从数单位来的，不是凭空出现的','课本顺序就这样','为了过渡'],a:1,fb:'对！公式只是「数单位」的快捷方式——先懂本质，再用工具。'},
+  {q:'用一句话告诉一年级小朋友「测量是什么」，你会说——',o:['算长度、面积、体积','用公式算结果','用小小的单位去铺满、然后数','考试会考的题'],a:2,fb:'对！测量就是：找一个小单位，铺满，数一数。就这么简单。'}
+];
+
+// ==================== 第一板块：拖拽铺满 ====================
+
+const canvas = document.getElementById('actionCanvas');
+const ctx = canvas.getContext('2d');
+const W = 500, H = 340;
+canvas.width = W; canvas.height = H;
+
+let currentStage = 0; // 0=线段, 1=方格, 2=方块
+let placedCount = 0;
+const stageTotals = [6, 24, 48];
+const stageUnits = ['段','个','个'];
+const stageLabels = ['线段','方格','方块'];
+const stageNames = ['厘米','平方厘米','立方厘米'];
+
+// 棋盘格参数
+const cellSize = 38;
+const gridCols = 6, gridRows = 4;
+const gridX = (W - gridCols*cellSize)/2;
+const gridY = 90;
+
+// 线段参数
+const segTotal = 6;
+const segW = 46, segH = 16;
+const segY = 160;
+const segStartX = (W - segTotal*segW)/2;
+
+// 格子状态
+let gridFilled = []; // 2D array for stages 1 and 2
+
+function resetStage() {
+  placedCount = 0;
+  gridFilled = [];
+  if (currentStage >= 1) {
+    for (let r=0; r<gridRows; r++) {
+      gridFilled[r] = [];
+      for (let c=0; c<gridCols; c++) gridFilled[r][c] = false;
+    }
+  }
+  if (currentStage === 2) {
+    // two layers
+    for (let r=0; r<gridRows; r++) {
+      for (let c=0; c<gridCols; c++) gridFilled[r][c] = 0; // 0=empty, 1=layer1, 2=layer2
+    }
+  }
+  drawStage();
+  updateUI();
+}
+
+function drawStage() {
+  ctx.clearRect(0, 0, W, H);
+  
+  if (currentStage === 0) drawLineStage();
+  else if (currentStage === 1) drawGridStage();
+  else drawCubeStage();
+}
+
+function drawLineStage() {
+  ctx.fillStyle = '#fefcf8';
+  ctx.fillRect(0,0,W,H);
+  
+  // 标题
+  ctx.fillStyle = '#8a7e6e';
+  ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('量一根线段', W/2, 50);
+  
+  // 画线段槽位
+  for (let i=0; i<segTotal; i++) {
+    let x = segStartX + i*segW;
+    if (i < placedCount) {
+      // 已填充
+      ctx.fillStyle = '#e67e22';
+      ctx.fillRect(x+2, segY, segW-4, segH);
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('1cm', x+segW/2, segY+segH/2+4);
+    } else {
+      // 空槽位
+      ctx.strokeStyle = '#e6dfd2';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4,4]);
+      ctx.strokeRect(x+2, segY, segW-4, segH);
+      ctx.setLineDash([]);
+    }
+  }
+  
+  // 计数器
+  ctx.fillStyle = '#5b5348';
+  ctx.font = 'bold 16px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('已铺：'+placedCount+' 段', W/2, segY+segH+50);
+  
+  if (placedCount === segTotal) {
+    ctx.fillStyle = '#d35400';
+    ctx.font = 'bold 18px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('✨ 这根线段长 6 厘米', W/2, segY+segH+80);
+    ctx.fillStyle = '#8a7e6e';
+    ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('你数了 6 个 1cm 的小线段', W/2, segY+segH+104);
+  }
+  
+  ctx.textAlign = 'start';
+}
+
+function drawGridStage() {
+  ctx.fillStyle = '#fefcf8';
+  ctx.fillRect(0,0,W,H);
+  
+  ctx.fillStyle = '#8a7e6e';
+  ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('量一个长方形面（6cm × 4cm）', W/2, 40);
+  
+  // 标注之前的线段
+  ctx.fillStyle = '#e67e22';
+  ctx.fillRect(segStartX+2, segY, segTotal*segW-4, segH);
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 10px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('6 厘米', W/2, segY+segH/2+4);
+  ctx.textAlign = 'start';
+  
+  // 画网格
+  for (let r=0; r<gridRows; r++) {
+    for (let c=0; c<gridCols; c++) {
+      let x = gridX + c*cellSize, y = gridY + r*cellSize;
+      if (gridFilled[r] && gridFilled[r][c]) {
+        ctx.fillStyle = '#f0a050';
+        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.fillStyle = 'rgba(255,255,255,.4)';
+        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 10px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('1cm²', x+cellSize/2, y+cellSize/2+4);
+      } else {
+        ctx.strokeStyle = '#e6dfd2';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3,3]);
+        ctx.strokeRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.setLineDash([]);
+      }
+    }
+  }
+  
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#5b5348';
+  ctx.font = 'bold 16px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('已铺：'+placedCount+' 个', W/2, gridY + gridRows*cellSize + 38);
+  
+  if (placedCount === stageTotals[1]) {
+    ctx.fillStyle = '#d35400';
+    ctx.font = 'bold 18px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('✨ 这张面的大小是 24 平方厘米', W/2, gridY + gridRows*cellSize + 64);
+    ctx.fillStyle = '#8a7e6e';
+    ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('你数了 24 个 1cm² 的小方格', W/2, gridY + gridRows*cellSize + 84);
+  }
+  ctx.textAlign = 'start';
+}
+
+function drawCubeStage() {
+  ctx.fillStyle = '#fefcf8';
+  ctx.fillRect(0,0,W,H);
+  
+  ctx.fillStyle = '#8a7e6e';
+  ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('量一个长方体盒子（6cm × 4cm × 2cm）', W/2, 34);
+  ctx.textAlign = 'start';
+  
+  // 第一层
+  let l1Y = 66;
+  ctx.fillStyle = '#5b5348';
+  ctx.font = 'bold 11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('第 1 层', W/2, l1Y-6);
+  
+  for (let r=0; r<gridRows; r++) {
+    for (let c=0; c<gridCols; c++) {
+      let x = gridX + c*cellSize, y = l1Y + r*cellSize;
+      let v = gridFilled[r] ? gridFilled[r][c] : 0;
+      if (v >= 1) {
+        ctx.fillStyle = '#e8c070';
+        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 9px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('1cm³', x+cellSize/2, y+cellSize/2+3);
+      } else {
+        ctx.strokeStyle = '#e6dfd2';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3,3]);
+        ctx.strokeRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.setLineDash([]);
+      }
+    }
+  }
+  
+  // 第二层
+  let l2Y = l1Y + gridRows*cellSize + 6;
+  ctx.fillStyle = '#5b5348';
+  ctx.font = 'bold 11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('第 2 层', W/2, l2Y-6);
+  
+  for (let r=0; r<gridRows; r++) {
+    for (let c=0; c<gridCols; c++) {
+      let x = gridX + c*cellSize, y = l2Y + r*cellSize;
+      let v = gridFilled[r] ? gridFilled[r][c] : 0;
+      if (v >= 2) {
+        ctx.fillStyle = '#d35400';
+        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 9px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('1cm³', x+cellSize/2, y+cellSize/2+3);
+      } else {
+        ctx.strokeStyle = '#e6dfd2';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3,3]);
+        ctx.strokeRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.setLineDash([]);
+      }
+    }
+  }
+  
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#5b5348';
+  ctx.font = 'bold 16px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('已填：'+placedCount+' 个', W/2, l2Y + gridRows*cellSize + 24);
+  
+  if (placedCount === stageTotals[2]) {
+    ctx.fillStyle = '#d35400';
+    ctx.font = 'bold 18px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('✨ 这个盒子占了 48 立方厘米', W/2, l2Y + gridRows*cellSize + 50);
+    ctx.fillStyle = '#8a7e6e';
+    ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('你数了 48 个 1cm³ 的小方块', W/2, l2Y + gridRows*cellSize + 70);
+  }
+  ctx.textAlign = 'start';
+}
+
+function placeOne() {
+  if (placedCount >= stageTotals[currentStage]) return;
+  if (currentStage === 0) {
+    placedCount++;
+  } else if (currentStage === 1) {
+    let idx = placedCount;
+    let r = Math.floor(idx / gridCols);
+    let c = idx % gridCols;
+    gridFilled[r][c] = true;
+    placedCount++;
+  } else {
+    let idx = placedCount;
+    let layer = Math.floor(idx / (gridRows*gridCols));
+    let pos = idx % (gridRows*gridCols);
+    let r = Math.floor(pos / gridCols);
+    let c = pos % gridCols;
+    gridFilled[r][c] = layer + 1;
+    placedCount++;
+  }
+  drawStage();
+  updateUI();
+}
+
+function autoFill() {
+  let remaining = stageTotals[currentStage] - placedCount;
+  while (placedCount < stageTotals[currentStage]) placeOne();
+  drawStage();
+  updateUI();
+}
+
+function updateUI() {
+  let info = document.getElementById('actionInfo');
+  let result = document.getElementById('actionResult');
+  let trans = document.getElementById('stageTrans');
+  let btnPlace = document.getElementById('btnPlace');
+  
+  if (placedCount === 0) {
+    info.innerHTML = '👆 点「放一个」开始铺～';
+  } else if (placedCount < stageTotals[currentStage]) {
+    info.innerHTML = `继续铺～还差 <b>${stageTotals[currentStage]-placedCount}</b> ${stageUnits[currentStage]}`;
+  }
+  
+  if (placedCount === stageTotals[currentStage]) {
+    result.innerHTML = `✨ 铺满了！你数了 <b>${stageTotals[currentStage]} ${stageUnits[currentStage]}</b> ${stageLabels[currentStage]}<br><span style="font-size:.85em;color:#8a7e6e">这是 ${stageTotals[currentStage]} ${stageNames[currentStage]}</span>`;
+    btnPlace.disabled = true;
+    document.getElementById('btnAuto').disabled = true;
+    
+    if (currentStage < 2) {
+      if (currentStage === 0) {
+        trans.innerHTML = '👇 现在这个线段「长」成一个面——继续铺！';
+      } else {
+        trans.innerHTML = '👇 现在这个面「长」成一个盒子——继续填！';
+      }
+    } else {
+      trans.innerHTML = '🎉 三次操作，三次都是 <b>铺满、数一数</b>！';
+      info.innerHTML = '从线段到方格到方块——你做的事一模一样。这就是测量的全部秘密。';
+    }
+  } else {
+    result.innerHTML = '';
+    trans.innerHTML = '';
+    btnPlace.disabled = false;
+    document.getElementById('btnAuto').disabled = false;
+  }
+  
+  updateDots();
+}
+
+function updateDots() {
+  document.querySelectorAll('.step-dot').forEach(d => d.classList.remove('active'));
+  let dots = document.querySelectorAll('.step-dot');
+  if (dots[currentStage]) dots[currentStage].classList.add('active');
+}
+
+function goToStage(stage) {
+  currentStage = stage;
+  resetStage();
+  document.getElementById('actionResult').innerHTML = '';
+  document.getElementById('stageTrans').innerHTML = '';
+  if (stage === 1) {
+    document.getElementById('actionInfo').innerHTML = '👆 线段变成了面——继续铺方格！';
+  } else if (stage === 2) {
+    document.getElementById('actionInfo').innerHTML = '👆 面变成了盒子——继续填方块！';
+  }
+}
+
+document.getElementById('btnPlace').onclick = placeOne;
+document.getElementById('btnAuto').onclick = autoFill;
+document.getElementById('btnReset').onclick = () => { resetStage(); };
+
+// 阶段切换逻辑：铺满当前阶段后自动启用下一阶段
+// 通过 step dots 切换
+document.querySelectorAll('.step-dot').forEach(dot => {
+  dot.addEventListener('click', function() {
+    let s = parseInt(this.dataset.step);
+    if (s <= currentStage || placedCount === stageTotals[currentStage]) {
+      goToStage(s);
+    }
+  });
+});
+
+// 初始化
+resetStage();
+
+// ==================== 第二板块：维度滑块 ====================
+
+let dimValue = 0;
+const dimCanvas = document.getElementById('dimCanvas');
+const dimCtx = dimCanvas.getContext('2d');
+const dimThumb = document.getElementById('sliderThumb');
+const dimDesc = document.getElementById('dimDesc');
+const dimLabels = ['1 厘米（cm）—— 一维 · 数线段','1 平方厘米（cm²）—— 二维 · 数方格','1 立方厘米（cm³）—— 三维 · 数方块'];
+
+function drawDimDisplay(v) {
+  dimCtx.clearRect(0,0,280,160);
+  let cx = 140, cy = 80;
+  dimCtx.textAlign = 'center';
+  dimCtx.textBaseline = 'middle';
+  
+  if (v === 0) {
+    // 线段
+    dimCtx.fillStyle = '#e67e22';
+    dimCtx.fillRect(cx-80, cy-6, 160, 12);
+    dimCtx.fillStyle = '#fff';
+    dimCtx.font = 'bold 14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('1 cm', cx, cy);
+    dimCtx.fillStyle = '#3a3530';
+    dimCtx.font = '28px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('—', cx, cy-36);
+  } else if (v === 1) {
+    // 正方形
+    let s = 80;
+    dimCtx.fillStyle = '#f0a050';
+    dimCtx.fillRect(cx-s/2, cy-s/2, s, s);
+    dimCtx.fillStyle = '#fff';
+    dimCtx.font = 'bold 14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('1 cm²', cx, cy);
+    // 边长标注
+    dimCtx.fillStyle = '#8a7e6e';
+    dimCtx.font = '11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('1cm', cx, cy+s/2+16);
+    dimCtx.fillText('1cm', cx-s/2-22, cy);
+    dimCtx.fillStyle = '#3a3530';
+    dimCtx.font = '28px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('□', cx, cy-54);
+  } else {
+    // 正方体（等距视图简化）
+    let s = 60;
+    let ox = cx-s/2, oy = cy-s/4;
+    // 前面
+    dimCtx.fillStyle = '#e8c070';
+    dimCtx.beginPath();
+    dimCtx.moveTo(ox, oy+s*0.4);
+    dimCtx.lineTo(ox+s, oy+s*0.4);
+    dimCtx.lineTo(ox+s, oy+s*0.4+s);
+    dimCtx.lineTo(ox, oy+s*0.4+s);
+    dimCtx.closePath();
+    dimCtx.fill();
+    // 顶面
+    dimCtx.fillStyle = '#f0d080';
+    dimCtx.beginPath();
+    dimCtx.moveTo(ox, oy+s*0.4);
+    dimCtx.lineTo(ox+s*0.3, oy);
+    dimCtx.lineTo(ox+s*0.3+s, oy);
+    dimCtx.lineTo(ox+s, oy+s*0.4);
+    dimCtx.closePath();
+    dimCtx.fill();
+    // 侧面
+    dimCtx.fillStyle = '#d4a050';
+    dimCtx.beginPath();
+    dimCtx.moveTo(ox+s, oy+s*0.4);
+    dimCtx.lineTo(ox+s*0.3+s, oy);
+    dimCtx.lineTo(ox+s*0.3+s, oy+s);
+    dimCtx.lineTo(ox+s, oy+s*0.4+s);
+    dimCtx.closePath();
+    dimCtx.fill();
+    
+    dimCtx.fillStyle = '#fff';
+    dimCtx.font = 'bold 14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('1 cm³', cx+12, cy+s*0.2+40);
+    
+    dimCtx.fillStyle = '#3a3530';
+    dimCtx.font = '28px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    dimCtx.fillText('■', cx, cy-60);
+  }
+  dimCtx.textAlign = 'start';
+  dimCtx.textBaseline = 'alphabetic';
+}
+
+function setDimValue(v) {
+  dimValue = v;
+  dimThumb.style.left = (v*50) + '%';
+  dimDesc.textContent = dimLabels[v];
+  drawDimDisplay(v);
+}
+
+// 滑块交互
+const sliderTrack = document.getElementById('sliderTrack');
+sliderTrack.addEventListener('click', function(e) {
+  let rect = sliderTrack.getBoundingClientRect();
+  let x = e.clientX - rect.left;
+  let pct = x / rect.width;
+  let v = Math.round(pct * 2);
+  v = Math.max(0, Math.min(2, v));
+  setDimValue(v);
+});
+
+let dragging = false;
+dimThumb.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+dimThumb.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); });
+document.addEventListener('mousemove', e => { if(dragging) updateThumb(e.clientX); });
+document.addEventListener('touchmove', e => { if(dragging) updateThumb(e.touches[0].clientX); });
+document.addEventListener('mouseup', () => { dragging = false; });
+document.addEventListener('touchend', () => { dragging = false; });
+
+function updateThumb(clientX) {
+  let rect = sliderTrack.getBoundingClientRect();
+  let x = clientX - rect.left;
+  let pct = Math.max(0, Math.min(1, x / rect.width));
+  let v = Math.round(pct * 2);
+  setDimValue(v);
+}
+
+// 初始化滑块
+drawDimDisplay(0);
+
+// ==================== 第二板块：三层楼 ====================
+
+function renderFloors() {
+  for (let f=0; f<3; f++) {
+    let tagsDiv = document.getElementById('floorTags'+f);
+    let data = floorData[f];
+    tagsDiv.innerHTML = data.tags.map((t,i) => 
+      `<span class="floor-tag" data-floor="${f}" data-idx="${i}" onclick="showTag(${f},${i})">${t.t}</span>`
+    ).join('');
+  }
+}
+
+function toggleFloor(f) {
+  let card = document.querySelectorAll('.floor-card')[f];
+  card.classList.toggle('open');
+  let sub = card.querySelector('.floor-sub');
+  if (card.classList.contains('open')) {
+    sub.textContent = '收起 ▲';
+  } else {
+    sub.textContent = '点击展开 ▼';
+  }
+}
+
+function showTag(f, i) {
+  let tag = floorData[f].tags[i];
+  let els = document.querySelectorAll('#floorTags'+f+' .floor-tag');
+  els.forEach(el => el.classList.remove('show'));
+  els[i].classList.add('show');
+  document.getElementById('tagInfo'+f).innerHTML = `<b>${tag.g}</b> · ${tag.d}`;
+}
+
+renderFloors();
+
+// ==================== 第二板块：拖拽归位 ====================
+
+let placedItems = {};
+function renderDragGame() {
+  let src = document.getElementById('dragSource');
+  // 随机打乱
+  let shuffled = [...dragItems].sort(() => Math.random() - 0.5);
+  src.innerHTML = shuffled.map((item, i) => 
+    `<span class="drag-item" data-idx="${i}" data-house="${item.h}" data-name="${item.t}" 
+     ontouchstart="dragStart(event,this)" ontouchmove="dragMove(event)" ontouchend="dragEnd(event,this)"
+     onmousedown="dragStart(event,this)">${item.t}</span>`
+  ).join('');
+  
+  // 重置房子
+  document.querySelectorAll('.drag-house').forEach(h => {
+    h.querySelector('.dh-items').innerHTML = '';
+  });
+  document.getElementById('dragDone').innerHTML = '';
+  placedItems = {};
+}
+
+let dragEl = null, dragOffX = 0, dragOffY = 0;
+
+function dragStart(e, el) {
+  if (el.classList.contains('placed')) return;
+  dragEl = el;
+  el.style.position = 'fixed';
+  el.style.zIndex = '200';
+  let rect = el.getBoundingClientRect();
+  let cx = e.touches ? e.touches[0].clientX : e.clientX;
+  let cy = e.touches ? e.touches[0].clientY : e.clientY;
+  dragOffX = cx - rect.left;
+  dragOffY = cy - rect.top;
+  el.style.left = (cx - dragOffX) + 'px';
+  el.style.top = (cy - dragOffY) + 'px';
+  e.preventDefault();
+}
+
+function dragMove(e) {
+  if (!dragEl) return;
+  let cx = e.touches ? e.touches[0].clientX : e.clientX;
+  let cy = e.touches ? e.touches[0].clientY : e.clientY;
+  dragEl.style.left = (cx - dragOffX) + 'px';
+  dragEl.style.top = (cy - dragOffY) + 'px';
+  
+  // 高亮目标房子
+  document.querySelectorAll('.drag-house').forEach(h => h.classList.remove('highlight'));
+  let target = document.elementFromPoint(cx, cy);
+  if (target) {
+    let house = target.closest('.drag-house');
+    if (house) house.classList.add('highlight');
+  }
+  e.preventDefault();
+}
+
+function dragEnd(e, el) {
+  if (!dragEl) return;
+  document.querySelectorAll('.drag-house').forEach(h => h.classList.remove('highlight'));
+  
+  let cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+  let cy = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+  let target = document.elementFromPoint(cx, cy);
+  
+  dragEl.style.position = '';
+  dragEl.style.zIndex = '';
+  dragEl.style.left = '';
+  dragEl.style.top = '';
+  
+  if (target) {
+    let house = target.closest('.drag-house');
+    if (house) {
+      let hIdx = parseInt(house.dataset.house);
+      let expectedH = parseInt(el.dataset.house);
+      if (hIdx === expectedH) {
+        // 正确
+        el.classList.add('placed');
+        let itemsDiv = house.querySelector('.dh-items');
+        let placed = document.createElement('span');
+        placed.className = 'dh-placed';
+        placed.textContent = el.dataset.name;
+        itemsDiv.appendChild(placed);
+        placedItems[el.dataset.name] = true;
+        
+        // 检查是否全部完成
+        if (Object.keys(placedItems).length === dragItems.length) {
+          document.getElementById('dragDone').innerHTML = '✨ 你帮所有知识找到了家！';
+        }
+      } else {
+        // 错误
+        el.classList.add('wrong-flash');
+        setTimeout(() => el.classList.remove('wrong-flash'), 400);
+      }
+    }
+  }
+  
+  dragEl = null;
+}
+
+// 桌面端也支持拖拽
+document.addEventListener('mousemove', function(e) {
+  if (dragEl && !e.touches) {
+    dragEl.style.left = (e.clientX - dragOffX) + 'px';
+    dragEl.style.top = (e.clientY - dragOffY) + 'px';
+    document.querySelectorAll('.drag-house').forEach(h => h.classList.remove('highlight'));
+    let target = document.elementFromPoint(e.clientX, e.clientY);
+    if (target) {
+      let house = target.closest('.drag-house');
+      if (house) house.classList.add('highlight');
+    }
+  }
+});
+
+document.addEventListener('mouseup', function(e) {
+  if (!dragEl) return;
+  document.querySelectorAll('.drag-house').forEach(h => h.classList.remove('highlight'));
+  
+  let target = document.elementFromPoint(e.clientX, e.clientY);
+  
+  dragEl.style.position = '';
+  dragEl.style.zIndex = '';
+  dragEl.style.left = '';
+  dragEl.style.top = '';
+  
+  if (target) {
+    let house = target.closest('.drag-house');
+    if (house) {
+      let hIdx = parseInt(house.dataset.house);
+      let expectedH = parseInt(dragEl.dataset.house);
+      if (hIdx === expectedH) {
+        dragEl.classList.add('placed');
+        let itemsDiv = house.querySelector('.dh-items');
+        let placed = document.createElement('span');
+        placed.className = 'dh-placed';
+        placed.textContent = dragEl.dataset.name;
+        itemsDiv.appendChild(placed);
+        placedItems[dragEl.dataset.name] = true;
+        if (Object.keys(placedItems).length === dragItems.length) {
+          document.getElementById('dragDone').innerHTML = '✨ 你帮所有知识找到了家！';
+        }
+      } else {
+        dragEl.classList.add('wrong-flash');
+        setTimeout(() => dragEl.classList.remove('wrong-flash'), 400);
+      }
+    }
+  }
+  
+  dragEl = null;
+});
+
+renderDragGame();
+
+// ==================== 第三板块：未来路径 ====================
+
+function renderPath() {
+  let inner = document.getElementById('pathInner');
+  inner.innerHTML = pathNodes.map((n,i) => `
+    <div class="path-node" onclick="togglePath(this)" data-idx="${i}">
+      <div class="path-dot">${n.icon}</div>
+      <div class="path-name">${n.name}</div>
+      <div class="path-detail">${n.detail}</div>
+    </div>
+  `).join('');
+}
+
+function togglePath(node) {
+  document.querySelectorAll('.path-node').forEach(n => n.classList.remove('expanded'));
+  node.classList.toggle('expanded');
+}
+
+function renderSceneCards() {
+  let container = document.getElementById('sceneCards');
+  container.innerHTML = sceneCards.map(c => `
+    <div class="scene-card" onclick="this.classList.toggle('flipped')">
+      <div class="scene-inner">
+        <div class="scene-front">
+          <div class="scene-emoji">${c.e}</div>
+          <div class="scene-name">${c.n}</div>
+          <div class="scene-hint">👆 点我翻过来</div>
+        </div>
+        <div class="scene-back">
+          <div class="scene-desc">${c.d}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderPath();
+renderSceneCards();
+
+// ==================== 第四板块：闯关 ====================
+
+let quizState = { questions:[], current:0, answers:[], done:false };
+
+function startQuiz() {
+  // 随机抽 10 题
+  let shuffled = [...quizBank].sort(() => Math.random() - 0.5);
+  quizState = {
+    questions: shuffled.slice(0, 10),
+    current: 0,
+    answers: [],
+    done: false
+  };
+  document.getElementById('quizScore').style.display = 'none';
+  document.getElementById('quizRetry').style.display = 'none';
+  document.getElementById('quizFB').innerHTML = '';
+  document.getElementById('quizFB').className = 'quiz-feedback';
+  renderQuiz();
+}
+
+function renderQuiz() {
+  let q = quizState.questions[quizState.current];
+  let dots = document.getElementById('quizDots');
+  dots.innerHTML = quizState.questions.map((_, i) => {
+    let cls = 'quiz-dot';
+    if (i === quizState.current) cls += ' current';
+    else if (i < quizState.current) {
+      cls += quizState.answers[i] === quizState.questions[i].a ? ' done' : ' wrong-dot';
+    }
+    return `<span class="${cls}"></span>`;
+  }).join('');
+  
+  document.getElementById('quizQ').innerHTML = `<b>第 ${quizState.current+1} 题</b> · ${q.q}`;
+  
+  let opts = document.getElementById('quizOpts');
+  opts.innerHTML = q.o.map((o,i) => 
+    `<button class="quiz-opt" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${o}</button>`
+  ).join('');
+  
+  document.getElementById('quizFB').innerHTML = '';
+  document.getElementById('quizFB').className = 'quiz-feedback';
+}
+
+function answerQuiz(idx) {
+  if (quizState.done) return;
+  let q = quizState.questions[quizState.current];
+  let correct = idx === q.a;
+  quizState.answers.push(idx);
+  
+  // 高亮选项
+  let opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((o,i) => {
+    o.disabled = true;
+    if (i === q.a) o.classList.add('correct');
+    if (i === idx && !correct) o.classList.add('wrong');
+  });
+  
+  // 反馈
+  let fb = document.getElementById('quizFB');
+  if (correct) {
+    fb.innerHTML = '✅ ' + q.fb;
+    fb.className = 'quiz-feedback good';
+  } else {
+    fb.innerHTML = '❌ 不对哦。正确答案是 ' + String.fromCharCode(65+q.a) + '。<br>' + q.fb;
+    fb.className = 'quiz-feedback bad';
+  }
+  
+  // 自动前进
+  quizState.current++;
+  if (quizState.current < quizState.questions.length) {
+    setTimeout(renderQuiz, 1200);
+  } else {
+    setTimeout(showScore, 1200);
+  }
+}
+
+function showScore() {
+  quizState.done = true;
+  let correct = 0;
+  quizState.questions.forEach((q,i) => {
+    if (quizState.answers[i] === q.a) correct++;
+  });
+  let total = quizState.questions.length;
+  
+  document.getElementById('quizQ').innerHTML = '';
+  document.getElementById('quizOpts').innerHTML = '';
+  document.getElementById('quizFB').innerHTML = '';
+  
+  let scoreEl = document.getElementById('quizScore');
+  scoreEl.style.display = 'block';
+  let msg = correct === total ? '🏆 全对！你完全懂了——测量就是数单位！' :
+            correct >= 7 ? '👍 很不错！测量的底层逻辑你基本掌握了。' :
+            correct >= 5 ? '📖 还行，但有些概念可以再回去看看。' :
+            '💪 加油！建议重新玩一遍前面的互动，再来试试。';
+  scoreEl.innerHTML = `答对 <b>${correct}</b> / ${total} 题<br><span style="font-size:.8em;font-weight:400">${msg}</span>`;
+  
+  // 更新 dots
+  let dots = document.getElementById('quizDots');
+  dots.innerHTML = quizState.questions.map((q, i) => {
+    let cls = 'quiz-dot';
+    cls += quizState.answers[i] === q.a ? ' done' : ' wrong-dot';
+    return `<span class="${cls}"></span>`;
+  }).join('');
+  
+  document.getElementById('quizRetry').style.display = 'block';
+}
+
+startQuiz();
+
+// ==================== 弹窗 ====================
+
+function showPopup(emoji, title, grade, desc) {
+  document.getElementById('popupEmoji').textContent = emoji;
+  document.getElementById('popupTitle').textContent = title;
+  document.getElementById('popupGrade').textContent = grade;
+  document.getElementById('popupDesc').textContent = desc;
+  document.getElementById('popupOverlay').style.display = 'flex';
+}
+
+function closePopup() {
+  document.getElementById('popupOverlay').style.display = 'none';
+}
+
+// ==================== 响应式 Canvas ====================
+
+function resizeCanvas() {
+  let wrap = document.getElementById('stageWrap');
+  let w = wrap.clientWidth;
+  let scale = Math.min(1, w / W);
+  canvas.style.width = (W * scale) + 'px';
+  canvas.style.height = (H * scale) + 'px';
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+</script>
+</body>
+</html>
