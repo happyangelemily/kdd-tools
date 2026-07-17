@@ -454,6 +454,7 @@ async function initCube3D() {
     import('three'),
     import('three/addons/controls/OrbitControls.js')
   ]);
+  window.THREE = THREE; // 全局化，供 add3DCube 使用
   
   cubeScene = new THREE.Scene();
   cubeScene.background = new THREE.Color('#fefcf8');
