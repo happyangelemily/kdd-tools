@@ -1146,8 +1146,8 @@ function quizAnswer(chosen){
     if(i===q.a)b.classList.add('good');
     if(i===chosen&&!ok)b.classList.add('bad');
   });
-  if(ok){document.getElementById('quizFb').innerHTML='<span style="color:#27ae60">✅ 正确！</span> '+q.x}
-  else{document.getElementById('quizFb').innerHTML='<span style="color:#e67e22">❌ 不对哦。</span> '+q.x}
+  if(ok){sfxOK();document.getElementById('quizFb').innerHTML='<span style="color:#27ae60">✅ 正确！</span> '+q.x}
+  else{sfxNO();document.getElementById('quizFb').innerHTML='<span style="color:#e67e22">❌ 不对哦。</span> '+q.x}
   document.getElementById('qNext').disabled=false;
   renderDots();
 }
@@ -1192,6 +1192,11 @@ function showWrongs(){
 }
 
 initQuiz();
+
+// 音效
+function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
+function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
+function sfxNO(){beep(200,.2,'triangle')}
 
 // ==================== 弹窗 ====================
 
