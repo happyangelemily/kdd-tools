@@ -113,24 +113,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .scene-hint{font-size:.64em;color:#d0c8b8;margin-top:4px}
 
 /* ===== 第四板块：闯关 ===== */
-.quiz-wrap{background:#fefcf8;border:1.5px solid #ece3d5;border-radius:16px;padding:16px 14px;margin:10px 0}
-.quiz-progress{display:flex;gap:4px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
-.quiz-dot{width:8px;height:8px;border-radius:50%;background:#ece3d5;transition:all .2s}
-.quiz-dot.done{background:#27ae60}
-.quiz-dot.wrong-dot{background:#e74c3c}
-.quiz-dot.current{background:#d35400;box-shadow:0 0 0 3px rgba(211,84,0,.2)}
-.quiz-q{font-size:.88em;color:#3a3530;margin-bottom:14px;line-height:1.6;text-align:center}
-.quiz-opts{display:flex;flex-direction:column;gap:8px}
-.quiz-opt{padding:12px 14px;background:#fff;border:1.5px solid #ece3d5;border-radius:12px;font-size:.82em;color:#5b5348;cursor:pointer;text-align:left;font-family:inherit;transition:all .15s}
-.quiz-opt:active{transform:scale(.97)}
-.quiz-opt.correct{background:#e8f6ed;border-color:#27ae60;color:#27ae60}
-.quiz-opt.wrong{background:#fde8e8;border-color:#e74c3c;color:#e74c3c}
-.quiz-opt:disabled{pointer-events:none}
-.quiz-feedback{text-align:center;font-size:.82em;min-height:24px;margin-top:8px;line-height:1.5}
-.quiz-feedback.good{color:#27ae60}
-.quiz-feedback.bad{color:#e74c3c}
-.quiz-score{text-align:center;font-size:.9em;font-weight:700;color:#d35400;margin-top:10px}
-.quiz-retry{display:block;margin:12px auto 0;padding:10px 24px;background:#d35400;color:#fff;border:none;border-radius:20px;font-size:.82em;font-weight:700;cursor:pointer;font-family:inherit}
+.quiz-box{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;padding:16px;margin:8px 0}
+.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+.qdot{width:13px;height:13px;border-radius:50%;border:1.5px solid #d8cfbe;background:transparent;transition:all .3s}
+.qdot.correct{background:#69f0ae;border-color:#69f0ae}
+.qdot.wrong{background:#ff5252;border-color:#ff5252}
+.qdot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+.quiz-q{text-align:center;font-size:.88em;font-weight:600;color:#5b5348;margin-bottom:12px}
+.qopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.qbtn{padding:10px 16px;border-radius:20px;border:2px solid #e6dfd2;background:#fcf9f4;font-size:.84em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348;transition:all .15s}
+.qbtn:active{transform:scale(.94)}
+.qbtn.good{border-color:#27ae60;background:#e8f5e9;color:#2e7d32}
+.qbtn.bad{border-color:#e74c3c;background:#fdecea;color:#c0392b}
+.qbtn:disabled{opacity:.55;pointer-events:none}
+.quiz-fb{text-align:center;font-size:.82em;font-weight:600;min-height:20px;margin-top:8px}
+.quiz-nav{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.qnav{padding:8px 18px;border-radius:20px;border:1.5px solid #d8cfbe;background:#fff;font-size:.82em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
+.qnav:disabled{opacity:.3;cursor:default}
+.qnav:active:not(:disabled){transform:scale(.95)}
+.quiz-score{text-align:center;font-size:.9em;font-weight:700;color:#2c3e50;margin-top:8px}
 
 /* 页尾 */
 .foot-msg{text-align:center;font-size:.76em;color:#b0a696;margin:24px 0 12px;line-height:1.8}
@@ -259,13 +260,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <div class="sec-div"><span class="sd-icon">🏆</span></div>
 <div class="sec-hd"><h2>测测你是不是真懂了</h2><div class="hd-sub">走完上面三步，试试下面的题</div></div>
 
-<div class="quiz-wrap" id="quizWrap">
+<div class="quiz-box" id="quizBox">
   <div class="quiz-progress" id="quizDots"></div>
   <div class="quiz-q" id="quizQ"></div>
-  <div class="quiz-opts" id="quizOpts"></div>
-  <div class="quiz-feedback" id="quizFB"></div>
+  <div class="qopts" id="quizOpts"></div>
+  <div class="quiz-fb" id="quizFb"></div>
+  <div class="quiz-nav">
+    <button class="qnav" id="qPrev" onclick="quizPrev()" disabled>◀ 上一题</button>
+    <button class="qnav" id="qNext" onclick="quizNext()" disabled>下一题 ▶</button>
+  </div>
   <div class="quiz-score" id="quizScore" style="display:none"></div>
-  <button class="quiz-retry" id="quizRetry" style="display:none" onclick="startQuiz()">🔄 再来一次</button>
 </div>
 
 <!-- 页尾 -->
@@ -363,33 +367,33 @@ const sceneCards = [
 // 题库
 const quizBank = [
   // 第一层：你数的是什么
-  {q:'量一支铅笔的长度，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几个点'],a:0,fb:'对！长度是一维的，数的是小线段。'},
-  {q:'量课桌桌面的大小，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几厘米'],a:1,fb:'对！桌面是二维的，数的是小方格。'},
-  {q:'量一个鞋盒能装多少东西，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几平方厘米'],a:2,fb:'对！鞋盒是三维的，数的是小方块。'},
-  {q:'小明说「我数了小方格，一共 24 个。」他量的最可能是？',o:['一根绳子的长度','一张纸的大小','一个杯子的容积','一支笔有多重'],a:1,fb:'对！小方格 → 二维 → 纸的大小。'},
-  {q:'小红说「我数了小方块，一共 60 个。」她量的最可能是？',o:['操场一圈多长','黑板面积','鱼缸能装多少水','书的厚度'],a:2,fb:'对！小方块 → 三维 → 鱼缸能装多少水。'},
+  {q:'量一支铅笔的长度，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几个点'],a:0,x:'对！长度是一维的，数的是小线段。'},
+  {q:'量课桌桌面的大小，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几厘米'],a:1,x:'对！桌面是二维的，数的是小方格。'},
+  {q:'量一个鞋盒能装多少东西，你数的是什么？',o:['几个小线段','几个小方格','几个小方块','几平方厘米'],a:2,x:'对！鞋盒是三维的，数的是小方块。'},
+  {q:'小明说「我数了小方格，一共 24 个。」他量的最可能是？',o:['一根绳子的长度','一张纸的大小','一个杯子的容积','一支笔有多重'],a:1,x:'对！小方格 → 二维 → 纸的大小。'},
+  {q:'小红说「我数了小方块，一共 60 个。」她量的最可能是？',o:['操场一圈多长','黑板面积','鱼缸能装多少水','书的厚度'],a:2,x:'对！小方块 → 三维 → 鱼缸能装多少水。'},
   // 第二层：单位怎么来的
-  {q:'1cm² 的小正方形，它的边长是？',o:['1cm','2cm','不确定','1cm²'],a:0,fb:'对！1cm² 的正方形，每条边都是 1cm。'},
-  {q:'1cm³ 的小正方体，它的每条棱长是？',o:['1cm','3cm','1cm³','不确定'],a:0,fb:'对！1cm³ 的正方体，每条棱都是 1cm。'},
-  {q:'为什么面积单位带「平方」？',o:['公式算出来的','你数的是小正方形，正方形是二维的','一种约定','老师规定的'],a:1,fb:'对！因为你数的是正方形单位——它是二维的。'},
-  {q:'为什么体积单位带「立方」？',o:['公式算出来的','你数的是小正方体，正方体是三维的','这是规定','为了和平方区分'],a:1,fb:'对！因为你数的是正方体单位——它是三维的。'},
-  {q:'下面哪个永远是错的？',o:['长度用 cm','面积用 cm²','面积用 cm³','体积用 m³'],a:2,fb:'对！面积永远不能用 cm³——cm³ 是三维的。'},
-  {q:'1m² = 10000cm²，为什么数字这么大？',o:['记住就行','1m=100cm，1m² 是 100×100 个 cm²','公式规定的','为了方便'],a:1,fb:'对！100 个 × 100 行 = 10000 个。'},
-  {q:'1m³ = 1000000cm³，比 1m² 多两个零。为什么？',o:['体积比较重要','三维比二维多乘了一个 100','巧合','人为规定'],a:1,fb:'对！三维多了一维，就多乘一个 100。'},
+  {q:'1cm² 的小正方形，它的边长是？',o:['1cm','2cm','不确定','1cm²'],a:0,x:'对！1cm² 的正方形，每条边都是 1cm。'},
+  {q:'1cm³ 的小正方体，它的每条棱长是？',o:['1cm','3cm','1cm³','不确定'],a:0,x:'对！1cm³ 的正方体，每条棱都是 1cm。'},
+  {q:'为什么面积单位带「平方」？',o:['公式算出来的','你数的是小正方形，正方形是二维的','一种约定','老师规定的'],a:1,x:'对！因为你数的是正方形单位——它是二维的。'},
+  {q:'为什么体积单位带「立方」？',o:['公式算出来的','你数的是小正方体，正方体是三维的','这是规定','为了和平方区分'],a:1,x:'对！因为你数的是正方体单位——它是三维的。'},
+  {q:'下面哪个永远是错的？',o:['长度用 cm','面积用 cm²','面积用 cm³','体积用 m³'],a:2,x:'对！面积永远不能用 cm³——cm³ 是三维的。'},
+  {q:'1m² = 10000cm²，为什么数字这么大？',o:['记住就行','1m=100cm，1m² 是 100×100 个 cm²','公式规定的','为了方便'],a:1,x:'对！100 个 × 100 行 = 10000 个。'},
+  {q:'1m³ = 1000000cm³，比 1m² 多两个零。为什么？',o:['体积比较重要','三维比二维多乘了一个 100','巧合','人为规定'],a:1,x:'对！三维多了一维，就多乘一个 100。'},
   // 第三层：单位选择
-  {q:'教室地面的面积，最合适的单位是？',o:['cm²','m²','km²','公顷'],a:1,fb:'对！教室用 m² 最合适。'},
-  {q:'一本练习本的厚度，最合适的单位是？',o:['mm','cm','m','km'],a:0,fb:'对！练习本很薄，用 mm 最合适。'},
-  {q:'一个冰箱的容积，通常用什么单位？',o:['mL','L','cm³','m³'],a:1,fb:'对！冰箱用 L（升）最合适，1L=1dm³。'},
-  {q:'北京到上海的距离，最合适的单位是？',o:['m','km','km²','没法量'],a:1,fb:'对！城市间的距离用 km。'},
-  {q:'1L 和下面哪个是一样的？',o:['1cm³','1m³','1dm³','1mm³'],a:2,fb:'对！1L = 1dm³，容积和体积是同一回事。'},
-  {q:'一个魔方的体积大约是？',o:['200cm³','200m³','200L','200cm²'],a:0,fb:'对！魔方大约 200cm³。注意：cm² 是面积不是体积。'},
+  {q:'教室地面的面积，最合适的单位是？',o:['cm²','m²','km²','公顷'],a:1,x:'对！教室用 m² 最合适。'},
+  {q:'一本练习本的厚度，最合适的单位是？',o:['mm','cm','m','km'],a:0,x:'对！练习本很薄，用 mm 最合适。'},
+  {q:'一个冰箱的容积，通常用什么单位？',o:['mL','L','cm³','m³'],a:1,x:'对！冰箱用 L（升）最合适，1L=1dm³。'},
+  {q:'北京到上海的距离，最合适的单位是？',o:['m','km','km²','没法量'],a:1,x:'对！城市间的距离用 km。'},
+  {q:'1L 和下面哪个是一样的？',o:['1cm³','1m³','1dm³','1mm³'],a:2,x:'对！1L = 1dm³，容积和体积是同一回事。'},
+  {q:'一个魔方的体积大约是？',o:['200cm³','200m³','200L','200cm²'],a:0,x:'对！魔方大约 200cm³。注意：cm² 是面积不是体积。'},
   // 第四层：底层逻辑
-  {q:'长方形周长、面积，长方体体积——三个公式长得像，是因为？',o:['巧合','它们都在数单位，只是单位形状不同','数学家故意设计的','课本排版问题'],a:1,fb:'对！都是「铺满、数一数」，只是单位形状随维度变化。'},
-  {q:'如果将来有人告诉你「四维的测量」，你猜它的单位长什么样？',o:['跟三维一样是正方体','比正方体多一个维度，原理一样但我画不出来','不存在','回到线段'],a:1,fb:'对！每多一维，单位就多一个方向——只是我们画不出来。'},
-  {q:'排水法测石头体积，这个方法的本质是？',o:['做实验','把不规则的石头替换成等体积的水，水可以数','公式推导','估算'],a:1,fb:'对！把不好数的换成好数的——还是「数单位」的思路。'},
-  {q:'下面哪种情况也是在「数单位」？',o:['称体重','看时间','用尺子量身高','称体重和看时间也是，只是数的东西不一样'],a:3,fb:'对！称重、计时、量身高——都是找一个单位然后数，只是单位不同。'},
-  {q:'为什么学面积时先学「铺方格数一数」，再学「长×宽」？',o:['数方格好玩','先让你知道公式是从数单位来的，不是凭空出现的','课本顺序就这样','为了过渡'],a:1,fb:'对！公式只是「数单位」的快捷方式——先懂本质，再用工具。'},
-  {q:'用一句话告诉一年级小朋友「测量是什么」，你会说——',o:['算长度、面积、体积','用公式算结果','用小小的单位去铺满、然后数','考试会考的题'],a:2,fb:'对！测量就是：找一个小单位，铺满，数一数。就这么简单。'}
+  {q:'长方形周长、面积，长方体体积——三个公式长得像，是因为？',o:['巧合','它们都在数单位，只是单位形状不同','数学家故意设计的','课本排版问题'],a:1,x:'对！都是「铺满、数一数」，只是单位形状随维度变化。'},
+  {q:'如果将来有人告诉你「四维的测量」，你猜它的单位长什么样？',o:['跟三维一样是正方体','比正方体多一个维度，原理一样但我画不出来','不存在','回到线段'],a:1,x:'对！每多一维，单位就多一个方向——只是我们画不出来。'},
+  {q:'排水法测石头体积，这个方法的本质是？',o:['做实验','把不规则的石头替换成等体积的水，水可以数','公式推导','估算'],a:1,x:'对！把不好数的换成好数的——还是「数单位」的思路。'},
+  {q:'下面哪种情况也是在「数单位」？',o:['称体重','看时间','用尺子量身高','称体重和看时间也是，只是数的东西不一样'],a:3,x:'对！称重、计时、量身高——都是找一个单位然后数，只是单位不同。'},
+  {q:'为什么学面积时先学「铺方格数一数」，再学「长×宽」？',o:['数方格好玩','先让你知道公式是从数单位来的，不是凭空出现的','课本顺序就这样','为了过渡'],a:1,x:'对！公式只是「数单位」的快捷方式——先懂本质，再用工具。'},
+  {q:'用一句话告诉一年级小朋友「测量是什么」，你会说——',o:['算长度、面积、体积','用公式算结果','用小小的单位去铺满、然后数','考试会考的题'],a:2,x:'对！测量就是：找一个小单位，铺满，数一数。就这么简单。'}
 ];
 
 // ==================== 第一板块：拖拽铺满 ====================
@@ -1085,112 +1089,109 @@ renderSceneCards();
 
 // ==================== 第四板块：闯关 ====================
 
-let quizState = { questions:[], current:0, answers:[], done:false };
+var qPool=[], qIdx=0, qTotal=10, qResults=[];
 
-function startQuiz() {
-  // 随机抽 10 题
-  let shuffled = [...quizBank].sort(() => Math.random() - 0.5);
-  quizState = {
-    questions: shuffled.slice(0, 10),
-    current: 0,
-    answers: [],
-    done: false
-  };
-  document.getElementById('quizScore').style.display = 'none';
-  document.getElementById('quizRetry').style.display = 'none';
-  document.getElementById('quizFB').innerHTML = '';
-  document.getElementById('quizFB').className = 'quiz-feedback';
-  renderQuiz();
+function initQuiz(){
+  var pool=quizBank.slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
+  qPool=pool.slice(0,qTotal);
+  qIdx=0;qResults=[];for(var i=0;i<qTotal;i++)qResults[i]=void 0;
+  document.getElementById('quizScore').style.display='none';
+  document.getElementById('qPrev').style.display='';
+  document.getElementById('qNext').style.display='';
+  renderDots();renderQ();
 }
 
-function renderQuiz() {
-  let q = quizState.questions[quizState.current];
-  let dots = document.getElementById('quizDots');
-  dots.innerHTML = quizState.questions.map((_, i) => {
-    let cls = 'quiz-dot';
-    if (i === quizState.current) cls += ' current';
-    else if (i < quizState.current) {
-      cls += quizState.answers[i] === quizState.questions[i].a ? ' done' : ' wrong-dot';
+function renderDots(){
+  var h='';
+  for(var i=0;i<qTotal;i++){
+    var r=qResults[i],cls='qdot';
+    if(r!==void 0){cls+=r.ok?' correct':' wrong';}
+    if(i===qIdx)cls+=' current';
+    h+='<span class="'+cls+'"></span>';
+  }
+  document.getElementById('quizDots').innerHTML=h;
+}
+
+function renderQ(){
+  if(qIdx>=qTotal){showScore();return}
+  var q=qPool[qIdx],r=qResults[qIdx],answered=r!==void 0;
+  document.getElementById('quizQ').textContent='第'+(qIdx+1)+'题：'+q.q;
+  var h='';
+  q.o.forEach(function(o,i){
+    var cls='qbtn',dis='';
+    if(answered){
+      dis=' disabled';
+      if(i===q.a){cls+=' good'}
+      if(i===r.chosen&&!r.ok){cls+=' bad'}
     }
-    return `<span class="${cls}"></span>`;
-  }).join('');
-  
-  document.getElementById('quizQ').innerHTML = `<b>第 ${quizState.current+1} 题</b> · ${q.q}`;
-  
-  let opts = document.getElementById('quizOpts');
-  opts.innerHTML = q.o.map((o,i) => 
-    `<button class="quiz-opt" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${o}</button>`
-  ).join('');
-  
-  document.getElementById('quizFB').innerHTML = '';
-  document.getElementById('quizFB').className = 'quiz-feedback';
-}
-
-function answerQuiz(idx) {
-  if (quizState.done) return;
-  let q = quizState.questions[quizState.current];
-  let correct = idx === q.a;
-  quizState.answers.push(idx);
-  
-  // 高亮选项
-  let opts = document.querySelectorAll('.quiz-opt');
-  opts.forEach((o,i) => {
-    o.disabled = true;
-    if (i === q.a) o.classList.add('correct');
-    if (i === idx && !correct) o.classList.add('wrong');
+    h+='<button class="'+cls+'"'+dis+' onclick="quizAnswer('+i+')">'+o+'</button>';
   });
-  
-  // 反馈
-  let fb = document.getElementById('quizFB');
-  if (correct) {
-    fb.innerHTML = '✅ ' + q.fb;
-    fb.className = 'quiz-feedback good';
-  } else {
-    fb.innerHTML = '❌ 不对哦。正确答案是 ' + String.fromCharCode(65+q.a) + '。<br>' + q.fb;
-    fb.className = 'quiz-feedback bad';
+  document.getElementById('quizOpts').innerHTML=h;
+  if(answered){
+    document.getElementById('quizFb').innerHTML=r.ok?'<span style="color:#27ae60">✅ 正确！</span> '+q.x:'<span style="color:#e67e22">❌ 不对哦。</span> '+q.x;
+  }else{
+    document.getElementById('quizFb').innerHTML='';
   }
-  
-  // 自动前进
-  quizState.current++;
-  if (quizState.current < quizState.questions.length) {
-    setTimeout(renderQuiz, 1200);
-  } else {
-    setTimeout(showScore, 1200);
-  }
+  document.getElementById('qPrev').disabled=qIdx===0;
+  document.getElementById('qNext').disabled=qResults[qIdx]===void 0;
 }
 
-function showScore() {
-  quizState.done = true;
-  let correct = 0;
-  quizState.questions.forEach((q,i) => {
-    if (quizState.answers[i] === q.a) correct++;
+function quizAnswer(chosen){
+  if(qResults[qIdx]!==void 0)return;
+  var q=qPool[qIdx],ok=(chosen===q.a);
+  qResults[qIdx]={ok:ok,chosen:chosen};
+  document.querySelectorAll('#quizOpts .qbtn').forEach(function(b,i){
+    b.disabled=true;
+    if(i===q.a)b.classList.add('good');
+    if(i===chosen&&!ok)b.classList.add('bad');
   });
-  let total = quizState.questions.length;
-  
-  document.getElementById('quizQ').innerHTML = '';
-  document.getElementById('quizOpts').innerHTML = '';
-  document.getElementById('quizFB').innerHTML = '';
-  
-  let scoreEl = document.getElementById('quizScore');
-  scoreEl.style.display = 'block';
-  let msg = correct === total ? '🏆 全对！你完全懂了——测量就是数单位！' :
-            correct >= 7 ? '👍 很不错！测量的底层逻辑你基本掌握了。' :
-            correct >= 5 ? '📖 还行，但有些概念可以再回去看看。' :
-            '💪 加油！建议重新玩一遍前面的互动，再来试试。';
-  scoreEl.innerHTML = `答对 <b>${correct}</b> / ${total} 题<br><span style="font-size:.8em;font-weight:400">${msg}</span>`;
-  
-  // 更新 dots
-  let dots = document.getElementById('quizDots');
-  dots.innerHTML = quizState.questions.map((q, i) => {
-    let cls = 'quiz-dot';
-    cls += quizState.answers[i] === q.a ? ' done' : ' wrong-dot';
-    return `<span class="${cls}"></span>`;
-  }).join('');
-  
-  document.getElementById('quizRetry').style.display = 'block';
+  if(ok){document.getElementById('quizFb').innerHTML='<span style="color:#27ae60">✅ 正确！</span> '+q.x}
+  else{document.getElementById('quizFb').innerHTML='<span style="color:#e67e22">❌ 不对哦。</span> '+q.x}
+  document.getElementById('qNext').disabled=false;
+  renderDots();
 }
 
-startQuiz();
+function quizPrev(){if(qIdx>0){qIdx--;renderDots();renderQ();}}
+function quizNext(){if(qIdx<qTotal-1){qIdx++;renderDots();renderQ();}else if(qIdx===qTotal-1){qIdx++;showScore()}}
+
+function showScore(){
+  qIdx=qTotal;
+  var correct=0,wrongs=[];
+  qResults.forEach(function(r,i){if(r&&r.ok)correct++;else if(r)wrongs.push({q:qPool[i],chosen:r.chosen})});
+  document.getElementById('quizQ').textContent='';
+  document.getElementById('quizOpts').innerHTML='';
+  document.getElementById('quizFb').innerHTML='';
+  document.getElementById('qPrev').style.display='none';
+  document.getElementById('qNext').style.display='none';
+  var msg=correct===qTotal?'🎉 全对！你完全懂了——测量就是数单位！':correct>=7?'👍 很不错！测量的底层逻辑你基本掌握了。':correct>=5?'📖 还行，但有些概念可以再回去看看。':'💪 加油！建议重新玩一遍前面的互动，再来试试。';
+  var btns='<button class="qbtn" onclick="initQuiz()" style="border-color:#d35400;color:#d35400">🔄 再闯一次</button>';
+  if(wrongs.length>0){
+    btns+=' <button class="qbtn" onclick="showWrongs()" style="border-color:#e67e22;color:#e67e22">🔍 查看错题 ('+wrongs.length+'题)</button>';
+  }
+  document.getElementById('quizScore').style.display='block';
+  document.getElementById('quizScore').innerHTML=msg+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+correct+' / '+qTotal+' 题</span><br><br>'+btns+'<div id="wrongList" style="display:none;text-align:left;margin-top:8px"></div>';
+  renderDots();
+  window._wrongs=wrongs;
+}
+
+function showWrongs(){
+  var wl=document.getElementById('wrongList'),w=window._wrongs||[];
+  if(wl.style.display==='block'){wl.style.display='none';return}
+  var h='';
+  w.forEach(function(wr,i){
+    var q=wr.q,userAns=q.o[wr.chosen],correctAns=q.o[q.a];
+    h+='<div style="background:#fef9f4;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.78em;line-height:1.5">';
+    h+='<b style="color:#e67e22">❌ 第'+(i+1)+'错：</b>'+q.q+'<br>';
+    h+='<span style="color:#c0392b">你的答案：'+userAns+'</span> → ';
+    h+='<span style="color:#27ae60">正确答案：'+correctAns+'</span><br>';
+    h+='<span style="color:#8a7e6e;font-size:.92em">'+q.x+'</span></div>';
+  });
+  wl.innerHTML=h;
+  wl.style.display='block';
+}
+
+initQuiz();
 
 // ==================== 弹窗 ====================
 
