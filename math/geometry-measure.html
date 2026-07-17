@@ -732,14 +732,11 @@ document.getElementById('btnPlace').onclick = placeOne;
 document.getElementById('btnAuto').onclick = autoFill;
 document.getElementById('btnReset').onclick = () => { resetStage(); };
 
-// 阶段切换逻辑：铺满当前阶段后自动启用下一阶段
-// 通过 step dots 切换
+// 阶段切换：始终可以自由切换
 document.querySelectorAll('.step-dot').forEach(dot => {
   dot.addEventListener('click', function() {
     let s = parseInt(this.dataset.step);
-    if (s <= currentStage || placedCount === stageTotals[currentStage]) {
-      goToStage(s);
-    }
+    goToStage(s);
   });
 });
 
