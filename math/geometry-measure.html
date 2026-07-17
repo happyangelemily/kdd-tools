@@ -162,6 +162,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
 <div class="action-stage" id="stageWrap">
   <canvas id="actionCanvas"></canvas>
+  <div id="cube3D" style="display:none;width:100%;aspect-ratio:4/3"></div>
 </div>
 <div class="action-info" id="actionInfo">点击下面按钮，开始动手吧～</div>
 <div class="action-result" id="actionResult"></div>
@@ -294,6 +295,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 
 </div>
 
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 <script>
 // ==================== 数据定义 ====================
 
@@ -411,7 +420,7 @@ const ctx = canvas.getContext('2d');
 const W = 500, H = 340;
 canvas.width = W; canvas.height = H;
 
-let currentStage = 0; // 0=线段, 1=方格, 2=方块
+let currentStage = 0; // 0=线段, 1=方格, 2=方块(3D)
 let placedCount = 0;
 const stageTotals = [6, 24, 48];
 const stageUnits = ['段','个','个'];
@@ -430,120 +439,254 @@ const segW = 46, segH = 16;
 const segY = 160;
 const segStartX = (W - segTotal*segW)/2;
 
-// 格子状态
-let gridFilled = []; // 2D array for stages 1 and 2
+// 格子状态（阶段1用）
+let gridFilled = [];
+
+// === Three.js 3D 方块场景 ===
+let cubeScene = null, cubeCamera = null, cubeRenderer = null;
+let cubeGroup = null, cubeControls = null, cubeMeshes = [];
+let cube3DReady = false;
+
+async function initCube3D() {
+  if (cube3DReady) return;
+  const container = document.getElementById('cube3D');
+  const [THREE, OrbitC] = await Promise.all([
+    import('three'),
+    import('three/addons/controls/OrbitControls.js')
+  ]);
+  
+  cubeScene = new THREE.Scene();
+  cubeScene.background = new THREE.Color('#fefcf8');
+  
+  cubeCamera = new THREE.PerspectiveCamera(35, container.clientWidth / Math.max(1, container.clientHeight), 0.5, 50);
+  cubeCamera.position.set(9, 5.5, 9);
+  cubeCamera.lookAt(2.5, 1, 0.5);
+  
+  cubeRenderer = new THREE.WebGLRenderer({ antialias: true });
+  cubeRenderer.setSize(container.clientWidth, container.clientHeight);
+  cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  cubeRenderer.shadowMap.enabled = true;
+  container.appendChild(cubeRenderer.domElement);
+  
+  cubeControls = new OrbitC.OrbitControls(cubeCamera, cubeRenderer.domElement);
+  cubeControls.target.set(2.5, 1, 0.5);
+  cubeControls.enableDamping = true;
+  cubeControls.dampingFactor = 0.08;
+  cubeControls.minDistance = 5;
+  cubeControls.maxDistance = 18;
+  cubeControls.maxPolarAngle = Math.PI * 0.7;
+  cubeControls.update();
+  
+  // 光照
+  const ambient = new THREE.AmbientLight('#fff8ee', 1.8);
+  cubeScene.add(ambient);
+  const dir = new THREE.DirectionalLight('#ffffff', 2.5);
+  dir.position.set(8, 12, 6);
+  dir.castShadow = true;
+  dir.shadow.mapSize.set(512, 512);
+  cubeScene.add(dir);
+  const fill = new THREE.DirectionalLight('#ffe8cc', 1.2);
+  fill.position.set(-4, 2, -2);
+  cubeScene.add(fill);
+  
+  // 底部平面
+  const planeGeo = new THREE.PlaneGeometry(12, 10);
+  const planeMat = new THREE.MeshStandardMaterial({ color: '#f7f4ed', roughness: 0.9 });
+  const plane = new THREE.Mesh(planeGeo, planeMat);
+  plane.rotation.x = -Math.PI / 2;
+  plane.position.set(2.5, -0.25, 1.5);
+  plane.receiveShadow = true;
+  cubeScene.add(plane);
+  
+  // 分组
+  cubeGroup = new THREE.Group();
+  cubeScene.add(cubeGroup);
+  
+  // 渲染一帧
+  cubeRenderer.render(cubeScene, cubeCamera);
+  cube3DReady = true;
+  
+  // 动画循环
+  function animate() {
+    if (!cube3DReady || currentStage !== 2) return;
+    requestAnimationFrame(animate);
+    cubeControls.update();
+    cubeRenderer.render(cubeScene, cubeCamera);
+  }
+  animate();
+  
+  // 响应式
+  window.addEventListener('resize', () => {
+    if (currentStage !== 2) return;
+    const c = document.getElementById('cube3D');
+    cubeCamera.aspect = c.clientWidth / Math.max(1, c.clientHeight);
+    cubeCamera.updateProjectionMatrix();
+    cubeRenderer.setSize(c.clientWidth, c.clientHeight);
+  });
+}
+
+function add3DCube() {
+  if (!cubeGroup) return;
+  const idx = Math.min(placedCount, 47);
+  const layer = Math.floor(idx / 24);
+  const pos = idx % 24;
+  const col = pos % 6;
+  const row = Math.floor(pos / 6);
+  
+  const geo = new THREE.BoxGeometry(0.88, 0.88, 0.88);
+  const mat = new THREE.MeshStandardMaterial({
+    color: layer === 0 ? '#e8a850' : '#d35400',
+    roughness: 0.3,
+    metalness: 0.05
+  });
+  const cube = new THREE.Mesh(geo, mat);
+  cube.position.set(col + 0.5, layer + 0.5, row + 0.5);
+  cube.castShadow = true;
+  cube.receiveShadow = true;
+  cubeGroup.add(cube);
+  cubeMeshes.push(cube);
+}
+
+function clear3DCubes() {
+  if (!cubeGroup) return;
+  while (cubeGroup.children.length > 0) {
+    const child = cubeGroup.children[0];
+    if (child.geometry) child.geometry.dispose();
+    if (child.material) child.material.dispose();
+    cubeGroup.remove(child);
+  }
+  cubeMeshes = [];
+}
+
+function resizeCanvas() {
+  let wrap = document.getElementById('stageWrap');
+  let w = wrap.clientWidth;
+  let scale = Math.min(1, w / W);
+  canvas.style.width = (W * scale) + 'px';
+  canvas.style.height = (H * scale) + 'px';
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// === 阶段切换 ===
+async function goToStage(stage) {
+  currentStage = stage;
+  const is3D = (stage === 2);
+  
+  // 切换显示
+  canvas.style.display = is3D ? 'none' : 'block';
+  document.getElementById('cube3D').style.display = is3D ? 'block' : 'none';
+  
+  if (is3D && !cube3DReady) {
+    await initCube3D();
+  }
+  
+  resetStage();
+  document.getElementById('actionResult').innerHTML = '';
+  document.getElementById('stageTrans').innerHTML = '';
+  if (stage === 1) {
+    document.getElementById('actionInfo').innerHTML = '👆 线段变成了面——继续铺方格！';
+  } else if (stage === 2) {
+    document.getElementById('actionInfo').innerHTML = '👆 面变成了盒子——继续填方块！可以拖拽旋转视角看～';
+  }
+}
 
 function resetStage() {
   placedCount = 0;
-  gridFilled = [];
-  if (currentStage >= 1) {
-    for (let r=0; r<gridRows; r++) {
+  
+  if (currentStage === 1) {
+    gridFilled = [];
+    for (let r = 0; r < gridRows; r++) {
       gridFilled[r] = [];
-      for (let c=0; c<gridCols; c++) gridFilled[r][c] = false;
+      for (let c = 0; c < gridCols; c++) gridFilled[r][c] = false;
     }
   }
+  
   if (currentStage === 2) {
-    // two layers
-    for (let r=0; r<gridRows; r++) {
-      for (let c=0; c<gridCols; c++) gridFilled[r][c] = 0; // 0=empty, 1=layer1, 2=layer2
-    }
+    clear3DCubes();
   }
+  
   drawStage();
   updateUI();
 }
 
 function drawStage() {
+  if (currentStage === 2) return; // 3D 不需要 Canvas 绘制
   ctx.clearRect(0, 0, W, H);
-  
   if (currentStage === 0) drawLineStage();
   else if (currentStage === 1) drawGridStage();
-  else drawCubeStage();
 }
 
 function drawLineStage() {
   ctx.fillStyle = '#fefcf8';
-  ctx.fillRect(0,0,W,H);
-  
-  // 标题
+  ctx.fillRect(0, 0, W, H);
   ctx.fillStyle = '#8a7e6e';
   ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('量一根线段', W/2, 50);
+  ctx.fillText('量一根线段', W / 2, 50);
   
-  // 画线段槽位
-  for (let i=0; i<segTotal; i++) {
-    let x = segStartX + i*segW;
+  for (let i = 0; i < segTotal; i++) {
+    let x = segStartX + i * segW;
     if (i < placedCount) {
-      // 已填充
       ctx.fillStyle = '#e67e22';
-      ctx.fillRect(x+2, segY, segW-4, segH);
+      ctx.fillRect(x + 2, segY, segW - 4, segH);
       ctx.fillStyle = '#fff';
       ctx.font = 'bold 11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('1cm', x+segW/2, segY+segH/2+4);
+      ctx.fillText('1cm', x + segW / 2, segY + segH / 2 + 4);
     } else {
-      // 空槽位
       ctx.strokeStyle = '#e6dfd2';
       ctx.lineWidth = 2;
-      ctx.setLineDash([4,4]);
-      ctx.strokeRect(x+2, segY, segW-4, segH);
+      ctx.setLineDash([4, 4]);
+      ctx.strokeRect(x + 2, segY, segW - 4, segH);
       ctx.setLineDash([]);
     }
   }
   
-  // 计数器
   ctx.fillStyle = '#5b5348';
   ctx.font = 'bold 16px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('已铺：'+placedCount+' 段', W/2, segY+segH+50);
+  ctx.fillText('已铺：' + placedCount + ' 段', W / 2, segY + segH + 50);
   
   if (placedCount === segTotal) {
     ctx.fillStyle = '#d35400';
     ctx.font = 'bold 18px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('✨ 这根线段长 6 厘米', W/2, segY+segH+80);
+    ctx.fillText('✨ 这根线段长 6 厘米', W / 2, segY + segH + 80);
     ctx.fillStyle = '#8a7e6e';
     ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('你数了 6 个 1cm 的小线段', W/2, segY+segH+104);
+    ctx.fillText('你数了 6 个 1cm 的小线段', W / 2, segY + segH + 104);
   }
-  
   ctx.textAlign = 'start';
 }
 
 function drawGridStage() {
   ctx.fillStyle = '#fefcf8';
-  ctx.fillRect(0,0,W,H);
-  
+  ctx.fillRect(0, 0, W, H);
   ctx.fillStyle = '#8a7e6e';
   ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('量一个长方形面（6cm × 4cm）', W/2, 40);
+  ctx.fillText('量一个长方形面（6cm × 4cm）', W / 2, 40);
   
-  // 标注之前的线段
   ctx.fillStyle = '#e67e22';
-  ctx.fillRect(segStartX+2, segY, segTotal*segW-4, segH);
+  ctx.fillRect(segStartX + 2, segY, segTotal * segW - 4, segH);
   ctx.fillStyle = '#fff';
   ctx.font = 'bold 10px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('6 厘米', W/2, segY+segH/2+4);
+  ctx.fillText('6 厘米', W / 2, segY + segH / 2 + 4);
   ctx.textAlign = 'start';
   
-  // 画网格
-  for (let r=0; r<gridRows; r++) {
-    for (let c=0; c<gridCols; c++) {
-      let x = gridX + c*cellSize, y = gridY + r*cellSize;
+  for (let r = 0; r < gridRows; r++) {
+    for (let c = 0; c < gridCols; c++) {
+      let x = gridX + c * cellSize, y = gridY + r * cellSize;
       if (gridFilled[r] && gridFilled[r][c]) {
         ctx.fillStyle = '#f0a050';
-        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
-        ctx.fillStyle = 'rgba(255,255,255,.4)';
-        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 10px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('1cm²', x+cellSize/2, y+cellSize/2+4);
+        ctx.fillText('1cm²', x + cellSize / 2, y + cellSize / 2 + 4);
       } else {
         ctx.strokeStyle = '#e6dfd2';
         ctx.lineWidth = 1;
-        ctx.setLineDash([3,3]);
-        ctx.strokeRect(x+1, y+1, cellSize-2, cellSize-2);
+        ctx.setLineDash([3, 3]);
+        ctx.strokeRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
         ctx.setLineDash([]);
       }
     }
@@ -552,120 +695,33 @@ function drawGridStage() {
   ctx.textAlign = 'center';
   ctx.fillStyle = '#5b5348';
   ctx.font = 'bold 16px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('已铺：'+placedCount+' 个', W/2, gridY + gridRows*cellSize + 38);
+  ctx.fillText('已铺：' + placedCount + ' 个', W / 2, gridY + gridRows * cellSize + 38);
   
   if (placedCount === stageTotals[1]) {
     ctx.fillStyle = '#d35400';
     ctx.font = 'bold 18px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('✨ 这张面的大小是 24 平方厘米', W/2, gridY + gridRows*cellSize + 64);
+    ctx.fillText('✨ 这张面的大小是 24 平方厘米', W / 2, gridY + gridRows * cellSize + 64);
     ctx.fillStyle = '#8a7e6e';
     ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('你数了 24 个 1cm² 的小方格', W/2, gridY + gridRows*cellSize + 84);
-  }
-  ctx.textAlign = 'start';
-}
-
-function drawCubeStage() {
-  ctx.fillStyle = '#fefcf8';
-  ctx.fillRect(0,0,W,H);
-  
-  ctx.fillStyle = '#8a7e6e';
-  ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('量一个长方体盒子（6cm × 4cm × 2cm）', W/2, 34);
-  ctx.textAlign = 'start';
-  
-  // 第一层
-  let l1Y = 66;
-  ctx.fillStyle = '#5b5348';
-  ctx.font = 'bold 11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('第 1 层', W/2, l1Y-6);
-  
-  for (let r=0; r<gridRows; r++) {
-    for (let c=0; c<gridCols; c++) {
-      let x = gridX + c*cellSize, y = l1Y + r*cellSize;
-      let v = gridFilled[r] ? gridFilled[r][c] : 0;
-      if (v >= 1) {
-        ctx.fillStyle = '#e8c070';
-        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 9px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('1cm³', x+cellSize/2, y+cellSize/2+3);
-      } else {
-        ctx.strokeStyle = '#e6dfd2';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([3,3]);
-        ctx.strokeRect(x+1, y+1, cellSize-2, cellSize-2);
-        ctx.setLineDash([]);
-      }
-    }
-  }
-  
-  // 第二层
-  let l2Y = l1Y + gridRows*cellSize + 6;
-  ctx.fillStyle = '#5b5348';
-  ctx.font = 'bold 11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('第 2 层', W/2, l2Y-6);
-  
-  for (let r=0; r<gridRows; r++) {
-    for (let c=0; c<gridCols; c++) {
-      let x = gridX + c*cellSize, y = l2Y + r*cellSize;
-      let v = gridFilled[r] ? gridFilled[r][c] : 0;
-      if (v >= 2) {
-        ctx.fillStyle = '#d35400';
-        ctx.fillRect(x+1, y+1, cellSize-2, cellSize-2);
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 9px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('1cm³', x+cellSize/2, y+cellSize/2+3);
-      } else {
-        ctx.strokeStyle = '#e6dfd2';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([3,3]);
-        ctx.strokeRect(x+1, y+1, cellSize-2, cellSize-2);
-        ctx.setLineDash([]);
-      }
-    }
-  }
-  
-  ctx.textAlign = 'center';
-  ctx.fillStyle = '#5b5348';
-  ctx.font = 'bold 16px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('已填：'+placedCount+' 个', W/2, l2Y + gridRows*cellSize + 24);
-  
-  if (placedCount === stageTotals[2]) {
-    ctx.fillStyle = '#d35400';
-    ctx.font = 'bold 18px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('✨ 这个盒子占了 48 立方厘米', W/2, l2Y + gridRows*cellSize + 50);
-    ctx.fillStyle = '#8a7e6e';
-    ctx.font = '14px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('你数了 48 个 1cm³ 的小方块', W/2, l2Y + gridRows*cellSize + 70);
+    ctx.fillText('你数了 24 个 1cm² 的小方格', W / 2, gridY + gridRows * cellSize + 84);
   }
   ctx.textAlign = 'start';
 }
 
 function placeOne() {
   if (placedCount >= stageTotals[currentStage]) return;
+  
   if (currentStage === 0) {
     placedCount++;
   } else if (currentStage === 1) {
     let idx = placedCount;
-    let r = Math.floor(idx / gridCols);
-    let c = idx % gridCols;
-    gridFilled[r][c] = true;
+    gridFilled[Math.floor(idx / gridCols)][idx % gridCols] = true;
     placedCount++;
   } else {
-    let idx = placedCount;
-    let layer = Math.floor(idx / (gridRows*gridCols));
-    let pos = idx % (gridRows*gridCols);
-    let r = Math.floor(pos / gridCols);
-    let c = pos % gridCols;
-    gridFilled[r][c] = layer + 1;
+    add3DCube();
     placedCount++;
   }
+  
   drawStage();
   updateUI();
 }
@@ -676,13 +732,10 @@ function autoFill() {
       placedCount++;
     } else if (currentStage === 1) {
       let idx = placedCount;
-      gridFilled[Math.floor(idx/gridCols)][idx%gridCols] = true;
+      gridFilled[Math.floor(idx / gridCols)][idx % gridCols] = true;
       placedCount++;
     } else {
-      let idx = placedCount;
-      let layer = Math.floor(idx/(gridRows*gridCols));
-      let pos = idx%(gridRows*gridCols);
-      gridFilled[Math.floor(pos/gridCols)][pos%gridCols] = layer+1;
+      add3DCube();
       placedCount++;
     }
   }
@@ -697,9 +750,9 @@ function updateUI() {
   let btnPlace = document.getElementById('btnPlace');
   
   if (placedCount === 0) {
-    info.innerHTML = '👆 点「放一个」开始铺～';
+    info.innerHTML = currentStage === 2 ? '👆 点「放一个」开始填方块～可以拖拽旋转看' : '👆 点「放一个」开始铺～';
   } else if (placedCount < stageTotals[currentStage]) {
-    info.innerHTML = `继续铺～还差 <b>${stageTotals[currentStage]-placedCount}</b> ${stageUnits[currentStage]}`;
+    info.innerHTML = `继续铺～还差 <b>${stageTotals[currentStage] - placedCount}</b> ${stageUnits[currentStage]}`;
   }
   
   if (placedCount === stageTotals[currentStage]) {
@@ -715,7 +768,7 @@ function updateUI() {
       }
     } else {
       trans.innerHTML = '🎉 三次操作，三次都是 <b>铺满、数一数</b>！';
-      info.innerHTML = '从线段到方格到方块——你做的事一模一样。这就是测量的全部秘密。';
+      info.innerHTML = '从线段到方格到方块——你做的事一模一样。这就是测量的全部秘密。可以拖拽旋转看盒子～';
     }
   } else {
     result.innerHTML = '';
@@ -733,32 +786,20 @@ function updateDots() {
   if (dots[currentStage]) dots[currentStage].classList.add('active');
 }
 
-function goToStage(stage) {
-  currentStage = stage;
-  resetStage();
-  document.getElementById('actionResult').innerHTML = '';
-  document.getElementById('stageTrans').innerHTML = '';
-  if (stage === 1) {
-    document.getElementById('actionInfo').innerHTML = '👆 线段变成了面——继续铺方格！';
-  } else if (stage === 2) {
-    document.getElementById('actionInfo').innerHTML = '👆 面变成了盒子——继续填方块！';
-  }
-}
-
 document.getElementById('btnPlace').onclick = placeOne;
 document.getElementById('btnAuto').onclick = autoFill;
 document.getElementById('btnReset').onclick = () => { resetStage(); };
 
 // 阶段切换：始终可以自由切换
 document.querySelectorAll('.step-dot').forEach(dot => {
-  dot.addEventListener('click', function() {
+  dot.addEventListener('click', function () {
     let s = parseInt(this.dataset.step);
     goToStage(s);
   });
 });
 
 // 初始化
-resetStage();
+goToStage(0);
 
 // ==================== 第二板块：维度滑块 ====================
 
