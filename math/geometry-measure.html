@@ -32,9 +32,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .action-btn{padding:10px 18px;border:none;border-radius:22px;font-size:.82em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:#fff}
 .action-btn:active{transform:scale(.95)}
 .action-btn:disabled{opacity:.45;pointer-events:none}
-.action-step{display:flex;justify-content:center;gap:16px;margin:10px 0}
-.action-step .step-dot{width:10px;height:10px;border-radius:50%;background:#e6dfd2;transition:all .3s}
-.action-step .step-dot.active{background:#d35400;box-shadow:0 0 0 4px rgba(211,84,0,.15)}
+.action-step{display:flex;justify-content:center;gap:8px;margin:10px 0}
+.action-step .step-dot{padding:6px 16px;border-radius:18px;background:#fefcf8;border:1.5px solid #e6dfd2;font-size:.76em;color:#b0a696;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
+.action-step .step-dot.active{background:#d35400;border-color:#d35400;color:#fff;box-shadow:0 2px 8px rgba(211,84,0,.25)}
 .action-result{text-align:center;font-size:.9em;font-weight:700;color:#d35400;min-height:28px;margin:6px 0;line-height:1.5;transition:all .4s}
 
 /* 阶段过渡提示 */
@@ -167,9 +167,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <div class="action-result" id="actionResult"></div>
 <div class="stage-transition" id="stageTrans"></div>
 <div class="action-step" id="stepDots">
-  <span class="step-dot active" data-step="0"></span>
-  <span class="step-dot" data-step="1"></span>
-  <span class="step-dot" data-step="2"></span>
+  <span class="step-dot active" data-step="0">📏 线段</span>
+  <span class="step-dot" data-step="1">🔲 方格</span>
+  <span class="step-dot" data-step="2">🧊 方块</span>
 </div>
 <div class="action-bar" id="actionBtns">
   <button class="action-btn" id="btnPlace" style="background:linear-gradient(135deg,#e67e22,#d35400)">🖐️ 放一个</button>
@@ -671,8 +671,21 @@ function placeOne() {
 }
 
 function autoFill() {
-  let remaining = stageTotals[currentStage] - placedCount;
-  while (placedCount < stageTotals[currentStage]) placeOne();
+  while (placedCount < stageTotals[currentStage]) {
+    if (currentStage === 0) {
+      placedCount++;
+    } else if (currentStage === 1) {
+      let idx = placedCount;
+      gridFilled[Math.floor(idx/gridCols)][idx%gridCols] = true;
+      placedCount++;
+    } else {
+      let idx = placedCount;
+      let layer = Math.floor(idx/(gridRows*gridCols));
+      let pos = idx%(gridRows*gridCols);
+      gridFilled[Math.floor(pos/gridCols)][pos%gridCols] = layer+1;
+      placedCount++;
+    }
+  }
   drawStage();
   updateUI();
 }
@@ -696,9 +709,9 @@ function updateUI() {
     
     if (currentStage < 2) {
       if (currentStage === 0) {
-        trans.innerHTML = '👇 现在这个线段「长」成一个面——继续铺！';
+        trans.innerHTML = '👇 点击上方「🔲 方格」——看看线段怎么长成面';
       } else {
-        trans.innerHTML = '👇 现在这个面「长」成一个盒子——继续填！';
+        trans.innerHTML = '👇 点击上方「🧊 方块」——看看面怎么长成盒子';
       }
     } else {
       trans.innerHTML = '🎉 三次操作，三次都是 <b>铺满、数一数</b>！';
