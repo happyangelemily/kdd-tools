@@ -58,7 +58,7 @@ input,select,textarea{font-size:16px}
 </style></head>
 <body><div class="stars" id="stars"></div><div class="container">
 <h1>🧱 二合音来做客 · CVC还是CVC！</h1><p class="subtitle">三明治还是三明治，只是面包片变「双层」了！sh·ch·th·wh·ck·ng·ph(🔊)</p>
-<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button></div>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
 
 <!-- ===== STORY ===== -->
 <div class="section active" id="sec-story"><div class="glass">
@@ -127,6 +127,51 @@ input,select,textarea{font-size:16px}
 <div class="section" id="sec-book"><div class="glass"><h2>📚 Chip the Fish</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本二合音CVC绘本 🐟</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
 
 </div>
+
+<!-- ===== EASTER EGG ===== -->
+<div class="section" id="sec-easter"><div class="glass">
+<h2>🥚 二合音小彩蛋 —— 不是所有三明治都守规矩！</h2>
+<div class="story-speech"><p>前面我们学了很多规规矩矩的 CVC 二合音单词：合音是一个整体、元音发短音，三个声音刚刚好。但英语里总有几个<b style="color:#ffd200">调皮的小家伙</b>，看着是三明治，吃起来味道却不一样！下面这三个，遇到了要单独记住——</p></div>
+
+<!-- Exception 1: what — vowel swapped -->
+<h3 style="margin-top:18px">🍬 第一类：a 偷偷换嗓子 —— 把 o 的短音借来用了！</h3>
+<div class="story-speech"><p>普通 CVC 里，字母 a 张大嘴说 <b style="color:#4fc3f7">/æ/</b>，比如 cat、hat。但有这么一个<b style="color:#ffd200">独一无二的小例外</b>：</p></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0">
+<div class="dg-decon-block" style="flex:1;min-width:180px;max-width:280px"><div class="dg-decon-word">what <span class="speak-btn" onclick="spk('what')">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">wh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/w/</div><span class="speak-btn" onclick="spkPhoneme('/w/',this)">🔊</span></div>
+<div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">a</div><div class="dg-decon-type">变嗓子！</div><div class="dg-decon-ipa">/ɒ/ ←不是/æ/！</div><span class="speak-btn" onclick="spkPhoneme('/ɒ/',this)">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">t</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/t/</div><span class="speak-btn" onclick="spkPhoneme('/t/',this)">🔊</span></div>
+<div class="dg-decon-say">🔊 /w/ + <span style="color:#ff8a65">/ɒ/</span> + /t/ = what <span class="speak-btn" onclick="spk('what')">🔊</span></div>
+</div>
+</div>
+<div class="story-speech"><p>🧠 <b>怎么记？</b>what = wh + <b style="color:#ff8a65">a→/ɒ/</b> + t。a 在 what 里不读 /æ/，而是<b style="color:#ff8a65">偷偷借了 o 的短音 /ɒ/</b>！整个英语里就它一个这么调皮——<b style="color:#ffd200">wh 正常拉手发 /w/，a 却偏偏不好好读 /æ/</b>。独一无二的小例外，遇到了直接记住！</p></div>
+
+<!-- Exception 2: push/bush — u变嗓子 -->
+<h3 style="margin-top:24px">🍬 第二类：u 收小嘴 —— 和二合音搭档时偷偷换气！</h3>
+<div class="story-speech"><p>普通 CVC 里，字母 u 张大嘴巴说 <b style="color:#4fc3f7">/ʌ/</b>（像小杯子"啊"），比如 cup、duck。但有几个小家伙，和二合音<b style="color:#ff8a65">sh</b> 搭档的时候，u 偏偏<b>把嘴巴收小</b>，说成 <b style="color:#ff8a65">/ʊ/</b>（像小脚丫"呜"）！</p></div>
+<p style="text-align:center;color:#ffd200;font-weight:bold;margin:8px 0">👇 这两个要单独记住：</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0">
+<div class="dg-decon-block" style="flex:1;min-width:160px;max-width:240px"><div class="dg-decon-word">push <span class="speak-btn" onclick="spk('push')">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">p</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/p/</div><span class="speak-btn" onclick="spkPhoneme('/p/',this)">🔊</span></div>
+<div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">u</div><div class="dg-decon-type">收小嘴！</div><div class="dg-decon-ipa">/ʊ/ ←不是/ʌ/！</div><span class="speak-btn" onclick="spkPhoneme('/ʊ/',this)">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">sh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/ʃ/</div><span class="speak-btn" onclick="spkPhoneme('/ʃ/',this)">🔊</span></div>
+<div class="dg-decon-say">🔊 /p/ + <span style="color:#ff8a65">/ʊ/</span> + /ʃ/ = push <span class="speak-btn" onclick="spk('push')">🔊</span></div>
+</div>
+<div class="dg-decon-block" style="flex:1;min-width:160px;max-width:240px"><div class="dg-decon-word">bush <span class="speak-btn" onclick="spk('bush')">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">b</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/b/</div><span class="speak-btn" onclick="spkPhoneme('/b/',this)">🔊</span></div>
+<div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">u</div><div class="dg-decon-type">收小嘴！</div><div class="dg-decon-ipa">/ʊ/ ←不是/ʌ/！</div><span class="speak-btn" onclick="spkPhoneme('/ʊ/',this)">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">sh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/ʃ/</div><span class="speak-btn" onclick="spkPhoneme('/ʃ/',this)">🔊</span></div>
+<div class="dg-decon-say">🔊 /b/ + <span style="color:#ff8a65">/ʊ/</span> + /ʃ/ = bush <span class="speak-btn" onclick="spk('bush')">🔊</span></div>
+</div>
+</div>
+<div class="story-speech"><p>🧠 <b>怎么记？</b>push 和 bush 里的 u，因为后面跟着 <b style="color:#ff8a65">sh</b>，嘴巴被挤小了，说成了 /ʊ/！虽然结构还是 CVC（p-u-sh），但中间的元音<b style="color:#ff8a65">换了嗓子</b>。这两个小家伙要单独背下来～</p></div>
+
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.15);border-radius:14px;padding:12px;margin-top:14px;text-align:center">
+<p style="color:#ffd200;font-weight:bold;margin:0">🥚 彩蛋小结：看着是 CVC，吃起来不一样！</p>
+<p style="color:#aaa;font-size:.85em;margin:6px 0 0">what → a 读 /ɒ/（借 o 的音） · push/bush → u 读 /ʊ/（被 sh 挤小了嘴） · 都是 CVC 结构，只是元音不按套路出牌 ✨</p>
+</div>
+</div></div>
+
 <div class="home-link"><a href="phonics-index.html">← 返回自然拼读全规则</a></div>
 <script>
 // === Stars ===
@@ -211,7 +256,7 @@ function speakNow(word){
 }
 
 // === Navigation ===
-var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本'};
+var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
 function showS(n){
   document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
   document.getElementById('sec-'+n).classList.add('active');
