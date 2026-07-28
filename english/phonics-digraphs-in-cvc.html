@@ -107,7 +107,7 @@ input,select,textarea{font-size:16px}
 
 <div class="story-speech"><p>🎯 <b style="color:#ffd200">核心规则：</b>虽然 ship 有 4 个字母，但 sh 是一个不可拆的整体（= 1 个 C），所以它和 cat 一样，<b style="color:#ffd200">依然是 CVC 结构</b>！三个音、三片三明治，只是其中一片面包是「双层」的。合音也可以放在<b style="color:#4fc3f7">词尾</b>：f-i-<b style="color:#ff8a65">sh</b> → fish，同样是 CVC。</p></div>
 
-<h3>🔍 认识七位「双层面包」战队</h3>
+<h3>🔍 认识八位「双层面包」战队</h3>
 <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0">
 <div style="background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 14px;text-align:center"><div style="font-size:1.4em;font-weight:bold;color:#ff8a65;letter-spacing:2px">sh</div><div style="font-size:.75em;color:#81c784">/ʃ/</div><span class="speak-btn" style="display:inline-block;margin-top:2px" onclick="spkPhoneme('/ʃ/',this)">🔊</span></div>
 <div style="background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 14px;text-align:center"><div style="font-size:1.4em;font-weight:bold;color:#ff8a65;letter-spacing:2px">ch</div><div style="font-size:.75em;color:#81c784">/tʃ/</div><span class="speak-btn" style="display:inline-block;margin-top:2px" onclick="spkPhoneme('/tʃ/',this)">🔊</span></div>
@@ -285,12 +285,13 @@ function showS(n){
 
 // ═══ STORY: Deconstruction ═══
 var dgDeconData=[
+  {w:'chat',e:'💬',rows:[{u:'ch',t:'C 二合音',s:'/tʃ/'},{u:'a',t:'V 元音',s:'/æ/'},{u:'t',t:'C 辅音',s:'/t/'}]},
+  {w:'when',e:'🕐',rows:[{u:'wh',t:'C 二合音',s:'/w/'},{u:'e',t:'V 元音',s:'/e/'},{u:'n',t:'C 辅音',s:'/n/'}]},
   {w:'ship',e:'🚢',rows:[{u:'sh',t:'C 二合音',s:'/ʃ/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'p',t:'C 辅音',s:'/p/'}]},
-  {w:'fish',e:'🐟',rows:[{u:'f',t:'C 辅音',s:'/f/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'sh',t:'C 二合音',s:'/ʃ/'}]},
-  {w:'chip',e:'🍟',rows:[{u:'ch',t:'C 二合音',s:'/tʃ/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'p',t:'C 辅音',s:'/p/'}]},
+  {w:'song',e:'🎵',rows:[{u:'s',t:'C 辅音',s:'/s/'},{u:'o',t:'V 元音',s:'/ɒ/'},{u:'ng',t:'C 二合音',s:'/ŋ/'}]},
   {w:'duck',e:'🦆',rows:[{u:'d',t:'C 辅音',s:'/d/'},{u:'u',t:'V 元音',s:'/ʌ/'},{u:'ck',t:'C 二合音',s:'/k/'}]},
-  {w:'thin',e:'📏',rows:[{u:'th',t:'C 二合音',s:'/θ/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'n',t:'C 辅音',s:'/n/'}]},
-  {w:'sing',e:'🎤',rows:[{u:'s',t:'C 辅音',s:'/s/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'ng',t:'C 二合音',s:'/ŋ/'}]}
+  {w:'thin',e:'📏',rows:[{u:'th',t:'C 二合音(清)',s:'/θ/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'n',t:'C 辅音',s:'/n/'}]},
+  {w:'this',e:'👉',rows:[{u:'th',t:'C 二合音(浊)',s:'/ð/'},{u:'i',t:'V 元音',s:'/ɪ/'},{u:'s',t:'C 辅音',s:'/s/'}]}
 ];
 function buildDGDecon(){
   var h='';
