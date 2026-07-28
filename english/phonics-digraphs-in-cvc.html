@@ -135,20 +135,6 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
 
 /* === PHONE-SPECIFIC BREAKPOINT === */
 
-  /* === FORCE FLEX-WRAP ON HORIZONTAL LAYOUTS === */
-  #sec-story>div>div[style*="display:flex"]{flex-wrap:wrap!important}
-  #sec-story>div>div[style*="display:flex"]>div[style*="min-width:70px"]{min-width:50px!important;padding:12px 10px!important}
-  #sec-story>div>div[style*="display:flex"]>div[style*="min-width:70px"]>div:first-child{font-size:1.5em!important}
-
-  /* === DIGRAPH TEAM CARDS: wrap === */
-  #sec-story>div>div[style*="display:flex"][style*="margin:10px"]>div[style*="border-radius:12px"]{flex:1 1 auto!important;min-width:70px!important;padding:8px 6px!important}
-  #sec-story>div>div[style*="display:flex"][style*="margin:10px"]>div[style*="border-radius:12px"]>div:first-child{font-size:1.2em!important}
-
-  /* === VOWEL CARDS === */
-  #sec-story>div>div[style*="display:flex"][style*="margin:10px"]>div[style*="border-radius:14px"]{flex:1 1 auto!important;min-width:55px!important;padding:10px 8px!important}
-
-  /* === CONTAINER === */
-  .container{max-width:100%!important}
 }
 
 
@@ -191,33 +177,7 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
   /* Safe area for iPhone notch */
   body{padding-bottom:env(safe-area-inset-bottom,12px)}
 
-  /* === FORCE FLEX-WRAP ON ALL HORIZONTAL LAYOUTS === */
-  #sec-story>div>div[style*="display:flex"]{flex-wrap:wrap!important;gap:6px!important}
-  #sec-story>div>div[style*="display:flex"]>div[style*="border-radius"]{flex:1 1 auto!important;min-width:44px!important;padding:10px 6px!important}
-  #sec-story>div>div[style*="display:flex"]>div[style*="font-size:1.5em"]{font-size:1em!important}
 
-  /* === MERGE DEMO: stack vertically === */
-  #sec-story>div>div[style*="display:flex"][style*="margin:14px"]>div[style*="min-width:70px"]{min-width:50px!important;padding:12px 8px!important}
-  #sec-story>div>div[style*="display:flex"][style*="margin:14px"]>div[style*="min-width:70px"]>div:first-child{font-size:1.5em!important}
-
-  /* === DIGRAPH TEAM CARDS: 4 per row === */
-  #sec-story>div>div[style*="display:flex"][style*="margin:10px"]>div[style*="border-radius:12px"]{flex:1 1 22%!important;min-width:60px!important;padding:6px 4px!important}
-  #sec-story>div>div[style*="display:flex"][style*="margin:10px"]>div[style*="border-radius:12px"]>div:first-child{font-size:1.1em!important}
-
-  /* === VOWEL REVIEW CARDS: 5 per row === */
-  #sec-story>div>div[style*="display:flex"][style*="margin:10px"]>div[style*="border-radius:14px"]{flex:1 1 17%!important;min-width:48px!important;padding:8px 4px!important}
-
-  /* === DECON ROWS: let them wrap === */
-  .dg-decon-row{flex-wrap:wrap!important;gap:2px!important}
-  .dg-decon-row .speak-btn{margin-left:0!important}
-
-  /* === Container max-width for phone === */
-  .container{max-width:100%!important}
-  .glass{max-width:100%!important}
-
-  /* === FONT SIZES: scale down inline large text === */
-  #sec-story [style*="font-size:2em"],#sec-story [style*="font-size:2.2em"]{font-size:1.3em!important}
-  [style*="font-size:4em"]{font-size:2.5em!important}
 }
 
 input,select,textarea{font-size:16px}
