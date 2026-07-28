@@ -255,7 +255,10 @@ var mergePairs=[
   {l1:'s',l2:'h',dg:'sh',ipa:'/ʃ/',emoji:'🤫'},
   {l1:'c',l2:'h',dg:'ch',ipa:'/tʃ/',emoji:'🚂'},
   {l1:'t',l2:'h',dg:'th',ipa:'/θ/',emoji:'👅'},
-  {l1:'c',l2:'k',dg:'ck',ipa:'/k/',emoji:'🦆'}
+  {l1:'c',l2:'k',dg:'ck',ipa:'/k/',emoji:'🦆'},
+  {l1:'w',l2:'h',dg:'wh',ipa:'/w/',emoji:'🌬️'},
+  {l1:'n',l2:'g',dg:'ng',ipa:'/ŋ/',emoji:'🔔'},
+  {l1:'p',l2:'h',dg:'ph',ipa:'/f/',emoji:'📷'}
 ];
 var mergeHeard1=false,mergeHeard2=false;
 
@@ -291,6 +294,8 @@ var dgDeconData=[
   {w:'duck',e:'🦆',struct:'CVCC',rows:[{u:'d',t:'辅音',s:'/d/'},{u:'u',t:'短元音',s:'/ʌ/'},{u:'ck',t:'二合音',s:'/k/'}]},
   {w:'thin',e:'📏',struct:'CCVC',rows:[{u:'th',t:'二合音(清)',s:'/θ/'},{u:'i',t:'短元音',s:'/ɪ/'},{u:'n',t:'辅音',s:'/n/'}]},
   {w:'thick',e:'📦',struct:'CCVCC',rows:[{u:'th',t:'二合音(清)',s:'/θ/'},{u:'i',t:'短元音',s:'/ɪ/'},{u:'ck',t:'二合音',s:'/k/'}]},
+  {w:'this',e:'👉',struct:'CCVC',rows:[{u:'th',t:'二合音(浊)',s:'/ð/'},{u:'i',t:'短元音',s:'/ɪ/'},{u:'s',t:'辅音',s:'/s/'}]},
+  {w:'what',e:'❓',struct:'CCVC',rows:[{u:'wh',t:'二合音',s:'/w/'},{u:'a',t:'短元音',s:'/ɒ/'},{u:'t',t:'辅音',s:'/t/'}]},
   {w:'sing',e:'🎤',struct:'CVCC',rows:[{u:'s',t:'辅音',s:'/s/'},{u:'i',t:'短元音',s:'/ɪ/'},{u:'ng',t:'二合音',s:'/ŋ/'}]},
   {w:'phone',e:'📞',struct:'CCVC',rows:[{u:'ph',t:'二合音',s:'/f/'},{u:'o',t:'长元音',s:'/əʊ/'},{u:'n',t:'辅音',s:'/n/'}]}
 ];
@@ -327,21 +332,26 @@ var curL='sh';
 function switchL(k){curL=k;document.querySelectorAll('.lab-tab').forEach(function(t){t.classList.remove('active')});var tabs=document.querySelectorAll('.lab-tab');var idx={sh:0,ch:1,th1:2,th2:3,wh:4,ck:5,ng:6,ph:7}[k];if(tabs[idx])tabs[idx].classList.add('active');buildL()}
 function buildL(){
   var data=labData[curL];
+  var dgMap={sh:'sh',ch:'ch',th1:'th',th2:'th',wh:'wh',ck:'ck',ng:'ng',ph:'ph'};
+  var dg=dgMap[curL];
+  var dgLen=dg.length;
+  var vowels='aeiou';
   document.getElementById('labGrid').innerHTML=data.map(function(w,i){
     var word=w[0],emoji=w[1];
-    // Color-code: digraph in orange, vowel in blue, other consonants in green
-    var dg='',vw='',rest='';
-    if(curL==='sh')dg='sh';else if(curL==='ch')dg='ch';else if(curL==='th1'||curL==='th2')dg='th';
-    else if(curL==='wh')dg='wh';else if(curL==='ck')dg='ck';else if(curL==='ng')dg='ng';else if(curL==='ph')dg='ph';
-    var parts=word.split(dg);
-    // Simple coloring: digraph = orange, rest = green, vowel gets blue
-    var colored=word.replace(dg,'<span class="dg-c">'+dg+'</span>');
-    // Find vowel
-    var vowels='aeiou';
-    for(var j=0;j<word.length;j++){
-      if(vowels.indexOf(word[j])>=0&&word.substring(j,j+dg.length)!==dg){
-        colored=colored.replace(word[j],'<span class="vw">'+word[j]+'</span>');
-        break;
+    // Build the word with each letter properly wrapped in a span
+    var colored='';
+    var j=0;
+    while(j<word.length){
+      // Check if this position starts the digraph
+      if(word.substring(j,j+dgLen)===dg){
+        colored+='<span class="dg-c">'+dg+'</span>';
+        j+=dgLen;
+      }else if(vowels.indexOf(word[j])>=0){
+        colored+='<span class="vw">'+word[j]+'</span>';
+        j++;
+      }else{
+        colored+='<span class="cn-c">'+word[j]+'</span>';
+        j++;
       }
     }
     return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
