@@ -98,10 +98,10 @@ input,select,textarea{font-size:16px}
 <div class="story-speech"><p>我们已经认识了 26 个字母，每个都有自己的声音。比如 <b style="color:#4fc3f7">s</b> 说 /s/，<b style="color:#ff8a65">h</b> 说 /h/。但英语里有个神奇的现象——当两个<b style="color:#ffd200">字母好朋友手拉手站在一起</b>时，它们会发出一个<b style="color:#ffd200">和原来完全不同的、第三种声音</b>！就像番茄🍅+鸡蛋🥚不是「番茄蛋」，而是一道全新的菜——「番茄炒蛋」！</p></div>
 <h3>🔍 来试试：拼出全新的声音！</h3>
 <p style="color:#aaa;margin-bottom:8px">👆 先分别点击两个字母听它们原本的声音，再点第三个听合体后的新声音👇</p>
-<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
-<div style="background:rgba(79,195,247,.12);border:2px solid rgba(79,195,247,.4);border-radius:16px;padding:16px 20px;text-align:center;min-width:70px;cursor:pointer" onclick="spkMergeL('s',this)"><div style="font-size:2em;font-weight:bold;color:#4fc3f7">s</div><div style="font-size:.65em;color:#888;margin-top:4px">/s/ 🔊</div></div>
+<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0" id="mergeDemo">
+<div style="background:rgba(79,195,247,.12);border:2px solid rgba(79,195,247,.4);border-radius:16px;padding:16px 20px;text-align:center;min-width:70px;cursor:pointer" id="mergeLeft" onclick="spkMergeL(currentPair().l1,this)"><div style="font-size:2em;font-weight:bold;color:#4fc3f7" id="mergeL1">s</div><div style="font-size:.65em;color:#888;margin-top:4px" id="mergeL1IPA">/s/ 🔊</div></div>
 <div style="font-size:1.5em;color:#888">+</div>
-<div style="background:rgba(255,138,101,.12);border:2px solid rgba(255,138,101,.4);border-radius:16px;padding:16px 20px;text-align:center;min-width:70px;cursor:pointer" onclick="spkMergeL('h',this)"><div style="font-size:2em;font-weight:bold;color:#ff8a65">h</div><div style="font-size:.65em;color:#888;margin-top:4px">/h/ 🔊</div></div>
+<div style="background:rgba(255,138,101,.12);border:2px solid rgba(255,138,101,.4);border-radius:16px;padding:16px 20px;text-align:center;min-width:70px;cursor:pointer" id="mergeRight" onclick="spkMergeL(currentPair().l2,this)"><div style="font-size:2em;font-weight:bold;color:#ff8a65" id="mergeL2">h</div><div style="font-size:.65em;color:#888;margin-top:4px" id="mergeL2IPA">/h/ 🔊</div></div>
 <div style="font-size:1.5em;color:#888">=</div>
 <div style="background:rgba(255,210,0,.08);border:2px solid rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;text-align:center;cursor:pointer" onclick="spkMergeDG()"><div style="font-size:2em;font-weight:bold;color:#ffd200;letter-spacing:2px" id="mergeLetters">sh</div><div style="font-size:.65em;color:#888;margin-top:4px" id="mergeIPA">/ʃ/ 🔊</div></div>
 </div>
@@ -263,7 +263,8 @@ var mergePairs=[
 var mergeHeard1=false,mergeHeard2=false;
 
 function spkMergeL(l,el){
-  spkPhoneme({'s':'/s/','h':'/h/','c':'/k/','k':'/k/','t':'/t/','w':'/w/'}[l],el);
+  var m={s:'/s/',h:'/h/',c:'/k/',k:'/k/',t:'/t/',w:'/w/',n:'/n/',g:'/g/',p:'/p/',f:'/f/'};
+  spkPhoneme(m[l],el);
   if(l===mergePairs[mergeIdx].l1)mergeHeard1=true;
   if(l===mergePairs[mergeIdx].l2)mergeHeard2=true;
   if(mergeHeard1&&mergeHeard2){
@@ -276,14 +277,24 @@ function spkMergeDG(){
   document.getElementById('mergeFeedback').innerHTML='<span style="color:#69f0ae;font-weight:bold">✅ '+p.l1+' + '+p.l2+' = '+p.dg+' '+p.emoji+' '+p.ipa+'！</span>';
   document.getElementById('mergeNext').style.display='inline-block';
 }
+function currentPair(){return mergePairs[mergeIdx]}
 function nextMergePair(){
   mergeIdx=(mergeIdx+1)%mergePairs.length;
   var p=mergePairs[mergeIdx];
   mergeHeard1=false;mergeHeard2=false;
+  // Update all three blocks
+  document.getElementById('mergeL1').textContent=p.l1;
+  document.getElementById('mergeL1IPA').innerHTML=getLetterPhoneme(p.l1)+' 🔊';
+  document.getElementById('mergeL2').textContent=p.l2;
+  document.getElementById('mergeL2IPA').innerHTML=getLetterPhoneme(p.l2)+' 🔊';
   document.getElementById('mergeLetters').textContent=p.dg;
   document.getElementById('mergeIPA').innerHTML=p.ipa+' 🔊';
   document.getElementById('mergeFeedback').innerHTML='';
   document.getElementById('mergeNext').style.display='none';
+}
+function getLetterPhoneme(l){
+  var m={s:'/s/',h:'/h/',c:'/k/',k:'/k/',t:'/t/',w:'/w/',n:'/n/',g:'/g/',p:'/p/',f:'/f/'};
+  return m[l]||'/'+l+'/';
 }
 
 // Deconstruction data
