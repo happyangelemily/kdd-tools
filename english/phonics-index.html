@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🗺️ 自然拼读全规则 · 千千妈妈 Phonics</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}
+@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.container{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:24px 16px}
+
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ffd200,#f7971e,#4fc3f7,#ab47bc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.subtitle{text-align:center;color:#888;margin-bottom:28px;font-size:.95em}
+
+/* 阶段卡片 */
+.stage{margin-bottom:32px;animation:slideIn .5s ease-out both}
+.stage:nth-child(2){animation-delay:.1s}
+.stage:nth-child(3){animation-delay:.2s}
+.stage:nth-child(4){animation-delay:.3s}
+.stage:nth-child(5){animation-delay:.4s}
+.stage:nth-child(6){animation-delay:.5s}
+.stage:nth-child(7){animation-delay:.6s}
+
+.stage-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.stage-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1.2em;flex-shrink:0}
+.stage-title{font-size:1.2em;font-weight:bold}
+.stage-sub{font-size:.8em;opacity:.7;margin-left:8px}
+
+.stage-s1 .stage-num{background:rgba(255,210,0,.15);color:#ffd200;border:2px solid rgba(255,210,0,.3)}
+.stage-s2 .stage-num{background:rgba(79,195,247,.15);color:#4fc3f7;border:2px solid rgba(79,195,247,.3)}
+.stage-s3 .stage-num{background:rgba(255,138,101,.15);color:#ff8a65;border:2px solid rgba(255,138,101,.3)}
+.stage-s4 .stage-num{background:rgba(129,199,132,.15);color:#81c784;border:2px solid rgba(129,199,132,.3)}
+.stage-s5 .stage-num{background:rgba(171,71,188,.15);color:#ab47bc;border:2px solid rgba(171,71,188,.3)}
+.stage-s6 .stage-num{background:rgba(255,210,0,.15);color:#ffd200;border:2px solid rgba(255,210,0,.3)}
+
+.rules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;padding-left:52px}
+.rule-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:10px 12px;text-align:center;transition:all .3s;
+  text-decoration:none;color:#ccc;display:block;font-size:.9em;
+}
+.rule-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.rule-card .rule-icon{font-size:1.3em;margin-bottom:2px}
+.rule-card .rule-name{font-weight:bold;font-size:1.05em}
+.rule-card .rule-desc{font-size:.75em;color:#888;margin-top:2px}
+
+.rule-card.ready{border-color:rgba(79,195,247,.4);background:rgba(79,195,247,.08)}
+.rule-card.ready:hover{border-color:#4fc3f7;background:rgba(79,195,247,.14)}
+.rule-card.ready .rule-name{color:#4fc3f7}
+
+.rule-card.done{border-color:rgba(105,240,174,.4);background:rgba(105,240,174,.06)}
+.rule-card.done:hover{border-color:#69f0ae;background:rgba(105,240,174,.12)}
+.rule-card.done .rule-name{color:#69f0ae}
+
+.rule-card.overview{border-color:rgba(255,210,0,.4);background:rgba(255,210,0,.06)}
+.rule-card.overview:hover{border-color:#ffd200}
+.rule-card.overview .rule-name{color:#ffd200}
+
+.rule-card.tbd{opacity:.5;cursor:default}
+.rule-card.tbd:hover{transform:none;box-shadow:none}
+
+.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;font-size:.85em}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend .dot{width:10px;height:10px;border-radius:50%}
+.legend .dot.done{background:#69f0ae}
+.legend .dot.ready{background:#4fc3f7}
+.legend .dot.tbd{background:rgba(255,255,255,.2)}
+
+
+  h1{font-size:1.5em}
+}
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%}
+  .container{padding:8px}
+  h1{font-size:1.4em}h2{font-size:1.1em}h3{font-size:.95em}
+  .glass{padding:16px 10px;margin:10px 0;border-radius:14px}
+  .nav{gap:4px;margin:6px 0}
+  .nav-btn{padding:12px 10px;font-size:.82em;border-radius:16px;min-height:44px}
+  .nav-btn:hover{background:rgba(79,195,247,.15);border-color:#4fc3f7;color:#4fc3f7}
+  .nav-btn:active{transform:scale(.94)}
+  .btn{padding:14px 20px;font-size:.9em;border-radius:22px;min-height:44px}
+  .btn-gold:hover{transform:none}
+  .btn-gold:active{transform:scale(.95);box-shadow:0 0 20px rgba(79,195,247,.4)}
+  .btn-outline:hover{border-color:rgba(255,255,255,.3);color:#ccc}
+  .btn-outline:active{border-color:#4fc3f7;color:#4fc3f7}
+  .btn-outline:disabled{opacity:.35}
+  .speak-btn{width:36px!important;height:36px!important;font-size:.9em!important}
+  .speak-btn:hover{background:rgba(79,195,247,.15);transform:none}
+  .speak-btn:active{background:rgba(79,195,247,.4);transform:scale(1.15)}
+  .lab-grid{gap:8px}
+  .lab-card{width:calc(50% - 6px);min-width:130px;padding:14px 8px;border-radius:12px}
+  .lab-card:hover{border-color:rgba(255,255,255,.1);transform:none}
+  .lab-card:active{border-color:rgba(79,195,247,.5);transform:scale(.96)}
+  .lab-card .word{font-size:1.3em!important}
+  .lab-tabs{gap:4px;margin-bottom:10px}
+  .lab-tab{padding:10px 10px;font-size:.82em;border-radius:18px;min-height:38px}
+  .lab-tab:hover{border-color:rgba(255,255,255,.2);color:#ccc}
+  .lab-tab:active,.lab-tab.active{border-color:#4fc3f7;color:#4fc3f7;background:rgba(79,195,247,.1)}
+  .story-speech{padding:10px 14px;font-size:.9em}
+  .word-demo{font-size:1.2em}
+  .sort-pool{gap:6px}
+  .sort-bins{gap:6px}
+  .sort-bin{min-width:70px;min-height:120px;padding:6px}
+  .sort-item{padding:10px 12px;font-size:.85em;min-height:40px}
+  .sort-bin-label{font-size:.75em}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:12px}
+  .quiz-q{font-size:.9em}
+  .quiz-word{font-size:1.4em}
+  .quiz-opts{gap:6px}
+  .quiz-opt{padding:13px 14px;font-size:.88em;min-height:44px;width:100%}
+  .quiz-opt:hover:not(.locked){border-color:rgba(255,255,255,.3)}
+  .quiz-opt:active:not(.locked){border-color:#4fc3f7}
+  .quiz-nav{gap:8px}
+  .quiz-dot{width:14px;height:14px}
+  .book-page{padding:14px;min-height:220px;border-radius:14px}
+  .book-scene{font-size:2.8em}
+  .book-text{font-size:.95em;line-height:1.9}
+  .book-title{font-size:1.1em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(85px,1fr));gap:5px}
+  .gi{padding:6px 8px}
+  .gi .gw{font-size:.85em}
+  .gi .gm{font-size:.72em}
+  .home-link a{font-size:.9em;padding:8px 0;display:inline-block}
+  .sort-feedback{font-size:.85em}
+  .subtitle{font-size:.82em;margin-bottom:14px}
+  .word-chip{padding:8px 12px;font-size:.85em;min-height:38px}
+  input,select,textarea{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="container">
+
+<h1>🗺️ 自然拼读全规则</h1>
+<p class="subtitle">千千妈妈 Phonics · 6大阶段 · 100+拼读规则 · 每个规则独立一页</p>
+
+<div class="legend">
+  <span><span class="dot done"></span>已完成</span>
+  <span><span class="dot ready"></span>即将开始 / 总览页</span>
+  <span><span class="dot tbd"></span>待制作</span>
+</div>
+
+<!-- ═══ Stage 1: Letter Sounds ═══ -->
+<div class="stage stage-s1">
+  <div class="stage-header">
+    <div class="stage-num">1</div>
+    <div><div class="stage-title">Letter Sounds 字母发音</div><div class="stage-sub">A-Z 共 26 条规则</div></div>
+  </div>
+  <div class="rules-grid">
+    <a class="rule-card" href="phonics-letter-names-sounds.html" style="grid-column:1/-1;background:rgba(255,210,0,.08);border-color:rgba(255,210,0,.3)"><div class="rule-icon">🔤</div><div class="rule-name" style="color:#ffd200">⭐ 入门必看：字母名 vs 字母音</div><div class="rule-desc">26个字母的名字和声音全辨析 · 理解自然拼读的意义</div></a>
+    <a class="rule-card overview" href="phonics-five-vowels.html" style="grid-column:1/-1"><div class="rule-icon">🌟</div><div class="rule-name">五大元音</div><div class="rule-desc">A E I O U — 为什么这五个字母最重要？矛盾引入+发音原理+三大实验+分类+全英绘本</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐊</div><div class="rule-name">A</div><div class="rule-desc">/æ/ Allen the Alligator</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐻</div><div class="rule-name">B</div><div class="rule-desc">/b/ Bonnie the Bear</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐱</div><div class="rule-name">C</div><div class="rule-desc">/k/ Candy the Cat</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐶</div><div class="rule-name">D</div><div class="rule-desc">/d/ Danny the Dog</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐘</div><div class="rule-name">E</div><div class="rule-desc">/e/ Emily the Elephant</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐸</div><div class="rule-name">F</div><div class="rule-desc">/f/ Fanny the Frog</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦍</div><div class="rule-name">G</div><div class="rule-desc">/g/ Gary the Gorilla</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐴</div><div class="rule-name">H</div><div class="rule-desc">/h/ Hayley the Horse</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦎</div><div class="rule-name">I</div><div class="rule-desc">/ɪ/ Ian the Iguana</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐆</div><div class="rule-name">J</div><div class="rule-desc">/dʒ/ Jack the Jaguar</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦘</div><div class="rule-name">K</div><div class="rule-desc">/k/ Kevin the Kangaroo</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦙</div><div class="rule-name">L</div><div class="rule-desc">/l/ Lala the Llama</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐵</div><div class="rule-name">M</div><div class="rule-desc">/m/ Marty the Monkey</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐦</div><div class="rule-name">N</div><div class="rule-desc">/n/ Nancy Nightingale</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦩</div><div class="rule-name">O</div><div class="rule-desc">/ɒ/ Ollie the Ostrich</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐧</div><div class="rule-name">P</div><div class="rule-desc">/p/ Penny the Penguin</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦃</div><div class="rule-name">Q</div><div class="rule-desc">/kw/ Quilla the Quail</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐰</div><div class="rule-name">R</div><div class="rule-desc">/r/ Robbie the Rabbit</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐍</div><div class="rule-name">S</div><div class="rule-desc">/s/ Sally the Snake</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐢</div><div class="rule-name">T</div><div class="rule-desc">/t/ Tom the Turtle</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦤</div><div class="rule-name">U</div><div class="rule-desc">/ʌ/ Usher Umbrellabird</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦅</div><div class="rule-name">V</div><div class="rule-desc">/v/ Vincent the Vulture</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐳</div><div class="rule-name">W</div><div class="rule-desc">/w/ William the Whale</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦊</div><div class="rule-name">X</div><div class="rule-desc">/ks/ Max the Fox</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐂</div><div class="rule-name">Y</div><div class="rule-desc">/j/ Yoyo the Yak</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦓</div><div class="rule-name">Z</div><div class="rule-desc">/z/ Zoe the Zebra</div></a>
+  </div>
+</div>
+
+<!-- ═══ Stage 2: Short & Long Vowels ═══ -->
+<div class="stage stage-s2">
+  <div class="stage-header">
+    <div class="stage-num">2</div>
+    <div><div class="stage-title">Short & Long Vowels 短元音 · 长元音</div><div class="stage-sub">CVC → CVCe · Magic E · 共 8 条规则 · Y 独立成页<a href="magic-e-adventure.html" style="color:#ffd200;margin-left:8px;font-size:.8em;">📖 总览页</a></div></div>
+  </div>
+  <div class="rules-grid">
+    <a class="rule-card done" href="phonics-cvc.html"><div class="rule-icon">🧱</div><div class="rule-name">CVC 短元音结构</div><div class="rule-desc">辅+元+辅 · 最基础的单词结构</div></a>
+    <a class="rule-card overview" href="magic-e-adventure.html"><div class="rule-icon">🔮</div><div class="rule-name">CVCe 长元音 & 魔法E</div><div class="rule-desc">加e变长音 · 综合游戏+绘本</div></a>
+    <a class="rule-card ready" href="phonics-a.html"><div class="rule-icon">🅰️</div><div class="rule-name">短A / 长A</div><div class="rule-desc">cat→cake · cap→cape</div></a>
+    <a class="rule-card ready" href="phonics-e.html"><div class="rule-icon">🅴</div><div class="rule-name">短E / 长E</div><div class="rule-desc">pet→Pete · bed→bee?</div></a>
+    <a class="rule-card overview" href="phonics-e-sounds.html"><div class="rule-icon">🔤</div><div class="rule-name">E的五种发音总览</div><div class="rule-desc">/e/·/iː/·/ə/·/ɪ/·不发音</div></a>
+    <a class="rule-card ready" href="phonics-i.html"><div class="rule-icon">🅸</div><div class="rule-name">短I / 长I</div><div class="rule-desc">kit→kite · pin→pine</div></a>
+    <a class="rule-card ready" href="phonics-o.html"><div class="rule-icon">🅾️</div><div class="rule-name">短O / 长O</div><div class="rule-desc">hop→hope · not→note</div></a>
+    <a class="rule-card ready" href="phonics-u.html"><div class="rule-icon">🆄</div><div class="rule-name">短U / 长U</div><div class="rule-desc">cut→cute · tub→tube</div></a>
+    <a class="rule-card ready" href="phonics-y-vowel.html"><div class="rule-icon">🆈</div><div class="rule-name">Y作元音</div><div class="rule-desc">fly·happy·cry·baby</div></a>
+  </div>
+</div>
+
+<!-- ═══ Stage 3: Consonant Blends ═══ -->
+<div class="stage stage-s3">
+  <div class="stage-header">
+    <div class="stage-num">3</div>
+    <div><div class="stage-title">Consonant Blends 辅音组合</div><div class="stage-sub">首辅音 + 尾辅音 · 约 25 条规则</div></div>
+  </div>
+  <div class="rules-grid">
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">bl</div><div class="rule-desc">black·blue·blow</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">cl</div><div class="rule-desc">clap·clean·climb</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">fl</div><div class="rule-desc">fly·flag·flower</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">gl</div><div class="rule-desc">glad·glass·glow</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">pl</div><div class="rule-desc">play·plan·plant</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">sl</div><div class="rule-desc">sleep·slow·slide</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">br</div><div class="rule-desc">brown·bring·brave</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">cr</div><div class="rule-desc">crab·cry·cross</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">dr</div><div class="rule-desc">drum·drink·drop</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">fr</div><div class="rule-desc">frog·free·friend</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">gr</div><div class="rule-desc">green·grow·grass</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">pr</div><div class="rule-desc">proud·print·press</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">tr</div><div class="rule-desc">tree·train·try</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">sc/sk</div><div class="rule-desc">scout·skip·sky</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">sm/sn</div><div class="rule-desc">smile·snake·snow</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">sp</div><div class="rule-desc">spin·spot·speak</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">st</div><div class="rule-desc">stop·star·step</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">sw/tw</div><div class="rule-desc">swim·sweet·twice</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔗</div><div class="rule-name">scr/spr/str</div><div class="rule-desc">scream·spring·street</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔚</div><div class="rule-name">尾-nd/nt</div><div class="rule-desc">and·end·ant·went</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔚</div><div class="rule-name">尾-mp/st/sk</div><div class="rule-desc">jump·fast·desk</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔚</div><div class="rule-name">尾-ft/ld/lt</div><div class="rule-desc">left·old·melt</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔚</div><div class="rule-name">尾-nk/ng</div><div class="rule-desc">think·sing·long</div></a>
+  </div>
+</div>
+
+<!-- ═══ Stage 4: Digraphs ═══ -->
+<div class="stage stage-s4">
+  <div class="stage-header">
+    <div class="stage-num">4</div>
+    <div><div class="stage-title">Digraphs & Soft Sounds 合音 · 软C软G</div><div class="stage-sub">双字母发一音 · 约 10 条规则</div></div>
+  </div>
+  <div class="rules-grid">
+    <a class="rule-card done" href="phonics-digraphs.html" style="grid-column:1/-1;background:rgba(255,138,101,.08);border-color:rgba(255,138,101,.3)"><div class="rule-icon">⚡</div><div class="rule-name" style="color:#ff8a65">⭐ 辅音二合音 · 字母超级战队</div><div class="rule-desc">sh·ch·th·wh·ck·ng·ph — 两个字母手拉手发出新声音！故事+卡片+单词工厂+闯关+绘本</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">🤫</div><div class="rule-name">sh</div><div class="rule-desc">ship·fish·shell</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">🚂</div><div class="rule-name">ch</div><div class="rule-desc">chip·chin·much</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">👅</div><div class="rule-name">th (清+浊)</div><div class="rule-desc">thin·bath / this·that</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">🌬️</div><div class="rule-name">wh</div><div class="rule-desc">what·when·which</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">🦆</div><div class="rule-name">ck</div><div class="rule-desc">duck·back·pick</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">🔔</div><div class="rule-name">ng</div><div class="rule-desc">sing·ring·long</div></a>
+    <a class="rule-card done" href="phonics-digraphs.html"><div class="rule-icon">📷</div><div class="rule-name">ph</div><div class="rule-desc">phone·photo·graph</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🍬</div><div class="rule-name">Soft C</div><div class="rule-desc">ce·ci·cy → /s/</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🦒</div><div class="rule-name">Soft G</div><div class="rule-desc">ge·gi·gy → /dʒ/</div></a>
+  </div>
+</div>
+
+<!-- ═══ Stage 5: Vowel Teams ═══ -->
+<div class="stage stage-s5">
+  <div class="stage-header">
+    <div class="stage-num">5</div>
+    <div><div class="stage-title">Vowel Teams 元音组合</div><div class="stage-sub">两个元音散步 · 约 20 条规则<a href="vowel-teams-adventure.html" style="color:#ffd200;margin-left:8px;font-size:.8em;">📖 总览页</a></div></div>
+  </div>
+  <div class="rules-grid">
+    <a class="rule-card overview" href="vowel-teams-adventure.html"><div class="rule-icon">🌈</div><div class="rule-name">元音组合总览</div><div class="rule-desc">综合游戏+绘本</div></a>
+    <a class="rule-card done" href="phonics-ai-ay.html"><div class="rule-icon">🌧️</div><div class="rule-name">ai / ay</div><div class="rule-desc">rain·train·day·play</div></a>
+    <a class="rule-card done" href="phonics-ee-ea.html"><div class="rule-icon">🌳</div><div class="rule-name">ee / ea</div><div class="rule-desc">tree·green·read·beach</div></a>
+    <a class="rule-card done" href="phonics-ea-sounds.html"><div class="rule-icon">🔤</div><div class="rule-name">ea 三种发音</div><div class="rule-desc">/iː/·/e/·/eɪ/ 进阶规则</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🛶</div><div class="rule-name">oa / ow</div><div class="rule-desc">boat·goat·snow·blow</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🌙</div><div class="rule-name">oo (长)</div><div class="rule-desc">moon·food·spoon</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">📖</div><div class="rule-name">oo (短)</div><div class="rule-desc">book·foot·good</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">☁️</div><div class="rule-name">ou / ow</div><div class="rule-desc">cloud·house·cow·down</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🪙</div><div class="rule-name">oi / oy</div><div class="rule-desc">coin·join·boy·toy</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🌙</div><div class="rule-name">igh</div><div class="rule-desc">night·light·right</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🔵</div><div class="rule-name">ue / ui / ew</div><div class="rule-desc">blue·fruit·new</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🍂</div><div class="rule-name">au / aw</div><div class="rule-desc">autumn·saw·draw</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">👟</div><div class="rule-name">oe</div><div class="rule-desc">toe·goes·Joe</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">👁️</div><div class="rule-name">ie / ey</div><div class="rule-desc">pie·tie·key·monkey</div></a>
+  </div>
+</div>
+
+<!-- ═══ Stage 6: FLoSS & Bossy R ═══ -->
+<div class="stage stage-s6">
+  <div class="stage-header">
+    <div class="stage-num">6</div>
+    <div><div class="stage-title">FLoSS Rule & Bossy R</div><div class="stage-sub">双写规则 · R主导元音 · 约 10 条规则</div></div>
+  </div>
+  <div class="rules-grid">
+    <a class="rule-card tbd"><div class="rule-icon">🐍</div><div class="rule-name">FLoSS -ll</div><div class="rule-desc">bell·tell·fall·small</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐍</div><div class="rule-name">FLoSS -ss</div><div class="rule-desc">miss·kiss·pass·grass</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐍</div><div class="rule-name">FLoSS -ff</div><div class="rule-desc">off·stuff·cliff·puff</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🐍</div><div class="rule-name">FLoSS -zz</div><div class="rule-desc">buzz·fizz·jazz·fuzz</div></a>
+    <a class="rule-card done" href="phonics-ar.html"><div class="rule-icon">⭐</div><div class="rule-name">Bossy R: ar</div><div class="rule-desc">car·star·farm·park</div></a>
+    <a class="rule-card done" href="phonics-er.html"><div class="rule-icon">⭐</div><div class="rule-name">Bossy R: er</div><div class="rule-desc">her·fern·river·winter</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">⭐</div><div class="rule-name">Bossy R: ir</div><div class="rule-desc">bird·girl·first·dirt</div></a>
+    <a class="rule-card done" href="phonics-or.html"><div class="rule-icon">⭐</div><div class="rule-name">Bossy R: or</div><div class="rule-desc">fork·corn·horse·storm</div></a>
+    <a class="rule-card overview" href="phonics-or-sounds.html"><div class="rule-icon">🔤</div><div class="rule-name">or 三种发音总览</div><div class="rule-desc">/ɔːr/·/ɜːr/·/ər/ 决策指南</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">⭐</div><div class="rule-name">Bossy R: ur</div><div class="rule-desc">turn·burn·surf·nurse</div></a>
+    <a class="rule-card tbd"><div class="rule-icon">🤫</div><div class="rule-name">Silent Letters</div><div class="rule-desc">kn·wr·gn·mb</div></a>
+  </div>
+</div>
+
+<p style="text-align:center;color:#888;margin-top:24px;font-size:.85em;">
+  📁 自然拼读页面存放于 <code style="color:#4fc3f7;">E:\\儿童教育\\自然拼读\\</code><br>
+  🟢已完成 18 页 · 🔵进行中 Stage 4 · ⚪待制作 ~75 条
+</p>
+
+</div><!-- /container -->
+
+<script>
+(function(){
+  const c=document.getElementById('stars');
+  for(let i=0;i<100;i++){
+    const s=document.createElement('div'); s.className='star';
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;
+    c.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>
