@@ -1,6 +1,7 @@
 <!--
-geometry-methodology.html — HTML2 核心方法论 v4
+geometry-methodology.html — 几何思维 · 拆解与组装
 拆解与组装的几何思维 · 可豆妈妈
+四大超能力卡片 + 点线面体动画 + 立体展开 + 闯关测验
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -9,7 +10,7 @@ geometry-methodology.html — HTML2 核心方法论 v4
 <title>几何思维 · 拆解与组装 | 可豆妈妈</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:16px;line-height:1.55}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f7f4ed;color:#3a3530;font-size:17px;line-height:1.6}
 .page{max-width:560px;margin:0 auto;padding:8px 14px 96px}
 :root{--d1:#7f8c8d;--d2:#16a085;--d3:#2c3e50;--know:#2980b9;--measure:#e67e22;--move:#27ae60;--where:#8e44ad;--know-l:#e8f2f9;--measure-l:#fef3e8;--move-l:#e8f6ed;--where-l:#f4edf7}
 
@@ -18,7 +19,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .sec-div::after{background:linear-gradient(to left,transparent,#d8cfbe)}
 .sec-div .sd-icon{font-size:1.4em;vertical-align:middle}
 .sec-hd{text-align:center;margin:8px 0 14px}
-.sec-hd h2{font-size:1.08em;color:#5b5348;line-height:1.4}
+.sec-hd h2{font-size:1.15em;color:#5b5348;line-height:1.4}
 .sec-hd .hd-sub{font-size:.76em;color:#bcb4a8;margin-top:4px;line-height:1.5}
 
 /* 开篇场景卡 */
@@ -33,28 +34,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .big-ask b{color:#d35400}
 .big-ask .ba-hint{font-size:.72em;font-weight:400;color:#b0a696;margin-top:6px;display:block}
 
-/* 互动纸箱区 */
+/* 互动立体区 */
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
-.box-stage{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0;position:relative}
-.box-stage svg{display:block;width:100%;height:auto}
+.box-stage{background:#fefcf8;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0;position:relative;aspect-ratio:4/3;cursor:grab;touch-action:none}
+.box-stage:active{cursor:grabbing}
+.box-stage canvas{display:block;width:100%;height:100%}
 .box-label{text-align:center;font-size:.76em;color:var(--d1);font-weight:600;margin:6px 0;line-height:1.5;min-height:38px}
-.box-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0}
 .box-btn{padding:12px 22px;border:none;border-radius:24px;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:#fff}
 .box-btn:active{transform:scale(.95)}
 .box-btn.openbtn{background:linear-gradient(135deg,#e67e22,#d35400);box-shadow:0 3px 10px rgba(230,126,34,.25)}
-.box-btn.foldbtn{background:linear-gradient(135deg,#16a085,#0e7c6b);box-shadow:0 3px 10px rgba(22,160,133,.25)}
 .box-btn:disabled{opacity:.35;cursor:default}
 .box-narrative{text-align:center;font-size:.84em;color:#5b5348;line-height:1.65;margin:10px 0;display:none;animation:fade .5s}
-.box-narrative.show{display:block}
+.box-narrative.show{display:flex}
 
 /* 演示区 */
-.demo-stage{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0}
-.demo-stage svg{display:block;width:100%;height:auto}
+.demo-stage{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;overflow:hidden;margin:10px 0;position:relative}
+.demo-stage canvas{display:block;width:100%;height:auto}
 .demo-label{text-align:center;font-size:.78em;color:var(--d1);font-weight:600;margin:4px 0 6px;line-height:1.5}
 .demo-label b{color:var(--d3)}
-.demo-step{display:inline-block;color:#fff;font-size:.68em;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:4px}
-.demo-step.fwd{background:linear-gradient(135deg,#e67e22,#d35400)}
-.demo-step.rev{background:linear-gradient(135deg,#16a085,#0e7c6b)}
 .demo-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:6px 0}
 .dbtn{padding:12px 20px;border:none;border-radius:24px;font-size:.88em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:#fff}
 .dbtn:active{transform:scale(.95)}
@@ -63,7 +60,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .dbtn:disabled{opacity:.35;cursor:default}
 .dbtn.reset{background:#fff;color:var(--d1);border:1.5px solid #d8cfbe;box-shadow:none}
 .demo-msg{text-align:center;font-size:.82em;font-weight:600;min-height:20px;margin-top:6px;line-height:1.5}
-.dir-intro{text-align:center;font-size:.84em;color:#5b5348;line-height:1.6;margin:6px 0}
 
 /* 四大专题卡 (保留) */
 .topic-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0}
@@ -78,7 +74,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .bodywrap{display:none}
 .tcard.open .bodywrap{display:block;animation:fade .3s}
 .tbody{padding:0 14px 14px}
-.tsubtitle{font-size:.82em;color:#5b5348;line-height:1.55;margin-bottom:8px}
+.tsubtitle{font-size:.86em;color:#5b5348;line-height:1.55;margin-bottom:8px}
 .tlist{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
 .titem{padding:6px 13px;border-radius:14px;font-size:.8em;font-weight:600;cursor:pointer;background:#faf7f1;border:1.5px solid #e6dfd2;color:#5b5348;transition:all .15s}
 .titem:active{transform:scale(.94)}
@@ -93,37 +89,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 .tcard.move .tinfo{background:var(--move-l);color:var(--move)}
 .tcard.where .tinfo{background:var(--where-l);color:var(--where)}
 
-/* 闯关 (保留) */
+/* 闯关 (shapes-style) */
 .quiz-box{background:#fff;border:1.5px solid #ece3d5;border-radius:16px;padding:16px;margin:8px 0}
-.quiz-progress{display:flex;justify-content:center;gap:4px;margin-bottom:10px}
-.qdot{width:9px;height:9px;border-radius:50%;background:#e6dfd2}
-.qdot.done{background:var(--d2)}.qdot.wrong{background:#e67e22}.qdot.cur{background:var(--d3);box-shadow:0 0 6px rgba(44,62,80,.4)}
-.qs{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.qs .qse{font-size:2.2em;flex-shrink:0}
-.qs .qsd{font-size:.88em;color:#5b5348;line-height:1.45;font-weight:600}
-.qrl{font-size:.74em;color:#b0a696;font-weight:600;margin-bottom:6px;text-align:center}
-.qopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
-.qo{padding:10px 16px;border-radius:20px;border:2px solid #e6dfd2;background:#fcf9f4;font-size:.82em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348;transition:all .15s}
-.qo:active{transform:scale(.94)}
-.qo.sel{border-color:var(--d2);background:#e8f6f3;color:var(--d2)}
-.qo.d1{border-color:var(--d1)}.qo.d1.sel{background:#ecf0f1;color:var(--d1)}
-.qo.d2{border-color:var(--d2)}.qo.d2.sel{background:#e8f6f3;color:var(--d2)}
-.qo.d3{border-color:var(--d3)}.qo.d3.sel{background:#e0e4e8;color:var(--d3)}
-.qo.know{border-color:var(--know)}.qo.know.sel{background:var(--know-l);color:var(--know)}
-.qo.measure{border-color:var(--measure)}.qo.measure.sel{background:var(--measure-l);color:var(--measure)}
-.qo.move{border-color:var(--move)}.qo.move.sel{background:var(--move-l);color:var(--move)}
-.qo.where{border-color:var(--where)}.qo.where.sel{background:var(--where-l);color:var(--where)}
-.qo:disabled{opacity:.4;cursor:default}
-.qo.bad{animation:sh .4s;border-color:#e67e22}
-@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.qfb{text-align:center;font-size:.82em;font-weight:600;min-height:20px;line-height:1.5;margin-top:6px}
-.q-ok{color:var(--d2)}.q-no{color:#e67e22}
-.qbtns{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
-.qscore{text-align:center;margin-top:14px;font-weight:700;font-size:.88em;color:var(--d3);line-height:1.6}
-.rv-box{margin-top:12px;text-align:left}
-.rv-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #f1ece2;font-size:.8em;line-height:1.45}
-.rv-item .ri-em{font-size:1.4em;flex-shrink:0}
-.rv-item .ri-ans{color:var(--d3);font-weight:600;margin-top:2px}
+.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+.qdot{width:13px;height:13px;border-radius:50%;border:1.5px solid #d8cfbe;background:transparent;transition:all .3s}
+.qdot.correct{background:#69f0ae;border-color:#69f0ae}
+.qdot.wrong{background:#ff5252;border-color:#ff5252}
+.qdot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+.quiz-q{text-align:center;font-size:.88em;font-weight:600;color:#5b5348;margin-bottom:12px;line-height:1.5}
+.qopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.qbtn{padding:10px 16px;border-radius:20px;border:2px solid #e6dfd2;background:#fcf9f4;font-size:.84em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348;transition:all .15s}
+.qbtn:active{transform:scale(.94)}
+.qbtn.good{border-color:#27ae60;background:#e8f5e9;color:#2e7d32}
+.qbtn.bad{border-color:#e74c3c;background:#fdecea;color:#c0392b}
+.qbtn:disabled{opacity:.55;pointer-events:none}
+.quiz-fb{text-align:center;font-size:.82em;font-weight:600;min-height:20px;margin-top:8px;line-height:1.45}
+.quiz-nav{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.qnav{padding:8px 18px;border-radius:20px;border:1.5px solid #d8cfbe;background:#fff;font-size:.82em;font-weight:600;cursor:pointer;font-family:inherit;color:#5b5348}
+.qnav:disabled{opacity:.3;cursor:default}
+.qnav:active:not(:disabled){transform:scale(.95)}
+.quiz-score{text-align:center;font-size:.9em;font-weight:700;color:var(--d3);margin-top:8px;line-height:1.6}
 
 .foot-msg{text-align:center;color:#c3bbac;font-size:.78em;margin:28px 0 10px;line-height:1.7}
 </style></head><body>
@@ -132,81 +117,98 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <!-- ===== ① 开篇：生活场景 → 引出问题 ===== -->
 <div class="scene-title">先看看我们身边的世界——</div>
 <div class="scene-cards">
-  <div class="sc"><span class="se">🍎</span><div class="sn">苹果</div><div class="st">圆鼓鼓的</div></div>
-  <div class="sc"><span class="se">📦</span><div class="sn">快递箱</div><div class="st">方方正正的</div></div>
-  <div class="sc"><span class="se">⚽</span><div class="sn">足球</div><div class="st">滚来滚去的</div></div>
-  <div class="sc"><span class="se">🏔️</span><div class="sn">大山</div><div class="st">高高大大的</div></div>
+  <div class="sc"><span class="se">🍎</span><div class="sn">苹果</div><div class="st">圆鼓鼓，全身都是弯弯的曲面</div></div>
+  <div class="sc"><span class="se">📦</span><div class="sn">快递箱</div><div class="st">方方正正，全是平平的面</div></div>
+  <div class="sc"><span class="se">⚽</span><div class="sn">足球</div><div class="st">滚来滚去，没有平整的面</div></div>
+  <div class="sc"><span class="se">🏔️</span><div class="sn">大山</div><div class="st">高高大大，曲面+斜面组合</div></div>
 </div>
 
-<div class="big-ask">
-  它们全都是<b>鼓鼓的立体</b>（三维）。<br>
-  那为什么我们还要学<br><b>细细的线</b>、<b>平平的面</b>？
-  <span class="ba-hint">👇 用你最熟悉的东西来回答～</span>
+<div class="big-ask" style="margin-bottom:8px">
+  足球、大山，身边万物都是立体。<br>
+  想要看懂、测量、做出它们，<br>先要弄懂<b>线</b>与<b>面</b>。
 </div>
 
-<!-- ===== 互动纸箱：亲手拆 ===== -->
-<div class="box-stage">
-  <svg viewBox="0 0 420 300" id="svgBox">
-    <defs>
-      <linearGradient id="bt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde2c4"/><stop offset="1" stop-color="#f0b878"/></linearGradient>
-      <linearGradient id="bf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8875a"/><stop offset="1" stop-color="#c85a3a"/></linearGradient>
-      <linearGradient id="br" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d4734a"/><stop offset="1" stop-color="#b84a30"/></linearGradient>
-    </defs>
-    <!-- 完整纸箱(等距) -->
-    <g id="bx3d">
-      <polygon points="130,160 190,130 330,130 270,160" fill="url(#bt)" stroke="#c07030" stroke-width="2"/>
-      <polygon points="130,160 130,225 270,225 270,160" fill="url(#bf)" stroke="#a04020" stroke-width="2"/>
-      <polygon points="270,160 330,130 330,195 270,225" fill="url(#br)" stroke="#903018" stroke-width="2"/>
-      <text x="200" y="203" text-anchor="middle" font-size="16" fill="#fff" font-weight="700" opacity=".7">📦</text>
-    </g>
-    <!-- 相连展开图 -->
-    <g id="bxNet" opacity="0">
-      <!-- 顶面 -->
-      <rect x="120" y="8" width="100" height="62" rx="2" fill="url(#bt)" stroke="#c07030" stroke-width="1.8"/>
-      <text x="170" y="42" text-anchor="middle" font-size="10" fill="#c07030" font-weight="700">顶面</text>
-      <!-- 左面 -->
-      <rect x="15" y="70" width="62" height="100" rx="2" fill="#f5c98a" stroke="#c07030" stroke-width="1.8"/>
-      <!-- 前面 -->
-      <rect x="77" y="70" width="100" height="100" rx="2" fill="url(#bf)" stroke="#a04020" stroke-width="1.8"/>
-      <text x="127" y="125" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">前面</text>
-      <!-- 右面 -->
-      <rect x="177" y="70" width="62" height="100" rx="2" fill="url(#br)" stroke="#903018" stroke-width="1.8"/>
-      <!-- 后面 -->
-      <rect x="239" y="70" width="62" height="100" rx="2" fill="#f0d8b0" stroke="#c07030" stroke-width="1.8"/>
-      <!-- 底面 -->
-      <rect x="120" y="170" width="100" height="62" rx="2" fill="#e8a070" stroke="#a04020" stroke-width="1.8"/>
-      <text x="170" y="206" text-anchor="middle" font-size="10" fill="#a04020" font-weight="700">底面</text>
-      <!-- 棱（公共边）高亮 -->
-      <line x1="77" y1="120" x2="139" y2="120" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
-      <line x1="177" y1="120" x2="239" y2="120" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
-      <line x1="170" y1="70" x2="170" y2="8" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
-      <line x1="170" y1="170" x2="170" y2="232" stroke="var(--d3)" stroke-width="3" stroke-dasharray="6 3"/>
-      <!-- 棱标签 -->
-      <text x="108" y="114" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
-      <text x="245" y="114" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
-      <text x="175" y="48" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
-      <text x="175" y="195" font-size="9" fill="var(--d3)" font-weight="800">棱</text>
-    </g>
-  </svg>
-</div>
-<div class="box-label" id="boxLabel">👆 一个<b>鼓鼓的快递纸箱</b>（3个可见面）</div>
-<div class="box-btns">
-  <button class="box-btn openbtn" id="boxOpenBtn" onclick="openBox()">🔓 拆开看看</button>
-  <button class="box-btn foldbtn" id="boxFoldBtn" onclick="foldBox()" disabled>🔒 折回去</button>
-</div>
-<div class="box-narrative" id="boxNarr">
-  你看！6 个面全拆开了，但它们<b>还连在一起</b>——<br>
-  面和面之间的公共边，叫<b>棱</b>。<br>
-  每一条棱，同时属于相邻的两个面。<br><br>
-  反过来：沿着棱折起来 → 6 个面重新拼成一个<b>鼓鼓的立体</b>。<br>
-  这就是几何的核心——<b>拆解与组装</b> ✨
+<div style="text-align:center;font-size:.88em;color:#5b5348;margin:10px 0 2px;line-height:1.6">
+  立体由面、线、点组成，<br>拆开立体就能看见平面。
 </div>
 
-<!-- ===== ② 四种超能力卡 (保留) ===== -->
+<div style="text-align:center;font-size:.92em;color:#5b5348;margin:12px 0 2px;line-height:1.5;font-weight:700">
+  拆开一个立体看看，答案就在里面 👇
+</div>
+<div style="text-align:center;font-size:.66em;color:#b0a696;margin:2px 0 10px">知识点：逆向思维 · 立体展开图，适配小学一、二年级</div>
+
+<div style="text-align:center;font-size:.82em;color:#8a7e6e;margin:4px 0 6px;line-height:1.5">
+  沿着边角一块一块摊开，面板还连在一起。<br>全部摊平后的图，就是<b>展开图</b>。
+</div>
+
+<!-- ===== 互动立体：Three.js 立体展开图 ===== -->
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0 8px">
+  <button class="dbtn reset" id="shapeCube" onclick="window._setShape('cube')" style="background:linear-gradient(135deg,#e67e22,#d35400);color:#fff;border:none;font-size:.74em;padding:6px 12px;border-radius:16px">🧊 正方体</button>
+  <button class="dbtn reset" id="shapeCuboid" onclick="window._setShape('cuboid')" style="font-size:.74em;padding:6px 12px;border-radius:16px">📦 长方体</button>
+  <button class="dbtn reset" id="shapeTriPrism" onclick="window._setShape('triprism')" style="font-size:.74em;padding:6px 12px;border-radius:16px">🔺 三棱柱</button>
+  <button class="dbtn reset" id="shapePyramid" onclick="window._setShape('pyramid')" style="font-size:.74em;padding:6px 12px;border-radius:16px">🔺 四棱锥</button>
+    </div>
+
+<div class="box-stage" id="boxWrap"></div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+  <button class="box-btn" style="background:#fff;color:#5b5348;border:1.5px solid #e6dfd2;padding:10px 16px;font-size:.8em;border-radius:22px" id="btnPrev" onclick="window._prev()" disabled>◀ 收回去</button>
+  <button class="box-btn openbtn" id="btnNext" onclick="window._next()" style="font-size:.8em;padding:10px 16px">▶ 拆一面</button>
+  <button class="box-btn" style="background:linear-gradient(135deg,#27ae60,#1e8449);font-size:.8em;padding:10px 16px;box-shadow:0 3px 10px rgba(39,174,96,.25)" onclick="window._all()">⏩ 全摊开</button>
+  <button class="box-btn" style="background:#fff;color:#5b5348;border:1.5px solid #e6dfd2;font-size:.8em;padding:10px 16px;border-radius:22px" onclick="window._reset()">↺ 变回立体</button>
+</div>
+
+<div class="box-label" id="boxInfo">拖动画面可以从不同角度观察</div>
+<div class="box-narrative show" id="boxNarr" style="display:none"></div>
+
+
+
+<div style="text-align:center;font-size:.88em;color:#5b5348;margin:20px 0 4px;line-height:1.6">
+  摊开是立体变平面，折起来是平面变回立体。<br>
+  <b>拆与拼</b>，就是看懂所有立体图形的万能钥匙。<br>
+  这也是我们必须先学线、面的根本原因——<br>
+  <b>所有立体，全是平面拼接出来的。</b>
+</div>
+
+<div style="text-align:center;font-size:.88em;color:#5b5348;margin:14px 0 4px;line-height:1.6">
+  反过来试试：从一个点开始，自己造一个立体 👇
+</div>
+<div style="text-align:center;font-size:.66em;color:#b0a696;margin:2px 0 10px">家长参考：正向建构 · 点动成线 → 线动成面 → 面动成体</div>
+
+<!-- ===== ② 正向组装 (rotation-experiment) ===== -->
+<div class="sec-div"><span class="sd-icon">🔨</span></div>
+<div class="sec-hd"><h2>由简单零件，搭建出立体实物</h2><div class="hd-sub">点动成线 → 线动成面 → 面动成体。切换形状看不同效果～</div></div>
+
+<div class="demo-stage">
+  <canvas id="mainCanvas" width="500" height="350" style="display:block;width:100%;height:auto"></canvas>
+</div>
+
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0 2px">
+  <button class="dbtn reset" id="mRect" onclick="setMode('rect')" style="background:linear-gradient(135deg,#e67e22,#d35400);color:#fff;border:none;font-size:.76em;padding:8px 14px">📐 矩形→圆柱</button>
+  <button class="dbtn reset" id="mSemi" onclick="setMode('semi')" style="font-size:.76em;padding:8px 14px">🌓 半圆→球</button>
+  <button class="dbtn reset" id="mCone" onclick="setMode('cone')" style="font-size:.76em;padding:8px 14px">🔺 三角→圆锥</button>
+  <button class="dbtn reset" id="mCuboid" onclick="setMode('cuboid')" style="font-size:.76em;padding:8px 14px">📦 矩形→长方体</button>
+</div>
+
+<div class="demo-label" id="mlabel">点动成线 → 线动成面 → 面动成体</div>
+<div class="demo-btns">
+  <button class="dbtn fwd" id="mb0" onclick="runStep1()">① 点动成线</button>
+  <button class="dbtn fwd" id="mb1" onclick="runStep2()" disabled>② 线动成面</button>
+  <button class="dbtn fwd" id="mb2" onclick="runStep3()" disabled>③ 面动成体</button>
+    <button class="dbtn reset" onclick="resetMain()">↺ 重来</button>
+</div>
+<div class="demo-msg" id="mm"></div>
+<div style="text-align:center;font-size:.88em;color:#5b5348;margin:20px 0 4px;line-height:1.6">
+  造立体用到的知识，分成四大几何本领 👇
+</div>
+<div style="text-align:center;font-size:.66em;color:#b0a696;margin:2px 0 10px">家长参考：认识图形 · 测量图形 · 图形的运动 · 物体的位置（人教版1-6年级）</div>
+
+<!-- ===== ③ 四大几何本领 ===== -->
 <div class="sec-div"><span class="sd-icon">📂</span></div>
 <div class="sec-hd">
-  <h2>四种超能力，四种看懂世界的工具</h2>
+  <h2>四大几何本领</h2>
   <div class="hd-sub">点开每张卡片，里面有好多例子～</div>
+        <div style="font-size:.66em;color:#b0a696;margin-top:2px">家长参考：图形与几何四大领域（人教版1-6年级核心知识点）</div>
 </div>
 
 <div class="topic-grid" id="topicGrid">
@@ -214,19 +216,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <div class="tcard know" id="tcard-know">
     <div class="thd" onclick="toggleTCard('know')"><span class="tem">👀</span><span>认识图形 —— 长什么样</span><span class="tcue">点开看例子</span></div>
     <div class="bodywrap"><div class="tbody">
-      <div class="tsubtitle">认出东西是什么形状。分两大类：</div>
+      <div class="tsubtitle">认出东西是什么形状。从最基本的线和角开始：</div>
       <div style="font-size:.78em;color:#8a7e6e;margin-bottom:6px">👇 点下面的例子，看它是平面还是立体</div>
       <div class="tlist" id="tlist-know">
-        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔺 三角形：三条边围成的平面')">🔺 三角形</span>
-        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🟦 正方形：四条一样长的边')">🟦 正方形</span>
-        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','▭ 长方形：对边一样长')">▭ 长方形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'基本元素','📏 线段：两个端点，能量出长度。射线：一个端点，无限延伸。直线：没有端点。')">📏 线段·射线·直线</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔺 三角形：三条边围成。按角分：锐角/直角/钝角三角形；按边分：等边/等腰。内角和=180°')">🔺 三角形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🟦 正方形：四条边一样长，四个角都是直角')">🟦 正方形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','▭ 长方形：对边一样长，四个角都是直角')">▭ 长方形</span>
         <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🟡 圆形：弯弯的，没有角')">🟡 圆形</span>
         <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','🧊 正方体：六个一样大的正方形面')">🧊 正方体</span>
         <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','📦 长方体：六个面，面对面一样大')">📦 长方体</span>
         <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','🥫 圆柱：两个圆面 + 一个弯面')">🥫 圆柱</span>
         <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','⚽ 球体：圆圆滚滚，没有平面')">⚽ 球体</span>
-        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔷 菱形：四条边一样长，但不是直角')">🔷 菱形</span>
-        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','⬠ 五边形：五条边')">⬠ 五边形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔷 菱形：四条边一样长，但不是直角。像风筝、钻石的形状')">🔷 菱形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','⬠ 五边形：五条边。足球上的黑色块就是五边形！')">⬠ 五边形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔷 平行四边形：对边平行且相等，推一推会变形，不像正方形那么"硬"')">🔷 平行四边形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','▰ 梯形：只有一组对边平行，像梯子、水库大坝的截面')">▰ 梯形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','📐 扇形：圆切出来的一块，两条半径+一段弧，像扇子、披萨切块')">📐 扇形</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','📐 角：两条边张开的大小。直角方方正正（90°），锐角尖尖小小，钝角大大张开')">📐 角（直角·锐角·钝角）</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'平面图形','🔍 三视图：同一个东西，从前面/上面/侧面看，形状可能完全不一样！')">🔍 三视图</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('know',this,'立体图形','🥧 圆锥：一个圆底面 + 一个尖尖的顶，像冰淇淋筒和生日帽')">🥧 圆锥</span>
       </div>
       <div class="tinfo" id="tinfo-know">👆 点一个形状看看～</div>
     </div></div>
@@ -235,13 +244,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <div class="tcard measure" id="tcard-measure">
     <div class="thd" onclick="toggleTCard('measure')"><span class="tem">📏</span><span>测量图形 —— 有多大</span><span class="tcue">点开看例子</span></div>
     <div class="bodywrap"><div class="tbody">
-      <div class="tsubtitle">用数字说清图形的大小。五种问法：</div>
+      <div class="tsubtitle">用数字说清图形的大小：</div>
       <div class="tlist" id="tlist-measure">
         <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📏 长度：一条边有多长？用尺子量。比如桌子的边是 1 米')">📏 长度</span>
         <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','🔄 周长：绕图形一圈总共多长？比如操场跑一圈 400 米')">🔄 周长</span>
         <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','🔲 面积：一个面铺满有多大？比如教室地面要铺多少块地砖')">🔲 面积</span>
-        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📦 体积：立体里面能装多少东西？比如水杯能装多少水')">📦 体积</span>
-        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📐 角度：角张开多大？用度数表示，比如直角是 90°')">📐 角度</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','🎁 表面积：立体表面包一层要多少纸？比如包礼物需要多大包装纸')">🎁 表面积</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📦 体积：立体占了多大空间？比如一块橡皮、一个箱子占多大地方')">📦 体积</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','🪣 容积：容器里面能装多少？比如水瓶能装多少毫升水')">🪣 容积</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('measure',this,'','📐 角度·内角和：角张开多大？用度数表示。三角形三个角加起来永远是 180°')">📐 角度·内角和</span>
       </div>
       <div class="tinfo" id="tinfo-measure">👆 点一个看看什么意思～</div>
     </div></div>
@@ -264,111 +275,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <div class="tcard where" id="tcard-where">
     <div class="thd" onclick="toggleTCard('where')"><span class="tem">🧭</span><span>物体的位置 —— 在哪里</span><span class="tcue">点开看例子</span></div>
     <div class="bodywrap"><div class="tbody">
-      <div class="tsubtitle">用方向和坐标说清东西在哪。四种方法：</div>
+      <div class="tsubtitle">用方向和坐标说清东西在哪：</div>
       <div class="tlist" id="tlist-where">
         <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','↕️ 上下前后左右：最基础的位置词。比如「书在桌子上面」')">↕️ 上下前后左右</span>
         <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','🧭 方向：东南西北 + 东北/东南/西北/西南，共 8 个方向')">🧭 八个方向</span>
         <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','🎯 数对：(列,排) 两个数字精准定位。比如电影院第 5 排第 3 座 = (3,5)')">🎯 数对</span>
         <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','🗺️ 路线图：从哪出发、往哪走、走多远。比如「从家往东走 200 米到学校」')">🗺️ 路线图</span>
+        <span class="titem" onclick="event.stopPropagation();selItem('where',this,'','📍 角度+距离：用方向和距离精确定位。比如「北偏东 30° 方向 200 米处」——比只说方向更准！')">📍 角度+距离定位</span>
       </div>
       <div class="tinfo" id="tinfo-where">👆 点一个看看～</div>
     </div></div>
   </div>
 </div>
 
-<!-- ===== ③ 正向组装 ===== -->
-<div class="sec-div"><span class="sd-icon">🔨</span></div>
-<div class="sec-hd"><h2>正向组装：从简单变出复杂</h2><div class="hd-sub">点动成线 → 线动成面 → 面动成体</div></div>
-
-<div class="demo-stage">
-  <svg viewBox="0 0 400 240" id="svgMain">
-    <defs>
-      <linearGradient id="mpf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fde2c4"/><stop offset="1" stop-color="#f5c98a"/></linearGradient>
-      <linearGradient id="mtf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde2c4"/><stop offset="1" stop-color="#f0b878"/></linearGradient>
-    </defs>
-    <!-- ① 点动成线 -->
-    <circle id="mdot" cx="110" cy="105" r="6" fill="#e67e22"/>
-    <line id="mline" x1="110" y1="105" x2="110" y2="105" stroke="#e67e22" stroke-width="3" stroke-linecap="round" opacity="0"/>
-    <circle id="mend" cx="190" cy="105" r="5" fill="var(--d1)" opacity="0"/>
-    <!-- ② 线动成面：同一条线向下平移 -->
-    <line id="mghostL" x1="110" y1="105" x2="190" y2="105" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="5 3" opacity="0"/>
-    <line id="msweep" x1="110" y1="105" x2="190" y2="105" stroke="#e67e22" stroke-width="3" opacity="0"/>
-    <rect id="mplane" x="110" y="105" width="80" height="0" fill="url(#mpf)" rx="2" opacity="0"/>
-    <!-- ③ 面动成体：同一个矩形绕左边缘旋转 -->
-    <g id="s3" opacity="0">
-      <line x1="110" y1="55" x2="110" y2="220" stroke="#888" stroke-width="1.5" stroke-dasharray="6 5"/>
-      <text x="102" y="238" text-anchor="end" font-size="10" fill="#999">轴</text>
-      <rect id="s3rect" x="110" y="105" width="80" height="70" rx="2" fill="#fde2c4" fill-opacity="0.35" stroke="#e67e22" stroke-width="2.5"/>
-      <rect id="s3g1" x="110" y="105" width="57" height="70" rx="1" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0" stroke-dasharray="3 2"/>
-      <rect id="s3g2" x="110" y="105" width="0" height="70" fill="none" stroke="#e67e22" stroke-width="2" opacity="0"/>
-      <rect id="s3g3" x="110" y="105" width="57" height="70" rx="1" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0" stroke-dasharray="3 2"/>
-      <rect id="s3g4" x="110" y="105" width="80" height="70" rx="2" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0" stroke-dasharray="3 2"/>
-      <ellipse id="s3topE" cx="110" cy="105" rx="80" ry="16" fill="none" stroke="#e67e22" stroke-width="1.8" opacity="0"/>
-      <ellipse id="s3botE" cx="110" cy="175" rx="80" ry="16" fill="none" stroke="#e67e22" stroke-width="1.8" opacity="0"/>
-      <line id="s3slL" x1="30" y1="105" x2="30" y2="175" stroke="#e67e22" stroke-width="1.5" opacity="0"/>
-      <line id="s3srL" x1="190" y1="105" x2="190" y2="175" stroke="#e67e22" stroke-width="1.5" opacity="0"/>
-      <path id="s3arc" d="M190 105 A80 16 0 0 1 30 105" fill="none" stroke="#e67e22" stroke-width="1.2" opacity="0" stroke-dasharray="4 3"/>
-      <path id="s3arc2" d="M190 175 A80 16 0 0 0 30 175" fill="none" stroke="#e67e22" stroke-width="1.2" opacity="0" stroke-dasharray="4 3"/>
-    </g>
-  </svg>
+<div style="text-align:center;font-size:.88em;color:#5b5348;margin:20px 0 4px;line-height:1.6">
+  四大本领都学会了？去生活里试试手 👇
 </div>
-<div class="demo-label" id="mlabel">点动成线 → 线动成面 → 面动成体</div>
-<div class="demo-btns">
-  <button class="dbtn fwd" id="mb0" onclick="animM0()">① 点动成线</button>
-  <button class="dbtn fwd" id="mb1" onclick="animM1()" disabled>② 线动成面</button>
-  <button class="dbtn fwd" id="mb2" onclick="animM2()" disabled>③ 面动成体</button>
-  <button class="dbtn reset" onclick="resetMain()">↺ 重来</button>
-</div>
-<div class="demo-msg" id="mm"></div>
-
-<!-- ===== ④ 闯关 ===== -->
+<div style="text-align:center;font-size:.66em;color:#b0a696;margin:2px 0 10px">家长参考：情境应用题 · 几何概念在真实场景中的综合运用</div>
+<!-- ===== ④ 闯关 (shapes-style) ===== -->
 <div class="sec-div"><span class="sd-icon">🎮</span></div>
-<div class="sec-hd"><h2>真实世界大闯关</h2><div class="hd-sub">每题先选维度，再选超能力。答错可以重选！</div></div>
-<div class="quiz-box">
-  <div class="quiz-progress" id="qd"></div>
-  <div class="qs" id="qs"></div>
-  <div class="qrl" id="qlb"></div>
-  <div class="qopts" id="qo"></div>
-  <div class="qfb" id="qfb"></div>
-  <div class="qbtns">
-    <button class="dbtn reset" id="qretry" onclick="retryQ()" style="display:none">🔄 重选本题</button>
-    <button class="dbtn fwd" id="qnext" onclick="nextQ()" disabled>下一题 ▶</button>
+<div class="sec-hd"><h2>真实世界大闯关</h2><div class="hd-sub">每题选对「几何本领」——答完点下一题。最后点「查看成绩」</div></div>
+<div class="quiz-box" id="quizBox">
+  <div class="quiz-progress" id="quizDots"></div>
+  <div class="quiz-q" id="quizQ"></div>
+  <div class="qopts" id="quizOpts"></div>
+  <div class="quiz-fb" id="quizFb"></div>
+  <div class="quiz-nav">
+    <button class="qnav" id="qPrev" onclick="quizPrev()" disabled>◀ 上一题</button>
+    <button class="qnav" id="qNext" onclick="quizNext()" disabled>下一题 ▶</button>
   </div>
-  <div class="qscore" id="qsc" style="display:none"></div>
-  <div class="rv-box" id="qrev" style="display:none"></div>
+  <div class="quiz-score" id="quizScore" style="display:none"></div>
 </div>
 
-<div class="foot-msg">学会了拆解与组装，你就拿到了几何的万能钥匙 🔑<br>无论多复杂的东西，都能一层层看懂它。<br><br>可豆妈妈 · 更多几何互动工具陆续上线 🌱</div>
+<div class="foot-msg">还记得拆立体时说的那句话吗？<br><b>拆与拼，就是看懂所有立体图形的万能钥匙</b> 🔑<br>无论多复杂的东西，都能一层层看懂它。<br><br>可豆妈妈 · 更多几何互动工具陆续上线 🌱</div>
 </div>
 
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
 <script>
 /* ===== 工具 ===== */
 function beep(f,d,t){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.12,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+d);o.start();o.stop(a.currentTime+d)}catch(e){}}
-function sfxOK(){beep(660,.1);setTimeout(function(){beep(880,.14)},90)}
-function sfxNO(){beep(200,.18,'triangle')}
-function sfxTap(){beep(560,.09)}
+function sfxOK(){try{beep(660,.1);setTimeout(function(){beep(880,.14)},90)}catch(e){}}
+function sfxNO(){try{beep(200,.18,'triangle')}catch(e){}}
+function sfxTap(){try{beep(560,.09)}catch(e){}}
 function $(id){return document.getElementById(id)}
 function SA(id,o){var e=$(id);if(e)for(var k in o)e.setAttribute(k,o[k])}
 function SO(id,v){var e=$(id);if(e)e.setAttribute('opacity',v)}
 function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
 function smoothAnim(dur,cb,done){var s=null;function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/dur,1);cb(ease(p));if(p<1)requestAnimationFrame(step);else if(done)done()}requestAnimationFrame(step)}
-
-/* ===== 互动纸箱 ===== */
-var boxOpen=false;
-function openBox(){
-  if(boxOpen)return;boxOpen=true;sfxOK();
-  $('boxOpenBtn').disabled=true;$('boxFoldBtn').disabled=false;
-  SO('bx3d','0');SO('bxNet','1');
-  $('boxLabel').innerHTML='🔓 拆开了！6 个面全在——<b>沿着棱还连在一起</b>';
-  $('boxNarr').classList.add('show');
-}
-function foldBox(){
-  if(!boxOpen)return;boxOpen=false;sfxTap();
-  $('boxOpenBtn').disabled=false;$('boxFoldBtn').disabled=true;
-  SO('bx3d','1');SO('bxNet','0');
-  $('boxLabel').innerHTML='👆 一个<b>鼓鼓的快递纸箱</b>（3个可见面）';
-  $('boxNarr').classList.remove('show');
-}
 
 /* ===== 专题卡 ===== */
 function toggleTCard(a){sfxTap();$('tcard-'+a).classList.toggle('open')}
@@ -376,126 +336,598 @@ function selItem(a,el,cat,txt){sfxTap();
   document.querySelectorAll('#tlist-'+a+' .titem').forEach(function(it){it.classList.remove('sel')});
   el.classList.add('sel');$('tinfo-'+a).innerHTML=cat?'<b>'+cat+'</b>：'+txt:txt;}
 
-/* ===== 正向组装动画 ===== */
-var mStep=0;
-function animM0(){if(mStep>=1)return;mStep=1;sfxOK();$('mb0').disabled=true;
-  SO('mline','1');
-  smoothAnim(900,function(p){var cx=110+p*80;SA('mdot',{cx:cx});SA('mline',{x2:cx})},function(){
-    SO('mend','1');$('mb1').disabled=false;
-    $('mlabel').innerHTML='✅ ① 点动成线（<b>一维</b>）';
-    $('mm').innerHTML='<span style="color:var(--d2)">点水平移动 → 轨迹形成线段</span>';
-  });
-}
-function animM1(){if(mStep>=2||mStep<1)return;mStep=2;sfxOK();$('mb1').disabled=true;
-  SO('mghostL','1');SO('msweep','1');SO('mplane','1');
-  smoothAnim(1000,function(p){
-    var y=105+p*70;SA('msweep',{y1:y,y2:y});SA('mplane',{height:p*70});
-  },function(){
-    $('mb2').disabled=false;
-    $('mlabel').innerHTML='✅ ② 线动成面（<b>二维</b>）';
-    $('mm').innerHTML='<span style="color:var(--d2)">线段向下平移 → 扫出矩形面</span>';
-  });
-}
-function animM2(){if(mStep>=3||mStep<2)return;mStep=3;sfxOK();$('mb2').disabled=true;
-  SO('s3','1');
-  // 矩形绕左边缘(x=110)旋转，完整 0°→360°
-  smoothAnim(4000,function(p){
-    var angle=p*Math.PI*2, cosA=Math.cos(angle), w=Math.abs(cosA)*80;
-    var x=cosA>=0?110:110-w;
-    SA('s3rect',{x:x,width:w});
-    // 幽灵轨迹留痕
-    if(p>.1){var c1=Math.cos(.1*Math.PI*2);SA('s3g1',{x:c1>=0?110:110-Math.abs(c1)*80,width:Math.abs(c1)*80});SO('s3g1','1')}
-    if(p>.25){SA('s3g2',{x:'110',width:'0'});SO('s3g2','1')}
-    if(p>.4){var c3=Math.cos(.4*Math.PI*2);SA('s3g3',{x:c3>=0?110:110-Math.abs(c3)*80,width:Math.abs(c3)*80});SO('s3g3','1')}
-    if(p>.55){SA('s3g4',{x:'30',width:'80'});SO('s3g4','1')}
-    // 圆柱线框
-    if(p>.3){SO('s3topE',1);SO('s3botE',1)}
-    if(p>.4){SO('s3slL','1');SO('s3srL','1')}
-    if(p>.5){SO('s3arc','1');SO('s3arc2','1')}
-    // 提示
-    if(p<.15)$('mm').innerHTML='<span style="color:#8a7e6e">矩形绕轴开始旋转…</span>';
-    else if(p<.3)$('mm').innerHTML='<span style="color:#8a7e6e">转到侧面，越来越窄…</span>';
-    else if(p<.35)$('mm').innerHTML='<span style="color:#8a7e6e">转过90°！翻到轴的另一边</span>';
-    else if(p<.6)$('mm').innerHTML='<span style="color:#8a7e6e">转出半圈，圆柱出现了…</span>';
-    else if(p<.8)$('mm').innerHTML='<span style="color:#8a7e6e">继续转，快回到原位…</span>';
-    else $('mm').innerHTML='<span style="color:#8a7e6e">转完一整圈！</span>';
-  },function(){
-    sfxOK();
-    $('mlabel').innerHTML='✅ ③ 面动成体：矩形绕轴转一整圈 → <b>圆柱</b>（三维）';
-    $('mm').innerHTML='<span style="color:var(--d2)">矩形绕轴旋转 → 扫过的空间变成一个圆柱体</span>';
-  });
-}
-function resetMain(){
-  mStep=0;$('mb0').disabled=false;$('mb1').disabled=true;$('mb2').disabled=true;
-  SA('mdot',{cx:'110'});SA('mline',{x2:'110'});SO('mline','0');SO('mend','0');
-  SO('mghostL','0');SO('msweep','0');SA('mplane',{height:'0'});SO('mplane','0');
-  SO('s3','0');
-  SA('s3rect',{x:'110',width:'80'});
-  ['s3g1','s3g2','s3g3','s3g4','s3topE','s3botE','s3slL','s3srL','s3arc','s3arc2'].forEach(function(id){SO(id,'0')});
-  $('mlabel').innerHTML='点动成线 → 线动成面 → 面动成体';
-  $('mm').innerHTML='';
+
+/* ===== 正向组装动画 (rotation-experiment) ===== */
+var W=500,H=350,axisX=250,topY=80,rectW=150,rectH=110,depthR=0.5,TOTAL=360;
+var mainCvs,mainCtx;
+var mode="rect",activeData,sphereR,sphereCY,sphereData,sphereSlices,SS=60;
+var triRects,rectRects,cuboidData,cuboidD=65,isoZX=0.60,isoZY=0.38;
+var mStep=0,mAnim=null,mmP=0,mRunning=false;
+
+function precompute(){
+  rectRects=[];
+  for(var i=0;i<TOTAL;i++){
+    var th=i*Math.PI*2/TOTAL,cosA=Math.cos(th),sinA=Math.sin(th);
+    rectRects.push({type:"rect",cosA:cosA,
+      tl:[axisX,topY],bl:[axisX,topY+rectH],
+      tr:[axisX+rectW*cosA,topY+rectW*sinA*depthR],
+      br:[axisX+rectW*cosA,topY+rectH+rectW*sinA*depthR]
+    });
+  }
+  sphereR=rectH/2;sphereCY=topY+sphereR;
+  sphereData=[];
+  for(var i=0;i<TOTAL;i++){
+    var th=i*Math.PI*2/TOTAL,cosA=Math.cos(th),sinA=Math.sin(th),pts=[];
+    for(var j=0;j<=30;j++){
+      var t=j/30,a=(t-0.5)*Math.PI;
+      var x=sphereR*Math.cos(a),y=sphereR*Math.sin(a);
+      pts.push([axisX+x*cosA,sphereCY+y+x*sinA*depthR]);
+    }
+    sphereData.push({type:"semi",cosA:cosA,pts:pts});
+  }
+  sphereSlices=[];
+  for(var i=0;i<SS;i++){
+    var y=topY+(i+0.5)*rectH/SS,dy=y-sphereCY,r2=sphereR*sphereR-dy*dy;
+    if(r2>0){var r=Math.sqrt(r2);sphereSlices.push({y:y,rx:r,ry:r*depthR})}
+  }
+  triRects=[];
+  for(var i=0;i<TOTAL;i++){
+    var th=i*Math.PI*2/TOTAL,cosA=Math.cos(th),sinA=Math.sin(th);
+    triRects.push({type:"tri",cosA:cosA,
+      a:[axisX,topY],b:[axisX,topY+rectH],
+      c:[axisX+rectW*cosA,topY+rectH+rectW*sinA*depthR]
+    });
+  }
+  cuboidData={front:{tl:[axisX,topY],tr:[axisX+rectW,topY],br:[axisX+rectW,topY+rectH],bl:[axisX,topY+rectH]},
+    backD:function(p){var dx=cuboidD*isoZX*p,dy=cuboidD*isoZY*p;
+      return {tl:[axisX+dx,topY+dy],tr:[axisX+rectW+dx,topY+dy],br:[axisX+rectW+dx,topY+rectH+dy],bl:[axisX+dx,topY+rectH+dy]};
+    }
+  };
 }
 
-/* ===== 闯关 ===== */
-var QUIZ=[
-  {s:'🎯',d:'排队时老师说"第3个小朋友出列"——队伍就是一条线',dim:'d1',ab:'where',dt:'一维·线',at:'物体的位置',x:'队伍里的第几个——用一维的「顺序」就能说清位置'},
-  {s:'🗺️',d:'手机上的电子地图——平平的一大片',dim:'d2',ab:'where',dt:'二维·面',at:'物体的位置',x:'地图是二维的，用坐标就能标出任何位置'},
-  {s:'🥛',d:'用量杯倒牛奶，看刻度线到200毫升——杯子是立体的',dim:'d3',ab:'measure',dt:'三维·体',at:'测量图形',x:'量杯装了多少——测量三维的容积'},
-  {s:'🪞',d:'镜子里的你——左右一模一样',dim:'d2',ab:'move',dt:'二维·面',at:'图形的运动',x:'镜像是轴对称——图形运动的经典例子'},
-  {s:'🎂',d:'生日蛋糕——圆圆的，从上往下看是个圆',dim:'d2',ab:'know',dt:'二维·面',at:'认识图形',x:'从上往下看蛋糕是圆形——认识平面图形'},
-  {s:'🏀',d:'篮球——圆滚滚的，能弹能滚',dim:'d3',ab:'know',dt:'三维·体',at:'认识图形',x:'篮球是球体——认识立体图形'},
-  {s:'📏',d:'用尺子量桌子的边有多长',dim:'d1',ab:'measure',dt:'一维·线',at:'测量图形',x:'量边的长度——测量一维的线段'},
-  {s:'📊',d:'看温度计——水银柱升到36°C那条线',dim:'d1',ab:'measure',dt:'一维·线',at:'测量图形',x:'温度计上读刻度——在一维的线上测量数值'},
-  {s:'🛞',d:'车轮转起来——绕着一个轴转圈',dim:'d2',ab:'move',dt:'二维·面',at:'图形的运动',x:'车轮转动是旋转——图形在二维平面上的运动'},
-  {s:'🏗️',d:'工地的塔吊——吊臂在空间里旋转',dim:'d3',ab:'move',dt:'三维·体',at:'图形的运动',x:'塔吊在三维空间旋转——立体图形的运动'},
-  {s:'🏢',d:'找同学的座位："她在2楼第3间教室"',dim:'d3',ab:'where',dt:'三维·体',at:'物体的位置',x:'楼号+房号——用两个数定位三维空间里的房间'},
-  {s:'🖼️',d:'给照片配一个正好大小的相框——量量照片多宽多长',dim:'d2',ab:'measure',dt:'二维·面',at:'测量图形',x:'照片的长和宽——测量二维的面积，才能配到合适的框'}
-];
-function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
-var qP=[],qi=0,qT=10,qDp=null,qR=0,qRes=[],qTried=false;
-function initQ(){
-  qP=shuffle(QUIZ.slice()).slice(0,qT);qi=0;qRes=[];qR=0;qDp=null;qTried=false;
-  $('qsc').style.display='none';$('qrev').style.display='none';$('qnext').style.display='inline-block';$('qretry').style.display='none';rDots();rQQ();
+function setMode(m){
+  resetMain();
+  mode=m;activeData=m==="rect"?rectRects:(m==="cone"?triRects:(m==="cuboid"?rectRects:sphereData));
+  var names=["Rect","Semi","Cone","Cuboid"];
+  for(var i=0;i<names.length;i++){
+    var btn=document.getElementById("m"+names[i]);
+    if(btn){
+      var active=names[i].toLowerCase()===m;
+      btn.style.background=active?"linear-gradient(135deg,#e67e22,#d35400)":"";
+      btn.style.color=active?"#fff":"";
+      btn.style.border=active?"none":"";
+    }
+  }
+  drawFrame();
 }
-function rDots(){var h='';for(var i=0;i<qT;i++){h+='<div class="qdot'+(i<qi?(qRes[i].ok?' done':' wrong'):(i===qi?' cur':''))+'"></div>'} $('qd').innerHTML=h}
-function rQQ(){
-  if(qi>=qT){showSc();return}var q=qP[qi];qR=0;qDp=null;qTried=false;
-  $('qs').innerHTML='<span class="qse">'+q.s+'</span><div class="qsd">'+q.d+'</div>';
-  $('qlb').textContent='第①步：它是几维的？';$('qfb').innerHTML='';$('qnext').disabled=true;$('qretry').style.display='none';
-  $('qo').innerHTML='<button class="qo d1" onclick="pd(\'d1\',this)">📏 一维 · 线</button><button class="qo d2" onclick="pd(\'d2\',this)">📄 二维 · 面</button><button class="qo d3" onclick="pd(\'d3\',this)">📦 三维 · 体</button>';
+
+function drawAxis(){
+  mainCtx.beginPath();mainCtx.moveTo(axisX,15);mainCtx.lineTo(axisX,topY+rectH+rectW*depthR+25);
+  mainCtx.setLineDash([6,5]);mainCtx.strokeStyle="#ccc";mainCtx.lineWidth=1.5;mainCtx.stroke();mainCtx.setLineDash([]);
 }
-function pd(d,btn){if(qR!==0)return;qDp=d;qR=1;sfxTap();document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('sel');b.disabled=true});btn.classList.add('sel');
-  $('qlb').textContent='第②步：它用到哪种超能力？';
-  $('qo').innerHTML='<button class="qo know" onclick="pa(\'know\',this)">👀 认识图形</button><button class="qo measure" onclick="pa(\'measure\',this)">📏 测量图形</button><button class="qo move" onclick="pa(\'move\',this)">🔄 图形的运动</button><button class="qo where" onclick="pa(\'where\',this)">🧭 物体的位置</button>';
+
+function drawDot(x,y,r,color){
+  mainCtx.beginPath();mainCtx.arc(x,y,r,0,Math.PI*2);mainCtx.fillStyle=color||"#e67e22";mainCtx.fill();
 }
-function pa(a,btn){if(qR!==1)return;qR=2;sfxTap();document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('sel');b.disabled=true});btn.classList.add('sel');
-  var q=qP[qi],ok=(qDp===q.dim&&a===q.ab);
-  if(ok){sfxOK();$('qfb').innerHTML='<span class="q-ok">✅ 答对了！</span><br><span style="font-size:.76em;color:#5b5348">'+q.x+'</span>';$('qnext').disabled=false;$('qretry').style.display='none';qRes.push({ok:true,q:q,s:q.s,d:q.d});}
-  else{sfxNO();
-    if(!qTried){$('qfb').innerHTML='<span class="q-no">❌ 不对哦～再试一次！</span>';$('qretry').style.display='inline-block';qTried=true;qR=0;qDp=null;
-      document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('sel');b.disabled=false;b.classList.add('bad')});
-      setTimeout(function(){document.querySelectorAll('#qo .qo').forEach(function(b){b.classList.remove('bad')})},450);
-      $('qlb').textContent='第①步：它是几维的？（重选）';
-      $('qo').innerHTML='<button class="qo d1" onclick="pd(\'d1\',this)">📏 一维 · 线</button><button class="qo d2" onclick="pd(\'d2\',this)">📄 二维 · 面</button><button class="qo d3" onclick="pd(\'d3\',this)">📦 三维 · 体</button>';
-    }else{$('qfb').innerHTML='<span class="q-no">答案是：<b>'+q.dt+'</b> + <b>'+q.at+'</b></span><br><span style="font-size:.76em;color:#5b5348">'+q.x+'</span>';$('qnext').disabled=false;$('qretry').style.display='none';qRes.push({ok:false,q:q,s:q.s,d:q.d});}
+
+function drawRectShape(r,alpha,strokeAlpha){
+  mainCtx.beginPath();
+  if(r.type==="rect"){mainCtx.moveTo(r.tl[0],r.tl[1]);mainCtx.lineTo(r.bl[0],r.bl[1]);mainCtx.lineTo(r.br[0],r.br[1]);mainCtx.lineTo(r.tr[0],r.tr[1]);}
+  else if(r.type==="tri"){mainCtx.moveTo(r.a[0],r.a[1]);mainCtx.lineTo(r.b[0],r.b[1]);mainCtx.lineTo(r.c[0],r.c[1]);}
+  else{mainCtx.moveTo(r.pts[0][0],r.pts[0][1]);for(var k=1;k<r.pts.length;k++)mainCtx.lineTo(r.pts[k][0],r.pts[k][1]);mainCtx.lineTo(r.pts[0][0],r.pts[0][1]);}
+  mainCtx.closePath();
+  mainCtx.fillStyle="rgba(253,226,196,"+alpha+")";mainCtx.fill();
+  if(strokeAlpha>0){mainCtx.strokeStyle="rgba(230,126,34,"+strokeAlpha+")";mainCtx.lineWidth=1;mainCtx.stroke();mainCtx.lineWidth=1}
+}
+
+function hlShape(r){
+  mainCtx.beginPath();
+  if(r.type==="rect"){mainCtx.moveTo(r.tl[0],r.tl[1]);mainCtx.lineTo(r.bl[0],r.bl[1]);mainCtx.lineTo(r.br[0],r.br[1]);mainCtx.lineTo(r.tr[0],r.tr[1]);}
+  else if(r.type==="tri"){mainCtx.moveTo(r.a[0],r.a[1]);mainCtx.lineTo(r.b[0],r.b[1]);mainCtx.lineTo(r.c[0],r.c[1]);}
+  else{mainCtx.moveTo(r.pts[0][0],r.pts[0][1]);for(var k=1;k<r.pts.length;k++)mainCtx.lineTo(r.pts[k][0],r.pts[k][1]);}
+  mainCtx.closePath();mainCtx.strokeStyle="#e67e22";mainCtx.lineWidth=3;mainCtx.stroke();mainCtx.lineWidth=1
+}
+
+function drawFrame(){
+
+  mainCtx.clearRect(0,0,W,H);drawAxis();
+  if(mStep>=1){
+    mainCtx.beginPath();
+    if(mode==="rect"||mode==="cuboid"){mainCtx.moveTo(axisX,topY+rectH);mainCtx.lineTo(axisX+rectW,topY+rectH)}
+    else if(mode==="cone"){mainCtx.moveTo(axisX,topY);mainCtx.lineTo(axisX,topY+rectH)}
+    else{mainCtx.moveTo(axisX,sphereCY);mainCtx.lineTo(axisX+sphereR,sphereCY)}
+    mainCtx.strokeStyle="rgba(230,126,34,.7)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1
+  }
+  if(mStep>=2)drawRectShape(activeData[0],0.35,0.60);
+  if(mStep>=3){
+    if(mode!=="cuboid"&&mode!=="semi"){
+      var back=[],front=[];
+      for(var i=0;i<TOTAL;i++){if(activeData[i].cosA<0)back.push(i);else front.push(i)}
+      back.forEach(function(i){drawRectShape(activeData[i],0.10,0.15)});
+      front.forEach(function(i){drawRectShape(activeData[i],0.18,0.22)});
+    }
+    if(mode==="rect"){
+      mainCtx.beginPath();mainCtx.ellipse(axisX,topY,rectW,rectW*depthR,0,0,Math.PI*2);
+      mainCtx.strokeStyle="rgba(230,126,34,.6)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;
+      mainCtx.beginPath();mainCtx.ellipse(axisX,topY+rectH,rectW,rectW*depthR,0,0,Math.PI*2);
+      mainCtx.strokeStyle="rgba(230,126,34,.6)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1
+    }else if(mode==="cuboid"){
+      var f=cuboidData.front,b=cuboidData.backD(1);
+      mainCtx.beginPath();mainCtx.moveTo(b.tl[0],b.tl[1]);mainCtx.lineTo(b.tr[0],b.tr[1]);mainCtx.lineTo(b.br[0],b.br[1]);mainCtx.lineTo(b.bl[0],b.bl[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.06)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.12)";mainCtx.lineWidth=1;mainCtx.stroke();mainCtx.lineWidth=1;
+      mainCtx.beginPath();mainCtx.moveTo(f.bl[0],f.bl[1]);mainCtx.lineTo(f.br[0],f.br[1]);mainCtx.lineTo(b.br[0],b.br[1]);mainCtx.lineTo(b.bl[0],b.bl[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.07)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.14)";mainCtx.stroke();
+      mainCtx.beginPath();mainCtx.moveTo(f.tl[0],f.tl[1]);mainCtx.lineTo(f.bl[0],f.bl[1]);mainCtx.lineTo(b.bl[0],b.bl[1]);mainCtx.lineTo(b.tl[0],b.tl[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.07)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.14)";mainCtx.stroke();
+      mainCtx.beginPath();mainCtx.moveTo(f.tl[0],f.tl[1]);mainCtx.lineTo(f.tr[0],f.tr[1]);mainCtx.lineTo(f.br[0],f.br[1]);mainCtx.lineTo(f.bl[0],f.bl[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.30)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.5)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;
+      mainCtx.beginPath();mainCtx.moveTo(f.tl[0],f.tl[1]);mainCtx.lineTo(f.tr[0],f.tr[1]);mainCtx.lineTo(b.tr[0],b.tr[1]);mainCtx.lineTo(b.tl[0],b.tl[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.18)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.35)";mainCtx.lineWidth=1.5;mainCtx.stroke();mainCtx.lineWidth=1;
+      mainCtx.beginPath();mainCtx.moveTo(f.tr[0],f.tr[1]);mainCtx.lineTo(f.br[0],f.br[1]);mainCtx.lineTo(b.br[0],b.br[1]);mainCtx.lineTo(b.tr[0],b.tr[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.12)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.25)";mainCtx.lineWidth=1.5;mainCtx.stroke();mainCtx.lineWidth=1
+    }else if(mode==="cone"){
+      mainCtx.beginPath();mainCtx.ellipse(axisX,topY+rectH,rectW,rectW*depthR,0,0,Math.PI*2);
+      mainCtx.strokeStyle="rgba(230,126,34,.6)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;
+      drawDot(axisX,topY,5,"rgba(230,126,34,.8)");
+      mainCtx.beginPath();mainCtx.moveTo(axisX,topY);mainCtx.lineTo(axisX+rectW,topY+rectH);
+      mainCtx.strokeStyle="rgba(230,126,34,.4)";mainCtx.lineWidth=1.5;mainCtx.stroke();
+      mainCtx.beginPath();mainCtx.moveTo(axisX,topY);mainCtx.lineTo(axisX-rectW,topY+rectH);
+      mainCtx.strokeStyle="rgba(230,126,34,.4)";mainCtx.lineWidth=1.5;mainCtx.stroke();mainCtx.lineWidth=1
+    }else{
+      var grad=mainCtx.createRadialGradient(axisX-sphereR*0.3,sphereCY-sphereR*0.35,sphereR*0.05,axisX,sphereCY,sphereR);
+      grad.addColorStop(0,"rgba(255,245,225,0.40)");grad.addColorStop(0.5,"rgba(235,200,165,0.22)");grad.addColorStop(1,"rgba(180,150,120,0.08)");
+      mainCtx.beginPath();mainCtx.arc(axisX,sphereCY,sphereR,0,Math.PI*2);mainCtx.fillStyle=grad;mainCtx.fill();
+      for(var a=0;a<360;a+=30){var r=activeData[a];mainCtx.beginPath();
+        mainCtx.moveTo(r.pts[0][0],r.pts[0][1]);for(var k=1;k<r.pts.length;k++)mainCtx.lineTo(r.pts[k][0],r.pts[k][1]);
+        mainCtx.strokeStyle="rgba(230,126,34,.10)";mainCtx.lineWidth=1;mainCtx.stroke();mainCtx.lineWidth=1}
+      mainCtx.beginPath();mainCtx.arc(axisX,sphereCY,sphereR,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,.40)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;
+      mainCtx.beginPath();mainCtx.ellipse(axisX,sphereCY,sphereR,sphereR*depthR,0,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,.20)";mainCtx.lineWidth=1.5;mainCtx.stroke();mainCtx.lineWidth=1
+    }
   }
 }
-function retryQ(){qR=0;qDp=null;qTried=true;$('qfb').innerHTML='';$('qretry').style.display='none';$('qnext').disabled=true;
-  $('qlb').textContent='第①步：它是几维的？（再试一次）';
-  $('qo').innerHTML='<button class="qo d1" onclick="pd(\'d1\',this)">📏 一维 · 线</button><button class="qo d2" onclick="pd(\'d2\',this)">📄 二维 · 面</button><button class="qo d3" onclick="pd(\'d3\',this)">📦 三维 · 体</button>';
+
+function drawAnimOverlay(){
+  if(mmP<=0)return;
+  if(mStep===0){
+    if(mode==="rect"||mode==="cuboid"){var x=axisX+rectW*ease(mmP);mainCtx.beginPath();mainCtx.moveTo(axisX,topY+rectH);mainCtx.lineTo(x,topY+rectH);mainCtx.strokeStyle="rgba(230,126,34,.9)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1;drawDot(axisX,topY+rectH,5,"#e67e22");drawDot(x,topY+rectH,5,"#f0b878")}
+    else if(mode==="cone"){var y=topY+rectH-rectH*ease(mmP);mainCtx.beginPath();mainCtx.moveTo(axisX,topY+rectH);mainCtx.lineTo(axisX,y);mainCtx.strokeStyle="rgba(230,126,34,.9)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1;drawDot(axisX,topY+rectH,5,"#e67e22");drawDot(axisX,y,5,"#f0b878")}
+    else{var cx=axisX,cy=sphereCY;var ex=cx+sphereR*ease(mmP),ey=cy;mainCtx.beginPath();mainCtx.moveTo(cx,cy);mainCtx.lineTo(ex,ey);mainCtx.strokeStyle="rgba(230,126,34,.9)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1;drawDot(cx,cy,5,"#e67e22");drawDot(ex,ey,5,"#f0b878")}
+  }else if(mStep===1){
+    if(mode==="rect"||mode==="cuboid"){var y=topY+rectH-rectH*ease(mmP);var x2=axisX+rectW;mainCtx.beginPath();mainCtx.moveTo(axisX,y);mainCtx.lineTo(x2,y);mainCtx.strokeStyle="rgba(230,126,34,.8)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1;mainCtx.fillStyle="rgba(253,226,196,0.25)";mainCtx.fillRect(axisX,y,rectW,topY+rectH-y);drawDot(axisX,y,4,"#e67e22");drawDot(x2,y,4,"#e67e22")}
+    else if(mode==="cone"){var dx=rectW*ease(mmP);mainCtx.beginPath();mainCtx.moveTo(axisX,topY);mainCtx.lineTo(axisX+dx,topY+rectH);mainCtx.strokeStyle="rgba(230,126,34,.8)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1;mainCtx.beginPath();mainCtx.moveTo(axisX,topY);mainCtx.lineTo(axisX+dx,topY+rectH);mainCtx.lineTo(axisX,topY+rectH);mainCtx.closePath();mainCtx.fillStyle="rgba(253,226,196,0.20)";mainCtx.fill();drawDot(axisX+dx,topY+rectH,5,"#f0b878");drawDot(axisX,topY,5,"#e67e22")}
+    else{var halfAng=Math.PI/2*ease(mmP),steps=Math.floor(20*ease(mmP));var cx=axisX,cy=sphereCY;
+      for(var dir=-1;dir<=1;dir+=2){for(var j=0;j<=steps;j++){var a=dir*(halfAng*j/steps);var ex=cx+sphereR*Math.cos(a),ey=cy+sphereR*Math.sin(a);var alpha=0.12+0.28*(j/steps);mainCtx.beginPath();mainCtx.moveTo(cx,cy);mainCtx.lineTo(ex,ey);mainCtx.strokeStyle="rgba(230,126,34,"+alpha+")";mainCtx.lineWidth=1.2;mainCtx.stroke();mainCtx.lineWidth=1}}
+      for(dir=-1;dir<=1;dir+=2){a=dir*halfAng;ex=cx+sphereR*Math.cos(a);ey=cy+sphereR*Math.sin(a);mainCtx.beginPath();mainCtx.moveTo(cx,cy);mainCtx.lineTo(ex,ey);mainCtx.strokeStyle="rgba(230,126,34,.9)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;drawDot(ex,ey,4,"#e67e22")}
+      drawDot(cx,cy,5,"#e67e22")}
+  }else if(mStep===2){
+    if(mode==="semi"){var pct=ease(mmP);var grad=mainCtx.createRadialGradient(axisX-sphereR*0.3,sphereCY-sphereR*0.35,sphereR*0.05,axisX,sphereCY,sphereR);
+      grad.addColorStop(0,"rgba(255,245,225,"+(0.15+0.55*pct)+")");grad.addColorStop(0.35,"rgba(245,220,185,"+(0.10+0.40*pct)+")");grad.addColorStop(0.7,"rgba(210,175,140,"+(0.05+0.25*pct)+")");grad.addColorStop(1,"rgba(170,140,110,"+(0.02+0.13*pct)+")");
+      mainCtx.beginPath();mainCtx.arc(axisX,sphereCY,sphereR,0,Math.PI*2);mainCtx.fillStyle=grad;mainCtx.fill();
+      var sliceN=Math.floor(sphereSlices.length*pct);
+      for(var j=0;j<sliceN;j++){var sl=sphereSlices[j];mainCtx.beginPath();mainCtx.ellipse(axisX,sl.y,sl.rx,sl.ry,0,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,"+(0.08+0.12*pct)+")";mainCtx.lineWidth=0.7;mainCtx.stroke();mainCtx.lineWidth=1}
+      var curA=Math.floor(TOTAL*pct);
+      for(var t=1;t<=8;t++){var ga=(curA-t*24+TOTAL)%TOTAL;var r=activeData[ga];mainCtx.beginPath();mainCtx.moveTo(r.pts[0][0],r.pts[0][1]);for(var k=1;k<r.pts.length;k++)mainCtx.lineTo(r.pts[k][0],r.pts[k][1]);mainCtx.strokeStyle="rgba(230,126,34,"+(0.08+0.06*(5-t))+")";mainCtx.lineWidth=1;mainCtx.stroke();mainCtx.lineWidth=1}
+      if(curA>0){r=activeData[curA%TOTAL];mainCtx.beginPath();mainCtx.moveTo(r.pts[0][0],r.pts[0][1]);for(k=1;k<r.pts.length;k++)mainCtx.lineTo(r.pts[k][0],r.pts[k][1]);mainCtx.strokeStyle="rgba(230,126,34,.7)";mainCtx.lineWidth=2.5;mainCtx.stroke();mainCtx.lineWidth=1}
+      if(pct>0.85){mainCtx.beginPath();mainCtx.arc(axisX,sphereCY,sphereR,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,.4)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1}
+      return}
+    if(mode==="cuboid"){pct=ease(mmP);var f=cuboidData.front,b=cuboidData.backD(pct);
+      mainCtx.beginPath();mainCtx.moveTo(f.tl[0],f.tl[1]);mainCtx.lineTo(f.tr[0],f.tr[1]);mainCtx.lineTo(f.br[0],f.br[1]);mainCtx.lineTo(f.bl[0],f.bl[1]);mainCtx.closePath();
+      mainCtx.fillStyle="rgba(253,226,196,0.35)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.7)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;
+      for(var t=1;t<=4;t++){var dp=Math.max(0,pct-t*0.20);if(dp<=0)continue;var g=cuboidData.backD(dp);
+        mainCtx.beginPath();mainCtx.moveTo(g.tl[0],g.tl[1]);mainCtx.lineTo(g.tr[0],g.tr[1]);mainCtx.lineTo(g.br[0],g.br[1]);mainCtx.lineTo(g.bl[0],g.bl[1]);mainCtx.closePath();
+        mainCtx.fillStyle="rgba(253,226,196,"+(0.05+0.03*(4-t))+")";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,"+(0.08+0.04*(4-t))+")";mainCtx.lineWidth=1;mainCtx.stroke();mainCtx.lineWidth=1}
+      if(pct>0.05){mainCtx.beginPath();mainCtx.moveTo(f.tl[0],f.tl[1]);mainCtx.lineTo(f.tr[0],f.tr[1]);mainCtx.lineTo(b.tr[0],b.tr[1]);mainCtx.lineTo(b.tl[0],b.tl[1]);mainCtx.closePath();
+        mainCtx.fillStyle="rgba(253,226,196,0.12)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.25)";mainCtx.lineWidth=1.5;mainCtx.stroke();mainCtx.lineWidth=1;
+        mainCtx.beginPath();mainCtx.moveTo(f.tr[0],f.tr[1]);mainCtx.lineTo(f.br[0],f.br[1]);mainCtx.lineTo(b.br[0],b.br[1]);mainCtx.lineTo(b.tr[0],b.tr[1]);mainCtx.closePath();
+        mainCtx.fillStyle="rgba(253,226,196,0.08)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.18)";mainCtx.lineWidth=1;mainCtx.stroke();mainCtx.lineWidth=1;
+        mainCtx.beginPath();mainCtx.moveTo(f.bl[0],f.bl[1]);mainCtx.lineTo(f.br[0],f.br[1]);mainCtx.lineTo(b.br[0],b.br[1]);mainCtx.lineTo(b.bl[0],b.bl[1]);mainCtx.closePath();
+        mainCtx.fillStyle="rgba(253,226,196,0.05)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.12)";mainCtx.stroke();
+        mainCtx.beginPath();mainCtx.moveTo(f.tl[0],f.tl[1]);mainCtx.lineTo(f.bl[0],f.bl[1]);mainCtx.lineTo(b.bl[0],b.bl[1]);mainCtx.lineTo(b.tl[0],b.tl[1]);mainCtx.closePath();
+        mainCtx.fillStyle="rgba(253,226,196,0.05)";mainCtx.fill();mainCtx.strokeStyle="rgba(230,126,34,.12)";mainCtx.stroke()}
+      return}
+    var count=Math.floor(TOTAL*ease(mmP)),back=[],front=[];
+    for(var i=0;i<count;i++){if(activeData[i].cosA<0)back.push(i);else front.push(i)}
+    back.forEach(function(i){drawRectShape(activeData[i],0.10,0.15)});
+    front.forEach(function(i){drawRectShape(activeData[i],0.18,0.22)});
+    if(count>0)hlShape(activeData[count-1]);
+    if(mode==="rect"){if(count>=TOTAL*0.9){
+      mainCtx.beginPath();mainCtx.ellipse(axisX,topY,rectW,rectW*depthR,0,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,.4)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;
+      mainCtx.beginPath();mainCtx.ellipse(axisX,topY+rectH,rectW,rectW*depthR,0,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,.4)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1}}
+    else if(mode==="cone"){if(count>=TOTAL*0.9){mainCtx.beginPath();mainCtx.ellipse(axisX,topY+rectH,rectW,rectW*depthR,0,0,Math.PI*2);mainCtx.strokeStyle="rgba(230,126,34,.4)";mainCtx.lineWidth=2;mainCtx.stroke();mainCtx.lineWidth=1;drawDot(axisX,topY,5,"rgba(230,126,34,.6)")}}
+  }
 }
-function nextQ(){qi++;rDots();rQQ();}
-function showSc(){
-  var c=qRes.filter(function(r){return r.ok}).length;
-  $('qs').innerHTML='';$('qlb').textContent='';$('qo').innerHTML='';$('qfb').innerHTML='';$('qnext').style.display='none';$('qretry').style.display='none';
-  var m=c===qT?'🎉 全对！你已经是拆解大师！':c>=7?'👍 很不错！继续加油～':c>=4?'💪 还可以更好，再练一次～':'🌱 没关系，多练几次就熟了！';
-  $('qsc').style.display='block';$('qsc').innerHTML=m+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+c+' / '+qT+' 题</span><br><br><button class="dbtn reset" onclick="initQ()">🔄 重新闯关</button>';
-  var w=qRes.filter(function(r){return!r.ok});
-  if(w.length>0){var rh='<div style="font-weight:700;color:#e67e22;margin-top:4px">📋 错题回顾：</div>';
-    w.forEach(function(r){rh+='<div class="rv-item"><span class="ri-em">'+r.s+'</span><div><div>'+r.d+'</div><div class="ri-ans">答案：'+r.q.dt+' + '+r.q.at+' → '+r.q.x+'</div></div></div>'});
-    $('qrev').innerHTML=rh;$('qrev').style.display='block';}
+
+function runStep1(){
+  if(mStep!==0||mRunning)return;mRunning=true;sfxOK();$("mb0").disabled=true;
+  $("mlabel").innerHTML="① 点动成线：点移动 → 形成<b>线段</b>（一维）";
+  mmP=0;(function tick(){mmP=Math.min(mmP+0.012,1);drawFrame();drawAnimOverlay();
+    if(mmP<1)mAnim=requestAnimationFrame(tick);else{mStep=1;mAnim=null;mRunning=false;drawFrame();$("mb1").disabled=false;sfxTap();
+      $("mlabel").innerHTML="✅ ① 完成！线段（一维）—— 点击 ② 继续";$("mm").innerHTML="";}
+  })();
 }
-initQ();
+function runStep2(){
+  if(mStep!==1||mRunning)return;mRunning=true;sfxOK();$("mb1").disabled=true;
+  var name=mode==="rect"?"矩形":(mode==="cone"?"三角形":(mode==="cuboid"?"矩形":"半圆"));
+  $("mlabel").innerHTML="② 线动成面：线平移/旋转 → 形成<b>"+name+"面</b>（二维）";
+  mmP=0;(function tick(){mmP=Math.min(mmP+0.008,1);drawFrame();drawAnimOverlay();
+    if(mmP<1)mAnim=requestAnimationFrame(tick);else{mStep=2;mAnim=null;mRunning=false;drawFrame();$("mb2").disabled=false;sfxTap();
+      $("mlabel").innerHTML="✅ ② 完成！"+name+"面（二维）—— 点击 ③ 看立体";$("mm").innerHTML="";}
+  })();
+}
+function runStep3(){
+  if(mStep!==2||mRunning)return;mRunning=true;sfxOK();$("mb2").disabled=true;
+  var name=mode==="rect"?"圆柱":(mode==="cone"?"圆锥":(mode==="cuboid"?"长方体":"球"));
+  $("mlabel").innerHTML="③ 面动成体：面绕轴旋转/挤出 → <b>"+name+"</b>（三维）";
+  mmP=0;(function tick(){mmP=Math.min(mmP+0.005,1);drawFrame();drawAnimOverlay();
+    if(mmP<1)mAnim=requestAnimationFrame(tick);else{mStep=3;mAnim=null;mRunning=false;drawFrame();sfxOK();
+      $("mlabel").innerHTML="🎉 ③ 完成！面动成体 = <b>"+name+"</b>（三维）";
+      $("mm").innerHTML="<span style=color:var(--d2)>360个面位置叠加 = "+name+"！</span>";}
+  })();
+}
+function resetMain(){
+  mStep=0;mRunning=false;
+  if(mAnim){cancelAnimationFrame(mAnim);mAnim=null}
+  mmP=0;
+  $("mb0").disabled=false;$("mb1").disabled=true;$("mb2").disabled=true;
+  $("mlabel").innerHTML="点动成线 → 线动成面 → 面动成体";
+  $("mm").innerHTML="";drawFrame();
+}
+
+(function init(){
+  mainCvs=$("mainCanvas");mainCtx=mainCvs.getContext("2d");
+  precompute();activeData=rectRects;drawFrame();
+})();
+/* ===== 闯关 (shapes-style) ===== */
+var quizData=[
+  {q:'生日蛋糕——圆圆的，从上往下看是个圆',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'从上往下看蛋糕是圆形——这是认识平面图形。'},
+  {q:'篮球——圆滚滚的，整个表面都是曲面，没有平面也没有棱角',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'篮球是球体——全是曲面，没有平面。认识立体图形！'},
+  {q:'教室的门——直直的边，四个角，像个长方形',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'门是长方形——认识平面图形。'},
+  {q:'快递纸箱——六个面，每个面都是长方形',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'纸箱是长方体——认识立体图形。'},
+  {q:'用尺子量桌子的边有多长',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'量桌边——测量一维线段的长度。'},
+  {q:'用量杯倒牛奶，看刻度线到了200毫升',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'量杯看刻度——测量三维容器的容积。'},
+  {q:'给照片配一个正好大小的相框——量量照片多宽多长',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'量照片的长和宽——测量二维的面积。'},
+  {q:'数学课上用量角器量三角形的角是多少度',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'量角器量角度——测量图形中角的大小。'},
+  {q:'镜子里的你——左右一模一样',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'镜像是轴对称——图形沿一条线翻转。属于图形的运动。'},
+  {q:'车轮转起来——绕着一个轴转圈',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'车轮转动是旋转——图形绕一个点或轴转。属于图形的运动。'},
+  {q:'滑滑梯——从上面滑到下面',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'滑滑梯是平移——物体沿直线改变位置。属于图形的运动。'},
+  {q:'风车被风吹得转起来',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'风车转动是旋转——二维叶片绕中心转。属于图形的运动。'},
+  {q:'排队时老师说第3个小朋友出列——队伍就是一条线',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'队伍里第几个——用一维顺序说清位置。属于物体的位置。'},
+  {q:'手机上的电子地图——平平的一大片，用坐标定位',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'地图是二维——用两个数标出位置。属于物体的位置。'},
+  {q:'电影院票上写着5排7座',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'排号+座位号——二维网格定位。属于物体的位置。'},
+  {q:'快递员看门牌号幸福路7号3单元201',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'地址用路号+单元+房号——逐层定位。属于物体的位置。'},
+  {q:'用卷尺量房间的长度是4米5',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'量房间长度——测量一维的长度。属于测量图形。'},
+  {q:'用放大镜看照片——照片里的东西变大了但形状没变',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'放大镜让图形变大——样子不变只变大小。属于图形的运动（放大缩小）。'},
+  {q:'把一张纸对折剪出心形——打开是个对称的爱心',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'对折剪纸——轴对称。属于图形的运动。'},
+  {q:'切一块三棱柱形的积木——横着切一刀，截面是个三角形',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'三棱柱横切——截面正好是三角形。认识平面图形！'},
+  {q:'推着购物车直直往前走',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'购物车直走——整个平移。属于图形的运动。'},
+  {q:'量一量你的身高是1米35',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'量身高——测量一维的长度。属于测量图形。'},
+  {q:'你站在我的左边，小明站在右边',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'左右位置——最基础的空间关系。属于物体的位置。'},
+  {q:'看地图找学校——上北下南左西右东',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'地图上用方向——属于物体的位置。'},
+  {q:'旋转门推一下转了半圈',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'旋转门绕轴转动——旋转。属于图形的运动。'},
+  {q:'金字塔——尖尖的，底是正方形',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'金字塔是四棱锥——认识立体图形。'},
+  {q:'骰子——它是一个正方体，六个面都是正方形，每个面一模一样大',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'骰子是正方体——六个一样大的正方形面。认识立体图形！'},
+  {q:'从家出发，先往东走100米再往北走50米到学校',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'出发→方向→距离——这是路线图。属于物体的位置。'},
+  {q:'量体温——体温计显示37°C',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'体温计读刻度——测量度数。属于测量图形。'},
+  {q:'魔方扭来扭去——每扭一下，小方块绕中心轴转圈',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'魔方扭动——小方块绕中心轴旋转。纯正的图形运动！'},
+  {q:'电梯从1楼升到5楼',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'电梯直直上升——平移。属于图形的运动。'},
+  {q:'看一个罐头——上下两个圆面，中间是弯的',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'罐头是圆柱——认识立体图形。'}
+,
+  {q:'设计师设计新手机——在电脑上标清楚长宽高各是多少，精确到毫米',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'标清每一个尺寸——量出东西的长短和大小，是测量图形。每个设计师天天都在用！'},
+  {q:'无人机在天上送快递——飞近大楼时，靠摄像头认出哪栋才是目的地',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'认出目标大楼——认识形状和外观，是认识图形。无人机「眼睛」靠的就是这个。'},
+  {q:'做电影特效让恐龙追着车跑——恐龙每跑一步，电脑都要算它的腿怎么摆、身体怎么动',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'算每一步的动作——让东西挪动、转动，是图形的运动。电影特效师靠几何让恐龙「活」起来。'},
+  {q:'自动驾驶汽车开在路上——随时知道前面红绿灯还有多远，该不该刹车',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'知道离红绿灯多远——精准判断位置和距离，是物体的位置。自动驾驶靠这个保安全。'},
+  {q:'戴虚拟现实眼镜打游戏——你转头，游戏里的画面也跟着转，感觉像真的走进了游戏世界',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'画面跟着头转动——让画面变换样子，是图形的运动。VR眼镜每秒算几十次旋转。'},
+  {q:'骨科医生帮骨折的人做手术——先在CT片上仔细量骨头碎成了几块、每块有多大',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'在CT上量骨头碎块——量出东西的大小，是测量图形。医生靠精确测量决定手术方案。'},
+  {q:'气象台预报台风——算它接下来会经过哪些城市、几点到达每个城市',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'台风经过哪些城市、几点到——预测物体的路线和到达时间，是物体的位置。天气预报全靠这个！'},
+  {q:'航天员在国际空间站——没有上下左右，全靠仪器上的坐标找到要找的工具在哪',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'太空中用坐标找东西——精准定位，是物体的位置。空间站里没有「上下」，全靠坐标。'},
+  {q:'三角尺——有三个角，其中一个角方方正正，是直角',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'三角尺有一个直角——认识平面图形中的角！'},
+  {q:'停车标志牌——红红的边框，圆圆的，没有角',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:0,x:'圆形——没有边也没有角。认识平面图形！'},
+  {q:'书放在桌子的上面，鞋子脱在椅子下面——这是在说什么？',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:3,x:'上面/下面——最基础的位置关系。属于物体的位置。'},
+  {q:'钟表上的秒针嘀嗒嘀嗒转——针尖一直在绕中心画圈',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:2,x:'秒针绕中心转圈——标准的旋转。属于图形的运动。'},
+  {q:'厨房里比较两个碗——哪个碗能装更多汤？倒满水比一比',o:['认识图形：看出东西长什么样', '测量图形：量出长短和大小', '图形运动：挪动、转动、变换', '物体位置：找到东西放哪里'],a:1,x:'比哪个装得多——比较容积。属于测量图形。'}];
+var qPool=[],qIdx=0,qTotal=20,qResults=[];
+function initQuiz(){
+  var pool=quizData.slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
+  qPool=pool.slice(0,qTotal);
+  qIdx=0;qResults=[];for(var i=0;i<qTotal;i++)qResults[i]=void 0;
+  document.getElementById('quizScore').style.display='none';
+  document.getElementById('qPrev').style.display='';
+  document.getElementById('qNext').style.display='';
+  renderDots();renderQ();
+}
+function renderDots(){
+  var h='';
+  for(var i=0;i<qTotal;i++){
+    var r=qResults[i],cls='qdot';
+    if(r!==void 0){cls+=r.ok?' correct':' wrong';}
+    if(i===qIdx)cls+=' current';
+    h+='<span class="'+cls+'"></span>';
+  }
+  document.getElementById('quizDots').innerHTML=h;
+}
+function renderQ(){
+  if(qIdx>=qTotal){showScore();return}
+  var q=qPool[qIdx],r=qResults[qIdx],answered=r!==void 0;
+  document.getElementById('quizQ').textContent='第'+(qIdx+1)+'题：'+q.q;
+  var h='';
+  q.o.forEach(function(o,i){
+    var cls='qbtn',dis='';
+    if(answered){
+      dis=' disabled';
+      if(i===q.a){cls+=' good'}
+      if(i===r.chosen&&!r.ok){cls+=' bad'}
+    }
+    h+='<button class="'+cls+'"'+dis+' onclick="quizAnswer('+i+')">'+o+'</button>';
+  });
+  document.getElementById('quizOpts').innerHTML=h;
+  if(answered){
+    document.getElementById('quizFb').innerHTML=r.ok?'<span style="color:#27ae60">✅ 正确！</span> '+q.x:'<span style="color:#e67e22">❌ 不对哦。</span> '+q.x;
+  }else{
+    document.getElementById('quizFb').innerHTML='';
+  }
+  document.getElementById('qPrev').disabled=qIdx===0;
+  document.getElementById('qNext').disabled=qResults[qIdx]===void 0;
+}
+function quizAnswer(chosen){
+  if(qResults[qIdx]!==void 0)return;
+  var q=qPool[qIdx],ok=(chosen===q.a);
+  qResults[qIdx]={ok:ok,chosen:chosen};
+  document.querySelectorAll('#quizOpts .qbtn').forEach(function(b,i){
+    b.disabled=true;
+    if(i===q.a)b.classList.add('good');
+    if(i===chosen&&!ok)b.classList.add('bad');
+  });
+  if(ok){sfxOK();document.getElementById('quizFb').innerHTML='<span style="color:#27ae60">✅ 正确！</span> '+q.x}
+  else{sfxNO();document.getElementById('quizFb').innerHTML='<span style="color:#e67e22">❌ 不对哦。</span> '+q.x}
+  document.getElementById('qNext').disabled=false;
+  renderDots();
+}
+function quizPrev(){if(qIdx>0){qIdx--;renderDots();renderQ();}}
+function quizNext(){if(qIdx<qTotal-1){qIdx++;renderDots();renderQ();}else if(qIdx===qTotal-1){qIdx++;showScore()}}
+function showScore(){
+  qIdx=qTotal;
+  var correct=0,wrongs=[];
+  qResults.forEach(function(r,i){if(r&&r.ok)correct++;else if(r)wrongs.push({q:qPool[i],chosen:r.chosen})});
+  document.getElementById('quizQ').textContent='';
+  document.getElementById('quizOpts').innerHTML='';
+  document.getElementById('quizFb').innerHTML='';
+  document.getElementById('qPrev').style.display='none';
+  document.getElementById('qNext').style.display='none';
+  var msg=correct===qTotal?'🎉 全对！四大几何本领，你全掌握了！':correct>=qTotal/2?'👍 不错！再练一次会更厉害～':'💪 没关系，多看看上面的几何本领卡片，再试一次吧！';
+  var btns='<button class="qbtn" onclick="initQuiz()" style="border-color:#d35400;color:#d35400">🔄 再闯一次</button>';
+  if(wrongs.length>0){
+    btns+=' <button class="qbtn" onclick="showWrongs()" style="border-color:#e67e22;color:#e67e22">🔍 查看错题 ('+wrongs.length+'题)</button>';
+  }
+  document.getElementById('quizScore').style.display='block';
+  document.getElementById('quizScore').innerHTML=msg+'<br><span style="font-size:.82em;color:#8a7e6e">答对 '+correct+' / '+qTotal+' 题</span><br><br>'+btns+'<div id="wrongList" style="display:none;text-align:left;margin-top:8px"></div>';
+  renderDots();
+  window._wrongs=wrongs;
+}
+function showWrongs(){
+  var wl=document.getElementById('wrongList'),w=window._wrongs||[];
+  if(wl.style.display==='block'){wl.style.display='none';return}
+  var h='';
+  w.forEach(function(wr,i){
+    var q=wr.q,userAns=q.o[wr.chosen],correctAns=q.o[q.a];
+    h+='<div style="background:#fef9f4;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.78em;line-height:1.5">';
+    h+='<b style="color:#e67e22">❌ 第'+(i+1)+'错：</b>'+q.q+'<br>';
+    h+='<span style="color:#c0392b">你的答案：'+userAns+'</span> → ';
+    h+='<span style="color:#27ae60">正确答案：'+correctAns+'</span><br>';
+    h+='<span style="color:#8a7e6e;font-size:.92em">'+q.x+'</span></div>';
+  });
+  wl.innerHTML=h;
+  wl.style.display='block';
+}
+initQuiz();
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+var wrap=document.getElementById("boxWrap"),infoEl=document.getElementById("boxInfo");
+var legendEl=document.getElementById("boxNarr"),btnNext=document.getElementById("btnNext");
+var btnPrev=document.getElementById("btnPrev");
+var W=wrap.clientWidth,H=wrap.clientHeight;
+var scene=new THREE.Scene();scene.background=new THREE.Color("#fefcf8");
+var camera=new THREE.PerspectiveCamera(40,W/H,0.5,30);camera.position.set(4,3,6);
+var renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(W,H);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+wrap.appendChild(renderer.domElement);
+scene.add(new THREE.AmbientLight("#fff5ed",2.8));
+var sun=new THREE.DirectionalLight("#fff8f0",4.5);sun.position.set(8,12,5);
+sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
+sun.shadow.camera.near=0.5;sun.shadow.camera.far=40;
+sun.shadow.camera.left=-12;sun.shadow.camera.right=12;
+sun.shadow.camera.top=12;sun.shadow.camera.bottom=-12;
+sun.shadow.bias=-0.0001;scene.add(sun);
+var fill=new THREE.DirectionalLight("#ffe8d0",1.8);fill.position.set(-3,2,-2);scene.add(fill);
+var floorGeo=new THREE.PlaneGeometry(20,20);
+var floorMat=new THREE.MeshStandardMaterial({color:"#faf6ef",roughness:0.9});
+var floor=new THREE.Mesh(floorGeo,floorMat);floor.rotation.x=-Math.PI/2;
+floor.position.y=-4;floor.receiveShadow=true;scene.add(floor);
+var controls=new OrbitControls(camera,renderer.domElement);
+controls.target.set(0,-0.2,0.5);controls.enableDamping=true;controls.dampingFactor=0.08;
+controls.minDistance=2;controls.maxDistance=16;controls.maxPolarAngle=Math.PI*0.75;
+controls.autoRotate=true;controls.autoRotateSpeed=0.5;controls.update();
+window.addEventListener("resize",function(){var w=wrap.clientWidth,h=wrap.clientHeight;
+  camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)});
+var currentStep=0,animTargets=null,animStart=0,animDir=1,autoChain=false,DUR=750;
+function easeInOutCubic(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+var _sceneTopLevel=[];
+function disposeRecursive(obj){obj.traverse(function(child){
+  if(child.geometry)child.geometry.dispose();
+  if(child.material){if(Array.isArray(child.material))child.material.forEach(function(m){if(m.map)m.map.dispose();m.dispose()});
+  else{if(child.material.map)child.material.map.dispose();child.material.dispose()}}});}
+function clearShape(){for(var i=0;i<_sceneTopLevel.length;i++){
+  disposeRecursive(_sceneTopLevel[i]);scene.remove(_sceneTopLevel[i]);}_sceneTopLevel.length=0;}
+function makeLabelTexture(text,bgColor){
+  var c=document.createElement("canvas");c.width=256;c.height=256;var ctx=c.getContext("2d");
+  ctx.fillStyle=bgColor;ctx.fillRect(0,0,256,256);
+  ctx.strokeStyle="rgba(255,255,255,0.06)";ctx.lineWidth=1;
+  for(var i=0;i<256;i+=32){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,256);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(256,i);ctx.stroke();}
+  ctx.fillStyle="rgba(255,255,255,0.92)";
+  ctx.font='bold 50px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(text,128,128);
+  var tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;
+  tex.minFilter=THREE.LinearFilter;tex.magFilter=THREE.LinearFilter;return tex;}
+function makeFace(w,h,text,bgColor){
+  var group=new THREE.Group();var geo=new THREE.PlaneGeometry(w,h);
+  var tex=makeLabelTexture(text,bgColor);
+  var mat=new THREE.MeshStandardMaterial({map:tex,roughness:0.45,metalness:0.02,side:THREE.DoubleSide});
+  var mesh=new THREE.Mesh(geo,mat);mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);
+  var edgeGeo=new THREE.EdgesGeometry(geo);
+  var edgeMat=new THREE.LineBasicMaterial({color:"#8b5a3c",transparent:true,opacity:0.5});
+  group.add(new THREE.LineSegments(edgeGeo,edgeMat));return group;}
+function buildCube(){
+  var w=2,h=2,d=2,hw=w/2,hh=h/2,hd=d/2;
+  var CLR={front:"#e8875a",top:"#f0b878",right:"#d4734a",left:"#f5c98a",back:"#f0d8b0",bottom:"#e8a070"};
+  var NM={front:"前面",top:"顶面",right:"右面",left:"左面",back:"后面",bottom:"底面"};
+  var frontMesh=makeFace(w,h,NM.front,CLR.front);frontMesh.position.set(0,0,hd);
+  scene.add(frontMesh);_sceneTopLevel.push(frontMesh);
+  var topPivot=new THREE.Group();topPivot.position.set(0,hh,hd);scene.add(topPivot);_sceneTopLevel.push(topPivot);
+  var topMesh=makeFace(w,d,NM.top,CLR.top);topMesh.position.set(0,0,-hd);topMesh.rotation.set(-Math.PI/2,0,0);topPivot.add(topMesh);
+  var botPivot=new THREE.Group();botPivot.position.set(0,-hh,hd);scene.add(botPivot);_sceneTopLevel.push(botPivot);
+  var botMesh=makeFace(w,d,NM.bottom,CLR.bottom);botMesh.position.set(0,0,-hd);botMesh.rotation.set(Math.PI/2,0,0);botPivot.add(botMesh);
+  var rightPivot=new THREE.Group();rightPivot.position.set(hw,0,hd);scene.add(rightPivot);_sceneTopLevel.push(rightPivot);
+  var rightMesh=makeFace(d,h,NM.right,CLR.right);rightMesh.position.set(0,0,-hd);rightMesh.rotation.set(0,Math.PI/2,0);rightPivot.add(rightMesh);
+  var backPivot=new THREE.Group();backPivot.position.set(0,0,-d);rightPivot.add(backPivot);
+  var backMesh=makeFace(w,h,NM.back,CLR.back);backMesh.position.set(-hw,0,0);backMesh.rotation.set(0,Math.PI,0);backPivot.add(backMesh);
+  var leftPivot=new THREE.Group();leftPivot.position.set(-hw,0,hd);scene.add(leftPivot);_sceneTopLevel.push(leftPivot);
+  var leftMesh=makeFace(d,h,NM.left,CLR.left);leftMesh.position.set(0,0,-hd);leftMesh.rotation.set(0,-Math.PI/2,0);leftPivot.add(leftMesh);
+  var STEPS=[{name:"top",pivots:[{g:topPivot,ax:"x",t:Math.PI/2}]},{name:"right",pivots:[{g:rightPivot,ax:"y",t:-Math.PI/2}]},{name:"left",pivots:[{g:leftPivot,ax:"y",t:Math.PI/2}]},{name:"bottom",pivots:[{g:botPivot,ax:"x",t:-Math.PI/2}]},{name:"back",pivots:[{g:backPivot,ax:"y",t:-Math.PI/2}]}];
+  var CAM=[{pos:[4,3.2,6.5],tgt:[0,-0.1,0.5]},{pos:[4.5,3.5,7.5],tgt:[0.2,0,0.7]},{pos:[5,3.8,8.5],tgt:[0.4,0,0.8]},{pos:[5.5,4,9.5],tgt:[0.6,0,0.9]},{pos:[5.8,4.5,10.5],tgt:[0.8,0,1]},{pos:[6,5,12],tgt:[1,0,1]}];
+  return {STEPS:STEPS,CAM:CAM,NM:NM,CLR:CLR};}
+
+function buildCuboid(){
+  var w=3,h=2,d=1.6,hw=w/2,hh=h/2,hd=d/2;
+  var CLR={front:"#5d9e9e",top:"#7ec8c8",right:"#4a8a8a",left:"#8ed8d8",back:"#a0d8d8",bottom:"#689898"};
+  var NM={front:"前面",top:"顶面",right:"右面",left:"左面",back:"后面",bottom:"底面"};
+  var fm=makeFace(w,h,NM.front,CLR.front);fm.position.set(0,0,hd);scene.add(fm);_sceneTopLevel.push(fm);
+  var tp=new THREE.Group();tp.position.set(0,hh,hd);scene.add(tp);_sceneTopLevel.push(tp);
+  var tm=makeFace(w,d,NM.top,CLR.top);tm.position.set(0,0,-hd);tm.rotation.set(-Math.PI/2,0,0);tp.add(tm);
+  var bp=new THREE.Group();bp.position.set(0,-hh,hd);scene.add(bp);_sceneTopLevel.push(bp);
+  var bm=makeFace(w,d,NM.bottom,CLR.bottom);bm.position.set(0,0,-hd);bm.rotation.set(Math.PI/2,0,0);bp.add(bm);
+  var rp=new THREE.Group();rp.position.set(hw,0,hd);scene.add(rp);_sceneTopLevel.push(rp);
+  var rm=makeFace(d,h,NM.right,CLR.right);rm.position.set(0,0,-hd);rm.rotation.set(0,Math.PI/2,0);rp.add(rm);
+  var bkp=new THREE.Group();bkp.position.set(0,0,-d);rp.add(bkp);
+  var bkm=makeFace(w,h,NM.back,CLR.back);bkm.position.set(-hw,0,0);bkm.rotation.set(0,Math.PI,0);bkp.add(bkm);
+  var lp=new THREE.Group();lp.position.set(-hw,0,hd);scene.add(lp);_sceneTopLevel.push(lp);
+  var lm=makeFace(d,h,NM.left,CLR.left);lm.position.set(0,0,-hd);lm.rotation.set(0,-Math.PI/2,0);lp.add(lm);
+  var STEPS=[{name:"top",pivots:[{g:tp,ax:"x",t:Math.PI/2}]},{name:"right",pivots:[{g:rp,ax:"y",t:-Math.PI/2}]},{name:"left",pivots:[{g:lp,ax:"y",t:Math.PI/2}]},{name:"bottom",pivots:[{g:bp,ax:"x",t:-Math.PI/2}]},{name:"back",pivots:[{g:bkp,ax:"y",t:-Math.PI/2}]}];
+  var CAM=[{pos:[4.5,3.5,7],tgt:[0,-0.1,0.4]},{pos:[5,3.8,8],tgt:[0.3,0,0.6]},{pos:[5.5,4,9],tgt:[0.6,0,0.7]},{pos:[6,4.5,10],tgt:[1,0,0.8]},{pos:[6.5,5,11.5],tgt:[1.2,0,0.9]},{pos:[7,5.5,13],tgt:[1.5,0,1]}];
+  return {STEPS:STEPS,CAM:CAM,NM:NM,CLR:CLR};
+}
+
+
+function makeTriFace2(s,h,text,bgColor){
+  var g=new THREE.Group();var geo=new THREE.BufferGeometry();
+  geo.setAttribute("position",new THREE.BufferAttribute(new Float32Array([-s/2,0,0,s/2,0,0,0,h,0]),3));
+  geo.setIndex([0,1,2]);geo.computeVertexNormals();
+  var tex=makeLabelTexture(text,bgColor);
+  var mat=new THREE.MeshStandardMaterial({map:tex,roughness:0.45,metalness:0.02,side:THREE.DoubleSide});
+  var m=new THREE.Mesh(geo,mat);m.castShadow=true;m.receiveShadow=true;g.add(m);
+  g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:"#8b5a3c",transparent:true,opacity:0.5})));
+  return g;
+}
+
+function buildTriPrism(){
+  var S=2,HH=2.5,triH=S*Math.sqrt(3)/2;
+  var CLR={front:"#8e6b9e",right:"#7a5690",left:"#c9a8d8",top:"#b896c8",bottom:"#9e80b0"};
+  var NM={front:"前面",right:"右面",left:"左面",top:"顶面",bottom:"底面"};
+  var fm=makeFace(S,HH,NM.front,CLR.front);fm.position.set(0,0,0);scene.add(fm);_sceneTopLevel.push(fm);
+  var rp=new THREE.Group();rp.position.set(1,0,0);var rm=makeFace(S,HH,NM.right,CLR.right);rm.position.set(1,0,0);rp.add(rm);scene.add(rp);_sceneTopLevel.push(rp);
+  var lp=new THREE.Group();lp.position.set(-1,0,0);var lm=makeFace(S,HH,NM.left,CLR.left);lm.position.set(-1,0,0);lp.add(lm);scene.add(lp);_sceneTopLevel.push(lp);
+  var tp2=new THREE.Group();tp2.position.set(0,HH/2,0);var tm2=makeTriFace2(S,triH,NM.top,CLR.top);tp2.add(tm2);scene.add(tp2);_sceneTopLevel.push(tp2);
+  var bp2=new THREE.Group();bp2.position.set(0,-HH/2,0);var bm2=makeTriFace2(S,triH,NM.bottom,CLR.bottom);bm2.rotation.x=Math.PI;bp2.add(bm2);scene.add(bp2);_sceneTopLevel.push(bp2);
+  var FA={right:2*Math.PI/3,left:-2*Math.PI/3,top:-Math.PI/2,bottom:Math.PI/2};
+  rp.rotation.y=FA.right;lp.rotation.y=FA.left;tp2.rotation.x=FA.top;bp2.rotation.x=FA.bottom;
+  var STEPS=[{name:"top",pivots:[{g:tp2,ax:"x",t:0}],folded:FA.top},{name:"right",pivots:[{g:rp,ax:"y",t:0}],folded:FA.right},{name:"left",pivots:[{g:lp,ax:"y",t:0}],folded:FA.left},{name:"bottom",pivots:[{g:bp2,ax:"x",t:0}],folded:FA.bottom}];
+  var CAM=[{pos:[3,3,7],tgt:[0,0.3,0]},{pos:[3.5,3.5,7.5],tgt:[0.2,0.4,0.2]},{pos:[4,4,8],tgt:[0.4,0.4,0.4]},{pos:[4.5,4.5,9],tgt:[0.6,0.4,0.6]},{pos:[5,5,10],tgt:[0.8,0.5,0.8]}];
+  return {STEPS:STEPS,CAM:CAM,NM:NM,CLR:CLR};
+}
+
+function buildPyramid(){
+  var S=2,H=2.5,slantH=Math.sqrt(H*H+(S/2)*(S/2)),FA=Math.PI-Math.acos((S/2)/slantH);
+  var CLR={base:"#7b5ea7",front:"#9b7ec4",back:"#5c3d8e",right:"#b498d8",left:"#422a6e"};
+  var NM={base:"底面",front:"前面",back:"后面",right:"右面",left:"左面"};
+  var bm=makeFace(S,S,NM.base,CLR.base);bm.position.set(0,0,-0.01);scene.add(bm);_sceneTopLevel.push(bm);
+  var fp2=new THREE.Group();fp2.position.set(0,-S/2,0);
+  var ft=makeTriFace2(S,slantH,NM.front,CLR.front);ft.rotation.z=Math.PI;fp2.add(ft);scene.add(fp2);_sceneTopLevel.push(fp2);
+  var bp3=new THREE.Group();bp3.position.set(0,S/2,0);
+  var bt=makeTriFace2(S,slantH,NM.back,CLR.back);bp3.add(bt);scene.add(bp3);_sceneTopLevel.push(bp3);
+  var rp3=new THREE.Group();rp3.position.set(S/2,0,0);
+  var rt=makeTriFace2(S,slantH,NM.right,CLR.right);rt.rotation.z=-Math.PI/2;rp3.add(rt);scene.add(rp3);_sceneTopLevel.push(rp3);
+  var lp3=new THREE.Group();lp3.position.set(-S/2,0,0);
+  var lt=makeTriFace2(S,slantH,NM.left,CLR.left);lt.rotation.z=Math.PI/2;lp3.add(lt);scene.add(lp3);_sceneTopLevel.push(lp3);
+  fp2.rotation.x=-FA;bp3.rotation.x=FA;rp3.rotation.y=-FA;lp3.rotation.y=FA;
+  var STEPS=[{name:"front",pivots:[{g:fp2,ax:"x",t:0}],folded:-FA},{name:"right",pivots:[{g:rp3,ax:"y",t:0}],folded:-FA},{name:"back",pivots:[{g:bp3,ax:"x",t:0}],folded:FA},{name:"left",pivots:[{g:lp3,ax:"y",t:0}],folded:FA}];
+  var CAM=[{pos:[2,4,10],tgt:[0,0.5,0]},{pos:[2.5,4.5,11],tgt:[0.2,0.5,0.2]},{pos:[3,5,12],tgt:[0.4,0.5,0.5]},{pos:[3.5,5.5,13],tgt:[0.6,0.5,0.6]},{pos:[4,6,14],tgt:[0.8,0.5,0.8]}];
+  return {STEPS:STEPS,CAM:CAM,NM:NM,CLR:CLR};
+}
+
+var BUILDERS={cube:buildCube,cuboid:buildCuboid,triprism:buildTriPrism,pyramid:buildPyramid};
+var shapeData=null;
+function switchShape(type){
+  type=type||"cube";clearShape();shapeData=BUILDERS[type]();currentStep=0;animTargets=null;autoChain=false;updateUI();
+  var html="";for(var id in shapeData.CLR){if(shapeData.NM[id])html+='<span style="display:flex;align-items:center;gap:4px"><span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:'+shapeData.CLR[id]+'"></span>'+shapeData.NM[id]+"</span>";}
+  legendEl.innerHTML=html;}
+function updateUI(){
+  var busy=animTargets!==null;
+  btnNext.disabled=busy||currentStep>=shapeData.STEPS.length;
+  btnPrev.disabled=busy||currentStep<=0;
+  if(currentStep===0)infoEl.innerHTML="👆 点「拆一面」开始拆立体～";
+  else if(currentStep<shapeData.STEPS.length){
+    var names=[];for(var i=0;i<currentStep;i++)names.push(shapeData.NM[shapeData.STEPS[i].name]);
+    infoEl.innerHTML="已摊开：<b>"+names.join(" → ")+"</b>";
+  }else infoEl.innerHTML="✅ 全摊开了！这就是<b>展开图</b>——立体变平面";}
+function animateUnfold(stepIndex){
+  if(stepIndex>=shapeData.STEPS.length)return;
+  var step=shapeData.STEPS[stepIndex];
+  animTargets=step.pivots.map(function(p){return {g:p.g,ax:p.ax,from:p.g.rotation[p.ax],to:p.t}});
+  animStart=performance.now();animDir=1;updateUI();}
+function animateFold(stepIndex){
+  if(stepIndex>=shapeData.STEPS.length)return;
+  var step=shapeData.STEPS[stepIndex];
+  animTargets=step.pivots.map(function(p){var fv=step.folded!=null?step.folded:0;return {g:p.g,ax:p.ax,from:p.g.rotation[p.ax],to:fv}});
+  animStart=performance.now();animDir=-1;updateUI();}
+function resetToFolded(){
+  for(var i=0;i<shapeData.STEPS.length;i++){
+    var s=shapeData.STEPS[i];
+    for(var j=0;j<s.pivots.length;j++){var p=s.pivots[j],fv=s.folded!=null?s.folded:0;p.g.rotation[p.ax]=fv;}}}
+window._next=function(){if(animTargets||currentStep>=shapeData.STEPS.length)return;autoChain=false;animateUnfold(currentStep)};
+window._prev=function(){if(animTargets||currentStep<=0)return;autoChain=false;animateFold(currentStep-1)};
+window._all=function(){if(animTargets)return;if(currentStep>=shapeData.STEPS.length){resetToFolded();currentStep=0;}autoChain=true;animateUnfold(0)};
+window._reset=function(){autoChain=false;resetToFolded();currentStep=0;animTargets=null;updateUI()};
+function lerp3(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
+function updateCamera(dt){
+  if(!shapeData)return;var s=Math.min(currentStep,shapeData.CAM.length-1);
+  var cp=shapeData.CAM[s],spd=3,t=Math.min(dt*spd,1);
+  var np=lerp3([camera.position.x,camera.position.y,camera.position.z],cp.pos,t);
+  camera.position.set(np[0],np[1],np[2]);
+  var nt=lerp3([controls.target.x,controls.target.y,controls.target.z],cp.tgt,t);
+  controls.target.set(nt[0],nt[1],nt[2]);}
+var lastTime=performance.now();
+function loop(now){
+  requestAnimationFrame(loop);var dt=(now-lastTime)/1000;lastTime=now;
+  if(animTargets){
+    var elapsed=now-animStart,t=Math.min(elapsed/DUR,1),et=easeInOutCubic(t);
+    for(var i=0;i<animTargets.length;i++){var a=animTargets[i];a.g.rotation[a.ax]=a.from+(a.to-a.from)*et;}
+    if(t>=1){animTargets=null;currentStep+=animDir;updateUI();
+      if(autoChain&&animDir===1&&currentStep<shapeData.STEPS.length)animateUnfold(currentStep);
+      else if(currentStep>=shapeData.STEPS.length)autoChain=false;}}
+  updateCamera(dt);controls.update();renderer.render(scene,camera);}
+window._setShape=function(type){
+  var names=["cube","cuboid","triprism","pyramid"],ids=["shapeCube","shapeCuboid","shapeTriPrism","shapePyramid"];
+  for(var i=0;i<names.length;i++){
+    var btn=document.getElementById(ids[i]),active=names[i]===type;
+    if(btn){btn.style.background=active?"linear-gradient(135deg,#e67e22,#d35400)":"";btn.style.color=active?"#fff":"";btn.style.border=active?"none":"";}
+  }
+  switchShape(type);
+};
+switchShape("cube");requestAnimationFrame(loop);
 </script>
 </body>
 </html>
