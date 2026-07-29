@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>几何 · 可豆妈妈数学工具</title>
+<title>几何全景地图 · 可豆妈妈数学工具</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
@@ -11,57 +11,185 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
 .container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px 20px 60px}
-.hero{text-align:center;padding:24px 0}
-.hero h1{font-size:1.8em;background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:#777;font-size:.9em;margin-top:8px}
-.tools{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.tool{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;text-decoration:none;color:#e0e0e0;transition:all .2s}
-.tool:hover{border-color:rgba(247,151,30,.4);background:rgba(247,151,30,.05)}
-.tool-icon{font-size:1.8em;flex-shrink:0}
-.tool-info{flex:1;min-width:0}
-.tool-name{font-size:1em;font-weight:600;color:#f7971e;margin-bottom:2px}
-.tool-desc{font-size:.8em;color:#888;line-height:1.4}
-.tool-arrow{color:#555;font-size:1.1em}
-.footer{text-align:center;color:#444;font-size:.78em;margin-top:40px}
+
+/* Hero */
+.hero{text-align:center;padding:28px 0 20px}
+.hero h1{font-size:1.7em;background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.hero .sub{color:#777;font-size:.85em}
+.hero .tagline{color:#66bb6a;font-size:.8em;margin-top:6px}
+
+/* Timeline */
+.timeline{position:relative;margin:0 0 0 28px;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,#f7971e,#ab47bc,#ffb74d,#42a5f5,#66bb6a);border-radius:1px}
+
+.stage{position:relative;margin-bottom:24px}
+.stage:last-child{margin-bottom:0}
+
+.stage-badge{
+  position:absolute;left:-36px;top:6px;
+  width:32px;height:32px;border-radius:50%;
+  background:#1a1a2e;border:2px solid #f7971e;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85em;color:#f7971e;
+  z-index:1
+}
+.stage:nth-child(1) .stage-badge{border-color:#f7971e;color:#f7971e}
+.stage:nth-child(2) .stage-badge{border-color:#ab47bc;color:#ab47bc}
+.stage:nth-child(3) .stage-badge{border-color:#ffb74d;color:#ffb74d}
+.stage:nth-child(4) .stage-badge{border-color:#42a5f5;color:#42a5f5}
+.stage:nth-child(5) .stage-badge{border-color:#66bb6a;color:#66bb6a}
+
+.stage-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:16px 18px;transition:border-color .2s;
+  border-left:4px solid #f7971e;
+}
+.stage:nth-child(1) .stage-card{border-left-color:#f7971e}
+.stage:nth-child(2) .stage-card{border-left-color:#ab47bc}
+.stage:nth-child(3) .stage-card{border-left-color:#ffb74d}
+.stage:nth-child(4) .stage-card{border-left-color:#42a5f5}
+.stage:nth-child(5) .stage-card{border-left-color:#66bb6a}
+
+.stage-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.stage-icon{font-size:1.5em;flex-shrink:0}
+.stage-title{font-size:1.05em;font-weight:700;color:#e8e8e8}
+.stage:nth-child(1) .stage-title{color:#f7971e}
+.stage:nth-child(2) .stage-title{color:#ab47bc}
+.stage:nth-child(3) .stage-title{color:#ffb74d}
+.stage:nth-child(4) .stage-title{color:#42a5f5}
+.stage:nth-child(5) .stage-title{color:#66bb6a}
+
+.stage-path{font-size:.78em;color:#666;line-height:1.5;margin-bottom:12px}
+.stage-path .arr{color:#555;margin:0 2px}
+
+.stage-goal{font-size:.78em;color:#555;margin-bottom:12px;padding:8px 12px;background:rgba(255,255,255,.02);border-radius:8px;line-height:1.5}
+.stage-goal::before{content:'✅ '}
+
+/* Tools */
+.tools-list{display:flex;flex-direction:column;gap:6px}
+.tool-link{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;text-decoration:none;transition:all .2s;font-size:.88em}
+.tool-link.live{background:rgba(255,183,77,.08);border:1px solid rgba(255,183,77,.15);color:#e0e0e0}
+.tool-link.live:hover{background:rgba(255,183,77,.15);border-color:rgba(255,183,77,.35)}
+.tool-link.live .tool-dot{width:7px;height:7px;border-radius:50%;background:#66bb6a;flex-shrink:0;box-shadow:0 0 6px #66bb6a}
+.tool-link.live .tool-label{color:#ffb74d;font-weight:600}
+.tool-link.live .tool-desc{color:#888;font-size:.82em;margin-left:auto;text-align:right;flex-shrink:0}
+.tool-link.live .tool-go{color:#ffb74d;font-size:.8em;flex-shrink:0}
+
+/* Footer */
+.footer{text-align:center;margin-top:40px;padding:24px 0 0}
+.footer p{color:#555;font-size:.78em;line-height:1.6}
+.footer .highlight{color:#f7971e;font-weight:600}
+
 @media(max-width:500px){
-  .hero h1{font-size:1.4em}.container{padding:16px 14px 50px}
-  .tool{padding:14px}
+  .hero h1{font-size:1.35em}
+  .container{padding:16px 12px 50px}
+  .timeline{margin-left:24px;padding-left:16px}
+  .stage-badge{left:-32px;width:28px;height:28px;font-size:.75em}
+  .stage-card{padding:14px 12px}
+  .stage-title{font-size:.95em}
+  .tool-link{font-size:.82em;padding:8px 10px}
+  .tool-link.live .tool-desc{display:none}
 }
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 <div class="container">
-  <div class="hero"><h1>📏 几何</h1><p>看清图形本身 · 工具持续更新中 🌱</p></div>
 
-  <div class="tools">
-    <a class="tool" href="geometry-map.html">
-      <span class="tool-icon">🗺️</span>
-      <span class="tool-info">
-        <span class="tool-name">几何全景地图</span>
-        <span class="tool-desc">帮小熊造小屋：选形状·量大小·怎么动·在哪里——四件事看懂整个几何</span>
-      </span>
-      <span class="tool-arrow">→</span>
-    </a>
-    <a class="tool" href="perimeter.html">
-      <span class="tool-icon">📏</span>
-      <span class="tool-info">
-        <span class="tool-name">周长彻底搞懂</span>
-        <span class="tool-desc">6步互动探索：描图形→选单位→推导公式→凹形拖拽→拼接靠墙→闯关测试</span>
-      </span>
-      <span class="tool-arrow">→</span>
-    </a>
-    <a class="tool" href="area.html">
-      <span class="tool-icon">📐</span>
-      <span class="tool-info">
-        <span class="tool-name">面积探险</span>
-        <span class="tool-desc">6步互动探索：生活场景→用小方块量→平方厘米→找规律→不规整形状→综合闯关</span>
-      </span>
-      <span class="tool-arrow">→</span>
-    </a>
+  <div class="hero">
+    <h1>🗺️ 几何全景地图</h1>
+    <p class="sub">5 阶体系 · 四件事串起整个几何</p>
+    <p class="tagline">跟随公众号进度 · 工具持续更新中 🌱</p>
   </div>
 
-  <div class="footer">关注公众号「可豆妈妈」获取最新数学工具</div>
+  <div class="timeline">
+
+    <!-- 阶段一：几何全景认知 -->
+    <div class="stage">
+      <div class="stage-badge">1</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🗺️</span>
+          <span class="stage-title">几何全景认知</span>
+        </div>
+        <div class="stage-path">几何是干什么的 <span class="arr">→</span> 四件事框架 <span class="arr">→</span> 一年级到高中的完整路线</div>
+        <div class="stage-goal">先看全貌，知道几何在研究什么、为什么学、整条路长什么样</div>
+      </div>
+    </div>
+
+    <!-- 阶段二：认识图形（长什么样） -->
+    <div class="stage">
+      <div class="stage-badge">2</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">👀</span>
+          <span class="stage-title">认识图形 · 长什么样</span>
+        </div>
+        <div class="stage-path">平面图形 <span class="arr">→</span> 立体图形 <span class="arr">→</span> 角与线</div>
+        <div class="stage-goal">能说出常见图形的名称和特征，分辨平面与立体</div>
+      </div>
+    </div>
+
+    <!-- 阶段三：测量图形（有多大） -->
+    <div class="stage">
+      <div class="stage-badge">3</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">📏</span>
+          <span class="stage-title">测量图形 · 有多大</span>
+        </div>
+        <div class="stage-path">长度 <span class="arr">→</span> 周长 <span class="arr">→</span> 面积 <span class="arr">→</span> 体积</div>
+        <div class="stage-goal">理解"测量就是数单位"，分清周长和面积不是一回事</div>
+        <div class="tools-list">
+          <a class="tool-link live" href="perimeter.html">
+            <span class="tool-dot"></span>
+            <span class="tool-label">周长彻底搞懂</span>
+            <span class="tool-desc">描图形·选单位·凹形拖拽·闯关</span>
+            <span class="tool-go">→</span>
+          </a>
+          <a class="tool-link live" href="area.html">
+            <span class="tool-dot"></span>
+            <span class="tool-label">面积探险</span>
+            <span class="tool-desc">小方块量·找规律·不规整形状</span>
+            <span class="tool-go">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段四：图形的运动（怎么动） -->
+    <div class="stage">
+      <div class="stage-badge">4</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🔄</span>
+          <span class="stage-title">图形的运动 · 怎么动</span>
+        </div>
+        <div class="stage-path">平移 <span class="arr">→</span> 旋转 <span class="arr">→</span> 轴对称 <span class="arr">→</span> 放大缩小</div>
+        <div class="stage-goal">理解图形在空间中如何变化，建立动态几何直觉</div>
+      </div>
+    </div>
+
+    <!-- 阶段五：空间与位置（在哪里） -->
+    <div class="stage">
+      <div class="stage-badge">5</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🧭</span>
+          <span class="stage-title">空间与位置 · 在哪里</span>
+        </div>
+        <div class="stage-path">方向 <span class="arr">→</span> 坐标 <span class="arr">→</span> 路线图</div>
+        <div class="stage-goal">建立空间感，能用坐标描述位置，看懂地图</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>关注公众号「<span class="highlight">可豆妈妈</span>」</p>
+    <p>每次上新第一时间收到通知，陪孩子一步步走完几何全程 👣</p>
+  </div>
+
 </div>
 <script>
 (function(){
