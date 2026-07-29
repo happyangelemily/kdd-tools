@@ -20,7 +20,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
 /* Timeline */
 .timeline{position:relative;margin:0 0 0 28px;padding-left:20px}
-.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,#f7971e,#ab47bc,#ffb74d,#42a5f5,#66bb6a);border-radius:1px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,#f7971e,#ab47bc,#ffb74d,#42a5f5,#66bb6a,#e0e0e0);border-radius:1px}
 
 .stage{position:relative;margin-bottom:24px}
 .stage:last-child{margin-bottom:0}
@@ -38,6 +38,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage:nth-child(3) .stage-badge{border-color:#ffb74d;color:#ffb74d}
 .stage:nth-child(4) .stage-badge{border-color:#42a5f5;color:#42a5f5}
 .stage:nth-child(5) .stage-badge{border-color:#66bb6a;color:#66bb6a}
+.stage:nth-child(6) .stage-badge{border-color:#e0e0e0;color:#e0e0e0}
 
 .stage-card{
   background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
@@ -49,6 +50,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage:nth-child(3) .stage-card{border-left-color:#ffb74d}
 .stage:nth-child(4) .stage-card{border-left-color:#42a5f5}
 .stage:nth-child(5) .stage-card{border-left-color:#66bb6a}
+.stage:nth-child(6) .stage-card{border-left-color:#e0e0e0}
 
 .stage-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .stage-icon{font-size:1.5em;flex-shrink:0}
@@ -58,6 +60,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage:nth-child(3) .stage-title{color:#ffb74d}
 .stage:nth-child(4) .stage-title{color:#42a5f5}
 .stage:nth-child(5) .stage-title{color:#66bb6a}
+.stage:nth-child(6) .stage-title{color:#e0e0e0}
 
 .stage-path{font-size:.78em;color:#666;line-height:1.5;margin-bottom:12px}
 .stage-path .arr{color:#555;margin:0 2px}
@@ -98,7 +101,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
   <div class="hero">
     <h1>🗺️ 几何全景地图</h1>
-    <p class="sub">5 阶体系 · 四件事串起整个几何</p>
+    <p class="sub">6 阶体系 · 四件事串起整个几何</p>
     <p class="tagline">跟随公众号进度 · 工具持续更新中 🌱</p>
   </div>
 
@@ -180,6 +183,19 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
         </div>
         <div class="stage-path">方向 <span class="arr">→</span> 坐标 <span class="arr">→</span> 路线图</div>
         <div class="stage-goal">建立空间感，能用坐标描述位置，看懂地图</div>
+      </div>
+    </div>
+
+    <!-- 阶段六：综合运用 -->
+    <div class="stage">
+      <div class="stage-badge">6</div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <span class="stage-icon">🧩</span>
+          <span class="stage-title">综合运用</span>
+        </div>
+        <div class="stage-path">跨维度组合 <span class="arr">→</span> 真实问题解决 <span class="arr">→</span> 几何思维内化</div>
+        <div class="stage-goal">能把长什么样+有多大+怎么动+在哪里灵活组合，解决真实几何问题</div>
       </div>
     </div>
 
