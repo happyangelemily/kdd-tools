@@ -413,15 +413,8 @@ var WORDS={
 (function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
 
 
-function playAudio(path,el){
-  if(el.classList.contains('on'))return;
-  var a=audioCache[path];
-  if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}
-  a.currentTime=0;el.classList.add('on');
-  a.onended=function(){el.classList.remove('on')};
-  a.onerror=function(){el.classList.remove('on')};
-  a.play().catch(function(e){el.classList.remove('on')});
-}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+
 function spkPhoneme(ipa,el){
   var p=PHONEMES[ipa];
   if(p){playAudio(p,el);return}
@@ -432,13 +425,8 @@ function spkWord(word,el){
   if(p){playAudio(p,el);return}
   spk(w);
 }
-function spk(word){
-  var w=word.toLowerCase();var p=WORDS[w];
-  if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}});return}
-  speechSynthesis.resume();
-  if(speechSynthesis.getVoices().length===0){voiceQ.push(w);return}
-  speakNow(w);
-}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
   speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}

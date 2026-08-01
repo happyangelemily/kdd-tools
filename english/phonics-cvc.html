@@ -260,7 +260,8 @@ var AUDIO_BASE='audio/';
 var spT=null,voiceRetries=0,voiceQ=[];
 function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
 speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
-function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}});return}var btn=document.querySelector('.speak-btn');speechSynthesis.resume();if(speechSynthesis.getVoices().length===0){voiceQ.push(w);return}speakNow(w)}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}function speakNow(word){speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.8;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50)}
 var audioCache={};
 var PHONEMES={'/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɒ/':'phonemes/sock.mp3','/e/':'phonemes/head.mp3','/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3','/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3','/f/':'phonemes/fish.mp3','/s/':'phonemes/say.mp3','/h/':'phonemes/hand.mp3','/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/w/':'phonemes/we.mp3','/ʃ/':'phonemes/she.mp3','/tʃ/':'phonemes/cheese.mp3','/ʊ/':'phonemes/foot.mp3','/ɜː/':'phonemes/bird.mp3','/ɔː/':'phonemes/horse.mp3'};
@@ -323,7 +324,8 @@ var WORDS={
 // Preload all audio to avoid file:// lazy-load failures
 (function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
 
-function playAudio(path,el){if(el.classList.contains('on'))return;var a=audioCache[path];if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}a.currentTime=0;el.classList.add('on');a.onended=function(){el.classList.remove('on')};a.onerror=function(){el.classList.remove('on')};a.play().catch(function(e){el.classList.remove('on')})}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+
 function spkPhoneme(ipa,el){var k=ipa.replace(/\//g,'');var p=PHONEMES['/'+k+'/'];if(p)playAudio(p,el);else console.log('Phoneme not found:',ipa)}
 function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p)playAudio(p,el);else console.log('Word not found:',w)}
 
