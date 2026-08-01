@@ -611,21 +611,16 @@ var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
 function playBookAudio(accent){
-  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
   bp_reading=true;
   document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
   document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
-  speechSynthesis.cancel();
-  var text=bp_pages[bp_cp].x.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
-  var u=new SpeechSynthesisUtterance(text);u.lang=accent==='uk'?'en-GB':'en-US';u.rate=0.75;u.pitch=1;u.volume=1;
-  var voices=speechSynthesis.getVoices();
-  var targetLang=accent==='uk'?'en-GB':'en-US';
-  var vo=voices.filter(function(v){return v.lang===targetLang}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
-  if(!vo)vo=voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
-  if(vo)u.voice=vo;
-  u.onend=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
-  speechSynthesis.speak(u);
+  bp_audio=new Audio(AUDIO_BASE+'book/04-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
 }
+
 function renderP(){
   if(bp_audio){bp_audio.pause();bp_audio=null}
   if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}

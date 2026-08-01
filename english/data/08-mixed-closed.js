@@ -245,7 +245,17 @@ var bp_cp=0,bp_pages=[{s:'🚂🌄',t:'The Grand Trip',x:'Grant puts a stamp on 
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
-function playBookAudio(accent){if(bp_audio){bp_audio.pause();bp_audio=null}bp_reading=true;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});speechSynthesis.cancel();var text=bp_pages[bp_cp].x.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();var u=new SpeechSynthesisUtterance(text);u.lang=accent==='uk'?'en-GB':'en-US';u.rate=0.75;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var targetLang=accent==='uk'?'en-GB':'en-US';var vo=voices.filter(function(v){return v.lang===targetLang}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(!vo)vo=voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(vo)u.voice=vo;u.onend=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};speechSynthesis.speak(u)}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/08-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+
 function renderP(){if(bp_audio){bp_audio.pause();bp_audio=null}if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}var p=bp_pages[bp_cp];document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';var g=bp_cp===bp_pages.length-1;document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>'}
 function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
 function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
