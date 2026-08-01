@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>分清元音和辅音 · Vowels & Consonants | 自然拼读</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.cvc-decon-block{margin:14px 0;padding:12px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.06)}.cvc-decon-word{font-size:1.5em;font-weight:bold;color:#ffd200;text-align:center;margin-bottom:8px;letter-spacing:5px}.cvc-decon-row{display:flex;gap:6px;align-items:center;margin:4px 0;padding:8px 12px;background:rgba(0,0,0,.15);border-radius:10px;font-size:.88em}.cvc-decon-letter{font-size:1.2em;font-weight:bold;min-width:32px;text-align:center}.cvc-decon-type{color:#888;font-size:.78em;min-width:60px}.cvc-decon-ipa{color:#81c784;font-weight:bold;flex:1}.cvc-decon-say{text-align:center;font-size:.92em;color:#4fc3f7;font-weight:bold;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}.container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#81c784,#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#4fc3f7;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(79,195,247,.15);border-color:#4fc3f7;color:#4fc3f7}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#4fc3f7,#81c784);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(79,195,247,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#4fc3f7;color:#4fc3f7}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(79,195,247,.08);border-left:3px solid #4fc3f7;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.footnote{font-size:.7em;color:#666;text-align:center;margin-top:12px}
+
+/* ===== TAB 1 ===== */
+.paradox-wrap{position:relative}
+.paradox-layout{display:flex;gap:0;position:relative}
+.letter-col{flex:0 0 155px;display:flex;flex-direction:column;gap:2px;position:relative;z-index:1}
+.letter-row{display:flex;align-items:center;gap:3px;padding:2px 6px;border-radius:6px;font-size:.85em;cursor:default}
+.letter-row.vowel-row{border-left:2px solid #ffd200;background:rgba(255,210,0,.04)}
+.letter-row .lr-letter{font-weight:bold;min-width:16px}.letter-row.vowel-row .lr-letter{color:#ffd200}
+.letter-row .lr-cnt{font-size:.6em;margin-left:auto;min-width:18px;text-align:right}.letter-row.vowel-row .lr-cnt{color:#ffd200}
+.letter-row .lr-spk{width:20px;height:20px;font-size:.55em}
+.phoneme-col{flex:1;min-width:0;position:relative;z-index:1}
+.phoneme-col h4{font-size:.8em;margin:0 0 3px;display:flex;align-items:center;gap:5px}.ph-dot{width:7px;height:7px;border-radius:50%;display:inline-block}.ph-dot.v{background:#ffd200}.ph-dot.c{background:#4fc3f7}
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:2px;margin-bottom:8px}
+.p-item{text-align:center;padding:3px 1px;border-radius:4px;font-size:.65em;cursor:pointer;background:rgba(0,0,0,.15);border:1px solid transparent;transition:all .2s}
+.p-item.vowel-ph{border-color:rgba(255,210,0,.06)}.p-item.cons-ph{border-color:rgba(79,195,247,.05)}.p-item:hover{border-color:rgba(255,255,255,.2)}
+#connCanvas{display:none}
+
+.mod-box,.card-grid,.ph-card,.ph-card-bar,.ph-card-detail,.ph-row,.ph-ipa,.ph-ex,.spk-mini,.mod-result,.mod-note,.y-tabs,.y-tab,.y-pane,.y-footnote,.cmp-grid,.cmp-label,.cmp-c,.cmp-total,.scene-label,.mod-header{box-sizing:border-box}
+.mod-box{border-radius:14px;padding:14px;margin:12px 0}
+.mod-vowel{background:rgba(255,210,0,.03);border:1px solid rgba(255,210,0,.15)}
+.mod-cons{background:rgba(79,195,247,.03);border:1px solid rgba(79,195,247,.12)}
+.mod-y{background:rgba(255,138,101,.03);border:1px solid rgba(255,138,101,.15)}
+.mod-header{font-size:1em;font-weight:bold;margin-bottom:8px}
+.mod-vowel .mod-header{color:#ffd200}.mod-cons .mod-header{color:#4fc3f7}.mod-y .mod-header{color:#ff8a65}
+.scene-label{font-size:.75em;color:#888;margin:12px 0 6px;padding:4px 10px;border-radius:6px;display:inline-block}
+.mod-vowel .scene-label{background:rgba(255,210,0,.04)}.mod-cons .scene-label{background:rgba(79,195,247,.03)}
+.card-grid{display:flex;flex-wrap:wrap;gap:6px}
+.ph-card{background:rgba(0,0,0,.2);border-radius:10px;border:1px solid rgba(255,255,255,.06);overflow:hidden}
+.mod-vowel .ph-card:hover{border-color:rgba(255,210,0,.25)}.mod-cons .ph-card:hover{border-color:rgba(79,195,247,.2)}
+.ph-card-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;cursor:pointer;font-weight:bold;font-size:.9em;user-select:none}
+.ph-card-bar:hover{background:rgba(255,255,255,.03)}
+.mod-vowel .ph-card-bar{color:#ffd200}.mod-cons .ph-card-bar{color:#4fc3f7}.mod-y .ph-card-bar{color:#ff8a65}
+.ph-card-detail{display:none;padding:4px 12px 8px;font-size:.82em}
+.ph-card.open .ph-card-detail{display:block}
+.ph-row{display:flex;align-items:center;gap:6px;padding:3px 6px;margin:1px 0;border-radius:6px;background:rgba(0,0,0,.1);font-size:.88em}
+.ph-ipa{font-weight:bold;min-width:48px}.mod-vowel .ph-ipa{color:#ffd200}.mod-cons .ph-ipa{color:#4fc3f7}.mod-y .ph-ipa{color:#ff8a65}
+.ph-ex{color:#aaa;font-size:.85em;margin-left:auto}
+.spk-mini{background:rgba(255,210,0,.1);border:1px solid rgba(255,210,0,.2);border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.6em;flex-shrink:0;color:#ffd200}
+.spk-mini:hover{background:rgba(255,210,0,.25);transform:scale(1.15)}
+.mod-result{text-align:center;padding:8px;margin-top:10px;border-radius:8px;font-size:.8em;font-weight:bold}
+.mod-vowel .mod-result{background:rgba(255,210,0,.06);color:#ffd200}.mod-cons .mod-result{background:rgba(79,195,247,.05);color:#4fc3f7}
+.mod-note{font-size:.68em;color:#888;text-align:center;margin-top:4px}
+.y-tabs{display:flex;gap:4px;margin:8px 0}
+.y-tab{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(255,138,101,.2);background:rgba(0,0,0,.15);color:#aaa;cursor:pointer;font-size:.8em;text-align:center}
+.y-tab:hover{border-color:rgba(255,138,101,.4)}.y-tab.on{background:rgba(255,138,101,.12);border-color:#ff8a65;color:#ff8a65;font-weight:bold}
+.y-pane{display:none}.y-pane.on{display:block}
+.y-footnote{font-size:.65em;color:#666;text-align:center;margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,.04)}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:10px 0;font-size:.82em}
+.cmp-label{grid-column:1/-1;text-align:center;padding:3px;color:#888;font-size:.72em;font-weight:bold}
+.cmp-c{padding:7px 8px;text-align:center;background:rgba(0,0,0,.15);border-radius:6px;font-weight:bold}
+.cmp-c.vc{background:rgba(255,210,0,.05);color:#ffd200}.cmp-c.cc{background:rgba(79,195,247,.03);color:#4fc3f7}
+.cmp-c.yc{grid-column:1/-1;background:rgba(255,138,101,.04);color:#ff8a65}
+.cmp-total{grid-column:1/-1;text-align:center;padding:9px;background:rgba(0,0,0,.2);border-radius:8px;margin-top:4px;font-size:.82em;color:#ccc}
+@media(max-width:768px){.ph-card{width:100%}.card-grid{gap:4px}.ph-card-bar{font-size:.82em;padding:10px}.cmp-grid{font-size:.75em}}
+
+/* ===== TAB 2 ===== */
+.ph-section{margin:12px 0}.ph-section h4{margin-bottom:6px;font-size:.95em}
+.ph-list{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.ph-chip{padding:6px 12px;border-radius:14px;font-size:.85em;display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08)}.ph-chip .ph-ipa{font-weight:bold}
+.flow-btns{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.flow-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.flow-btn:hover,.flow-btn.on{border-color:#4fc3f7;color:#4fc3f7;background:rgba(79,195,247,.1)}
+.quiz-box{margin:16px 0;padding:16px;background:rgba(0,0,0,.15);border-radius:14px;border:1px solid rgba(255,255,255,.06)}
+.quiz-box h4{margin-top:0;margin-bottom:10px}.q-opt-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.q-opt-btn{padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .2s}.q-opt-btn:hover{border-color:#4fc3f7}
+.reveal-box{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:14px;padding:14px;margin:10px 0;text-align:center}
+
+/* ===== TAB 3 ===== */
+.three-zones{display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px;margin-bottom:16px}
+.zone{border-radius:14px;padding:14px 10px;text-align:center;min-height:90px}.zone.v-zone{background:rgba(255,210,0,.04);border:2px solid rgba(255,210,0,.2)}.zone.c-zone{background:rgba(79,195,247,.03);border:2px solid rgba(79,195,247,.12)}.zone.y-zone{background:rgba(255,138,101,.04);border:2px solid rgba(255,138,101,.18)}
+.zone .z-title{font-size:.9em;font-weight:bold;margin-bottom:6px}.zone .z-letters{font-size:1.8em;font-weight:bold;letter-spacing:6px}
+.zone.v-zone .z-title{color:#ffd200}.zone.v-zone .z-letters{color:#ffd200}.zone.c-zone .z-title{color:#4fc3f7}.zone.c-zone .z-letters{color:#4fc3f7}.zone.y-zone .z-title{color:#ff8a65}.zone.y-zone .z-letters{color:#ff8a65}
+.exp-card{border-radius:14px;padding:16px;margin:14px 0;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06)}
+.exp-card h3{font-size:1em;margin:0 0 8px;color:#ffd200}.exp-card .exp-num{color:#ff8a65}
+.exp-row{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:8px 0}
+.exp-letter{font-size:1.6em;font-weight:bold;padding:6px 14px;border-radius:10px;background:rgba(0,0,0,.2);color:#ccc;transition:all .2s}
+.exp-letter.is-vowel{background:rgba(255,210,0,.12);border:2px solid #ffd200;color:#ffd200}
+.exp-msg{text-align:center;min-height:24px;margin:6px 0;font-size:.9em}
+/* Vowel Bridge */
+.bridge-demo{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:12px 0;min-height:80px}
+.bridge-unit{display:flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;font-size:1.5em;font-weight:bold;min-width:50px;transition:all .4s}
+.bridge-unit.cn{background:rgba(255,138,101,.1);border:2px solid #ff8a65;color:#ff8a65}
+.bridge-unit.vw{background:rgba(255,210,0,.12);border:2px solid #ffd200;color:#ffd200}
+.bridge-unit.muted{opacity:.15;filter:grayscale(1);transform:scale(.85)}
+.bridge-line{width:28px;height:4px;background:rgba(255,210,0,.6);border-radius:2px;transition:all .4s;flex-shrink:0}
+.bridge-line.broken{background:rgba(255,82,82,.4);height:0;position:relative}
+.bridge-line.broken::after{content:'🚫';position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:1.2em}
+.bridge-word{text-align:center;font-size:1.6em;font-weight:bold;margin:6px 0;letter-spacing:3px}
+.bridge-word.ok{color:#69f0ae}.bridge-word.no{color:#ff5252;text-decoration:line-through}
+
+/* ===== TAB 4 ===== */
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:100px;min-height:120px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.9em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+
+/* ===== TAB 5 ===== */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#4fc3f7;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#4fc3f7}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2)}.review-wrong{margin-top:12px}
+
+/* ===== TAB 6 ===== */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4.5em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(79,195,247,.3))}.book-title{font-size:1.4em;color:#4fc3f7;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .sv{color:#ffd200;font-weight:bold}.book-text .sc{color:#ffffff;font-weight:bold}.book-text .sy{color:#ff8a65;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.uk:hover{background:rgba(79,195,247,.15);border-color:#4fc3f7;color:#4fc3f7}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.us:hover{background:rgba(255,138,101,.15);border-color:#ff8a65;color:#ff8a65}.pron-btn.playing{animation:pulse .3s;pointer-events:none}
+@media(max-width:768px){
+  body{font-size:16px}.container{padding:6px;max-width:480px}h1{font-size:1.25em}h2{font-size:1em}h3{font-size:.9em}.glass{padding:14px 8px;margin:8px 0;border-radius:12px}.subtitle{font-size:.78em;padding:0 4px}.nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin:6px 0}.nav-btn{padding:10px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}.speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}.story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}.three-zones{grid-template-columns:1fr}.zone{padding:10px 8px;min-height:60px}.zone .z-letters{font-size:1.2em;letter-spacing:4px}.sort-bins{flex-direction:column}.sort-bin{min-height:60px;width:100%}.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.book-page{padding:12px;min-height:200px;border-radius:12px}.book-scene{font-size:2.5em}.book-text{font-size:.9em;line-height:1.8}.ph-list{gap:4px}.ph-chip{padding:4px 8px;font-size:.75em}.bridge-demo{gap:2px}.bridge-unit{padding:8px 10px;font-size:1.1em;min-width:36px}.bridge-line{width:18px}.exp-letter{font-size:1.1em;padding:4px 10px}
+}
+@media(max-width:480px){.container{padding:4px}.glass{padding:12px 6px;margin:6px 0}h1{font-size:1.15em}.nav{gap:3px}.nav-btn{padding:9px 2px;font-size:.65em;min-height:44px;border-radius:12px}.quiz-opts{grid-template-columns:1fr}.book-scene{font-size:2em}.book-text{font-size:.85em;line-height:1.7}.zone .z-letters{font-size:1em;letter-spacing:2px}.bridge-unit{font-size:.9em;padding:6px 8px;min-width:28px}.bridge-line{width:12px}.exp-letter{font-size:.95em}body{padding-bottom:env(safe-area-inset-bottom,12px)}}
+</style></head>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔤 分清元音和辅音</h1><p class="subtitle">Vowels & Consonants — 自然拼读的第一步</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">🎤 故事</button><button class="nav-btn" onclick="showS('classify')">📋 字母分分类</button><button class="nav-btn" onclick="showS('lab')">🔬 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 综合闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button></div>
+
+<!-- ==================== TAB 2 ==================== -->
+<div class="section active" id="sec-story"><div class="glass">
+<div class="story-speech" style="text-align:center"><p>👋 小朋友，这一页我们要学会<b style="color:#ffd200">分清元音和辅音</b>！先来听听它们的声音有什么不同——</p></div>
+
+<h2>🎤 来听听：元音和辅音有什么不同？</h2>
+
+<div class="ph-section"><h3>🎧 元音音素</h3>
+<div class="flow-btns"><button class="flow-btn" onclick="toggleLoopV()" id="loopVBtn">🔁 循环播放全部元音</button></div>
+<div class="ph-list" id="vowelPhList"></div>
+</div>
+
+<div class="ph-section"><h3>🎧 辅音音素</h3>
+<div class="flow-btns"><button class="flow-btn" onclick="toggleLoopC()" id="loopCBtn">🔁 循环播放全部辅音</button></div>
+<div class="ph-list" id="consPhList"></div>
+</div>
+
+<div class="quiz-box" id="mixQuiz"><h4>🤔 综合闯关：点击 🔊 听发音，判断它是元音还是辅音？（5题）</h4></div>
+
+<div id="storyReveal"></div>
+</div></div>
+
+<!-- ==================== TAB 2 ==================== -->
+<div class="section" id="sec-classify"><div class="glass">
+<h2>📋 字母分分类</h2>
+<div class="story-speech"><p>前面我们认识了元音音素和辅音音素——它们说的是「声音」。现在我们来看看<b>写出来的字母</b>，分成<b style="color:#ffd200">元音字母</b>、<b style="color:#4fc3f7">辅音字母</b>，还有一位特别的<b style="color:#ff8a65">半元音字母 Y</b>。</p></div>
+<div class="three-zones">
+  <div class="zone v-zone"><div class="z-title">🔴 元音字母</div><div class="z-letters">A E I<br>O U</div><p style="color:#888;font-size:.7em;margin-top:4px">共 5 个</p></div>
+  <div class="zone c-zone"><div class="z-title">🔵 辅音字母</div><div class="z-letters" style="font-size:1em;line-height:1.8">B C D F G H J K L M<br>N P Q R S T V W X Z</div><p style="color:#888;font-size:.7em;margin-top:4px">共 20 个</p></div>
+  <div class="zone y-zone"><div class="z-title">🟡 半元音字母</div><div class="z-letters">Y</div><p style="color:#888;font-size:.7em;margin-top:4px">有时当辅音<br>有时当元音</p></div>
+</div>
+</div></div>
+
+<!-- ==================== TAB 3 ==================== -->
+<div class="section" id="sec-lab"><div class="glass">
+<h2>🔬 实验室</h2>
+<div class="story-speech" style="margin-top:16px"><p>分好类了！现在我们来看看<b style="color:#ffd200">元音</b>和<b style="color:#4fc3f7">辅音</b>在单词里是怎么<b>合作</b>的——</p><p>打个比方：元音就像乐队里的<b style="color:#ffd200">🎤 主唱</b>，声音响亮，站在舞台中央；辅音就像<b style="color:#4fc3f7">🥁 伴奏</b>，环绕主唱搭配出丰富声调。一首歌可以没有伴奏，但绝对不能少了主唱！</p><p>那 <b style="color:#ff8a65">Y</b> 呢？Y 是<b style="color:#ff8a65">半元音</b>——平时在辅音阵营当伴奏（比如 yes），但单词缺元音的时候，Y 可以<b style="color:#ff8a65">替补上场当主唱</b>（比如 fly、happy）！</p></div>
+<div class="exp-card"><h3><span class="exp-num">实验一</span> · 每个单词都必须有元音字母</h3>
+<div class="story-speech"><p>试着把几个字母拼在一起——<b style="color:#ffd200">有元音字母（黄色高亮）才能成词，全是辅音就不行</b>。</p><p style="color:#888;font-size:.85em">就像乐队不能全是伴奏——必须有人唱歌！</p></div>
+<div class="exp-row" id="exp1Letters"></div>
+<div class="exp-row"><button class="btn btn-outline" onclick="randomExp1()">🔀 换一组字母</button><button class="btn btn-gold" onclick="checkExp1()">🔍 检查</button></div>
+<div class="exp-msg" id="exp1Msg" style="color:#888"></div>
+</div>
+
+<div class="exp-card"><h3><span class="exp-num">实验二</span> · 元音桥 —— 元音是拼读的桥梁 🌉</h3>
+<div class="story-speech"><p><b style="color:#ff8a65">辅音</b>自己不会"说话"——它们必须靠<b style="color:#ffd200">元音桥</b>连接起来才能拼成单词。下面的桥梁：<b style="color:#ffd200">元音在中间当桥</b>，左右辅音才能串起来！撤掉桥——辅音就散了。</p><p style="color:#888;font-size:.85em">主唱站在中间，两边的伴奏才能合起来演奏！</p></div>
+<div class="bridge-demo" id="bridgeDemo"></div>
+<div class="bridge-word" id="bridgeWord"></div>
+<div class="exp-row">
+  <button class="btn btn-outline" onclick="toggleBridge()" id="bridgeToggleBtn">❌ 撤掉元音桥</button>
+  <button class="btn btn-outline" onclick="nextBridge()">🔀 换一个单词</button>
+</div>
+<div class="exp-msg" id="exp2Msg" style="color:#888"></div>
+</div>
+
+
+
+</div>
+</div></div>
+
+<!-- ==================== TAB 4 ==================== -->
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 字母分类：元音 / 辅音 / 半元音</h2><p class="sort-hint">点击字母再点目标框，或直接拖拽到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-feedback" id="sortFeedback"></div><div class="sort-bins"><div class="sort-bin" id="binV" onclick="clickToBin('v')"><div class="sort-bin-label" style="color:#ffd200">🔴 元音字母</div><div id="binVItems"></div></div><div class="sort-bin" id="binC" onclick="clickToBin('c')"><div class="sort-bin-label" style="color:#4fc3f7">🔵 辅音字母</div><div id="binCItems"></div></div><div class="sort-bin" id="binY" onclick="clickToBin('y')"><div class="sort-bin-label" style="color:#ff8a65">🟡 半元音</div><div id="binYItems"></div></div></div><div style="text-align:center;margin-top:10px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
+
+<!-- ==================== TAB 5 ==================== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 综合闯关（10题）</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">判断 · 听音 · 分类 · 单词有效性 · Y角色 · 多音节</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- ==================== TAB 6 ==================== -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 Cat and Friends</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">A fun story with five good friends 🐱🐔🐷🐶☀️</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+
+
+</div>
+<script>
+// ===== STARS =====
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(1+Math.random()*2)+'px;height:'+(1+Math.random()*2)+'px;--dur:'+(2+Math.random()*4)+'s;--delay:'+Math.random()*5+'s;';c.appendChild(s)}})();
+
+// ===== AUDIO =====
+var AUDIO_BASE='audio/';var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=function(){loadVoices()};loadVoices();setTimeout(function(){try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+function spk(word){var p=WORDS[word];if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}},function(){speechSynthesis.resume();if(speechSynthesis.getVoices().length===0){voiceQ.push(word)}else{speakNow(word)}});return}speechSynthesis.resume();if(speechSynthesis.getVoices().length===0){voiceQ.push(word);return}speakNow(word)}
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}function speakNow(word){speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.8;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50)}
+var audioCache={};
+var PHONEMES={'/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɒ/':'phonemes/sock.mp3','/e/':'phonemes/head.mp3','/ʊ/':'phonemes/foot.mp3','/ɜː/':'phonemes/bird.mp3','/ɔː/':'phonemes/horse.mp3','/ɑː/':'phonemes/father.mp3','/uː/':'phonemes/blue.mp3','/eɪ/':'phonemes/day_ei.mp3','/aɪ/':'phonemes/eye.mp3','/ɔɪ/':'phonemes/boy.mp3','/aʊ/':'phonemes/mouth.mp3','/əʊ/':'phonemes/nose.mp3','/ɪə/':'phonemes/ear.mp3','/eə/':'phonemes/hair.mp3','/ʊə/':'phonemes/pure.mp3','/ə/':'phonemes/above.mp3','/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3','/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3','/tʃ/':'phonemes/cheese.mp3','/dʒ/':'phonemes/jump.mp3','/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3','/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3','/ʃ/':'phonemes/she.mp3','/ʒ/':'phonemes/vision.mp3','/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/ŋ/':'phonemes/sing.mp3','/h/':'phonemes/hand.mp3','/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/j/':'phonemes/yes.mp3','/w/':'phonemes/we.mp3','/tr/':'phonemes/tr.mp3','/dr/':'phonemes/dr.mp3','/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'};
+var WORDS={'cat':'words/cat.mp3','bed':'words/bed.mp3','pig':'words/pig.mp3','dog':'words/dog.mp3','cup':'words/cup.mp3','hat':'words/hat.mp3','sun':'words/sun.mp3','car':'words/car.mp3','bird':'words/bird.mp3','fish':'words/fish.mp3','happy':'words/happy.mp3','bus':'words/bus.mp3','cake':'words/cake.mp3','book':'words/book.mp3','my':'words/my.mp3','box':'words/box.mp3','egg':'words/egg.mp3','boy':'words/boy.mp3','eye':'words/eye.mp3','moon':'words/moon.mp3','frog':'words/frog.mp3','sky':'words/sky.mp3','bug':'words/bug.mp3','hot':'words/hot.mp3','hen':'words/hen.mp3','red':'words/red.mp3','run':'words/run.mp3','fun':'words/fun.mp3'};
+function playAudio(path,el,onErr){if(el&&el.classList.contains('on'))return;var a=audioCache[path];if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}a.currentTime=0;if(el)el.classList.add('on');a.onended=function(){if(el)el.classList.remove('on')};a.onerror=function(){if(el)el.classList.remove('on');if(onErr)onErr()};a.play().catch(function(e){if(el)el.classList.remove('on');if(onErr)onErr()})}
+function spkPhoneme(ipa,el){var k=ipa.replace(/\//g,'');var p=PHONEMES['/'+k+'/'];if(p)playAudio(p,el)}
+function spkWord(word,el){var p=WORDS[word];if(p)playAudio(p,el)}
+var LETTER_IPA={a:'/eɪ/',b:'/biː/',c:'/siː/',d:'/diː/',e:'/iː/',f:'/ef/',g:'/dʒiː/',h:'/eɪtʃ/',i:'/aɪ/',j:'/dʒeɪ/',k:'/keɪ/',l:'/el/',m:'/em/',n:'/en/',o:'/əʊ/',p:'/piː/',q:'/kjuː/',r:'/ɑː/',s:'/es/',t:'/tiː/',u:'/juː/',v:'/viː/',w:'/ˈdʌbljuː/',x:'/eks/',y:'/waɪ/',z:'/zed/'};
+var LETTER_AUDIO={'/eɪ/':'letter-names/letter-a.mp3','/biː/':'letter-names/letter-b.mp3','/siː/':'letter-names/letter-c.mp3','/diː/':'letter-names/letter-d.mp3','/iː/':'letter-names/letter-e.mp3','/ef/':'letter-names/letter-f.mp3','/dʒiː/':'letter-names/letter-g.mp3','/eɪtʃ/':'letter-names/letter-h.mp3','/aɪ/':'letter-names/letter-i.mp3','/dʒeɪ/':'letter-names/letter-j.mp3','/keɪ/':'letter-names/letter-k.mp3','/el/':'letter-names/letter-l.mp3','/em/':'letter-names/letter-m.mp3','/en/':'letter-names/letter-n.mp3','/əʊ/':'letter-names/letter-o.mp3','/piː/':'letter-names/letter-p.mp3','/kjuː/':'letter-names/letter-q.mp3','/ɑː/':'letter-names/letter-r.mp3','/es/':'letter-names/letter-s.mp3','/tiː/':'letter-names/letter-t.mp3','/juː/':'letter-names/letter-u.mp3','/viː/':'letter-names/letter-v.mp3','/ˈdʌbljuː/':'letter-names/letter-w.mp3','/eks/':'letter-names/letter-x.mp3','/waɪ/':'letter-names/letter-y.mp3','/zed/':'letter-names/letter-z.mp3'};
+function spkLetterName(letter,el){var ipa=LETTER_IPA[letter.toLowerCase()];var path=LETTER_AUDIO[ipa];if(path)playAudio(path,el)}function spkSpell(el){var bar=el.parentNode;var raw=(bar&&bar.textContent)||'';var groups=raw.split('/');var seq=[];for(var g=0;g<groups.length;g++){var ls=groups[g].match(/[a-zA-Z]/g)||[];for(var j=0;j<ls.length;j++){seq.push({L:ls[j].toLowerCase(),last:j===ls.length-1})}}if(!seq.length)return;if(el.classList&&el.classList.contains('on'))return;if(el.classList)el.classList.add('on');var i=0;function step(){if(i>=seq.length){if(el.classList)el.classList.remove('on');return}var it=seq[i++];var ipa=LETTER_IPA[it.L];var path=ipa?LETTER_AUDIO[ipa]:null;var gap=it.last?420:150;if(!path){setTimeout(step,gap);return}var a=audioCache[path];if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}a.currentTime=0;a.onended=function(){setTimeout(step,gap)};a.onerror=function(){setTimeout(step,gap)};a.play().catch(function(){setTimeout(step,gap)})}step()}
+
+// ===== NAV =====
+const NM={story:'故事',classify:'分分类',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本'};
+function goClassify(){showS('classify')}
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='story')buildStory();
+  if(n==='lab')buildLab();
+  if(n==='sort')buildSort();
+  if(n==='quiz')initQ();
+  if(n==='book'){cp=0;renderP()}
+}
+
+// ===== TAB 1 =====
+
+var letterPhMap={a:['/æ/','/eɪ/','/ɑː/','/ɔː/','/ə/'],b:['/b/'],c:['/k/','/s/'],d:['/d/'],e:['/e/','/iː/','/ɪ/','/ə/'],f:['/f/'],g:['/g/','/dʒ/'],h:['/h/'],i:['/ɪ/','/aɪ/','/iː/'],j:['/dʒ/'],k:['/k/'],l:['/l/'],m:['/m/'],n:['/n/','/ŋ/'],o:['/ɒ/','/əʊ/','/ʌ/','/ɔː/'],p:['/p/'],q:['/kw/'],r:['/r/'],s:['/s/','/z/','/ʃ/','/ʒ/'],t:['/t/'],u:['/ʌ/','/juː/','/ʊ/','/uː/'],v:['/v/'],w:['/w/'],x:['/ks/'],y:['/j/','/aɪ/','/iː/','/ɪ/'],z:['/z/']};
+var vowelIpa=['/æ/','/e/','/ɪ/','/ɒ/','/ʌ/','/ʊ/','/iː/','/ɜː/','/ɔː/','/uː/','/ɑː/','/eɪ/','/aɪ/','/ɔɪ/','/aʊ/','/əʊ/','/ɪə/','/eə/','/ʊə/','/ə/'];
+var consIpa=['/p/','/b/','/t/','/d/','/k/','/g/','/tʃ/','/dʒ/','/f/','/v/','/θ/','/ð/','/s/','/z/','/ʃ/','/ʒ/','/m/','/n/','/ŋ/','/h/','/l/','/r/','/j/','/w/'];
+function togglePhCard(id){var c=document.getElementById('card-'+id);c.classList.toggle('open')}
+function switchYTab(n){document.getElementById('yt1').classList.toggle('on',n===1);document.getElementById('yt2').classList.toggle('on',n===2);document.getElementById('yp1').classList.toggle('on',n===1);document.getElementById('yp2').classList.toggle('on',n===2)}
+
+// ===== TAB 2 =====
+var loopV=false,loopC=false;
+function buildStory(){
+  var vh='';vowelIpa.forEach(function(p){vh+='<div class="ph-chip"><span class="ph-ipa" style="color:#ffd200">'+p+'</span><span class="speak-btn" style="width:22px;height:22px;font-size:.6em" onclick="spkPhoneme(\x27'+p+'\x27,this)">🔊</span></div>';});
+  document.getElementById('vowelPhList').innerHTML=vh;
+  var ch='';consIpa.forEach(function(p){ch+='<div class="ph-chip"><span class="ph-ipa" style="color:#4fc3f7">'+p+'</span><span class="speak-btn" style="width:22px;height:22px;font-size:.6em" onclick="spkPhoneme(\x27'+p+'\x27,this)">🔊</span></div>';});
+  document.getElementById('consPhList').innerHTML=ch;
+  document.getElementById('storyReveal').innerHTML='';
+  loopV=false;loopC=false;document.getElementById('loopVBtn').classList.remove('on');document.getElementById('loopVBtn').textContent='🔁 循环播放全部元音';document.getElementById('loopCBtn').classList.remove('on');document.getElementById('loopCBtn').textContent='🔁 循环播放全部辅音';
+  initMixQuiz();
+}
+function toggleLoopV(){loopV=!loopV;document.getElementById('loopVBtn').classList.toggle('on',loopV);document.getElementById('loopVBtn').textContent=loopV?'⏹ 停止':'🔁 循环播放全部元音';if(loopV)playLoopV(0);}
+function playLoopV(i){if(!loopV)return;if(i>=vowelIpa.length){setTimeout(function(){playLoopV(0)},1000);return}spkPhoneme(vowelIpa[i],null);setTimeout(function(){playLoopV(i+1)},800)}
+function toggleLoopC(){loopC=!loopC;document.getElementById('loopCBtn').classList.toggle('on',loopC);document.getElementById('loopCBtn').textContent=loopC?'⏹ 停止':'🔁 循环播放全部辅音';if(loopC)playLoopC(0);}
+function playLoopC(i){if(!loopC)return;if(i>=consIpa.length){setTimeout(function(){playLoopC(0)},1000);return}spkPhoneme(consIpa[i],null);setTimeout(function(){playLoopC(i+1)},800)}
+
+// Mixed quiz
+var mixPool=[{p:'/æ/',a:'v'},{p:'/k/',a:'c'},{p:'/iː/',a:'v'},{p:'/t/',a:'c'},{p:'/ɒ/',a:'v'}];
+var mIdx=0,mScore=0,mDone=false,mLocked=false;
+function initMixQuiz(){mIdx=0;mScore=0;mDone=false;renderMixQ();}
+function renderMixQ(){
+  var h='<h4>🤔 综合闯关：点击 🔊 听发音，判断它是元音还是辅音？（'+(mIdx+1)+'/'+mixPool.length+'）</h4>';
+  h+='<div class="q-opt-row"><button class="btn btn-gold" onclick="spkPhoneme(\x27'+mixPool[mIdx].p+'\x27,this)" style="font-size:1.1em">🔊 听发音</button></div>';
+  h+='<div class="q-opt-row"><button class="q-opt-btn" onclick="answerMix(\x27v\x27)">🎤 元音</button><button class="q-opt-btn" onclick="answerMix(\x27c\x27)">🥁 辅音</button></div>';
+  document.getElementById('mixQuiz').innerHTML=h;
+}
+function answerMix(choice){
+  if(mDone||mLocked)return;
+  var correct=choice===mixPool[mIdx].a;
+  var btns=document.querySelectorAll('#mixQuiz .q-opt-btn');
+  mLocked=true;
+  if(correct){
+    mScore++;sfxOK();
+    for(var i=0;i<btns.length;i++)btns[i].classList.add('locked');
+    var ci=mixPool[mIdx].a==='v'?0:1;
+    btns[ci].classList.add('correct');
+    var fb=document.createElement('div');fb.style.cssText='text-align:center;margin-top:8px;font-size:.9em;min-height:24px';
+    fb.innerHTML='<span style="color:#69f0ae">✅ 正确！</span> ';
+    document.getElementById('mixQuiz').appendChild(fb);
+    mIdx++;
+    setTimeout(function(){
+      mLocked=false;
+      if(mIdx>=mixPool.length){mDone=true;showMixResult()}else renderMixQ();
+    },900);
+  }else{
+    sfxNO();
+    var wi=choice==='v'?0:1,ci=mixPool[mIdx].a==='v'?0:1;
+    btns[wi].classList.add('wrong');btns[ci].classList.add('correct');
+    for(var i=0;i<btns.length;i++)btns[i].classList.add('locked');
+    var fb=document.createElement('div');fb.style.cssText='text-align:center;margin-top:8px;font-size:.9em;min-height:24px';
+    fb.innerHTML='<span style="color:#ff5252">❌ 不对哦～ 再听听，重新选一次！</span> ';
+    document.getElementById('mixQuiz').appendChild(fb);
+    setTimeout(function(){
+      var divs=document.querySelectorAll('#mixQuiz > div');
+      for(var j=divs.length-1;j>=0;j--){var t=divs[j].textContent||'';if(t.indexOf('不对')>=0||t.indexOf('正确')>=0){divs[j].remove();break}}
+      for(var k=0;k<btns.length;k++)btns[k].classList.remove('locked','correct','wrong');
+      mLocked=false;
+    },1200);
+  }
+}
+function showMixResult(){
+  document.getElementById('mixQuiz').innerHTML='<div class="reveal-box"><p>✅ 你答对了 <b style="color:#ffd200">'+mScore+'/'+mixPool.length+'</b> 题！</p></div>';
+  var rh='<div class="reveal-box" style="margin-top:14px"><h3>🎤 你发现了吗？</h3>';
+  rh+='<div class="story-speech"><p>🎤 <b style="color:#ffd200">元音</b>发音时，嘴巴张开，<b>气流呼出畅通无阻</b>，声音响亮，可以拉得很长——试试发「啊——」。</p></div>';
+  rh+='<div class="story-speech"><p>🥁 <b style="color:#4fc3f7">辅音</b>发音时，嘴唇、牙齿、舌头<b>挡住气流</b>，声音短促、无法拉长——试试发「p」，一下子就没了。</p></div>';
+
+  rh+='<p class="footnote">⚠️ 严谨地说：元音 / 辅音指的是<b>发音音素</b>（声音层面），而 A E I O U 是<b>元音字母</b>（书写符号）。二者概念不同。</p>';
+  rh+='<div style="text-align:center;margin-top:14px"><button class="btn btn-gold" onclick="goClassify()">📋 接下来：看看字母怎么分类 →</button></div>';
+  rh+='</div>';
+  document.getElementById('storyReveal').innerHTML=rh;
+}
+
+// ===== TAB 3 =====
+var exp1Cur=[];
+var exp1Pool=[['C','A','T'],['D','O','G'],['P','M','B'],['F','R','O','G'],['K','T','S'],['B','L','O','C','K'],['B','E','D'],['F','U','N'],['G','R','P'],['H','A','T'],['S','U','N'],['T','E','N','T'],['D','E','S','K'],['L','M','N']];
+var bridgeWords=[{w:'cat',u:[{t:'c',l:'c'},{t:'v',l:'a'},{t:'c',l:'t'}]},{w:'bed',u:[{t:'c',l:'b'},{t:'v',l:'e'},{t:'c',l:'d'}]},{w:'dog',u:[{t:'c',l:'d'},{t:'v',l:'o'},{t:'c',l:'g'}]},{w:'cup',u:[{t:'c',l:'c'},{t:'v',l:'u'},{t:'c',l:'p'}]},{w:'hat',u:[{t:'c',l:'h'},{t:'v',l:'a'},{t:'c',l:'t'}]},{w:'sun',u:[{t:'c',l:'s'},{t:'v',l:'u'},{t:'c',l:'n'}]},{w:'frog',u:[{t:'c',l:'fr'},{t:'v',l:'o'},{t:'c',l:'g'}]},{w:'fish',u:[{t:'c',l:'f'},{t:'v',l:'i'},{t:'c',l:'sh'}]}];
+var bIdx=0,bBridge=false;
+function shuffleArr(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b}
+function buildLab(){randomExp1();bIdx=0;bBridge=false;renderBridge();}
+function randomExp1(){exp1Cur=exp1Pool[Math.floor(Math.random()*exp1Pool.length)];var h='';exp1Cur.forEach(function(l){h+='<span class="exp-letter">'+l+'</span>';});document.getElementById('exp1Letters').innerHTML=h;document.getElementById('exp1Msg').innerHTML='<span style="color:#888">👆 点击「检查」看看这组字母能否成词</span>';}
+function checkExp1(){var hasV=exp1Cur.some(function(l){return'AEIOU'.indexOf(l)>=0});var h='';exp1Cur.forEach(function(l){var cls='AEIOU'.indexOf(l)>=0?' is-vowel':'';h+='<span class="exp-letter'+cls+'">'+l+'</span>';});document.getElementById('exp1Letters').innerHTML=h;var msg=document.getElementById('exp1Msg');if(hasV)msg.innerHTML='<span style="color:#69f0ae;font-weight:bold">✅ 可以成词！</span> <span style="color:#ccc">黄色高亮的是元音字母——有它就能拼成单词</span>';else msg.innerHTML='<span style="color:#ff5252;font-weight:bold">❌ 不能成词！</span> <span style="color:#ccc">全是辅音字母，缺少元音——没有元音就不是英文单词</span>';
+}
+
+// Bridge
+function renderBridge(){
+  var w=bridgeWords[bIdx];
+  var h='';w.u.forEach(function(u,i){
+    if(i>0&&u.t==='v'){h+='<div class="bridge-line'+(bBridge?' broken':'')+'"></div>';}
+    h+='<div class="bridge-unit '+(u.t==='v'?'vw':'cn')+''+(bBridge&&u.t==='v'?' muted':'')+'">'+u.l+'</div>';
+    if(i<w.u.length-1&&w.u[i+1].t!=='v')h+='<div class="bridge-line'+(bBridge?' broken':'')+'"></div>';
+  });
+  document.getElementById('bridgeDemo').innerHTML=h;
+  document.getElementById('bridgeWord').innerHTML=bBridge?'<div class="bridge-word no">🚫 桥塌了！无法拼读</div>':'<div class="bridge-word ok">= '+w.w+' <span class="speak-btn" style="width:28px;height:28px;font-size:.75em" onclick="spk(\x27'+w.w+'\x27)">🔊</span></div>';
+  document.getElementById('bridgeToggleBtn').textContent=bBridge?'✅ 恢复元音桥':'❌ 撤掉元音桥';
+  document.getElementById('exp2Msg').innerHTML=bBridge?'<span style="color:#ff5252">元音桥没了！辅音断了线，串不起来——不能拼读。</span>':'<span style="color:#888">👆 元音桥把前后辅音串起来了——有桥就能拼成单词！</span>';
+}
+function toggleBridge(){bBridge=!bBridge;renderBridge()}
+function nextBridge(){bIdx=(bIdx+1)%bridgeWords.length;bBridge=false;renderBridge()}
+
+
+
+// ===== TAB 4 =====
+var sortLetters=[{l:'A',t:'v'},{l:'B',t:'c'},{l:'C',t:'c'},{l:'D',t:'c'},{l:'E',t:'v'},{l:'F',t:'c'},{l:'G',t:'c'},{l:'H',t:'c'},{l:'I',t:'v'},{l:'J',t:'c'},{l:'K',t:'c'},{l:'L',t:'c'},{l:'M',t:'c'},{l:'N',t:'c'},{l:'O',t:'v'},{l:'P',t:'c'},{l:'Q',t:'c'},{l:'R',t:'c'},{l:'S',t:'c'},{l:'T',t:'c'},{l:'U',t:'v'},{l:'V',t:'c'},{l:'W',t:'c'},{l:'X',t:'c'},{l:'Y',t:'y'},{l:'Z',t:'c'}];
+var selectedWord=null,placedCount=0;
+function buildSort(){var pool=document.getElementById('sortPool'),h='';sortLetters.forEach(function(w){h+='<span class="sort-item unplaced" data-word="'+w.l+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\x27'+w.l+'\x27)">'+w.l+'</span>'});pool.innerHTML=h;['V','C','Y'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins()}
+function setupBins(){['binV','binC','binY'].forEach(function(id){var el=document.getElementById(id);el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};el.ondragleave=function(){el.classList.remove('drag-over')};el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())}})}
+function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
+function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#ff8a65">👆 请先点击一个字母</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
+function dropToBin(w,type,correct){if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}var ok=type===correct;var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;if(ok){item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';var bid='bin'+type.toUpperCase()+'Items';document.getElementById(bid).innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';var labels={v:'元音字母（发音音素层面称"元音"）',c:'辅音字母（发音音素层面称"辅音"）',y:'半元音 Y（词首发辅音，缺元音时替补当元音）'};document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ 正确！</span><br><span style="color:#888;font-size:.78em">'+labels[type]+'</span>';placedCount++;if(placedCount>=sortLetters.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！26个字母全部分类完成！</span>'}else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再想想！</span>'}selectedWord=null}
+function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
+function dragEnd(e){e.target.classList.remove('dragging')}
+var tl=null,tc=null;
+function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(255,210,0,.18);border:2px solid #ffd200;border-radius:14px;padding:6px 14px;font-weight:bold;color:#ffd200;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binV','binC','binY'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binV','binC','binY'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+function resetSort(){buildSort()}
+
+// ===== TAB 5 (with review + redo) =====
+var quizPool=[{q:'元音和辅音本质上是指什么？',o:['英文字母','发音音素','单词类型','语法规则'],a:1,x:'元音和辅音是<b>发音音素</b>的分类，不是指字母本身。'},{t:'listen',q:'点击 🔊 听发音，判断这是元音还是辅音？',p:'/æ/',o:['元音','辅音'],a:0,x:'/æ/ 是元音（嘴巴张开，气流顺畅）。'},{t:'listen',q:'点击 🔊 听发音，判断这是元音还是辅音？',p:'/k/',o:['元音','辅音'],a:1,x:'/k/ 是辅音（气流被阻挡，声音短促）。'},{t:'listen',q:'点击 🔊 听发音，判断这是元音还是辅音？',p:'/iː/',o:['辅音','元音'],a:1,x:'/iː/ 是元音（长音，气流顺畅）。'},{t:'listen',q:'点击 🔊 听发音，判断这是元音还是辅音？',p:'/s/',o:['元音','辅音'],a:1,x:'/s/ 是辅音（气流从牙缝挤出，短促）。'},{t:'listen',q:'点击 🔊 听发音，判断这是元音还是辅音？',p:'/m/',o:['元音','辅音'],a:1,x:'/m/ 是辅音（嘴唇闭合，鼻子出气）。'},{q:'元音发音时，口腔气流的特征是什么？',o:['被嘴唇阻挡','气流通畅无阻碍','被舌头阻挡','气流出不来'],a:1,x:'元音发音<b>气流通畅无阻碍</b>。'},{q:'辅音发音时，口腔气流的特征是什么？',o:['气流顺畅','被口腔某部位阻挡','从鼻子里出气','不张嘴'],a:1,x:'辅音发音被<b>阻挡</b>，短促。'},{q:'以下字母哪个属于元音字母？',o:['B','K','O','T'],a:2,x:'<b>O</b> 是五大元音字母之一。'},{q:'以下字母哪个属于辅音字母？',o:['A','E','M','U'],a:2,x:'<b>M</b> 是辅音字母。'},{q:'以下字母哪个属于元音字母？',o:['F','S','N','I'],a:3,x:'<b>I</b> 是五大元音字母之一。'},{q:'以下哪个字母是半元音？',o:['W','Y','X','Z'],a:1,x:'<b>Y</b> 是半元音——有时当辅音，有时当元音。'},{q:'以下哪一组字母可以组成有效的英文单词？',o:['MPB','KTS','CAT','LNP'],a:2,x:'<b>CAT</b> 有元音A，可以成词。'},{q:'以下哪一组全部是元音字母？',o:['A E I O U','A B C D E','M N P Q R','X Y Z W V'],a:0,x:'<b>A E I O U</b> 就是五大元音字母。'},{q:'每个英文单词必须包含什么？',o:['至少一个辅音','至少一个元音','大写字母','至少两个字母'],a:1,x:'每个英文单词<b>至少需要一个元音</b>。'},{q:'全部由辅音字母拼接，能构成英文单词吗？',o:['能','不能','看情况','不确定'],a:1,x:'<b>不能</b>。必须至少有一个元音字母。'},{q:'"sun" 这个单词里，哪个字母是元音？',o:['s','u','n','没有元音'],a:1,x:'<b>u</b> 是元音字母。'},{q:'"fly" 这个单词里，Y 充当什么角色？',o:['辅音','元音','不发音','半辅音'],a:1,x:'fly 里没有 A E I O U，Y <b>充当元音</b>发 /aɪ/。'},{q:'以下哪个字母是元音字母？',o:['C','D','A','G'],a:2,x:'<b>A</b> 是五大元音字母之一。'},{q:'"cat" 里有几个元音字母？',o:['0个','1个','2个','3个'],a:1,x:'cat 有 <b>1个</b> 元音字母：a。'},{q:'以下哪个单词里的 Y 是元音？',o:['yes','yellow','sky','you'],a:2,x:'<b>sky</b> 中 Y 是元音发 /aɪ/，因为没有 A E I O U。'},{q:'辅音字母一共有多少个（不含 Y）？',o:['5个','20个','21个','26个'],a:0,x:'<b>20个</b>常规辅音字母，加上 Y 共 21 个辅音/半元音字母。'}];
+var qS={qs:[],cur:0,as:[],origIdx:[]};
+function initQ(){var p=quizPool.map(function(q,i){return{q:q,oi:i}});p=shuffleArr(p);qS={qs:p.slice(0,10).map(function(x){return x.q}),cur:0,as:new Array(10).fill(-1),origIdx:p.slice(0,10).map(function(x){return x.oi})};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题</div><div class="quiz-q">❓ '+q.q+'</div>';if(q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spkPhoneme(\x27'+q.p+'\x27,this)" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音，选出答案</div></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(i===chosen)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var allDone=qS.as.every(function(x){return x>=0});document.getElementById('qn').innerHTML=allDone?'<button class="btn btn-gold" onclick="showQR()">🎯 查看成绩</button>':'<button class="btn btn-outline" onclick="goQ(-1)" '+(qS.cur===0?'disabled':'')+'>◀ 上一题</button><span class="qi">'+(qS.cur+1)+'/10</span><button class="btn btn-outline" onclick="goQ(1)" '+(qS.cur>=qS.qs.length-1?'disabled':'')+'>下一题 ▶</button>'}
+function sfxOK(){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}catch(e){}}function sfxNO(){try{var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}catch(e){}}function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQC()}
+
+var wrongIndices=[];
+function showQR(){
+  var s=0;wrongIndices=[];
+  qS.as.forEach(function(a,i){if(a===qS.qs[i].a)s++;else wrongIndices.push(i)});
+  document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';
+  var f=document.getElementById('qf');f.style.display='block';
+  var e,m;if(s===10){e='🏆🌟';m='满分！元音大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}
+  var wh='';
+  if(wrongIndices.length>0){
+    wh+='<div class="review-wrong"><button class="btn btn-outline" style="border-color:rgba(255,82,82,.4);color:#ff5252;margin-bottom:10px" onclick="showWrongReview()">🔍 查看错题 ('+wrongIndices.length+'题)</button></div>';
+  }
+  f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#4fc3f7;margin:8px 0">'+s+'/10</div><p>'+m+'</p>'+wh+'<div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn btn-gold" onclick="initQ()">🔄 再来</button></div></div>';
+}
+
+function showWrongReview(){
+  var h='<div class="quiz-final"><h3 style="color:#ff8a65">🔍 错题回看</h3>';
+  wrongIndices.forEach(function(i,wi){
+    var q=qS.qs[i];var ua=qS.as[i]>=0?q.o[qS.as[i]]:'未作答';
+    h+='<div style="background:rgba(255,82,82,.06);border:1px solid rgba(255,82,82,.15);border-radius:12px;padding:12px;margin:8px 0;text-align:left;font-size:.85em">';
+    h+='<b style="color:#4fc3f7">Q'+(i+1)+':</b> '+q.q+'<br>';
+    h+='<span style="color:#ff5252">✗ 你的答案：</span>'+ua+'<br>';
+    h+='<span style="color:#69f0ae">✓ 正确答案：</span>'+q.o[q.a]+'<br>';
+    h+='<span style="color:#888;font-size:.8em">💡 '+q.x+'</span><br>';
+    h+='<button class="btn btn-outline" style="margin-top:6px;font-size:.8em" onclick="redoWrong('+i+','+wi+')">🔄 重做此题</button>';
+    h+='</div>';
+  });
+  h+='<button class="btn btn-outline" style="margin-top:10px" onclick="showQR()">⬅ 返回成绩</button></div>';
+  document.getElementById('qf').innerHTML=h;
+}
+
+var redoingIdx=-1;
+function redoWrong(qIdx,wIdx){
+  redoingIdx=qIdx;qS.as[qIdx]=-1;
+  var h='<div class="quiz-card"><div class="quiz-q-num" style="color:#ff8a65">🔄 重做错题</div><div class="quiz-q">❓ '+qS.qs[qIdx].q+'</div>';
+  var q=qS.qs[qIdx];
+  if(q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spkPhoneme(\x27'+q.p+'\x27,this)" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888">点击听发音</div></div>';
+  h+='<div class="quiz-opts">'+q.o.map(function(o,j){return'<button class="quiz-opt" onclick="redoAns('+qIdx+','+j+')">'+String.fromCharCode(65+j)+'. '+o+'</button>'}).join('')+'</div></div><button class="btn btn-outline" style="margin-top:8px" onclick="showWrongReview()">⬅ 返回错题列表</button>';
+  document.getElementById('qf').innerHTML=h;
+}
+function redoAns(qIdx,choice){
+  qS.as[qIdx]=choice;
+  var q=qS.qs[qIdx];var ok=choice===q.a;if(ok)sfxOK();else sfxNO();
+  // Update wrong list
+  if(ok){wrongIndices=wrongIndices.filter(function(x){return x!==qIdx})}
+  if(wrongIndices.length===0){showQR();return}
+  var h='<div class="quiz-card"><div class="quiz-q-num" style="color:'+(ok?'#69f0ae':'#ff5252')+'">'+(ok?'✅ 正确！':'❌ 不对~')+'</div><div class="quiz-explain"><span style="color:#888">💡 '+q.x+'</span></div></div><button class="btn btn-outline" style="margin-top:8px" onclick="showWrongReview()">⬅ 返回错题列表</button>';
+  document.getElementById('qf').innerHTML=h;
+}
+
+// ===== TAB 6: 绘本 (animal story, no phonics lecture) =====
+let cp=0;const bp_=[
+{s:'🐱',t:'Cat on the Mat',x:'<span class="sc">C</span><span class="sv">a</span><span class="sc">t</span> <span class="sc">s</span><span class="sv">i</span><span class="sc">t</span><span class="sc">s</span> <span class="sv">o</span><span class="sc">n</span> <span class="sv">a</span> <span class="sc">r</span><span class="sv">e</span><span class="sc">d</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span>.<br>"<span class="sc">T</span><span class="sc">h</span><span class="sv">i</span><span class="sc">s</span> <span class="sv">i</span><span class="sc">s</span> <span class="sc">m</span><span class="sy">y</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span>," <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>.<br>"<span class="sv">I</span> <span class="sc">l</span><span class="sv">o</span><span class="sc">v</span><span class="sv">e</span> <span class="sc">m</span><span class="sy">y</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span>!"'},
+{s:'🐔',t:'Hen Comes Along',x:'<span class="sv">A</span> <span class="sc">r</span><span class="sv">e</span><span class="sc">d</span> <span class="sc">h</span><span class="sv">e</span><span class="sc">n</span> <span class="sc">c</span><span class="sv">o</span><span class="sc">m</span><span class="sv">e</span><span class="sc">s</span> <span class="sv">a</span><span class="sc">l</span><span class="sv">o</span><span class="sc">n</span><span class="sc">g</span>.<br>"<span class="sc">H</span><span class="sv">e</span><span class="sc">l</span><span class="sc">l</span><span class="sv">o</span>, <span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">H</span><span class="sv">e</span><span class="sc">n</span>.<br>"<span class="sc">C</span><span class="sv">a</span><span class="sc">n</span> <span class="sv">I</span> <span class="sc">s</span><span class="sv">i</span><span class="sc">t</span> <span class="sv">o</span><span class="sc">n</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span>?"'},
+{s:'🐷',t:'Pig Wants to Play',x:'<span class="sv">A</span> <span class="sc">b</span><span class="sv">i</span><span class="sc">g</span> <span class="sc">p</span><span class="sv">i</span><span class="sc">g</span> <span class="sc">c</span><span class="sv">o</span><span class="sc">m</span><span class="sv">e</span><span class="sc">s</span> <span class="sc">r</span><span class="sv">u</span><span class="sc">n</span><span class="sc">n</span><span class="sv">i</span><span class="sc">n</span><span class="sc">g</span>.<br>"<span class="sc">L</span><span class="sv">e</span><span class="sc">t</span> <span class="sc">m</span><span class="sv">e</span> <span class="sc">p</span><span class="sc">l</span><span class="sv">a</span><span class="sy">y</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">P</span><span class="sv">i</span><span class="sc">g</span>.<br><span class="sc">P</span><span class="sv">i</span><span class="sc">g</span> <span class="sc">j</span><span class="sv">u</span><span class="sc">m</span><span class="sc">p</span><span class="sc">s</span> <span class="sv">o</span><span class="sc">n</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span> — <span class="sc">b</span><span class="sv">u</span><span class="sc">m</span><span class="sc">p</span>!'},
+{s:'🐶',t:'Dog Joins the Fun',x:'<span class="sv">A</span> <span class="sc">h</span><span class="sv">o</span><span class="sc">t</span> <span class="sc">d</span><span class="sv">o</span><span class="sc">g</span> <span class="sc">t</span><span class="sc">r</span><span class="sv">o</span><span class="sc">t</span><span class="sc">s</span> <span class="sv">o</span><span class="sc">v</span><span class="sv">e</span><span class="sc">r</span>.<br>"<span class="sc">R</span><span class="sv">o</span><span class="sv">o</span><span class="sc">m</span> <span class="sc">f</span><span class="sv">o</span><span class="sc">r</span> <span class="sc">m</span><span class="sv">e</span>?" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">D</span><span class="sv">o</span><span class="sc">g</span>.<br><span class="sc">T</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span> <span class="sc">g</span><span class="sv">e</span><span class="sc">t</span><span class="sc">s</span> <span class="sc">v</span><span class="sv">e</span><span class="sc">r</span><span class="sy">y</span> <span class="sc">f</span><span class="sv">u</span><span class="sc">l</span><span class="sc">l</span>!'},
+{s:'😱',t:'Uh-oh! Too Many Friends!',x:'<span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>, <span class="sc">H</span><span class="sv">e</span><span class="sc">n</span>, <span class="sc">P</span><span class="sv">i</span><span class="sc">g</span>, <span class="sc">D</span><span class="sv">o</span><span class="sc">g</span> —<br><span class="sv">a</span><span class="sc">l</span><span class="sc">l</span> <span class="sv">o</span><span class="sc">n</span> <span class="sv">o</span><span class="sc">n</span><span class="sv">e</span> <span class="sc">l</span><span class="sv">i</span><span class="sc">t</span><span class="sc">t</span><span class="sc">l</span><span class="sv">e</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span>!<br>"<span class="sv">O</span><span class="sc">h</span> <span class="sc">n</span><span class="sv">o</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>. "<span class="sc">T</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">m</span><span class="sv">a</span><span class="sc">t</span> <span class="sv">i</span><span class="sc">s</span> <span class="sc">t</span><span class="sv">o</span><span class="sv">o</span> <span class="sc">s</span><span class="sc">m</span><span class="sv">a</span><span class="sc">l</span><span class="sc">l</span>!"'},
+{s:'☀️',t:'A Better Idea',x:'<span class="sc">S</span><span class="sv">u</span><span class="sc">n</span> <span class="sc">c</span><span class="sv">o</span><span class="sc">m</span><span class="sv">e</span><span class="sc">s</span> <span class="sv">o</span><span class="sv">u</span><span class="sc">t</span> — <span class="sc">b</span><span class="sv">i</span><span class="sc">g</span> <span class="sv">a</span><span class="sc">n</span><span class="sc">d</span> <span class="sc">b</span><span class="sc">r</span><span class="sv">i</span><span class="sc">g</span><span class="sc">h</span><span class="sc">t</span>!<br>"<span class="sc">L</span><span class="sv">e</span><span class="sc">t</span>\'<span class="sc">s</span> <span class="sc">s</span><span class="sv">i</span><span class="sc">t</span> <span class="sv">i</span><span class="sc">n</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">s</span><span class="sv">u</span><span class="sc">n</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">P</span><span class="sv">i</span><span class="sc">g</span>.<br><span class="sc">S</span><span class="sv">o</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span><span class="sy">y</span> <span class="sv">a</span><span class="sc">l</span><span class="sc">l</span> <span class="sc">r</span><span class="sv">u</span><span class="sc">n</span> <span class="sc">t</span><span class="sv">o</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">g</span><span class="sc">r</span><span class="sv">a</span><span class="sc">s</span><span class="sc">s</span>.'},
+{s:'😊',t:'Happy Together',x:'<span class="sc">T</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">s</span><span class="sv">u</span><span class="sc">n</span> <span class="sv">i</span><span class="sc">s</span> <span class="sc">w</span><span class="sv">a</span><span class="sc">r</span><span class="sc">m</span>.<br><span class="sc">T</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">g</span><span class="sc">r</span><span class="sv">a</span><span class="sc">s</span><span class="sc">s</span> <span class="sv">i</span><span class="sc">s</span> <span class="sc">s</span><span class="sv">o</span><span class="sc">f</span><span class="sc">t</span>.<br><span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>, <span class="sc">H</span><span class="sv">e</span><span class="sc">n</span>, <span class="sc">P</span><span class="sv">i</span><span class="sc">g</span>, <span class="sv">a</span><span class="sc">n</span><span class="sc">d</span> <span class="sc">D</span><span class="sv">o</span><span class="sc">g</span><br><span class="sv">a</span><span class="sc">r</span><span class="sv">e</span> <span class="sc">h</span><span class="sv">a</span><span class="sc">p</span><span class="sc">p</span><span class="sy">y</span> <span class="sc">t</span><span class="sv">o</span><span class="sc">g</span><span class="sv">e</span><span class="sc">t</span><span class="sc">h</span><span class="sv">e</span><span class="sc">r</span>.'},
+{s:'👋',t:'See You Tomorrow!',x:'"<span class="sc">S</span><span class="sv">e</span><span class="sv">e</span> <span class="sy">y</span><span class="sv">o</span><span class="sv">u</span> <span class="sc">t</span><span class="sv">o</span><span class="sc">m</span><span class="sv">o</span><span class="sc">r</span><span class="sc">r</span><span class="sv">o</span><span class="sc">w</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span><span class="sc">s</span> <span class="sc">C</span><span class="sv">a</span><span class="sc">t</span>.<br>"<span class="sc">B</span><span class="sy">y</span><span class="sv">e</span> <span class="sc">b</span><span class="sy">y</span><span class="sv">e</span>!" <span class="sc">s</span><span class="sv">a</span><span class="sy">y</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">f</span><span class="sc">r</span><span class="sv">i</span><span class="sv">e</span><span class="sc">n</span><span class="sc">d</span><span class="sc">s</span>.<br><span class="sc">G</span><span class="sv">o</span><span class="sv">o</span><span class="sc">d</span> <span class="sc">f</span><span class="sc">r</span><span class="sv">i</span><span class="sv">e</span><span class="sc">n</span><span class="sc">d</span><span class="sc">s</span> <span class="sv">a</span><span class="sc">r</span><span class="sv">e</span> <span class="sc">t</span><span class="sc">h</span><span class="sv">e</span> <span class="sc">b</span><span class="sv">e</span><span class="sc">s</span><span class="sc">t</span>!'},
+{s:'📖',t:'Words We Met',x:'<p style="color:#aaa;margin-bottom:10px">Here are the vowel words from our story — listen to each one:</p><div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center"><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">c<span class="sv">a</span>t</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27cat\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">h<span class="sv">e</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27hen\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">r<span class="sv">e</span>d</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27red\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">p<span class="sv">i</span>g</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27pig\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">d<span class="sv">o</span>g</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27dog\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">h<span class="sv">o</span>t</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27hot\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">s<span class="sv">u</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27sun\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">r<span class="sv">u</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27run\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">f<span class="sv">u</span>n</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27fun\x27)">🔊</span><span style="display:inline-block;white-space:nowrap;margin:0 4px"><span style="font-size:1.2em;font-weight:bold;letter-spacing:normal">h<span class="sv">a</span>pp<span class="sv">y</span> <span class="speak-btn" style="width:28px;height:28px" onclick="spk(\x27happy\x27)">🔊</span></div><p style="color:#888;font-size:.85em;margin-top:12px">The <span style="color:#ffd200;font-weight:bold">yellow letters</span> are our five vowel friends — A, E, I, O, U (and Y too!)</p>'}
+];
+var bookTTS=false,bookAudio=null;
+function readPageUK(){playBookAu('uk')}
+function readPageUS(){playBookAu('us')}
+function playBookAu(accent){
+  if(bookAudio){bookAudio.pause();bookAudio=null;bookTTS=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bookTTS=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){
+    if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')
+  });
+  bookAudio=new Audio(AUDIO_BASE+'book/vc-page'+(cp+1)+'-'+accent+'.mp3');
+  bookAudio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bookTTS=false;bookAudio=null};
+  bookAudio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bookTTS=false;bookAudio=null};
+  bookAudio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bookTTS=false;bookAudio=null})
+}
+function renderP(){
+  if(bookAudio){bookAudio.pause();bookAudio=null;bookTTS=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_[cp];document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;document.getElementById('pn').textContent=(cp+1)+'/'+bp_.length;
+  document.getElementById('bp').style.visibility=cp===0?'hidden':'visible';document.getElementById('bn').style.visibility=cp===bp_.length-1?'hidden':'visible';
+  var g=cp===bp_.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="readPageUK()">🇬🇧 UK</button><button class="pron-btn us" onclick="readPageUS()">🇺🇸 US</button>';
+}
+function nextP(){if(cp<bp_.length-1){cp++;renderP()}}
+function prevP(){if(cp>0){cp--;renderP()}}
+
+// ===== INIT =====
+buildStory();buildSort();initQ();
+</script></body></html>

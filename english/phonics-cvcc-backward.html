@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>CVCC · 后置加长 | 自然拼读 Stage 5</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #4fc3f7)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.sort-spk{width:22px!important;height:22px!important;font-size:.6em!important}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ef9a9a;color:#ef9a9a}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(239,154,154,.06);border-left:3px solid #ef9a9a;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+
+/* Decon */
+.dg-decon-block{margin:10px 0;padding:12px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.06)}.dg-decon-word{font-size:1.5em;font-weight:bold;color:#ffd200;text-align:center;margin-bottom:8px;letter-spacing:5px}.dg-decon-row{display:flex;gap:6px;align-items:center;margin:4px 0;padding:8px 12px;background:rgba(0,0,0,.15);border-radius:10px;font-size:.88em}.dg-decon-letter{font-size:1.2em;font-weight:bold;color:#ff8a65;min-width:32px;text-align:center}.dg-decon-type{color:#888;font-size:.78em;min-width:55px}.dg-decon-ipa{color:#81c784;font-weight:bold;flex:1}.dg-decon-say{text-align:center;font-size:.92em;color:#4fc3f7;font-weight:bold;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
+.dg-decon-struct{text-align:center;font-size:.7em;margin-top:4px}.dg-decon-struct span{padding:2px 8px;border-radius:8px;font-weight:bold;background:rgba(79,195,247,.12);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
+
+/* Lab */
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(239,154,154,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px}.lab-card .word .eb-c{color:#ef9a9a}.lab-card .word .vw{color:#4fc3f7;text-decoration:underline;text-underline-offset:4px}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ef9a9a}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+
+/* Sort */
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+
+/* Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ef9a9a;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ef9a9a}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2)}
+
+/* Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(239,154,154,.3))}.book-title{font-size:1.4em;color:#ef9a9a;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ef9a9a;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(239,154,154,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ef9a9a}.gi .gm{font-size:.8em;color:#aaa}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.72em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn:active{transform:scale(.94)}
+  .nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .btn-gold:active{transform:scale(.95);box-shadow:0 0 20px rgba(255,138,101,.4)}
+  .btn-outline:active{border-color:#ef9a9a;color:#ef9a9a}
+  .btn-outline:disabled{opacity:.35}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;border-radius:50%;min-width:44px;min-height:44px}
+  .speak-btn:active{background:rgba(239,154,154,.4);transform:scale(1.15)}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .story-speech+.story-speech{margin-top:10px}
+  .dg-decon-block{padding:8px;margin:8px 0}
+  .dg-decon-word{font-size:1.05em;letter-spacing:2px;margin-bottom:4px}
+  .dg-decon-row{padding:5px 6px;font-size:.75em;gap:3px}
+  .dg-decon-letter{font-size:.95em;min-width:24px}
+  .dg-decon-type{min-width:44px;font-size:.68em}
+  .dg-decon-ipa{font-size:.85em}
+  .dg-decon-say{font-size:.78em;margin-top:4px;padding-top:4px}
+  .dg-decon-struct{font-size:.65em}
+  .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lab-card{width:auto;min-width:0;padding:12px 6px;border-radius:12px;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+  .lab-card:active{border-color:rgba(239,154,154,.5);transform:scale(.96)}
+  .lab-card .word{font-size:1.2em!important}
+  .lab-card .hint{font-size:.68em}
+  .lab-tabs{gap:3px;margin-bottom:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .lab-tab{padding:9px 6px;font-size:.7em;border-radius:14px;min-height:40px;white-space:nowrap;flex-shrink:0}
+  .lab-tab:active,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+  .sort-hint{font-size:.75em;margin-bottom:6px}
+  .sort-pool{gap:5px;margin-bottom:8px;min-height:38px}
+  .sort-item{padding:9px 10px;font-size:.8em;border-radius:12px;min-height:44px;display:inline-flex;align-items:center}
+  .sort-item[draggable=true]{cursor:grab;min-height:44px}
+  .sort-spk{width:36px!important;height:36px!important;font-size:.7em!important}
+  .sort-bins{gap:5px}
+  .sort-bin{min-width:0;min-height:80px;padding:4px;border-radius:10px}
+  .sort-bin-label{font-size:.72em;margin-bottom:3px}
+  .sort-feedback{font-size:.82em;min-height:20px}
+  .sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important;box-shadow:0 0 14px rgba(255,210,0,.3)}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ef9a9a}
+  .quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+  .quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .quiz-final.perfect .btn{margin:4px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+}
+
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .dg-decon-block{padding:6px;margin:6px 0}
+  .dg-decon-word{font-size:.95em}
+  .dg-decon-row{padding:4px 5px;font-size:.72em;gap:2px}
+  .dg-decon-letter{min-width:20px;font-size:.85em}
+  .dg-decon-type{min-width:38px;font-size:.65em}
+  .lab-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding:0 2px}
+  .lab-tab{flex-shrink:0;font-size:.68em;padding:7px 8px}
+  .sort-bins{flex-direction:column}
+  .sort-bin{min-height:60px;width:100%}
+  .sort-bin-label{font-size:.78em;text-align:left;padding-left:6px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+
+input,select,textarea{font-size:16px}
+.eb-c{color:#ef9a9a}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🍞🍞 结尾加厚了！· CVCC / CVCCC 后置加长</h1><p class="subtitle">结尾多了一两片面包，中间肉肉还是短元音！</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
+
+<!-- ===== STORY ===== -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 结尾也加厚了！</h2>
+
+<div class="story-speech"><p>三明治的结构你已经很熟了：<b style="color:#ff8a65">开头面包🍞</b> + <b style="color:#4fc3f7">肉肉🥩</b> + <b style="color:#81c784">结尾面包🍞</b> = CVC，三个声音。比如：</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(255,138,101,.15);border:2px solid #ff8a65;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ff8a65">h</span><span style="color:#888">+</span>
+<span style="background:rgba(79,195,247,.15);border:2px solid #4fc3f7;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#4fc3f7">a</span><span style="color:#888">+</span>
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">t</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px">hat</span>
+<span class="speak-btn" onclick="spkWord('hat',this)">🔊</span>
+</div>
+
+<div class="story-speech"><p>上一次我们给<b style="color:#ce93d8">开头</b>加厚了（CCVC），还记得 stop 吗？这一次，我们给<b style="color:#ef9a9a">结尾</b>加厚！两个辅音并排站在词尾，这就是 <b style="color:#ef9a9a">CVCC</b>：</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(255,138,101,.15);border:2px solid #ff8a65;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ff8a65">h</span><span style="color:#888">+</span>
+<span style="background:rgba(79,195,247,.15);border:2px solid #4fc3f7;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#4fc3f7">a</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 14px;font-size:1.3em;font-weight:bold;color:#ef9a9a;cursor:pointer" onclick="spkPhoneme('/n/',this)">n 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 14px;font-size:1.3em;font-weight:bold;color:#ef9a9a;cursor:pointer" onclick="spkPhoneme('/d/',this)">d 🔊</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(239,154,154,.08);border:2px solid #ef9a9a;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ef9a9a;letter-spacing:3px">hand</span>
+<span class="speak-btn" onclick="spk('hand')">🔊</span>
+<span style="font-size:.8em;color:#888;margin-left:4px">CVCC</span>
+</div>
+
+<div class="story-speech"><p>🎯 <b>关键：</b>结尾多了一个辅音 → 4 个声音、CVCC 结构。中间的<b style="color:#4fc3f7">短元音</b>不变！h<b style="color:#4fc3f7\">a</b>nd 里的 a 还是读 /æ/，和 h<b style="color:#4fc3f7\">a</b>t 里一样。</p></div>
+
+<h3>🍞🍞 结尾两片面包的花样</h3>
+<div class="story-speech"><p>结尾的「两片面包」有各种各样的组合！下面每种都试试点开听：</p></div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="cvccDemo"></div>
+
+<div class="story-speech"><p>📝 不管结尾是 -nd（hand）、-mp（jump）、-st（best）、-lt（belt）还是 -sk（desk），<b style="color:#ef9a9a\">结尾都是两个辅音各自发各自的音</b>。中间的元音全部是<b style="color:#4fc3f7\">短元音</b>。</p></div>
+
+<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(206,147,216,.06);border:1px solid rgba(206,147,216,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">开头加厚 → CCVC</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ce93d8;letter-spacing:2px">stop 🛑</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">s-t-o-p，前面2片面包</div>
+<span class="speak-btn" onclick="spk('stop')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">结尾加厚 → CVCC</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">hand ✋</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">h-a-n-d，后面2片面包</div>
+<span class="speak-btn" onclick="spk('hand')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<h3>🔺 三片结尾面包：CVCCC</h3>
+<div class="story-speech"><p>结尾也可以有三个辅音！比如 help + s → helps：</p></div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="cvcccDemo"></div>
+
+<h3>🔺🔺 四片结尾面包：CVCCCC（四连缀）</h3>
+<div class="story-speech"><p>英语里最极端的结尾——<b style="color:#ef9a9a">四个辅音</b>叠在一起！全是靠 <b style="color:#ffd200">x = /ks/</b> 这个「打包字母」做到的：</p></div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="cvccccDemo"></div>
+
+<div class="story-speech"><p>🧠 <b>关键机制：</b>x 一个字母包了 /k/+/s/ 两个声音。再加 th /θ/ 和 s /s/，4 个辅音音位在词尾一字排开！</p><p>📝 <b>英语词尾最多 4 个辅音：</b>/ksθs/（sixths）、/ksts/（texts）、/mpts/（prompts）。靠 x 或塞音+擦音+塞音+擦音的交替排列实现。这就是为什么 sixths 有 6 个声音却只有 6 个字母——x 和 th 各是一个字母代表一个音位。</p></div>
+
+<h3>⚠️ 别搞混：结尾二合音不是连缀！</h3>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,138,101,.06);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">二合音结尾</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ff8a65;letter-spacing:2px">back</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">ck = 1个音 → CVC</div>
+<span class="speak-btn" onclick="spk('back')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">连缀结尾 → CVCC</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">desk</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">s+k = 2个音 → CVCC</div>
+<span class="speak-btn" onclick="spk('desk')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<div class="story-speech"><p>🧠 <b>记住：</b>back（3字母、3声音、CVC）和 desk（4字母、4声音、CVCC）。ck 合体了，sk 没有！</p></div>
+</div></div>
+
+<!-- ===== LAB ===== -->
+<div class="section" id="sec-lab"><div class="glass"><h2>🧪 CVCC / CVCCC 拼读实验室</h2><p style="color:#aaa;margin-bottom:8px">点击卡片翻转听发音！<span style="color:#ef9a9a">粉色</span>=结尾连缀 <span style="color:#4fc3f7">蓝色</span>=元音 <span style="color:#81c784">绿色</span>=开头辅音</p>
+<div class="lab-tabs" id="labTabs"></div>
+<div class="lab-grid" id="labGrid"></div></div></div>
+
+<!-- ===== SORT ===== -->
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：按结尾连缀分类</h2><p class="sort-hint">读单词，找到结尾的连缀，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
+<div class="sort-bin" id="binND" onclick="clickToBin('nd')"><div class="sort-bin-label" style="color:#ef9a9a">-nd</div><div id="binNDItems"></div></div>
+<div class="sort-bin" id="binMP" onclick="clickToBin('mp')"><div class="sort-bin-label" style="color:#ef9a9a">-mp</div><div id="binMPItems"></div></div>
+<div class="sort-bin" id="binST" onclick="clickToBin('st')"><div class="sort-bin-label" style="color:#ef9a9a">-st</div><div id="binSTItems"></div></div>
+<div class="sort-bin" id="binLT" onclick="clickToBin('lt')"><div class="sort-bin-label" style="color:#ef9a9a">-lt</div><div id="binLTItems"></div></div>
+<div class="sort-bin" id="binNK" onclick="clickToBin('nk')"><div class="sort-bin-label" style="color:#ef9a9a">-nk</div><div id="binNKItems"></div></div>
+<div class="sort-bin" id="binX" onclick="clickToBin('x')"><div class="sort-bin-label" style="color:#ef9a9a">-x /ks/</div><div id="binXItems"></div></div>
+<div class="sort-bin" id="binCCCC" onclick="clickToBin('cccc')"><div class="sort-bin-label" style="color:#ff8a65">4连缀</div><div id="binCCCCItems"></div></div>
+</div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">听音 · 拼读 · 辨别结构</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- ===== BOOK ===== -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 The Best Gift</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 CVCC 绘本 🎁</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+<!-- ===== EASTER EGG ===== -->
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：x 的秘密 &amp; 特殊结尾</h2>
+<div class="story-speech"><p>有几个词尾很特别——看起来不像连缀，但里面藏着<b style="color:#ef9a9a">两个声音</b>！</p></div>
+
+<h3>🔍 x = /ks/：一个字母，两个声音！</h3>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ef9a9a;font-weight:bold;margin-bottom:6px;font-size:1.3em">box 📦</div>
+<div style="font-size:.9em;color:#aaa">b + o + x<br>x = /k/+/s/ = 两个音！<br>→ 虽然只有3个字母，但是 CVCC</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">结构：<b style="color:#ef9a9a">CVCC</b> (b-o-ks)</div>
+<span class="speak-btn" onclick="spk('box')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ef9a9a;font-weight:bold;margin-bottom:6px;font-size:1.3em">fix 🔧</div>
+<div style="font-size:.9em;color:#aaa">f + i + x<br>x = /k/+/s/ = 两个音！<br>→ 也是 CVCC</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">结构：<b style="color:#ef9a9a">CVCC</b> (f-i-ks)</div>
+<span class="speak-btn" onclick="spk('fix')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+</div>
+<div class="story-speech"><p>📝 <b>x 是一个「打包字母」：</b>它一个字母就包了 /k/+/s/ 两个声音！所以 box/fix/six/fox/mix 虽然只有 3 个字母，但声音数是 4 → <b style="color:#ef9a9a">CVCC</b>。数声音，不数字母！</p></div>
+
+<h3>🧬 二合音作为「一个C」参与结尾连缀</h3>
+<div class="story-speech"><p>结尾的「两片面包」里，有一片可能不是单个辅音，而是一个<b style="color:#ff8a65">二合音</b>——两个字母合起来发一个音，在连缀中充当<b style="color:#ffd200">一个C</b>的角色。这就是「单辅音 + 二合音」的结尾组合。点击每个单词的🔊听整词发音，点击拆分字母听单个音：</p></div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="easterDigraphCards"></div>
+
+<div class="story-speech"><p>📝 <b>共同规律：</b>每个词的结尾都是 <b>「一个单辅音 + 一个二合音」</b>——3 个字母，但只有 <b>2 个音位</b>→ 全是 <b style="color:#ef9a9a">CVCC</b>。字母数 ≠ 声音数！</p><p>⚠️ <b>注意：</b>-rch、-rsh、-rth 类词（如 march/harsh/worth）虽然也是「单辅音+二合音」模式，但中间的元音被 r 影响了发音（r控元音），属于后续学习内容，本页不含。</p></div>
+
+<div class="story-speech"><p>🧠 <b>核心结论：</b>判断一个词是 CVCC 还是 CVCCC，<b style="color:#ffd200">看结尾有几个音位</b>，不数字母！二合音（ph/ch/sh/th/ck/ng/ge）不管由几个字母组成，只算 <b style="color:#ff8a65">1个C</b>。</p></div>
+</div></div>
+
+</div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// ═══ CAMBRIDGE AUDIO SYSTEM ═══
+var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+var audioCache={};
+var PHONEMES={
+  '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
+  '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
+  '/ɒ/':'phonemes/sock.mp3','/uː/':'phonemes/blue.mp3','/ʊ/':'phonemes/foot.mp3',
+  '/e/':'phonemes/head.mp3','/ɜː/':'phonemes/bird.mp3','/ə/':'phonemes/above.mp3',
+  '/eɪ/':'phonemes/day_ei.mp3','/aɪ/':'phonemes/eye.mp3','/ɔɪ/':'phonemes/boy.mp3',
+  '/əʊ/':'phonemes/nose.mp3','/aʊ/':'phonemes/mouth.mp3','/ɪə/':'phonemes/ear.mp3',
+  '/eə/':'phonemes/hair.mp3','/ʊə/':'phonemes/pure.mp3',
+  '/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3',
+  '/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3',
+  '/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3',
+  '/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3',
+  '/ʃ/':'phonemes/she.mp3','/ʒ/':'phonemes/vision.mp3','/h/':'phonemes/hand.mp3',
+  '/tʃ/':'phonemes/cheese.mp3','/dʒ/':'phonemes/jump.mp3',
+  '/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/ŋ/':'phonemes/sing.mp3',
+  '/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/w/':'phonemes/we.mp3',
+  '/j/':'phonemes/yes.mp3',
+  '/i/':'phonemes/happy.mp3','/u/':'phonemes/situation.mp3',
+  '/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'
+};
+var WORDS={
+  'above':'words/above.mp3','act':'words/act.mp3','actor':'words/actor.mp3','apple':'words/apple.mp3','apt':'words/apt.mp3','back':'words/back.mp3','bag':'words/bag.mp3','bang':'words/bang.mp3',
+  'bank':'words/bank.mp3','bar':'words/bar.mp3','bask':'words/bask.mp3','bat':'words/bat.mp3','bath':'words/bath.mp3','beach':'words/beach.mp3','bed':'words/bed.mp3','bee':'words/bee.mp3',
+  'before':'words/before.mp3','belch':'words/belch.mp3','belt':'words/belt.mp3','bench':'words/bench.mp3','bend':'words/bend.mp3','bent':'words/bent.mp3','best':'words/best.mp3','big':'words/big.mp3',
+  'bird':'words/bird.mp3','blob':'words/blob.mp3','blue':'words/blue.mp3','bolt':'words/bolt.mp3','bond':'words/bond.mp3','book':'words/book.mp3','box':'words/box.mp3','boy':'words/boy.mp3',
+  'brag':'words/brag.mp3','bread':'words/bread.mp3','break':'words/break.mp3','bred':'words/bred.mp3','brim':'words/brim.mp3','bug':'words/bug.mp3','bulk':'words/bulk.mp3','bump':'words/bump.mp3',
+  'bunch':'words/bunch.mp3','bus':'words/bus.mp3','bush':'words/bush.mp3','cake':'words/cake.mp3','camp':'words/camp.mp3','cap':'words/cap.mp3','cape':'words/cape.mp3','car':'words/car.mp3',
+  'cash':'words/cash.mp3','cat':'words/cat.mp3','chat':'words/chat.mp3','cheese':'words/cheese.mp3','chin':'words/chin.mp3','chip':'words/chip.mp3','chop':'words/chop.mp3','city':'words/city.mp3',
+  'clip':'words/clip.mp3','club':'words/club.mp3','cold':'words/cold.mp3','corn':'words/corn.mp3','cost':'words/cost.mp3','crab':'words/crab.mp3','crept':'words/crept.mp3','crib':'words/crib.mp3',
+  'crisp':'words/crisp.mp3','cup':'words/cup.mp3','cut':'words/cut.mp3','cute':'words/cute.mp3','damp':'words/damp.mp3','dark':'words/dark.mp3','dash':'words/dash.mp3','day':'words/day.mp3',
+  'dent':'words/dent.mp3','desk':'words/desk.mp3','dig':'words/dig.mp3','doctor':'words/doctor.mp3','dog':'words/dog.mp3','door':'words/door.mp3','dot':'words/dot.mp3','dream':'words/dream.mp3',
+  'drop':'words/drop.mp3','drum':'words/drum.mp3','duck':'words/duck.mp3','duct':'words/duct.mp3','dump':'words/dump.mp3','dunk':'words/dunk.mp3','dusk':'words/dusk.mp3','dust':'words/dust.mp3',
+  'ear':'words/ear.mp3','eat':'words/eat.mp3','egg':'words/egg.mp3','elf':'words/elf.mp3','enjoy':'words/enjoy.mp3','eye':'words/eye.mp3','fact':'words/fact.mp3','fan':'words/fan.mp3',
+  'far':'words/far.mp3','farm':'words/farm.mp3','fast':'words/fast.mp3','father':'words/father.mp3','felt':'words/felt.mp3','fern':'words/fern.mp3','filch':'words/filch.mp3','fill':'words/fill.mp3',
+  'filth':'words/filth.mp3','fin':'words/fin.mp3','fish':'words/fish.mp3','fist':'words/fist.mp3','fix':'words/fix.mp3','flag':'words/flag.mp3','flat':'words/flat.mp3','floor':'words/floor.mp3',
+  'flower':'words/flower.mp3','fly':'words/fly.mp3','fog':'words/fog.mp3','fold':'words/fold.mp3','foot':'words/foot.mp3','for':'words/for.mp3','fork':'words/fork.mp3','fox':'words/fox.mp3',
+  'frog':'words/frog.mp3','full':'words/full.mp3','fun':'words/fun.mp3','fund':'words/fund.mp3','garden':'words/garden.mp3','gasp':'words/gasp.mp3','germ':'words/germ.mp3','gift':'words/gift.mp3',
+  'giraffe':'words/giraffe.mp3','give':'words/give.mp3','glad':'words/glad.mp3','goat':'words/goat.mp3','gold':'words/gold.mp3','golf':'words/golf.mp3','grab':'words/grab.mp3','gray':'words/gray.mp3',
+  'great':'words/great.mp3','green':'words/green.mp3','grin':'words/grin.mp3','guitar':'words/guitar.mp3','gulp':'words/gulp.mp3','gym':'words/gym.mp3','hair':'words/hair.mp3','halt':'words/halt.mp3',
+  'hand':'words/hand.mp3','hang':'words/hang.mp3','happy':'words/happy.mp3','hasp':'words/hasp.mp3','hat':'words/hat.mp3','he':'words/he.mp3','head':'words/head.mp3','health':'words/health.mp3',
+  'held':'words/held.mp3','help':'words/help.mp3','hemp':'words/hemp.mp3','hen':'words/hen.mp3','her':'words/her.mp3','hit':'words/hit.mp3','honk':'words/honk.mp3','hop':'words/hop.mp3',
+  'hope':'words/hope.mp3','horse':'words/horse.mp3','hot':'words/hot.mp3','hug':'words/hug.mp3','hunch':'words/hunch.mp3','hunt':'words/hunt.mp3','husk':'words/husk.mp3','hut':'words/hut.mp3',
+  'ice':'words/ice.mp3','igloo':'words/igloo.mp3','jam':'words/jam.mp3','jar':'words/jar.mp3','jet':'words/jet.mp3','jump':'words/jump.mp3','junk':'words/junk.mp3','just':'words/just.mp3',
+  'kept':'words/kept.mp3','kilt':'words/kilt.mp3','king':'words/king.mp3','kit':'words/kit.mp3','kite':'words/kite.mp3','lamp':'words/lamp.mp3','left':'words/left.mp3','leg':'words/leg.mp3',
+  'length':'words/length.mp3','lick':'words/lick.mp3','lift':'words/lift.mp3','like':'words/like.mp3','limp':'words/limp.mp3','link':'words/link.mp3','lint':'words/lint.mp3','lion':'words/lion.mp3',
+  'lip':'words/lip.mp3','lisp':'words/lisp.mp3','loft':'words/loft.mp3','log':'words/log.mp3','long':'words/long.mp3','look':'words/look.mp3','lost':'words/lost.mp3','lunch':'words/lunch.mp3',
+  'lymph':'words/lymph.mp3','mail':'words/mail.mp3','map':'words/map.mp3','mask':'words/mask.mp3','math':'words/math.mp3','me':'words/me.mp3','melt':'words/melt.mp3','mend':'words/mend.mp3',
+  'milk':'words/milk.mp3','mint':'words/mint.mp3','mix':'words/mix.mp3','month':'words/month.mp3','moon':'words/moon.mp3','more':'words/more.mp3','moth':'words/moth.mp3','mouth':'words/mouth.mp3',
+  'much':'words/much.mp3','mulch':'words/mulch.mp3','must':'words/must.mp3','my':'words/my.mp3','myth':'words/myth.mp3','name':'words/name.mp3','nest':'words/nest.mp3','net':'words/net.mp3',
+  'never':'words/never.mp3','north':'words/north.mp3','nose':'words/nose.mp3','not':'words/not.mp3','nut':'words/nut.mp3','nymph':'words/nymph.mp3','octopus':'words/octopus.mp3','odd':'words/odd.mp3',
+  'open':'words/open.mp3','opt':'words/opt.mp3','pack':'words/pack.mp3','pact':'words/pact.mp3','paint':'words/paint.mp3','pan':'words/pan.mp3','pant':'words/pant.mp3','park':'words/park.mp3',
+  'path':'words/path.mp3','peg':'words/peg.mp3','pen':'words/pen.mp3','pet':'words/pet.mp3','pick':'words/pick.mp3','pig':'words/pig.mp3','pin':'words/pin.mp3','pinch':'words/pinch.mp3',
+  'pink':'words/pink.mp3','plan':'words/plan.mp3','play':'words/play.mp3','plug':'words/plug.mp3','pond':'words/pond.mp3','pot':'words/pot.mp3','press':'words/press.mp3','prod':'words/prod.mp3',
+  'prompts':'words/prompts.mp3','pull':'words/pull.mp3','pulp':'words/pulp.mp3','pump':'words/pump.mp3','punt':'words/punt.mp3','pure':'words/pure.mp3','push':'words/push.mp3','put':'words/put.mp3',
+  'queen':'words/queen.mp3','raft':'words/raft.mp3','rain':'words/rain.mp3','ranch':'words/ranch.mp3','rat':'words/rat.mp3','read':'words/read.mp3','red':'words/red.mp3','rest':'words/rest.mp3',
+  'rich':'words/rich.mp3','risk':'words/risk.mp3','river':'words/river.mp3','rock':'words/rock.mp3','romp':'words/romp.mp3','rose':'words/rose.mp3','run':'words/run.mp3','rush':'words/rush.mp3',
+  'rust':'words/rust.mp3','sad':'words/sad.mp3','sail':'words/sail.mp3','salt':'words/salt.mp3','sand':'words/sand.mp3','say':'words/say.mp3','scab':'words/scab.mp3','scalp':'words/scalp.mp3',
+  'scar':'words/scar.mp3','scram':'words/scram.mp3','script':'words/script.mp3','scum':'words/scum.mp3','sea':'words/sea.mp3','sect':'words/sect.mp3','see':'words/see.mp3','self':'words/self.mp3',
+  'send':'words/send.mp3','serve':'words/serve.mp3','shark':'words/shark.mp3','she':'words/she.mp3','sheep':'words/sheep.mp3','shelf':'words/shelf.mp3','ship':'words/ship.mp3','shop':'words/shop.mp3',
+  'short':'words/short.mp3','shred':'words/shred.mp3','shrub':'words/shrub.mp3','shrug':'words/shrug.mp3','sift':'words/sift.mp3','silk':'words/silk.mp3','sin':'words/sin.mp3','sing':'words/sing.mp3',
+  'sink':'words/sink.mp3','sir':'words/sir.mp3','sister':'words/sister.mp3','sit':'words/sit.mp3','six':'words/six.mp3','sixth':'words/sixth.mp3','sixths':'words/sixths.mp3','skin':'words/skin.mp3',
+  'skip':'words/skip.mp3','slam':'words/slam.mp3','sled':'words/sled.mp3','sleep':'words/sleep.mp3','slip':'words/slip.mp3','slug':'words/slug.mp3','smog':'words/smog.mp3','smug':'words/smug.mp3',
+  'snap':'words/snap.mp3','snip':'words/snip.mp3','sock':'words/sock.mp3','soft':'words/soft.mp3','son':'words/son.mp3','song':'words/song.mp3','speak':'words/speak.mp3','spin':'words/spin.mp3',
+  'splash':'words/splash.mp3','splat':'words/splat.mp3','split':'words/split.mp3','spot':'words/spot.mp3','sprig':'words/sprig.mp3','spring':'words/spring.mp3','sprint':'words/sprint.mp3','star':'words/star.mp3',
+  'stay':'words/stay.mp3','step':'words/step.mp3','stop':'words/stop.mp3','store':'words/store.mp3','storm':'words/storm.mp3','strap':'words/strap.mp3','strip':'words/strip.mp3','strong':'words/strong.mp3',
+  'strum':'words/strum.mp3','such':'words/such.mp3','sulk':'words/sulk.mp3','sun':'words/sun.mp3','swell':'words/swell.mp3','swept':'words/swept.mp3','swim':'words/swim.mp3','sylph':'words/sylph.mp3',
+  'table':'words/table.mp3','tank':'words/tank.mp3','tea':'words/tea.mp3','teacher':'words/teacher.mp3','ten':'words/ten.mp3','tent':'words/tent.mp3','tenth':'words/tenth.mp3','term':'words/term.mp3',
+  'text':'words/text.mp3','texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3',
+  'throb':'words/throb.mp3','tick':'words/tick.mp3','top':'words/top.mp3','town':'words/town.mp3','train':'words/train.mp3','trap':'words/trap.mp3','tree':'words/tree.mp3','trim':'words/trim.mp3',
+  'trip':'words/trip.mp3','tub':'words/tub.mp3','tusk':'words/tusk.mp3','twig':'words/twig.mp3','twin':'words/twin.mp3','twist':'words/twist.mp3','type':'words/type.mp3','umbrella':'words/umbrella.mp3',
+  'unicorn':'words/unicorn.mp3','van':'words/van.mp3','verb':'words/verb.mp3','very':'words/very.mp3','vision':'words/vision.mp3','wait':'words/wait.mp3','wash':'words/wash.mp3','wasp':'words/wasp.mp3',
+  'way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3','wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3',
+  'which':'words/which.mp3','whip':'words/whip.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
+  'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
+  'you':'words/you.mp3','zoo':'words/zoo.mp3'
+};
+// Preload all audio to avoid file:// lazy-load failures
+(function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
+
+function playAudio(path,el){
+  if(!el||!el.classList)return;
+  if(el.classList.contains('on'))return;
+  var a=audioCache[path];
+  if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}
+  a.currentTime=0;el.classList.add('on');
+  a.onended=function(){el.classList.remove('on')};
+  a.onerror=function(){el.classList.remove('on')};
+  a.play().catch(function(e){el.classList.remove('on')});
+}
+function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
+function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
+// Preload all word/phoneme audio to avoid file:// lazy-load failures
+(function(){
+  for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}
+  for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}
+})();
+function spk(word){
+  var w=word.toLowerCase();var p=WORDS[w];
+  if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}});return}
+  speechSynthesis.resume();if(speechSynthesis.getVoices().length===0){voiceQ.push(w);return}speakNow(w);
+}
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
+function speakNow(word){
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
+  var voices=speechSynthesis.getVoices();
+  var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
+    voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||
+    voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50);
+}
+
+// === Navigation ===
+var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='lab')buildL();
+  if(n==='sort')buildSort();
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ STORY: CVCCC Demo ═══
+(function(){
+  var demos=[
+    {l:['l','p','s'],w:'helps',e:'🤝',s:['/l/','/p/','/s/']},
+    {l:['l','t','s'],w:'belts',e:'🪢',s:['/l/','/t/','/s/']},
+    {l:['n','t','s'],w:'tents',e:'⛺',s:['/n/','/t/','/s/']},
+    {l:['n','d','s'],w:'hands',e:'👐',s:['/n/','/d/','/z/']}
+  ];
+  var h='';
+  demos.forEach(function(d){
+    h+='<div style="background:rgba(239,154,154,.05);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:10px 14px;text-align:center;min-width:90px">';
+    h+='<div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px">';
+    d.l.forEach(function(l,i){
+      h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:1em" onclick="spkPhoneme(\''+d.s[i]+'\',this)">'+l+' 🔊</span>';
+      if(i<d.l.length-1)h+='<span style="color:#888;font-size:.7em">+</span>';
+    });
+    h+='</div>';
+    h+='<div style="font-size:1.2em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">'+d.w+'</div>';
+    h+='<div style="font-size:.7em;color:#aaa">'+d.e+' CVCCC</div>';
+    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:28px;height:28px">🔊</span></div>';
+  });
+  document.getElementById('cvcccDemo').innerHTML=h;
+})();
+
+// ═══ STORY: CVCCCC Demo (4-consonant endings) ═══
+(function(){
+  var demos=[
+    {l:['x','th','s'],w:'sixths',e:'6️⃣',ipa:'/sɪksθs/',s:['/ks/','/θ/','/s/']},
+    {l:['x','t','s'],w:'texts',e:'📱',ipa:'/teksts/',s:['/ks/','/t/','/s/']},
+    {l:['m','p','t','s'],w:'prompts',e:'💬',ipa:'/prɒmpts/',s:['/m/','/p/','/t/','/s/']},
+    {l:['m','p','t','s'],w:'tempts',e:'😈',ipa:'/tempts/',s:['/m/','/p/','/t/','/s/']}
+  ];
+  var h='';
+  demos.forEach(function(d){
+    h+='<div style="background:rgba(255,138,101,.05);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:10px 14px;text-align:center;min-width:100px">';
+    h+='<div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px;flex-wrap:wrap;align-items:center">';
+    d.l.forEach(function(l,i){
+      h+='<span style="color:#ff8a65;font-weight:bold;cursor:pointer;font-size:0.95em" onclick="spkPhoneme(\''+d.s[i]+'\',this)">'+l+' 🔊</span>';
+      if(i<d.l.length-1)h+='<span style="color:#888;font-size:.7em">+</span>';
+    });
+    h+='</div>';
+    h+='<div style="font-size:.75em;color:#aaa;margin-top:2px">'+d.ipa+'</div>';
+    h+='<div style="font-size:1.2em;font-weight:bold;color:#ff8a65;letter-spacing:2px">'+d.w+'</div>';
+    h+='<div style="font-size:.7em;color:#aaa">'+d.e+' CVCCCC</div>';
+    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:28px;height:28px">🔊</span></div>';
+  });
+  document.getElementById('cvccccDemo').innerHTML=h;
+})();
+
+// ═══ STORY: CVCC Variety Demo (2-consonant endings) ═══
+(function(){
+  var demos=[
+    {v:'a',w:'hand',e:'✋',end:'nd',s1:'/n/',s2:'/d/'},
+    {v:'u',w:'jump',e:'🦘',end:'mp',s1:'/m/',s2:'/p/'},
+    {v:'e',w:'best',e:'🏆',end:'st',s1:'/s/',s2:'/t/'},
+    {v:'e',w:'belt',e:'🪢',end:'lt',s1:'/l/',s2:'/t/'},
+    {v:'i',w:'milk',e:'🥛',end:'lk',s1:'/l/',s2:'/k/'},
+    {v:'e',w:'desk',e:'🪑',end:'sk',s1:'/s/',s2:'/k/'},
+    {v:'e',w:'left',e:'⬅',end:'ft',s1:'/f/',s2:'/t/'},
+    {v:'o',w:'gold',e:'🥇',end:'ld',s1:'/l/',s2:'/d/'}
+  ];
+  var h='';
+  demos.forEach(function(d){
+    h+='<div style="background:rgba(239,154,154,.05);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:9px 12px;text-align:center;min-width:80px">';
+    h+='<div style="font-size:1.1em;font-weight:bold;color:#ef9a9a;letter-spacing:2px;margin-bottom:2px">'+d.w+'</div>';
+    h+='<div style="display:flex;gap:1px;justify-content:center;align-items:center;margin-bottom:3px;flex-wrap:wrap">';
+    h+='<span style="font-size:.7em;color:#888">-'+d.end+':</span>';
+    h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:.8em" onclick="spkPhoneme(\''+d.s1+'\',this)">'+d.end[0]+' 🔊</span>';
+    h+='<span style="color:#888;font-size:.6em">+</span>';
+    h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:.8em" onclick="spkPhoneme(\''+d.s2+'\',this)">'+d.end[1]+' 🔊</span>';
+    h+='</div>';
+    h+='<div style="font-size:.65em;color:#aaa">'+d.e+' CVCC</div>';
+    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:2px;width:24px;height:24px;font-size:.55em">🔊</span></div>';
+  });
+  document.getElementById('cvccDemo').innerHTML=h;
+})();
+
+// ═══ EASTER EGG: Digraph-as-C cards (one per word) ═══
+(function(){
+  var cards=[
+    {w:'bench',e:'🪑',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'lunch',e:'🍱',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'pinch',e:'🤏',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'hunch',e:'🤔',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'ranch',e:'🏜',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'bunch',e:'💐',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'filch',e:'🥷',c:'l',dg:'ch',cIPA:'/l/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'mulch',e:'🌱',c:'l',dg:'ch',cIPA:'/l/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'belch',e:'😮',c:'l',dg:'ch',cIPA:'/l/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
+    {w:'nymph',e:'🧚',c:'m',dg:'ph',cIPA:'/m/',dgF:'ph=/f/',dgIPA:'/f/'},
+    {w:'lymph',e:'🩸',c:'m',dg:'ph',cIPA:'/m/',dgF:'ph=/f/',dgIPA:'/f/'},
+    {w:'sylph',e:'💨',c:'l',dg:'ph',cIPA:'/l/',dgF:'ph=/f/',dgIPA:'/f/'},
+    {w:'Welsh',e:'🏴',c:'l',dg:'sh',cIPA:'/l/',dgF:'sh=/ʃ/',dgIPA:'/ʃ/'},
+    {w:'tenth',e:'🔟',c:'n',dg:'th',cIPA:'/n/',dgF:'th=/θ/',dgIPA:'/θ/'},
+    {w:'month',e:'📅',c:'n',dg:'th',cIPA:'/n/',dgF:'th=/θ/',dgIPA:'/θ/'},
+    {w:'health',e:'❤️',c:'l',dg:'th',cIPA:'/l/',dgF:'th=/θ/',dgIPA:'/θ/'},
+    {w:'filth',e:'🦠',c:'l',dg:'th',cIPA:'/l/',dgF:'th=/θ/',dgIPA:'/θ/'},
+    {w:'length',e:'📏',c:'ng',dg:'th',cIPA:'/ŋ/',dgF:'th=/θ/',dgIPA:'/θ/',note:'二合音+二合音'}
+  ];
+  var h='';
+  cards.forEach(function(d){
+    h+='<div style="background:rgba(255,138,101,.05);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:8px 10px;text-align:center;min-width:75px">';
+    h+='<div style="font-size:.95em;font-weight:bold;color:#ef9a9a;letter-spacing:1px;margin-bottom:3px">'+d.w+' '+d.e+'</div>';
+    h+='<div style="display:flex;gap:1px;justify-content:center;align-items:center;margin-bottom:2px;font-size:.7em">';
+    h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer" onclick="spkPhoneme(\''+d.cIPA+'\',this)">'+d.c+' 🔊</span>';
+    h+='<span style="color:#888;margin:0 2px">+</span>';
+    h+='<span style="color:#ff8a65;font-weight:bold;cursor:pointer" onclick="spkPhoneme(\''+d.dgIPA+'\',this)">'+d.dg+' 🔊</span>';
+    h+='</div>';
+    h+='<div style="font-size:.58em;color:#aaa">'+d.dgF+'</div>';
+    if(d.note)h+='<div style="font-size:.55em;color:#888;margin-top:1px">'+d.note+'</div>';
+    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:20px;height:20px;font-size:.45em">🔊</span></div>';
+  });
+  document.getElementById('easterDigraphCards').innerHTML=h;
+})();
+
+// ═══ LAB ═══
+var labData={
+  'nmbl':{label:'🔹 鼻音类 (-nd -nt -nk -mp)',blendLen:2,
+    words:[['hand','手 ✋ -nd'],['sand','沙子 🏖 -nd'],['send','发送 📨 -nd'],['pond','池塘 🪷 -nd'],['wind','风 💨 -nd'],['fund','基金 💰 -nd'],['bond','纽带 🔗 -nd'],['mend','修理 🩹 -nd'],
+      ['bent','弯曲 〰 -nt'],['tent','帐篷 ⛺ -nt'],['mint','薄荷 🌿 -nt'],['hunt','打猎 🏹 -nt'],['pant','喘气 😤 -nt'],['dent','凹痕 🕳 -nt'],['lint','棉絮 🧵 -nt'],['punt','踢 🏈 -nt'],
+      ['bank','银行 🏦 -nk'],['sink','下沉 🚰 -nk'],['pink','粉色 🩷 -nk'],['junk','垃圾 🗑 -nk'],['tank','坦克 🛢 -nk'],['honk','喇叭 📯 -nk'],['dunk','灌篮 🏀 -nk'],['link','链接 🔗 -nk'],
+      ['jump','跳 🦘 -mp'],['lamp','台灯 💡 -mp'],['damp','潮湿 💧 -mp'],['bump','撞 🛑 -mp'],['camp','露营 🏕 -mp'],['limp','跛行 🩼 -mp'],['pump','泵 ⛽ -mp'],['dump','倾倒 🗑 -mp'],['romp','嬉闹 🎉 -mp'],['hemp','麻绳 🪢 -mp']]},
+  'lbl':{label:'🔹 l-类 (-ld -lf -lk -lp -lt)',blendLen:2,
+    words:[['gold','金子 🥇 -ld'],['held','握住 🤝 -ld'],['cold','冷 🥶 -ld'],['fold','折叠 📁 -ld'],['wild','狂野 🐯 -ld'],
+      ['self','自己 🧘 -lf'],['elf','精灵 🧝 -lf'],['shelf','架子 📚 -lf'],['golf','高尔夫 ⛳ -lf'],
+      ['milk','牛奶 🥛 -lk'],['silk','丝绸 👘 -lk'],['bulk','大批 📦 -lk'],['sulk','生闷气 😒 -lk'],
+      ['help','帮助 🆘 -lp'],['yelp','尖叫 📢 -lp'],['gulp','吞咽 😋 -lp'],['pulp','果浆 🧃 -lp'],['scalp','头皮 💆 -lp'],
+      ['belt','腰带 🪢 -lt'],['melt','融化 🫠 -lt'],['kilt','苏格兰裙 🏴 -lt'],['bolt','螺栓 🔩 -lt'],['felt','毛毡 🧶 -lt'],['salt','盐 🧂 -lt'],['halt','停 🛑 -lt']]},
+  'sbl':{label:'🔹 s-类 (-sk -sp -st)',blendLen:2,
+    words:[['desk','书桌 🪑 -sk'],['mask','面具 🎭 -sk'],['risk','风险 ⚠ -sk'],['tusk','象牙 🦷 -sk'],['dusk','黄昏 🌆 -sk'],['husk','外壳 🌽 -sk'],['bask','晒太阳 ☀ -sk'],
+      ['gasp','喘气 😲 -sp'],['wasp','黄蜂 🐝 -sp'],['crisp','脆 🍟 -sp'],['lisp','咬舌 🗣 -sp'],['wisp','一缕 💨 -sp'],['hasp','搭扣 🔒 -sp'],
+      ['best','最好 🏆 -st'],['fast','快 🏃 -st'],['nest','鸟巢 🪺 -st'],['dust','灰尘 💨 -st'],['just','刚刚 ✅ -st'],['must','必须 📌 -st'],['rest','休息 😴 -st'],['lost','迷路 🗺 -st'],['fist','拳头 👊 -st'],['rust','锈 🔩 -st'],['cost','花费 💸 -st']]},
+  'tbl':{label:'🔹 塞音类 (-ft -pt -ct)',blendLen:2,
+    words:[['left','左边 ⬅ -ft'],['gift','礼物 🎁 -ft'],['soft','柔软 ☁ -ft'],['lift','抬起 🛗 -ft'],['raft','筏子 🛶 -ft'],['sift','筛 🪹 -ft'],['loft','阁楼 🏠 -ft'],
+      ['kept','保留 🔒 -pt'],['wept','哭泣 😢 -pt'],['swept','扫过 🧹 -pt'],['crept','爬行 🐢 -pt'],['apt','适合 👍 -pt'],['opt','选择 ✔ -pt'],
+      ['fact','事实 📋 -ct'],['act','行动 🎭 -ct'],['duct','管道 🔧 -ct'],['pact','协议 🤝 -ct'],['sect','派别 🏛 -ct']]},
+  'spec':{label:'🔸 特殊 (-x /ks/ -mph /mf/)',blendLen:1,
+    words:[['box','盒子 📦 -x'],['fix','修 🔧 -x'],['six','六 6️⃣ -x'],['fox','狐狸 🦊 -x'],['mix','混合 🥣 -x'],
+      ['nymph','仙女 🧚 -mph'],['lymph','淋巴 🩸 -mph']]},
+  'cccc':{label:'🔺 四连缀 (-xts -xths -mpts)',blendLen:3,
+    words:[['texts','文本 📱 -xts'],['sixths','第六 6️⃣ -xths'],['prompts','提示 💬 -mpts'],['tempts','诱惑 😈 -mpts'],['exempts','豁免 🎫 -mpts']]}
+};
+var curL='nmbl';
+function switchL(k){curL=k;buildL()}
+function buildL(){
+  var cfg=labData[curL];
+  var tabs='';
+  Object.keys(labData).forEach(function(k){
+    tabs+='<button class="lab-tab'+(k===curL?' active':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
+  });
+  document.getElementById('labTabs').innerHTML=tabs;
+  var bl=cfg.blendLen,vowels='aeiou';
+  document.getElementById('labGrid').innerHTML=cfg.words.map(function(w,i){
+    var word=w[0],emoji=w[1],colored='',len=word.length,endStart=len-bl;
+    // For CVCC: first char = regular C, vowel at pos 1, rest = ending blend
+    // Special: -x words: x is at position len-1 and represents 2 sounds
+    // For -mph words: m is at len-3, ph at len-2,len-1
+    var j=0;
+    while(j<len){
+      if(curL==='spec'&&word[j]==='x'){
+        colored+='<span style="color:#ef9a9a;font-weight:bold">'+word[j]+'</span>';j++;
+      }else if(curL==='spec'&&j>=len-3&&word.substring(len-3)==='mph'){
+        if(j===len-3){colored+='<span class="eb-c">'+word[j]+'</span>';j++}
+        else if(j===len-2){colored+='<span class="eb-c">ph</span>';j+=2}
+        else{j++}
+      }else if(curL==='cccc'&&j===0&&word.substring(0,2)==='pr'){
+        colored+='<span style="color:#ce93d8">pr</span>';j+=2;
+      }else if(j===0){
+        colored+='<span class="cn-c">'+word[j]+'</span>';j++;
+      }else if(vowels.indexOf(word[j])>=0){
+        colored+='<span class="vw">'+word[j]+'</span>';j++;
+      }else{
+        colored+='<span class="eb-c">'+word[j]+'</span>';j++;
+      }
+    }
+    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="letter-spacing:3px">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
+  }).join('');
+}
+
+// ═══ SORT: By ending blend ═══
+var sortWords=[
+  {w:'hand',t:'nd'},{w:'sand',t:'nd'},{w:'pond',t:'nd'},{w:'wind',t:'nd'},{w:'fund',t:'nd'},
+  {w:'jump',t:'mp'},{w:'lamp',t:'mp'},{w:'camp',t:'mp'},{w:'dump',t:'mp'},{w:'pump',t:'mp'},
+  {w:'best',t:'st'},{w:'fast',t:'st'},{w:'just',t:'st'},{w:'lost',t:'st'},{w:'rest',t:'st'},{w:'cost',t:'st'},
+  {w:'belt',t:'lt'},{w:'melt',t:'lt'},{w:'felt',t:'lt'},{w:'salt',t:'lt'},
+  {w:'bank',t:'nk'},{w:'sink',t:'nk'},{w:'pink',t:'nk'},{w:'tank',t:'nk'},
+  {w:'box',t:'x'},{w:'fix',t:'x'},{w:'six',t:'x'},{w:'fox',t:'x'},{w:'mix',t:'x'},
+  {w:'texts',t:'cccc'},{w:'sixths',t:'cccc'},{w:'tempts',t:'cccc'}
+];
+var selectedWord=null,placedCount=0;
+function buildSort(){
+  var pool=document.getElementById('sortPool'),h='';
+  sortWords.sort(function(){return Math.random()-0.5}).forEach(function(w){
+    h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>';
+  });
+  pool.innerHTML=h;
+  ['ND','MP','ST','LT','NK','X','CCCC'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
+}
+function setupBins(){
+  ['binND','binMP','binST','binLT','binNK','binX','binCCCC'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};
+    el.ondragleave=function(){el.classList.remove('drag-over')};
+    el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())};
+  });
+}
+function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
+function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
+function dropToBin(w,type,correct){
+  if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
+  var ok=type===correct;
+  var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
+  if(ok){
+    item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';
+    document.getElementById('bin'+type.toUpperCase()+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
+    var label=type==='cccc'?'4连缀':'-'+type;
+    document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+label+'!</span>';
+    placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>';
+  }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听结尾的连缀？</span>'}
+  selectedWord=null;
+}
+function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
+function dragEnd(e){e.target.classList.remove('dragging')}
+var tl=null,tc=null;
+function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(79,195,247,.18);border:2px solid #4fc3f7;border-radius:14px;padding:6px 14px;font-weight:bold;color:#4fc3f7;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binND','binMP','binST','binLT','binNK','binX','binCCCC'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binND','binMP','binST','binLT','binNK','binX','binCCCC'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+function resetSort(){buildSort()}
+
+// ═══ QUIZ ═══
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'hand',o:['3个 (CVC)','4个 (CVCC)','5个 (CVCCC)','2个'],a:1,x:'hand = /h/+/æ/+/n/+/d/ = 4个音，CVCC ✓'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'helps',o:['3个','4个 (CVCC)','5个 (CVCCC)','6个'],a:2,x:'helps = /h/+/e/+/l/+/p/+/s/ = 5个音，CVCCC ✓'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'texts',o:['4个 (CVCC)','5个 (CVCCC)','6个 (CVCCCC)','7个'],a:2,x:'texts = /t/+/e/+/k/+/s/+/t/+/s/ = 6个音，CVCCCC ✓ x=2个音！'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'sixths',o:['4个 (CVCC)','5个 (CVCCC)','6个 (CVCCCC)','7个'],a:2,x:'sixths = /s/+/ɪ/+/k/+/s/+/θ/+/s/ = 6个音，CVCCCC ✓ x+th+s=4个音在结尾！'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'back',o:['3个 (CVC)','4个 (CVCC)','5个','2个'],a:0,x:'back = /b/+/æ/+/k/ = 3个音，CVC ✓ ck是二合音不拆分！'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'box',o:['3个 (CVC)','4个 (CVCC)','5个','2个'],a:1,x:'box = /b/+/ɒ/+/k/+/s/ = 4个音，CVCC ✓ x包含两个声音！'},
+  {t:'struct',q:'hand 是什么结构？',w:'hand',o:['CVC','CCVC','CVCC','CVCCC'],a:2,x:'h+a+n+d = CVCC，4个声音、结尾2个辅音'},
+  {t:'struct',q:'helps 是什么结构？',w:'helps',o:['CVC','CCVC','CVCC','CVCCC'],a:3,x:'h+e+l+p+s = CVCCC，5个声音、结尾3个辅音'},
+  {t:'struct',q:'texts 是什么结构？',w:'texts',o:['CVC','CVCC','CVCCC','CVCCCC'],a:3,x:'t+e+x+t+s = CVCCCC，6个声音、结尾4个辅音 /ksts/！'},
+  {t:'struct',q:'sixths 是什么结构？',w:'sixths',o:['CVC','CVCC','CVCCC','CVCCCC'],a:3,x:'s+i+x+th+s = CVCCCC，6个声音、结尾4个辅音 /ksθs/！'},
+  {t:'struct',q:'back 是什么结构？',w:'back',o:['CVC','CVCC','CCVC','CV'],a:0,x:'b+a+ck = CVC！虽然4个字母，但ck是二合音=1个音'},
+  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'jump',o:['-mp','-nt','-nd','-nk'],a:0,x:'jump = ju-mp，mp 两个声音 /m/+/p/'},
+  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'desk',o:['-st','-sk','-sp','-ck'],a:1,x:'desk = de-sk，sk 两个声音 /s/+/k/（不是ck二合音！）'},
+  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'gift',o:['-pt','-ft','-ct','-st'],a:1,x:'gift = gi-ft，ft 两个声音 /f/+/t/'},
+  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'texts',o:['-xts','-sts','-xt','-ts'],a:0,x:'texts = te-xts，xts = /ksts/ 四个音 /k/+/s/+/t/+/s/'},
+  {t:'spell',q:'哪个是正确的拼写？/hænd/',o:['hand','hannd','handd','hamd'],a:0,x:'/h/+/æ/+/n/+/d/ = h-a-n-d = hand'},
+  {t:'spell',q:'哪个是正确的拼写？/dʒʌmp/',o:['jump','jumm','jamp','gump'],a:0,x:'/dʒ/+/ʌ/+/m/+/p/ = j-u-m-p = jump'},
+  {t:'vowel',q:'hand 中间的元音是什么？',w:'hand',o:['a /æ/','a /eɪ/','e /e/','i /ɪ/'],a:0,x:'hand = h-a-nd，a 读短音 /æ/，CVCC 里元音是短的！'},
+  {t:'vowel',q:'jump 中间的元音是什么？',w:'jump',o:['u /ʌ/','u /juː/','o /ɒ/','a /æ/'],a:0,x:'jump = j-u-mp，u 读短音 /ʌ/'},
+  {t:'choose',q:'下面哪个是 CVCC？',o:['cat','back','hand','helps'],a:2,x:'hand = CVCC。cat=CVC，back=CVC(二合音)，helps=CVCCC'},
+  {t:'choose',q:'下面哪个是 CVCCCC（四连缀结尾）？',o:['hand','helps','texts','box'],a:2,x:'texts = CVCCCC，结尾 /ksts/ 四个音。hand=CVCC，helps=CVCCC，box=CVCC'},
+  {t:'choose',q:'下面哪个结尾是真正的连缀（不是二合音）？',o:['back (-ck)','sing (-ng)','desk (-sk)','fish (-sh)'],a:2,x:'desk的-sk是连缀（2个音）。ck/ng/sh都是二合音（1个音）'},
+  {t:'x',q:'box 只有3个字母，为什么是 CVCC？',w:'box',o:['搞错了，box是CVC','x一个字母发两个音/ks/','b不是辅音','box是CCVC'],a:1,x:'x = /k/+/s/ = 两个声音。3个字母，4个声音 → CVCC。数声音，不数字母！'},
+  {t:'compare',q:'back 和 desk 都是4个字母，为什么结构不同？',o:['一样，都是CVCC','ck是二合音=1音, sk是连缀=2音','desk更短','不确定'],a:1,x:'ck合体发/k/→CVC。sk各自发/s/+/k/→CVCC！'},
+  {t:'cccc',q:'sixths /sɪksθs/ 结尾有几个辅音？',w:'sixths',o:['2个','3个','4个','5个'],a:2,x:'sixths 结尾 /ksθs/ = /k/+/s/+/θ/+/s/ = 4个辅音！x贡献2个、th贡献1个、s贡献1个'}
+];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'\"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={count:'🔊 听音数数',struct:'🏗️ 辨别结构',listen:'👂 听音辨连缀',spell:'✏️ 选正确拼写',vowel:'🔤 找中间元音',choose:'🎯 选择',compare:'⚖️ 对比',x:'🤔 x的秘密',cccc:'🔺 四连缀'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&(q.t==='count'||q.t==='listen'))h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='count'&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！CVCC大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ef9a9a;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// ═══ BOOK ═══
+var bp_cp=0,bp_pages=[
+  {s:'🎁🐸',t:'The Best Gift',x:'<span class="dg-hl">Kent</span> has a <span class="dg-hl">gift</span> in his <span class="dg-hl">hand</span>.<br>He runs to the <span class="dg-hl">pond</span>.<br>\\\\\\\"It is the <span class="dg-hl">best</span> day!\\\\\\\" says <span class="dg-hl">Kent</span>.'},
+  {s:'🐸📦',t:'At the Pond',x:'A frog sits on a <span class="dg-hl">desk</span> of <span class="dg-hl">sand</span>.<br>\\\\\\\"Do not <span class="dg-hl">jump</span> on my <span class="dg-hl">gift</span>!\\\\\\\"<br>The frog just <span class="dg-hl">yelps</span> and <span class="dg-hl">jumps</span>.'},
+  {s:'💡🔧🏃',t:'A Big Fix',x:'<span class="dg-hl">Kent</span> must <span class="dg-hl">fix</span> a <span class="dg-hl">lamp</span>.<br>He gets a <span class="dg-hl">belt</span> and a <span class="dg-hl">mask</span>.<br>\\\\\\\"I <span class="dg-hl">kept</span> my tools in the <span class="dg-hl">box</span>!\\\\\\\"'},
+  {s:'🥛🎉',t:'The Gift',x:'At <span class="dg-hl">last</span>, <span class="dg-hl">Kent</span> opens the <span class="dg-hl">gift</span>.<br>It is a cup of <span class="dg-hl">milk</span> and a <span class="dg-hl">gold</span> pin!<br>\\\\\\\"The <span class="dg-hl">best gift</span>!\\\\\\\" he says with a <span class="dg-hl">grin</span>.'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">Kent <span class="speak-btn" onclick="spk(&#39;kent&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nt CVCC</div></div><div class="gi"><div class="gw">gift <span class="speak-btn" onclick="spk(&#39;gift&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ft CVCC</div></div><div class="gi"><div class="gw">hand <span class="speak-btn" onclick="spk(&#39;hand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd CVCC</div></div><div class="gi"><div class="gw">pond <span class="speak-btn" onclick="spk(&#39;pond&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd CVCC</div></div><div class="gi"><div class="gw">best <span class="speak-btn" onclick="spk(&#39;best&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-st CVCC</div></div><div class="gi"><div class="gw">desk <span class="speak-btn" onclick="spk(&#39;desk&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sk CVCC</div></div><div class="gi"><div class="gw">sand <span class="speak-btn" onclick="spk(&#39;sand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd CVCC</div></div><div class="gi"><div class="gw">jump <span class="speak-btn" onclick="spk(&#39;jump&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp CVCC</div></div><div class="gi"><div class="gw">yelp <span class="speak-btn" onclick="spk(&#39;yelp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-lp CVCC</div></div><div class="gi"><div class="gw">fix <span class="speak-btn" onclick="spk(&#39;fix&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-x CVCC</div></div><div class="gi"><div class="gw">lamp <span class="speak-btn" onclick="spk(&#39;lamp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp CVCC</div></div><div class="gi"><div class="gw">belt <span class="speak-btn" onclick="spk(&#39;belt&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-lt CVCC</div></div><div class="gi"><div class="gw">mask <span class="speak-btn" onclick="spk(&#39;mask&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sk CVCC</div></div><div class="gi"><div class="gw">kept <span class="speak-btn" onclick="spk(&#39;kept&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-pt CVCC</div></div><div class="gi"><div class="gw">box <span class="speak-btn" onclick="spk(&#39;box&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-x CVCC</div></div><div class="gi"><div class="gw">milk <span class="speak-btn" onclick="spk(&#39;milk&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-lk CVCC</div></div><div class="gi"><div class="gw">gold <span class="speak-btn" onclick="spk(&#39;gold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ld CVCC</div></div></div>'}
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  speechSynthesis.cancel();
+  var text=bp_pages[bp_cp].x.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+  var u=new SpeechSynthesisUtterance(text);u.lang=accent==='uk'?'en-GB':'en-US';u.rate=0.75;u.pitch=1;u.volume=1;
+  var voices=speechSynthesis.getVoices();
+  var targetLang=accent==='uk'?'en-GB':'en-US';
+  var vo=voices.filter(function(v){return v.lang===targetLang}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(!vo)vo=voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(vo)u.voice=vo;
+  u.onend=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  speechSynthesis.speak(u);
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+buildL();buildSort();initQ();
+</script>
+</body></html>

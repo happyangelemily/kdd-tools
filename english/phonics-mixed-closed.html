@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>混合闭音节连缀 | 自然拼读</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #ffd200)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.sort-spk{width:22px!important;height:22px!important;font-size:.6em!important}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:1.7em;text-align:center;background:linear-gradient(135deg,#ce93d8,#ff8a65,#ef9a9a,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ffd200;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ce93d8;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.1);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ce93d8,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,210,0,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(255,210,0,.04);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(255,210,0,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px}.lab-card .word .sb-c{color:#ce93d8}.lab-card .word .eb-c{color:#ef9a9a}.lab-card .word .vw{color:#4fc3f7;text-decoration:underline;text-underline-offset:4px}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ffd200}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:8px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ffd200;color:#ffd200;background:rgba(255,210,0,.08)}
+.lab-subtabs{display:flex;gap:4px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-subtab{padding:6px 11px;border-radius:16px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.2);color:#aaa;cursor:pointer;font-size:.78em;transition:all .3s}.lab-subtab:hover,.lab-subtab.active{border-color:#ce93d8;color:#ce93d8;background:rgba(206,147,216,.08)}
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:80px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.3);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ffd200;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.04);border:1px solid rgba(255,210,0,.15)}
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ef9a9a;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(239,154,154,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}h1{font-size:1.05em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}.subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lab-card{width:auto;min-width:0;padding:12px 6px;border-radius:12px;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+  .lab-card .word{font-size:1.2em!important}.lab-card .hint{font-size:.68em}
+  .lab-tabs{gap:3px;margin-bottom:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .lab-tab{padding:9px 8px;font-size:.7em;border-radius:14px;min-height:40px;white-space:nowrap;flex-shrink:0}
+  .lab-subtabs{gap:3px;margin-bottom:8px}.lab-subtab{padding:7px 8px;font-size:.68em;border-radius:12px;min-height:36px;white-space:nowrap}
+  .sort-hint{font-size:.75em}.sort-item{padding:9px 10px;font-size:.8em;border-radius:12px;min-height:44px}
+  .sort-spk{width:36px!important;height:36px!important;font-size:.7em!important}
+  .sort-bins{gap:5px}.sort-bin{min-width:0;min-height:80px;padding:4px;border-radius:10px}.sort-bin-label{font-size:.72em}
+  .sort-feedback{font-size:.82em}.sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important}
+  .quiz-container{max-width:100%}.quiz-card{padding:10px}.quiz-q{font-size:.88em}.quiz-word{font-size:1.3em}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px}
+  .quiz-nav{gap:6px;flex-wrap:wrap}.quiz-nav .qi{font-size:.8em}.quiz-dot{width:12px;height:12px}.quiz-explain{font-size:.82em}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}.book-scene{font-size:2.5em}.book-title{font-size:1em}
+  .book-text{font-size:.9em;line-height:1.8}.book-nav{gap:6px}.book-pron{gap:5px}.pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}.gi{padding:5px 6px}.gi .gw{font-size:.8em}.gi .gm{font-size:.68em}
+}
+@media(max-width:480px){
+  .container{padding:4px}.glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:.95em}h2{font-size:.9em}.nav{gap:4px}.nav-btn{padding:10px 3px;font-size:.65em;min-height:44px;border-radius:12px}
+  .sort-bins{flex-direction:column}.sort-bin{min-height:60px;width:100%}.sort-bin-label{font-size:.78em;text-align:left;padding-left:6px}
+  .quiz-opts{grid-template-columns:1fr}.quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}.book-text{font-size:.85em;line-height:1.7}.speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+input,select,textarea{font-size:16px}
+.sb-c{color:#ce93d8}.eb-c{color:#ef9a9a}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>两边都加厚了！· 混合闭音节连缀</h1><p class="subtitle">CCVCC / CCVCCC / CCCVCC / CCCVCCC —— 开头连缀 + 短元音 + 结尾连缀，所有情况一网打尽！</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
+
+<!-- STORY -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 两边都加厚——开头和结尾都有连缀！</h2>
+
+<div class="story-speech"><p>你已经学过了单边加厚——<b style="color:#ce93d8">开头连缀→CCVC</b>（stop）和 <b style="color:#ef9a9a">结尾连缀→CVCC</b>（hand）。现在把它们合体！<b style="color:#ffd200">开头和结尾可以各有 2~3 个辅音</b>，中间夹一个短元音——这就是<b>混合闭音节连缀</b>。</p></div>
+
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.3);border-radius:12px;padding:10px 14px;text-align:center">
+<div style="color:#888;font-size:.75em">CCVCC (2+1+2)</div><div style="font-size:1.2em;color:#ffd200;font-weight:bold">stamp ✉️</div></div>
+<div style="background:rgba(255,138,101,.06);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:10px 14px;text-align:center">
+<div style="color:#888;font-size:.75em">CCVCCC (2+1+3)</div><div style="font-size:1.2em;color:#ff8a65;font-weight:bold">plants 🌱+s</div></div>
+<div style="background:rgba(206,147,216,.06);border:1px solid rgba(206,147,216,.2);border-radius:12px;padding:10px 14px;text-align:center">
+<div style="color:#888;font-size:.75em">CCCVCC (3+1+2)</div><div style="font-size:1.2em;color:#ce93d8;font-weight:bold">sprint 🏃</div></div>
+<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:10px 14px;text-align:center">
+<div style="color:#888;font-size:.75em">CCCVCCC (3+1+3)</div><div style="font-size:1.2em;color:#ef9a9a;font-weight:bold">sprints 🏃+s</div></div>
+</div>
+
+<h3>🏗️ 四种结构一览</h3>
+<div class="story-speech"><p>开头连缀可以是 <b style="color:#ce93d8">2 个</b>或 <b style="color:#ff8a65">3 个</b>辅音，结尾连缀也可以是 <b style="color:#ef9a9a">2 个</b>或 <b style="color:#ff8a65">3 个</b>辅音。排列组合 = 4 种结构。下面逐一拆解：</p></div>
+
+<div class="story-speech"><p><b style="color:#ffd200">① CCVCC</b> — 开头2个 + 结尾2个。以 stamp ✉️ 为例：</p></div>
+<div style="display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ce93d8;cursor:pointer" onclick="spkPhoneme('/s/',this)">s 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ce93d8;cursor:pointer" onclick="spkPhoneme('/t/',this)">t 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(79,195,247,.15);border:2px solid #4fc3f7;border-radius:12px;padding:10px 16px;font-weight:bold;color:#4fc3f7">a</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ef9a9a;cursor:pointer" onclick="spkPhoneme('/m/',this)">m 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ef9a9a;cursor:pointer" onclick="spkPhoneme('/p/',this)">p 🔊</span>
+<span style="color:#888">=</span><span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-weight:bold;color:#ffd200;letter-spacing:3px">stamp</span>
+<span class="speak-btn" onclick="spk('stamp')">🔊</span><span style="font-size:.75em;color:#888;margin-left:4px">5音位</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 14px" id="ccvccVariety"></div>
+
+<div class="story-speech"><p><b style="color:#ff8a65">② CCVCCC</b> — 开头2个 + 结尾3个（加 -s 复数）。以 plants 🌱+s 为例：</p></div>
+<div style="display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ce93d8;cursor:pointer" onclick="spkPhoneme('/p/',this)">p 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ce93d8;cursor:pointer" onclick="spkPhoneme('/l/',this)">l 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(79,195,247,.15);border:2px solid #4fc3f7;border-radius:12px;padding:10px 16px;font-weight:bold;color:#4fc3f7">a</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 13px;font-weight:bold;color:#ef9a9a;cursor:pointer;font-size:.95em" onclick="spkPhoneme('/n/',this)">n 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 13px;font-weight:bold;color:#ef9a9a;cursor:pointer;font-size:.95em" onclick="spkPhoneme('/t/',this)">t 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 13px;font-weight:bold;color:#ef9a9a;cursor:pointer;font-size:.95em" onclick="spkPhoneme('/s/',this)">s 🔊</span>
+<span style="color:#888">=</span><span style="background:rgba(255,138,101,.08);border:2px solid #ff8a65;border-radius:12px;padding:10px 18px;font-weight:bold;color:#ff8a65;letter-spacing:2px">plants</span>
+<span class="speak-btn" onclick="spk('plants')">🔊</span><span style="font-size:.75em;color:#888;margin-left:4px">6音位</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 14px" id="ccvcccCards"></div>
+
+<div class="story-speech"><p><b style="color:#ce93d8">③ CCCVCC</b> — 开头3个 + 结尾2个。以 sprint 🏃 为例：</p></div>
+<div style="display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 13px;font-weight:bold;color:#ce93d8;cursor:pointer;font-size:.95em" onclick="spkPhoneme('/s/',this)">s 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 13px;font-weight:bold;color:#ce93d8;cursor:pointer;font-size:.95em" onclick="spkPhoneme('/p/',this)">p 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 13px;font-weight:bold;color:#ce93d8;cursor:pointer;font-size:.95em" onclick="spkPhoneme('/r/',this)">r 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(79,195,247,.15);border:2px solid #4fc3f7;border-radius:12px;padding:10px 16px;font-weight:bold;color:#4fc3f7">i</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ef9a9a;cursor:pointer" onclick="spkPhoneme('/n/',this)">n 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 14px;font-weight:bold;color:#ef9a9a;cursor:pointer" onclick="spkPhoneme('/t/',this)">t 🔊</span>
+<span style="color:#888">=</span><span style="background:rgba(206,147,216,.08);border:2px solid #ce93d8;border-radius:12px;padding:10px 18px;font-weight:bold;color:#ce93d8;letter-spacing:2px">sprint</span>
+<span class="speak-btn" onclick="spk('sprint')">🔊</span><span style="font-size:.75em;color:#888;margin-left:4px">6音位</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 14px" id="cccvccCards"></div>
+
+<div class="story-speech"><p><b style="color:#ef9a9a">④ CCCVCCC</b> — 开头3个 + 结尾3个（加 -s）。以 sprints 🏃+s 为例：</p></div>
+<div style="display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 12px;font-weight:bold;color:#ce93d8;cursor:pointer;font-size:.88em" onclick="spkPhoneme('/s/',this)">s 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 12px;font-weight:bold;color:#ce93d8;cursor:pointer;font-size:.88em" onclick="spkPhoneme('/p/',this)">p 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(206,147,216,.15);border:2px solid #ce93d8;border-radius:12px;padding:10px 12px;font-weight:bold;color:#ce93d8;cursor:pointer;font-size:.88em" onclick="spkPhoneme('/r/',this)">r 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(79,195,247,.15);border:2px solid #4fc3f7;border-radius:12px;padding:10px 16px;font-weight:bold;color:#4fc3f7">i</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 12px;font-weight:bold;color:#ef9a9a;cursor:pointer;font-size:.88em" onclick="spkPhoneme('/n/',this)">n 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 12px;font-weight:bold;color:#ef9a9a;cursor:pointer;font-size:.88em" onclick="spkPhoneme('/t/',this)">t 🔊</span><span style="color:#888">+</span>
+<span style="background:rgba(239,154,154,.15);border:2px solid #ef9a9a;border-radius:12px;padding:10px 12px;font-weight:bold;color:#ef9a9a;cursor:pointer;font-size:.88em" onclick="spkPhoneme('/s/',this)">s 🔊</span>
+<span style="color:#888">=</span><span style="background:rgba(239,154,154,.08);border:2px solid #ef9a9a;border-radius:12px;padding:10px 18px;font-weight:bold;color:#ef9a9a;letter-spacing:1px">sprints</span>
+<span class="speak-btn" onclick="spk('sprints')">🔊</span><span style="font-size:.75em;color:#888;margin-left:4px">7音位</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 14px" id="cccvcccCards"></div>
+
+<div class="story-speech"><p>🎯 <b>核心规律：</b>不管开头几个辅音、结尾几个辅音，<b style="color:#ffd200">中间的元音永远是短的</b>！st<b style="color:#4fc3f7">a</b>mp、spr<b style="color:#4fc3f7">i</b>nt、pla<b style="color:#4fc3f7">n</b>ts——a/e/i/o/u 全是短音，和 CVC 里一模一样。</p></div>
+
+<h3>🌈 颜色说明</h3>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(206,147,216,.06);border:1px solid rgba(206,147,216,.2);border-radius:12px;padding:10px 14px;text-align:center"><div style="width:30px;height:16px;background:#ce93d8;border-radius:4px;margin:0 auto 4px"></div><div style="font-size:.7em;color:#ce93d8">开头连缀</div></div>
+<div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:10px 14px;text-align:center"><div style="width:30px;height:16px;background:#4fc3f7;border-radius:4px;margin:0 auto 4px"></div><div style="font-size:.7em;color:#4fc3f7">中间元音</div></div>
+<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:10px 14px;text-align:center"><div style="width:30px;height:16px;background:#ef9a9a;border-radius:4px;margin:0 auto 4px"></div><div style="font-size:.7em;color:#ef9a9a">结尾连缀</div></div>
+</div>
+</div></div>
+
+<!-- LAB -->
+<div class="section" id="sec-lab"><div class="glass"><h2>🧪 混合连缀实验室</h2><p style="color:#aaa;margin-bottom:8px">上方切换结构类型；CCVCC 有子标签按结尾连缀分类</p>
+<div class="lab-tabs" id="labTabs"></div><div class="lab-subtabs" id="labSubtabs"></div><div class="lab-grid" id="labGrid"></div></div></div>
+
+<!-- SORT -->
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：按结构类型分类</h2><p class="sort-hint">判断单词的结构，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
+<div class="sort-bin" id="binCCVCC" onclick="clickToBin('ccvcc')"><div class="sort-bin-label" style="color:#ffd200">CCVCC<br><span style="font-size:.7em">2+1+2</span></div><div id="binCCVCCItems"></div></div>
+<div class="sort-bin" id="binCCVCCC" onclick="clickToBin('ccvccc')"><div class="sort-bin-label" style="color:#ff8a65">CCVCCC<br><span style="font-size:.7em">2+1+3</span></div><div id="binCCVCCCItems"></div></div>
+<div class="sort-bin" id="binCCCVCC" onclick="clickToBin('cccvcc')"><div class="sort-bin-label" style="color:#ce93d8">CCCVCC<br><span style="font-size:.7em">3+1+2</span></div><div id="binCCCVCCItems"></div></div>
+<div class="sort-bin" id="binCCCVCCC" onclick="clickToBin('cccvccc')"><div class="sort-bin-label" style="color:#ef9a9a">CCCVCCC<br><span style="font-size:.7em">3+1+3</span></div><div id="binCCCVCCCItems"></div></div>
+</div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
+
+<!-- QUIZ -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">四种结构混合，全面考察！</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- BOOK -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 The Grand Trip</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本混合连缀绘本 🚂</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+<!-- EASTER EGG -->
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：二合音 = 一个 C</h2>
+<div class="story-speech"><p>二合音（两个字母合发一个音）只算 1 个 C。不管出现在开头还是结尾！</p></div>
+<h3>🔍 词首：shr- / thr- / s+ph-（二合音 + 辅音 = 2C 开头）</h3>
+<div class="story-speech"><p>sh→/ʃ/、th→/θ/、ph→/f/——各算 <b style="color:#ff8a65">1 个 C</b>，搭配一个辅音组成 2C 开头：</p></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="easterStart"></div>
+
+<h3>🔍 词尾：-nch / -lch / -ngth（辅音 + 二合音 = 2C 结尾）</h3>
+<div class="story-speech"><p>ch→/tʃ/、ng→/ŋ/、th→/θ/。最厉害的是 <b style="color:#ffd200">-ngth</b>：<b style="color:#ff8a65">两个二合音并排</b>！</p></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="easterEnd"></div>
+<div class="story-speech"><p>🧠 数<b style="color:#ffd200">音位</b>，不数字母！</p></div>
+</div></div>
+
+</div>
+<script src="data/08-mixed-closed.js"></script>
+</body></html>
