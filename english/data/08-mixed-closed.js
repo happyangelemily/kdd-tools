@@ -62,7 +62,7 @@ var WORDS={
   'push':'words/push.mp3','put':'words/put.mp3','queen':'words/queen.mp3','raft':'words/raft.mp3','rain':'words/rain.mp3','ranch':'words/ranch.mp3','rat':'words/rat.mp3','read':'words/read.mp3',
   'red':'words/red.mp3','rest':'words/rest.mp3','rich':'words/rich.mp3','risk':'words/risk.mp3','river':'words/river.mp3','rock':'words/rock.mp3','romp':'words/romp.mp3','rose':'words/rose.mp3',
   'run':'words/run.mp3','rush':'words/rush.mp3','rust':'words/rust.mp3','sad':'words/sad.mp3','sail':'words/sail.mp3','salt':'words/salt.mp3','sand':'words/sand.mp3','say':'words/say.mp3',
-  'scab':'words/scab.mp3','scalp':'words/scalp.mp3','scar':'words/scar.mp3','scram':'words/scram.mp3','script':'words/script.mp3','scum':'words/scum.mp3','sea':'words/sea.mp3','sect':'words/sect.mp3',
+  'scab':'words/scab.mp3','scalp':'words/scalp.mp3','scar':'words/scar.mp3','scram':'words/scram.mp3','script':'words/script.mp3','scrimp':'words/scrimp.mp3','scum':'words/scum.mp3','sea':'words/sea.mp3','sect':'words/sect.mp3',
   'see':'words/see.mp3','self':'words/self.mp3','send':'words/send.mp3','serve':'words/serve.mp3','shark':'words/shark.mp3','she':'words/she.mp3','sheep':'words/sheep.mp3','shelf':'words/shelf.mp3',
   'ship':'words/ship.mp3','shop':'words/shop.mp3','short':'words/short.mp3','shred':'words/shred.mp3','shrub':'words/shrub.mp3','shrug':'words/shrug.mp3','sift':'words/sift.mp3','silk':'words/silk.mp3',
   'sin':'words/sin.mp3','sing':'words/sing.mp3','sink':'words/sink.mp3','sir':'words/sir.mp3','sister':'words/sister.mp3','sit':'words/sit.mp3','six':'words/six.mp3','sixth':'words/sixth.mp3',
