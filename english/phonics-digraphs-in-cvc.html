@@ -320,10 +320,6 @@ input,select,textarea{font-size:16px}
 
 // ═══ CAMBRIDGE AUDIO SYSTEM (exact copy from letter-names-sounds page) ═══
 var AUDIO_BASE='audio/';
-var spT=null,voiceRetries=0,voiceQ=[];
-function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
-speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
-
 var audioCache={};
 var PHONEMES={
   '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
@@ -346,25 +342,76 @@ var PHONEMES={
   '/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'
 };
 var WORDS={
-  'cat':'words/cat.mp3','dog':'words/dog.mp3','fish':'words/fish.mp3','hat':'words/hat.mp3',
-  'pig':'words/pig.mp3','red':'words/red.mp3','sun':'words/sun.mp3','cup':'words/cup.mp3',
-  'ship':'words/ship.mp3','chip':'words/chip.mp3','sing':'words/sing.mp3',
-  'she':'words/she.mp3','this':'words/this.mp3','think':'words/think.mp3',
-  'sheep':'words/sheep.mp3','cheese':'words/cheese.mp3','bed':'words/bed.mp3',
-  'pen':'words/pen.mp3','hen':'words/hen.mp3','hot':'words/hot.mp3',
-  'pet':'words/pet.mp3','jam':'words/jam.mp3','name':'words/name.mp3',
-  'hand':'words/hand.mp3','book':'words/book.mp3','jump':'words/jump.mp3',
-  'bus':'words/bus.mp3','van':'words/van.mp3','top':'words/top.mp3','bat':'words/bat.mp3'
+  'above':'words/above.mp3','act':'words/act.mp3','actor':'words/actor.mp3','apple':'words/apple.mp3','apt':'words/apt.mp3','back':'words/back.mp3','bag':'words/bag.mp3','bang':'words/bang.mp3',
+  'bank':'words/bank.mp3','bar':'words/bar.mp3','bask':'words/bask.mp3','bat':'words/bat.mp3','bath':'words/bath.mp3','beach':'words/beach.mp3','bed':'words/bed.mp3','bee':'words/bee.mp3',
+  'before':'words/before.mp3','belch':'words/belch.mp3','belt':'words/belt.mp3','bench':'words/bench.mp3','bend':'words/bend.mp3','bent':'words/bent.mp3','best':'words/best.mp3','big':'words/big.mp3',
+  'bird':'words/bird.mp3','blob':'words/blob.mp3','blue':'words/blue.mp3','bolt':'words/bolt.mp3','bond':'words/bond.mp3','book':'words/book.mp3','box':'words/box.mp3','boy':'words/boy.mp3',
+  'brag':'words/brag.mp3','bread':'words/bread.mp3','break':'words/break.mp3','bred':'words/bred.mp3','brim':'words/brim.mp3','bug':'words/bug.mp3','bulk':'words/bulk.mp3','bump':'words/bump.mp3',
+  'bunch':'words/bunch.mp3','bus':'words/bus.mp3','bush':'words/bush.mp3','cake':'words/cake.mp3','camp':'words/camp.mp3','cap':'words/cap.mp3','cape':'words/cape.mp3','car':'words/car.mp3',
+  'cash':'words/cash.mp3','cat':'words/cat.mp3','chat':'words/chat.mp3','cheese':'words/cheese.mp3','chin':'words/chin.mp3','chip':'words/chip.mp3','chop':'words/chop.mp3','city':'words/city.mp3',
+  'clip':'words/clip.mp3','club':'words/club.mp3','cold':'words/cold.mp3','corn':'words/corn.mp3','cost':'words/cost.mp3','crab':'words/crab.mp3','crept':'words/crept.mp3','crib':'words/crib.mp3',
+  'crisp':'words/crisp.mp3','cup':'words/cup.mp3','cut':'words/cut.mp3','cute':'words/cute.mp3','damp':'words/damp.mp3','dark':'words/dark.mp3','dash':'words/dash.mp3','day':'words/day.mp3',
+  'dent':'words/dent.mp3','desk':'words/desk.mp3','dig':'words/dig.mp3','doctor':'words/doctor.mp3','dog':'words/dog.mp3','door':'words/door.mp3','dot':'words/dot.mp3','dream':'words/dream.mp3',
+  'drop':'words/drop.mp3','drum':'words/drum.mp3','duck':'words/duck.mp3','duct':'words/duct.mp3','dump':'words/dump.mp3','dunk':'words/dunk.mp3','dusk':'words/dusk.mp3','dust':'words/dust.mp3',
+  'ear':'words/ear.mp3','eat':'words/eat.mp3','egg':'words/egg.mp3','elf':'words/elf.mp3','enjoy':'words/enjoy.mp3','eye':'words/eye.mp3','fact':'words/fact.mp3','fan':'words/fan.mp3',
+  'far':'words/far.mp3','farm':'words/farm.mp3','fast':'words/fast.mp3','father':'words/father.mp3','felt':'words/felt.mp3','fern':'words/fern.mp3','filch':'words/filch.mp3','fill':'words/fill.mp3',
+  'filth':'words/filth.mp3','fin':'words/fin.mp3','fish':'words/fish.mp3','fist':'words/fist.mp3','fix':'words/fix.mp3','flag':'words/flag.mp3','flat':'words/flat.mp3','floor':'words/floor.mp3',
+  'flower':'words/flower.mp3','fly':'words/fly.mp3','fog':'words/fog.mp3','fold':'words/fold.mp3','foot':'words/foot.mp3','for':'words/for.mp3','fork':'words/fork.mp3','fox':'words/fox.mp3',
+  'frog':'words/frog.mp3','full':'words/full.mp3','fun':'words/fun.mp3','fund':'words/fund.mp3','garden':'words/garden.mp3','gasp':'words/gasp.mp3','germ':'words/germ.mp3','gift':'words/gift.mp3',
+  'giraffe':'words/giraffe.mp3','give':'words/give.mp3','glad':'words/glad.mp3','goat':'words/goat.mp3','gold':'words/gold.mp3','golf':'words/golf.mp3','grab':'words/grab.mp3','gray':'words/gray.mp3',
+  'great':'words/great.mp3','green':'words/green.mp3','grin':'words/grin.mp3','guitar':'words/guitar.mp3','gulp':'words/gulp.mp3','gym':'words/gym.mp3','hair':'words/hair.mp3','halt':'words/halt.mp3',
+  'hand':'words/hand.mp3','hang':'words/hang.mp3','happy':'words/happy.mp3','hasp':'words/hasp.mp3','hat':'words/hat.mp3','he':'words/he.mp3','head':'words/head.mp3','health':'words/health.mp3',
+  'held':'words/held.mp3','help':'words/help.mp3','hemp':'words/hemp.mp3','hen':'words/hen.mp3','her':'words/her.mp3','hit':'words/hit.mp3','honk':'words/honk.mp3','hop':'words/hop.mp3',
+  'hope':'words/hope.mp3','horse':'words/horse.mp3','hot':'words/hot.mp3','hug':'words/hug.mp3','hunch':'words/hunch.mp3','hunt':'words/hunt.mp3','husk':'words/husk.mp3','hut':'words/hut.mp3',
+  'ice':'words/ice.mp3','igloo':'words/igloo.mp3','jam':'words/jam.mp3','jar':'words/jar.mp3','jet':'words/jet.mp3','jump':'words/jump.mp3','junk':'words/junk.mp3','just':'words/just.mp3',
+  'kept':'words/kept.mp3','kilt':'words/kilt.mp3','king':'words/king.mp3','kit':'words/kit.mp3','kite':'words/kite.mp3','lamp':'words/lamp.mp3','left':'words/left.mp3','leg':'words/leg.mp3',
+  'length':'words/length.mp3','lick':'words/lick.mp3','lift':'words/lift.mp3','like':'words/like.mp3','limp':'words/limp.mp3','link':'words/link.mp3','lint':'words/lint.mp3','lion':'words/lion.mp3',
+  'lip':'words/lip.mp3','lisp':'words/lisp.mp3','loft':'words/loft.mp3','log':'words/log.mp3','long':'words/long.mp3','look':'words/look.mp3','lost':'words/lost.mp3','lunch':'words/lunch.mp3',
+  'lymph':'words/lymph.mp3','mail':'words/mail.mp3','map':'words/map.mp3','mask':'words/mask.mp3','math':'words/math.mp3','me':'words/me.mp3','melt':'words/melt.mp3','mend':'words/mend.mp3',
+  'milk':'words/milk.mp3','mint':'words/mint.mp3','mix':'words/mix.mp3','month':'words/month.mp3','moon':'words/moon.mp3','more':'words/more.mp3','moth':'words/moth.mp3','mouth':'words/mouth.mp3',
+  'much':'words/much.mp3','mulch':'words/mulch.mp3','must':'words/must.mp3','my':'words/my.mp3','myth':'words/myth.mp3','name':'words/name.mp3','nest':'words/nest.mp3','net':'words/net.mp3',
+  'never':'words/never.mp3','north':'words/north.mp3','nose':'words/nose.mp3','not':'words/not.mp3','nut':'words/nut.mp3','nymph':'words/nymph.mp3','octopus':'words/octopus.mp3','odd':'words/odd.mp3',
+  'open':'words/open.mp3','opt':'words/opt.mp3','pack':'words/pack.mp3','pact':'words/pact.mp3','paint':'words/paint.mp3','pan':'words/pan.mp3','pant':'words/pant.mp3','park':'words/park.mp3',
+  'path':'words/path.mp3','peg':'words/peg.mp3','pen':'words/pen.mp3','pet':'words/pet.mp3','pick':'words/pick.mp3','pig':'words/pig.mp3','pin':'words/pin.mp3','pinch':'words/pinch.mp3',
+  'pink':'words/pink.mp3','plan':'words/plan.mp3','play':'words/play.mp3','plug':'words/plug.mp3','pond':'words/pond.mp3','pot':'words/pot.mp3','press':'words/press.mp3','prod':'words/prod.mp3',
+  'prompts':'words/prompts.mp3','pull':'words/pull.mp3','pulp':'words/pulp.mp3','pump':'words/pump.mp3','punt':'words/punt.mp3','pure':'words/pure.mp3','push':'words/push.mp3','put':'words/put.mp3',
+  'queen':'words/queen.mp3','raft':'words/raft.mp3','rain':'words/rain.mp3','ranch':'words/ranch.mp3','rat':'words/rat.mp3','read':'words/read.mp3','red':'words/red.mp3','rest':'words/rest.mp3',
+  'rich':'words/rich.mp3','risk':'words/risk.mp3','river':'words/river.mp3','rock':'words/rock.mp3','romp':'words/romp.mp3','rose':'words/rose.mp3','run':'words/run.mp3','rush':'words/rush.mp3',
+  'rust':'words/rust.mp3','sad':'words/sad.mp3','sail':'words/sail.mp3','salt':'words/salt.mp3','sand':'words/sand.mp3','say':'words/say.mp3','scab':'words/scab.mp3','scalp':'words/scalp.mp3',
+  'scar':'words/scar.mp3','scram':'words/scram.mp3','script':'words/script.mp3','scum':'words/scum.mp3','sea':'words/sea.mp3','sect':'words/sect.mp3','see':'words/see.mp3','self':'words/self.mp3',
+  'send':'words/send.mp3','serve':'words/serve.mp3','shark':'words/shark.mp3','she':'words/she.mp3','sheep':'words/sheep.mp3','shelf':'words/shelf.mp3','ship':'words/ship.mp3','shop':'words/shop.mp3',
+  'short':'words/short.mp3','shred':'words/shred.mp3','shrub':'words/shrub.mp3','shrug':'words/shrug.mp3','sift':'words/sift.mp3','silk':'words/silk.mp3','sin':'words/sin.mp3','sing':'words/sing.mp3',
+  'sink':'words/sink.mp3','sir':'words/sir.mp3','sister':'words/sister.mp3','sit':'words/sit.mp3','six':'words/six.mp3','sixth':'words/sixth.mp3','sixths':'words/sixths.mp3','skin':'words/skin.mp3',
+  'skip':'words/skip.mp3','slam':'words/slam.mp3','sled':'words/sled.mp3','sleep':'words/sleep.mp3','slip':'words/slip.mp3','slug':'words/slug.mp3','smog':'words/smog.mp3','smug':'words/smug.mp3',
+  'snap':'words/snap.mp3','snip':'words/snip.mp3','sock':'words/sock.mp3','soft':'words/soft.mp3','son':'words/son.mp3','song':'words/song.mp3','speak':'words/speak.mp3','spin':'words/spin.mp3',
+  'splash':'words/splash.mp3','splat':'words/splat.mp3','split':'words/split.mp3','spot':'words/spot.mp3','sprig':'words/sprig.mp3','spring':'words/spring.mp3','sprint':'words/sprint.mp3','star':'words/star.mp3',
+  'stay':'words/stay.mp3','step':'words/step.mp3','stop':'words/stop.mp3','store':'words/store.mp3','storm':'words/storm.mp3','strap':'words/strap.mp3','strip':'words/strip.mp3','strong':'words/strong.mp3',
+  'strum':'words/strum.mp3','such':'words/such.mp3','sulk':'words/sulk.mp3','sun':'words/sun.mp3','swell':'words/swell.mp3','swept':'words/swept.mp3','swim':'words/swim.mp3','sylph':'words/sylph.mp3',
+  'table':'words/table.mp3','tank':'words/tank.mp3','tea':'words/tea.mp3','teacher':'words/teacher.mp3','ten':'words/ten.mp3','tent':'words/tent.mp3','tenth':'words/tenth.mp3','term':'words/term.mp3',
+  'text':'words/text.mp3','texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3',
+  'throb':'words/throb.mp3','tick':'words/tick.mp3','top':'words/top.mp3','town':'words/town.mp3','train':'words/train.mp3','trap':'words/trap.mp3','tree':'words/tree.mp3','trim':'words/trim.mp3',
+  'trip':'words/trip.mp3','tub':'words/tub.mp3','tusk':'words/tusk.mp3','twig':'words/twig.mp3','twin':'words/twin.mp3','twist':'words/twist.mp3','type':'words/type.mp3','umbrella':'words/umbrella.mp3',
+  'unicorn':'words/unicorn.mp3','van':'words/van.mp3','verb':'words/verb.mp3','very':'words/very.mp3','vision':'words/vision.mp3','wait':'words/wait.mp3','wash':'words/wash.mp3','wasp':'words/wasp.mp3',
+  'way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3','wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3',
+  'which':'words/which.mp3','whip':'words/whip.mp3','whim':'words/whim.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
+  'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
+  'you':'words/you.mp3','zoo':'words/zoo.mp3'
 };
+// Preload all audio to avoid file:// lazy-load failures
+(function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
+
 
 function playAudio(path,el){
+  if(!el||!el.classList)return;
   if(el.classList.contains('on'))return;
   var a=audioCache[path];
-  if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}
-  a.currentTime=0;el.classList.add('on');
-  a.onended=function(){el.classList.remove('on')};
-  a.onerror=function(){el.classList.remove('on')};
-  a.play().catch(function(e){el.classList.remove('on')});
+  var src=a?a.src:(AUDIO_BASE+path);
+  var player=new Audio(src);
+  player.preload='auto';
+  el.classList.add('on');
+  player.onended=function(){el.classList.remove('on')};
+  player.onerror=function(){el.classList.remove('on')};
+  player.play().catch(function(e){el.classList.remove('on')});
 }
 function spkPhoneme(ipa,el){
   var p=PHONEMES[ipa];
@@ -376,17 +423,12 @@ function spkWord(word,el){
   if(p){playAudio(p,el);return}
   spk(w);
 }
-function spk(word){
-  var w=word;var p=WORDS[w];
-  if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}});return}
-  speechSynthesis.resume();
-  if(speechSynthesis.getVoices().length===0){voiceQ.push(w);return}
-  speakNow(w);
-}
+
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
-  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
-  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
+  speechSynthesis.resume();
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(word);
   u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
   var voices=speechSynthesis.getVoices();
   var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
@@ -395,6 +437,26 @@ function speakNow(word){
   if(en)u.voice=en;
   setTimeout(function(){speechSynthesis.speak(u)},50);
 }
+
+function spk(word){
+  var w=word.toLowerCase();var p=WORDS[w];
+  if(p){
+    var a=audioCache[p];
+    var src=a?a.src:(AUDIO_BASE+p);
+    var player=new Audio(src);
+    player.preload='auto';
+    var fired=false;
+    var fallback=function(){if(!fired){fired=true;speakNow(w)}};
+    player.onerror=fallback;
+    player.play().catch(fallback);
+  }else{
+    speakNow(w);
+  }
+}
+
+
+
+
 
 // === Navigation ===
 var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
@@ -435,13 +497,13 @@ buildDGDecon();
 
 // ═══ LAB: Tabbed word cards ═══
 var labData={
-  'sh':[['ship','🚢'],['fish','🐟'],['shop','🏪'],['dash','💨'],['rush','🏃'],['wish','🌟'],['cash','💰']],
-  'ch':[['chip','🍟'],['chin','👤'],['much','📦'],['chat','💬'],['chop','🪓'],['rich','💰'],['such','👉']],
-  'ck':[['duck','🦆'],['back','🔙'],['pick','👆'],['sock','🧦'],['pack','🎒'],['rock','🪨'],['tick','✔'],['lick','👅']],
-  'ng':[['sing','🎤'],['ring','💍'],['song','🎵'],['king','👑'],['hang','🪝'],['bang','💥'],['wing','🪽'],['long','📏']],
-  'th1':[['thin','📏'],['bath','🛁'],['path','🛤'],['math','🔢'],['moth','🦋']],
-  'th2':[['this','👉'],['that','👈'],['then','⏭'],['them','👥'],['with','🤝']],
-  'wh':[['when','🕐'],['which','🔍'],['whip','🪢'],['whiz','💫']],
+  'sh':[['ship','船 🚢'],['fish','鱼 🐟'],['shop','商店 🏪'],['dash','冲刺 💨'],['rush','冲 🏃'],['wish','愿望 🌟'],['cash','现金 💰']],
+  'ch':[['chip','薯片 🍟'],['chin','下巴 👤'],['much','很多 📦'],['chat','聊天 💬'],['chop','砍 🪓'],['rich','富有 💰'],['such','这样 👉']],
+  'ck':[['duck','鸭子 🦆'],['back','后面 🔙'],['pick','挑选 👆'],['sock','袜子 🧦'],['pack','打包 🎒'],['rock','石头 🪨'],['tick','打钩 ✔'],['lick','舔 👅']],
+  'ng':[['sing','唱歌 🎤'],['ring','戒指 💍'],['song','歌曲 🎵'],['king','国王 👑'],['hang','挂 🪝'],['bang','砰 💥'],['wing','翅膀 🪽'],['long','长 📏']],
+  'th1':[['thin','薄 📏'],['bath','洗澡 🛁'],['path','小路 🛤'],['math','数学 🔢'],['moth','飞蛾 🦋']],
+  'th2':[['this','这个 👉'],['that','那个 👈'],['then','然后 ⏭'],['them','他们 👥'],['with','和 🤝']],
+  'wh':[['when','何时 🕐'],['which','哪个 🔍'],['whip','鞭子 🪢'],['whim','奇想 💭']],
   'ph':[] // sound only, no words
 };
 var curL='sh';
@@ -546,9 +608,9 @@ var quizPool=[
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
 function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
-function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
-function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
-function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQC()}
 function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！CVC大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ff8a65;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
 
 // ═══ BOOK ═══
