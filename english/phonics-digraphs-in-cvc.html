@@ -320,6 +320,10 @@ input,select,textarea{font-size:16px}
 
 // ═══ CAMBRIDGE AUDIO SYSTEM (exact copy from letter-names-sounds page) ═══
 var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+
 var audioCache={};
 var PHONEMES={
   '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
@@ -393,7 +397,7 @@ var WORDS={
   'trip':'words/trip.mp3','tub':'words/tub.mp3','tusk':'words/tusk.mp3','twig':'words/twig.mp3','twin':'words/twin.mp3','twist':'words/twist.mp3','type':'words/type.mp3','umbrella':'words/umbrella.mp3',
   'unicorn':'words/unicorn.mp3','van':'words/van.mp3','verb':'words/verb.mp3','very':'words/very.mp3','vision':'words/vision.mp3','wait':'words/wait.mp3','wash':'words/wash.mp3','wasp':'words/wasp.mp3',
   'way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3','wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3',
-  'which':'words/which.mp3','whip':'words/whip.mp3','whim':'words/whim.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
+  'which':'words/which.mp3','whip':'words/whip.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
   'you':'words/you.mp3','zoo':'words/zoo.mp3'
 };
@@ -402,16 +406,13 @@ var WORDS={
 
 
 function playAudio(path,el){
-  if(!el||!el.classList)return;
   if(el.classList.contains('on'))return;
   var a=audioCache[path];
-  var src=a?a.src:(AUDIO_BASE+path);
-  var player=new Audio(src);
-  player.preload='auto';
-  el.classList.add('on');
-  player.onended=function(){el.classList.remove('on')};
-  player.onerror=function(){el.classList.remove('on')};
-  player.play().catch(function(e){el.classList.remove('on')});
+  if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}
+  a.currentTime=0;el.classList.add('on');
+  a.onended=function(){el.classList.remove('on')};
+  a.onerror=function(){el.classList.remove('on')};
+  a.play().catch(function(e){el.classList.remove('on')});
 }
 function spkPhoneme(ipa,el){
   var p=PHONEMES[ipa];
@@ -423,12 +424,17 @@ function spkWord(word,el){
   if(p){playAudio(p,el);return}
   spk(w);
 }
-
+function spk(word){
+  var w=word.toLowerCase();var p=WORDS[w];
+  if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}});return}
+  speechSynthesis.resume();
+  if(speechSynthesis.getVoices().length===0){voiceQ.push(w);return}
+  speakNow(w);
+}
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
-  speechSynthesis.resume();
-  speechSynthesis.cancel();
-  var u=new SpeechSynthesisUtterance(word);
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
   u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
   var voices=speechSynthesis.getVoices();
   var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
@@ -437,26 +443,6 @@ function speakNow(word){
   if(en)u.voice=en;
   setTimeout(function(){speechSynthesis.speak(u)},50);
 }
-
-function spk(word){
-  var w=word.toLowerCase();var p=WORDS[w];
-  if(p){
-    var a=audioCache[p];
-    var src=a?a.src:(AUDIO_BASE+p);
-    var player=new Audio(src);
-    player.preload='auto';
-    var fired=false;
-    var fallback=function(){if(!fired){fired=true;speakNow(w)}};
-    player.onerror=fallback;
-    player.play().catch(fallback);
-  }else{
-    speakNow(w);
-  }
-}
-
-
-
-
 
 // === Navigation ===
 var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
@@ -503,7 +489,7 @@ var labData={
   'ng':[['sing','唱歌 🎤'],['ring','戒指 💍'],['song','歌曲 🎵'],['king','国王 👑'],['hang','挂 🪝'],['bang','砰 💥'],['wing','翅膀 🪽'],['long','长 📏']],
   'th1':[['thin','薄 📏'],['bath','洗澡 🛁'],['path','小路 🛤'],['math','数学 🔢'],['moth','飞蛾 🦋']],
   'th2':[['this','这个 👉'],['that','那个 👈'],['then','然后 ⏭'],['them','他们 👥'],['with','和 🤝']],
-  'wh':[['when','何时 🕐'],['which','哪个 🔍'],['whip','鞭子 🪢'],['whim','奇想 💭']],
+  'wh':[['when','何时 🕐'],['which','哪个 🔍'],['whip','鞭子 🪢'],['whiz','嗖 💫']],
   'ph':[] // sound only, no words
 };
 var curL='sh';
@@ -514,7 +500,7 @@ function buildL(){
   var dg=dgMap[curL],dgLen=dg.length,vowels='aeiou';
 
   if(curL==='ph'){
-    document.getElementById('labGrid').innerHTML='<div style="text-align:center;padding:30px"><div style="font-size:2.2em;font-weight:bold;color:#ff8a65;letter-spacing:3px;margin:12px 0">ph</div><span class="speak-btn" onclick="spkPhoneme(\'/f/\',this)" style="width:44px;height:44px;font-size:1.1em;display:inline-block;margin:8px 0">🔊</span><div style="color:#aaa;font-size:1.05em;margin-top:14px;line-height:1.8">本节课暂时没有它的<br><b style="color:#ffd200">CVC 三明治单词</b>哦 🍞</div><div style="margin-top:18px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.08);border-radius:10px;text-align:left;max-width:380px;margin-left:auto;margin-right:auto"><div style="font-size:.65em;color:#555;line-height:1.7">📝 <b>家长备注</b>：ph 暂无原生 CVC 结构单词；graph 会在 CCVC 前置加长页面学习，nymph、lymph 会在 CVCC 后置加长页面学习；phone 等长元音单词，将在后续元音变长知识点中学习。</div></div></div>';
+    document.getElementById('labGrid').innerHTML='<div style="text-align:center;padding:30px"><div style="font-size:3.5em">📷</div><div style="font-size:2.2em;font-weight:bold;color:#ff8a65;letter-spacing:3px;margin:12px 0">ph</div><div style="font-size:1.6em;color:#ffd200;font-weight:bold;margin:10px 0">双层面包片<br>统一发 <span style="font-size:1.1em">/f/</span> 这一个音 🔊</div><span class="speak-btn" onclick="spkPhoneme(\'/f/\',this)" style="width:44px;height:44px;font-size:1.1em;display:inline-block;margin:8px 0">🔊</span><div style="color:#aaa;font-size:1.05em;margin-top:14px;line-height:1.8">本节课暂时没有它的<br><b style="color:#ffd200">CVC 三明治单词</b>哦 🍞</div><div style="margin-top:18px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.08);border-radius:10px;text-align:left;max-width:380px;margin-left:auto;margin-right:auto"><div style="font-size:.65em;color:#555;line-height:1.7">📝 <b>家长备注</b>：ph 暂无原生 CVC 结构单词；graph 会在 CCVC 前置加长页面学习，nymph、lymph 会在 CVCC 后置加长页面学习；phone 等长元音单词，将在后续元音变长知识点中学习。</div></div></div>';
     return;
   }
 

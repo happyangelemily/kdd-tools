@@ -280,6 +280,9 @@ input,select,textarea{font-size:16px}
 
 // ═══ CAMBRIDGE AUDIO SYSTEM ═══
 var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
 var audioCache={};
 var PHONEMES={
   '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
@@ -364,13 +367,11 @@ function playAudio(path,el){
   if(!el||!el.classList)return;
   if(el.classList.contains('on'))return;
   var a=audioCache[path];
-  var src=a?a.src:(AUDIO_BASE+path);
-  var player=new Audio(src);
-  player.preload='auto';
-  el.classList.add('on');
-  player.onended=function(){el.classList.remove('on')};
-  player.onerror=function(){el.classList.remove('on')};
-  player.play().catch(function(e){el.classList.remove('on')});
+  if(!a){a=new Audio(AUDIO_BASE+path);audioCache[path]=a}
+  a.currentTime=0;el.classList.add('on');
+  a.onended=function(){el.classList.remove('on')};
+  a.onerror=function(){el.classList.remove('on')};
+  a.play().catch(function(e){el.classList.remove('on')});
 }
 function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
 function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
@@ -379,40 +380,22 @@ function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudi
   for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}
   for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}
 })();
-
+function spk(word){
+  var w=word.toLowerCase();var p=WORDS[w];
+  if(p){playAudio(p,{classList:{contains:function(){return false},add:function(){},remove:function(){}}});return}
+  speechSynthesis.resume();if(speechSynthesis.getVoices().length===0){voiceQ.push(w);return}speakNow(w);
+}
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
-  speechSynthesis.resume();
-  speechSynthesis.cancel();
-  var u=new SpeechSynthesisUtterance(word);
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
   u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
   var voices=speechSynthesis.getVoices();
   var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
     voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||
     voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
-  if(en)u.voice=en;
-  setTimeout(function(){speechSynthesis.speak(u)},50);
+  if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50);
 }
-
-function spk(word){
-  var w=word.toLowerCase();var p=WORDS[w];
-  if(p){
-    var a=audioCache[p];
-    var src=a?a.src:(AUDIO_BASE+p);
-    var player=new Audio(src);
-    player.preload='auto';
-    var fired=false;
-    var fallback=function(){if(!fired){fired=true;speakNow(w)}};
-    player.onerror=fallback;
-    player.play().catch(fallback);
-  }else{
-    speakNow(w);
-  }
-}
-
-
-
-
 
 // === Navigation ===
 var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
