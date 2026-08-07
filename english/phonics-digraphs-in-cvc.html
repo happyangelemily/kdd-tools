@@ -16,7 +16,7 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
 .story-speech{background:rgba(255,138,101,.06);border-left:3px solid #ff8a65;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
 
 /* Decon */
-.dg-decon-block{margin:10px 0;padding:12px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.06)}.dg-decon-word{font-size:1.5em;font-weight:bold;color:#ffd200;text-align:center;margin-bottom:8px;letter-spacing:5px}.dg-decon-row{display:flex;gap:6px;align-items:center;margin:4px 0;padding:8px 12px;background:rgba(0,0,0,.15);border-radius:10px;font-size:.88em}.dg-decon-letter{font-size:1.2em;font-weight:bold;color:#ff8a65;min-width:32px;text-align:center}.dg-decon-type{color:#888;font-size:.78em;min-width:55px}.dg-decon-ipa{color:#81c784;font-weight:bold;flex:1}.dg-decon-say{text-align:center;font-size:.92em;color:#4fc3f7;font-weight:bold;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
+.dg-decon-block{margin:10px 0;padding:12px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(255,255,255,.06);max-width:100%;overflow-x:auto}.dg-decon-word{font-size:1.5em;font-weight:bold;color:#ffd200;text-align:center;margin-bottom:8px;letter-spacing:5px}.dg-decon-row{display:flex;gap:6px;align-items:center;margin:4px 0;padding:8px 12px;background:rgba(0,0,0,.15);border-radius:10px;font-size:.88em}.dg-decon-letter{font-size:1.2em;font-weight:bold;color:#ff8a65;min-width:32px;text-align:center}.dg-decon-type{color:#888;font-size:.78em;min-width:55px}.dg-decon-ipa{color:#81c784;font-weight:bold;flex:1;min-width:0;overflow-wrap:break-word}.dg-decon-say{text-align:center;font-size:.92em;color:#4fc3f7;font-weight:bold;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
 .dg-decon-struct{text-align:center;font-size:.7em;margin-top:4px}.dg-decon-struct span{padding:2px 8px;border-radius:8px;font-weight:bold;background:rgba(79,195,247,.12);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
 
 /* Lab */
@@ -269,49 +269,71 @@ input,select,textarea{font-size:16px}
 
 <!-- ===== EASTER EGG ===== -->
 <div class="section" id="sec-easter"><div class="glass"><h2>🥚 二合音小彩蛋 —— 不是所有三明治都守规矩！</h2>
-<div class="story-speech"><p>前面我们学了很多规规矩矩的 CVC 二合音单词：合音是一个整体、元音发短音，三个声音刚刚好。但英语里总有几个<b style="color:#ffd200">调皮的小家伙</b>，看着是三明治，吃起来味道却不一样！下面这三个，遇到了要单独记住——</p></div>
+<div class="story-speech"><p>前面我们学了很多规规矩矩的 CVC 二合音单词。但英语里总有几个<b style="color:#ffd200">调皮的小家伙</b>，看着是三明治，吃起来味道却不一样！</p></div>
 
-<h3>🍬 第一类：a 偷偷换嗓子 —— 把 o 的短音借来用了！</h3>
-<div class="story-speech"><p>普通 CVC 里，字母 a 张大嘴说 <b style="color:#4fc3f7">/æ/</b>，比如 cat、hat。但有这么两个<b style="color:#ffd200">小例外</b>——前面的 w 或者 wh 一带路，a 就偷偷换了嗓子：</p></div>
-
-<div class="dg-decon-block"><div class="dg-decon-word">what <span class="speak-btn" onclick="spk('what')">🔊</span></div>
+<h3>🍬 第一类：a 偷偷换嗓子 —— 借了 o 的短音！</h3>
+<div class="story-speech"><p>w / wh 一带路，a 就偷偷把 /æ/ 换成 <b style="color:#ff8a65">/ɒ/</b>：</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+<div class="dg-decon-block" style="flex:1;min-width:260px;max-width:400px"><div class="dg-decon-word">what <span class="speak-btn" onclick="spk('what')">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">wh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/w/</div><span class="speak-btn" onclick="spkPhoneme('/w/',this)">🔊</span></div>
 <div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">a</div><div class="dg-decon-type">变嗓子！</div><div class="dg-decon-ipa">/ɒ/ ←不是/æ/！</div><span class="speak-btn" onclick="spkPhoneme('/ɒ/',this)">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">t</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/t/</div><span class="speak-btn" onclick="spkPhoneme('/t/',this)">🔊</span></div>
-<div class="dg-decon-say">🔊 /w/ + <span style="color:#ff8a65">/ɒ/</span> + /t/ = what <span class="speak-btn" onclick="spk('what')">🔊</span></div>
+<div class="dg-decon-say">🔊 /w/ + <span style="color:#ff8a65">/ɒ/</span> + /t/ = what</div>
 </div>
-
-<div class="dg-decon-block"><div class="dg-decon-word">wash <span class="speak-btn" onclick="spk('wash')">🔊</span></div>
+<div class="dg-decon-block" style="flex:1;min-width:260px;max-width:400px"><div class="dg-decon-word">wash <span class="speak-btn" onclick="spk('wash')">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">w</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/w/</div><span class="speak-btn" onclick="spkPhoneme('/w/',this)">🔊</span></div>
 <div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">a</div><div class="dg-decon-type">变嗓子！</div><div class="dg-decon-ipa">/ɒ/ ←不是/æ/！</div><span class="speak-btn" onclick="spkPhoneme('/ɒ/',this)">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">sh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/ʃ/</div><span class="speak-btn" onclick="spkPhoneme('/ʃ/',this)">🔊</span></div>
-<div class="dg-decon-say">🔊 /w/ + <span style="color:#ff8a65">/ɒ/</span> + /ʃ/ = wash <span class="speak-btn" onclick="spk('wash')">🔊</span></div>
+<div class="dg-decon-say">🔊 /w/ + <span style="color:#ff8a65">/ɒ/</span> + /ʃ/ = wash</div>
 </div>
+</div>
+<div class="story-speech"><p>🧠 <b>怎么记？</b>what 和 wash 里的 a 都不读 /æ/，而是<b style="color:#ff8a65">偷偷借了 o 的短音 /ɒ/</b>！前面有 w / wh 的时候 a 特别容易耍赖。遇到了直接记住！</p></div>
 
-<div class="story-speech"><p>🧠 <b>怎么记？</b>what 和 wash 里的 a 都不读 /æ/，而是<b style="color:#ff8a65">偷偷借了 o 的短音 /ɒ/</b>！前面有 w / wh 的时候，a 特别容易耍赖——<b style="color:#ffd200">what 有 wh 二合音，wash 有 sh 二合音</b>，但 a 偏偏不好好读。遇到了直接记住！</p></div>
-
-<h3>🍬 第二类：u 收小嘴 —— 和二合音搭档时偷偷换气！</h3>
-<div class="story-speech"><p>普通 CVC 里，字母 u 张大嘴巴说 <b style="color:#4fc3f7">/ʌ/</b>（像小杯子"啊"），比如 cup、duck。但有两个小家伙，和二合音<b style="color:#ff8a65">sh</b> 搭档的时候，u 偏偏<b>把嘴巴收小</b>，说成 <b style="color:#ff8a65">/ʊ/</b>（像小脚丫"呜"）！</p></div>
-
-<div class="dg-decon-block"><div class="dg-decon-word">push <span class="speak-btn" onclick="spk('push')">🔊</span></div>
+<h3>🍬 第二类：u 收小嘴 —— 被 sh 挤小了！</h3>
+<div class="story-speech"><p>u 和二合音 <b style="color:#ff8a65">sh</b> 搭档的时候，嘴巴被挤小了，把 /ʌ/ 换成 <b style="color:#ff8a65">/ʊ/</b>：</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+<div class="dg-decon-block" style="flex:1;min-width:260px;max-width:400px"><div class="dg-decon-word">push <span class="speak-btn" onclick="spk('push')">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">p</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/p/</div><span class="speak-btn" onclick="spkPhoneme('/p/',this)">🔊</span></div>
 <div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">u</div><div class="dg-decon-type">收小嘴！</div><div class="dg-decon-ipa">/ʊ/ ←不是/ʌ/！</div><span class="speak-btn" onclick="spkPhoneme('/ʊ/',this)">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">sh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/ʃ/</div><span class="speak-btn" onclick="spkPhoneme('/ʃ/',this)">🔊</span></div>
-<div class="dg-decon-say">🔊 /p/ + <span style="color:#ff8a65">/ʊ/</span> + /ʃ/ = push <span class="speak-btn" onclick="spk('push')">🔊</span></div>
+<div class="dg-decon-say">🔊 /p/ + <span style="color:#ff8a65">/ʊ/</span> + /ʃ/ = push</div>
 </div>
-
-<div class="dg-decon-block"><div class="dg-decon-word">bush <span class="speak-btn" onclick="spk('bush')">🔊</span></div>
+<div class="dg-decon-block" style="flex:1;min-width:260px;max-width:400px"><div class="dg-decon-word">bush <span class="speak-btn" onclick="spk('bush')">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">b</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/b/</div><span class="speak-btn" onclick="spkPhoneme('/b/',this)">🔊</span></div>
 <div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">u</div><div class="dg-decon-type">收小嘴！</div><div class="dg-decon-ipa">/ʊ/ ←不是/ʌ/！</div><span class="speak-btn" onclick="spkPhoneme('/ʊ/',this)">🔊</span></div>
 <div class="dg-decon-row"><div class="dg-decon-letter" style="color:#ff8a65">sh</div><div class="dg-decon-type">C 二合音</div><div class="dg-decon-ipa">/ʃ/</div><span class="speak-btn" onclick="spkPhoneme('/ʃ/',this)">🔊</span></div>
-<div class="dg-decon-say">🔊 /b/ + <span style="color:#ff8a65">/ʊ/</span> + /ʃ/ = bush <span class="speak-btn" onclick="spk('bush')">🔊</span></div>
+<div class="dg-decon-say">🔊 /b/ + <span style="color:#ff8a65">/ʊ/</span> + /ʃ/ = bush</div>
 </div>
+</div>
+<div class="story-speech"><p>🧠 <b>怎么记？</b>push 和 bush 里的 u，因为后面跟着 <b style="color:#ff8a65">sh</b>，嘴巴被挤小了，说成了 /ʊ/！结构还是 CVC，只是元音换了嗓子。</p></div>
 
-<div class="story-speech"><p>🧠 <b>怎么记？</b>push 和 bush 里的 u，因为后面跟着 <b style="color:#ff8a65">sh</b>，嘴巴被挤小了，说成了 /ʊ/！虽然结构还是 CVC（p-u-sh），但中间的元音<b style="color:#ff8a65">换了嗓子</b>。这两个小家伙要单独背下来～</p></div>
+<h3>🍬 第三类：三个字母手拉手 —— 三合音！</h3>
+<div class="story-speech"><p>有两个字母手拉手（二合音），<b style="color:#ffd200">三个字母也能手拉手发一个音</b>——这叫<b style="color:#ff8a65">三合音</b>：</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+<div class="dg-decon-block" style="flex:1;min-width:200px;max-width:300px"><div class="dg-decon-word">catch <span class="speak-btn" onclick="spk('catch')">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">c</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/k/</div><span class="speak-btn" onclick="spkPhoneme('/k/',this)">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#4fc3f7">a</div><div class="dg-decon-type">V 元音</div><div class="dg-decon-ipa">/æ/</div><span class="speak-btn" onclick="spkPhoneme('/æ/',this)">🔊</span></div>
+<div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">tch</div><div class="dg-decon-type">⚡三合音！</div><div class="dg-decon-ipa">/tʃ/</div><span class="speak-btn" onclick="spkPhoneme('/tʃ/',this)">🔊</span></div>
+<div class="dg-decon-say">🔊 /k/ + /æ/ + <span style="color:#ff8a65">/tʃ/</span> = catch</div>
+</div>
+<div class="dg-decon-block" style="flex:1;min-width:200px;max-width:300px"><div class="dg-decon-word">match <span class="speak-btn" onclick="spk('match')">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">m</div><div class="dg-decon-type">C 辅音</div><div class="dg-decon-ipa">/m/</div><span class="speak-btn" onclick="spkPhoneme('/m/',this)">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#4fc3f7">a</div><div class="dg-decon-type">V 元音</div><div class="dg-decon-ipa">/æ/</div><span class="speak-btn" onclick="spkPhoneme('/æ/',this)">🔊</span></div>
+<div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">tch</div><div class="dg-decon-type">⚡三合音！</div><div class="dg-decon-ipa">/tʃ/</div><span class="speak-btn" onclick="spkPhoneme('/tʃ/',this)">🔊</span></div>
+<div class="dg-decon-say">🔊 /m/ + /æ/ + <span style="color:#ff8a65">/tʃ/</span> = match</div>
+</div>
+<div class="dg-decon-block" style="flex:1;min-width:200px;max-width:300px"><div class="dg-decon-word">bridge <span class="speak-btn" onclick="spk('bridge')">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#81c784">br</div><div class="dg-decon-type">C 连缀</div><div class="dg-decon-ipa">/br/</div><span class="speak-btn" onclick="spkPhoneme('/b/',this)">🔊</span></div>
+<div class="dg-decon-row"><div class="dg-decon-letter" style="color:#4fc3f7">i</div><div class="dg-decon-type">V 元音</div><div class="dg-decon-ipa">/ɪ/</div><span class="speak-btn" onclick="spkPhoneme('/ɪ/',this)">🔊</span></div>
+<div class="dg-decon-row" style="background:rgba(255,138,101,.06)"><div class="dg-decon-letter" style="color:#ff8a65">dge</div><div class="dg-decon-type">⚡三合音！</div><div class="dg-decon-ipa">/dʒ/</div><span class="speak-btn" onclick="spkPhoneme('/dʒ/',this)">🔊</span></div>
+<div class="dg-decon-say">🔊 /br/ + /ɪ/ + <span style="color:#ff8a65">/dʒ/</span> = bridge</div>
+</div>
+</div>
+<div class="story-speech"><p>🧠 <b>怎么记？</b>tch = /tʃ/（和 ch 声音一样），dge = /dʒ/。三个字母占一片面包，千万别拆开读！</p></div>
 
 <div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.15);border-radius:14px;padding:12px;margin-top:14px;text-align:center">
 <p style="color:#ffd200;font-weight:bold;margin:0">🥚 彩蛋小结：看着是 CVC，吃起来不一样！</p>
-<p style="color:#aaa;font-size:.85em;margin:6px 0 0">what/wash → a 读 /ɒ/（借 o 的音） · push/bush → u 读 /ʊ/（被 sh 挤小了嘴） · 都是 CVC 结构，只是元音不按套路出牌 ✨</p>
+<p style="color:#aaa;font-size:.85em;margin:6px 0 0">what/wash → a 读 /ɒ/ · push/bush → u 读 /ʊ/ · tch/dge → 三合音 · 都是 CVC 结构 ✨</p>
 </div>
 </div></div>
 <script>
@@ -350,9 +372,9 @@ var WORDS={
   'bank':'words/bank.mp3','bar':'words/bar.mp3','bask':'words/bask.mp3','bat':'words/bat.mp3','bath':'words/bath.mp3','beach':'words/beach.mp3','bed':'words/bed.mp3','bee':'words/bee.mp3',
   'before':'words/before.mp3','belch':'words/belch.mp3','belt':'words/belt.mp3','bench':'words/bench.mp3','bend':'words/bend.mp3','bent':'words/bent.mp3','best':'words/best.mp3','big':'words/big.mp3',
   'bird':'words/bird.mp3','blob':'words/blob.mp3','blue':'words/blue.mp3','bolt':'words/bolt.mp3','bond':'words/bond.mp3','book':'words/book.mp3','box':'words/box.mp3','boy':'words/boy.mp3',
-  'brag':'words/brag.mp3','bread':'words/bread.mp3','break':'words/break.mp3','bred':'words/bred.mp3','brim':'words/brim.mp3','bug':'words/bug.mp3','bulk':'words/bulk.mp3','bump':'words/bump.mp3',
+  'brag':'words/brag.mp3','bread':'words/bread.mp3','break':'words/break.mp3','bred':'words/bred.mp3','bridge':'words/bridge.mp3','brim':'words/brim.mp3','bug':'words/bug.mp3','bulk':'words/bulk.mp3','bump':'words/bump.mp3',
   'bunch':'words/bunch.mp3','bus':'words/bus.mp3','bush':'words/bush.mp3','cake':'words/cake.mp3','camp':'words/camp.mp3','cap':'words/cap.mp3','cape':'words/cape.mp3','car':'words/car.mp3',
-  'cash':'words/cash.mp3','cat':'words/cat.mp3','chat':'words/chat.mp3','cheese':'words/cheese.mp3','chin':'words/chin.mp3','chip':'words/chip.mp3','chop':'words/chop.mp3','city':'words/city.mp3',
+  'cash':'words/cash.mp3','cat':'words/cat.mp3','catch':'words/catch.mp3','chat':'words/chat.mp3','cheese':'words/cheese.mp3','chin':'words/chin.mp3','chip':'words/chip.mp3','chop':'words/chop.mp3','city':'words/city.mp3',
   'clip':'words/clip.mp3','club':'words/club.mp3','cold':'words/cold.mp3','corn':'words/corn.mp3','cost':'words/cost.mp3','crab':'words/crab.mp3','crept':'words/crept.mp3','crib':'words/crib.mp3',
   'crisp':'words/crisp.mp3','cup':'words/cup.mp3','cut':'words/cut.mp3','cute':'words/cute.mp3','damp':'words/damp.mp3','dark':'words/dark.mp3','dash':'words/dash.mp3','day':'words/day.mp3',
   'dent':'words/dent.mp3','desk':'words/desk.mp3','dig':'words/dig.mp3','doctor':'words/doctor.mp3','dog':'words/dog.mp3','door':'words/door.mp3','dot':'words/dot.mp3','dream':'words/dream.mp3',
@@ -371,7 +393,7 @@ var WORDS={
   'kept':'words/kept.mp3','kilt':'words/kilt.mp3','king':'words/king.mp3','kit':'words/kit.mp3','kite':'words/kite.mp3','lamp':'words/lamp.mp3','left':'words/left.mp3','leg':'words/leg.mp3',
   'length':'words/length.mp3','lick':'words/lick.mp3','lift':'words/lift.mp3','like':'words/like.mp3','limp':'words/limp.mp3','link':'words/link.mp3','lint':'words/lint.mp3','lion':'words/lion.mp3',
   'lip':'words/lip.mp3','lisp':'words/lisp.mp3','loft':'words/loft.mp3','log':'words/log.mp3','long':'words/long.mp3','look':'words/look.mp3','lost':'words/lost.mp3','lunch':'words/lunch.mp3',
-  'lymph':'words/lymph.mp3','mail':'words/mail.mp3','map':'words/map.mp3','mask':'words/mask.mp3','math':'words/math.mp3','me':'words/me.mp3','melt':'words/melt.mp3','mend':'words/mend.mp3',
+  'lymph':'words/lymph.mp3','mail':'words/mail.mp3','map':'words/map.mp3','mask':'words/mask.mp3','math':'words/math.mp3','match':'words/match.mp3','me':'words/me.mp3','melt':'words/melt.mp3','mend':'words/mend.mp3',
   'milk':'words/milk.mp3','mint':'words/mint.mp3','mix':'words/mix.mp3','month':'words/month.mp3','moon':'words/moon.mp3','more':'words/more.mp3','moth':'words/moth.mp3','mouth':'words/mouth.mp3',
   'much':'words/much.mp3','mulch':'words/mulch.mp3','must':'words/must.mp3','my':'words/my.mp3','myth':'words/myth.mp3','name':'words/name.mp3','nest':'words/nest.mp3','net':'words/net.mp3',
   'never':'words/never.mp3','north':'words/north.mp3','nose':'words/nose.mp3','not':'words/not.mp3','nut':'words/nut.mp3','nymph':'words/nymph.mp3','octopus':'words/octopus.mp3','odd':'words/odd.mp3',
