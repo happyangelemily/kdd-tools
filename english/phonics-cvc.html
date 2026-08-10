@@ -260,7 +260,7 @@ var AUDIO_BASE='audio/';
 var spT=null,voiceRetries=0,voiceQ=[];
 function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
 speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
-function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p);return}speakNow(w)}
 
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}function speakNow(word){speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.8;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50)}
 var audioCache={};
@@ -321,13 +321,41 @@ var WORDS={
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
   'you':'words/you.mp3','zoo':'words/zoo.mp3'
 };
-// Preload all audio to avoid file:// lazy-load failures
-(function(){try{for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}}catch(e){}})();
+// ═══ Web Audio — full preload, instant playback ═══
+var _ctx=null,_buf={};
+(function(){for(var k in WORDS){audioCache[k]=WORDS[k]}for(var k in PHONEMES){if(!audioCache[k])audioCache[k]=PHONEMES[k]}})();
 
-function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){setTimeout(function(){player.play().catch(function(){el.classList.remove('on')})},300)})}
+function _initCtx(){
+  if(_ctx)return;
+  try{_ctx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
+  var all=[];for(var k in audioCache){if(!_buf[k])all.push(audioCache[k])}
+  var fetched=0,total=all.length;
+  function loadOne(path){
+    fetch(AUDIO_BASE+path).then(function(r){
+      if(!r.ok)return;
+      return r.arrayBuffer().then(function(ab){return _ctx.decodeAudioData(ab)});
+    }).then(function(b){if(b){_buf[path]=b;fetched++}}).catch(function(){fetched++});
+  }
+  for(var i=0;i<all.length;i++)loadOne(all[i]);
+}
 
-function spkPhoneme(ipa,el){var k=ipa.replace(/\//g,'');var p=PHONEMES['/'+k+'/'];if(p)playAudio(p,el);else console.log('Phoneme not found:',ipa)}
-function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p)playAudio(p,el);else console.log('Word not found:',w)}
+function playAudio(path,el){
+  if(el&&el.classList){if(el.classList.contains('on'))return;el.classList.add('on')}
+  var done=function(){if(el&&el.classList)el.classList.remove('on')};
+  if(_buf[path]){
+    var s=_ctx.createBufferSource();s.buffer=_buf[path];s.connect(_ctx.destination);
+    s.onended=done;s.start(0);return;
+  }
+  if(!_ctx)_initCtx();
+  var a=document.createElement('audio');a.preload='none';
+  a.src=AUDIO_BASE+path;a.load();
+  _buf['__fb']=a;
+  a.addEventListener('ended',done,{once:true});a.addEventListener('error',done,{once:true});
+  a.play().catch(function(e){if(el&&el.classList)el.classList.remove('on')});
+}
+
+function spkPhoneme(ipa,el){var k=ipa.replace(/\//g,'');var p=PHONEMES['/'+k+'/'];if(p)playAudio(p,el)}
+function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p)playAudio(p,el)}
 
 const NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};function showS(n){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+n).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});if(n==='lab')buildL();if(n==='sort')buildSort();if(n==='quiz')initQ();if(n==='book'){cp=0;renderP()}}
 const labData={a:[['cat','猫'],['hat','帽子'],['map','地图'],['bag','包'],['sad','伤心'],['fan','风扇'],['pan','平底锅'],['rat','老鼠'],['bat','蝙蝠'],['jam','果酱'],['van','货车']],e:[['bed','床'],['red','红色'],['pen','笔'],['net','网'],['leg','腿'],['hen','母鸡'],['ten','十'],['wet','湿的'],['jet','喷气机'],['pet','宠物']],i:[['pig','猪'],['sit','坐'],['big','大'],['lip','嘴唇'],['six','六'],['fin','鱼鳍'],['pin','别针'],['kit','装备'],['dig','挖'],['hit','打']],o:[['dog','狗'],['hot','热'],['pot','锅'],['box','盒子'],['top','顶部'],['fox','狐狸'],['hop','跳跃'],['not','不'],['dot','点'],['log','木头']],u:[['cup','杯子'],['sun','太阳'],['bug','虫子'],['run','跑'],['nut','坚果'],['hug','拥抱'],['cut','切'],['tub','盆'],['bus','公共汽车'],['fun','有趣']]};
