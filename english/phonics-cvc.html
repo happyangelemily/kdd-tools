@@ -325,18 +325,22 @@ var WORDS={
 var _ctx=null,_buf={};
 (function(){for(var k in WORDS){audioCache[k]=WORDS[k]}for(var k in PHONEMES){if(!audioCache[k])audioCache[k]=PHONEMES[k]}})();
 
+function _loadOne(path,cb){
+  fetch(AUDIO_BASE+path).then(function(r){
+    if(!r.ok)return;
+    return r.arrayBuffer().then(function(ab){return _ctx.decodeAudioData(ab)});
+  }).then(function(b){if(b)_buf[path]=b;if(cb)cb()}).catch(function(){if(cb)cb()});
+}
+
 function _initCtx(){
   if(_ctx)return;
   try{_ctx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
-  var all=[];for(var k in audioCache){if(!_buf[k])all.push(audioCache[k])}
-  var fetched=0,total=all.length;
-  function loadOne(path){
-    fetch(AUDIO_BASE+path).then(function(r){
-      if(!r.ok)return;
-      return r.arrayBuffer().then(function(ab){return _ctx.decodeAudioData(ab)});
-    }).then(function(b){if(b){_buf[path]=b;fetched++}}).catch(function(){fetched++});
-  }
-  for(var i=0;i<all.length;i++)loadOne(all[i]);
+  // Phase 1: visible phonemes first (used everywhere) — typically 25 small MP3s
+  var first=[];for(var k in PHONEMES)first.push(PHONEMES[k]);
+  // Phase 2: rest (words) in background
+  var rest=[];for(var k in WORDS)rest.push(WORDS[k]);
+  var i=0;function next(){if(i<first.length){_loadOne(first[i],function(){i++;next()})}else if(rest.length){i=0;first=rest;rest=[];next()}}
+  next();
 }
 
 function playAudio(path,el){

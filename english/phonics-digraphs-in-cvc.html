@@ -434,23 +434,25 @@ var WORDS={
   'you':'words/you.mp3','zoo':'words/zoo.mp3','ring':'words/ring.mp3',
 };
 // ═══ Web Audio — full preload, instant playback ═══
-var _ctx=null,_buf={},_preloadDone=false;
-// Path lookup: word/phoneme → audio file path (repurposing audioCache)
+var _ctx=null,_buf={};
 (function(){for(var k in WORDS){audioCache[k]=WORDS[k]}for(var k in PHONEMES){if(!audioCache[k])audioCache[k]=PHONEMES[k]}})();
+
+function _loadOne(path,cb){
+  fetch(AUDIO_BASE+path).then(function(r){
+    if(!r.ok)return;
+    return r.arrayBuffer().then(function(ab){return _ctx.decodeAudioData(ab)});
+  }).then(function(b){if(b)_buf[path]=b;if(cb)cb()}).catch(function(){if(cb)cb()});
+}
 
 function _initCtx(){
   if(_ctx)return;
   try{_ctx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
-  // Background: fetch & decode ALL audio
-  var all=[];for(var k in audioCache){if(!_buf[k])all.push(audioCache[k])}
-  var fetched=0,total=all.length;
-  function loadOne(path){
-    fetch(AUDIO_BASE+path).then(function(r){
-      if(!r.ok)return;
-      return r.arrayBuffer().then(function(ab){return _ctx.decodeAudioData(ab)});
-    }).then(function(b){if(b){_buf[path]=b;fetched++;if(fetched===total)_preloadDone=true}}).catch(function(){fetched++;if(fetched===total)_preloadDone=true});
-  }
-  for(var i=0;i<all.length;i++)loadOne(all[i]);
+  // Phase 1: phonemes first (used everywhere, small files)
+  var first=[];for(var k in PHONEMES)first.push(PHONEMES[k]);
+  // Phase 2: words in background
+  var rest=[];for(var k in WORDS)rest.push(WORDS[k]);
+  var i=0;function next(){if(i<first.length){_loadOne(first[i],function(){i++;next()})}else if(rest.length){i=0;first=rest;rest=[];next()}}
+  next();
 }
 
 function playAudio(path,el){
