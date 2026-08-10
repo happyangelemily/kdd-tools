@@ -456,15 +456,16 @@ function _initCtx(){
 function playAudio(path,el){
   if(el&&el.classList){if(el.classList.contains('on'))return;el.classList.add('on')}
   var done=function(){if(el&&el.classList)el.classList.remove('on')};
-  // Try Web Audio buffer first
-  if(_ctx&&_buf[path]){
+  // Web Audio buffer ready → instant
+  if(_buf[path]){
     var s=_ctx.createBufferSource();s.buffer=_buf[path];s.connect(_ctx.destination);
     s.onended=done;s.start(0);return;
   }
-  // Fallback: first-time click, init context + play via <audio>
-  _initCtx();
+  // Not ready yet → play via <audio>, init context if needed
+  if(!_ctx)_initCtx();
   var a=document.createElement('audio');a.preload='none';
   a.src=AUDIO_BASE+path;a.load();
+  _buf['__fallback']=a; // prevent GC
   a.addEventListener('ended',done,{once:true});a.addEventListener('error',done,{once:true});
   a.play().catch(function(e){if(el&&el.classList)el.classList.remove('on')});
 }
