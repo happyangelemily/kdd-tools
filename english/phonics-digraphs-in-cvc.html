@@ -433,17 +433,38 @@ var WORDS={
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
   'you':'words/you.mp3','zoo':'words/zoo.mp3','ring':'words/ring.mp3',
 };
-// Single Audio singleton — works on iOS Safari, WeChat, all browsers
+// ═══ Web Audio — full preload, instant playback ═══
+var _ctx=null,_buf={},_preloadDone=false;
 // Path lookup: word/phoneme → audio file path (repurposing audioCache)
 (function(){for(var k in WORDS){audioCache[k]=WORDS[k]}for(var k in PHONEMES){if(!audioCache[k])audioCache[k]=PHONEMES[k]}})();
-var _ap=[new Audio(),new Audio()];_ap[0].preload='none';_ap[1].preload='none';var _api=0;
+
+function _initCtx(){
+  if(_ctx)return;
+  try{_ctx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
+  // Background: fetch & decode ALL audio
+  var all=[];for(var k in audioCache){if(!_buf[k])all.push(audioCache[k])}
+  var fetched=0,total=all.length;
+  function loadOne(path){
+    fetch(AUDIO_BASE+path).then(function(r){
+      if(!r.ok)return;
+      return r.arrayBuffer().then(function(ab){return _ctx.decodeAudioData(ab)});
+    }).then(function(b){if(b){_buf[path]=b;fetched++;if(fetched===total)_preloadDone=true}}).catch(function(){fetched++;if(fetched===total)_preloadDone=true});
+  }
+  for(var i=0;i<all.length;i++)loadOne(all[i]);
+}
 
 function playAudio(path,el){
   if(el&&el.classList){if(el.classList.contains('on'))return;el.classList.add('on')}
   var done=function(){if(el&&el.classList)el.classList.remove('on')};
-  var a=_ap[_api];_api^=1;
-  a.pause();a.src=AUDIO_BASE+path;a.load();
-  a.removeEventListener('ended',done);a.removeEventListener('error',done);
+  // Try Web Audio buffer first
+  if(_ctx&&_buf[path]){
+    var s=_ctx.createBufferSource();s.buffer=_buf[path];s.connect(_ctx.destination);
+    s.onended=done;s.start(0);return;
+  }
+  // Fallback: first-time click, init context + play via <audio>
+  _initCtx();
+  var a=document.createElement('audio');a.preload='none';
+  a.src=AUDIO_BASE+path;a.load();
   a.addEventListener('ended',done,{once:true});a.addEventListener('error',done,{once:true});
   a.play().catch(function(e){if(el&&el.classList)el.classList.remove('on')});
 }
