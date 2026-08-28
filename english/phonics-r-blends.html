@@ -335,11 +335,11 @@ var WORDS={
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
   'next':'words/next.mp3','tempt':'words/tempt.mp3','stan':'words/stan.mp3','brown':'words/brown.mp3','cry':'words/cry.mp3','drink':'words/drink.mp3','fruit':'words/fruit.mp3','grass':'words/grass.mp3','prince':'words/prince.mp3','truck':'words/truck.mp3','frump':'words/frump.mp3','bring':'words/bring.mp3','you':'words/you.mp3','zoo':'words/zoo.mp3'
 };
-// Preload all audio to avoid file:// lazy-load failures
-(function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
+// Lazy-load audio on demand — preloading hundreds of unused MP3s slows the public site to a crawl
+function getAudio(path){var player=audioCache[path];if(!player){player=new Audio(AUDIO_BASE+path);player.preload='auto';audioCache[path]=player;}return player;}
 
 
-function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
 
 function spkPhoneme(ipa,el){
   var p=PHONEMES[ipa];
@@ -351,7 +351,7 @@ function spkWord(word,el){
   if(p){playAudio(p,el);return}
   spk(w);
 }
-function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=getAudio(p);player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
 
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
