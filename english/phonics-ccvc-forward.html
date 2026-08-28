@@ -20,7 +20,7 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
 .dg-decon-struct{text-align:center;font-size:.7em;margin-top:4px}.dg-decon-struct span{padding:2px 8px;border-radius:8px;font-weight:bold;background:rgba(79,195,247,.12);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
 
 /* Lab */
-.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(255,138,101,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px}.lab-card .word .dg-c{color:#ff8a65}.lab-card .word .vw{color:#4fc3f7;text-decoration:underline;text-underline-offset:4px}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ff8a65}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ff8a65;color:#ff8a65;background:rgba(255,138,101,.1)}
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(255,138,101,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px;overflow-wrap:break-word;word-break:break-word}.lab-card .word .dg-c{color:#ff8a65}.lab-card .word .vw{color:#4fc3f7;text-decoration:underline;text-underline-offset:4px}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ff8a65}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ff8a65;color:#ff8a65;background:rgba(255,138,101,.1)}
 
 /* Sort */
 .sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
@@ -268,15 +268,16 @@ input,select,textarea{font-size:16px}
 <!-- ===== LAB ===== -->
 <div class="section" id="sec-lab"><div class="glass"><h2>🧪 CCVC / CCCVC 拼读实验室</h2><p style="color:#aaa;margin-bottom:8px">点击卡片翻转听发音！<span style="color:#ce93d8">紫色</span>=连缀辅音 <span style="color:#4fc3f7">蓝色</span>=元音 <span style="color:#81c784">绿色</span>=普通辅音</p>
 <div class="lab-tabs" id="labTabs"></div>
+<div class="lab-tabs" id="labSubTabs" style="display:none"></div>
 <div class="lab-grid" id="labGrid"></div></div></div>
 
 <!-- ===== SORT ===== -->
-<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：按元音分类</h2><p class="sort-hint">读单词，找出中间的短元音，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
-<div class="sort-bin" id="binA" onclick="clickToBin('a')"><div class="sort-bin-label" style="color:#4fc3f7">🔵 a /æ/</div><div id="binAItems"></div></div>
-<div class="sort-bin" id="binE" onclick="clickToBin('e')"><div class="sort-bin-label" style="color:#4fc3f7">🔵 e /e/</div><div id="binEItems"></div></div>
-<div class="sort-bin" id="binI" onclick="clickToBin('i')"><div class="sort-bin-label" style="color:#4fc3f7">🔵 i /ɪ/</div><div id="binIItems"></div></div>
-<div class="sort-bin" id="binO" onclick="clickToBin('o')"><div class="sort-bin-label" style="color:#4fc3f7">🔵 o /ɒ/</div><div id="binOItems"></div></div>
-<div class="sort-bin" id="binU" onclick="clickToBin('u')"><div class="sort-bin-label" style="color:#4fc3f7">🔵 u /ʌ/</div><div id="binUItems"></div></div>
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：按词首连缀分类</h2><p class="sort-hint">读单词，找出词首的连缀类型，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
+<div class="sort-bin" id="binS" onclick="clickToBin('s')"><div class="sort-bin-label" style="color:#ce93d8">🟣 s-类<br>st sp sw sn sm sk sc</div><div id="binSItems"></div></div>
+<div class="sort-bin" id="binL" onclick="clickToBin('l')"><div class="sort-bin-label" style="color:#ce93d8">🟣 l-类<br>bl cl fl gl pl sl</div><div id="binLItems"></div></div>
+<div class="sort-bin" id="binR" onclick="clickToBin('r')"><div class="sort-bin-label" style="color:#ce93d8">🟣 r-类<br>br cr dr fr gr pr tr</div><div id="binRItems"></div></div>
+<div class="sort-bin" id="binSpec" onclick="clickToBin('spec')"><div class="sort-bin-label" style="color:#ef9a9a">🔴 特殊<br>tw</div><div id="binSpecItems"></div></div>
+<div class="sort-bin" id="binTri" onclick="clickToBin('tri')"><div class="sort-bin-label" style="color:#ef9a9a">🔴 三连缀<br>str spr scr spl</div><div id="binTriItems"></div></div>
 </div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
 
 <!-- ===== QUIZ ===== -->
@@ -286,40 +287,12 @@ input,select,textarea{font-size:16px}
 <div class="section" id="sec-book"><div class="glass"><h2>📚 Stan and the Frog</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 CCVC 绘本 🐸</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
 
 <!-- ===== EASTER EGG ===== -->
-<div class="section" id="sec-easter"><div class="glass"><h2>🥚 shr- 和 thr-：连缀还是二合音？</h2>
-<div class="story-speech"><p>shr- 和 thr- 很特别：<b style="color:#ff8a65">sh</b>/<b style="color:#ff8a65">th</b> 本身是二合音（一个音），但后面又跟了一个 <b style="color:#ce93d8">r</b> 连缀辅音。所以：</p></div>
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 tw- 是两个音，不是二合音！</h2>
+<div class="story-speech"><p>tw- 里的 <b style="color:#ce93d8">t</b> 和 <b style="color:#ce93d8">w</b> 各发各的音：/t/ + /w/。它是真正的 <b style="color:#ce93d8">二连缀</b>，不是二合音！</p></div>
 
-<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
-<div style="background:rgba(255,138,101,.06);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:14px 18px;text-align:center">
-<div style="color:#ff8a65;font-weight:bold;margin-bottom:6px">shrug</div>
-<div style="font-size:.9em;color:#aaa"><span style="color:#ff8a65">sh</span> = 二合音 /ʃ/ (1音)<br>+ r = 连缀 /r/ (1音)<br>= 开头共 2 个音</div>
-<div style="color:#888;font-size:.75em;margin-top:4px">结构：<b style="color:#ff8a65">CC</b>VC</div>
-<span class="speak-btn" onclick="spk('shrug')" style="display:inline-block;margin-top:6px">🔊</span>
-</div>
-<div style="background:rgba(255,138,101,.06);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:14px 18px;text-align:center">
-<div style="color:#ff8a65;font-weight:bold;margin-bottom:6px">throb</div>
-<div style="font-size:.9em;color:#aaa"><span style="color:#ff8a65">th</span> = 二合音 /θ/ (1音)<br>+ r = 连缀 /r/ (1音)<br>= 开头共 2 个音</div>
-<div style="color:#888;font-size:.75em;margin-top:4px">结构：<b style="color:#ff8a65">CC</b>VC</div>
-<span class="speak-btn" onclick="spk('throb')" style="display:inline-block;margin-top:6px">🔊</span>
-</div>
-</div>
+<div id="twDemo"></div>
 
-<div class="story-speech"><p>🧠 <b>所以 shr-/thr- 的字母数 ≠ 声音数：</b>shrug 虽然开头有 3 个字母（shr），但 sh 合体了 → 实际只有 <b>2 个辅音音位</b>，是 CCVC（不是 CCCVC）！</p></div>
-
-<h3>🔍 对比：str- vs shr-</h3>
-<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
-<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:14px 18px;text-align:center">
-<div style="color:#ef9a9a;font-weight:bold;margin-bottom:6px">strap 🎒</div>
-<div style="font-size:.9em;color:#aaa">s + t + r = 三个音 /s/+/t/+/r/<br>→ <b style="color:#ef9a9a">CCC</b>VC（三连缀）</div>
-<span class="speak-btn" onclick="spk('strap')" style="display:inline-block;margin-top:6px">🔊</span>
-</div>
-<div style="background:rgba(255,138,101,.06);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:14px 18px;text-align:center">
-<div style="color:#ff8a65;font-weight:bold;margin-bottom:6px">shrug 🤷</div>
-<div style="font-size:.9em;color:#aaa">sh + r = 两个音 /ʃ/+/r/<br>→ <b style="color:#ff8a65">CC</b>VC（二合音+连缀）</div>
-<span class="speak-btn" onclick="spk('shrug')" style="display:inline-block;margin-top:6px">🔊</span>
-</div>
-</div>
-<div class="story-speech"><p>📝 <b>结论：</b>shr- 和 thr- 虽然字母看起来像三连缀，但因为是「二合音+单辅音」的组合，本质上属于 <b>CCVC</b> 范畴。记住：<b style="color:#ffd200">数声音，不数字母！</b></p></div>
+<div class="story-speech"><p>📝 想认识 <b style="color:#ff8a65">shr- / thr-</b>（二合音 + 连缀，比如 shrimp / thrift）？去下一课「二合音加入连缀」继续冒险！</p></div>
 </div></div>
 
 </div>
@@ -334,6 +307,7 @@ var spT=null,voiceRetries=0,voiceQ=[];
 function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
 speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
 var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
 var PHONEMES={
   '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
   '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
@@ -408,16 +382,16 @@ var WORDS={
   'way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3','wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3',
   'which':'words/which.mp3','whip':'words/whip.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
-  'you':'words/you.mp3','zoo':'words/zoo.mp3'
+  'stan':'words/stan.mp3','you':'words/you.mp3','zoo':'words/zoo.mp3'
 };
-// Preload all audio to avoid file:// lazy-load failures
-(function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
 
-function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
 
 function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
 function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
-function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=getAudio(p);if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
 
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
@@ -443,109 +417,134 @@ function showS(n){
   if(n==='book'){bp_cp=0;renderP()}
 }
 
-// ═══ STORY: CCVC Demo ═══
-(function(){
-  var demos=[
-    {l:['s','p'],w:'spot',e:'🔴',s:['/s/','/p/']},
-    {l:['f','r'],w:'frog',e:'🐸',s:['/f/','/r/']},
-    {l:['g','l'],w:'glad',e:'😊',s:['/g/','/l/']},
-    {l:['t','r'],w:'trip',e:'✈',s:['/t/','/r/']},
-    {l:['d','r'],w:'drum',e:'🥁',s:['/d/','/r/']},
-    {l:['s','w'],w:'swim',e:'🏊',s:['/s/','/w/']}
-  ];
-  var h='';
-  demos.forEach(function(d){
-    h+='<div style="background:rgba(206,147,216,.05);border:1px solid rgba(206,147,216,.2);border-radius:12px;padding:10px 14px;text-align:center;min-width:90px">';
-    h+='<div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px">';
-    d.l.forEach(function(l,i){
-      h+='<span style="color:#ce93d8;font-weight:bold;cursor:pointer;font-size:1em" onclick="spkPhoneme(\''+d.s[i]+'\',this)">'+l+' 🔊</span>';
-      if(i<d.l.length-1)h+='<span style="color:#888;font-size:.7em">+</span>';
-    });
-    h+='</div>';
-    h+='<div style="font-size:1.2em;font-weight:bold;color:#ce93d8;letter-spacing:2px">'+d.w+'</div>';
-    h+='<div style="font-size:.7em;color:#aaa">'+d.e+' CCVC</div>';
-    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:28px;height:28px">🔊</span></div>';
+// ═══ STORY: Blend Deconstruction Cards ═══
+function makeDeconCard(cat, word, letters){
+  var h='<div style="background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0;min-width:0">';
+  h+='<span style="font-size:.7em;color:#888;white-space:nowrap;min-width:50px">'+cat+'</span>';
+  h+='<span style="display:inline-flex;align-items:center;gap:1px;flex-wrap:wrap">';
+  letters.forEach(function(l,i){
+    if(i>0)h+='<span style="color:#444;font-size:.75em;margin:0 3px">+</span>';
+    h+='<span style="display:inline-flex;flex-direction:column;align-items:center;cursor:pointer;padding:1px 2px" onclick="spkPhoneme(\''+l.s+'\',this)">';
+    h+='<span style="color:'+l.c+';font-size:1.2em;font-weight:bold;line-height:1.2">'+l.l+'</span>';
+    h+='<span style="font-size:.62em;color:#888;line-height:1.2">'+l.s+' 🔊</span>';
+    h+='</span>';
   });
+  h+='</span>';
+  h+='<span style="color:#666;font-size:.85em;margin:0 4px">→</span>';
+  h+='<span style="font-size:1.15em;font-weight:bold;color:#ffd200;letter-spacing:2px">'+word+'</span>';
+  h+='<span class="speak-btn" onclick="spk(\''+word+'\')" style="width:24px;height:24px;font-size:.65em;flex-shrink:0">🔊</span>';
+  h+='</div>';
+  return h;
+}
+
+// CCVC — 每类一例
+(function(){
+  var h='';
+  h+=makeDeconCard('s-类','stop',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'},{l:'o',s:'/ɒ/',c:'#4fc3f7'},{l:'p',s:'/p/',c:'#81c784'}]);
+  h+=makeDeconCard('l-类','club',[{l:'c',s:'/k/',c:'#ce93d8'},{l:'l',s:'/l/',c:'#ce93d8'},{l:'u',s:'/ʌ/',c:'#4fc3f7'},{l:'b',s:'/b/',c:'#81c784'}]);
+  h+=makeDeconCard('r-类','frog',[{l:'f',s:'/f/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'o',s:'/ɒ/',c:'#4fc3f7'},{l:'g',s:'/g/',c:'#81c784'}]);
+  h+=makeDeconCard('特殊','twin',[{l:'t',s:'/t/',c:'#ce93d8'},{l:'w',s:'/w/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#81c784'}]);
   document.getElementById('ccvcDemo').innerHTML=h;
 })();
 
-// ═══ STORY: CCCVC Demo ═══
+// CCCVC — 每类一例
 (function(){
-  var demos=[
-    {l:['s','t','r'],w:'strap',e:'🎒',s:['/s/','/t/','/r/']},
-    {l:['s','p','r'],w:'sprig',e:'🌿',s:['/s/','/p/','/r/']},
-    {l:['s','c','r'],w:'scram',e:'🏃',s:['/s/','/k/','/r/']},
-    {l:['s','p','l'],w:'split',e:'✂',s:['/s/','/p/','/l/']}
-  ];
   var h='';
-  demos.forEach(function(d){
-    h+='<div style="background:rgba(239,154,154,.05);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:10px 14px;text-align:center;min-width:90px">';
-    h+='<div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px">';
-    d.l.forEach(function(l,i){
-      h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:1em" onclick="spkPhoneme(\''+d.s[i]+'\',this)">'+l+' 🔊</span>';
-      if(i<d.l.length-1)h+='<span style="color:#888;font-size:.7em">+</span>';
-    });
-    h+='</div>';
-    h+='<div style="font-size:1.2em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">'+d.w+'</div>';
-    h+='<div style="font-size:.7em;color:#aaa">'+d.e+' CCCVC</div>';
-    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:28px;height:28px">🔊</span></div>';
-  });
+  h+=makeDeconCard('str-/spr-','strap',[{l:'s',s:'/s/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'},{l:'r',s:'/r/',c:'#ef9a9a'},{l:'a',s:'/æ/',c:'#4fc3f7'},{l:'p',s:'/p/',c:'#81c784'}]);
+  h+=makeDeconCard('scr-/spl-','split',[{l:'s',s:'/s/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'t',s:'/t/',c:'#81c784'}]);
   document.getElementById('cccvcDemo').innerHTML=h;
+})();
+
+// ═══ EASTER EGG: tw ═══
+(function(){
+  var h='';
+  h+=makeDeconCard('tw-','twin',[{l:'t',s:'/t/',c:'#ce93d8'},{l:'w',s:'/w/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#81c784'}]);
+  h+=makeDeconCard('tw-','twist',[{l:'t',s:'/t/',c:'#ce93d8'},{l:'w',s:'/w/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'s',s:'/s/',c:'#81c784'},{l:'t',s:'/t/',c:'#81c784'}]);
+  document.getElementById('twDemo').innerHTML=h;
 })();
 
 // ═══ LAB ═══
 var labData={
-  'sbl':{label:'🔹 s-类 (st sp sw sn sm sk sc)',blendLen:2,
-    words:[['stop','停 🛑 st-'],['step','步 👣 st-'],['spot','点 🔴 sp-'],['spin','转 🌀 sp-'],
-      ['swim','游泳 🏊 sw-'],['swell','膨胀 🎈 sw-'],['snap','咔嚓 📸 sn-'],['snip','剪 ✂ sn-'],
-      ['smog','雾霾 🌫 sm-'],['smug','得意 😏 sm-'],['skip','跳 ⏭ sk-'],['skin','皮肤 🦵 sk-'],
-      ['scab','痂 🩹 sc-'],['scum','浮渣 🫧 sc-']]},
-  'lbl':{label:'🔹 l-类 (bl cl fl gl pl sl)',blendLen:2,
-    words:[['blob','团 💧 bl-'],['club','俱乐部 🏛 cl-'],['clip','夹子 📎 cl-'],['flag','旗子 🚩 fl-'],
-      ['flat','平坦 📏 fl-'],['glad','开心 😊 gl-'],['plan','计划 📋 pl-'],['plug','插头 🔌 pl-'],
-      ['slug','鼻涕虫 🐌 sl-'],['slip','滑倒 🛝 sl-'],['slam','猛摔 💥 sl-'],['sled','雪橇 🛷 sl-']]},
-  'rbl':{label:'🔹 r-类 (br cr dr fr gr pr tr)',blendLen:2,
-    words:[['crab','螃蟹 🦀 cr-'],['crib','婴儿床 🛏 cr-'],['drop','落下 💧 dr-'],['drum','鼓 🥁 dr-'],
-      ['frog','青蛙 🐸 fr-'],['grab','抓住 ✋ gr-'],['grin','咧嘴笑 😁 gr-'],['trip','旅行 ✈ tr-'],
-      ['trap','陷阱 🪤 tr-'],['press','按 📰 pr-'],['brim','帽檐 🎩 br-'],['bred','培育 🍞 br-'],
-      ['prod','戳 👉 pr-'],['trim','修剪 ✂ tr-']]},
-  'spec':{label:'🔸 特殊 (tw shr thr)',blendLen:2,
-    words:[['twin','双胞胎 👯 tw-'],['twig','树枝 🌿 tw-'],['twist','扭转 🔄 tw-'],
-      ['shrug','耸肩 🤷 shr-'],['shred','撕碎 📄 shr-'],['shrub','灌木 🌳 shr-'],
-      ['throb','跳动 💓 thr-'],['thrum','弹拨 🎸 thr-']]},
-  'onset3':{label:'🔺 词首三连缀 (str spr scr spl)',blendLen:3,
-    words:[['strap','背带 🎒 str-'],['strip','条 📏 str-'],['strum','弹奏 🎸 str-'],['strong','强壮 💪 str-'],
-      ['sprig','嫩枝 🌿 spr-'],['sprint','冲刺 🏃 spr-'],['scram','快跑 💨 scr-'],['script','剧本 📜 scr-'],
-      ['split','劈开 ✂ spl-'],['splat','啪嗒 💥 spl-'],['splash','溅水 💦 spl-']]}
+  'ccvc':{
+    label:'🔹 词首二连缀 (CCVC)',blendLen:2,pos:'onset',
+    subs:{
+      's-blend':{label:'s-类 (st sp sw sn sm sk sc)',words:[
+        ['stop','停 🛑 st-'],['step','步 👣 st-'],['spot','点 🔴 sp-'],['spin','转 🌀 sp-'],
+        ['swim','游泳 🏊 sw-'],['swell','膨胀 🎈 sw-'],['snap','咔嚓 📸 sn-'],['snip','剪 ✂ sn-'],
+        ['smog','雾霾 🌫 sm-'],['smug','得意 😏 sm-'],['skip','跳 ⏭ sk-'],['skin','皮肤 🦵 sk-'],
+        ['scab','痂 🩹 sc-'],['scum','浮渣 🫧 sc-']
+      ]},
+      'l-blend':{label:'l-类 (bl cl fl gl pl sl)',words:[
+        ['blob','团 💧 bl-'],['club','俱乐部 🏛 cl-'],['clip','夹子 📎 cl-'],['flag','旗子 🚩 fl-'],
+        ['flat','平坦 📏 fl-'],['glad','开心 😊 gl-'],['plan','计划 📋 pl-'],['plug','插头 🔌 pl-'],
+        ['slug','鼻涕虫 🐌 sl-'],['slip','滑倒 🛝 sl-'],['slam','猛摔 💥 sl-'],['sled','雪橇 🛷 sl-']
+      ]},
+      'r-blend':{label:'r-类 (br cr dr fr gr pr tr)',words:[
+        ['crab','螃蟹 🦀 cr-'],['crib','婴儿床 🛏 cr-'],['drop','落下 💧 dr-'],['drum','鼓 🥁 dr-'],
+        ['frog','青蛙 🐸 fr-'],['grab','抓住 ✋ gr-'],['grin','咧嘴笑 😁 gr-'],['trip','旅行 ✈ tr-'],
+        ['trap','陷阱 🪤 tr-'],['press','按 📰 pr-'],['brim','帽檐 🎩 br-'],['bred','培育 🍞 br-'],
+        ['prod','戳 👉 pr-'],['trim','修剪 ✂ tr-']
+      ]},
+      'special':{label:'特殊 (tw)',words:[
+        ['twin','双胞胎 👯 tw-'],['twig','树枝 🌿 tw-'],['twist','扭转 🔄 tw-']
+      ]}
+    }
+  },
+  'cccvc':{
+    label:'🔺 词首三连缀 (CCCVC)',blendLen:3,pos:'onset',
+    subs:{
+      'o3-str':{label:'str-/spr-',words:[
+        ['strap','背带 🎒 str-'],['strip','条 📏 str-'],['strum','弹奏 🎸 str-'],['strong','强壮 💪 str-'],
+        ['sprig','嫩枝 🌿 spr-'],['sprint','冲刺 🏃 spr-']
+      ]},
+      'o3-scr':{label:'scr-/spl-',words:[
+        ['scram','快跑 💨 scr-'],['script','剧本 📜 scr-'],
+        ['split','劈开 ✂ spl-'],['splat','啪嗒 💥 spl-'],['splash','溅水 💦 spl-']
+      ]}
+    }
+  }
 };
-var curL='sbl';
-function switchL(k){curL=k;buildL()}
+var curL='ccvc';
+var curSub='s-blend';
+function switchL(k){curL=k;var s=labData[k].subs;curSub=s?Object.keys(s)[0]:null;buildL()}
+function switchSub(k){curSub=k;buildL()}
 function buildL(){
   var cfg=labData[curL];
+  if(!cfg){document.getElementById('labGrid').innerHTML='';return}
   var tabs='';
   Object.keys(labData).forEach(function(k){
-    tabs+='<button class="lab-tab'+(k===curL?' active':'')+(k==='onset3'?' bl-tab':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
+    tabs+='<button class="lab-tab'+(k===curL?' active':'')+(k==='cccvc'?' bl-tab':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
   });
   document.getElementById('labTabs').innerHTML=tabs;
+  var subEl=document.getElementById('labSubTabs');
+  if(cfg.subs){
+    var stabs='';
+    Object.keys(cfg.subs).forEach(function(k){
+      stabs+='<button class="lab-tab'+(k===curSub?' active':'')+'" onclick="switchSub(\''+k+'\')">'+cfg.subs[k].label+'</button>';
+    });
+    subEl.innerHTML=stabs;
+    subEl.style.display='flex';
+  }else{subEl.innerHTML='';subEl.style.display='none'}
+  var words=cfg.subs?cfg.subs[curSub].words:(cfg.words||[]);
   var bl=cfg.blendLen,blendColor=bl>=3?'#ef9a9a':'#ce93d8',vowels='aeiou';
-  document.getElementById('labGrid').innerHTML=cfg.words.map(function(w,i){
+  document.getElementById('labGrid').innerHTML=words.map(function(w,i){
     var word=w[0],emoji=w[1],colored='',j=0;
     while(j<word.length){
       if(j<bl){colored+='<span style="color:'+blendColor+'">'+word[j]+'</span>';j++}
       else if(vowels.indexOf(word[j])>=0){colored+='<span style="color:#4fc3f7;text-decoration:underline;text-underline-offset:4px">'+word[j]+'</span>';j++}
       else{colored+='<span style="color:#81c784">'+word[j]+'</span>';j++}
     }
-    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="letter-spacing:3px">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
+    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'3px':word.length<=6?'2px':word.length<=7?'1px':'0px')+'">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
   }).join('');
 }
 
 // ═══ SORT: By vowel ═══
 var sortWords=[
-  {w:'stop',t:'o'},{w:'spot',t:'o'},{w:'frog',t:'o'},{w:'drop',t:'o'},{w:'blob',t:'o'},{w:'club',t:'u'},
-  {w:'step',t:'e'},{w:'press',t:'e'},{w:'swell',t:'e'},{w:'sprint',t:'i'},{w:'spin',t:'i'},
-  {w:'clip',t:'i'},{w:'trip',t:'i'},{w:'swim',t:'i'},{w:'split',t:'i'},{w:'grin',t:'i'},
-  {w:'crab',t:'a'},{w:'flag',t:'a'},{w:'plan',t:'a'},{w:'snap',t:'a'},{w:'grab',t:'a'},{w:'trap',t:'a'},{w:'strap',t:'a'},{w:'flat',t:'a'},{w:'splat',t:'a'},
-  {w:'drum',t:'u'},{w:'plug',t:'u'},{w:'slug',t:'u'},{w:'strum',t:'u'},{w:'shrug',t:'u'}
+  {w:'stop',t:'s'},{w:'spot',t:'s'},{w:'swim',t:'s'},{w:'snap',t:'s'},{w:'smog',t:'s'},{w:'skip',t:'s'},{w:'scab',t:'s'},
+  {w:'blob',t:'l'},{w:'club',t:'l'},{w:'flag',t:'l'},{w:'glad',t:'l'},{w:'plan',t:'l'},{w:'slug',t:'l'},
+  {w:'crab',t:'r'},{w:'drop',t:'r'},{w:'frog',t:'r'},{w:'grab',t:'r'},{w:'brim',t:'r'},{w:'press',t:'r'},{w:'trip',t:'r'},
+  {w:'twin',t:'spec'},{w:'twig',t:'spec'},{w:'twist',t:'spec'},
+  {w:'strap',t:'tri'},{w:'sprig',t:'tri'},{w:'scram',t:'tri'},{w:'split',t:'tri'}
 ];
 var selectedWord=null,placedCount=0;
 function buildSort(){
@@ -554,30 +553,32 @@ function buildSort(){
     h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>';
   });
   pool.innerHTML=h;
-  ['A','E','I','O','U'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  ['S','L','R','Spec','Tri'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
   document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
 }
 function setupBins(){
-  ['binA','binE','binI','binO','binU'].forEach(function(id){
+  ['binS','binL','binR','binSpec','binTri'].forEach(function(id){
     var el=document.getElementById(id);
     el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};
     el.ondragleave=function(){el.classList.remove('drag-over')};
-    el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())};
+    el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin',''))};
   });
 }
 function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
 function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
 function dropToBin(w,type,correct){
   if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
-  var ok=type===correct;
+  var t=type.toLowerCase();
+  var ok=t===correct;
   var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
   if(ok){
     item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';
-    document.getElementById('bin'+type.toUpperCase()+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
-    var vl={a:'a /æ/',e:'e /e/',i:'i /ɪ/',o:'o /ɒ/',u:'u /ʌ/'};
-    document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+vl[type]+'!</span>';
+    var binIds={s:'binS',l:'binL',r:'binR',spec:'binSpec',tri:'binTri'};
+    document.getElementById(binIds[t]+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
+    var vl={s:'🟣 s-类（st/sp/sw/sn/sm/sk/sc）',l:'🟣 l-类（bl/cl/fl/gl/pl/sl）',r:'🟣 r-类（br/cr/dr/fr/gr/pr/tr）',spec:'🔴 特殊（tw）',tri:'🔴 三连缀（str/spr/scr/spl）'};
+    document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+vl[t]+'!</span>';
     placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>';
-  }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听中间的元音？</span>'}
+  }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听词首连缀？</span>'}
   selectedWord=null;
 }
 function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
@@ -611,8 +612,7 @@ var quizPool=[
   {t:'vowel',q:'drum 中间的元音是什么？',w:'drum',o:['u /ʌ/','u /juː/','o /ɒ/','a /æ/'],a:0,x:'drum = dr-u-m，u 读短音 /ʌ/'},
   {t:'choose',q:'下面哪个是 CCVC？',o:['cat','ship','stop','strap'],a:2,x:'stop = CCVC。cat=CVC，ship=CVC(二合音)，strap=CCCVC'},
   {t:'choose',q:'下面哪个是 CCCVC？',o:['frog','stop','strap','ship'],a:2,x:'strap = CCCVC。frog/stop 是 CCVC，ship 是 CVC'},
-  {t:'compare',q:'stop 和 ship 都是4个字母，为什么结构不同？',o:['没有不同','sh是二合音=1音，st是连缀=2音','stop更长','ship更长'],a:1,x:'sh 两个字母发1个音=CVC；st 两个字母发2个音=CCVC！'},
-  {t:'shr',q:'shrug 开头有三个字母 shr，是 CCCVC 吗？',w:'shrug',o:['是 CCCVC','不是，sh 是二合音，实际是 CCVC','是 CVC','不确定'],a:1,x:'sh 合体成 /ʃ/ + r 单独 /r/ = 2个音 → CCVC。数声音，不数字母！'}
+  {t:'compare',q:'stop 和 ship 都是4个字母，为什么结构不同？',o:['没有不同','sh是二合音=1音，st是连缀=2音','stop更长','ship更长'],a:1,x:'sh 两个字母发1个音=CVC；st 两个字母发2个音=CCVC！'}
 ];
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
@@ -620,14 +620,15 @@ function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_
 function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={count:'🔊 听音数数',struct:'🏗️ 辨别结构',listen:'👂 听音辨连缀',spell:'✏️ 选正确拼写',vowel:'🔤 找中间元音',choose:'🎯 选择',compare:'⚖️ 对比',shr:'🤔 shr辨析'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&(q.t==='count'||q.t==='listen'))h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='count'&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
 function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
 function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
-function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！CCVC大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ce93d8;margin:8px 0">'+s+'/12</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！CCVC大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ce93d8;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🚀🐸',t:'Stan and the Frog',x:'<span class="dg-hl">Stan</span> will <span class="dg-hl">step</span> on a log.<br><span class="dg-hl">Crack</span>! The log <span class="dg-hl">snaps</span>!<br>A big green <span class="dg-hl">frog</span> jumps up.'},
-  {s:'🐸💧🏊',t:'At the Pond',x:'The <span class="dg-hl">frog</span> hops to a pond.<br><span class="dg-hl">Splash</span>! In goes the <span class="dg-hl">frog</span>.<br><span class="dg-hl">Stan</span> can <span class="dg-hl">spot</span> him <span class="dg-hl">swim</span>.'},
-  {s:'🥁🎸🎤',t:'Frog Band',x:'<span class="dg-hl">Stan</span> grabs a <span class="dg-hl">drum</span>.<br>The <span class="dg-hl">frog</span> can <span class="dg-hl">strum</span> a twig.<br>\\\"Let us <span class="dg-hl">plan</span> a <span class="dg-hl">trip</span>!\\\" says <span class="dg-hl">Stan</span>.'},
-  {s:'✈🦀🌿',t:'The Big Trip',x:'They <span class="dg-hl">trip</span> and <span class="dg-hl">slip</span> on mud.<br>A <span class="dg-hl">crab</span> gives them a <span class="dg-hl">grin</span>.<br>\\\"<span class="dg-hl">Grab</span> this <span class="dg-hl">sprig</span>!\\\" says the <span class="dg-hl">crab</span>.'},
+  {s:'🚀🗺️',t:'A Big Plan',x:'<span class="dg-hl">Stan</span> wants to <span class="dg-hl">plan</span> a <span class="dg-hl">trip</span>.<br>He will <span class="dg-hl">step</span> out and see the world.'},
+  {s:'🐸🥁',t:'The Frog Band',x:'He <span class="dg-hl">spots</span> a <span class="dg-hl">frog</span>.<br>The <span class="dg-hl">frog</span> can <span class="dg-hl">swim</span> and <span class="dg-hl">strum</span> a <span class="dg-hl">drum</span>.<br><span class="dg-hl">Snap</span>! goes the beat.'},
+  {s:'🦀🌿',t:'The Crab Helps',x:'A <span class="dg-hl">crab</span> comes with a <span class="dg-hl">grin</span>.<br>“I can <span class="dg-hl">grab</span> this <span class="dg-hl">sprig</span> for you!”'},
+  {s:'💦😱',t:'Slip!',x:'But <span class="dg-hl">Stan</span> <span class="dg-hl">slips</span> on the mud.<br>“Oh no!” He falls down.'},
+  {s:'😊🏁',t:'What a Trip',x:'The <span class="dg-hl">crab</span> and <span class="dg-hl">frog</span> help him up.<br><span class="dg-hl">Stan</span> <span class="dg-hl">grins</span>.<br>“What a <span class="dg-hl">trip</span>!”'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">Stan <span class="speak-btn" onclick="spk(&#39;stan&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">st- CCVC</div></div><div class="gi"><div class="gw">step <span class="speak-btn" onclick="spk(&#39;step&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">st- CCVC</div></div><div class="gi"><div class="gw">snap <span class="speak-btn" onclick="spk(&#39;snap&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sn- CCVC</div></div><div class="gi"><div class="gw">frog <span class="speak-btn" onclick="spk(&#39;frog&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">fr- CCVC</div></div><div class="gi"><div class="gw">spot <span class="speak-btn" onclick="spk(&#39;spot&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sp- CCVC</div></div><div class="gi"><div class="gw">swim <span class="speak-btn" onclick="spk(&#39;swim&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sw- CCVC</div></div><div class="gi"><div class="gw">drum <span class="speak-btn" onclick="spk(&#39;drum&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">dr- CCVC</div></div><div class="gi"><div class="gw">strum <span class="speak-btn" onclick="spk(&#39;strum&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">str- CCCVC</div></div><div class="gi"><div class="gw">plan <span class="speak-btn" onclick="spk(&#39;plan&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">pl- CCVC</div></div><div class="gi"><div class="gw">trip <span class="speak-btn" onclick="spk(&#39;trip&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">tr- CCVC</div></div><div class="gi"><div class="gw">slip <span class="speak-btn" onclick="spk(&#39;slip&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sl- CCVC</div></div><div class="gi"><div class="gw">crab <span class="speak-btn" onclick="spk(&#39;crab&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">cr- CCVC</div></div><div class="gi"><div class="gw">grin <span class="speak-btn" onclick="spk(&#39;grin&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">gr- CCVC</div></div><div class="gi"><div class="gw">grab <span class="speak-btn" onclick="spk(&#39;grab&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">gr- CCVC</div></div><div class="gi"><div class="gw">sprig <span class="speak-btn" onclick="spk(&#39;sprig&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">spr- CCCVC</div></div></div>'}
 ];
 var bp_reading=false,bp_audio=null;

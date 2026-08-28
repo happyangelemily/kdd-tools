@@ -20,7 +20,7 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
 .dg-decon-struct{text-align:center;font-size:.7em;margin-top:4px}.dg-decon-struct span{padding:2px 8px;border-radius:8px;font-weight:bold;background:rgba(79,195,247,.12);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
 
 /* Lab */
-.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(239,154,154,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px}.lab-card .word .eb-c{color:#ef9a9a}.lab-card .word .vw{color:#4fc3f7;text-decoration:underline;text-underline-offset:4px}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ef9a9a}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(239,154,154,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px;overflow-wrap:break-word;word-break:break-word}.lab-card .word .eb-c{color:#ef9a9a}.lab-card .word .vw{color:#4fc3f7;text-decoration:underline;text-underline-offset:4px}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ef9a9a}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
 
 /* Sort */
 .sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
@@ -173,55 +173,20 @@ input,select,textarea{font-size:16px}
 
 <div class="story-speech"><p>📝 不管结尾是 -nd（hand）、-mp（jump）、-st（best）、-lt（belt）还是 -sk（desk），<b style="color:#ef9a9a\">结尾都是两个辅音各自发各自的音</b>。中间的元音全部是<b style="color:#4fc3f7\">短元音</b>。</p></div>
 
-<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0">
-<div style="background:rgba(206,147,216,.06);border:1px solid rgba(206,147,216,.2);border-radius:12px;padding:12px 16px;text-align:center">
-<div style="color:#888;font-size:.8em;margin-bottom:4px">开头加厚 → CCVC</div>
-<div style="font-size:1.3em;font-weight:bold;color:#ce93d8;letter-spacing:2px">stop 🛑</div>
-<div style="font-size:.75em;color:#aaa;margin-top:4px">s-t-o-p，前面2片面包</div>
-<span class="speak-btn" onclick="spk('stop')" style="display:inline-block;margin-top:4px">🔊</span>
-</div>
-<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:12px 16px;text-align:center">
-<div style="color:#888;font-size:.8em;margin-bottom:4px">结尾加厚 → CVCC</div>
-<div style="font-size:1.3em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">hand ✋</div>
-<div style="font-size:.75em;color:#aaa;margin-top:4px">h-a-n-d，后面2片面包</div>
-<span class="speak-btn" onclick="spk('hand')" style="display:inline-block;margin-top:4px">🔊</span>
-</div>
-</div>
 
 <h3>🔺 三片结尾面包：CVCCC</h3>
-<div class="story-speech"><p>结尾也可以有三个辅音！比如 help + s → helps：</p></div>
+<div class="story-speech"><p>结尾也可以有三个辅音！比如 text（x = /ks/ 两个音 + t 一个音 = 三个辅音音位）：</p></div>
 
 <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="cvcccDemo"></div>
 
-<h3>🔺🔺 四片结尾面包：CVCCCC（四连缀）</h3>
-<div class="story-speech"><p>英语里最极端的结尾——<b style="color:#ef9a9a">四个辅音</b>叠在一起！全是靠 <b style="color:#ffd200">x = /ks/</b> 这个「打包字母」做到的：</p></div>
+<div class="story-speech"><p>📝 <b>四连缀（-CCCC）</b>如 texts/tempts，全部是「三辅尾 + 后缀 -s」。🔒 后缀要等后面专门学。</p></div>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="cvccccDemo"></div>
-
-<div class="story-speech"><p>🧠 <b>关键机制：</b>x 一个字母包了 /k/+/s/ 两个声音。再加 th /θ/ 和 s /s/，4 个辅音音位在词尾一字排开！</p><p>📝 <b>英语词尾最多 4 个辅音：</b>/ksθs/（sixths）、/ksts/（texts）、/mpts/（prompts）。靠 x 或塞音+擦音+塞音+擦音的交替排列实现。这就是为什么 sixths 有 6 个声音却只有 6 个字母——x 和 th 各是一个字母代表一个音位。</p></div>
-
-<h3>⚠️ 别搞混：结尾二合音不是连缀！</h3>
-<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
-<div style="background:rgba(255,138,101,.06);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:12px 16px;text-align:center">
-<div style="color:#888;font-size:.8em;margin-bottom:4px">二合音结尾</div>
-<div style="font-size:1.3em;font-weight:bold;color:#ff8a65;letter-spacing:2px">back</div>
-<div style="font-size:.75em;color:#aaa;margin-top:4px">ck = 1个音 → CVC</div>
-<span class="speak-btn" onclick="spk('back')" style="display:inline-block;margin-top:4px">🔊</span>
-</div>
-<div style="background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:16px;text-align:center">
-<div style="color:#888;font-size:.8em;margin-bottom:4px">连缀结尾 → CVCC</div>
-<div style="font-size:1.3em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">desk</div>
-<div style="font-size:.75em;color:#aaa;margin-top:4px">s+k = 2个音 → CVCC</div>
-<span class="speak-btn" onclick="spk('desk')" style="display:inline-block;margin-top:4px">🔊</span>
-</div>
-</div>
-
-<div class="story-speech"><p>🧠 <b>记住：</b>back（3字母、3声音、CVC）和 desk（4字母、4声音、CVCC）。ck 合体了，sk 没有！</p></div>
 </div></div>
 
 <!-- ===== LAB ===== -->
 <div class="section" id="sec-lab"><div class="glass"><h2>🧪 CVCC / CVCCC 拼读实验室</h2><p style="color:#aaa;margin-bottom:8px">点击卡片翻转听发音！<span style="color:#ef9a9a">粉色</span>=结尾连缀 <span style="color:#4fc3f7">蓝色</span>=元音 <span style="color:#81c784">绿色</span>=开头辅音</p>
 <div class="lab-tabs" id="labTabs"></div>
+<div class="lab-tabs" id="labSubTabs" style="display:none;margin-top:4px"></div>
 <div class="lab-grid" id="labGrid"></div></div></div>
 
 <!-- ===== SORT ===== -->
@@ -232,7 +197,7 @@ input,select,textarea{font-size:16px}
 <div class="sort-bin" id="binLT" onclick="clickToBin('lt')"><div class="sort-bin-label" style="color:#ef9a9a">-lt</div><div id="binLTItems"></div></div>
 <div class="sort-bin" id="binNK" onclick="clickToBin('nk')"><div class="sort-bin-label" style="color:#ef9a9a">-nk</div><div id="binNKItems"></div></div>
 <div class="sort-bin" id="binX" onclick="clickToBin('x')"><div class="sort-bin-label" style="color:#ef9a9a">-x /ks/</div><div id="binXItems"></div></div>
-<div class="sort-bin" id="binCCCC" onclick="clickToBin('cccc')"><div class="sort-bin-label" style="color:#ff8a65">4连缀</div><div id="binCCCCItems"></div></div>
+<div class="sort-bin" id="binCCC" onclick="clickToBin('coda3')"><div class="sort-bin-label" style="color:#ff8a65">-CCC 三辅尾</div><div id="binCCCItems"></div></div>
 </div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
 
 <!-- ===== QUIZ ===== -->
@@ -242,7 +207,7 @@ input,select,textarea{font-size:16px}
 <div class="section" id="sec-book"><div class="glass"><h2>📚 The Best Gift</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 CVCC 绘本 🎁</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
 
 <!-- ===== EASTER EGG ===== -->
-<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：x 的秘密 &amp; 特殊结尾</h2>
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：x 的秘密</h2>
 <div class="story-speech"><p>有几个词尾很特别——看起来不像连缀，但里面藏着<b style="color:#ef9a9a">两个声音</b>！</p></div>
 
 <h3>🔍 x = /ks/：一个字母，两个声音！</h3>
@@ -262,14 +227,6 @@ input,select,textarea{font-size:16px}
 </div>
 <div class="story-speech"><p>📝 <b>x 是一个「打包字母」：</b>它一个字母就包了 /k/+/s/ 两个声音！所以 box/fix/six/fox/mix 虽然只有 3 个字母，但声音数是 4 → <b style="color:#ef9a9a">CVCC</b>。数声音，不数字母！</p></div>
 
-<h3>🧬 二合音作为「一个C」参与结尾连缀</h3>
-<div class="story-speech"><p>结尾的「两片面包」里，有一片可能不是单个辅音，而是一个<b style="color:#ff8a65">二合音</b>——两个字母合起来发一个音，在连缀中充当<b style="color:#ffd200">一个C</b>的角色。这就是「单辅音 + 二合音」的结尾组合。点击每个单词的🔊听整词发音，点击拆分字母听单个音：</p></div>
-
-<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0" id="easterDigraphCards"></div>
-
-<div class="story-speech"><p>📝 <b>共同规律：</b>每个词的结尾都是 <b>「一个单辅音 + 一个二合音」</b>——3 个字母，但只有 <b>2 个音位</b>→ 全是 <b style="color:#ef9a9a">CVCC</b>。字母数 ≠ 声音数！</p><p>⚠️ <b>注意：</b>-rch、-rsh、-rth 类词（如 march/harsh/worth）虽然也是「单辅音+二合音」模式，但中间的元音被 r 影响了发音（r控元音），属于后续学习内容，本页不含。</p></div>
-
-<div class="story-speech"><p>🧠 <b>核心结论：</b>判断一个词是 CVCC 还是 CVCCC，<b style="color:#ffd200">看结尾有几个音位</b>，不数字母！二合音（ph/ch/sh/th/ck/ng/ge）不管由几个字母组成，只算 <b style="color:#ff8a65">1个C</b>。</p></div>
 </div></div>
 
 </div>
@@ -284,6 +241,7 @@ var spT=null,voiceRetries=0,voiceQ=[];
 function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
 speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
 var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
 var PHONEMES={
   '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
   '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
@@ -351,19 +309,19 @@ var WORDS={
   'stay':'words/stay.mp3','step':'words/step.mp3','stop':'words/stop.mp3','store':'words/store.mp3','storm':'words/storm.mp3','strap':'words/strap.mp3','strip':'words/strip.mp3','strong':'words/strong.mp3',
   'strum':'words/strum.mp3','such':'words/such.mp3','sulk':'words/sulk.mp3','sun':'words/sun.mp3','swell':'words/swell.mp3','swept':'words/swept.mp3','swim':'words/swim.mp3','sylph':'words/sylph.mp3',
   'table':'words/table.mp3','tank':'words/tank.mp3','tea':'words/tea.mp3','teacher':'words/teacher.mp3','ten':'words/ten.mp3','tent':'words/tent.mp3','tents':'words/tents.mp3','tenth':'words/tenth.mp3','term':'words/term.mp3',
-  'text':'words/text.mp3','texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3',
+  'text':'words/text.mp3','find':'words/find.mp3','texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3',
   'throb':'words/throb.mp3','tick':'words/tick.mp3','top':'words/top.mp3','town':'words/town.mp3','train':'words/train.mp3','trap':'words/trap.mp3','tree':'words/tree.mp3','trim':'words/trim.mp3',
   'trip':'words/trip.mp3','tub':'words/tub.mp3','tusk':'words/tusk.mp3','twig':'words/twig.mp3','twin':'words/twin.mp3','twist':'words/twist.mp3','type':'words/type.mp3','umbrella':'words/umbrella.mp3',
   'unicorn':'words/unicorn.mp3','van':'words/van.mp3','verb':'words/verb.mp3','very':'words/very.mp3','vision':'words/vision.mp3','wait':'words/wait.mp3','wash':'words/wash.mp3','wasp':'words/wasp.mp3',
   'way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3','wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3',
   'which':'words/which.mp3','whip':'words/whip.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind':'words/wind.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
-  'you':'words/you.mp3','zoo':'words/zoo.mp3'
+  'kent':'words/kent.mp3','tempt':'words/tempt.mp3','you':'words/you.mp3','zoo':'words/zoo.mp3'
 };
-// Preload all audio to avoid file:// lazy-load failures
-(function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
 
-function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
 
 function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
 function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
@@ -372,7 +330,7 @@ function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudi
   for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}
   for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}
 })();
-function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=getAudio(p);if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
 
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){
@@ -398,182 +356,130 @@ function showS(n){
   if(n==='book'){bp_cp=0;renderP()}
 }
 
+// ═══ STORY: Blend Deconstruction Cards ═══
+function makeDeconCard(cat, word, letters){
+  var h='<div style="background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0;min-width:0">';
+  h+='<span style="font-size:.7em;color:#888;white-space:nowrap;min-width:50px">'+cat+'</span>';
+  h+='<span style="display:inline-flex;align-items:center;gap:1px;flex-wrap:wrap">';
+  letters.forEach(function(l,i){
+    if(i>0)h+='<span style="color:#444;font-size:.75em;margin:0 3px">+</span>';
+    if(l.s2){
+      h+='<span style="display:inline-flex;flex-direction:column;align-items:center;padding:1px 2px">';
+      h+='<span style="color:'+l.c+';font-size:1.2em;font-weight:bold;line-height:1.2">'+l.l+'</span>';
+      h+='<span style="font-size:.62em;color:#888;line-height:1.2">'+l.s+' <span style="cursor:pointer" onclick="spkPhoneme(\''+l.s+'\',this)">🔊</span> '+l.s2+' <span style="cursor:pointer" onclick="spkPhoneme(\''+l.s2+'\',this)">🔊</span></span>';
+      h+='</span>';
+    }else{
+      h+='<span style="display:inline-flex;flex-direction:column;align-items:center;cursor:pointer;padding:1px 2px" onclick="spkPhoneme(\''+l.s+'\',this)">';
+      h+='<span style="color:'+l.c+';font-size:1.2em;font-weight:bold;line-height:1.2">'+l.l+'</span>';
+      h+='<span style="font-size:.62em;color:#888;line-height:1.2">'+l.s+' 🔊</span>';
+      h+='</span>';
+    }
+  });
+  h+='</span>';
+  h+='<span style="color:#666;font-size:.85em;margin:0 4px">→</span>';
+  h+='<span style="font-size:1.15em;font-weight:bold;color:#ffd200;letter-spacing:2px">'+word+'</span>';
+  h+='<span class="speak-btn" onclick="spk(\''+word+'\')" style="width:24px;height:24px;font-size:.65em;flex-shrink:0">🔊</span>';
+  h+='</div>';
+  return h;
+}
+
 // ═══ STORY: CVCCC Demo ═══
 (function(){
-  var demos=[
-    {l:['l','p','s'],w:'helps',e:'🤝',s:['/l/','/p/','/s/']},
-    {l:['l','t','s'],w:'belts',e:'🪢',s:['/l/','/t/','/s/']},
-    {l:['n','t','s'],w:'tents',e:'⛺',s:['/n/','/t/','/s/']},
-    {l:['n','d','s'],w:'hands',e:'👐',s:['/n/','/d/','/z/']}
-  ];
   var h='';
-  demos.forEach(function(d){
-    h+='<div style="background:rgba(239,154,154,.05);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:10px 14px;text-align:center;min-width:90px">';
-    h+='<div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px">';
-    d.l.forEach(function(l,i){
-      h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:1em" onclick="spkPhoneme(\''+d.s[i]+'\',this)">'+l+' 🔊</span>';
-      if(i<d.l.length-1)h+='<span style="color:#888;font-size:.7em">+</span>';
-    });
-    h+='</div>';
-    h+='<div style="font-size:1.2em;font-weight:bold;color:#ef9a9a;letter-spacing:2px">'+d.w+'</div>';
-    h+='<div style="font-size:.7em;color:#aaa">'+d.e+' CVCCC</div>';
-    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:28px;height:28px">🔊</span></div>';
-  });
+  h+=makeDeconCard('CVCCC','text',[{l:'t',s:'/t/',c:'#81c784'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'x',s:'/k/',s2:'/s/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('CVCCC','tempt',[{l:'t',s:'/t/',c:'#81c784'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
   document.getElementById('cvcccDemo').innerHTML=h;
 })();
 
-// ═══ STORY: CVCCCC Demo (4-consonant endings) ═══
+// ═══ STORY: CVCC Deconstruction Cards (one per sub-type) ═══
 (function(){
-  var demos=[
-    {l:['x','th','s'],w:'sixths',e:'6️⃣',ipa:'/sɪksθs/',s:['/ks/','/θ/','/s/']},
-    {l:['x','t','s'],w:'texts',e:'📱',ipa:'/teksts/',s:['/ks/','/t/','/s/']},
-    {l:['m','p','t','s'],w:'prompts',e:'💬',ipa:'/prɒmpts/',s:['/m/','/p/','/t/','/s/']},
-    {l:['m','p','t','s'],w:'tempts',e:'😈',ipa:'/tempts/',s:['/m/','/p/','/t/','/s/']}
-  ];
   var h='';
-  demos.forEach(function(d){
-    h+='<div style="background:rgba(255,138,101,.05);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:10px 14px;text-align:center;min-width:100px">';
-    h+='<div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px;flex-wrap:wrap;align-items:center">';
-    d.l.forEach(function(l,i){
-      h+='<span style="color:#ff8a65;font-weight:bold;cursor:pointer;font-size:0.95em" onclick="spkPhoneme(\''+d.s[i]+'\',this)">'+l+' 🔊</span>';
-      if(i<d.l.length-1)h+='<span style="color:#888;font-size:.7em">+</span>';
-    });
-    h+='</div>';
-    h+='<div style="font-size:.75em;color:#aaa;margin-top:2px">'+d.ipa+'</div>';
-    h+='<div style="font-size:1.2em;font-weight:bold;color:#ff8a65;letter-spacing:2px">'+d.w+'</div>';
-    h+='<div style="font-size:.7em;color:#aaa">'+d.e+' CVCCCC</div>';
-    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:28px;height:28px">🔊</span></div>';
-  });
-  document.getElementById('cvccccDemo').innerHTML=h;
-})();
-
-// ═══ STORY: CVCC Variety Demo (2-consonant endings) ═══
-(function(){
-  var demos=[
-    {v:'a',w:'hand',e:'✋',end:'nd',s1:'/n/',s2:'/d/'},
-    {v:'u',w:'jump',e:'🦘',end:'mp',s1:'/m/',s2:'/p/'},
-    {v:'e',w:'best',e:'🏆',end:'st',s1:'/s/',s2:'/t/'},
-    {v:'e',w:'belt',e:'🪢',end:'lt',s1:'/l/',s2:'/t/'},
-    {v:'i',w:'milk',e:'🥛',end:'lk',s1:'/l/',s2:'/k/'},
-    {v:'e',w:'desk',e:'🪑',end:'sk',s1:'/s/',s2:'/k/'},
-    {v:'e',w:'left',e:'⬅',end:'ft',s1:'/f/',s2:'/t/'},
-    {v:'o',w:'gold',e:'🥇',end:'ld',s1:'/l/',s2:'/d/'}
-  ];
-  var h='';
-  demos.forEach(function(d){
-    h+='<div style="background:rgba(239,154,154,.05);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:9px 12px;text-align:center;min-width:80px">';
-    h+='<div style="font-size:1.1em;font-weight:bold;color:#ef9a9a;letter-spacing:2px;margin-bottom:2px">'+d.w+'</div>';
-    h+='<div style="display:flex;gap:1px;justify-content:center;align-items:center;margin-bottom:3px;flex-wrap:wrap">';
-    h+='<span style="font-size:.7em;color:#888">-'+d.end+':</span>';
-    h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:.8em" onclick="spkPhoneme(\''+d.s1+'\',this)">'+d.end[0]+' 🔊</span>';
-    h+='<span style="color:#888;font-size:.6em">+</span>';
-    h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer;font-size:.8em" onclick="spkPhoneme(\''+d.s2+'\',this)">'+d.end[1]+' 🔊</span>';
-    h+='</div>';
-    h+='<div style="font-size:.65em;color:#aaa">'+d.e+' CVCC</div>';
-    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:2px;width:24px;height:24px;font-size:.55em">🔊</span></div>';
-  });
+  h+=makeDeconCard('鼻音类','hand',[{l:'h',s:'/h/',c:'#81c784'},{l:'a',s:'/æ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ef9a9a'},{l:'d',s:'/d/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('l-类','milk',[{l:'m',s:'/m/',c:'#81c784'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'k',s:'/k/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('s-类','best',[{l:'b',s:'/b/',c:'#81c784'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'s',s:'/s/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('塞音类','gift',[{l:'g',s:'/g/',c:'#81c784'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'f',s:'/f/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('特殊','box',[{l:'b',s:'/b/',c:'#81c784'},{l:'o',s:'/ɒ/',c:'#4fc3f7'},{l:'x',s:'/k/',s2:'/s/',c:'#ef9a9a'}]);
   document.getElementById('cvccDemo').innerHTML=h;
 })();
 
-// ═══ EASTER EGG: Digraph-as-C cards (one per word) ═══
-(function(){
-  var cards=[
-    {w:'bench',e:'🪑',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'lunch',e:'🍱',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'pinch',e:'🤏',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'hunch',e:'🤔',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'ranch',e:'🏜',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'bunch',e:'💐',c:'n',dg:'ch',cIPA:'/n/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'filch',e:'🥷',c:'l',dg:'ch',cIPA:'/l/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'mulch',e:'🌱',c:'l',dg:'ch',cIPA:'/l/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'belch',e:'😮',c:'l',dg:'ch',cIPA:'/l/',dgF:'ch=/tʃ/',dgIPA:'/tʃ/'},
-    {w:'nymph',e:'🧚',c:'m',dg:'ph',cIPA:'/m/',dgF:'ph=/f/',dgIPA:'/f/'},
-    {w:'lymph',e:'🩸',c:'m',dg:'ph',cIPA:'/m/',dgF:'ph=/f/',dgIPA:'/f/'},
-    {w:'sylph',e:'💨',c:'l',dg:'ph',cIPA:'/l/',dgF:'ph=/f/',dgIPA:'/f/'},
-    {w:'Welsh',e:'🏴',c:'l',dg:'sh',cIPA:'/l/',dgF:'sh=/ʃ/',dgIPA:'/ʃ/'},
-    {w:'tenth',e:'🔟',c:'n',dg:'th',cIPA:'/n/',dgF:'th=/θ/',dgIPA:'/θ/'},
-    {w:'month',e:'📅',c:'n',dg:'th',cIPA:'/n/',dgF:'th=/θ/',dgIPA:'/θ/'},
-    {w:'health',e:'❤️',c:'l',dg:'th',cIPA:'/l/',dgF:'th=/θ/',dgIPA:'/θ/'},
-    {w:'filth',e:'🦠',c:'l',dg:'th',cIPA:'/l/',dgF:'th=/θ/',dgIPA:'/θ/'},
-    {w:'length',e:'📏',c:'ng',dg:'th',cIPA:'/ŋ/',dgF:'th=/θ/',dgIPA:'/θ/',note:'二合音+二合音'}
-  ];
-  var h='';
-  cards.forEach(function(d){
-    h+='<div style="background:rgba(255,138,101,.05);border:1px solid rgba(255,138,101,.2);border-radius:12px;padding:8px 10px;text-align:center;min-width:75px">';
-    h+='<div style="font-size:.95em;font-weight:bold;color:#ef9a9a;letter-spacing:1px;margin-bottom:3px">'+d.w+' '+d.e+'</div>';
-    h+='<div style="display:flex;gap:1px;justify-content:center;align-items:center;margin-bottom:2px;font-size:.7em">';
-    h+='<span style="color:#ef9a9a;font-weight:bold;cursor:pointer" onclick="spkPhoneme(\''+d.cIPA+'\',this)">'+d.c+' 🔊</span>';
-    h+='<span style="color:#888;margin:0 2px">+</span>';
-    h+='<span style="color:#ff8a65;font-weight:bold;cursor:pointer" onclick="spkPhoneme(\''+d.dgIPA+'\',this)">'+d.dg+' 🔊</span>';
-    h+='</div>';
-    h+='<div style="font-size:.58em;color:#aaa">'+d.dgF+'</div>';
-    if(d.note)h+='<div style="font-size:.55em;color:#888;margin-top:1px">'+d.note+'</div>';
-    h+='<span class="speak-btn" onclick="spk(\''+d.w+'\')" style="display:inline-block;margin-top:3px;width:20px;height:20px;font-size:.45em">🔊</span></div>';
-  });
-  document.getElementById('easterDigraphCards').innerHTML=h;
-})();
+
 
 // ═══ LAB ═══
 var labData={
-  'nmbl':{label:'🔹 鼻音类 (-nd -nt -nk -mp)',blendLen:2,
-    words:[['hand','手 ✋ -nd'],['sand','沙子 🏖 -nd'],['send','发送 📨 -nd'],['pond','池塘 🪷 -nd'],['wind','风 💨 -nd'],['fund','基金 💰 -nd'],['bond','纽带 🔗 -nd'],['mend','修理 🩹 -nd'],
-      ['bent','弯曲 〰 -nt'],['tent','帐篷 ⛺ -nt'],['mint','薄荷 🌿 -nt'],['hunt','打猎 🏹 -nt'],['pant','喘气 😤 -nt'],['dent','凹痕 🕳 -nt'],['lint','棉絮 🧵 -nt'],['punt','踢 🏈 -nt'],
-      ['bank','银行 🏦 -nk'],['sink','下沉 🚰 -nk'],['pink','粉色 🩷 -nk'],['junk','垃圾 🗑 -nk'],['tank','坦克 🛢 -nk'],['honk','喇叭 📯 -nk'],['dunk','灌篮 🏀 -nk'],['link','链接 🔗 -nk'],
-      ['jump','跳 🦘 -mp'],['lamp','台灯 💡 -mp'],['damp','潮湿 💧 -mp'],['bump','撞 🛑 -mp'],['camp','露营 🏕 -mp'],['limp','跛行 🩼 -mp'],['pump','泵 ⛽ -mp'],['dump','倾倒 🗑 -mp'],['romp','嬉闹 🎉 -mp'],['hemp','麻绳 🪢 -mp']]},
-  'lbl':{label:'🔹 l-类 (-ld -lf -lk -lp -lt)',blendLen:2,
-    words:[['gold','金子 🥇 -ld'],['held','握住 🤝 -ld'],['cold','冷 🥶 -ld'],['fold','折叠 📁 -ld'],['wild','狂野 🐯 -ld'],
-      ['self','自己 🧘 -lf'],['elf','精灵 🧝 -lf'],['shelf','架子 📚 -lf'],['golf','高尔夫 ⛳ -lf'],
-      ['milk','牛奶 🥛 -lk'],['silk','丝绸 👘 -lk'],['bulk','大批 📦 -lk'],['sulk','生闷气 😒 -lk'],
-      ['help','帮助 🆘 -lp'],['yelp','尖叫 📢 -lp'],['gulp','吞咽 😋 -lp'],['pulp','果浆 🧃 -lp'],['scalp','头皮 💆 -lp'],
-      ['belt','腰带 🪢 -lt'],['melt','融化 🫠 -lt'],['kilt','苏格兰裙 🏴 -lt'],['bolt','螺栓 🔩 -lt'],['felt','毛毡 🧶 -lt'],['salt','盐 🧂 -lt'],['halt','停 🛑 -lt']]},
-  'sbl':{label:'🔹 s-类 (-sk -sp -st)',blendLen:2,
-    words:[['desk','书桌 🪑 -sk'],['mask','面具 🎭 -sk'],['risk','风险 ⚠ -sk'],['tusk','象牙 🦷 -sk'],['dusk','黄昏 🌆 -sk'],['husk','外壳 🌽 -sk'],['bask','晒太阳 ☀ -sk'],
-      ['gasp','喘气 😲 -sp'],['wasp','黄蜂 🐝 -sp'],['crisp','脆 🍟 -sp'],['lisp','咬舌 🗣 -sp'],['wisp','一缕 💨 -sp'],['hasp','搭扣 🔒 -sp'],
-      ['best','最好 🏆 -st'],['fast','快 🏃 -st'],['nest','鸟巢 🪺 -st'],['dust','灰尘 💨 -st'],['just','刚刚 ✅ -st'],['must','必须 📌 -st'],['rest','休息 😴 -st'],['lost','迷路 🗺 -st'],['fist','拳头 👊 -st'],['rust','锈 🔩 -st'],['cost','花费 💸 -st']]},
-  'tbl':{label:'🔹 塞音类 (-ft -pt -ct)',blendLen:2,
-    words:[['left','左边 ⬅ -ft'],['gift','礼物 🎁 -ft'],['soft','柔软 ☁ -ft'],['lift','抬起 🛗 -ft'],['raft','筏子 🛶 -ft'],['sift','筛 🪹 -ft'],['loft','阁楼 🏠 -ft'],
-      ['kept','保留 🔒 -pt'],['wept','哭泣 😢 -pt'],['swept','扫过 🧹 -pt'],['crept','爬行 🐢 -pt'],['apt','适合 👍 -pt'],['opt','选择 ✔ -pt'],
-      ['fact','事实 📋 -ct'],['act','行动 🎭 -ct'],['duct','管道 🔧 -ct'],['pact','协议 🤝 -ct'],['sect','派别 🏛 -ct']]},
-  'spec':{label:'🔸 特殊 (-x /ks/ -mph /mf/)',blendLen:1,
-    words:[['box','盒子 📦 -x'],['fix','修 🔧 -x'],['six','六 6️⃣ -x'],['fox','狐狸 🦊 -x'],['mix','混合 🥣 -x'],
-      ['nymph','仙女 🧚 -mph'],['lymph','淋巴 🩸 -mph']]},
-  'cccc':{label:'🔺 四连缀 (-xts -xths -mpts)',blendLen:3,
-    words:[['texts','文本 📱 -xts'],['sixths','第六 6️⃣ -xths'],['prompts','提示 💬 -mpts'],['tempts','诱惑 😈 -mpts'],['exempts','豁免 🎫 -mpts']]}
+  'cvcc':{
+    label:'🔹 词尾二连缀 (CVCC)',blendLen:2,pos:'coda',
+    subs:{
+      'nasal':{label:'鼻音类 (-nd -nt -nk -mp)',words:[
+        ['hand','手 ✋ -nd'],['sand','沙子 🏖 -nd'],['send','发送 📨 -nd'],['pond','池塘 🪷 -nd'],['wind','风 💨 -nd'],['fund','基金 💰 -nd'],['bond','纽带 🔗 -nd'],['mend','修理 🩹 -nd'],
+        ['bent','弯曲 〰 -nt'],['tent','帐篷 ⛺ -nt'],['mint','薄荷 🌿 -nt'],['hunt','打猎 🏹 -nt'],['pant','喘气 😤 -nt'],['dent','凹痕 🕳 -nt'],['lint','棉絮 🧵 -nt'],['punt','踢 🏈 -nt'],
+        ['bank','银行 🏦 -nk'],['sink','下沉 🚰 -nk'],['pink','粉色 🩷 -nk'],['junk','垃圾 🗑 -nk'],['tank','坦克 🛢 -nk'],['honk','喇叭 📯 -nk'],['dunk','灌篮 🏀 -nk'],['link','链接 🔗 -nk'],
+        ['jump','跳 🦘 -mp'],['lamp','台灯 💡 -mp'],['damp','潮湿 💧 -mp'],['bump','撞 🛑 -mp'],['camp','露营 🏕 -mp'],['limp','跛行 🩼 -mp'],['pump','泵 ⛽ -mp'],['dump','倾倒 🗑 -mp'],['romp','嬉闹 🎉 -mp'],['hemp','麻绳 🪢 -mp']]},
+      'l-end':{label:'l-类 (-ld -lf -lk -lp -lt)',words:[
+        ['held','握住 🤝 -ld'],
+        ['self','自己 🧘 -lf'],['elf','精灵 🧝 -lf'],['golf','高尔夫 ⛳ -lf'],
+        ['milk','牛奶 🥛 -lk'],['silk','丝绸 👘 -lk'],['bulk','大批 📦 -lk'],['sulk','生闷气 😒 -lk'],
+        ['help','帮助 🆘 -lp'],['yelp','尖叫 📢 -lp'],['gulp','吞咽 😋 -lp'],['pulp','果浆 🧃 -lp'],['scalp','头皮 💆 -lp'],
+        ['belt','腰带 🪢 -lt'],['melt','融化 🫠 -lt'],['kilt','苏格兰裙 🏴 -lt'],['felt','毛毡 🧶 -lt']
+      ]},
+      's-end':{label:'s-类 (-sk -sp -st)',words:[
+        ['desk','书桌 🪑 -sk'],['mask','面具 🎭 -sk'],['risk','风险 ⚠ -sk'],['tusk','象牙 🦷 -sk'],['dusk','黄昏 🌆 -sk'],['husk','外壳 🌽 -sk'],['bask','晒太阳 ☀ -sk'],
+        ['gasp','喘气 😲 -sp'],['wasp','黄蜂 🐝 -sp'],['crisp','脆 🍟 -sp'],['lisp','咬舌 🗣 -sp'],['wisp','一缕 💨 -sp'],['hasp','搭扣 🔒 -sp'],
+        ['best','最好 🏆 -st'],['fast','快 🏃 -st'],['nest','鸟巢 🪺 -st'],['dust','灰尘 💨 -st'],['just','刚刚 ✅ -st'],['must','必须 📌 -st'],['rest','休息 😴 -st'],['lost','迷路 🗺 -st'],['fist','拳头 👊 -st'],['rust','锈 🔩 -st'],['cost','花费 💸 -st']]},
+      'stop':{label:'塞音类 (-ft -pt -ct)',words:[
+        ['left','左边 ⬅ -ft'],['gift','礼物 🎁 -ft'],['soft','柔软 ☁ -ft'],['lift','抬起 🛗 -ft'],['raft','筏子 🛶 -ft'],['sift','筛 🪹 -ft'],['loft','阁楼 🏠 -ft'],
+        ['kept','保留 🔒 -pt'],['wept','哭泣 😢 -pt'],['swept','扫过 🧹 -pt'],['crept','爬行 🐢 -pt'],['apt','适合 👍 -pt'],['opt','选择 ✔ -pt'],
+        ['fact','事实 📋 -ct'],['act','行动 🎭 -ct'],['duct','管道 🔧 -ct'],['pact','协议 🤝 -ct'],['sect','派别 🏛 -ct']]},
+      'special':{label:'特殊 (-x /ks/)',blendLen:1,words:[
+        ['box','盒子 📦 -x'],['fix','修 🔧 -x'],['six','六 6️⃣ -x'],['fox','狐狸 🦊 -x'],['mix','混合 🥣 -x']]}
+    }
+  },
+  'cvccc':{
+    label:'🔺 词尾三连缀 (CVCCC)',blendLen:3,pos:'coda',
+    subs:{
+      'tricoda':{label:'三辅尾 (-xt -mpt)',words:[
+        ['text','文本 📱 CCC'],['tempt','诱惑 😈 CCC']]}
+    }
+  }
 };
-var curL='nmbl';
-function switchL(k){curL=k;buildL()}
+var curL='cvcc';
+var curSub='nasal';
+function switchL(k){curL=k;var s=labData[k].subs;curSub=s?Object.keys(s)[0]:null;buildL()}
+function switchSub(k){curSub=k;buildL()}
 function buildL(){
   var cfg=labData[curL];
+  if(!cfg){document.getElementById('labGrid').innerHTML='';return}
   var tabs='';
   Object.keys(labData).forEach(function(k){
     tabs+='<button class="lab-tab'+(k===curL?' active':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
   });
   document.getElementById('labTabs').innerHTML=tabs;
-  var bl=cfg.blendLen,vowels='aeiou';
-  document.getElementById('labGrid').innerHTML=cfg.words.map(function(w,i){
-    var word=w[0],emoji=w[1],colored='',len=word.length,endStart=len-bl;
-    // For CVCC: first char = regular C, vowel at pos 1, rest = ending blend
-    // Special: -x words: x is at position len-1 and represents 2 sounds
-    // For -mph words: m is at len-3, ph at len-2,len-1
-    var j=0;
+  var subEl=document.getElementById('labSubTabs');
+  if(cfg.subs){
+    var stabs='';
+    Object.keys(cfg.subs).forEach(function(k){
+      stabs+='<button class="lab-tab'+(k===curSub?' active':'')+'" onclick="switchSub(\''+k+'\')">'+cfg.subs[k].label+'</button>';
+    });
+    subEl.innerHTML=stabs;
+    subEl.style.display='flex';
+  }else{subEl.innerHTML='';subEl.style.display='none'}
+  var words=cfg.subs?cfg.subs[curSub].words:(cfg.words||[]);
+  var blendLen=cfg.blendLen||2,vowels='aeiou';
+  document.getElementById('labGrid').innerHTML=words.map(function(w,i){
+    var word=w[0],emoji=w[1],colored='',len=word.length,j=0;
+    var dg=['sh','th','ch','ng','ph','ck','wh'];
     while(j<len){
-      if(curL==='spec'&&word[j]==='x'){
-        colored+='<span style="color:#ef9a9a;font-weight:bold">'+word[j]+'</span>';j++;
-      }else if(curL==='spec'&&j>=len-3&&word.substring(len-3)==='mph'){
-        if(j===len-3){colored+='<span class="eb-c">'+word[j]+'</span>';j++}
-        else if(j===len-2){colored+='<span class="eb-c">ph</span>';j+=2}
-        else{j++}
-      }else if(curL==='cccc'&&j===0&&word.substring(0,2)==='pr'){
-        colored+='<span style="color:#ce93d8">pr</span>';j+=2;
+      var two=word.substring(j,j+2);
+      if(dg.indexOf(two)>=0){
+        colored+='<span style="color:#ff8a65">'+two+'</span>';j+=2;
       }else if(j===0){
-        colored+='<span class="cn-c">'+word[j]+'</span>';j++;
-      }else if(vowels.indexOf(word[j])>=0){
-        colored+='<span class="vw">'+word[j]+'</span>';j++;
+        colored+='<span style="color:#81c784">'+word[j]+'</span>';j++;
+      }else if(vowels.indexOf(word[j])>=0 || word[j]==='y'){
+        colored+='<span style="color:#4fc3f7;text-decoration:underline;text-underline-offset:4px">'+word[j]+'</span>';j++;
       }else{
-        colored+='<span class="eb-c">'+word[j]+'</span>';j++;
+        colored+='<span style="color:#ef9a9a">'+word[j]+'</span>';j++;
       }
     }
-    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="letter-spacing:3px">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
+    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'3px':word.length<=6?'2px':word.length<=7?'1px':'0px')+'">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
   }).join('');
 }
 
@@ -582,10 +488,10 @@ var sortWords=[
   {w:'hand',t:'nd'},{w:'sand',t:'nd'},{w:'pond',t:'nd'},{w:'wind',t:'nd'},{w:'fund',t:'nd'},
   {w:'jump',t:'mp'},{w:'lamp',t:'mp'},{w:'camp',t:'mp'},{w:'dump',t:'mp'},{w:'pump',t:'mp'},
   {w:'best',t:'st'},{w:'fast',t:'st'},{w:'just',t:'st'},{w:'lost',t:'st'},{w:'rest',t:'st'},{w:'cost',t:'st'},
-  {w:'belt',t:'lt'},{w:'melt',t:'lt'},{w:'felt',t:'lt'},{w:'salt',t:'lt'},
+  {w:'belt',t:'lt'},{w:'melt',t:'lt'},{w:'felt',t:'lt'},
   {w:'bank',t:'nk'},{w:'sink',t:'nk'},{w:'pink',t:'nk'},{w:'tank',t:'nk'},
   {w:'box',t:'x'},{w:'fix',t:'x'},{w:'six',t:'x'},{w:'fox',t:'x'},{w:'mix',t:'x'},
-  {w:'texts',t:'cccc'},{w:'sixths',t:'cccc'},{w:'tempts',t:'cccc'}
+  {w:'text',t:'coda3'},{w:'tempt',t:'coda3'}
 ];
 var selectedWord=null,placedCount=0;
 function buildSort(){
@@ -594,11 +500,11 @@ function buildSort(){
     h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>';
   });
   pool.innerHTML=h;
-  ['ND','MP','ST','LT','NK','X','CCCC'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  ['ND','MP','ST','LT','NK','X','CCC'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
   document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
 }
 function setupBins(){
-  ['binND','binMP','binST','binLT','binNK','binX','binCCCC'].forEach(function(id){
+  ['binND','binMP','binST','binLT','binNK','binX','binCCC'].forEach(function(id){
     var el=document.getElementById(id);
     el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};
     el.ondragleave=function(){el.classList.remove('drag-over')};
@@ -608,13 +514,14 @@ function setupBins(){
 function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
 function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
 function dropToBin(w,type,correct){
+  if(type==='ccc')type='coda3';
   if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
   var ok=type===correct;
   var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
   if(ok){
     item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';
-    document.getElementById('bin'+type.toUpperCase()+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
-    var label=type==='cccc'?'4连缀':'-'+type;
+    document.getElementById('bin'+(type==='coda3'?'CCC':type.toUpperCase())+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
+    var label=type==='coda3'?'-CCC':'-'+type;
     document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+label+'!</span>';
     placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>';
   }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听结尾的连缀？</span>'}
@@ -624,8 +531,8 @@ function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-
 function dragEnd(e){e.target.classList.remove('dragging')}
 var tl=null,tc=null;
 function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(79,195,247,.18);border:2px solid #4fc3f7;border-radius:14px;padding:6px 14px;font-weight:bold;color:#4fc3f7;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
-document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binND','binMP','binST','binLT','binNK','binX','binCCCC'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
-document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binND','binMP','binST','binLT','binNK','binX','binCCCC'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binND','binMP','binST','binLT','binNK','binX','binCCC'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binND','binMP','binST','binLT','binNK','binX','binCCC'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
 function resetSort(){buildSort()}
 
 // ═══ QUIZ ═══
@@ -634,45 +541,38 @@ function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a
 
 var quizPool=[
   {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'hand',o:['3个 (CVC)','4个 (CVCC)','5个 (CVCCC)','2个'],a:1,x:'hand = /h/+/æ/+/n/+/d/ = 4个音，CVCC ✓'},
-  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'helps',o:['3个','4个 (CVCC)','5个 (CVCCC)','6个'],a:2,x:'helps = /h/+/e/+/l/+/p/+/s/ = 5个音，CVCCC ✓'},
-  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'texts',o:['4个 (CVCC)','5个 (CVCCC)','6个 (CVCCCC)','7个'],a:2,x:'texts = /t/+/e/+/k/+/s/+/t/+/s/ = 6个音，CVCCCC ✓ x=2个音！'},
-  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'sixths',o:['4个 (CVCC)','5个 (CVCCC)','6个 (CVCCCC)','7个'],a:2,x:'sixths = /s/+/ɪ/+/k/+/s/+/θ/+/s/ = 6个音，CVCCCC ✓ x+th+s=4个音在结尾！'},
-  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'back',o:['3个 (CVC)','4个 (CVCC)','5个','2个'],a:0,x:'back = /b/+/æ/+/k/ = 3个音，CVC ✓ ck是二合音不拆分！'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'help',o:['3个 (CVC)','4个 (CVCC)','5个 (CVCCC)','2个'],a:1,x:'help = /h/+/e/+/l/+/p/ = 4个音，CVCC ✓'},
+  {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'text',o:['3个 (CVC)','4个 (CVCC)','5个 (CVCCC)','6个'],a:1,x:'text = /t/+/e/+/k/+/s/ = 4个音，CVCC ✓ x=2个音！'},
   {t:'count',q:'🔊 点击听发音，这个词有几个声音？',w:'box',o:['3个 (CVC)','4个 (CVCC)','5个','2个'],a:1,x:'box = /b/+/ɒ/+/k/+/s/ = 4个音，CVCC ✓ x包含两个声音！'},
   {t:'struct',q:'hand 是什么结构？',w:'hand',o:['CVC','CCVC','CVCC','CVCCC'],a:2,x:'h+a+n+d = CVCC，4个声音、结尾2个辅音'},
-  {t:'struct',q:'helps 是什么结构？',w:'helps',o:['CVC','CCVC','CVCC','CVCCC'],a:3,x:'h+e+l+p+s = CVCCC，5个声音、结尾3个辅音'},
-  {t:'struct',q:'texts 是什么结构？',w:'texts',o:['CVC','CVCC','CVCCC','CVCCCC'],a:3,x:'t+e+x+t+s = CVCCCC，6个声音、结尾4个辅音 /ksts/！'},
-  {t:'struct',q:'sixths 是什么结构？',w:'sixths',o:['CVC','CVCC','CVCCC','CVCCCC'],a:3,x:'s+i+x+th+s = CVCCCC，6个声音、结尾4个辅音 /ksθs/！'},
-  {t:'struct',q:'back 是什么结构？',w:'back',o:['CVC','CVCC','CCVC','CV'],a:0,x:'b+a+ck = CVC！虽然4个字母，但ck是二合音=1个音'},
+  {t:'struct',q:'help 是什么结构？',w:'help',o:['CVC','CCVC','CVCC','CVCCC'],a:2,x:'h+e+l+p = CVCC，4个声音、结尾2个辅音'},
+  {t:'struct',q:'text 是什么结构？',w:'text',o:['CVC','CVCC','CVCCC','CVCCCC'],a:1,x:'t+e+x+t = CVCC，4个声音、x=2个音/ks/'},
   {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'jump',o:['-mp','-nt','-nd','-nk'],a:0,x:'jump = ju-mp，mp 两个声音 /m/+/p/'},
-  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'desk',o:['-st','-sk','-sp','-ck'],a:1,x:'desk = de-sk，sk 两个声音 /s/+/k/（不是ck二合音！）'},
+  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'desk',o:['-st','-sk','-sp','-lt'],a:1,x:'desk = de-sk，sk 两个声音 /s/+/k/'},
   {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'gift',o:['-pt','-ft','-ct','-st'],a:1,x:'gift = gi-ft，ft 两个声音 /f/+/t/'},
-  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'texts',o:['-xts','-sts','-xt','-ts'],a:0,x:'texts = te-xts，xts = /ksts/ 四个音 /k/+/s/+/t/+/s/'},
+  {t:'listen',q:'🔊 听发音，结尾是哪个连缀？',w:'text',o:['-xt','-st','-ks','-ts'],a:0,x:'text = te-xt，结尾 xt = /kst/ 三个音 /k/+/s/+/t/'},
   {t:'spell',q:'哪个是正确的拼写？/hænd/',o:['hand','hannd','handd','hamd'],a:0,x:'/h/+/æ/+/n/+/d/ = h-a-n-d = hand'},
   {t:'spell',q:'哪个是正确的拼写？/dʒʌmp/',o:['jump','jumm','jamp','gump'],a:0,x:'/dʒ/+/ʌ/+/m/+/p/ = j-u-m-p = jump'},
   {t:'vowel',q:'hand 中间的元音是什么？',w:'hand',o:['a /æ/','a /eɪ/','e /e/','i /ɪ/'],a:0,x:'hand = h-a-nd，a 读短音 /æ/，CVCC 里元音是短的！'},
   {t:'vowel',q:'jump 中间的元音是什么？',w:'jump',o:['u /ʌ/','u /juː/','o /ɒ/','a /æ/'],a:0,x:'jump = j-u-mp，u 读短音 /ʌ/'},
-  {t:'choose',q:'下面哪个是 CVCC？',o:['cat','back','hand','helps'],a:2,x:'hand = CVCC。cat=CVC，back=CVC(二合音)，helps=CVCCC'},
-  {t:'choose',q:'下面哪个是 CVCCCC（四连缀结尾）？',o:['hand','helps','texts','box'],a:2,x:'texts = CVCCCC，结尾 /ksts/ 四个音。hand=CVCC，helps=CVCCC，box=CVCC'},
-  {t:'choose',q:'下面哪个结尾是真正的连缀（不是二合音）？',o:['back (-ck)','sing (-ng)','desk (-sk)','fish (-sh)'],a:2,x:'desk的-sk是连缀（2个音）。ck/ng/sh都是二合音（1个音）'},
+  {t:'choose',q:'下面哪个是 CVCC？',o:['cat','crab','hand','hat'],a:2,x:'hand = CVCC。cat/hat=CVC，crab=CCVC'},
   {t:'x',q:'box 只有3个字母，为什么是 CVCC？',w:'box',o:['搞错了，box是CVC','x一个字母发两个音/ks/','b不是辅音','box是CCVC'],a:1,x:'x = /k/+/s/ = 两个声音。3个字母，4个声音 → CVCC。数声音，不数字母！'},
-  {t:'compare',q:'back 和 desk 都是4个字母，为什么结构不同？',o:['一样，都是CVCC','ck是二合音=1音, sk是连缀=2音','desk更短','不确定'],a:1,x:'ck合体发/k/→CVC。sk各自发/s/+/k/→CVCC！'},
-  {t:'cccc',q:'sixths /sɪksθs/ 结尾有几个辅音？',w:'sixths',o:['2个','3个','4个','5个'],a:2,x:'sixths 结尾 /ksθs/ = /k/+/s/+/θ/+/s/ = 4个辅音！x贡献2个、th贡献1个、s贡献1个'}
 ];
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
 function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'\"></div>'}).join('')}
-function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={count:'🔊 听音数数',struct:'🏗️ 辨别结构',listen:'👂 听音辨连缀',spell:'✏️ 选正确拼写',vowel:'🔤 找中间元音',choose:'🎯 选择',compare:'⚖️ 对比',x:'🤔 x的秘密',cccc:'🔺 四连缀'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&(q.t==='count'||q.t==='listen'))h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='count'&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={count:'🔊 听音数数',struct:'🏗️ 辨别结构',listen:'👂 听音辨连缀',spell:'✏️ 选正确拼写',vowel:'🔤 找中间元音',choose:'🎯 选择',compare:'⚖️ 对比',x:'🤔 x的秘密',tricoda:'🔺 三辅尾'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&(q.t==='count'||q.t==='listen'))h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='count'&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
 function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
 function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
 function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！CVCC大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ef9a9a;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🎁🐸',t:'The Best Gift',x:'<span class="dg-hl">Kent</span> has a <span class="dg-hl">gift</span> in his <span class="dg-hl">hand</span>.<br>He runs to the <span class="dg-hl">pond</span>.<br>\\\\\\\"It is the <span class="dg-hl">best</span> day!\\\\\\\" says <span class="dg-hl">Kent</span>.'},
-  {s:'🐸📦',t:'At the Pond',x:'A frog sits on a <span class="dg-hl">desk</span> of <span class="dg-hl">sand</span>.<br>\\\\\\\"Do not <span class="dg-hl">jump</span> on my <span class="dg-hl">gift</span>!\\\\\\\"<br>The frog just <span class="dg-hl">yelps</span> and <span class="dg-hl">jumps</span>.'},
-  {s:'💡🔧🏃',t:'A Big Fix',x:'<span class="dg-hl">Kent</span> must <span class="dg-hl">fix</span> a <span class="dg-hl">lamp</span>.<br>He gets a <span class="dg-hl">belt</span> and a <span class="dg-hl">mask</span>.<br>\\\\\\\"I <span class="dg-hl">kept</span> my tools in the <span class="dg-hl">box</span>!\\\\\\\"'},
-  {s:'🥛🎉',t:'The Gift',x:'At <span class="dg-hl">last</span>, <span class="dg-hl">Kent</span> opens the <span class="dg-hl">gift</span>.<br>It is a cup of <span class="dg-hl">milk</span> and a <span class="dg-hl">gold</span> pin!<br>\\\\\\\"The <span class="dg-hl">best gift</span>!\\\\\\\" he says with a <span class="dg-hl">grin</span>.'},
+  {s:'🎁🐸',t:'The Best Gift',x:'<span class="dg-hl">Kent</span> has a <span class="dg-hl">gift</span> in his <span class="dg-hl">hand</span>.<br>He runs to the <span class="dg-hl">pond</span>.<br>“It is the <span class="dg-hl">best</span> day!”'},
+  {s:'🐸📦',t:'By the Pond',x:'A frog sits on the <span class="dg-hl">sand</span>.<br>“Do not <span class="dg-hl">jump</span> on my <span class="dg-hl">gift</span>!”<br>The frog just <span class="dg-hl">yelps</span> and <span class="dg-hl">jumps</span>.'},
+  {s:'💡🔧',t:'A Big Fix',x:'<span class="dg-hl">Kent</span> must <span class="dg-hl">fix</span> a <span class="dg-hl">lamp</span> on his <span class="dg-hl">desk</span>.<br>He puts on a <span class="dg-hl">mask</span>.<br>“I <span class="dg-hl">kept</span> my tools in the <span class="dg-hl">box</span>!”'},
+  {s:'🥛💪',t:'Hard Work',x:'He wears a <span class="dg-hl">belt</span> and works hard.<br>He stops to drink some <span class="dg-hl">milk</span>.'},
+  {s:'🎁✨',t:'The Gold Coin',x:'At last, <span class="dg-hl">Kent</span> opens the <span class="dg-hl">gift</span>.<br>It is a shiny <span class="dg-hl">gold</span> coin!<br>“The <span class="dg-hl">best</span> <span class="dg-hl">gift</span>!”'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">Kent <span class="speak-btn" onclick="spk(&#39;kent&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nt CVCC</div></div><div class="gi"><div class="gw">gift <span class="speak-btn" onclick="spk(&#39;gift&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ft CVCC</div></div><div class="gi"><div class="gw">hand <span class="speak-btn" onclick="spk(&#39;hand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd CVCC</div></div><div class="gi"><div class="gw">pond <span class="speak-btn" onclick="spk(&#39;pond&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd CVCC</div></div><div class="gi"><div class="gw">best <span class="speak-btn" onclick="spk(&#39;best&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-st CVCC</div></div><div class="gi"><div class="gw">desk <span class="speak-btn" onclick="spk(&#39;desk&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sk CVCC</div></div><div class="gi"><div class="gw">sand <span class="speak-btn" onclick="spk(&#39;sand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd CVCC</div></div><div class="gi"><div class="gw">jump <span class="speak-btn" onclick="spk(&#39;jump&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp CVCC</div></div><div class="gi"><div class="gw">yelp <span class="speak-btn" onclick="spk(&#39;yelp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-lp CVCC</div></div><div class="gi"><div class="gw">fix <span class="speak-btn" onclick="spk(&#39;fix&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-x CVCC</div></div><div class="gi"><div class="gw">lamp <span class="speak-btn" onclick="spk(&#39;lamp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp CVCC</div></div><div class="gi"><div class="gw">belt <span class="speak-btn" onclick="spk(&#39;belt&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-lt CVCC</div></div><div class="gi"><div class="gw">mask <span class="speak-btn" onclick="spk(&#39;mask&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sk CVCC</div></div><div class="gi"><div class="gw">kept <span class="speak-btn" onclick="spk(&#39;kept&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-pt CVCC</div></div><div class="gi"><div class="gw">box <span class="speak-btn" onclick="spk(&#39;box&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-x CVCC</div></div><div class="gi"><div class="gw">milk <span class="speak-btn" onclick="spk(&#39;milk&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-lk CVCC</div></div><div class="gi"><div class="gw">gold <span class="speak-btn" onclick="spk(&#39;gold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ld CVCC</div></div></div>'}
 ];
 var bp_reading=false,bp_audio=null;

@@ -289,7 +289,10 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#4fc3f7,#
 // 零机器人读音 — 全部来自 Cambridge Dictionary
 // ═══════════════════════════════════════════
 
-var AUDIO_BASE = 'audio/';
+var AUDIO_BASE='audio/';
+var spT=null;
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){return true}return false}
+speechSynthesis.onvoiceschanged=function(){loadVoices()};loadVoices();
 
 // ── Layer 1: Phonemes (Cambridge phoneme reference, 44+ UK RP) ──
 // IPA → phoneme filename. Each file is a native speaker pronouncing the isolated sound.
@@ -383,35 +386,9 @@ var WORDS = {
 
 // ── Audio Cache (preload all on page load for instant playback) ──
 var audioCache = {};
-var audioLoading = 0;
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+ files from all three layers
 
-function preloadAudio(path) {
-  var full = AUDIO_BASE + path;
-  if (audioCache[full]) return;
-  audioLoading++;
-  var a = new Audio();
-  a.preload = 'auto';
-  a.src = full;
-  a.load();
-  a.addEventListener('canplaythrough', function() {
-    audioLoading--;
-  }, {once: true});
-  a.addEventListener('error', function() {
-    audioLoading--;
-  }, {once: true});
-  audioCache[full] = a;
-}
-
-// Preload all audio files from all three layers
-(function() {
-  var seen = {};
-  // Phonemes
-  for (var k in PHONEMES) { if (!seen[PHONEMES[k]]) { seen[PHONEMES[k]] = true; preloadAudio(PHONEMES[k]); } }
-  // Letter names
-  for (var k in LETTER_NAMES) { if (!seen[LETTER_NAMES[k]]) { seen[LETTER_NAMES[k]] = true; preloadAudio(LETTER_NAMES[k]); } }
-  // Words
-  for (var k in WORDS) { if (!seen[WORDS[k]]) { seen[WORDS[k]] = true; preloadAudio(WORDS[k]); } }
-})();
 
 // ── Unified Audio Player ──
 function playAudio(path, el) {
@@ -419,14 +396,18 @@ function playAudio(path, el) {
   var full = AUDIO_BASE + path;
   var a = audioCache[full];
   if (!a) {
-    // Fallback: create on demand if not preloaded
     a = new Audio(full);
+    audioCache[full] = a;
+  }
+  if(a.error&&a.error.code===4){
+    a = new Audio(full+'?v=1');
     audioCache[full] = a;
   }
   a.currentTime = 0;
   el.classList.add('on');
-  a.onended = function(){ el.classList.remove('on'); };
-  a.onerror = function(){ el.classList.remove('on'); };
+  var done = function(){ el.classList.remove('on'); };
+  a.onended = done;
+  a.onerror = function(){ el.classList.remove('on'); speakNow(path.replace('words/','').replace('.mp3/','').replace('.mp3','')); };
   a.play().catch(function(e){ el.classList.remove('on'); });
 }
 
@@ -465,8 +446,11 @@ function spkWord(word, el) {
   var w = word.toLowerCase();
   var path = WORDS[w];
   if (path) { playAudio(path, el); return; }
-  console.log('Word not found:', w);
+  speakNow(w);
 }
+
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
+function speakNow(word){speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50)}
 
 // ── Escape helper ──
 function esc(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
