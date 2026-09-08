@@ -387,7 +387,6 @@ var WORDS = {
 // ── Audio Cache (preload all on page load for instant playback) ──
 var audioCache = {};
 function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
- files from all three layers
 
 
 // ── Unified Audio Player ──
