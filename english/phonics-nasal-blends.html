@@ -233,7 +233,7 @@ input,select,textarea{font-size:16px}
 <div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：鼻音连缀在哪？</h2><p class="sort-hint">读单词，判断鼻音连缀是词首、词尾还是三字母，拖到对应框</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
 <div class="sort-bin" id="binONSET" onclick="clickToBin('onset')"><div class="sort-bin-label" style="color:#ce93d8">🔹 词首（sm- sn-）</div><div id="binONSETItems"></div></div>
 <div class="sort-bin" id="binCODA" onclick="clickToBin('coda')"><div class="sort-bin-label" style="color:#ce93d8">🔸 词尾（-mp -nd -nt -nk）</div><div id="binCODAItems"></div></div>
-<div class="sort-bin" id="binCODA3" onclick="clickToBin('coda3')"><div class="sort-bin-label" style="color:#ef9a9a">🔺 三字母（-mpt -nct）</div><div id="binCODA3Items"></div></div>
+<div class="sort-bin" id="binCODA3" onclick="clickToBin('coda3')"><div class="sort-bin-label" style="color:#ce93d8">🔺 三字母（-mpt -nct）</div><div id="binCODA3Items"></div></div>
 </div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
 
 <div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">听音 · 辨别 · 拆解 · 定位 · 填空</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
@@ -446,7 +446,7 @@ function makeDGRefCard(label, word, letters, merged){
 })();
 (function(){
   var h='';
-  h+=makeDeconCard('-mp','jump',[{l:'j',s:'/dʒ/',c:'#81c784'},{l:'u',s:'/ʌ/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ce93d8'},{l:'p',s:'/p/',c:'#81c784'}]);
+  h+=makeDeconCard('-mp','jump',[{l:'j',s:'/dʒ/',c:'#81c784'},{l:'u',s:'/ʌ/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ce93d8'},{l:'p',s:'/p/',c:'#ce93d8'}]);
   h+=makeDeconCard('-nd','hand',[{l:'h',s:'/h/',c:'#81c784'},{l:'a',s:'/æ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ce93d8'},{l:'d',s:'/d/',c:'#ce93d8'}]);
   h+=makeDeconCard('-nt','tent',[{l:'t',s:'/t/',c:'#81c784'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'}]);
   h+=makeDeconCard('-nk','pink',[{l:'p',s:'/p/',c:'#81c784'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/ŋ/',c:'#ce93d8'},{l:'k',s:'/k/',c:'#ce93d8'}]);
@@ -454,8 +454,8 @@ function makeDGRefCard(label, word, letters, merged){
 })();
 (function(){
   var h='';
-  h+=makeDeconCard('-mpt','tempt',[{l:'t',s:'/t/',c:'#81c784'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
-  h+=makeDeconCard('-nct','instinct',[{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#81c784'},{l:'s',s:'/s/',c:'#81c784'},{l:'t',s:'/t/',c:'#81c784'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/ŋ/',c:'#ef9a9a'},{l:'c',s:'/k/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('-mpt','tempt',[{l:'t',s:'/t/',c:'#81c784'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ce93d8'},{l:'p',s:'/p/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'}]);
+  h+=makeDeconCard('-nct','instinct',[{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#81c784'},{l:'s',s:'/s/',c:'#81c784'},{l:'t',s:'/t/',c:'#81c784'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/ŋ/',c:'#ce93d8'},{l:'c',s:'/k/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'}]);
   document.getElementById('codaNasal3Demo').innerHTML=h;
 })();
 
@@ -493,7 +493,7 @@ function buildL(){
 
   var words=cfg.subs?cfg.subs[curSub].words:(cfg.words||[]);
   var vowels='aeiou',bl=cfg.blendLen,isCoda=cfg.pos==='coda';
-  var blendColor=bl>=3?'#ef9a9a':'#ce93d8';
+  var blendColor='#ce93d8';
   document.getElementById('labGrid').innerHTML=words.map(function(w,i){
     var word=w[0],emoji=w[1],sc=w[2],colored='',j=0;
     while(j<word.length){
@@ -577,15 +577,15 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'⛺🦆',t:'A Shy Duck',x:'We go to a <span class="dg-hl">camp</span> by the <span class="dg-hl">pond</span>.<br>We put up a <span class="dg-hl">tent</span>.<br>A <span class="dg-hl">pink</span> duck hides by the <span class="dg-hl">bank</span>.'},
-  {s:'🦆🎵',t:'It Wants to Sing',x:'The duck wants to <span class="dg-hl">sing</span> a <span class="dg-hl">song</span>.<br>But it is too shy to try!<br>“Come out, little duck!” I say.'},
-  {s:'✋🦆😰',t:'No Sound',x:'I hold out my <span class="dg-hl">hand</span>.<br>The duck <span class="dg-hl">jumps</span> on the <span class="dg-hl">sand</span>.<br>It opens its mouth... but no sound!'},
-  {s:'🌱🎵',t:'Plant a Song',x:'“Don’t be sad! We will <span class="dg-hl">plant</span> a <span class="dg-hl">song</span>!”<br>“<span class="dg-hl">Sing</span> with me: la, la, la!”<br>We <span class="dg-hl">sing</span> and sing.'},
-  {s:'🌟🦆🎵',t:'The Pond Song',x:'The duck <span class="dg-hl">sings</span> loud and clear!<br>The whole <span class="dg-hl">camp</span> <span class="dg-hl">sings</span> by the <span class="dg-hl">pond</span>.<br>What a happy <span class="dg-hl">song</span>, under the stars!'},
-
-
-
-  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">camp <span class="speak-btn" onclick="spk(&#39;camp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp 词尾</div><div class="gz">营地 ⛺</div></div><div class="gi"><div class="gw">tent <span class="speak-btn" onclick="spk(&#39;tent&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nt 词尾</div><div class="gz">帐篷 ⛺</div></div><div class="gi"><div class="gw">hand <span class="speak-btn" onclick="spk(&#39;hand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd 词尾</div><div class="gz">手 ✋</div></div><div class="gi"><div class="gw">plant <span class="speak-btn" onclick="spk(&#39;plant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nt 词尾</div><div class="gz">植物 🌱</div></div><div class="gi"><div class="gw">pond <span class="speak-btn" onclick="spk(&#39;pond&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd 词尾</div><div class="gz">池塘 🏞</div></div><div class="gi"><div class="gw">sand <span class="speak-btn" onclick="spk(&#39;sand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd 词尾</div><div class="gz">沙 🏖</div></div><div class="gi"><div class="gw">jump <span class="speak-btn" onclick="spk(&#39;jump&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp 词尾</div><div class="gz">跳 🦘</div></div><div class="gi"><div class="gw">pink <span class="speak-btn" onclick="spk(&#39;pink&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nk 词尾</div><div class="gz">粉色 🌸</div></div><div class="gi"><div class="gw">bank <span class="speak-btn" onclick="spk(&#39;bank&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nk 词尾</div><div class="gz">银行 🏦</div></div><div class="gi"><div class="gw">sing <span class="speak-btn" onclick="spk(&#39;sing&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ng 词尾</div><div class="gz">唱 🎤</div></div><div class="gi"><div class="gw">song <span class="speak-btn" onclick="spk(&#39;song&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ng 词尾</div><div class="gz">歌 🎵</div></div></div>'}
+  {s:'🦆🎵',t:'A Wish to Sing',x:'A <span class="dg-hl">pink</span> duck lives by the <span class="dg-hl">bank</span>.<br>It has a big wish: it wants to <span class="dg-hl">sing</span> a <span class="dg-hl">song</span>.'},
+  {s:'🦆😔',t:'Too Shy',x:'But it is too shy.<br>It hides and hides.<br>No <span class="dg-hl">song</span> comes out.'},
+  {s:'⛺🏕️',t:'A Camp by the Pond',x:'A child sets up a <span class="dg-hl">camp</span> by the <span class="dg-hl">pond</span>.<br>A <span class="dg-hl">tent</span> goes up, up, up.'},
+  {s:'✋🦆',t:'A Little Friend',x:'The child holds out a <span class="dg-hl">hand</span>.<br>The duck <span class="dg-hl">jumps</span> on the soft <span class="dg-hl">sand</span>.'},
+  {s:'🦆😶',t:'No Sound',x:'The duck is <span class="dg-hl">tempted</span> to sing.<br>It opens its mouth... but no sound! It is so sad.'},
+  {s:'🌱🎵',t:'Plant a Song',x:'“Do not be sad,” says the child.<br>“We will <span class="dg-hl">plant</span> a <span class="dg-hl">song</span> and make it grow!”'},
+  {s:'🦆💡',t:'Try Again',x:'The duck’s <span class="dg-hl">instinct</span> says, “Try! Try!”<br>It takes a big breath.'},
+  {s:'🎵😊',t:'Sing Loud!',x:'The duck <span class="dg-hl">sings</span> loud and clear!<br>The whole <span class="dg-hl">camp</span> <span class="dg-hl">sings</span> along. What a happy <span class="dg-hl">song</span>!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">pink <span class="speak-btn" onclick="spk(&#39;pink&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nk 词尾</div><div class="gz">粉色 🌸</div></div><div class="gi"><div class="gw">bank <span class="speak-btn" onclick="spk(&#39;bank&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nk 词尾</div><div class="gz">银行 🏦</div></div><div class="gi"><div class="gw">camp <span class="speak-btn" onclick="spk(&#39;camp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp 词尾</div><div class="gz">营地 ⛺</div></div><div class="gi"><div class="gw">pond <span class="speak-btn" onclick="spk(&#39;pond&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd 词尾</div><div class="gz">池塘 🏞</div></div><div class="gi"><div class="gw">tent <span class="speak-btn" onclick="spk(&#39;tent&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nt 词尾</div><div class="gz">帐篷 ⛺</div></div><div class="gi"><div class="gw">hand <span class="speak-btn" onclick="spk(&#39;hand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd 词尾</div><div class="gz">手 ✋</div></div><div class="gi"><div class="gw">jump <span class="speak-btn" onclick="spk(&#39;jump&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mp 词尾</div><div class="gz">跳 🦘</div></div><div class="gi"><div class="gw">sand <span class="speak-btn" onclick="spk(&#39;sand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nd 词尾</div><div class="gz">沙 🏖</div></div><div class="gi"><div class="gw">plant <span class="speak-btn" onclick="spk(&#39;plant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nt 词尾</div><div class="gz">植物 🌱</div></div><div class="gi"><div class="gw">tempt <span class="speak-btn" onclick="spk(&#39;tempt&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-mpt 词尾</div><div class="gz">诱惑 🍬</div></div><div class="gi"><div class="gw">instinct <span class="speak-btn" onclick="spk(&#39;instinct&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-nct 词尾</div><div class="gz">本能 🧠</div></div></div>'},
 ];
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
@@ -595,7 +595,7 @@ function playBookAudio(accent){
   bp_reading=true;
   document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
   document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
-  bp_audio=new Audio(AUDIO_BASE+'book/05d-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio=new Audio(AUDIO_BASE+'book/08-page'+(bp_cp+1)+'-'+accent+'.mp3');
   bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
   bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
   bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
