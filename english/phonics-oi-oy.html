@@ -500,14 +500,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'👦🪙',t:'A Coin',x:'A <span class="dg-hl">boy</span> finds a <span class="dg-hl">coin</span> in the <span class="dg-hl">soil</span>.'},
-  {s:'👦😊',t:'A Toy',x:'The <span class="dg-hl">boy</span> wants a <span class="dg-hl">toy</span>.<br>He has a <span class="dg-hl">coin</span>!'},
-  {s:'👦🛒',t:'Buy a Toy',x:'He will buy a <span class="dg-hl">toy</span> with the <span class="dg-hl">coin</span>.'},
-  {s:'👦😔',t:'A Choice',x:'What <span class="dg-hl">toy</span> to pick?<br>What a <span class="dg-hl">choice</span>!'},
-  {s:'👦😊',t:'Join',x:'A pal <span class="dg-hl">joins</span> the <span class="dg-hl">boy</span>.<br>They pick a <span class="dg-hl">toy</span>.'},
-  {s:'😊🧸',t:'Joy',x:'The <span class="dg-hl">boy</span> is full of <span class="dg-hl">joy</span>!<br>What a good <span class="dg-hl">coin</span>!'},
+  {s:'👦🪙',t:'A Coin',x:'A <span class="dg-hl">boy</span> digs in the <span class="dg-hl">soil</span>.<br>He finds a shiny <span class="dg-hl">coin</span>!<br>“What a lucky day!” he grins.'},
+  {s:'👦🧸',t:'A Toy',x:'The <span class="dg-hl">boy</span> wants a new <span class="dg-hl">toy</span>.<br>Now he has a <span class="dg-hl">coin</span> to spend.<br>He runs to the <span class="dg-hl">toy</span> shop.'},
+  {s:'👦😔',t:'A Choice',x:'What <span class="dg-hl">toy</span> to pick?<br>There are so many!<br>What a hard <span class="dg-hl">choice</span>!'},
+  {s:'👦🤝',t:'A Pal Joins',x:'A pal <span class="dg-hl">joins</span> the <span class="dg-hl">boy</span>.<br>“Let me help you pick,” she says.<br>They look at every <span class="dg-hl">toy</span>.'},
+  {s:'🚗😊',t:'The Pick',x:'They pick a small red <span class="dg-hl">toy</span> car.<br>The <span class="dg-hl">boy</span> pays with his <span class="dg-hl">coin</span>.<br>The car is his now!'},
+  {s:'😊🧸',t:'Joy',x:'The <span class="dg-hl">boy</span> is full of <span class="dg-hl">joy</span>.<br>He rolls the <span class="dg-hl">toy</span> car fast.<br>Zoom, zoom, zoom!'},
+  {s:'👧😔',t:'Share',x:'The pal looks a little sad.<br>She has no <span class="dg-hl">toy</span> of her own.<br>The <span class="dg-hl">boy</span> has an idea.'},
+  {s:'😊🤝',t:'A Good Choice',x:'“Let us <span class="dg-hl">join</span> and share!” he says.<br>They play with the <span class="dg-hl">toy</span> together.<br>What a good <span class="dg-hl">choice</span>!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">boy <span class="speak-btn" onclick="spk(&#39;boy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oy /ɔɪ/</div><div class="gz">男孩 👦</div></div><div class="gi"><div class="gw">coin <span class="speak-btn" onclick="spk(&#39;coin&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oi /ɔɪ/</div><div class="gz">硬币 🪙</div></div><div class="gi"><div class="gw">soil <span class="speak-btn" onclick="spk(&#39;soil&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oi /ɔɪ/</div><div class="gz">土壤 🌱</div></div><div class="gi"><div class="gw">toy <span class="speak-btn" onclick="spk(&#39;toy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oy /ɔɪ/</div><div class="gz">玩具 🧸</div></div><div class="gi"><div class="gw">choice <span class="speak-btn" onclick="spk(&#39;choice&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oi /ɔɪ/</div><div class="gz">选择 ✅</div></div><div class="gi"><div class="gw">join <span class="speak-btn" onclick="spk(&#39;join&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oi /ɔɪ/</div><div class="gz">加入 🤝</div></div><div class="gi"><div class="gw">joy <span class="speak-btn" onclick="spk(&#39;joy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oy /ɔɪ/</div><div class="gz">快乐 😊</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

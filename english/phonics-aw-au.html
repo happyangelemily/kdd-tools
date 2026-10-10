@@ -570,14 +570,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🐾☀️',t:'August',x:'It is <span class="dg-hl">August</span>.<br>A cat sits with a sad <span class="dg-hl">paw</span>.'},
-  {s:'👧😊',t:'Draw',x:'A kid sees the cat.<br>“Let us <span class="dg-hl">draw</span>!” she says.'},
-  {s:'🪚😊',t:'A Saw',x:'The kid <span class="dg-hl">draws</span> a <span class="dg-hl">saw</span>.<br>“A <span class="dg-hl">saw</span> can fix it!”'},
-  {s:'👧🐾',t:'The Paw',x:'The kid looks at the <span class="dg-hl">paw</span>.<br>“It will be fine,” she says.'},
-  {s:'🐾😊',t:'Glad',x:'The cat is glad <span class="dg-hl">because</span> its <span class="dg-hl">paw</span> is fine.'},
-  {s:'😊🪚',t:'A Good Day',x:'The cat can <span class="dg-hl">draw</span> and <span class="dg-hl">saw</span> all day.<br>What a good day!'},
+  {s:'🐾☀️',t:'August',x:'It is <span class="dg-hl">August</span>.<br>The sun is hot and bright.<br>A cat sits with a sad <span class="dg-hl">paw</span>.'},
+  {s:'🐾😔',t:'The Paw',x:'The cat’s <span class="dg-hl">paw</span> hurts.<br>It can not walk far.<br>It mews a sad little mew.'},
+  {s:'👧😊',t:'A Kid',x:'A kid sees the cat.<br>“What is wrong?” she asks.<br>“Let me look at your <span class="dg-hl">paw</span>.”'},
+  {s:'👧✍️',t:'Draw',x:'“Let us <span class="dg-hl">draw</span> while you rest,” she says.<br>She gets out paper and pens.<br>They <span class="dg-hl">draw</span> a sunny day.'},
+  {s:'🪚😊',t:'A Saw',x:'The kid <span class="dg-hl">draws</span> a big <span class="dg-hl">saw</span>.<br>“A <span class="dg-hl">saw</span> can fix things!” she jokes.<br>The cat purrs and smiles.'},
+  {s:'🐾😊',t:'The Paw Is Fine',x:'The kid checks the <span class="dg-hl">paw</span> again.<br>“It will be fine,” she says.<br>The cat wags its tail.'},
+  {s:'🐾❤️',t:'Because',x:'The cat is glad, <span class="dg-hl">because</span> its <span class="dg-hl">paw</span> is better.<br>It rubs the kid’s leg.<br>It does not hurt now.'},
+  {s:'😊🐾',t:'A Good Day',x:'The cat can <span class="dg-hl">draw</span> and play all day.<br>It bats the paper with its <span class="dg-hl">paw</span>.<br>What a good <span class="dg-hl">August</span> day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">August <span class="speak-btn" onclick="spk(&#39;august&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">au /ɔː/</div><div class="gz">八月 🗓️</div></div><div class="gi"><div class="gw">paw <span class="speak-btn" onclick="spk(&#39;paw&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">aw /ɔː/</div><div class="gz">爪子 🐾</div></div><div class="gi"><div class="gw">draw <span class="speak-btn" onclick="spk(&#39;draw&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">aw /ɔː/</div><div class="gz">画画 ✍️</div></div><div class="gi"><div class="gw">saw <span class="speak-btn" onclick="spk(&#39;saw&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">aw /ɔː/</div><div class="gz">锯子 🪚</div></div><div class="gi"><div class="gw">because <span class="speak-btn" onclick="spk(&#39;because&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">au /ɔː/</div><div class="gz">因为 🤔</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

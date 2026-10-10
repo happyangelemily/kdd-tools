@@ -539,14 +539,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🐮📢',t:'A Loud Cow',x:'A cow is by a <span class="dg-hl">house</span>.<br>It is so <span class="dg-hl">loud</span>!'},
-  {s:'🐮😊',t:'Moo!',x:'The cow says “Moo!”<br>It is <span class="dg-hl">proud</span> of its <span class="dg-hl">sound</span>.'},
-  {s:'🐭😱',t:'A Mouse',x:'A <span class="dg-hl">mouse</span> in the <span class="dg-hl">house</span> hears the <span class="dg-hl">loud</span> cow.'},
-  {s:'🐭😊',t:'Out',x:'The <span class="dg-hl">mouse</span> runs <span class="dg-hl">out</span>.<br>It sees the cow.'},
-  {s:'🐮🐭',t:'Down',x:'The cow looks <span class="dg-hl">down</span> at the <span class="dg-hl">mouse</span>.<br>“Come up!”'},
-  {s:'😊🐮',t:'Proud',x:'The <span class="dg-hl">mouse</span> and cow are pals.<br>They <span class="dg-hl">shout</span> and <span class="dg-hl">shout</span>!'},
+  {s:'🐮📢',t:'A Loud Cow',x:'A cow lives by a red <span class="dg-hl">house</span>.<br>It is so <span class="dg-hl">loud</span>!<br>Its <span class="dg-hl">sound</span> shakes the walls.'},
+  {s:'🐮😊',t:'Moo!',x:'The cow says “Moo!” all day.<br>It is <span class="dg-hl">proud</span> of its big <span class="dg-hl">sound</span>.<br>The whole town can hear it.'},
+  {s:'🐭😱',t:'A Mouse',x:'A little <span class="dg-hl">mouse</span> in the <span class="dg-hl">house</span> can not sleep.<br>The <span class="dg-hl">loud</span> <span class="dg-hl">sound</span> keeps it up.<br>It covers its tiny ears.'},
+  {s:'🐭😊',t:'Out',x:'The <span class="dg-hl">mouse</span> runs <span class="dg-hl">out</span> of the <span class="dg-hl">house</span>.<br>“Please be quiet!” it squeaks.<br>But the cow can not hear it.'},
+  {s:'🐮🐭',t:'Down',x:'The cow looks <span class="dg-hl">down</span> at the <span class="dg-hl">mouse</span>.<br>“Did you say something?” it asks.<br>“I can not hear over my own <span class="dg-hl">sound</span>!”'},
+  {s:'🐭🗣',t:'Shout',x:'The <span class="dg-hl">mouse</span> takes a deep breath.<br>It <span class="dg-hl">shouts</span> as <span class="dg-hl">loud</span> as it can.<br>“BE QUIET, PLEASE!”'},
+  {s:'🐮😊',t:'Proud',x:'The cow stops at once.<br>“I am <span class="dg-hl">proud</span> of my <span class="dg-hl">sound</span>,” it says.<br>“But I will be quiet for you.”'},
+  {s:'😊🐭',t:'Glad',x:'The <span class="dg-hl">house</span> is quiet now.<br>The <span class="dg-hl">mouse</span> sleeps <span class="dg-hl">down</span> in its bed.<br>What a good, calm day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">loud <span class="speak-btn" onclick="spk(&#39;loud&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">大声 📢</div></div><div class="gi"><div class="gw">house <span class="speak-btn" onclick="spk(&#39;house&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">房子 🏠</div></div><div class="gi"><div class="gw">proud <span class="speak-btn" onclick="spk(&#39;proud&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">自豪 😎</div></div><div class="gi"><div class="gw">sound <span class="speak-btn" onclick="spk(&#39;sound&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">声音 🔊</div></div><div class="gi"><div class="gw">mouse <span class="speak-btn" onclick="spk(&#39;mouse&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">老鼠 🐭</div></div><div class="gi"><div class="gw">out <span class="speak-btn" onclick="spk(&#39;out&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">出 🚪</div></div><div class="gi"><div class="gw">down <span class="speak-btn" onclick="spk(&#39;down&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow /aʊ/</div><div class="gz">向下 ⬇️</div></div><div class="gi"><div class="gw">shout <span class="speak-btn" onclick="spk(&#39;shout&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou /aʊ/</div><div class="gz">喊 🗣</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
