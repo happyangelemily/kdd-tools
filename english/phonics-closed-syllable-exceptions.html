@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>闭音节例外 | 自然拼读</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #ffd200)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.sort-spk{width:22px!important;height:22px!important;font-size:.6em!important}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.u-v{color:#ff8a65;font-weight:bold}.se-c{color:#888}.cn-c{color:#81c784}.vw{color:#ff8a65;text-decoration:underline;text-underline-offset:4px}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+.word-wall{display:flex;flex-direction:column;gap:5px;margin:10px 0}
+.word-row{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;justify-content:center}
+.word-tag{font-size:.72em;color:#ff8a65;min-width:46px;text-align:right;line-height:2.4;font-weight:bold;flex-shrink:0}
+.word-chips{display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:0;justify-content:flex-start}
+
+/* Lab */
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(255,210,0,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px;overflow-wrap:break-word;word-break:break-word}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ffd200}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ffd200;color:#ffd200;background:rgba(255,210,0,.1)}
+
+/* Sort */
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(255,210,0,.08);border:1px solid rgba(255,210,0,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ff8a65!important;box-shadow:0 0 12px rgba(255,138,101,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+
+/* Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ff8a65;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}.gi .gz{font-size:.68em;color:#888;margin-top:2px}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.72em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;border-radius:50%;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lab-card{width:auto;min-width:0;padding:12px 6px;border-radius:12px;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+  .lab-card .word{font-size:1.2em!important}
+  .lab-card .hint{font-size:.68em}
+  .lab-tabs{gap:3px;margin-bottom:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .lab-tab{padding:9px 6px;font-size:.7em;border-radius:14px;min-height:40px;white-space:nowrap;flex-shrink:0}
+  .sort-hint{font-size:.75em;margin-bottom:6px}
+  .sort-pool{gap:5px;margin-bottom:8px;min-height:38px}
+  .sort-item{padding:9px 10px;font-size:.8em;border-radius:12px;min-height:44px;display:inline-flex;align-items:center}
+  .sort-spk{width:36px!important;height:36px!important;font-size:.7em!important}
+  .sort-bins{gap:5px}
+  .sort-bin{min-width:0;min-height:80px;padding:4px;border-radius:10px}
+  .sort-bin-label{font-size:.72em;margin-bottom:3px}
+  .sort-feedback{font-size:.82em;min-height:20px}
+  .sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important;box-shadow:0 0 14px rgba(255,210,0,.3)}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+  .quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .lab-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding:0 2px}
+  .lab-tab{flex-shrink:0;font-size:.68em;padding:7px 8px}
+  .sort-bins{flex-direction:column}
+  .sort-bin{min-height:60px;width:100%}
+  .sort-bin-label{font-size:.78em;text-align:left;padding-left:6px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+input,select,textarea{font-size:16px}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔒 闭音节例外 · Closed-Syllable Exceptions</h1><p class="subtitle">时间胶囊里的「化石词」——发音被时间冻结的古老单词！</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
+
+<!-- ===== STORY ===== -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 时间胶囊里的「化石词」</h2>
+<div class="story-speech"><p>英语博物馆的墙角，藏着一排<b style="color:#ffd200">时间胶囊</b>——里面冻着几百年前的单词，发音几百年没变。这些「化石词」长得像闭音节（该读短音），打开胶囊一听，元音读的却是<b style="color:#ff8a65">字母自己的名字</b>！科学家叫它们<b style="color:#ffd200">闭音节例外</b>。记住：<b>见到化石词，读出字母的名字！</b></p></div>
+
+<div class="story-speech"><p>🧠 这些长音你早会啦——<b style="color:#ff8a65">find</b> 的 i 读 /aɪ/（跟 b<b>i</b>ke 一样），<b style="color:#ff8a65">gold</b> 的 o 读 /əʊ/（跟 r<b>o</b>pe 一样），只是把古老的声音「冻」进了拼写。</p></div>
+
+<h3>🦁 第一枚化石：i 喊自己的名字 /aɪ/（「爱」）</h3>
+<div class="story-speech"><p>闭音节里 i 本该读 /ɪ/（p<b>i</b>g），但这几枚化石的 i 还冻着<b style="color:#ff8a65">字母 i 的名字 /aɪ/</b>——藏在 <b style="color:#ffd200">-ild / -ind</b> 结尾里：</p></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0" id="iCards"></div>
+
+<h3>👴 第二枚化石：o 喊自己的名字 /əʊ/</h3>
+<div class="story-speech"><p>闭音节里 o 本该读 /ɒ/（d<b>o</b>g），但这几枚化石的 o 还冻着<b style="color:#ff8a65">字母 o 的名字 /əʊ/</b>——藏在 <b style="color:#ffd200">-old / -olt / -ost / -oll</b> 结尾里：</p></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0" id="oCards"></div>
+
+<h3>🧂 第三枚化石：a 喊 /ɔː/ 或 /ɑː/（嘴巴张圆）</h3>
+<div class="story-speech"><p>闭音节里 a 本该读 /æ/（c<b>a</b>t），但这几枚化石的 a 冻成了 <b style="color:#ff8a65">/ɔː/</b> 或 <b style="color:#ff8a65">/ɑː/</b>——藏在 <b style="color:#ffd200">-alt / -ald / -alk / -alm</b> 结尾里（-alk / -alm 的 l 还不发声）：</p></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0" id="aCards"></div>
+
+<h3>📥 第四枚化石：u 收小嘴读 /ʊ/</h3>
+<div class="story-speech"><p>闭音节里 u 本该读 /ʌ/（c<b>u</b>t），但这几枚化石的 u 冻成了<b style="color:#ff8a65">收小嘴的 /ʊ/</b>：</p></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0" id="uCards"></div>
+
+<div class="magic-rule">🎯 <b>化石词口诀：</b>长得像闭音节，声音却是古老的——<b style="color:#ffd200">见到就喊字母的名字</b>，别按短音拼！</div>
+
+<h3>🔍 字母配色说明</h3>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<span style="color:#81c784;font-weight:bold;font-size:1.1em">🟢 辅音</span>
+<span style="color:#ff8a65;font-weight:bold;font-size:1.1em">🟠 长元音（字母喊名字！）</span>
+<span style="color:#888;font-weight:bold;font-size:1.1em">⚪ 不出声的 l</span>
+</div>
+</div></div>
+
+<!-- ===== LAB ===== -->
+<div class="section" id="sec-lab"><div class="glass"><h2>🧪 化石挖掘实验室</h2><p style="color:#aaa;margin-bottom:8px">点开时间胶囊，听化石词的古老发音！橙色 = 喊名字的元音</p>
+<div class="lab-tabs" id="labTabs"></div>
+<div class="word-wall" id="labGrid"></div></div></div>
+
+<!-- ===== SORT ===== -->
+<div class="section" id="sec-sort"><div class="glass">
+<h2>🎯 分拣：把化石送回时间胶囊</h2>
+<p class="sort-hint">读单词，听出元音喊哪个名字，拖进对应的胶囊</p>
+<div class="sort-pool" id="sortPool"></div>
+<div class="sort-bins">
+<div class="sort-bin" id="binAI" onclick="clickToBin('ai')"><div class="sort-bin-label" style="color:#ffd200">🦁 i → /aɪ/</div><div id="binAIItems"></div></div>
+<div class="sort-bin" id="binOU" onclick="clickToBin('ou')"><div class="sort-bin-label" style="color:#ffd200">👴 o → /əʊ/</div><div id="binOUItems"></div></div>
+<div class="sort-bin" id="binOR" onclick="clickToBin('or')"><div class="sort-bin-label" style="color:#ffd200">🧂 a → /ɔː/ /ɑː/</div><div id="binORItems"></div></div>
+<div class="sort-bin" id="binU" onclick="clickToBin('u')"><div class="sort-bin-label" style="color:#ffd200">📥 u → /ʊ/</div><div id="binUItems"></div></div>
+</div>
+<div class="sort-feedback" id="sortFeedback"></div>
+<div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div>
+</div></div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">听音 · 辨长音 · 找化石</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- ===== BOOK ===== -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 The Kind Old Man</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本化石词绘本 🧓🏆</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+<!-- ===== EASTER EGG ===== -->
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：胶囊里混进了「假化石」！</h2>
+<div class="story-speech"><p>打开时间胶囊一看，里面居然还混进了几枚<b style="color:#ff5252">「假化石」</b>——明明长着化石的样子，元音却偏偏读回短音！见一个记一个：</p></div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,82,82,.06);border:2px solid rgba(255,82,82,.3);border-radius:14px;padding:16px 20px;text-align:center;min-width:130px">
+<div style="font-size:1.6em;font-weight:bold;color:#ff5252;letter-spacing:3px">doll</div>
+<div style="color:#ff5252;font-size:1em;margin:4px 0">/dɒl/ 🪆 洋娃娃</div>
+<span class="speak-btn" onclick="spk('doll')" style="display:inline-block;margin-top:8px;width:40px;height:40px;font-size:1em">🔊</span>
+</div>
+<div style="background:rgba(255,82,82,.06);border:2px solid rgba(255,82,82,.3);border-radius:14px;padding:16px 20px;text-align:center;min-width:130px">
+<div style="font-size:1.6em;font-weight:bold;color:#ff5252;letter-spacing:3px">pal</div>
+<div style="color:#ff5252;font-size:1em;margin:4px 0">/pæl/ 👫 朋友</div>
+<span class="speak-btn" onclick="spk('pal')" style="display:inline-block;margin-top:8px;width:40px;height:40px;font-size:1em">🔊</span>
+</div>
+</div>
+<div class="story-speech"><p>🧠 <b style="color:#ffd200">为什么？</b>doll 也是 -oll 结尾，却不读 /əʊ/ 而读 /ɒ/；pal 也是 a+l，却不读 /ɔː/ 而读 /æ/。这就是英语的脾气——<b>规律能帮我们认出大多数化石，但永远有个别「假化石」要单独记</b>。别怕，见一个、记一个就好！</p></div>
+</div></div>
+
+</div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// ═══ CAMBRIDGE AUDIO SYSTEM ═══
+var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+var PHONEMES={
+  '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
+  '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
+  '/ɒ/':'phonemes/sock.mp3','/uː/':'phonemes/blue.mp3','/ʊ/':'phonemes/foot.mp3',
+  '/e/':'phonemes/head.mp3','/ɜː/':'phonemes/bird.mp3','/ə/':'phonemes/above.mp3',
+  '/eɪ/':'phonemes/day_ei.mp3','/aɪ/':'phonemes/eye.mp3','/ɔɪ/':'phonemes/boy.mp3',
+  '/əʊ/':'phonemes/nose.mp3','/aʊ/':'phonemes/mouth.mp3','/ɪə/':'phonemes/ear.mp3',
+  '/eə/':'phonemes/hair.mp3','/ʊə/':'phonemes/pure.mp3',
+  '/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3',
+  '/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3',
+  '/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3',
+  '/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3',
+  '/ʃ/':'phonemes/she.mp3','/ʒ/':'phonemes/vision.mp3','/h/':'phonemes/hand.mp3',
+  '/tʃ/':'phonemes/cheese.mp3','/dʒ/':'phonemes/jump.mp3',
+  '/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/ŋ/':'phonemes/sing.mp3',
+  '/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/w/':'phonemes/we.mp3',
+  '/j/':'phonemes/yes.mp3',
+  '/i/':'phonemes/happy.mp3','/u/':'phonemes/situation.mp3',
+  '/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'
+};
+var WORDS={
+  'wild':'words/wild.mp3','child':'words/child.mp3','mild':'words/mild.mp3','find':'words/find.mp3','mind':'words/mind.mp3','kind':'words/kind.mp3','blind':'words/blind.mp3','grind':'words/grind.mp3',
+  'old':'words/old.mp3','cold':'words/cold.mp3','gold':'words/gold.mp3','fold':'words/fold.mp3','hold':'words/hold.mp3','told':'words/told.mp3','sold':'words/sold.mp3','bold':'words/bold.mp3','bolt':'words/bolt.mp3','colt':'words/colt.mp3','most':'words/most.mp3','post':'words/post.mp3','ghost':'words/ghost.mp3','host':'words/host.mp3','roll':'words/roll.mp3','toll':'words/toll.mp3',
+  'salt':'words/salt.mp3','halt':'words/halt.mp3','bald':'words/bald.mp3','scald':'words/scald.mp3','walk':'words/walk.mp3','talk':'words/talk.mp3','chalk':'words/chalk.mp3','calm':'words/calm.mp3','palm':'words/palm.mp3',
+  'put':'words/put.mp3','pull':'words/pull.mp3','push':'words/push.mp3','full':'words/full.mp3','bush':'words/bush.mp3',
+  'doll':'words/doll.mp3','pal':'words/pal.mp3',
+  'bike':'words/bike.mp3','night':'words/night.mp3','rope':'words/rope.mp3','boat':'words/boat.mp3','pig':'words/pig.mp3','dog':'words/dog.mp3','cat':'words/cat.mp3','cut':'words/cut.mp3',
+  'saw':'words/saw.mp3','moon':'words/moon.mp3','blue':'words/blue.mp3','zoo':'words/zoo.mp3','you':'words/you.mp3'
+};
+
+
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){var w=path.replace('words/','').replace('.mp3','');speakNow(w);return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');var w2=path.replace('words/','').replace('.mp3','');speakNow(w2)},{once:true});player.play().catch(function(e){el.classList.remove('on');var w3=path.replace('words/','').replace('.mp3','');speakNow(w3)});}
+function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
+function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=getAudio(p);if(!player||(player.error&&player.error.code===4)){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
+function speakNow(word){
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
+  var voices=speechSynthesis.getVoices();
+  var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
+    voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||
+    voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50);
+}
+
+// === Navigation ===
+var NM={story:'故事',lab:'实验室',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='lab')buildL();
+  if(n==='sort')buildSort();
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ STORY: Deconstruction Cards ═══
+function makeDeconCard(cat, word, letters){
+  var h='<div style="background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0;min-width:0">';
+  h+='<span style="font-size:.7em;color:#888;white-space:nowrap;min-width:50px">'+cat+'</span>';
+  h+='<span style="display:inline-flex;align-items:center;gap:1px;flex-wrap:wrap">';
+  letters.forEach(function(l,i){
+    if(i>0)h+='<span style="color:#444;font-size:.75em;margin:0 3px">+</span>';
+    h+='<span style="display:inline-flex;flex-direction:column;align-items:center;cursor:pointer;padding:1px 2px" onclick="spkPhoneme(\''+l.s+'\',this)">';
+    h+='<span style="color:'+l.c+';font-size:1.2em;font-weight:bold;line-height:1.2">'+l.l+'</span>';
+    h+='<span style="font-size:.62em;color:#888;line-height:1.2">'+l.s+' 🔊</span>';
+    h+='</span>';
+  });
+  h+='</span>';
+  h+='<span style="color:#666;font-size:.85em;margin:0 4px">→</span>';
+  h+='<span style="font-size:1.15em;font-weight:bold;color:#ffd200;letter-spacing:2px">'+word+'</span>';
+  h+='<span class="speak-btn" onclick="spk(\''+word+'\')" style="width:24px;height:24px;font-size:.65em;flex-shrink:0">🔊</span>';
+  h+='</div>';
+  return h;
+}
+(function(){
+  var h='';
+  h+=makeDeconCard('-ild','wild',[{l:'w',s:'/w/',c:'#81c784'},{l:'i',s:'/aɪ/',c:'#ff8a65'},{l:'l',s:'/l/',c:'#81c784'},{l:'d',s:'/d/',c:'#81c784'}]);
+  h+=makeDeconCard('-ind','find',[{l:'f',s:'/f/',c:'#81c784'},{l:'i',s:'/aɪ/',c:'#ff8a65'},{l:'n',s:'/n/',c:'#81c784'},{l:'d',s:'/d/',c:'#81c784'}]);
+  document.getElementById('iCards').innerHTML=h;
+})();
+(function(){
+  var h='';
+  h+=makeDeconCard('-old','gold',[{l:'g',s:'/g/',c:'#81c784'},{l:'o',s:'/əʊ/',c:'#ff8a65'},{l:'l',s:'/l/',c:'#81c784'},{l:'d',s:'/d/',c:'#81c784'}]);
+  h+=makeDeconCard('-olt','bolt',[{l:'b',s:'/b/',c:'#81c784'},{l:'o',s:'/əʊ/',c:'#ff8a65'},{l:'l',s:'/l/',c:'#81c784'},{l:'t',s:'/t/',c:'#81c784'}]);
+  h+=makeDeconCard('-ost','most',[{l:'m',s:'/m/',c:'#81c784'},{l:'o',s:'/əʊ/',c:'#ff8a65'},{l:'s',s:'/s/',c:'#81c784'},{l:'t',s:'/t/',c:'#81c784'}]);
+  h+=makeDeconCard('-oll','roll',[{l:'r',s:'/r/',c:'#81c784'},{l:'o',s:'/əʊ/',c:'#ff8a65'},{l:'ll',s:'/l/',c:'#81c784'}]);
+  document.getElementById('oCards').innerHTML=h;
+})();
+(function(){
+  var h='';
+  h+=makeDeconCard('-alt','salt',[{l:'s',s:'/s/',c:'#81c784'},{l:'a',s:'/ɔː/',c:'#ff8a65'},{l:'l',s:'/l/',c:'#81c784'},{l:'t',s:'/t/',c:'#81c784'}]);
+  h+=makeDeconCard('-ald','scald',[{l:'sc',s:'/sk/',c:'#81c784'},{l:'a',s:'/ɔː/',c:'#ff8a65'},{l:'l',s:'/l/',c:'#81c784'},{l:'d',s:'/d/',c:'#81c784'}]);
+  h+=makeDeconCard('-alk','walk',[{l:'w',s:'/w/',c:'#81c784'},{l:'a',s:'/ɔː/',c:'#ff8a65'},{l:'l',s:'静音',c:'#888'},{l:'k',s:'/k/',c:'#81c784'}]);
+  h+=makeDeconCard('-alm','calm',[{l:'c',s:'/k/',c:'#81c784'},{l:'a',s:'/ɑː/',c:'#ff8a65'},{l:'l',s:'静音',c:'#888'},{l:'m',s:'/m/',c:'#81c784'}]);
+  document.getElementById('aCards').innerHTML=h;
+})();
+(function(){
+  var h='';
+  h+=makeDeconCard('u→/ʊ/','put',[{l:'p',s:'/p/',c:'#81c784'},{l:'u',s:'/ʊ/',c:'#ff8a65'},{l:'t',s:'/t/',c:'#81c784'}]);
+  h+=makeDeconCard('u→/ʊ/','pull',[{l:'p',s:'/p/',c:'#81c784'},{l:'u',s:'/ʊ/',c:'#ff8a65'},{l:'ll',s:'/l/',c:'#81c784'}]);
+  h+=makeDeconCard('u→/ʊ/','push',[{l:'p',s:'/p/',c:'#81c784'},{l:'u',s:'/ʊ/',c:'#ff8a65'},{l:'sh',s:'/ʃ/',c:'#81c784'}]);
+  document.getElementById('uCards').innerHTML=h;
+})();
+
+// ═══ LAB：词卡墙大卡片 ═══
+function labHtml(groups){
+  return groups.map(function(g){
+    var tag = g[0], words = g[1];
+    var cards = words.map(function(item){
+      var w = item[0], m = item[1];
+      var colored = '';
+      for(var j=0;j<w.length;j++){
+        if('aeiou'.indexOf(w[j])>=0) colored += '<span class="u-v">'+w[j]+'</span>';
+        else colored += '<span class="cn-c">'+w[j]+'</span>';
+      }
+      var fs = w.length<=4?'1.7em':w.length<=5?'1.45em':w.length<=6?'1.25em':w.length<=7?'1.1em':w.length<=8?'0.95em':'0.8em';
+      var ls = w.length<=5?'3px':w.length<=6?'2px':'1px';
+      return '<div class="lab-card" onclick="spk(\''+w+'\')"><div class="word" style="font-size:'+fs+';letter-spacing:'+ls+'">'+colored+'</div><div class="hint">'+m+'</div></div>';
+    }).join('');
+    return '<div class="word-row"><span class="word-tag">'+tag+'</span><span class="word-chips">'+cards+'</span></div>';
+  }).join('');
+}
+
+// ═══ 统一词表（带子组标签，故事 + 实验室共用）═══
+var labData={
+  'i':{label:'🦁 i → /aɪ/',groups:[
+    ['-ild', [['wild','野生的 🦁'],['child','孩子 👦'],['mild','温和的 🍃']]],
+    ['-ind', [['find','找到 🔍'],['mind','头脑 🧠'],['kind','善良 💗'],['blind','失明 🙈'],['grind','磨碎 ⚙️']]]
+  ]},
+  'o':{label:'👴 o → /əʊ/',groups:[
+    ['-old', [['old','老的 👴'],['cold','冷的 ❄️'],['gold','金子 🏆'],['fold','折叠 📄'],['hold','握住 🤲'],['told','告诉 💬'],['sold','卖掉 💰'],['bold','大胆的 💪']]],
+    ['-olt', [['bolt','螺栓 🔩'],['colt','小马驹 🐴']]],
+    ['-ost', [['most','最多 🥇'],['post','邮寄 📮'],['ghost','幽灵 👻'],['host','主人 🏠']]],
+    ['-oll', [['roll','滚动 🌀'],['toll','过路费 🛣️']]]
+  ]},
+  'a':{label:'🧂 a → /ɔː/ /ɑː/',groups:[
+    ['-alt', [['salt','盐 🧂'],['halt','停下 ✋']]],
+    ['-ald', [['bald','秃头 🦲'],['scald','烫伤 🔥']]],
+    ['-alk', [['walk','走路 🚶'],['talk','说话 💬'],['chalk','粉笔 🖍️']]],
+    ['-alm', [['calm','平静 😌'],['palm','手掌 🖐️']]]
+  ]},
+  'u':{label:'📥 u → /ʊ/',groups:[
+    ['u→/ʊ/', [['put','放 📥'],['pull','拉 🪢'],['push','推 🚪'],['full','满的 🈵'],['bush','灌木 🌳']]]
+  ]}
+};
+
+// ═══ LAB ═══
+var curL='i';
+function switchL(k){curL=k;buildL()}
+function buildL(){
+  var cfg=labData[curL];
+  var tabs='';
+  Object.keys(labData).forEach(function(k){
+    tabs+='<button class="lab-tab'+(k===curL?' active':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
+  });
+  document.getElementById('labTabs').innerHTML=tabs;
+  document.getElementById('labGrid').innerHTML=labHtml(cfg.groups);
+}
+
+// ═══ SORT ═══
+var sortWords=[
+  {w:'wild',t:'ai'},{w:'child',t:'ai'},{w:'mild',t:'ai'},{w:'find',t:'ai'},{w:'mind',t:'ai'},{w:'kind',t:'ai'},{w:'blind',t:'ai'},{w:'grind',t:'ai'},
+  {w:'old',t:'ou'},{w:'cold',t:'ou'},{w:'gold',t:'ou'},{w:'fold',t:'ou'},{w:'hold',t:'ou'},{w:'told',t:'ou'},{w:'sold',t:'ou'},{w:'bold',t:'ou'},{w:'bolt',t:'ou'},{w:'colt',t:'ou'},{w:'most',t:'ou'},{w:'post',t:'ou'},{w:'ghost',t:'ou'},{w:'host',t:'ou'},{w:'roll',t:'ou'},{w:'toll',t:'ou'},
+  {w:'salt',t:'or'},{w:'halt',t:'or'},{w:'walk',t:'or'},{w:'talk',t:'or'},{w:'chalk',t:'or'},{w:'bald',t:'or'},{w:'scald',t:'or'},{w:'calm',t:'or'},{w:'palm',t:'or'},
+  {w:'put',t:'u'},{w:'pull',t:'u'},{w:'push',t:'u'},{w:'full',t:'u'},{w:'bush',t:'u'}
+];
+var selectedWord=null,placedCount=0;
+function buildSort(){var pool=document.getElementById('sortPool'),h='';sortWords.sort(function(){return Math.random()-0.5}).forEach(function(w){h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,&apos;'+w.w+'&apos;)">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spkWord(&apos;'+w.w+'&apos;,this)">🔊</span></span>'});pool.innerHTML=h;['AI','OU','OR','U'].forEach(function(id){document.getElementById('bin'+id+'Items').innerHTML=''});document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins()}
+function setupBins(){['binAI','binOU','binOR','binU'].forEach(function(id){var el=document.getElementById(id);if(!el)return;el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};el.ondragleave=function(){el.classList.remove('drag-over')};el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())}})}
+function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
+function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#ff8a65">👆 请先点击一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
+function dropToBin(w,type,correct){if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}var ok=type===correct;var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;if(ok){item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';var cap={'ai':'AI','ou':'OU','or':'OR','u':'U'}[type];document.getElementById('bin'+cap+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ 正确！</span>';placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！四类长音全分清啦！</span>'}else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听！</span>'}selectedWord=null}
+function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
+function dragEnd(e){e.target.classList.remove('dragging')}
+var tl=null,tc=null;
+function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(255,210,0,.18);border:2px solid #ffd200;border-radius:14px;padding:6px 14px;font-weight:bold;color:#ffd200;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binAI','binOU','binOR','binU'].forEach(function(id){var el=document.getElementById(id);if(!el)return;var r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binAI','binOU','binOR','binU'].forEach(function(id){var el=document.getElementById(id);if(!el)return;var r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+function resetSort(){buildSort()}
+
+// ═══ QUIZ ═══
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+var quizPool=[
+  {t:'vowel',q:'find 中的 i 读什么音？',w:'find',o:['/ɪ/ (短音)','/aɪ/ (长音)','/iː/','/e/'],a:1,x:'find 的 i 读 /aɪ/——闭音节例外！虽然长得像闭音节，i 却读自己的名字。'},
+  {t:'vowel',q:'gold 中的 o 读什么音？',w:'gold',o:['/ɒ/ (短音)','/əʊ/ (长音)','/ɔː/','/uː/'],a:1,x:'gold 的 o 读 /əʊ/——闭音节例外！和 rope 的 o_e 一样是长音。'},
+  {t:'vowel',q:'walk 中的 a 读什么音？',w:'walk',o:['/æ/ (短音)','/ɔː/ (长音)','/eɪ/','/ɑː/'],a:1,x:'walk 的 a 读 /ɔː/，l 不发音！'},
+  {t:'vowel',q:'put 中的 u 读什么音？',w:'put',o:['/ʌ/ (短音)','/ʊ/ (收小嘴)','/uː/','/juː/'],a:1,x:'put 的 u 读 /ʊ/——闭音节例外，u 没收小嘴读 /ʌ/！'},
+  {t:'concept',q:'「闭音节例外」是什么意思？',o:['元音读短音','元音读长音/变音','没有元音','元音不发音'],a:1,x:'闭音节例外 = 长得像闭音节（该短音），元音却读长音或变音！'},
+  {t:'compare',q:'find 和 fin 的 i 发音一样吗？',o:['一样，都 /ɪ/','一样，都 /aɪ/','不一样：/aɪ/ vs /ɪ/','不一样：/ɪ/ vs /aɪ/'],a:2,x:'find 的 i 读 /aɪ/（例外），fin 的 i 读 /ɪ/（正常短音）！'},
+  {t:'choose',q:'下面哪个是「闭音节例外」？',o:['pig','gold','dog','cut'],a:1,x:'gold 的 o 读 /əʊ/（例外）。pig/dog/cut 的元音都是正常短音。'},
+  {t:'choose',q:'下面哪个词里 l 不发音？',o:['gold','walk','salt','wild'],a:1,x:'walk 的 l 不发音（a 读 /ɔː/）。gold/salt/wild 的 l 都发音。'},
+  {t:'compare',q:'salt 和 cat 的 a 发音一样吗？',o:['一样，都 /æ/','一样，都 /ɔː/','不一样：/ɔː/ vs /æ/','不一样：/æ/ vs /ɔː/'],a:2,x:'salt 的 a 读 /ɔː/（例外），cat 的 a 读 /æ/（正常）！'},
+  {t:'listen',q:'🔊 听发音：这个 i 读 /aɪ/ 还是 /ɪ/？',w:'kind',o:['/aɪ/ (长音)','/ɪ/ (短音)','/iː/','/e/'],a:0,x:'kind 读 /kaɪnd/，i 是 /aɪ/ 长音——闭音节例外！'},
+  {t:'choose',q:'roll 的 o 读什么？',w:'roll',o:['/ɒ/','/əʊ/','/ɔː/','/uː/'],a:1,x:'roll 的 o 读 /əʊ/——-oll 也是闭音节例外！'},
+  {t:'listen',q:'🔊 听发音：这个 u 读 /ʊ/ 还是 /ʌ/？',w:'pull',o:['/ʊ/ (收小嘴)','/ʌ/ (短音)','/uː/','/juː/'],a:0,x:'pull 读 /pʊl/，u 是 /ʊ/——闭音节例外！'}
+];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={vowel:'🔤 元音读什么',concept:'🧠 概念',compare:'⚖️ 对比',choose:'🎯 选择',listen:'👂 听音辨音'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&(q.t==='listen'||q.t==='vowel'))h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='listen'&&q.t!=='vowel')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！闭音节例外大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ffd200;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// ═══ BOOK ═══
+var bp_cp=0,bp_pages=[
+  {s:'👴😊',t:'A Kind Man',x:'An <span class="dg-hl">old</span> man is very <span class="dg-hl">kind</span>.'},
+  {s:'👴🐕',t:'A Wild Dog',x:'A <span class="dg-hl">wild</span> dog runs by.<br>It is <span class="dg-hl">cold</span> and sad.'},
+  {s:'👴💗',t:'Kind',x:'The <span class="dg-hl">kind</span> man <span class="dg-hl">finds</span> the dog.<br>“Come home,” he says.'},
+  {s:'👴🤲',t:'Hold',x:'The man <span class="dg-hl">holds</span> the dog.<br>It is warm now.'},
+  {s:'👴🥇',t:'Gold',x:'The man has a <span class="dg-hl">gold</span> heart.<br>The dog is glad.'},
+  {s:'😊👴',t:'Glad',x:'The <span class="dg-hl">old</span> man and the dog are pals.<br>What a <span class="dg-hl">kind</span> <span class="dg-hl">old</span> man!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">old <span class="speak-btn" onclick="spk(&#39;old&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">老的 👴</div></div><div class="gi"><div class="gw">kind <span class="speak-btn" onclick="spk(&#39;kind&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ind /aɪ/</div><div class="gz">善良 💗</div></div><div class="gi"><div class="gw">wild <span class="speak-btn" onclick="spk(&#39;wild&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ild /aɪ/</div><div class="gz">野生的 🦁</div></div><div class="gi"><div class="gw">cold <span class="speak-btn" onclick="spk(&#39;cold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">冷的 ❄️</div></div><div class="gi"><div class="gw">find <span class="speak-btn" onclick="spk(&#39;find&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ind /aɪ/</div><div class="gz">找到 🔍</div></div><div class="gi"><div class="gw">hold <span class="speak-btn" onclick="spk(&#39;hold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">握住 🤲</div></div><div class="gi"><div class="gw">gold <span class="speak-btn" onclick="spk(&#39;gold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">金子 🥇</div></div></div>'},
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/44-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+buildL();buildSort();initQ();
+</script>
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>/juː/ · u 喊自己的名字！ u_e, ue, ew 都能发 /juː/ | 自然拼读 Stage 6</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #4fc3f7)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.sort-spk{width:22px!important;height:22px!important;font-size:.6em!important}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ef9a9a;color:#ef9a9a}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(239,154,154,.06);border-left:3px solid #ef9a9a;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+
+/* Lab */
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(239,154,154,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px;overflow-wrap:break-word;word-break:break-word}.lab-card.multi{width:145px}.lab-card.multi .word{font-size:1.05em;letter-spacing:0}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ef9a9a}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+
+/* Sort */
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+
+/* Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ef9a9a;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ef9a9a}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2)}
+
+/* Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(239,154,154,.3))}.book-title{font-size:1.4em;color:#ef9a9a;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(239,154,154,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}.gi .gz{font-size:.68em;color:#888;margin-top:2px}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.72em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn:active{transform:scale(.94)}
+  .nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .btn-gold:active{transform:scale(.95);box-shadow:0 0 20px rgba(255,138,101,.4)}
+  .btn-outline:active{border-color:#ef9a9a;color:#ef9a9a}
+  .btn-outline:disabled{opacity:.35}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;border-radius:50%;min-width:44px;min-height:44px}
+  .speak-btn:active{background:rgba(239,154,154,.4);transform:scale(1.15)}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .story-speech+.story-speech{margin-top:10px}
+  .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lab-card{width:auto;min-width:0;padding:12px 6px;border-radius:12px;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+  .lab-card:active{border-color:rgba(239,154,154,.5);transform:scale(.96)}
+  .lab-card.multi{width:auto}
+  .lab-card.multi .word{font-size:.9em!important}
+  .lab-card .word{font-size:1.2em!important}
+  .lab-card .hint{font-size:.68em}
+  .lab-tabs{gap:3px;margin-bottom:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .lab-tab{padding:9px 6px;font-size:.7em;border-radius:14px;min-height:40px;white-space:nowrap;flex-shrink:0}
+  .lab-tab:active,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+  .sort-hint{font-size:.75em;margin-bottom:6px}
+  .sort-pool{gap:5px;margin-bottom:8px;min-height:38px}
+  .sort-item{padding:9px 10px;font-size:.8em;border-radius:12px;min-height:44px;display:inline-flex;align-items:center}
+  .sort-item[draggable=true]{cursor:grab;min-height:44px}
+  .sort-spk{width:36px!important;height:36px!important;font-size:.7em!important}
+  .sort-bins{gap:5px}
+  .sort-bin{min-width:0;min-height:80px;padding:4px;border-radius:10px}
+  .sort-bin-label{font-size:.72em;margin-bottom:3px}
+  .sort-feedback{font-size:.82em;min-height:20px}
+  .sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important;box-shadow:0 0 14px rgba(255,210,0,.3)}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ef9a9a}
+  .quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+  .quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .quiz-final.perfect .btn{margin:4px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+}
+
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .lab-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding:0 2px}
+  .lab-tab{flex-shrink:0;font-size:.68em;padding:7px 8px}
+  .sort-bins{flex-direction:column}
+  .sort-bin{min-height:60px;width:100%}
+  .sort-bin-label{font-size:.78em;text-align:left;padding-left:6px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+
+input,select,textarea{font-size:16px}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔊 /juː/ · u 喊自己的名字！u_e · ue · ew · ui</h1><p class="subtitle">u_e、ue、ew 都能发 /juː/，ui 偶尔也发——这就是字母 U 的读音！</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
+
+<!-- ===== STORY ===== -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 /juː/ —— u 说自己的名字！</h2>
+
+<h3>👑 复习：u_e 魔法 e</h3>
+<div class="story-speech"><p><b style="color:#ffd200">cube</b> 里的 u_e 发 /juː/——u 在说自己的名字！还记得魔法 e 吗？e 不发音，但它让前面的 u 说自己的名字：c + u + be → /kjuːb/。大部分 u_e 都发 /juː/。</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#81c784">c</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#ffd200">u_e</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:8px;padding:6px 12px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">c</span><span style="color:#ffd200">u</span><span style="color:#81c784">b</span><span style="color:#888">e</span> 🧊</span>
+<span class="speak-btn" onclick="spk('cube')" style="display:inline-block">🔊</span>
+</div>
+
+<h3>🎯 新朋友：ue = /juː/</h3>
+<div class="story-speech"><p><b style="color:#ffd200">ue</b> 在词尾也发 /juː/。比如 <b style="color:#ffd200">cue</b>（提示）——c + ue = /kjuː/。ue 是两个字母一起发 /juː/，就像 u_e 里的 u 和 e 搬到词尾了！</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#81c784">c</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#ffd200">ue</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:8px;padding:6px 12px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">c</span><span style="color:#ffd200">ue</span> 🎯</span>
+<span class="speak-btn" onclick="spk('cue')" style="display:inline-block">🔊</span>
+</div>
+
+<h3>🆕 新朋友：ew = /juː/</h3>
+<div class="story-speech"><p><b style="color:#ffd200">ew</b> 在词尾发 /juː/。比如 <b style="color:#ffd200">few</b>（几个）——f + ew = /fjuː/。<b style="color:#ffd200">new</b>（新的）——n + ew = /njuː/。ew 和 ue 很像，都爱站词尾，都能发 /juː/！</p></div>
+
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="display:flex;gap:4px;justify-content:center;align-items:center;margin-bottom:6px">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#81c784">f</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#ffd200">ew</span>
+</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">f</span><span style="color:#ffd200">ew</span> 🔢</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">/fjuː/</div>
+<span class="speak-btn" onclick="spk('few')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="display:flex;gap:4px;justify-content:center;align-items:center;margin-bottom:6px">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#81c784">n</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#ffd200">ew</span>
+</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">n</span><span style="color:#ffd200">ew</span> 🆕</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">/njuː/</div>
+<span class="speak-btn" onclick="spk('new')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<h3>🆕 新朋友：ui = /juː/（极少数）</h3>
+<div class="story-speech"><p><b style="color:#ffd200">ui</b> 在词中也偶尔发 /juː/——不过这种词很少，先认识两个就好：<b style="color:#ffd200">nuisance</b>（讨厌鬼）和 <b style="color:#ffd200">pursuit</b>（追求）。</p></div>
+
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="display:flex;gap:4px;justify-content:center;align-items:center;margin-bottom:6px">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#81c784">n</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#ffd200">ui</span>
+</div>
+<div style="font-size:1.2em;font-weight:bold;color:#ffd200;letter-spacing:1px"><span style="color:#81c784">n</span><span style="color:#ffd200">ui</span><span style="color:#81c784">sance</span> 😖</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">/ˈnjuːsns/</div>
+<span class="speak-btn" onclick="spk('nuisance')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="display:flex;gap:4px;justify-content:center;align-items:center;margin-bottom:6px">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#81c784">p</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:8px;padding:6px 10px;font-size:1.1em;font-weight:bold;color:#ffd200">ui</span>
+</div>
+<div style="font-size:1.2em;font-weight:bold;color:#ffd200;letter-spacing:1px"><span style="color:#81c784">purs</span><span style="color:#ffd200">ui</span><span style="color:#81c784">t</span> 🏃</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">/pəˈsjuːt/</div>
+<span class="speak-btn" onclick="spk('pursuit')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<div class="story-speech" style="border-left-color:#888"><p>🔒 <b>注意：</b>ui 大多时候发 /uː/（fruit、juice、suit /suːt/），那是后面 /uː/ 那页的活。这里先记住 ui 偶尔也能发 /juː/ 就好。</p></div>
+
+<h3>⚠️ /juː/ 还是 /uː/？</h3>
+
+<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:16px 0">
+
+<div style="flex:1;min-width:200px;max-width:350px;background:rgba(105,240,174,.06);border:2px solid rgba(105,240,174,.25);border-radius:16px;padding:16px;text-align:center">
+<div style="font-size:2em;margin-bottom:4px">🗣️</div>
+<div style="font-size:1.2em;font-weight:bold;color:#69f0ae;margin-bottom:8px">/juː/（带 y 音）</div>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 14px">
+<div style="color:#ffd200;font-weight:bold"><span style="color:#81c784">c</span><span style="color:#ffd200">u</span><span style="color:#81c784">b</span><span style="color:#888">e</span> 🧊</div>
+<div style="color:#aaa;font-size:.7em">c + u_e</div>
+</div>
+<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 14px">
+<div style="color:#ffd200;font-weight:bold"><span style="color:#81c784">f</span><span style="color:#ffd200">ew</span> 🔢</div>
+<div style="color:#aaa;font-size:.7em">f + ew</div>
+</div>
+<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 14px">
+<div style="color:#ffd200;font-weight:bold"><span style="color:#81c784">n</span><span style="color:#ffd200">ui</span><span style="color:#81c784">sance</span> 😖</div>
+<div style="color:#aaa;font-size:.7em">n + ui</div>
+</div>
+</div>
+<div style="color:#aaa;font-size:.75em;margin-top:8px">普通辅音 + u → /juː/</div>
+</div>
+
+<div style="flex:1;min-width:200px;max-width:350px;background:rgba(239,154,154,.06);border:2px solid rgba(239,154,154,.25);border-radius:16px;padding:16px;text-align:center">
+<div style="font-size:2em;margin-bottom:4px">🤫</div>
+<div style="font-size:1.2em;font-weight:bold;color:#ef9a9a;margin-bottom:8px">/uː/（不带 y）</div>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 14px">
+<div style="color:#ffd200;font-weight:bold"><span style="color:#81c784">r</span><span style="color:#ffd200">u</span><span style="color:#81c784">l</span><span style="color:#888">e</span> 📏</div>
+<div style="color:#aaa;font-size:.7em">r + u_e</div>
+</div>
+<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 14px">
+<div style="color:#ffd200;font-weight:bold"><span style="color:#81c784">bl</span><span style="color:#ffd200">ue</span> 🔵</div>
+<div style="color:#aaa;font-size:.7em">bl + ue</div>
+</div>
+<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 14px">
+<div style="color:#ffd200;font-weight:bold"><span style="color:#81c784">fr</span><span style="color:#ffd200">ui</span><span style="color:#81c784">t</span> 🍊</div>
+<div style="color:#aaa;font-size:.7em">fr + ui</div>
+</div>
+</div>
+<div style="color:#aaa;font-size:.75em;margin-top:8px">r, l, ch, j + u → /uː/</div>
+</div>
+
+</div>
+
+<div class="story-speech" style="text-align:center"><p>💡 <b style="color:#ffd200">r、l、ch、j 后面的 u 不喊名字！</b></p></div>
+
+</div></div>
+
+<!-- ===== 实验室 ===== -->
+<div class="section" id="sec-lab"><div class="glass">
+<h2>🧪 u_e👑 · ue🎯 · ui🍊 · ew🆕 实验室</h2><p style="color:#aaa;margin-bottom:8px">点击卡片翻转听发音！<span style="color:#ffd200">金色</span>=元音 <span style="color:#81c784">绿色</span>=辅音</p>
+<div class="lab-tabs" id="labTabs"></div>
+<div class="lab-grid" id="labGrid"></div></div></div>
+
+<!-- ===== 分拣 ===== -->
+
+<!-- ===== SORT ===== -->
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：u_e · ue · ui · ew（都是 /juː/！）</h2><p class="sort-hint">读单词，判断 /juː/ 是哪种写法，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
+<div class="sort-bin" id="binUE_" onclick="clickToBin('u_e')"><div class="sort-bin-label" style="color:#ffd200">u_e👑 /juː/</div><div id="binUE_Items"></div></div>
+<div class="sort-bin" id="binUE" onclick="clickToBin('ue')"><div class="sort-bin-label" style="color:#ffd200">ue🎯 /juː/</div><div id="binUEItems"></div></div>
+<div class="sort-bin" id="binEW" onclick="clickToBin('ew')"><div class="sort-bin-label" style="color:#ffd200">ew🆕 /juː/</div><div id="binEWItems"></div></div>
+<div class="sort-bin" id="binUI" onclick="clickToBin('ui')"><div class="sort-bin-label" style="color:#ffd200">ui🍊 /juː/</div><div id="binUIItems"></div></div>
+</div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">辨别 u_e/ue/ew 和 /juː/ 发音</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- ===== BOOK ===== -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 The Rescue</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 /juː/ 绘本 👀</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+<!-- ===== EASTER EGG ===== -->
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：U = You！这些词开头就是 /juː/</h2>
+
+<div class="story-speech"><p>你知道吗？字母 <b style="color:#ffd200">U</b> 的读音就是 <b style="color:#ffd200">/juː/</b>——跟单词 <b style="color:#ffd200">you</b>（你）一模一样！所以外国人发短信写 "U" 代替 "you"。</p><p>很多以 <b style="color:#ffd200">u</b> 开头的词，u 也发 /juː/：</p></div>
+
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ffd200;font-weight:bold;font-size:1.2em">unicorn 🦄</div>
+<div style="color:#aaa;font-size:.8em">u + ni + corn = /ˈjuːnɪkɔːrn/</div>
+<span class="speak-btn" onclick="spk('unicorn')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ffd200;font-weight:bold;font-size:1.2em">unit 📐</div>
+<div style="color:#aaa;font-size:.8em">u + nit = /ˈjuːnɪt/</div>
+<span class="speak-btn" onclick="spk('unit')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ffd200;font-weight:bold;font-size:1.2em">uniform 👔</div>
+<div style="color:#aaa;font-size:.8em">u + ni + form = /ˈjuːnɪfɔːrm/</div>
+<span class="speak-btn" onclick="spk('uniform')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ffd200;font-weight:bold;font-size:1.2em">university 🎓</div>
+<div style="color:#aaa;font-size:.8em">u + ni + ver + si + ty</div>
+<span class="speak-btn" onclick="spk('university')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ffd200;font-weight:bold;font-size:1.2em">you 👉</div>
+<div style="color:#aaa;font-size:.8em">you = /juː/ = U！</div>
+<span class="speak-btn" onclick="spk('you')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<h3>🤫 安静的朋友：knew 和 know</h3>
+<div class="story-speech"><p><b style="color:#ffd200">knew</b>（知道，过去式）——k 不发音！kn + ew = /njuː/。跟 new 发音一模一样！<b style="color:#ffd200">knife</b>（刀）、<b style="color:#ffd200">knee</b>（膝盖）也是 k 不发音。kn 开头，k 永远闭嘴！</p></div>
+
+<p style="color:#ffd200;font-size:1.1em;text-align:center;margin-top:16px">🎉 <b>记住：U = you，knew = new！</b></p>
+
+</div></div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// ═══ CAMBRIDGE AUDIO SYSTEM ═══
+var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+var PHONEMES={
+  '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
+  '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
+  '/ɒ/':'phonemes/sock.mp3','/uː/':'phonemes/blue.mp3','/ʊ/':'phonemes/foot.mp3',
+  '/e/':'phonemes/head.mp3','/ɜː/':'phonemes/bird.mp3','/ə/':'phonemes/above.mp3',
+  '/eɪ/':'phonemes/day_ei.mp3','/aɪ/':'phonemes/eye.mp3','/ɔɪ/':'phonemes/boy.mp3',
+  '/əʊ/':'phonemes/nose.mp3','/aʊ/':'phonemes/mouth.mp3','/ɪə/':'phonemes/ear.mp3',
+  '/eə/':'phonemes/hair.mp3','/ʊə/':'phonemes/pure.mp3',
+  '/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3',
+  '/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3',
+  '/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3',
+  '/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3',
+  '/ʃ/':'phonemes/she.mp3','/ʒ/':'phonemes/vision.mp3','/h/':'phonemes/hand.mp3',
+  '/tʃ/':'phonemes/cheese.mp3','/dʒ/':'phonemes/jump.mp3',
+  '/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/ŋ/':'phonemes/sing.mp3',
+  '/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/w/':'phonemes/we.mp3',
+  '/j/':'phonemes/yes.mp3',
+  '/i/':'phonemes/happy.mp3','/u/':'phonemes/situation.mp3',
+  '/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'
+};
+var WORDS = {
+  'above':'words/above.mp3','act':'words/act.mp3','apple':'words/apple.mp3',
+  'argue':'words/argue.mp3','avenue':'words/avenue.mp3',
+  'back':'words/back.mp3','bag':'words/bag.mp3','bank':'words/bank.mp3',
+  'belt':'words/belt.mp3','best':'words/best.mp3','blew':'words/blew.mp3',
+  'blue':'words/blue.mp3','book':'words/book.mp3','box':'words/box.mp3',
+  'brew':'words/brew.mp3','bruise':'words/bruise.mp3',
+  'cake':'words/cake.mp3','camp':'words/camp.mp3','canoe':'words/canoe.mp3',
+  'cape':'words/cape.mp3','cat':'words/cat.mp3','chew':'words/chew.mp3',
+  'clue':'words/clue.mp3','continue':'words/continue.mp3',
+  'crew':'words/crew.mp3','cruise':'words/cruise.mp3',
+  'cube':'words/cube.mp3','cue':'words/cue.mp3','cute':'words/cute.mp3',
+  'day':'words/day.mp3','desk':'words/desk.mp3','dew':'words/dew.mp3',
+  'do':'words/do.mp3','drew':'words/drew.mp3','due':'words/due.mp3',
+  'fast':'words/fast.mp3','few':'words/few.mp3','fish':'words/fish.mp3',
+  'flew':'words/flew.mp3','flute':'words/flute.mp3','fly':'words/fly.mp3',
+  'fruit':'words/fruit.mp3','glue':'words/glue.mp3','gold':'words/gold.mp3',
+  'grew':'words/grew.mp3','hand':'words/hand.mp3','hat':'words/hat.mp3',
+  'help':'words/help.mp3','hue':'words/hue.mp3','interview':'words/interview.mp3',
+  'juice':'words/juice.mp3','jump':'words/jump.mp3','just':'words/just.mp3',
+  'knew':'words/knew.mp3','left':'words/left.mp3','milk':'words/milk.mp3',
+  'moon':'words/moon.mp3','nephew':'words/nephew.mp3','new':'words/new.mp3',
+  'nuisance':'words/nuisance.mp3','play':'words/play.mp3','preview':'words/preview.mp3',
+  'pursuit':'words/pursuit.mp3','rain':'words/rain.mp3','recruit':'words/recruit.mp3',
+  'renew':'words/renew.mp3','rescue':'words/rescue.mp3','review':'words/review.mp3',
+  'say':'words/say.mp3','screw':'words/screw.mp3','shoe':'words/shoe.mp3',
+  'statue':'words/statue.mp3','stew':'words/stew.mp3','stop':'words/stop.mp3',
+  'sue':'words/sue.mp3','suit':'words/suit.mp3','suitable':'words/suitable.mp3',
+  'suitcase':'words/suitcase.mp3','threw':'words/threw.mp3','tissue':'words/tissue.mp3',
+  'to':'words/to.mp3','true':'words/true.mp3','two':'words/two.mp3',
+  'value':'words/value.mp3','view':'words/view.mp3',
+  'who':'words/who.mp3','argue':'words/argue.mp3','avenue':'words/avenue.mp3','continue':'words/continue.mp3','cube':'words/cube.mp3','cue':'words/cue.mp3','cute':'words/cute.mp3','few':'words/few.mp3','fuse':'words/fuse.mp3','hue':'words/hue.mp3','huge':'words/huge.mp3','interview':'words/interview.mp3','knew':'words/knew.mp3','muse':'words/muse.mp3','mute':'words/mute.mp3','nephew':'words/nephew.mp3','new':'words/new.mp3','nuisance':'words/nuisance.mp3','pursue':'words/pursue.mp3','pursuit':'words/pursuit.mp3','renew':'words/renew.mp3','rescue':'words/rescue.mp3','review':'words/review.mp3','statue':'words/statue.mp3','suit':'words/suit.mp3','tube':'words/tube.mp3','unicorn':'words/unicorn.mp3','uniform':'words/uniform.mp3','unit':'words/unit.mp3','university':'words/university.mp3','use':'words/use.mp3','value':'words/value.mp3','view':'words/view.mp3','you':'words/you.mp3','you':'words/you.mp3','quiz':'words/quiz.mp3','sort':'words/sort.mp3','ue':'words/ue.mp3','hugh':'words/hugh.mp3','huge':'words/huge.mp3','muse':'words/muse.mp3','fuse':'words/fuse.mp3','mute':'words/mute.mp3','pursue':'words/pursue.mp3','story':'words/story.mp3','tube':'words/tube.mp3','use':'words/use.mp3','unit':'words/unit.mp3','uniform':'words/uniform.mp3','university':'words/university.mp3','audio':'words/audio.mp3','sec':'words/sec.mp3','phonemes':'words/phonemes.mp3','flipped':'words/flipped.mp3','en':'words/en.mp3','position':'words/position.mp3','data':'words/data.mp3','drag':'words/drag.mp3','px':'words/px.mp3','hug':'words/hug.mp3','ew':'words/ew.mp3','us':'words/us.mp3','unicorn':'words/unicorn.mp3','binue':'words/binue.mp3','ui':'words/ui.mp3',
+};
+
+
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){var w=path.replace('words/','').replace('.mp3','');speakNow(w);return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');var w2=path.replace('words/','').replace('.mp3','');speakNow(w2)},{once:true});player.play().catch(function(e){el.classList.remove('on');var w3=path.replace('words/','').replace('.mp3','');speakNow(w3)});}
+function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
+function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=getAudio(p);if(!player||(player.error&&player.error.code===4)){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
+function speakNow(word){
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
+  var voices=speechSynthesis.getVoices();
+  var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
+    voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||
+    voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50);
+}
+
+// === Navigation ===
+var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='lab')buildL();
+  if(n==='sort')buildSort();
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ LAB ═══
+var labData={
+  'u_e':{label:'u_e👑 魔法e',vowel:'u_e',vowelLen:3,
+    words:[
+      ['cube','方块 🧊'],['cute','可爱 🥰'],['use','使用 📤'],['fuse','保险丝 ⚡'],
+      ['huge','巨大 🐘'],['tube','试管 🔬'],['mute','静音 🔇'],['muse','灵感 🎭']
+    ]},
+  'ue':{label:'ue🎯 词尾',vowel:'ue',vowelLen:2,
+    words:[
+      ['cue','提示 🎯'],['hue','色调 🎨'],['argue','争论 🗣️'],['continue','继续 ▶️'],
+      ['value','价值 💎'],['rescue','救援 🛟'],['pursue','追赶 🏃'],['avenue','大道 🛤️']
+    ]},
+  'ew':{label:'ew🆕 词尾',vowel:'ew',vowelLen:2,
+    words:[
+      ['few','几个 🔢'],['new','新的 🆕'],['knew','知道 🧠(过去式)'],['nephew','侄子 👦'],
+      ['view','视野 👁️'],['interview','面试 🎤'],['preview','预览 👀'],['review','复习 📝'],
+      ['renew','更新 🔄']
+    ]},
+  'ui':{label:'ui🍊 词中(极少数)',vowel:'ui',vowelLen:2,
+    words:[
+      ['nuisance','讨厌鬼 😖'],['pursuit','追求 🏃']
+    ]}
+};
+var MULTI_WORDS=['continue','rescue','value','argue','interview','preview','review','renew','nephew','pursue','avenue','nuisance','pursuit'];
+var curL='u_e';
+function switchL(k){curL=k;buildL()}
+function buildL(){
+  var cfg=labData[curL];
+  var tabs='';
+  Object.keys(labData).forEach(function(k){
+    tabs+='<button class="lab-tab'+(k===curL?' active':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
+  });
+  document.getElementById('labTabs').innerHTML=tabs;
+  var vow=cfg.vowel,vowLen=cfg.vowelLen;
+  document.getElementById('labGrid').innerHTML=cfg.words.map(function(w,i){
+    var word=w[0],emoji=w[1],colored='',len=word.length,vowIdx=word.indexOf(vow);
+    var isMulti=MULTI_WORDS.indexOf(word.toLowerCase())>=0;
+    // Handle u_e specially: u and final e
+    if(vow==='u_e'){
+      for(var j=0;j<len;j++){
+        if(j===vowIdx){
+          colored+='<span style="color:#ffd200;font-weight:bold">'+word[j]+'</span>';
+        }else if(j===len-1&&word[j]==='e'){
+          colored+='<span style="color:#ffd200;font-weight:bold;opacity:0.5">'+word[j]+'</span>';
+        }else{
+          colored+='<span style="color:#81c784">'+word[j]+'</span>';
+        }
+      }
+    }else{
+      for(var j=0;j<len;j++){
+        if(j===vowIdx){
+          colored+='<span style="color:#ffd200;font-weight:bold">'+word.substring(j,j+vowLen)+'</span>';
+          j+=vowLen-1;
+        }else{
+          colored+='<span style="color:#81c784">'+word[j]+'</span>';
+        }
+      }
+    }
+    return '<div class="lab-card'+(isMulti?' multi':'')+'" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'3px':word.length<=6?'2px':word.length<=7?'1px':'0px')+'">'+colored+'</div><div class="hint">'+emoji+(isMulti?' 📦':'')+'</div></div>';
+  }).join('');
+}
+
+// ═══ SORT: u_e / ue / ew ═══
+var sortWords=[
+  // u_e words
+  {w:'cube',t:'u_e'},{w:'cute',t:'u_e'},{w:'use',t:'u_e'},{w:'fuse',t:'u_e'},
+  {w:'huge',t:'u_e'},{w:'tube',t:'u_e'},{w:'mute',t:'u_e'},{w:'muse',t:'u_e'},
+  // ue words
+  {w:'cue',t:'ue'},{w:'hue',t:'ue'},{w:'argue',t:'ue'},{w:'continue',t:'ue'},
+  {w:'value',t:'ue'},{w:'rescue',t:'ue'},{w:'pursue',t:'ue'},
+  // ew words
+  {w:'few',t:'ew'},{w:'new',t:'ew'},{w:'knew',t:'ew'},{w:'nephew',t:'ew'},
+  {w:'view',t:'ew'},{w:'interview',t:'ew'},{w:'review',t:'ew'},{w:'avenue',t:'ue'},
+  {w:'renew',t:'ew'},
+  {w:'nuisance',t:'ui'},{w:'pursuit',t:'ui'}
+];
+var selectedWord=null,placedCount=0;
+function buildSort(){
+  var pool=document.getElementById('sortPool'),h='';
+  sortWords.sort(function(){return Math.random()-0.5}).forEach(function(w){
+    h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>';
+  });
+  pool.innerHTML=h;
+  ['UE_','UE','EW','UI'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
+}
+function setupBins(){
+  ['binUE_','binUE','binUI','binEW'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};
+    el.ondragleave=function(){el.classList.remove('drag-over')};
+    el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w){var t=id.replace('bin','').toLowerCase();if(t==='ue_')t='u_e';if(t==='i_e')t='i_e';dropToBin(w,t)}};
+  });
+}
+function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
+function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
+function dropToBin(w,type,correct){
+  if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
+  var ok=type===correct;
+  var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
+  if(ok){
+    item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';
+    var binId=type==='u_e'?'UE_':type.toUpperCase();
+    document.getElementById('bin'+binId+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
+    var fb='✅ '+w+' → '+type+' /juː/!';
+    document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">'+fb+'</span>';
+    placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！/juː/ 的四种写法都分清楚啦！</span>';
+  }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听，是什么写法？</span>'}
+  selectedWord=null;
+}
+function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
+function dragEnd(e){e.target.classList.remove('dragging')}
+var tl=null,tc=null;
+function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(79,195,247,.18);border:2px solid #4fc3f7;border-radius:14px;padding:6px 14px;font-weight:bold;color:#4fc3f7;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binUE_','binUE','binUI','binEW'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binUE_','binUE','binUI','binEW'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom){type=id.replace('bin','').toLowerCase();if(type==='ue_')type='u_e';}el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+function resetSort(){buildSort()}
+
+// ═══ QUIZ ═══
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[
+  // Type: fill-blank (what letter combo?)
+  {t:'fill',q:'c _ b e → 方块（cube），填什么写法？',w:'cube',o:['u_e 👑','ue 🎯','ew 🆕','ui 🍊'],a:0,x:'c + u + b + e = cube 🧊。魔法 e 让 u 说自己的名字 /juː/ ✓'},
+  {t:'fill',q:'c _ _ → 提示（cue），填什么写法？',w:'cue',o:['u_e 👑','ue 🎯','ew 🆕','oo'],a:1,x:'c+ue = cue 🎯。ue 在词尾发 /juː/ ✓'},
+  {t:'fill',q:'f _ _ → 几个（few），填什么写法？',w:'few',o:['u_e 👑','ue 🎯','ew 🆕','ui 🍊'],a:2,x:'f+ew = few 🔢。ew 在词尾发 /juː/ ✓'},
+  {t:'fill',q:'n _ _ → 新的（new），填什么写法？',w:'new',o:['u_e 👑','ue 🎯','ew 🆕','oo'],a:2,x:'n+ew = new 🆕。ew 在词尾发 /juː/ ✓'},
+  {t:'fill',q:'h _ g e → 巨大（huge），填什么写法？',w:'huge',o:['u_e 👑','ue 🎯','ew 🆕','ui 🍊'],a:0,x:'h + u + g + e = huge 🐘。u_e 在词中，e 在词尾 ✓'},
+  {t:'fill',q:'n _ _ sance → 讨厌鬼（nuisance），填什么写法？',w:'nuisance',o:['u_e 👑','ue 🎯','ew 🆕','ui 🍊'],a:3,x:'n + ui = nuisance 😖。ui 偶尔也发 /juː/（极少数词）✓'},
+  // Type: /juː/ vs /uː/ identification
+  {t:'uj',q:'cube 里的 u 发什么音？',w:'cube',o:['/juː/（带 y 音，像"优"）','/uː/（不带 y 音，像"乌"）','/ʌ/（短音）','/ʊ/（短音）'],a:0,x:'cube /kjuːb/ → u_e 发 /juː/，u 说自己的名字，带 y 音 ✓'},
+  {t:'uj',q:'cue 里的 ue 发什么音？',w:'cue',o:['/juː/（带 y 音）','/uː/（不带 y 音）','/ʌ/（短音）','/eɪ/'],a:0,x:'cue /kjuː/ → ue 发 /juː/，带 y 音 ✓'},
+  {t:'uj',q:'few 里的 ew 发什么音？',w:'few',o:['/juː/（带 y 音）','/uː/（不带 y 音）','/ʌ/（短音）','/əʊ/'],a:0,x:'few /fjuː/ → ew 发 /juː/，带 y 音 ✓'},
+  {t:'uj',q:'new 里的 ew 发什么音？',w:'new',o:['/juː/（带 y 音）','/uː/（不带 y 音）','/ʌ/（短音）','/əʊ/'],a:0,x:'new /njuː/ → ew 发 /juː/，带 y 音 ✓'},
+  // Type: spelling choice
+  {t:'spell',q:'哪个拼写发 /juː/？',o:['cute','cut','cot','cat'],a:0,x:'cute /kjuːt/ → u_e 发 /juː/。cut 是短音 /ʌ/ ✓'},
+  {t:'spell',q:'哪个拼写发 /juː/？',o:['hug','huge','hog','hag'],a:1,x:'huge /hjuːdʒ/ → u_e 发 /juː/。hug 是短音 /ʌ/ ✓'},
+  {t:'spell',q:'哪个拼写发 /juː/？',o:['us','use','bus','fuss'],a:1,x:'use /juːz/ → u_e 发 /juː/。us 是短音 /ʌs/ ✓'},
+  // Type: listen-and-choose
+  {t:'listen',q:'🔊 听发音，是哪个写法？',w:'cube',o:['u_e 👑','ue 🎯','ew 🆕','u（短音）'],a:0,x:'cube /kjuːb/ → u_e 魔法 e ✓'},
+  {t:'listen',q:'🔊 听发音，是哪个写法？',w:'cue',o:['u_e 👑','ue 🎯','ew 🆕','u（短音）'],a:1,x:'cue /kjuː/ → ue 在词尾 ✓'},
+  {t:'listen',q:'🔊 听发音，是哪个写法？',w:'few',o:['u_e 👑','ue 🎯','ew 🆕','u（短音）'],a:2,x:'few /fjuː/ → ew 在词尾 ✓'},
+  {t:'listen',q:'🔊 听发音，是哪个写法？',w:'new',o:['u_e 👑','ue 🎯','ew 🆕','u（短音）'],a:2,x:'new /njuː/ → ew 在词尾 ✓'},
+  {t:'listen',q:'🔊 听发音，是哪个写法？',w:'huge',o:['u_e 👑','ue 🎯','ew 🆕','u（短音）'],a:0,x:'huge /hjuːdʒ/ → u_e 魔法 e ✓'},
+  // Type: word recognition
+  {t:'word',q:'下面哪个词发 /juː/？',o:['cute 🥰','cup ☕','cut ✂️','cub 🐻'],a:0,x:'cute /kjuːt/ → u_e 发 /juː/。其他都是短音 /ʌ/ ✓'},
+  {t:'word',q:'下面哪个词发 /juː/？',o:['huge 🐘','hug 🤗','hut 🛖','hum 🎵'],a:0,x:'huge /hjuːdʒ/ → u_e 发 /juː/。其他都是短音 /ʌ/ ✓'},
+  {t:'word',q:'下面哪个词的 ew 发 /juː/？',o:['few 🔢','blew 💨','flew ✈️','grew 🌱'],a:0,x:'few /fjuː/ → ew 发 /juː/。blew/flew/grew 的 ew 发 /uː/（l/r 后面）✓'},
+  {t:'word',q:'下面哪个词的 ew 发 /juː/？',o:['new 🆕','drew ✍️','threw 🤾','crew 👥'],a:0,x:'new /njuː/ → ew 发 /juː/。drew/threw/crew 的 ew 发 /uː/（r 后面）✓'}
+];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={fill:'🔤 填空选写法',uj:'🎯 /juː/ 还是 /uː/',spell:'✏️ 选正确拼写',listen:'👂 听音辨写法',word:'📝 识别单词'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！/juː/ 大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ef9a9a;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// ═══ BOOK ═══
+var bp_cp=0,bp_pages=[
+  {s:'🐱😔',t:'A Kitten',x:'A kitten is stuck.<br>It needs a rescue.'},
+  {s:'👧💪',t:'A Big Tube',x:'A kid <span class="dg-hl">uses</span> a <span class="dg-hl">huge</span> <span class="dg-hl">tube</span> to help.'},
+  {s:'🐱😊',t:'Rescue',x:'The kid rescues the kitten.<br>It is <span class="dg-hl">cute</span>!'},
+  {s:'🎵😊',t:'A Tune',x:'The kid hums a <span class="dg-hl">tune</span>.<br>The kitten is glad.'},
+  {s:'😊🐱',t:'A Few Pals',x:'A <span class="dg-hl">few</span> pals come.<br>They see the <span class="dg-hl">cute</span> kitten.'},
+  {s:'😊🐱',t:'Glad',x:'The kitten is safe.<br>What a good rescue!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">use <span class="speak-btn" onclick="spk(&#39;use&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">使用 📤</div></div><div class="gi"><div class="gw">huge <span class="speak-btn" onclick="spk(&#39;huge&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">巨大 🐘</div></div><div class="gi"><div class="gw">tube <span class="speak-btn" onclick="spk(&#39;tube&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">管子 🔬</div></div><div class="gi"><div class="gw">cute <span class="speak-btn" onclick="spk(&#39;cute&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">可爱 🥰</div></div><div class="gi"><div class="gw">tune <span class="speak-btn" onclick="spk(&#39;tune&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">旋律 🎵</div></div><div class="gi"><div class="gw">rescue <span class="speak-btn" onclick="spk(&#39;rescue&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ue /juː/</div><div class="gz">救援 🛟</div></div><div class="gi"><div class="gw">few <span class="speak-btn" onclick="spk(&#39;few&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ew /juː/</div><div class="gz">几个 🔢</div></div></div>'},
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/27-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+buildL();buildSort();initQ();
+</script>
+</body></html>

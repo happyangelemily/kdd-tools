@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>词缀固定发音：-tion·-sion·-ture·-cient | 自然拼读·解码</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #ffd200)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s;background:rgba(255,210,0,.4)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+.type-card{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 12px;text-align:center;min-width:86px}.type-card .w{font-size:1.2em;font-weight:bold;color:#ffd200}.type-card .m{color:#888;font-size:.68em;margin-top:2px;line-height:1.4}
+
+/* 目标板 */
+.goal-box{background:linear-gradient(135deg,rgba(255,138,101,.12),rgba(255,210,0,.08));border:2px solid rgba(255,138,101,.35);border-radius:18px;padding:22px 20px;text-align:center}
+.goal-tag{display:inline-block;background:rgba(255,138,101,.2);border:1px solid rgba(255,138,101,.5);color:#ff8a65;border-radius:20px;padding:3px 14px;font-size:.78em;font-weight:bold;margin-bottom:12px}
+.goal-line{font-size:1.25em;font-weight:bold;color:#ffe9c7;line-height:1.7}
+
+/* 思维流程图 */
+.flow{display:flex;flex-direction:column;gap:8px;max-width:560px;margin:0 auto}
+.flow-node{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.12);border-radius:14px;padding:11px 14px;transition:all .3s}
+.flow-node .step{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);color:#888;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.flow-node .q{flex:1;font-size:.95em;line-height:1.5}
+.flow-node .a{font-size:.82em;color:#888;text-align:right;flex-shrink:0}
+.flow-node.active{border-color:#ffd200;background:rgba(255,210,0,.07)}
+.flow-node.active .step{background:#ffd200;color:#1a1a2e}
+.flow-node.active .a{color:#ffd200}
+.flow-node.locked{opacity:.45}
+.flow-node.done{border-color:rgba(105,240,174,.35);background:rgba(105,240,174,.04)}
+.flow-node.done .a{color:#69f0ae}
+.flow-arrow{text-align:center;color:#555;font-size:.9em;line-height:1}
+.stage-tag{margin:16px 0 6px;padding:6px 12px;border-radius:10px;font-size:.85em;font-weight:bold;text-align:center}.stage-tag.s1{background:rgba(105,240,174,.14);color:#69f0ae;border:1px solid rgba(105,240,174,.4)}.stage-tag.s2{background:rgba(255,210,0,.08);color:#ffd200;border:1px solid rgba(255,210,0,.3)}.stage-tag.s3{background:rgba(255,138,101,.08);color:#ff8a65;border:1px solid rgba(255,138,101,.3)}.stage-tag.s4{background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
+
+/* 工作台 */
+.wb-stage{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0}
+.wb-word{display:flex;align-items:center;flex-wrap:nowrap;justify-content:center;gap:0;margin:6px 0}
+.wb-tile{font-size:2em;font-weight:bold;color:#e0e0e0;letter-spacing:1px;user-select:none;transition:all .25s}
+.wb-tile.hl{color:#ffd200;text-shadow:0 0 12px rgba(255,210,0,.6)}
+.wb-hint{min-height:30px;text-align:center;font-size:.92em;color:#e0e0e0;margin-top:6px}
+.wb-feedback{min-height:24px;text-align:center;font-size:.95em;margin:6px 0;font-weight:bold}
+.wb-types{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.wb-type-btn{padding:10px 16px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}
+.wb-type-btn:hover:not(.locked){border-color:#ffd200}
+.wb-type-btn.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+.wb-type-btn.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+.wb-type-btn.locked{pointer-events:none}
+.wb-progress{display:flex;gap:4px;justify-content:center;margin:10px 0;flex-wrap:wrap}.wb-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}.wb-dot.done{background:#69f0ae}.wb-dot.cur{background:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+
+/* 闯关 Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* 绘本 Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.78em;color:#aaa}.gi .gz{font-size:.78em;color:#bbb}
+
+/* 备忘卡 */
+.memo-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,210,0,.35);border-radius:16px;padding:20px;max-width:560px;margin:0 auto;position:relative;overflow:hidden}
+.memo-rule{margin:10px 0;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:12px;font-size:.95em;line-height:1.7}
+.memo-rule b{color:#ffd200}
+.memo-example{color:#81c784;font-size:.92em;letter-spacing:1px}
+.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+@media print{body{background:#fff;color:#111}.stars,.nav,.wb-stage,.speak-btn,.print-note,.quiz-nav,.book-nav,.book-pron{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.memo-card{background:#fff;border:2px solid #333;color:#111}.memo-card b{color:#c70}.memo-card .memo-rule{background:#f5f5f5}.memo-example{color:#070}.goal-line,h1,h2,h3{color:#111}.flow-node{background:#fff;border-color:#ccc;color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .magic-rule{padding:12px 14px;font-size:.9em}
+  .type-card{min-width:76px;padding:8px 8px}.type-card .w{font-size:1.05em}
+  .goal-line{font-size:1.05em}
+  .flow-node{padding:9px 10px}
+  .flow-node .a{font-size:.72em}
+  .stage-tag{font-size:.75em;padding:5px 10px}
+  .wb-tile{font-size:1.45em}
+  .wb-type-btn{padding:11px 12px;font-size:.85em;min-height:44px}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ffd200}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+  .gi .gz{font-size:.68em}
+  .memo-card{padding:14px}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔩 词缀固定发音</h1><p class="subtitle">见词能读 · 阶段 4 · 定音（词缀篇）—— 词缀是「固定发音」，整块读，不切不判！</p>
+<div class="nav">
+<button class="nav-btn active" onclick="showS('goal')">🎯 目标板</button>
+<button class="nav-btn" onclick="showS('flow')">🗺️ 流程图</button>
+<button class="nav-btn" onclick="showS('wb')">🔧 工作台</button>
+<button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button>
+<button class="nav-btn" onclick="showS('book')">📚 绘本</button>
+<button class="nav-btn" onclick="showS('memo')">💳 备忘卡</button>
+</div>
+
+<!-- ===== 目标板（讲故事） ===== -->
+<div class="section active" id="sec-goal"><div class="glass">
+<h2>🎯 今天学什么 · 长词里那些「固定发音」的词缀</h2>
+
+<div class="story-speech"><p>上一步，你学会了<b style="color:#ffd200">多音字母</b>（c/g/y 看后面）和<b style="color:#ffd200">歧义组合</b>（oo/ow/ea 靠试音）。可长词里还有一群<b style="color:#ff8a65">最省心的</b>——它们像小尾巴一样挂在词尾，读音却<b style="color:#ff8a65">永远不变</b>！</p></div>
+
+<h3>🔩 三个老朋友 + 一位新朋友</h3>
+<div class="story-speech"><p>这些「固定发音」的小尾巴叫<b style="color:#ffd200">词缀</b>。看到它们，不用切、不用判类型、不用试音——<b style="color:#ff8a65">整块读出来</b>就行！其中 <b style="color:#ffd200">-tion、-sion、-ture</b> 你早会啦（前面学过），今天再认识一位新朋友 <b style="color:#4fc3f7">-cient</b>。</p></div>
+
+<div class="story-speech"><p>四个词缀的固定发音，一次记住：</p>
+<p><b style="color:#ffd200">-tion</b> → /ʃən/（frac·tion）<br><b style="color:#ffd200">-sion</b> → /ʒən/ 或 /ʃən/（vi·sion / mis·sion）<br><b style="color:#ffd200">-ture</b> → /tʃə/（na·ture · pic·ture）<br><b style="color:#4fc3f7">-cient</b> → /ʃənt/（an·cient）🆕</p></div>
+
+<div class="story-speech"><p>这就是解码地图上的<b style="color:#4fc3f7">🔵 阶段 4 · 定音（词缀篇）</b>。词缀<b>整块读</b>、<b>不套普通音节规则</b>——去「🔧 工作台」动手练！</p></div>
+
+</div></div>
+
+<!-- ===== 思维流程图 ===== -->
+<div class="section" id="sec-flow"><div class="glass">
+<h2>🗺️ 见词能读 · 解码一条线</h2>
+<p style="color:#aaa;font-size:.9em;margin-bottom:12px;text-align:center">解码一条线 · 4 个阶段。今天学 <span class="gold">🔵 阶段 4 · 定音（词缀篇）</span>，其余已学 ✅。</p>
+<div class="flow" style="max-width:600px">
+<div class="stage-tag s1">🟢 阶段 1 · 大块预处理</div>
+<div class="flow-node done"><div class="step">①</div><div class="q">复合词 · 前后缀 · 辅音 -le</div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s2">🟡 阶段 2 · 标记元音核</div>
+<div class="flow-node done"><div class="step">④</div><div class="q">圈画<span class="dim">元音核</span>（静音 e 不算）</div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">⑤</div><div class="q">清点<span class="dim">元音核数量</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s3">🔴 阶段 3 · 音节边界切割</div>
+<div class="flow-node done"><div class="step">⑥</div><div class="q">辅音<span class="dim">夹心层</span>试切（VCCV/VCV/V-V）</div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">⑦</div><div class="q">切口<span class="dim">合法性校验</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s4">🔵 阶段 4 · 解码发音（今天学！）</div>
+<div class="flow-node done"><div class="step">⑧</div><div class="q">类型判定 <span class="dim">短/长/r/双元音</span></div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">⑨</div><div class="q">定音 <span class="dim">多音字母·歧义组合</span></div><div class="a">✅ 已学</div></div>
+<div class="memo-rule"><b>⑨ 定音 · 词缀篇</b>（今天）→ 词缀整块固定音<br><span class="memo-example">-tion→/ʃən/ · -sion→/ʒən/·/ʃən/ · -ture→/tʃə/ · -cient→/ʃənt/</span></div>
+<div class="flow-node locked"><div class="step">⑩</div><div class="q">定重音 <span class="dim">多音节重音</span></div><div class="a">🔒 后面学</div></div>
+</div>
+</div></div>
+
+<!-- ===== 工作台 ===== -->
+<div class="section" id="sec-wb"><div class="glass">
+<div class="magic-rule">🔵 今天学 <b>阶段 4：定音（词缀篇）</b> —— 看长词<b>词尾的金色词缀</b>，选出它的固定声音！</div>
+<h3>🔩 第一步：看金色词缀，选对固定声音</h3>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<div class="type-card"><div class="w">-tion</div><div class="m">/ʃən/<br>frac·tion</div></div>
+<div class="type-card"><div class="w">-sion</div><div class="m">/ʒən/ vi·sion<br>/ʃən/ mis·sion</div></div>
+<div class="type-card"><div class="w">-ture</div><div class="m">/tʃə/<br>na·ture</div></div>
+<div class="type-card"><div class="w">-cient</div><div class="m">/ʃənt/<br>an·cient 🆕</div></div>
+</div>
+<div class="magic-rule">🎯 记住：<b>词缀是「固定发音」</b>——一眼认出，整块读！<b>-sion</b> 有两张脸（/ʒən/ 元音后、/ʃən/ 辅音后），其余词缀只有一个音。</div>
+<h2>🔧 词缀定音工作台</h2>
+<p style="color:#aaa;font-size:.88em;text-align:center;margin-bottom:6px">看长词 → <span class="gold">点金色词缀</span>想它的音 → 选下面的固定声音</p>
+<div class="wb-progress" id="wbDots"></div>
+<div class="wb-stage">
+<div class="wb-word" id="wbWord"></div>
+<div class="wb-hint" id="wbHint"></div>
+<div class="wb-types" id="wbTypes"></div>
+<div class="wb-feedback" id="wbFeedback"></div>
+</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0">
+<button class="btn btn-outline" onclick="wbHelp()">💡 帮帮我</button>
+<button class="btn btn-outline" onclick="wbNext()">➡️ 下一个</button>
+</div>
+</div></div>
+
+<!-- ===== 闯关 ===== -->
+<div class="section" id="sec-quiz"><div class="glass">
+<h2>🏆 闯关挑战（10 题）</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">看长词词尾的词缀，选出它的固定声音！</p>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- ===== 绘本 ===== -->
+<div class="section" id="sec-book"><div class="glass">
+<h2>📚 The Ancient Castle</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">一本「词缀」绘本 🏰</p>
+<div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div>
+</div></div>
+
+<!-- ===== 备忘卡 ===== -->
+<div class="section" id="sec-memo"><div class="glass">
+<h2>💳 知识点备忘卡</h2>
+<div class="memo-card">
+<div style="text-align:center;font-size:1.1em;font-weight:bold;color:#ffd200">🔩 词缀固定发音（整块读，不切不判）</div>
+<div class="memo-rule"><b>-tion</b> → /ʃən/<br><span class="memo-example">frac·tion /ˈfrækʃən/ · sta·tion /ˈsteɪʃən/ · ad·di·tion /əˈdɪʃən/</span></div>
+<div class="memo-rule"><b>-sion</b> → /ʒən/（元音后）· /ʃən/（辅音后）<br><span class="memo-example">vi·sion /ˈvɪʒən/ · te·le·vi·sion /ˌtelɪˈvɪʒən/　｜　mis·sion /ˈmɪʃən/</span></div>
+<div class="memo-rule"><b>-ture</b> → /tʃə/<br><span class="memo-example">na·ture /ˈneɪtʃə/ · pic·ture /ˈpɪktʃə/ · fu·ture /ˈfjuːtʃə/</span></div>
+<div class="memo-rule"><b>-cient</b> → /ʃənt/ 🆕<br><span class="memo-example">an·cient /ˈeɪnʃənt/ · suf·fi·cient /səˈfɪʃənt/</span></div>
+<div class="memo-rule" style="border:1px dashed rgba(255,210,0,.4)"><b>记住：</b>词缀是<b>固定发音</b>，整块读、不切不判。唯一要小心的：<b>-sion</b> 有两张脸（元音后 /ʒən/、辅音后 /ʃən/）。</div>
+</div>
+<p class="print-note">🖨️ 可截图 / 打印保存（打印自动变白底）</p>
+</div></div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={
+'fraction':'words/fraction.mp3','action':'words/action.mp3','motion':'words/motion.mp3','section':'words/section.mp3','direction':'words/direction.mp3','pollution':'words/pollution.mp3','division':'words/division.mp3','admission':'words/admission.mp3','permission':'words/permission.mp3','discussion':'words/discussion.mp3','revision':'words/revision.mp3','session':'words/session.mp3','adventure':'words/adventure.mp3','furniture':'words/furniture.mp3','culture':'words/culture.mp3','temperature':'words/temperature.mp3','sufficient':'words/sufficient.mp3','efficient':'words/efficient.mp3','patient':'words/patient.mp3','special':'words/special.mp3','social':'words/social.mp3','official':'words/official.mp3','partial':'words/partial.mp3','essential':'words/essential.mp3','potential':'words/potential.mp3','facial':'words/facial.mp3','crucial':'words/crucial.mp3','treasure':'words/treasure.mp3','measure':'words/measure.mp3','pleasure':'words/pleasure.mp3','closure':'words/closure.mp3','exposure':'words/exposure.mp3','confusion':'words/confusion.mp3','occasion':'words/occasion.mp3','conclusion':'words/conclusion.mp3','station':'words/station.mp3','vision':'words/vision.mp3','mission':'words/mission.mp3',
+'nature':'words/nature.mp3','picture':'words/picture.mp3','ancient':'words/ancient.mp3','future':'words/future.mp3',
+'addition':'words/addition.mp3','nation':'words/nation.mp3','television':'words/television.mp3','decision':'words/decision.mp3',
+'capture':'words/capture.mp3','creature':'words/creature.mp3','feature':'words/feature.mp3','mixture':'words/mixture.mp3','question':'words/question.mp3',
+'castle':'words/castle.mp3','hill':'words/hill.mp3','king':'words/king.mp3','wall':'words/wall.mp3','tree':'words/tree.mp3',
+'river':'words/river.mp3','gold':'words/gold.mp3','wise':'words/wise.mp3','man':'words/man.mp3','smile':'words/smile.mp3',
+'look':'words/look.mp3','say':'words/say.mp3','half':'words/half.mp3','share':'words/share.mp3','done':'words/done.mp3'
+};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){speakNow(path.replace('words/','').replace('.mp3',''));return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');speakNow(path.replace('words/','').replace('.mp3',''))},{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === Navigation ===
+var NM={goal:'目标板',flow:'流程图',wb:'工作台',quiz:'闯关',book:'绘本',memo:'备忘卡'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// === Workbench data ===
+var WB=[
+{w:'fraction',hl:[4,5,6,7],opts:['/ʃən/','/tʃən/'],a:0,rule:'frac·tion：-tion 固定发 /ʃən/',emoji:'🧮'},
+{w:'station',hl:[3,4,5,6],opts:['/ʃən/','/ʒən/'],a:0,rule:'sta·tion：-tion 固定发 /ʃən/',emoji:'🚉'},
+{w:'action',hl:[2,3,4,5],opts:['/ʃən/','/tʃən/'],a:0,rule:'ac·tion：-tion 固定发 /ʃən/',emoji:'🎬'},
+{w:'nation',hl:[2,3,4,5],opts:['/ʃən/','/tʃən/'],a:0,rule:'na·tion：-tion 固定发 /ʃən/',emoji:'🏳️'},
+{w:'motion',hl:[2,3,4,5],opts:['/ʃən/','/tʃən/'],a:0,rule:'mo·tion：-tion 固定发 /ʃən/',emoji:'🏃'},
+{w:'section',hl:[3,4,5,6],opts:['/ʃən/','/tʃən/'],a:0,rule:'sec·tion：-tion 固定发 /ʃən/',emoji:'📚'},
+{w:'question',hl:[4,5,6,7],opts:['/ʃən/','/tʃən/'],a:1,rule:'ques·tion：-tion 前面是 s → 发 /tʃən/（小陷阱）',emoji:'❓'},
+{w:'direction',hl:[5,6,7,8],opts:['/ʃən/','/tʃən/'],a:0,rule:'di·rec·tion：-tion 固定发 /ʃən/',emoji:'🧭'},
+{w:'addition',hl:[4,5,6,7],opts:['/ʃən/','/tʃən/'],a:0,rule:'ad·di·tion：-tion 固定发 /ʃən/',emoji:'➕'},
+{w:'pollution',hl:[5,6,7,8],opts:['/ʃən/','/tʃən/'],a:0,rule:'pol·lu·tion：-tion 固定发 /ʃən/',emoji:'🏭'},
+{w:'vision',hl:[2,3,4,5],opts:['/ʒən/','/ʃən/'],a:0,rule:'vi·sion：-sion 在元音后发 /ʒən/',emoji:'👁️'},
+{w:'mission',hl:[3,4,5,6],opts:['/ʃən/','/ʒən/'],a:0,rule:'mis·sion：-sion 在辅音后发 /ʃən/',emoji:'🎯'},
+{w:'television',hl:[6,7,8,9],opts:['/ʒən/','/ʃən/'],a:0,rule:'te·le·vi·sion：-sion 在元音后发 /ʒən/',emoji:'📺'},
+{w:'decision',hl:[4,5,6,7],opts:['/ʒən/','/ʃən/'],a:0,rule:'de·ci·sion：-sion 在元音后发 /ʒən/',emoji:'🤔'},
+{w:'division',hl:[4,5,6,7],opts:['/ʒən/','/ʃən/'],a:0,rule:'di·vi·sion：-sion 在元音后发 /ʒən/',emoji:'➗'},
+{w:'admission',hl:[5,6,7,8],opts:['/ʃən/','/ʒən/'],a:0,rule:'ad·mis·sion：-sion 在辅音后发 /ʃən/',emoji:'🎟️'},
+{w:'permission',hl:[6,7,8,9],opts:['/ʃən/','/ʒən/'],a:0,rule:'per·mis·sion：-sion 在辅音后发 /ʃən/',emoji:'✅'},
+{w:'discussion',hl:[6,7,8,9],opts:['/ʃən/','/ʒən/'],a:0,rule:'dis·cus·sion：-sion 在辅音后发 /ʃən/',emoji:'💬'},
+{w:'revision',hl:[4,5,6,7],opts:['/ʒən/','/ʃən/'],a:0,rule:'re·vi·sion：-sion 在元音后发 /ʒən/',emoji:'📝'},
+{w:'session',hl:[3,4,5,6],opts:['/ʃən/','/ʒən/'],a:0,rule:'ses·sion：-sion 在辅音后发 /ʃən/',emoji:'🪑'},
+{w:'nature',hl:[2,3,4,5],opts:['/tʃə/','/tʊə/'],a:0,rule:'na·ture：-ture 固定发 /tʃə/',emoji:'🌿'},
+{w:'picture',hl:[3,4,5,6],opts:['/tʃə/','/tʊə/'],a:0,rule:'pic·ture：-ture 固定发 /tʃə/',emoji:'🖼️'},
+{w:'future',hl:[2,3,4,5],opts:['/tʃə/','/tʊə/'],a:0,rule:'fu·ture：-ture 固定发 /tʃə/',emoji:'🔮'},
+{w:'adventure',hl:[5,6,7,8],opts:['/tʃə/','/tʊə/'],a:0,rule:'ad·ven·ture：-ture 固定发 /tʃə/',emoji:'🗺️'},
+{w:'capture',hl:[3,4,5,6],opts:['/tʃə/','/tʊə/'],a:0,rule:'cap·ture：-ture 固定发 /tʃə/',emoji:'📷'},
+{w:'mixture',hl:[3,4,5,6],opts:['/tʃə/','/tʊə/'],a:0,rule:'mix·ture：-ture 固定发 /tʃə/',emoji:'🥣'},
+{w:'furniture',hl:[5,6,7,8],opts:['/tʃə/','/tʊə/'],a:0,rule:'fur·ni·ture：-ture 固定发 /tʃə/',emoji:'🛋️'},
+{w:'creature',hl:[4,5,6,7],opts:['/tʃə/','/tʊə/'],a:0,rule:'crea·ture：-ture 固定发 /tʃə/',emoji:'👹'},
+{w:'culture',hl:[3,4,5,6],opts:['/tʃə/','/tʊə/'],a:0,rule:'cul·ture：-ture 固定发 /tʃə/',emoji:'🎭'},
+{w:'temperature',hl:[7,8,9,10],opts:['/tʃə/','/tʊə/'],a:0,rule:'tem·per·a·ture：-ture 固定发 /tʃə/',emoji:'🌡️'},
+{w:'ancient',hl:[2,3,4,5,6],opts:['/ʃənt/','/sɪənt/'],a:0,rule:'an·cient：-cient 固定发 /ʃənt/',emoji:'🏺'},
+{w:'sufficient',hl:[5,6,7,8,9],opts:['/ʃənt/','/sɪənt/'],a:0,rule:'suf·fi·cient：-cient 固定发 /ʃənt/',emoji:'🈶'},
+{w:'efficient',hl:[4,5,6,7,8],opts:['/ʃənt/','/sɪənt/'],a:0,rule:'ef·fi·cient：-cient 固定发 /ʃənt/',emoji:'⚡'},
+{w:'patient',hl:[3,4,5,6],opts:['/ʃənt/','/sɪənt/'],a:0,rule:'pa·tient：-tient 固定发 /ʃənt/',emoji:'🩺'},
+{w:'special',hl:[3,4,5,6],opts:['/ʃəl/','/sɪəl/'],a:0,rule:'spe·cial：-cial 固定发 /ʃəl/',emoji:'✨'},
+{w:'social',hl:[2,3,4,5],opts:['/ʃəl/','/sɪəl/'],a:0,rule:'so·cial：-cial 固定发 /ʃəl/',emoji:'👥'},
+{w:'official',hl:[4,5,6,7],opts:['/ʃəl/','/sɪəl/'],a:0,rule:'of·fi·cial：-cial 固定发 /ʃəl/',emoji:'🪪'},
+{w:'partial',hl:[3,4,5,6],opts:['/ʃəl/','/tɪəl/'],a:0,rule:'par·tial：-tial 固定发 /ʃəl/',emoji:'🧩'},
+{w:'essential',hl:[5,6,7,8],opts:['/ʃəl/','/tɪəl/'],a:0,rule:'es·sen·tial：-tial 固定发 /ʃəl/',emoji:'💎'},
+{w:'potential',hl:[5,6,7,8],opts:['/ʃəl/','/tɪəl/'],a:0,rule:'po·ten·tial：-tial 固定发 /ʃəl/',emoji:'🌱'},
+{w:'facial',hl:[2,3,4,5],opts:['/ʃəl/','/sɪəl/'],a:0,rule:'fa·cial：-cial 固定发 /ʃəl/',emoji:'😊'},
+{w:'crucial',hl:[3,4,5,6],opts:['/ʃəl/','/sɪəl/'],a:0,rule:'cru·cial：-cial 固定发 /ʃəl/',emoji:'🔑'},
+{w:'treasure',hl:[4,5,6,7],opts:['/ʒə/','/sjʊə/'],a:0,rule:'trea·sure：-sure 固定发 /ʒə/',emoji:'💰'},
+{w:'measure',hl:[3,4,5,6],opts:['/ʒə/','/sjʊə/'],a:0,rule:'mea·sure：-sure 固定发 /ʒə/',emoji:'📏'},
+{w:'pleasure',hl:[4,5,6,7],opts:['/ʒə/','/sjʊə/'],a:0,rule:'plea·sure：-sure 固定发 /ʒə/',emoji:'😄'},
+{w:'closure',hl:[3,4,5,6],opts:['/ʒə/','/sjʊə/'],a:0,rule:'clo·sure：-sure 固定发 /ʒə/',emoji:'🔒'},
+{w:'exposure',hl:[4,5,6,7],opts:['/ʒə/','/sjʊə/'],a:0,rule:'ex·po·sure：-sure 固定发 /ʒə/',emoji:'📸'},
+{w:'confusion',hl:[5,6,7,8],opts:['/ʒən/','/ʃən/'],a:0,rule:'con·fu·sion：-sion 在元音后发 /ʒən/',emoji:'😵'},
+{w:'occasion',hl:[4,5,6,7],opts:['/ʒən/','/ʃən/'],a:0,rule:'oc·ca·sion：-sion 在元音后发 /ʒən/',emoji:'🎉'},
+{w:'conclusion',hl:[6,7,8,9],opts:['/ʒən/','/ʃən/'],a:0,rule:'con·clu·sion：-sion 在元音后发 /ʒən/',emoji:'🏁'}
+];
+var wbIdx=0,wbDone=[];
+function wbRender(){
+  var it=WB[wbIdx];
+  var html='';
+  for(var i=0;i<it.w.length;i++){
+    var cls='wb-tile'+(it.hl.indexOf(i)>=0?' hl':'');
+    html+='<span class="'+cls+'">'+it.w[i]+'</span>';
+  }
+  document.getElementById('wbWord').innerHTML=html;
+  document.getElementById('wbHint').innerHTML = wbDone[wbIdx] ? '👆 已答对，点「下一个」继续' : '👆 看长词里的金色字母/组合，选它的声音';
+  document.getElementById('wbFeedback').innerHTML='';
+  var tb='';
+  for(var j=0;j<it.opts.length;j++){
+    var c='wb-type-btn';
+    if(wbDone[wbIdx]){c+=' locked'; if(j===it.a)c+=' correct';}
+    tb+='<button class="'+c+'" onclick="wbPick('+j+')">'+it.opts[j]+'</button>';
+  }
+  document.getElementById('wbTypes').innerHTML=tb;
+  document.getElementById('wbWord').style.animation='none';void document.getElementById('wbWord').offsetWidth;
+  var dots='';
+  for(var j=0;j<WB.length;j++){var c='wb-dot';if(wbDone[j])c+=' done';else if(j===wbIdx)c+=' cur';dots+='<span class="'+c+'"></span>'}
+  document.getElementById('wbDots').innerHTML=dots;
+}
+function wbPick(t){
+  if(wbDone[wbIdx])return;
+  var it=WB[wbIdx];
+  if(t===it.a){
+    wbDone[wbIdx]=true;
+    wbRender();
+    document.getElementById('wbFeedback').innerHTML='<span class="green">✅ 选对了！</span> '+it.w+' → <span class="gold">'+it.opts[it.a]+'</span> '+it.emoji;
+    document.getElementById('wbWord').style.animation='pop .35s';
+    setTimeout(function(){spk(it.w)},150);
+  }else{
+    document.getElementById('wbFeedback').innerHTML='<span class="red">❌ 这个音不对哦，再想想</span>（可以点 💡 帮帮我）';
+    var btns=document.querySelectorAll('#wbTypes .wb-type-btn');
+    for(var k=0;k<btns.length;k++){if(k===t)btns[k].classList.add('wrong')}
+    document.getElementById('wbWord').style.animation='shake .4s';
+    setTimeout(function(){wbRender()},700);
+  }
+}
+function wbHelp(){
+  var it=WB[wbIdx];
+  document.getElementById('wbFeedback').innerHTML='💡 '+it.w+'：'+it.rule+' → <span class="gold">'+it.opts[it.a]+'</span>';
+  spk(it.w);
+}
+function wbNext(){
+  wbIdx=(wbIdx+1)%WB.length;wbRender();
+}
+
+// === Quiz ===
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[{t:'choose',q:'fraction 里的 tion 读什么音？',w:'fraction',o:['/ʃən/','/tʃən/'],a:0,x:'frac·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'station 里的 tion 读什么音？',w:'station',o:['/ʃən/','/ʒən/'],a:0,x:'sta·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'action 里的 tion 读什么音？',w:'action',o:['/ʃən/','/tʃən/'],a:0,x:'ac·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'nation 里的 tion 读什么音？',w:'nation',o:['/ʃən/','/tʃən/'],a:0,x:'na·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'motion 里的 tion 读什么音？',w:'motion',o:['/ʃən/','/tʃən/'],a:0,x:'mo·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'section 里的 tion 读什么音？',w:'section',o:['/ʃən/','/tʃən/'],a:0,x:'sec·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'question 里的 tion 读什么音？',w:'question',o:['/ʃən/','/tʃən/'],a:1,x:'ques·tion：-tion 前面是 s → 发 /tʃən/（小陷阱）'},
+{t:'choose',q:'direction 里的 tion 读什么音？',w:'direction',o:['/ʃən/','/tʃən/'],a:0,x:'di·rec·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'addition 里的 tion 读什么音？',w:'addition',o:['/ʃən/','/tʃən/'],a:0,x:'ad·di·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'pollution 里的 tion 读什么音？',w:'pollution',o:['/ʃən/','/tʃən/'],a:0,x:'pol·lu·tion：-tion 固定发 /ʃən/'},
+{t:'choose',q:'vision 里的 sion 读什么音？',w:'vision',o:['/ʒən/','/ʃən/'],a:0,x:'vi·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'mission 里的 sion 读什么音？',w:'mission',o:['/ʃən/','/ʒən/'],a:0,x:'mis·sion：-sion 在辅音后发 /ʃən/'},
+{t:'choose',q:'television 里的 sion 读什么音？',w:'television',o:['/ʒən/','/ʃən/'],a:0,x:'te·le·vi·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'decision 里的 sion 读什么音？',w:'decision',o:['/ʒən/','/ʃən/'],a:0,x:'de·ci·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'division 里的 sion 读什么音？',w:'division',o:['/ʒən/','/ʃən/'],a:0,x:'di·vi·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'admission 里的 sion 读什么音？',w:'admission',o:['/ʃən/','/ʒən/'],a:0,x:'ad·mis·sion：-sion 在辅音后发 /ʃən/'},
+{t:'choose',q:'permission 里的 sion 读什么音？',w:'permission',o:['/ʃən/','/ʒən/'],a:0,x:'per·mis·sion：-sion 在辅音后发 /ʃən/'},
+{t:'choose',q:'discussion 里的 sion 读什么音？',w:'discussion',o:['/ʃən/','/ʒən/'],a:0,x:'dis·cus·sion：-sion 在辅音后发 /ʃən/'},
+{t:'choose',q:'revision 里的 sion 读什么音？',w:'revision',o:['/ʒən/','/ʃən/'],a:0,x:'re·vi·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'session 里的 sion 读什么音？',w:'session',o:['/ʃən/','/ʒən/'],a:0,x:'ses·sion：-sion 在辅音后发 /ʃən/'},
+{t:'choose',q:'nature 里的 ture 读什么音？',w:'nature',o:['/tʃə/','/tʊə/'],a:0,x:'na·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'picture 里的 ture 读什么音？',w:'picture',o:['/tʃə/','/tʊə/'],a:0,x:'pic·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'future 里的 ture 读什么音？',w:'future',o:['/tʃə/','/tʊə/'],a:0,x:'fu·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'adventure 里的 ture 读什么音？',w:'adventure',o:['/tʃə/','/tʊə/'],a:0,x:'ad·ven·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'capture 里的 ture 读什么音？',w:'capture',o:['/tʃə/','/tʊə/'],a:0,x:'cap·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'mixture 里的 ture 读什么音？',w:'mixture',o:['/tʃə/','/tʊə/'],a:0,x:'mix·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'furniture 里的 ture 读什么音？',w:'furniture',o:['/tʃə/','/tʊə/'],a:0,x:'fur·ni·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'creature 里的 ture 读什么音？',w:'creature',o:['/tʃə/','/tʊə/'],a:0,x:'crea·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'culture 里的 ture 读什么音？',w:'culture',o:['/tʃə/','/tʊə/'],a:0,x:'cul·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'temperature 里的 ture 读什么音？',w:'temperature',o:['/tʃə/','/tʊə/'],a:0,x:'tem·per·a·ture：-ture 固定发 /tʃə/'},
+{t:'choose',q:'ancient 里的 cient 读什么音？',w:'ancient',o:['/ʃənt/','/sɪənt/'],a:0,x:'an·cient：-cient 固定发 /ʃənt/'},
+{t:'choose',q:'sufficient 里的 cient 读什么音？',w:'sufficient',o:['/ʃənt/','/sɪənt/'],a:0,x:'suf·fi·cient：-cient 固定发 /ʃənt/'},
+{t:'choose',q:'efficient 里的 cient 读什么音？',w:'efficient',o:['/ʃənt/','/sɪənt/'],a:0,x:'ef·fi·cient：-cient 固定发 /ʃənt/'},
+{t:'choose',q:'patient 里的 ient 读什么音？',w:'patient',o:['/ʃənt/','/sɪənt/'],a:0,x:'pa·tient：-tient 固定发 /ʃənt/'},
+{t:'choose',q:'special 里的 cial 读什么音？',w:'special',o:['/ʃəl/','/sɪəl/'],a:0,x:'spe·cial：-cial 固定发 /ʃəl/'},
+{t:'choose',q:'social 里的 cial 读什么音？',w:'social',o:['/ʃəl/','/sɪəl/'],a:0,x:'so·cial：-cial 固定发 /ʃəl/'},
+{t:'choose',q:'official 里的 cial 读什么音？',w:'official',o:['/ʃəl/','/sɪəl/'],a:0,x:'of·fi·cial：-cial 固定发 /ʃəl/'},
+{t:'choose',q:'partial 里的 tial 读什么音？',w:'partial',o:['/ʃəl/','/tɪəl/'],a:0,x:'par·tial：-tial 固定发 /ʃəl/'},
+{t:'choose',q:'essential 里的 tial 读什么音？',w:'essential',o:['/ʃəl/','/tɪəl/'],a:0,x:'es·sen·tial：-tial 固定发 /ʃəl/'},
+{t:'choose',q:'potential 里的 tial 读什么音？',w:'potential',o:['/ʃəl/','/tɪəl/'],a:0,x:'po·ten·tial：-tial 固定发 /ʃəl/'},
+{t:'choose',q:'facial 里的 cial 读什么音？',w:'facial',o:['/ʃəl/','/sɪəl/'],a:0,x:'fa·cial：-cial 固定发 /ʃəl/'},
+{t:'choose',q:'crucial 里的 cial 读什么音？',w:'crucial',o:['/ʃəl/','/sɪəl/'],a:0,x:'cru·cial：-cial 固定发 /ʃəl/'},
+{t:'choose',q:'treasure 里的 sure 读什么音？',w:'treasure',o:['/ʒə/','/sjʊə/'],a:0,x:'trea·sure：-sure 固定发 /ʒə/'},
+{t:'choose',q:'measure 里的 sure 读什么音？',w:'measure',o:['/ʒə/','/sjʊə/'],a:0,x:'mea·sure：-sure 固定发 /ʒə/'},
+{t:'choose',q:'pleasure 里的 sure 读什么音？',w:'pleasure',o:['/ʒə/','/sjʊə/'],a:0,x:'plea·sure：-sure 固定发 /ʒə/'},
+{t:'choose',q:'closure 里的 sure 读什么音？',w:'closure',o:['/ʒə/','/sjʊə/'],a:0,x:'clo·sure：-sure 固定发 /ʒə/'},
+{t:'choose',q:'exposure 里的 sure 读什么音？',w:'exposure',o:['/ʒə/','/sjʊə/'],a:0,x:'ex·po·sure：-sure 固定发 /ʒə/'},
+{t:'choose',q:'confusion 里的 sion 读什么音？',w:'confusion',o:['/ʒən/','/ʃən/'],a:0,x:'con·fu·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'occasion 里的 sion 读什么音？',w:'occasion',o:['/ʒən/','/ʃən/'],a:0,x:'oc·ca·sion：-sion 在元音后发 /ʒən/'},
+{t:'choose',q:'conclusion 里的 sion 读什么音？',w:'conclusion',o:['/ʒən/','/ʃən/'],a:0,x:'con·clu·sion：-sion 在元音后发 /ʒən/'}];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · 🗣️ 选音</div><div class="quiz-q">'+q.q+'</div>';h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！定音小达人！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ffd200;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// === Book ===
+var bp_cp=0,bp_pages=[
+  {s:'🏰👑',t:'The Castle',x:'An <span class="dg-hl">ancient</span> <span class="dg-hl">castle</span> stands on a <span class="dg-hl">hill</span>.<br>“What a fine <span class="dg-hl">picture</span>!” the <span class="dg-hl">king</span> <span class="dg-hl">says</span>.'},
+  {s:'🌿🖼️',t:'Nature',x:'He <span class="dg-hl">looks</span> at the <span class="dg-hl">picture</span>.<br>It shows <span class="dg-hl">nature</span> — a <span class="dg-hl">river</span> and a <span class="dg-hl">tree</span>.'},
+  {s:'🤔💰',t:'A Question',x:'“I have a <span class="dg-hl">question</span>,” the <span class="dg-hl">king</span> <span class="dg-hl">says</span>.<br>“What is a <span class="dg-hl">fraction</span> of <span class="dg-hl">gold</span>?”'},
+  {s:'👁️🔮',t:'A Vision',x:'A <span class="dg-hl">wise</span> <span class="dg-hl">man</span> has a <span class="dg-hl">vision</span>.<br>“One <span class="dg-hl">half</span>!” he <span class="dg-hl">says</span>.'},
+  {s:'🔮😊',t:'The Future',x:'“<span class="dg-hl">Share</span> it now,” he <span class="dg-hl">says</span>.<br>“In the <span class="dg-hl">future</span>, all will <span class="dg-hl">smile</span>.”'},
+  {s:'🎯✨',t:'Mission',x:'The <span class="dg-hl">king</span>’s <span class="dg-hl">mission</span> is <span class="dg-hl">done</span>.<br>Everyone gets <span class="dg-hl">gold</span>!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">ancient <span class="speak-btn" onclick="spk(&#39;ancient&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-cient→/ʃənt/</div><div class="gz">古老 🏺</div></div><div class="gi"><div class="gw">picture <span class="speak-btn" onclick="spk(&#39;picture&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ture→/tʃə/</div><div class="gz">图画 🖼️</div></div><div class="gi"><div class="gw">nature <span class="speak-btn" onclick="spk(&#39;nature&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ture→/tʃə/</div><div class="gz">自然 🌿</div></div><div class="gi"><div class="gw">fraction <span class="speak-btn" onclick="spk(&#39;fraction&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-tion→/ʃən/</div><div class="gz">分数 🧮</div></div><div class="gi"><div class="gw">vision <span class="speak-btn" onclick="spk(&#39;vision&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sion→/ʒən/</div><div class="gz">幻象 👁️</div></div><div class="gi"><div class="gw">future <span class="speak-btn" onclick="spk(&#39;future&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ture→/tʃə/</div><div class="gz">未来 🔮</div></div><div class="gi"><div class="gw">mission <span class="speak-btn" onclick="spk(&#39;mission&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sion→/ʃən/</div><div class="gz">任务 🎯</div></div></div>'}
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/affix-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+wbRender();initQ();
+</script>
+</body></html>

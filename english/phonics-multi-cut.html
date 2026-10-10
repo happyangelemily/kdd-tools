@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>多音节纯切割 · 见词能读③ | 自然拼读</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s;background:rgba(255,210,0,.4)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+.type-card{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 12px;text-align:center;min-width:86px}.type-card .w{font-size:1.2em;font-weight:bold;color:#ffd200}.type-card .m{color:#888;font-size:.68em;margin-top:2px;line-height:1.4}
+
+/* 流程图 */
+.flow{display:flex;flex-direction:column;gap:8px;max-width:560px;margin:0 auto}
+.flow-node{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.12);border-radius:14px;padding:11px 14px;transition:all .3s}
+.flow-node .step{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);color:#888;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.flow-node .q{flex:1;font-size:.95em;line-height:1.5}
+.flow-node .a{font-size:.82em;color:#888;text-align:right;flex-shrink:0}
+.flow-node.locked{opacity:.45}
+.flow-arrow{text-align:center;color:#555;font-size:.9em;line-height:1}
+.stage-tag{margin:16px 0 6px;padding:6px 12px;border-radius:10px;font-size:.85em;font-weight:bold;text-align:center}.stage-tag.s1{background:rgba(105,240,174,.14);color:#69f0ae;border:1px solid rgba(105,240,174,.4)}.stage-tag.s2{background:rgba(255,210,0,.08);color:#ffd200;border:1px solid rgba(255,210,0,.3)}.stage-tag.s3{background:rgba(255,138,101,.08);color:#ff8a65;border:1px solid rgba(255,138,101,.3)}.stage-tag.s4{background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
+
+/* 工作台 */
+.wb-stage{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0}
+.wb-word{display:flex;align-items:center;flex-wrap:nowrap;justify-content:center;gap:0;margin:6px 0}
+.wb-tile{font-size:1.6em;font-weight:bold;color:#e0e0e0;letter-spacing:0;user-select:none;padding:2px 3px;border-radius:8px}
+.wb-tile.vowel{color:#ffd200}
+.wb-tile.cons{color:#81c784}
+.wb-tile.dg{color:#ff8a65;background:rgba(255,138,101,.15);box-shadow:0 0 0 2px rgba(255,138,101,.4)}
+.wb-cut{width:20px;height:52px;margin:0 -1px;position:relative;cursor:pointer;border-left:2px solid transparent;transition:all .2s;flex-shrink:0}
+.wb-cut:hover{border-left:2px solid rgba(255,255,255,.35)}
+.wb-cut.marker{border-left:2px solid #ffd200;box-shadow:-1px 0 12px rgba(255,210,0,.5)}
+.wb-cut.marker::before{content:'✂️';position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:.9em;z-index:2}
+.wb-cut.done{border-left:2px solid #69f0ae}
+.wb-cut.wrong{border-left:2px solid #ff5252;animation:shake .4s}
+.wb-hint{min-height:28px;text-align:center;font-size:.88em;color:#ccc;margin-top:6px;max-width:520px;line-height:1.6}
+.wb-feedback{min-height:24px;text-align:center;font-size:.95em;margin:6px 0;font-weight:bold}
+.wb-progress{display:flex;gap:4px;justify-content:center;margin:10px 0;flex-wrap:wrap}.wb-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}.wb-dot.done{background:#69f0ae}.wb-dot.cur{background:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+
+/* 闯关 */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.6em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:2px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* 绘本 */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}
+
+/* 备忘卡 */
+.memo-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,210,0,.35);border-radius:16px;padding:20px;max-width:560px;margin:0 auto;position:relative;overflow:hidden}
+.memo-rule{margin:10px 0;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:12px;font-size:.95em;line-height:1.7}
+.memo-rule b{color:#ffd200}
+.memo-example{color:#81c784;font-size:.92em;letter-spacing:1px}
+.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+@media print{body{background:#fff;color:#111}.stars,.nav,.wb-stage,.speak-btn,.print-note,.quiz-nav,.book-nav,.book-pron{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.memo-card{background:#fff;border:2px solid #333;color:#111}.memo-card b{color:#c70}.memo-card .memo-rule{background:#f5f5f5}.memo-example{color:#070}.goal-line,h1,h2,h3{color:#111}.flow-node{background:#fff;border-color:#ccc;color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .magic-rule{padding:12px 14px;font-size:.9em}
+  .type-card{min-width:76px;padding:8px 8px}.type-card .w{font-size:1.05em}
+  .flow-node{padding:9px 10px}
+  .flow-node .a{font-size:.72em}
+  .stage-tag{font-size:.75em;padding:5px 10px}
+  .wb-tile{font-size:1.15em}
+  .wb-cut{width:16px;height:42px}
+  .wb-cut.marker::before{font-size:.75em}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.2em;letter-spacing:1px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ffd200}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+  .memo-card{padding:14px}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>✂️ 多音节纯切割</h1><p class="subtitle">见词能读 · 阶段 3 · 多音节 —— 3 个以上元音核，连切好几刀，全部切成单音节</p>
+<div class="nav">
+<button class="nav-btn active" onclick="showS('goal')">🎯 目标板</button>
+<button class="nav-btn" onclick="showS('flow')">🗺️ 流程图</button>
+<button class="nav-btn" onclick="showS('wb')">🔧 工作台</button>
+<button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button>
+<button class="nav-btn" onclick="showS('book')">📚 绘本</button>
+<button class="nav-btn" onclick="showS('memo')">💳 备忘卡</button>
+</div>
+
+<!-- ===== 目标板 ===== -->
+<div class="section active" id="sec-goal"><div class="glass">
+<h2>🎯 今天学什么 · 见词能读第三步</h2>
+<div class="story-speech"><p>VCCV、VCV、V-V 你都学会啦！现在把它们<b style="color:#ffd200">拼在一起</b>用——遇到一个<b style="color:#ffd200">超长词</b>（3 个甚至 4 个元音核），就<b style="color:#ff8a65">连切好几刀</b>，把它切成一段段小音节。</p></div>
+<div class="magic-rule">🔪 <b>多音节纯切割</b>：数出 N 个元音核 → 落 <b>N−1 刀</b> → 每两个元音核之间，套用 VCCV / VCV / V-V 的切法</div>
+<h3>🔪 一刀刀来</h3>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<div class="type-card"><div class="w">ba|na|na</div><div class="m">3 音节<br>切 2 刀</div><span class="speak-btn" onclick="spk('banana')" style="display:inline-block;margin-top:4px">🔊</span></div>
+<div class="type-card"><div class="w">um|brel|la</div><div class="m">3 音节<br>切 2 刀</div><span class="speak-btn" onclick="spk('umbrella')" style="display:inline-block;margin-top:4px">🔊</span></div>
+<div class="type-card"><div class="w">cat|er|pil|lar</div><div class="m">4 音节<br>切 3 刀</div><span class="speak-btn" onclick="spk('caterpillar')" style="display:inline-block;margin-top:4px">🔊</span></div>
+</div>
+<div class="story-speech"><p>窍门：<b style="color:#ffd200">先圈出所有元音核</b>（几个核 = 几刀 + 1），再从左到右，每两个核之间套一条规则。别忘了<b style="color:#ff8a65">二合字母不拆</b>！去「🔧 工作台」大显身手。</p></div>
+</div></div>
+
+<!-- ===== 流程图 ===== -->
+<div class="section" id="sec-flow"><div class="glass">
+<h2>🗺️ 见词能读 · 解码一条线</h2>
+<p style="color:#aaa;font-size:.9em;margin-bottom:12px;text-align:center">解码一条线 · 4 个阶段。今天 <span class="gold">🔴 阶段 3 收官</span>。</p>
+<div class="flow" style="max-width:600px">
+<div class="stage-tag s1">🟢 阶段 1 · 大块预处理（✅ 已学）</div>
+<div class="flow-node"><div class="step">①</div><div class="q">拆分<span class="dim">复合词</span></div><div class="a">✅</div></div>
+<div class="flow-node"><div class="step">②</div><div class="q">剥离<span class="dim">前后缀</span></div><div class="a">✅</div></div>
+<div class="flow-node"><div class="step">③</div><div class="q">识别<span class="dim">辅音 + le</span></div><div class="a">✅</div></div>
+<div class="stage-tag s2">🟡 阶段 2 · 标记元音核（✅ 已学）</div>
+<div class="flow-node"><div class="step">④</div><div class="q">圈画<span class="dim">元音核</span></div><div class="a">✅</div></div>
+<div class="flow-node"><div class="step">⑤</div><div class="q">清点<span class="dim">元音核数量</span></div><div class="a">✅</div></div>
+<div class="stage-tag s3">🔴 阶段 3 · 音节边界切割（今天收官！）</div>
+<div class="memo-rule"><b>⑥ 辅音夹心层试切</b>（每两个元音核之间套一条）<br>≥2 辅音 → VCCV 正中切 <span class="memo-example">bas|ket</span><br>1 辅音 → VCV 先 V-CV 再 VC-V <span class="memo-example">ti|ger · cam|el</span><br>0 辅音 → V-V 中间切 <span class="memo-example">li|on</span></div>
+<div class="memo-rule"><b>⑦ 切口合法性校验</b>（0 号约束层）<br>硬黑名单：<span class="memo-example">sh · ch · th · ck · qu · ng</span> 不能切开<br><b>多音节 = 一刀刀来</b>：<span class="memo-example">ca|ter|pil|lar（4 核切 3 刀）</span></div>
+<div class="stage-tag s4">🔵 阶段 4 · 解码发音（后面学）</div>
+<div class="flow-node locked"><div class="step">⑧</div><div class="q">类型判定 · 定音 · 定重音</div><div class="a">🔒</div></div>
+</div>
+</div></div>
+
+<!-- ===== 工作台 ===== -->
+<div class="section" id="sec-wb"><div class="glass">
+<div class="magic-rule">🔴 今天学 <b>阶段 3 收官：多音节纯切割</b> —— 数元音核，落 N−1 刀，套 VCCV / VCV / V-V！</div>
+<h2>🔧 切词工作台</h2>
+<p style="color:#aaa;font-size:.88em;text-align:center;margin-bottom:6px">圈元音核 → <span class="gold">点所有要切的位置（可点好几刀 ✂️）</span> → 确认</p>
+<div class="wb-progress" id="wbDots"></div>
+<div class="wb-stage">
+<div class="wb-word" id="wbWord"></div>
+<div class="wb-hint" id="wbHint"></div>
+<div class="wb-feedback" id="wbFeedback"></div>
+</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0">
+<button class="btn btn-outline" onclick="wbHelp()">💡 帮帮我</button>
+<button class="btn btn-gold" onclick="wbCheck()">✅ 确认</button>
+<button class="btn btn-outline" onclick="wbNext()">➡️ 下一个</button>
+</div>
+</div></div>
+
+<!-- ===== 闯关 ===== -->
+<div class="section" id="sec-quiz"><div class="glass">
+<h2>🏆 闯关挑战（10 题）</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">多音节词，切几刀？切哪里？</p>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- ===== 绘本 ===== -->
+<div class="section" id="sec-book"><div class="glass">
+<h2>📚 At the Hospital</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">一本多音节绘本 🏥</p>
+<div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div>
+</div></div>
+
+<!-- ===== 备忘卡 ===== -->
+<div class="section" id="sec-memo"><div class="glass">
+<h2>💳 知识点备忘卡</h2>
+<div class="memo-card">
+<div style="text-align:center;font-size:1.1em;font-weight:bold;color:#ffd200">✂️ 多音节纯切割 完整版</div>
+<div class="memo-rule"><b>核心规则</b>：<b>N 个元音核 = N 个音节 = 落 N−1 刀</b>，每两个核之间套 VCCV / VCV / V-V<br><span class="memo-example">ba|na|na（3 核 2 刀）· cat|er|pil|lar（4 核 3 刀）</span></div>
+<div class="memo-rule"><b>三步走</b>：① 圈全部元音核 ② 数一数定刀数 ③ 从左到右每两个核之间套规则（≥2 辅音正中切 / 1 辅音试错 / 0 辅音中间切）</div>
+<div class="memo-rule"><b>⚠️ 二合字母黑名单</b>：sh · ch · th · ck · qu · ng 不能切开，元音组合 / R控 也不拆<br><span class="memo-example">hos|pi|tal（s·p 中间切）· com|pu|ter（m·p）</span></div>
+<div class="memo-rule"><b>易错提醒</b><br>① 元音核圈错 = 刀数错（Magic-E 静音 e、词首 y 不算核）<br>② 长词先找大块（复合词/前后缀/辅音-le，见 65）<br>③ 切割只是「定边界」，怎么读交给 71-74</div>
+</div>
+<p class="print-note">🖨️ 可截图 / 打印保存（打印自动变白底）</p>
+</div></div>
+
+<script src="syllableRuleEngine.js"></script>
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={
+'banana':'words/banana.mp3','kangaroo':'words/kangaroo.mp3','chocolate':'words/chocolate.mp3','potato':'words/potato.mp3','remember':'words/remember.mp3','together':'words/together.mp3','beautiful':'words/beautiful.mp3','adventure':'words/adventure.mp3','dictionary':'words/dictionary.mp3','education':'words/education.mp3','information':'words/information.mp3','imagination':'words/imagination.mp3','competition':'words/competition.mp3','invitation':'words/invitation.mp3','situation':'words/situation.mp3','pollution':'words/pollution.mp3','television':'words/television.mp3','revolution':'words/revolution.mp3','envelope':'words/envelope.mp3','president':'words/president.mp3','vegetable':'words/vegetable.mp3','cinema':'words/cinema.mp3','medicine':'words/medicine.mp3','avenue':'words/avenue.mp3','bicycle':'words/bicycle.mp3','furniture':'words/furniture.mp3','library':'words/library.mp3','camera':'words/camera.mp3','guitar':'words/guitar.mp3','museum':'words/museum.mp3','radio':'words/radio.mp3','video':'words/video.mp3','studio':'words/studio.mp3','helicopter':'words/helicopter.mp3','watermelon':'words/watermelon.mp3','pineapple':'words/pineapple.mp3','strawberry':'words/strawberry.mp3','spaghetti':'words/spaghetti.mp3','hamburger':'words/hamburger.mp3','tomorrow':'words/tomorrow.mp3','yesterday':'words/yesterday.mp3','restaurant':'words/restaurant.mp3','magazine':'words/magazine.mp3','umbrella':'words/umbrella.mp3','animal':'words/animal.mp3','elephant':'words/elephant.mp3',
+'hospital':'words/hospital.mp3','computer':'words/computer.mp3','tomato':'words/tomato.mp3','family':'words/family.mp3',
+'important':'words/important.mp3','butterfly':'words/butterfly.mp3','dinosaur':'words/dinosaur.mp3','caterpillar':'words/caterpillar.mp3',
+'telephone':'words/telephone.mp3','rabbit':'words/rabbit.mp3','tiger':'words/tiger.mp3','lion':'words/lion.mp3'
+};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){speakNow(path.replace('words/','').replace('.mp3',''));return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');speakNow(path.replace('words/','').replace('.mp3',''))},{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === Navigation ===
+var NM={goal:'目标板',flow:'流程图',wb:'工作台',quiz:'闯关',book:'绘本',memo:'备忘卡'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ 工作台：多音节切词 ═══
+var WB=[
+  {w:'banana',n:[[1],[3],[5]],a:[1,3]},
+  {w:'tomato',n:[[1],[3],[5]],a:[1,3]},
+  {w:'animal',n:[[0],[2],[4]],a:[1,2]},
+  {w:'elephant',n:[[0],[2],[5]],a:[1,2]},
+  {w:'family',n:[[1],[3],[5]],a:[2,3]},
+  {w:'hospital',n:[[1],[4],[6]],a:[2,4]},
+  {w:'computer',n:[[1],[4],[6,7]],a:[2,4]},
+  {w:'important',n:[[0],[3,4],[6]],a:[1,4]},
+  {w:'umbrella',n:[[0],[4],[7]],a:[1,5]},
+  {w:'butterfly',n:[[1],[4],[8]],a:[2,5]},
+  {w:'dinosaur',n:[[1],[3],[5,6]],a:[1,3]},
+  {w:'telephone',n:[[1],[3],[6]],a:[2,3]},
+  {w:'caterpillar',n:[[1],[3,4],[6],[9]],a:[2,4,7]},
+  {w:'kangaroo',n:[[1],[4],[6,7]],a:[2,5]},
+  {w:'chocolate',n:[[2],[4],[6]],a:[3,5]},
+  {w:'potato',n:[[1],[3],[5]],a:[1,3]},
+  {w:'remember',n:[[1],[3],[6,7]],a:[2,5]},
+  {w:'together',n:[[1],[3],[6,7]],a:[2,5]},
+  {w:'beautiful',n:[[1,3],[5],[7]],a:[4,6]},
+  {w:'adventure',n:[[0],[3],[6,7]],a:[1,4]},
+  {w:'dictionary',n:[[1],[4],[6],[8]],a:[2,5,7]},
+  {w:'education',n:[[0],[2],[4],[6]],a:[1,3,5]},
+  {w:'information',n:[[0],[3],[6],[8]],a:[2,5,7]},
+  {w:'imagination',n:[[0],[2],[4],[6],[8]],a:[1,3,5,7]},
+  {w:'competition',n:[[1],[4],[6],[8]],a:[3,5,7]},
+  {w:'invitation',n:[[0],[3],[5],[7]],a:[1,4,6]},
+  {w:'situation',n:[[1],[3],[5],[7]],a:[2,4,6]},
+  {w:'pollution',n:[[1],[4],[6]],a:[3,5]},
+  {w:'television',n:[[1],[3],[5],[7]],a:[2,4,6]},
+  {w:'revolution',n:[[1],[3],[5],[7]],a:[2,4,6]},
+  {w:'envelope',n:[[0],[3],[5]],a:[2,4]},
+  {w:'president',n:[[2],[4],[6]],a:[3,5]},
+  {w:'vegetable',n:[[1],[3],[5],[7]],a:[2,4,6]},
+  {w:'cinema',n:[[1],[3],[5]],a:[2,4]},
+  {w:'medicine',n:[[1],[3],[5]],a:[2,4]},
+  {w:'avenue',n:[[0],[2],[4,5]],a:[1,3]},
+  {w:'bicycle',n:[[1],[3],[5]],a:[2,4]},
+  {w:'furniture',n:[[1],[4],[6,7]],a:[3,5]},
+  {w:'library',n:[[1],[4],[6]],a:[2,5]},
+  {w:'camera',n:[[1],[3],[5]],a:[2,4]},
+  {w:'guitar',n:[[1],[4,5]],a:[3]},
+  {w:'museum',n:[[1],[3],[4]],a:[2,3]},
+  {w:'radio',n:[[1],[3],[4]],a:[2,3]},
+  {w:'video',n:[[1],[3],[4]],a:[2,3]},
+  {w:'studio',n:[[2],[4],[5]],a:[3,4]},
+  {w:'helicopter',n:[[1],[3],[5],[8,9]],a:[2,4,7]},
+  {w:'watermelon',n:[[1],[3],[6],[8]],a:[2,5,7]},
+  {w:'pineapple',n:[[1],[3],[4],[7]],a:[2,6]},
+  {w:'strawberry',n:[[3,4],[6,7],[9]],a:[5,8]},
+  {w:'spaghetti',n:[[2],[5],[8]],a:[3,6]},
+  {w:'hamburger',n:[[1],[4],[7,8]],a:[3,6]},
+  {w:'tomorrow',n:[[1],[3],[6,7]],a:[2,5]},
+  {w:'yesterday',n:[[1],[4],[7,8]],a:[3,6]},
+  {w:'restaurant',n:[[1],[4],[7]],a:[3,6]},
+  {w:'magazine',n:[[1],[3],[5]],a:[2,4]}
+];
+var wbIdx=0,wbCuts={},wbHelpOn=false;
+var wbDone=[];
+function wbCur(){return WB[wbIdx]}
+function nucleusAt(it,i){for(var j=0;j<it.n.length;j++){if(it.n[j].indexOf(i)>=0)return true}return false}
+function hasCut(i){return wbCuts[i]===true}
+function wbRender(){
+  var it=wbCur();
+  var h='';
+  for(var i=0;i<it.w.length;i++){
+    var cls='wb-tile '+(nucleusAt(it,i)?'vowel':'cons');
+    if(wbHelpOn){var dgs=SyllableEngine.findDigraphs(it.w);for(var d=0;d<dgs.length;d++){if(i>=dgs[d].start&&i<=dgs[d].end)cls+=' dg'}}
+    h+='<span class="'+cls+'">'+it.w[i]+'</span>';
+    if(i<it.w.length-1){
+      var cCls='wb-cut';
+      if(hasCut(i))cCls+=(wbDone[wbIdx]?' done':' marker');
+      h+='<span class="'+cCls+'" onclick="wbTapCut('+i+')"></span>';
+    }
+  }
+  document.getElementById('wbWord').innerHTML=h;
+  document.getElementById('wbHint').innerHTML=(wbDone[wbIdx]?'':'👆 数元音核（金色字母），<b>'+it.n.length+' 个核 = 落 '+(it.n.length-1)+' 刀</b>，点要切的位置');
+  document.getElementById('wbFeedback').innerHTML='';
+  var dots='';
+  for(var k=0;k<WB.length;k++){var c2='wb-dot';if(wbDone[k])c2+=' done';else if(k===wbIdx)c2+=' cur';dots+='<span class="'+c2+'"></span>'}
+  document.getElementById('wbDots').innerHTML=dots;
+}
+function wbTapCut(i){
+  if(wbDone[wbIdx])return;
+  if(wbCuts[i])delete wbCuts[i];else wbCuts[i]=true;
+  wbRender();
+}
+function wbCheck(){
+  var it=wbCur();
+  if(wbDone[wbIdx])return;
+  var keys=Object.keys(wbCuts).map(Number);
+  if(keys.length===0){document.getElementById('wbFeedback').innerHTML='<span class="orange">👆 先点要切的位置（落 '+it.a.length+' 刀）</span>';return}
+  for(var k=0;k<keys.length;k++){
+    var dg=SyllableEngine.cutSplitsDigraph(it.w,keys[k]);
+    if(dg){
+      document.getElementById('wbFeedback').innerHTML='<span class="red">❌ 有一刀切开了「'+dg+'」！二合字母不能拆，换位置</span>';
+      var cutEl=document.querySelectorAll('#wbWord .wb-cut')[keys[k]];
+      if(cutEl){cutEl.classList.add('wrong');setTimeout(function(){cutEl.classList.remove('wrong')},500)}
+      return;
+    }
+  }
+  var want=it.a.slice().sort(function(x,y){return x-y});
+  keys.sort(function(x,y){return x-y});
+  var same=keys.length===want.length && keys.every(function(v,i){return v===want[i]});
+  if(same){
+    wbDone[wbIdx]=true;
+    wbRender();
+    var parts=it.w.split('');var s=parts[0];
+    for(var i=1;i<parts.length;i++){if(want.indexOf(i-1)>=0)s+='|';s+=parts[i]}
+    document.getElementById('wbFeedback').innerHTML='<span class="green">✅ 切对了！</span> '+it.w+' = <span class="gold">'+s+'</span>';
+    document.getElementById('wbWord').style.animation='pop .35s';
+    setTimeout(function(){spk(it.w)},150);
+  }else{
+    document.getElementById('wbFeedback').innerHTML='<span class="orange">🤔 再数数元音核、套套规则（VCCV 正中 / VCV 试错 / V-V 中间）</span>';
+  }
+}
+function wbHelp(){
+  var it=wbCur();
+  wbHelpOn=true;wbRender();
+  var nuc=it.n.map(function(x){return x.map(function(i){return it.w[i]}).join('')}).join(' · ');
+  document.getElementById('wbHint').innerHTML='💡 元音核：<span class="gold">'+nuc+'</span>（共 '+it.n.length+' 个）→ 落 '+it.a.length+' 刀';
+  spk(it.w);
+}
+function wbNext(){
+  wbIdx=(wbIdx+1)%WB.length;wbCuts={};wbHelpOn=false;wbRender();
+}
+wbRender();
+
+// === Quiz ===
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[{t:'cut',q:'banana 怎么切？',w:'banana',o:['b|an|ana', 'ba|n|ana', 'b|anana'],a:0,x:'b|an|ana：2 刀 ✓'},
+{t:'cut',q:'tomato 怎么切？',w:'tomato',o:['t|om|ato', 'to|m|ato', 't|omato'],a:0,x:'t|om|ato：2 刀 ✓'},
+{t:'cut',q:'animal 怎么切？',w:'animal',o:['a|n|imal', 'an||imal', 'a|nimal'],a:0,x:'a|n|imal：2 刀 ✓'},
+{t:'cut',q:'elephant 怎么切？',w:'elephant',o:['e|l|ephant', 'el||ephant', 'e|lephant'],a:0,x:'e|l|ephant：2 刀 ✓'},
+{t:'cut',q:'family 怎么切？',w:'family',o:['fa|m|ily', 'fam||ily', 'fa|mily'],a:0,x:'fa|m|ily：2 刀 ✓'},
+{t:'cut',q:'hospital 怎么切？',w:'hospital',o:['ho|sp|ital', 'hos|p|ital', 'ho|spital'],a:0,x:'ho|sp|ital：2 刀 ✓'},
+{t:'cut',q:'computer 怎么切？',w:'computer',o:['co|mp|uter', 'com|p|uter', 'co|mputer'],a:0,x:'co|mp|uter：2 刀 ✓'},
+{t:'cut',q:'important 怎么切？',w:'important',o:['i|mpo|rtant', 'im|po|rtant', 'i|mportant'],a:0,x:'i|mpo|rtant：2 刀 ✓'},
+{t:'cut',q:'umbrella 怎么切？',w:'umbrella',o:['u|mbre|lla', 'um|bre|lla', 'u|mbrella'],a:0,x:'u|mbre|lla：2 刀 ✓'},
+{t:'cut',q:'butterfly 怎么切？',w:'butterfly',o:['bu|tte|rfly', 'but|te|rfly', 'bu|tterfly'],a:0,x:'bu|tte|rfly：2 刀 ✓'},
+{t:'cut',q:'dinosaur 怎么切？',w:'dinosaur',o:['d|in|osaur', 'di|n|osaur', 'd|inosaur'],a:0,x:'d|in|osaur：2 刀 ✓'},
+{t:'cut',q:'telephone 怎么切？',w:'telephone',o:['te|l|ephone', 'tel||ephone', 'te|lephone'],a:0,x:'te|l|ephone：2 刀 ✓'},
+{t:'cut',q:'caterpillar 怎么切？',w:'caterpillar',o:['ca|te|rpi|llar', 'cat|e|rpi|llar', 'ca|te|rpillar'],a:0,x:'ca|te|rpi|llar：3 刀 ✓'},
+{t:'cut',q:'kangaroo 怎么切？',w:'kangaroo',o:['ka|nga|roo', 'kan|ga|roo', 'ka|ngaroo'],a:0,x:'ka|nga|roo：2 刀 ✓'},
+{t:'cut',q:'chocolate 怎么切？',w:'chocolate',o:['cho|co|late', 'choc|o|late', 'cho|colate'],a:0,x:'cho|co|late：2 刀 ✓'},
+{t:'cut',q:'potato 怎么切？',w:'potato',o:['p|ot|ato', 'po|t|ato', 'p|otato'],a:0,x:'p|ot|ato：2 刀 ✓'},
+{t:'cut',q:'remember 怎么切？',w:'remember',o:['re|mem|ber', 'rem|em|ber', 're|member'],a:0,x:'re|mem|ber：2 刀 ✓'},
+{t:'cut',q:'together 怎么切？',w:'together',o:['to|get|her', 'tog|et|her', 'to|gether'],a:0,x:'to|get|her：2 刀 ✓'},
+{t:'cut',q:'beautiful 怎么切？',w:'beautiful',o:['beau|ti|ful', 'beaut|i|ful', 'beau|tiful'],a:0,x:'beau|ti|ful：2 刀 ✓'},
+{t:'cut',q:'adventure 怎么切？',w:'adventure',o:['a|dve|nture', 'ad|ve|nture', 'a|dventure'],a:0,x:'a|dve|nture：2 刀 ✓'},
+{t:'cut',q:'dictionary 怎么切？',w:'dictionary',o:['di|cti|on|ary', 'dic|ti|on|ary', 'di|cti|onary'],a:0,x:'di|cti|on|ary：3 刀 ✓'},
+{t:'cut',q:'education 怎么切？',w:'education',o:['e|du|ca|tion', 'ed|u|ca|tion', 'e|du|cation'],a:0,x:'e|du|ca|tion：3 刀 ✓'},
+{t:'cut',q:'information 怎么切？',w:'information',o:['in|for|ma|tion', 'inf|or|ma|tion', 'in|for|mation'],a:0,x:'in|for|ma|tion：3 刀 ✓'},
+{t:'cut',q:'imagination 怎么切？',w:'imagination',o:['i|ma|gi|na|tion', 'im|a|gi|na|tion', 'i|ma|gi|nation'],a:0,x:'i|ma|gi|na|tion：4 刀 ✓'},
+{t:'cut',q:'competition 怎么切？',w:'competition',o:['com|pe|ti|tion', 'comp|e|ti|tion', 'com|pe|tition'],a:0,x:'com|pe|ti|tion：3 刀 ✓'},
+{t:'cut',q:'invitation 怎么切？',w:'invitation',o:['i|nvi|ta|tion', 'in|vi|ta|tion', 'i|nvi|tation'],a:0,x:'i|nvi|ta|tion：3 刀 ✓'},
+{t:'cut',q:'situation 怎么切？',w:'situation',o:['si|tu|at|ion', 'sit|u|at|ion', 'si|tu|ation'],a:0,x:'si|tu|at|ion：3 刀 ✓'},
+{t:'cut',q:'pollution 怎么切？',w:'pollution',o:['pol|lu|tion', 'poll|u|tion', 'pol|lution'],a:0,x:'pol|lu|tion：2 刀 ✓'},
+{t:'cut',q:'television 怎么切？',w:'television',o:['te|le|vi|sion', 'tel|e|vi|sion', 'te|le|vision'],a:0,x:'te|le|vi|sion：3 刀 ✓'},
+{t:'cut',q:'revolution 怎么切？',w:'revolution',o:['re|vo|lu|tion', 'rev|o|lu|tion', 're|vo|lution'],a:0,x:'re|vo|lu|tion：3 刀 ✓'},
+{t:'cut',q:'envelope 怎么切？',w:'envelope',o:['en|ve|lope', 'env|e|lope', 'en|velope'],a:0,x:'en|ve|lope：2 刀 ✓'},
+{t:'cut',q:'president 怎么切？',w:'president',o:['pre|si|dent', 'pres|i|dent', 'pre|sident'],a:0,x:'pre|si|dent：2 刀 ✓'},
+{t:'cut',q:'vegetable 怎么切？',w:'vegetable',o:['ve|ge|ta|ble', 'veg|e|ta|ble', 've|ge|table'],a:0,x:'ve|ge|ta|ble：3 刀 ✓'},
+{t:'cut',q:'cinema 怎么切？',w:'cinema',o:['ci|ne|ma', 'cin|e|ma', 'ci|nema'],a:0,x:'ci|ne|ma：2 刀 ✓'},
+{t:'cut',q:'medicine 怎么切？',w:'medicine',o:['me|di|cine', 'med|i|cine', 'me|dicine'],a:0,x:'me|di|cine：2 刀 ✓'},
+{t:'cut',q:'avenue 怎么切？',w:'avenue',o:['a|ve|nue', 'av|e|nue', 'a|venue'],a:0,x:'a|ve|nue：2 刀 ✓'},
+{t:'cut',q:'bicycle 怎么切？',w:'bicycle',o:['bi|cy|cle', 'bic|y|cle', 'bi|cycle'],a:0,x:'bi|cy|cle：2 刀 ✓'},
+{t:'cut',q:'furniture 怎么切？',w:'furniture',o:['fur|ni|ture', 'furn|i|ture', 'fur|niture'],a:0,x:'fur|ni|ture：2 刀 ✓'},
+{t:'cut',q:'library 怎么切？',w:'library',o:['li|bra|ry', 'lib|ra|ry', 'li|brary'],a:0,x:'li|bra|ry：2 刀 ✓'},
+{t:'cut',q:'camera 怎么切？',w:'camera',o:['ca|me|ra', 'cam|e|ra', 'ca|mera'],a:0,x:'ca|me|ra：2 刀 ✓'},
+{t:'cut',q:'guitar 怎么切？',w:'guitar',o:['gui|tar', 'guit|ar'],a:0,x:'gui|tar：1 刀 ✓'},
+{t:'cut',q:'museum 怎么切？',w:'museum',o:['mu|s|eum', 'mus||eum', 'mu|seum'],a:0,x:'mu|s|eum：2 刀 ✓'},
+{t:'cut',q:'radio 怎么切？',w:'radio',o:['ra|d|io', 'rad||io', 'ra|dio'],a:0,x:'ra|d|io：2 刀 ✓'},
+{t:'cut',q:'video 怎么切？',w:'video',o:['vi|d|eo', 'vid||eo', 'vi|deo'],a:0,x:'vi|d|eo：2 刀 ✓'},
+{t:'cut',q:'studio 怎么切？',w:'studio',o:['stu|d|io', 'stud||io', 'stu|dio'],a:0,x:'stu|d|io：2 刀 ✓'},
+{t:'cut',q:'helicopter 怎么切？',w:'helicopter',o:['he|li|cop|ter', 'hel|i|cop|ter', 'he|li|copter'],a:0,x:'he|li|cop|ter：3 刀 ✓'},
+{t:'cut',q:'watermelon 怎么切？',w:'watermelon',o:['wa|ter|me|lon', 'wat|er|me|lon', 'wa|ter|melon'],a:0,x:'wa|ter|me|lon：3 刀 ✓'},
+{t:'cut',q:'pineapple 怎么切？',w:'pineapple',o:['pi|neap|ple', 'pin|eap|ple', 'pi|neapple'],a:0,x:'pi|neap|ple：2 刀 ✓'},
+{t:'cut',q:'strawberry 怎么切？',w:'strawberry',o:['straw|ber|ry', 'strawb|er|ry', 'straw|berry'],a:0,x:'straw|ber|ry：2 刀 ✓'},
+{t:'cut',q:'spaghetti 怎么切？',w:'spaghetti',o:['spa|ghe|tti', 'spag|he|tti', 'spa|ghetti'],a:0,x:'spa|ghe|tti：2 刀 ✓'},
+{t:'cut',q:'hamburger 怎么切？',w:'hamburger',o:['ham|bur|ger', 'hamb|ur|ger', 'ham|burger'],a:0,x:'ham|bur|ger：2 刀 ✓'},
+{t:'cut',q:'tomorrow 怎么切？',w:'tomorrow',o:['to|mor|row', 'tom|or|row', 'to|morrow'],a:0,x:'to|mor|row：2 刀 ✓'},
+{t:'cut',q:'yesterday 怎么切？',w:'yesterday',o:['yes|ter|day', 'yest|er|day', 'yes|terday'],a:0,x:'yes|ter|day：2 刀 ✓'},
+{t:'cut',q:'restaurant 怎么切？',w:'restaurant',o:['res|tau|rant', 'rest|au|rant', 'res|taurant'],a:0,x:'res|tau|rant：2 刀 ✓'},
+{t:'cut',q:'magazine 怎么切？',w:'magazine',o:['ma|ga|zine', 'mag|a|zine', 'ma|gazine'],a:0,x:'ma|ga|zine：2 刀 ✓'}];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={cut:'✂️ 找切口',choose:'🎯 选择'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w)h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！多音节切割大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ffd200;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// === Book ===
+var bp_cp=0,bp_pages=[
+  {s:'🐰😨',t:'Scared',x:'A little rabbit is sick.<br>“I am scared!” it says.'},
+  {s:'🏥😨',t:'The Hospital',x:'“Take me to the <span class="dg-hl">hospital</span>!” it says.'},
+  {s:'🐘🤗',t:'The Elephant',x:'A kind <span class="dg-hl">elephant</span> comes to help.<br>“Do not be scared, little <span class="dg-hl">animal</span>.”'},
+  {s:'🐘🤗',t:'Carry You',x:'“I will carry you.”<br>The <span class="dg-hl">elephant</span> carries the rabbit.'},
+  {s:'💻🏥',t:'The Computer',x:'At the <span class="dg-hl">hospital</span>, a <span class="dg-hl">computer</span> checks the rabbit.<br>“It is <span class="dg-hl">important</span>,” says the doctor.'},
+  {s:'👨‍👩‍👧🍌',t:'We Are Here',x:'The rabbit’s <span class="dg-hl">family</span> brings a <span class="dg-hl">banana</span> and a <span class="dg-hl">tomato</span>.<br>“We are here with you.”'},
+  {s:'🦋😊',t:'A Butterfly',x:'A <span class="dg-hl">butterfly</span> lands on the rabbit’s nose.<br>The rabbit smiles.'},
+  {s:'😊🐰',t:'Glad',x:'“I feel better now! I am not scared.”<br>What a good day!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">hospital <span class="speak-btn" onclick="spk(&#39;hospital&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">医院 🏥</div></div><div class="gi"><div class="gw">elephant <span class="speak-btn" onclick="spk(&#39;elephant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">大象 🐘</div></div><div class="gi"><div class="gw">animal <span class="speak-btn" onclick="spk(&#39;animal&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">动物 🐾</div></div><div class="gi"><div class="gw">computer <span class="speak-btn" onclick="spk(&#39;computer&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">电脑 💻</div></div><div class="gi"><div class="gw">important <span class="speak-btn" onclick="spk(&#39;important&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">重要 ⭐</div></div><div class="gi"><div class="gw">family <span class="speak-btn" onclick="spk(&#39;family&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">家庭 👨‍👩‍👧</div></div><div class="gi"><div class="gw">banana <span class="speak-btn" onclick="spk(&#39;banana&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">香蕉 🍌</div></div><div class="gi"><div class="gw">tomato <span class="speak-btn" onclick="spk(&#39;tomato&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">番茄 🍅</div></div><div class="gi"><div class="gw">butterfly <span class="speak-btn" onclick="spk(&#39;butterfly&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">multi</div><div class="gz">蝴蝶 🦋</div></div></div>'},
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/decode34-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+wbRender();initQ();
+</script>
+</body></html>

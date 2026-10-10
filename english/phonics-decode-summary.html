@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>解码总结：见长词会读 · 分步闯关 | 自然拼读·解码</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+
+/* 8 步总览 */
+.flow8{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.flow8 .fstep{display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 12px;font-size:.82em}.flow8 .fstep .fn{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;font-size:.85em;flex-shrink:0}
+.flow8 .fstep.c1 .fn{background:rgba(105,240,174,.2);color:#69f0ae}.flow8 .fstep.c2 .fn{background:rgba(255,210,0,.2);color:#ffd200}.flow8 .fstep.c3 .fn{background:rgba(255,138,101,.2);color:#ff8a65}.flow8 .fstep.c4 .fn{background:rgba(79,195,247,.2);color:#4fc3f7}
+.flow8 .fstep.active{border-color:#ffd200;background:rgba(255,210,0,.1)}
+
+/* 词池 */
+.pool{display:flex;flex-direction:column;gap:8px;max-width:640px;margin:0 auto}
+.pool-grp{font-size:.8em;color:#ff8a65;font-weight:bold;margin-top:4px}
+.pool-btns{display:flex;gap:6px;flex-wrap:wrap}
+.pool-btn{padding:8px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.pool-btn:hover{border-color:#ffd200}.pool-btn.on{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200;font-weight:bold}
+
+/* 分步向导 */
+.guide{max-width:640px;margin:0 auto}
+.guide-word{text-align:center;font-size:2.2em;font-weight:bold;color:#ffd200;letter-spacing:2px;margin:8px 0}
+.guide-ipa{text-align:center;color:#4fc3f7;font-size:.9em;margin-bottom:8px}
+.step-track{display:flex;gap:4px;justify-content:center;margin:12px 0;flex-wrap:wrap}.step-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.12)}.step-dot.done{background:#69f0ae}.step-dot.cur{background:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.6)}
+.step-card{background:rgba(0,0,0,.3);border:1.5px solid rgba(255,255,255,.15);border-radius:16px;padding:18px 16px;margin:10px 0}
+.step-tag{display:inline-block;background:rgba(79,195,247,.15);color:#4fc3f7;border:1px solid rgba(79,195,247,.4);border-radius:14px;padding:2px 10px;font-size:.72em;font-weight:bold;margin-bottom:8px}
+.step-q{font-size:1.05em;line-height:1.6;margin-bottom:12px}
+.step-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.step-opt{padding:10px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.95em;transition:all .3s}.step-opt:hover:not(.locked){border-color:#ffd200}.step-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.step-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.step-opt.locked{pointer-events:none}
+.step-fb{min-height:26px;text-align:center;font-size:.9em;margin-top:10px;font-weight:bold;line-height:1.5}
+.guide-nav{display:flex;gap:10px;justify-content:center;margin:12px 0;align-items:center}.guide-nav .qi{color:#888;font-size:.9em}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.done-banner{text-align:center;padding:20px;border-radius:18px;background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25)}
+
+/* 口诀备忘 */
+.memo-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,210,0,.35);border-radius:16px;padding:20px;max-width:560px;margin:0 auto}.memo-rule{margin:10px 0;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:12px;font-size:.95em;line-height:1.7}.memo-rule b{color:#ffd200}.memo-example{color:#81c784;font-size:.92em}.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+
+@media print{body{background:#fff;color:#111}.stars,.pool,.guide-nav,.speak-btn,.print-note,.step-opts{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.memo-card{background:#fff;border:2px solid #333;color:#111}.memo-card b{color:#c70}.memo-card .memo-rule{background:#f5f5f5}.memo-example{color:#070}.guide-word,h1,h2{color:#111}.step-card{background:#fff;border-color:#ccc;color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .flow8 .fstep{padding:5px 8px;font-size:.72em}
+  .pool-btn{padding:9px 12px;font-size:.82em;min-height:38px;border-radius:16px}
+  .guide-word{font-size:1.6em}
+  .step-card{padding:14px 10px}
+  .step-q{font-size:.92em}
+  .step-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .step-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .step-opt:active:not(.locked){border-color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .memo-card{padding:14px}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .step-opts{grid-template-columns:1fr}
+  .step-opt{font-size:.82em;min-height:44px}
+  .guide-word{font-size:1.4em}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🧭 解码总结 · 见长词会读</h1><p class="subtitle">8 步一条线 · 选一个长词，一步步自己把它读出来！</p>
+
+<!-- ===== 8 步总览 ===== -->
+<div class="glass">
+<h2>🗺️ 解码 8 步一条线</h2>
+<div class="flow8" id="flow8">
+<div class="fstep c1"><span class="fn">1</span>大块预处理</div>
+<div class="fstep c2"><span class="fn">2</span>数元音核</div>
+<div class="fstep c2"><span class="fn">3</span>划一刀切</div>
+<div class="fstep c3"><span class="fn">4</span>判类型</div>
+<div class="fstep c3"><span class="fn">5</span>定音</div>
+<div class="fstep c3"><span class="fn">6</span>词缀定音</div>
+<div class="fstep c4"><span class="fn">7</span>定重音</div>
+<div class="fstep c4"><span class="fn">8</span>读出来</div>
+</div>
+<div class="story-speech"><p>看见长词别慌，<b style="color:#ffd200">顺着这条线走</b>：先砍大块 → 数元音核 → 划一刀切 → 判类型 → 定音 → 定重音 → 大声读！下面选个词，<b style="color:#ff8a65">每一步你自己做</b>，做对才前进。</p></div>
+</div>
+
+<!-- ===== 分步向导 ===== -->
+<div class="glass">
+<h2>🔧 选个长词，跟着走</h2>
+<div class="pool">
+<div class="pool-grp">🟢 复合词</div>
+<div class="pool-btns"><button class="pool-btn on" id="pb0" onclick="selWord(0)">sunset 🌅</button><button class="pool-btn" id="pb1" onclick="selWord(1)">sunshine ☀️</button><button class="pool-btn" id="pb2" onclick="selWord(2)">cowboy 🤠</button></div>
+<div class="pool-grp">🟢 前后缀</div>
+<div class="pool-btns"><button class="pool-btn" id="pb3" onclick="selWord(3)">rewrite ✍️</button><button class="pool-btn" id="pb4" onclick="selWord(4)">hopeful 🍀</button></div>
+<div class="pool-grp">🟢 辅音 -le</div>
+<div class="pool-btns"><button class="pool-btn" id="pb5" onclick="selWord(5)">table 🪑</button></div>
+<div class="pool-grp">🔴 切割类</div>
+<div class="pool-btns"><button class="pool-btn" id="pb6" onclick="selWord(6)">rabbit(VCCV) 🐰</button><button class="pool-btn" id="pb7" onclick="selWord(7)">kitten(VCCV) 🐱</button><button class="pool-btn" id="pb8" onclick="selWord(8)">tiger(VCV) 🐯</button><button class="pool-btn" id="pb9" onclick="selWord(9)">camel(VCV) 🐫</button><button class="pool-btn" id="pb10" onclick="selWord(10)">lion(V-V) 🦁</button><button class="pool-btn" id="pb11" onclick="selWord(11)">banana(多音节) 🍌</button><button class="pool-btn" id="pb12" onclick="selWord(12)">tomato(多音节) 🍅</button></div>
+<div class="pool-grp">🔵 定音类</div>
+<div class="pool-btns"><button class="pool-btn" id="pb13" onclick="selWord(13)">market(R控) 🛒</button><button class="pool-btn" id="pb14" onclick="selWord(14)">garden(R控) 🌷</button><button class="pool-btn" id="pb15" onclick="selWord(15)">corner(R控) 📐</button><button class="pool-btn" id="pb16" onclick="selWord(16)">enjoy(双元音) 😊</button><button class="pool-btn" id="pb17" onclick="selWord(17)">outside(双元音) 🌳</button><button class="pool-btn" id="pb18" onclick="selWord(18)">city(软c) 🏙️</button></div>
+<div class="pool-grp">🔵 词缀定音</div>
+<div class="pool-btns"><button class="pool-btn" id="pb19" onclick="selWord(19)">station(-tion) 🚉</button><button class="pool-btn" id="pb20" onclick="selWord(20)">picture(-ture) 🖼️</button></div>
+</div>
+
+<div class="guide">
+<div class="guide-word" id="gw"></div>
+<div class="guide-ipa" id="gipa"></div>
+<div class="step-track" id="track"></div>
+<div class="step-card">
+<div class="step-tag" id="stag"></div>
+<div class="step-q" id="sq"></div>
+<div class="step-opts" id="so"></div>
+<div class="step-fb" id="sfb"></div>
+</div>
+<div class="guide-nav">
+<button class="btn btn-outline" id="prevBtn" onclick="gPrev()">⬅ 上一步</button>
+<span class="qi" id="qi"></span>
+<button class="btn btn-gold" id="nextBtn" onclick="gNext()">下一步 ➡</button>
+</div>
+</div>
+</div>
+
+<!-- ===== 口诀 ===== -->
+<div class="glass">
+<h2>💳 解码口诀</h2>
+<div class="memo-card">
+<div class="memo-rule"><b>🟢 大块</b>：复合词中间切 · 前后缀整体切 · -le 前倒数1字母切<br><span class="memo-example">sun|set · re|write · ta|ble</span></div>
+<div class="memo-rule"><b>🟡 元音核</b>：组合/R控算一个，静音 e 不算，几个核 = 几个音节</div>
+<div class="memo-rule"><b>🔴 切割</b>：VCCV 正中 · VCV 先长后短 · V-V 中间<br><span class="memo-example">rab|bit · ti|ger→cam|el · li|on</span></div>
+<div class="memo-rule"><b>🔵 发音</b>：判类型（短/长/R控/双）→ 定音（多音字母看后面）→ 定重音（名词一/动词二/前后缀不重）</div>
+<div class="memo-rule" style="border:1px dashed rgba(255,210,0,.4)"><b>一条线口诀：</b>先砍大块 → 数元音核 → 划一刀切 → 判类型 · 定音 · 定重音 → 大声读！</div>
+</div>
+<p class="print-note">🖨️ 可截图 / 打印保存（打印自动变白底）</p>
+</div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={'sunset':'words/sunset.mp3','sunshine':'words/sunshine.mp3','rewrite':'words/rewrite.mp3','hopeful':'words/hopeful.mp3','table':'words/table.mp3','rabbit':'words/rabbit.mp3','tiger':'words/tiger.mp3','camel':'words/camel.mp3','lion':'words/lion.mp3','banana':'words/banana.mp3','market':'words/market.mp3','enjoy':'words/enjoy.mp3','cowboy':'words/cowboy.mp3','kitten':'words/kitten.mp3','tomato':'words/tomato.mp3','garden':'words/garden.mp3','corner':'words/corner.mp3','outside':'words/outside.mp3','city':'words/city.mp3','station':'words/station.mp3','picture':'words/picture.mp3'};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var f=new Audio(AUDIO_BASE+p+'?v=1');f.play().catch(function(){});f.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=f;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === 词池数据：每词 7 步（大块→元音核→切割→类型→定音→重音→读出）===
+var WB=[
+{w:'sunset',emoji:'🌅',ipa:'/ˈsʌnset/',steps:[
+{q:'① 大块：sunset 是什么结构？',o:['复合词（两个词拼的）','带前缀/后缀','辅音 -le 结尾','都不是，直接切'],a:0,why:'sun + set 两个词拼的 → 复合词，两词中间切'},
+{q:'② 元音核：几个元音核 = 几个音节？',o:['1 个','2 个','3 个'],a:1,why:'u、e 两个元音核 → 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['sun|set','su|nset','suns|et'],a:0,why:'复合词边界 → sun|set'},
+{q:'④ 类型：sun 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:0,why:'u 被 n 挡住 → 短元音'},
+{q:'⑤ 定音：sun 读 /sʌn/，set 读 /set/，对吗？',o:['对，短音','不对'],a:0,why:'短 u → /ʌ/，短 e → /e/，都对'},
+{q:'⑥ 重音：重读哪个音节？',o:['SUN-set（第一）','sun-SET（第二）'],a:0,why:'复合词重第一部分 SUN'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'sunset = /ˈsʌnset/ 🌅'}
+]},
+{w:'sunshine',emoji:'☀️',ipa:'/ˈsʌnʃaɪn/',steps:[
+{q:'① 大块：sunshine 是什么结构？',o:['复合词','带前缀/后缀','辅音 -le','都不是'],a:0,why:'sun + shine 两个词拼的 → 复合词，中间切'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'u、i_e 两个元音核（词尾 e 静音不算）→ 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['sun|shine','su|nshine','sunsh|ine'],a:0,why:'复合词边界 → sun|shine'},
+{q:'④ 类型：shine 的元音是什么类型？',o:['短元音','长元音（魔法E）','R控','双元音'],a:1,why:'i_e 是魔法 E → 长元音'},
+{q:'⑤ 定音：shine 的 i_e 读什么？',o:['/ɪ/','/aɪ/'],a:1,why:'魔法 E → i 喊名字 /aɪ/'},
+{q:'⑥ 重音：重读哪个音节？',o:['SUN-shine（第一）','sun-SHINE（第二）'],a:0,why:'复合词重第一部分 SUN'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'sunshine = /ˈsʌnʃaɪn/ ☀️'}
+]},
+{w:'rewrite',emoji:'✍️',ipa:'/ˌriːˈraɪt/',steps:[
+{q:'① 大块：rewrite 是什么结构？',o:['复合词','带前缀 re-','辅音 -le','都不是'],a:1,why:'有前缀 re- → 整体切 re|write'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'e、i_e 两个元音核 → 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['rew|rite','re|write','rewr|ite'],a:1,why:'前缀边界 → re|write'},
+{q:'④ 类型：write 的元音是什么类型？',o:['短元音','长元音（魔法E）','R控','双元音'],a:1,why:'i_e 是魔法 E → 长元音'},
+{q:'⑤ 定音：re 读 /riː/，write 读 /raɪt/，对吗？',o:['对','不对'],a:0,why:'开音节 e → /iː/，魔法 E i_e → /aɪ/，都对'},
+{q:'⑥ 重音：重读哪个音节？',o:['RE-write（第一）','re-WRITE（第二）'],a:1,why:'前缀 re- 不重读 → 重 WRITE'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'rewrite = /ˌriːˈraɪt/ ✍️'}
+]},
+{w:'hopeful',emoji:'🍀',ipa:'/ˈhəʊpfl/',steps:[
+{q:'① 大块：hopeful 是什么结构？',o:['复合词','带前缀','带后缀 -ful','辅音 -le'],a:2,why:'有后缀 -ful → 整体切 hope|ful'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'o_e、u 两个元音核 → 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['hop|eful','hope|ful','hopef|ul'],a:1,why:'后缀边界 → hope|ful'},
+{q:'④ 类型：hope 的元音是什么类型？',o:['短元音','长元音（魔法E）','R控','双元音'],a:1,why:'o_e 是魔法 E → 长元音'},
+{q:'⑤ 定音：hope 的 o_e 读什么？',o:['/ɒ/','/əʊ/'],a:1,why:'魔法 E → o 喊名字 /əʊ/'},
+{q:'⑥ 重音：重读哪个音节？',o:['HOPE-ful（第一）','hope-FUL（第二）'],a:0,why:'后缀 -ful 不重读 → 重 HOPE'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'hopeful = /ˈhəʊpfl/ 🍀'}
+]},
+{w:'table',emoji:'🪑',ipa:'/ˈteɪbl/',steps:[
+{q:'① 大块：table 是什么结构？',o:['复合词','带前后缀','辅音 -le 结尾','都不是'],a:2,why:'词尾辅音 + le → 在 le 前倒数 1 字母切'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'a 一个元音核 + -le 自成一节 → 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['t|able','ta|ble','tab|le'],a:1,why:'le 前倒数 1 字母切 → ta|ble'},
+{q:'④ 类型：ta 的元音是什么类型？',o:['短元音','长元音（开音节）','R控','双元音'],a:1,why:'ta 以元音结尾 → 开音节长音'},
+{q:'⑤ 定音：ta 的 a 读什么？',o:['/æ/','/eɪ/'],a:1,why:'开音节 → a 喊名字 /eɪ/'},
+{q:'⑥ 重音：重读哪个音节？',o:['TA-ble（第一）','ta-BLE（第二）'],a:0,why:'重读第一音节 TA'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'table = /ˈteɪbl/ 🪑'}
+]},
+{w:'rabbit',emoji:'🐰',ipa:'/ˈræbɪt/',steps:[
+{q:'① 大块：rabbit 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'a、i 两个元音核 → 2 个音节'},
+{q:'③ 切割：两个元音中间有 bb（VCCV），怎么切？',o:['ra|bbit','rab|bit','rabb|it'],a:1,why:'VCCV 从正中切 → rab|bit'},
+{q:'④ 类型：rab 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:0,why:'a 被 b 挡住 → 短元音'},
+{q:'⑤ 定音：rab 读 /ræb/，bit 读 /bɪt/，对吗？',o:['对，都短音','不对'],a:0,why:'短 a → /æ/，短 i → /ɪ/，都对'},
+{q:'⑥ 重音：重读哪个音节？',o:['RAB-bit（第一）','rab-BIT（第二）'],a:0,why:'重读第一音节 RAB'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'rabbit = /ˈræbɪt/ 🐰'}
+]},
+{w:'tiger',emoji:'🐯',ipa:'/ˈtaɪɡə/',steps:[
+{q:'① 大块：tiger 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'i、er 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 1 个辅音 g（VCV），先试哪种？',o:['ti|ger（长音）','tig|er（短音）'],a:0,why:'VCV 先试长音 → ti|ger'},
+{q:'④ 类型：ti 的元音是什么类型？',o:['短元音','长元音（开音节）','R控','双元音'],a:1,why:'ti 以元音结尾 → 开音节长音'},
+{q:'⑤ 定音：ti 的 i 读什么？',o:['/ɪ/','/aɪ/'],a:1,why:'开音节 → i 喊名字 /aɪ/'},
+{q:'⑥ 重音：重读哪个音节？',o:['TI-ger（第一）','ti-GER（第二）'],a:0,why:'重读第一音节 TI'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'tiger = /ˈtaɪɡə/ 🐯'}
+]},
+{w:'camel',emoji:'🐫',ipa:'/ˈkæməl/',steps:[
+{q:'① 大块：camel 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'a、e 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 1 个辅音 m（VCV），先试长音 ca|mel，对吗？',o:['对，先试长音','不对'],a:0,why:'VCV 先试长音 ca|mel，但 ca 不读 /keɪ/ → 改短音'},
+{q:'④ 类型：cam 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:0,why:'长音试不成，改闭音节 → cam 短元音'},
+{q:'⑤ 定音：cam 读 /kæm/，el 读 /əl/，对吗？',o:['对','不对'],a:0,why:'短 a → /æ/，弱读 el → /əl/，都对'},
+{q:'⑥ 重音：重读哪个音节？',o:['CAM-el（第一）','cam-EL（第二）'],a:0,why:'重读第一音节 CAM'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'camel = /ˈkæməl/ 🐫'}
+]},
+{w:'lion',emoji:'🦁',ipa:'/ˈlaɪən/',steps:[
+{q:'① 大块：lion 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'i、o 两个元音核（相邻）→ 2 个音节'},
+{q:'③ 切割：两个元音相邻（V-V），怎么切？',o:['li|on（中间切）','l|ion','lio|n'],a:0,why:'V-V 两元音中间切 → li|on'},
+{q:'④ 类型：li 的元音是什么类型？',o:['短元音','长元音（开音节）','R控','双元音'],a:1,why:'li 以元音结尾 → 开音节长音'},
+{q:'⑤ 定音：li 的 i 读什么？',o:['/ɪ/','/aɪ/'],a:1,why:'开音节 → i 喊名字 /aɪ/'},
+{q:'⑥ 重音：重读哪个音节？',o:['LI-on（第一）','li-ON（第二）'],a:0,why:'重读第一音节 LI'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'lion = /ˈlaɪən/ 🦁'}
+]},
+{w:'banana',emoji:'🍌',ipa:'/bəˈnɑːnə/',steps:[
+{q:'① 大块：banana 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['2 个','3 个','4 个'],a:1,why:'a、a、a 三个元音核 → 3 个音节'},
+{q:'③ 切割：三个音节，切几刀、怎么切？',o:['ba|na|na（两刀）','ban|ana','ba|nana'],a:0,why:'每个元音核一个音节 → ba|na|na'},
+{q:'④ 类型：三个都是开音节（元音结尾），对吗？',o:['对','不对'],a:0,why:'ba、na、na 都以元音结尾 → 开音节'},
+{q:'⑤ 定音：首尾的 a 读 /ə/，中间的 a 读 /ɑː/，对吗？',o:['对','不对'],a:0,why:'弱读 → /ə/，重读 → /ɑː/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['BA-na-na（第一）','ba-NA-na（中间）','ba-na-NA（最后）'],a:1,why:'重读中间 NA'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'banana = /bəˈnɑːnə/ 🍌'}
+]},
+{w:'market',emoji:'🛒',ipa:'/ˈmɑːkɪt/',steps:[
+{q:'① 大块：market 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'ar、e 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 rk（VCCV），怎么切？',o:['ma|rket','mar|ket','mark|et'],a:1,why:'VCCV 正中切，且不拆 R控 ar → mar|ket'},
+{q:'④ 类型：mar 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:2,why:'a + r → R控，r 管住 → /ɑː/'},
+{q:'⑤ 定音：mar 读 /mɑː/，ket 读 /kɪt/，对吗？',o:['对','不对'],a:0,why:'R控 ar → /ɑː/，短 e → /ɪ/（弱读），对'},
+{q:'⑥ 重音：重读哪个音节？',o:['MAR-ket（第一）','mar-KET（第二）'],a:0,why:'重读第一音节 MAR'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'market = /ˈmɑːkɪt/ 🛒'}
+]},
+{w:'enjoy',emoji:'😊',ipa:'/ɪnˈdʒɔɪ/',steps:[
+{q:'① 大块：enjoy 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'e、oy 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 n 和 j（VCCV），怎么切？',o:['en|joy','e|njoy','enj|oy'],a:0,why:'VCCV 正中切 → en|joy'},
+{q:'④ 类型：joy 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:3,why:'oy 两个音滑一起 → 双元音 /ɔɪ/'},
+{q:'⑤ 定音：en 读 /ɪn/，joy 读 /dʒɔɪ/，对吗？',o:['对','不对'],a:0,why:'弱读 e → /ɪ/，双元音 oy → /ɔɪ/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['EN-joy（第一）','en-JOY（第二）'],a:1,why:'重读第二音节 JOY'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'enjoy = /ɪnˈdʒɔɪ/ 😊'}
+]},
+{w:'cowboy',emoji:'🤠',ipa:'/ˈkaʊbɔɪ/',steps:[
+{q:'① 大块：cowboy 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是'],a:0,why:'cow + boy 两个词拼的 → 复合词，中间切'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'ow、oy 两个元音核 → 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['cow|boy','co|wboy','cowb|oy'],a:0,why:'复合词边界 → cow|boy'},
+{q:'④ 类型：cow 的 ow 是什么类型？',o:['短元音','长元音','R控','双元音'],a:3,why:'ow 两个音滑一起 → 双元音 /aʊ/'},
+{q:'⑤ 定音：cow 读 /kaʊ/，boy 读 /bɔɪ/，对吗？',o:['对','不对'],a:0,why:'ow→/aʊ/，oy→/ɔɪ/，都对'},
+{q:'⑥ 重音：重读哪个音节？',o:['COW-boy（第一）','cow-BOY（第二）'],a:0,why:'复合词重第一部分 COW'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'cowboy = /ˈkaʊbɔɪ/ 🤠'}
+]},
+{w:'kitten',emoji:'🐱',ipa:'/ˈkɪtn/',steps:[
+{q:'① 大块：kitten 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'i、e 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 tt（VCCV），怎么切？',o:['ki|tten','kit|ten','kitt|en'],a:1,why:'VCCV 正中切 → kit|ten'},
+{q:'④ 类型：kit 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:0,why:'i 被 t 挡住 → 短元音 /ɪ/'},
+{q:'⑤ 定音：kit 读 /kɪt/，ten 读 /tn/，对吗？',o:['对','不对'],a:0,why:'短 i → /ɪ/，弱读 e → /ə/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['KIT-ten（第一）','kit-TEN（第二）'],a:0,why:'重读第一音节 KIT'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'kitten = /ˈkɪtn/ 🐱'}
+]},
+{w:'tomato',emoji:'🍅',ipa:'/təˈmɑːtəʊ/',steps:[
+{q:'① 大块：tomato 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['2 个','3 个','4 个'],a:1,why:'o、a、o 三个元音核 → 3 个音节'},
+{q:'③ 切割：三个音节，怎么切？',o:['to|ma|to（两刀）','tom|ato','to|mato'],a:0,why:'每个元音核一个音节 → to|ma|to'},
+{q:'④ 类型：三个音节都是开音节，对吗？',o:['对','不对'],a:0,why:'to、ma、to 都以元音结尾 → 开音节'},
+{q:'⑤ 定音：首尾 o 读 /ə/ 和 /əʊ/，中间 a 读 /ɑː/，对吗？',o:['对','不对'],a:0,why:'弱读 → /ə/，重读 → /ɑː/，开音节 o → /əʊ/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['TO-ma-to（第一）','to-MA-to（中间）','to-ma-TO（最后）'],a:1,why:'重读中间 MA'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'tomato = /təˈmɑːtəʊ/ 🍅'}
+]},
+{w:'garden',emoji:'🌷',ipa:'/ˈɡɑːdn/',steps:[
+{q:'① 大块：garden 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'ar、e 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 rd（VCCV），怎么切？',o:['ga|rden','gar|den','gard|en'],a:1,why:'VCCV 正中切，且不拆 R控 ar → gar|den'},
+{q:'④ 类型：gar 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:2,why:'a + r → R控，r 管住 → /ɑː/'},
+{q:'⑤ 定音：gar 读 /ɡɑː/，den 读 /dn/，对吗？',o:['对','不对'],a:0,why:'R控 ar → /ɑː/，弱读 e → /ə/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['GAR-den（第一）','gar-DEN（第二）'],a:0,why:'重读第一音节 GAR'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'garden = /ˈɡɑːdn/ 🌷'}
+]},
+{w:'corner',emoji:'📐',ipa:'/ˈkɔːnə/',steps:[
+{q:'① 大块：corner 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'or、er 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 rn（VCCV），怎么切？',o:['co|rner','cor|ner','corn|er'],a:1,why:'VCCV 正中切，且不拆 R控 or → cor|ner'},
+{q:'④ 类型：cor 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:2,why:'o + r → R控，r 管住 → /ɔː/'},
+{q:'⑤ 定音：cor 读 /kɔː/，ner 读 /nə/，对吗？',o:['对','不对'],a:0,why:'R控 or → /ɔː/，弱读 er → /ə/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['COR-ner（第一）','cor-NER（第二）'],a:0,why:'重读第一音节 COR'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'corner = /ˈkɔːnə/ 📐'}
+]},
+{w:'outside',emoji:'🌳',ipa:'/ˌaʊtˈsaɪd/',steps:[
+{q:'① 大块：outside 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是'],a:0,why:'out + side 两个词拼的 → 复合词，中间切'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'ou、i_e 两个元音核 → 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['out|side','ou|tside','outs|ide'],a:0,why:'复合词边界 → out|side'},
+{q:'④ 类型：side 的元音是什么类型？',o:['短元音','长元音（魔法E）','R控','双元音'],a:1,why:'i_e 是魔法 E → 长元音'},
+{q:'⑤ 定音：out 读 /aʊt/，side 读 /saɪd/，对吗？',o:['对','不对'],a:0,why:'ou→/aʊ/，魔法E i_e→/aɪ/，对'},
+{q:'⑥ 重音：重读哪个音节？',o:['OUT-side（第一）','out-SIDE（第二）'],a:1,why:'重读第二音节 SIDE'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'outside = /ˌaʊtˈsaɪd/ 🌳'}
+]},
+{w:'city',emoji:'🏙️',ipa:'/ˈsɪti/',steps:[
+{q:'① 大块：city 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'i、y 两个元音核 → 2 个音节'},
+{q:'③ 切割：中间 t（VCV），怎么切？',o:['ci|ty','cit|y','c|ity'],a:0,why:'VCV 先试长音 → ci|ty'},
+{q:'④ 类型：ci 的 i 读什么音？',o:['短音 /ɪ/','长音 /aɪ/'],a:0,why:'ci 以元音结尾，本应读长音，但 city 是例外 → 读短音 /ɪ/'},
+{q:'⑤ 定音：ci 的 c 读什么？ty 的 y 读什么？',o:['/s/、/ɪ/','/k/、/aɪ/'],a:0,why:'软 c（i 前）→ /s/，词尾 y → /ɪ/'},
+{q:'⑥ 重音：重读哪个音节？',o:['CI-ty（第一）','ci-TY（第二）'],a:0,why:'重读第一音节 CI'},
+{q:'⑦ 读出来！',o:['🔊 我会读了'],a:0,why:'city = /ˈsɪti/ 🏙️'}
+]},
+{w:'station',emoji:'🚉',ipa:'/ˈsteɪʃn/',steps:[
+{q:'① 大块：station 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'a、io 两个元音核（-tion 算一个核）→ 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['sta|tion','st|ation','stat|ion'],a:0,why:'词缀 -tion 整体切 → sta|tion'},
+{q:'④ 类型：sta 的元音是什么类型？',o:['短元音','长元音（开音节）','R控','双元音'],a:1,why:'sta 以元音结尾 → 开音节长音'},
+{q:'⑤ 定音：sta 的 a 读什么？',o:['/æ/','/eɪ/'],a:1,why:'开音节 → a 喊名字 /eɪ/'},
+{q:'⑥ 词缀定音：-tion 读什么？',o:['/ʃn/（一个音）','/ti-ɒn/（两个音）'],a:0,why:'-tion 是词缀，读 /ʃn/ 一个音'},
+{q:'⑦ 重音：重读哪个音节？',o:['STA-tion（第一）','sta-TION（第二）'],a:0,why:'重读第一音节 STA'},
+{q:'⑧ 读出来！',o:['🔊 我会读了'],a:0,why:'station = /ˈsteɪʃn/ 🚉'}
+]},
+{w:'picture',emoji:'🖼️',ipa:'/ˈpɪktʃə/',steps:[
+{q:'① 大块：picture 是什么结构？',o:['复合词','带前后缀','辅音 -le','都不是，直接切'],a:3,why:'都不是 → 进入元音核 + 切割'},
+{q:'② 元音核：几个音节？',o:['1 个','2 个','3 个'],a:1,why:'i、ure 两个元音核（-ture 算一个核）→ 2 个音节'},
+{q:'③ 切割：在哪里切？',o:['pic|ture','pi|cture','pict|ure'],a:0,why:'词缀 -ture 整体切 → pic|ture'},
+{q:'④ 类型：pic 的元音是什么类型？',o:['短元音','长元音','R控','双元音'],a:0,why:'i 被 c 挡住 → 短元音 /ɪ/'},
+{q:'⑤ 定音：pic 读 /pɪk/，对吗？',o:['对','不对'],a:0,why:'短 i → /ɪ/，对'},
+{q:'⑥ 词缀定音：-ture 读什么？',o:['/tʃə/（一个音）','/tu-re/（两个音）'],a:0,why:'-ture 是词缀，读 /tʃə/ 一个音'},
+{q:'⑦ 重音：重读哪个音节？',o:['PIC-ture（第一）','pic-TURE（第二）'],a:0,why:'重读第一音节 PIC'},
+{q:'⑧ 读出来！',o:['🔊 我会读了'],a:0,why:'picture = /ˈpɪktʃə/ 🖼️'}
+]}
+];
+var wbIdx=0,wbStep=0,wbDone=[];
+function resetDone(){wbDone=[];for(var i=0;i<WB[wbIdx].steps.length;i++)wbDone.push(false);}
+function selWord(i){
+  wbIdx=i;wbStep=0;resetDone();
+  document.querySelectorAll('.pool-btn').forEach(function(b){b.classList.remove('on')});
+  var pb=document.getElementById('pb'+i);if(pb)pb.classList.add('on');
+  wbRender();
+}
+function wbRender(){
+  var it=WB[wbIdx];
+  document.getElementById('gw').innerHTML=it.w+' '+it.emoji+' <span class="speak-btn" onclick="spk(\''+it.w+'\')" style="width:34px;height:34px;font-size:.8em">🔊</span>';
+  document.getElementById('gipa').textContent=it.ipa;
+  // 步骤进度
+  var tr='';for(var j=0;j<it.steps.length;j++){var c='step-dot';if(wbDone[j])c+=' done';else if(j===wbStep)c+=' cur';tr+='<span class="'+c+'"></span>';}
+  document.getElementById('track').innerHTML=tr;
+  // 高亮 8 步总览
+  var flowStep=Math.min(wbStep,7);document.querySelectorAll('#flow8 .fstep').forEach(function(f,idx){f.classList.toggle('active',idx===flowStep)});
+  // 完成横幅
+  if(wbStep>=it.steps.length){
+    document.getElementById('stag').textContent='🎉 完成！';
+    document.getElementById('sq').innerHTML='你已经自己读出来了：<span class="gold">'+it.w+'</span> = '+it.ipa;
+    document.getElementById('so').innerHTML='<button class="step-opt" onclick="spk(\''+it.w+'\')">🔊 再听一遍</button><button class="step-opt" onclick="selWord((wbIdx+1)%WB.length)">➡ 下一个词</button>';
+    document.getElementById('sfb').innerHTML='<span class="green">✅ 太棒了！顺着 8 步，长词你自己读出来了！</span>';
+    document.getElementById('prevBtn').disabled=false;
+    document.getElementById('nextBtn').disabled=true;
+    document.getElementById('qi').textContent='✓ 完成';
+    return;
+  }
+  var st=it.steps[wbStep];
+  document.getElementById('stag').textContent='第 '+(wbStep+1)+' 步 / 共 '+it.steps.length+' 步';
+  document.getElementById('sq').textContent=st.q;
+  var oh='';
+  for(var k=0;k<st.o.length;k++){
+    var cc='step-opt';
+    if(wbDone[wbStep]){cc+=' locked'; if(k===st.a)cc+=' correct';}
+    oh+='<button class="'+cc+'" onclick="gPick('+k+')">'+st.o[k]+'</button>';
+  }
+  document.getElementById('so').innerHTML=oh;
+  document.getElementById('sfb').innerHTML = wbDone[wbStep] ? '<span class="green">✅ 对啦！</span> '+st.why : '';
+  document.getElementById('prevBtn').disabled=(wbStep===0);
+  document.getElementById('nextBtn').disabled=!wbDone[wbStep];
+  document.getElementById('qi').textContent=(wbStep+1)+' / '+it.steps.length;
+}
+function gPick(k){
+  if(wbDone[wbStep])return;
+  var st=WB[wbIdx].steps[wbStep];
+  if(k===st.a){
+    wbDone[wbStep]=true;
+    document.getElementById('sfb').innerHTML='<span class="green">✅ 对啦！</span> '+st.why;
+    document.getElementById('nextBtn').disabled=false;
+    var btns=document.querySelectorAll('#so .step-opt');
+    btns.forEach(function(b,i){b.classList.add('locked');if(i===st.a)b.classList.add('correct')});
+    if(st.o.length===1){setTimeout(function(){gNext()},400);}
+  }else{
+    document.getElementById('sfb').innerHTML='<span class="red">❌ 再想想</span>（想想这个长词该怎么拆）';
+    var btns=document.querySelectorAll('#so .step-opt');
+    btns[k].classList.add('wrong');
+    setTimeout(function(){wbRender()},600);
+  }
+}
+function gNext(){if(wbStep<WB[wbIdx].steps.length){wbStep++;wbRender();}}
+function gPrev(){if(wbStep>0){wbStep--;wbRender();}}
+
+// === Init ===
+selWord(0);
+</script>
+</body></html>

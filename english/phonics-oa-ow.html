@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>/əʊ/ 小队 · oa ow oe | 自然拼读 Stage 6</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #ffd200)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.sort-spk{width:22px!important;height:22px!important;font-size:.6em!important}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ef9a9a;color:#ef9a9a}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(239,154,154,.06);border-left:3px solid #ef9a9a;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+
+/* Lab */
+.oa-ow{color:#ffd200!important;text-decoration:underline;text-underline-offset:4px;font-weight:bold}
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(255,210,0,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px;overflow-wrap:break-word;word-break:break-word}.lab-card .word .cn-c{color:#81c784}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ffd200}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ffd200;color:#ffd200;background:rgba(255,210,0,.1)}
+
+/* Sort */
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+
+/* Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ef9a9a;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ef9a9a}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2)}
+
+/* Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(239,154,154,.3))}.book-title{font-size:1.4em;color:#ef9a9a;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(239,154,154,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}.gi .gz{font-size:.68em;color:#888;margin-top:2px}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.72em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn:active{transform:scale(.94)}
+  .nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .btn-gold:active{transform:scale(.95);box-shadow:0 0 20px rgba(255,138,101,.4)}
+  .btn-outline:active{border-color:#ef9a9a;color:#ef9a9a}
+  .btn-outline:disabled{opacity:.35}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;border-radius:50%;min-width:44px;min-height:44px}
+  .speak-btn:active{background:rgba(239,154,154,.4);transform:scale(1.15)}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .story-speech+.story-speech{margin-top:10px}
+  .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lab-card{width:auto;min-width:0;padding:12px 6px;border-radius:12px;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+  .lab-card:active{border-color:rgba(255,210,0,.5);transform:scale(.96)}
+  .lab-card .word{font-size:1.2em!important}
+  .lab-card .hint{font-size:.68em}
+  .lab-tabs{gap:3px;margin-bottom:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .lab-tab{padding:9px 6px;font-size:.7em;border-radius:14px;min-height:40px;white-space:nowrap;flex-shrink:0}
+  .lab-tab:active,.lab-tab.active{border-color:#ffd200;color:#ffd200;background:rgba(255,210,0,.1)}
+  .sort-hint{font-size:.75em;margin-bottom:6px}
+  .sort-pool{gap:5px;margin-bottom:8px;min-height:38px}
+  .sort-item{padding:9px 10px;font-size:.8em;border-radius:12px;min-height:44px;display:inline-flex;align-items:center}
+  .sort-item[draggable=true]{cursor:grab;min-height:44px}
+  .sort-spk{width:36px!important;height:36px!important;font-size:.7em!important}
+  .sort-bins{gap:5px}
+  .sort-bin{min-width:0;min-height:80px;padding:4px;border-radius:10px}
+  .sort-bin-label{font-size:.72em;margin-bottom:3px}
+  .sort-feedback{font-size:.82em;min-height:20px}
+  .sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important;box-shadow:0 0 14px rgba(255,210,0,.3)}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ef9a9a}
+  .quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+  .quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .quiz-final.perfect .btn{margin:4px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+}
+
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .lab-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding:0 2px}
+  .lab-tab{flex-shrink:0;font-size:.68em;padding:7px 8px}
+  .sort-bins{flex-direction:column}
+  .sort-bin{min-height:60px;width:100%}
+  .sort-bin-label{font-size:.78em;text-align:left;padding-left:6px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+
+input,select,textarea{font-size:16px}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔊 /əʊ/ 小队 · oa ow oe</h1><p class="subtitle">长音 /əʊ/ 有两个写法——oa 和 ow，ow 还有另一个身份后面揭晓！</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
+
+<!-- ===== STORY ===== -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 oa 和 ow —— /əʊ/ 的两个写法</h2>
+
+<div class="story-speech"><p>还记得<b style="color:#ffd200"> o_e </b>吗？<b style="color:#ffd200">home</b> 里的 o 发 /əʊ/——一个 o 和 e 配合，中间隔一个辅音。但 /əʊ/ 还有其他写法！</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">h</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ffd200">o_e</span><span style="color:#888">+</span>
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">m</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">h</span><span style="color:#ffd200">o</span><span style="color:#81c784">m</span><span style="color:#888">e</span></span>
+<span class="speak-btn" onclick="spk('home',this)">🔊</span>
+</div>
+
+<div class="story-speech"><p>今天介绍第一个新写法：<b style="color:#ffd200">oa</b>。oa 在词中间发 /əʊ/。比如 <b style="color:#ffd200">boat</b>（船）——b + oa + t。两个字母 o 和 a 合在一起发一个长音！</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">b</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ffd200">oa</span><span style="color:#888">+</span>
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">t</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">b</span><span style="color:#ffd200">oa</span><span style="color:#81c784">t</span></span>
+<span class="speak-btn" onclick="spk('boat',this)">🔊</span>
+</div>
+
+<div class="story-speech"><p>第二个写法：<b style="color:#ffd200">ow</b>。ow 在词尾发 /əʊ/。比如 <b style="color:#ffd200">snow</b>（雪）——sn + ow。</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">sn</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ffd200">ow</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">sn</span><span style="color:#ffd200">ow</span></span>
+<span class="speak-btn" onclick="spk('snow',this)">🔊</span>
+</div>
+
+<div class="story-speech"><p>⚠️ <b style="color:#ff8a65">重要预告：</b>ow 还会发另一种音 /aʊ/（比如 cow🐄），但那是后面的课程。这一页<b style="color:#ffd200">只学 ow=/əʊ/ 的部分</b>！ow 是个「双面间谍」——后面揭晓它的另一个身份！</p></div>
+
+<h3>🥇 四种 /əʊ/ 写法一览</h3>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:2px solid rgba(255,210,0,.3);border-radius:14px;padding:14px 18px;text-align:center;min-width:100px">
+<div style="font-size:.75em;color:#aaa;margin-bottom:4px">o_e 分家型</div>
+<div style="font-size:1.4em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">h</span><span style="color:#ffd200">o</span><span style="color:#81c784">m</span><span style="color:#888">e</span></div>
+<div style="font-size:.7em;color:#888;margin-top:3px">🏠 h + o_e + m</div>
+<span class="speak-btn" onclick="spk('home',this)" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:2px solid rgba(255,210,0,.3);border-radius:14px;padding:14px 18px;text-align:center;min-width:100px">
+<div style="font-size:.75em;color:#aaa;margin-bottom:4px">oa 中间型</div>
+<div style="font-size:1.4em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">b</span><span style="color:#ffd200">oa</span><span style="color:#81c784">t</span></div>
+<div style="font-size:.7em;color:#888;margin-top:3px">🚤 b + oa + t</div>
+<span class="speak-btn" onclick="spk('boat',this)" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:2px solid rgba(255,210,0,.3);border-radius:14px;padding:14px 18px;text-align:center;min-width:100px">
+<div style="font-size:.75em;color:#aaa;margin-bottom:4px">ow 结尾型</div>
+<div style="font-size:1.4em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">sn</span><span style="color:#ffd200">ow</span></div>
+<div style="font-size:.7em;color:#888;margin-top:3px">❄️ sn + ow</div>
+<span class="speak-btn" onclick="spk('snow',this)" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:2px solid rgba(255,210,0,.3);border-radius:14px;padding:14px 18px;text-align:center;min-width:100px">
+<div style="font-size:.75em;color:#aaa;margin-bottom:4px">oe 结尾型</div>
+<div style="font-size:1.4em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">t</span><span style="color:#ffd200">oe</span></div>
+<div style="font-size:.7em;color:#888;margin-top:3px">🦶 t + oe</div>
+<span class="speak-btn" onclick="spk('toe',this)" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<div class="story-speech"><p>🧠 <b>记忆口诀：</b>oa 站中间（boat, coat, road），ow 站尾巴（snow, blow, grow），oe 也站尾巴（toe, Joe, hoe）。o_e 分两边（home, hope, rope）。四种写法，同一个音 /əʊ/！</p></div>
+</div></div>
+
+<!-- ===== LAB ===== -->
+<div class="section" id="sec-lab"><div class="glass"><h2>🧪 /əʊ/ 拼读实验室</h2><p style="color:#aaa;margin-bottom:8px">点击卡片翻转听发音！<span style="color:#ffd200">金色</span>=oa或ow <span style="color:#81c784">绿色</span>=辅音</p>
+<div class="lab-tabs" id="labTabs"></div>
+<div class="lab-grid" id="labGrid"></div></div></div>
+
+<!-- ===== SORT ===== -->
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：o_e / oa / ow / oe 四种 /əʊ/</h2><p class="sort-hint">读单词，判断 /əʊ/ 用的是哪种写法，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
+<div class="sort-bin" id="binOE" onclick="clickToBin('oe_')"><div class="sort-bin-label" style="color:#ff8a65">o_e</div><div id="binOEItems"></div></div>
+<div class="sort-bin" id="binOA" onclick="clickToBin('oa')"><div class="sort-bin-label" style="color:#ffd200">oa</div><div id="binOAItems"></div></div>
+<div class="sort-bin" id="binOW" onclick="clickToBin('ow')"><div class="sort-bin-label" style="color:#ffd200">ow</div><div id="binOWItems"></div></div>
+<div class="sort-bin" id="binOE2" onclick="clickToBin('oe2')"><div class="sort-bin-label" style="color:#ffd200">oe 👟</div><div id="binOE2Items"></div></div>
+</div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">填空 · 听音 · 辨写法 · 选拼写</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- ===== BOOK ===== -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 Snow Day</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 /əʊ/ 小队绘本 ❄️</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+<!-- ===== EASTER EGG ===== -->
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：ow 的双重身份预告</h2>
+
+<div class="story-speech"><p>ow 是个<b style="color:#ffd200">「双面间谍」</b>——有时发 /əʊ/，有时发 /aʊ/！怎么区分？<b style="color:#ff8a65">没有绝对规律——只能多读多记。</b></p></div>
+
+<h3>🕵️ ow 的两张面孔</h3>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:2px solid rgba(255,210,0,.3);border-radius:14px;padding:14px 18px;text-align:center;min-width:120px">
+<div style="color:#ffd200;font-weight:bold;font-size:1.2em;margin-bottom:6px">ow = /əʊ/</div>
+<div style="font-size:1.1em;letter-spacing:2px">snow ❄️ <span class="speak-btn" onclick="spk('snow')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">blow 💨 <span class="speak-btn" onclick="spk('blow')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">grow 🌱 <span class="speak-btn" onclick="spk('grow')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">show 👀 <span class="speak-btn" onclick="spk('show')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">know 🧠 <span class="speak-btn" onclick="spk('know')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:.7em;color:#888;margin-top:4px">✅ 这里学的</div>
+</div>
+<div style="background:rgba(255,138,101,.06);border:2px solid rgba(255,138,101,.3);border-radius:14px;padding:14px 18px;text-align:center;min-width:120px">
+<div style="color:#ff8a65;font-weight:bold;font-size:1.2em;margin-bottom:6px">ow = /aʊ/</div>
+<div style="font-size:1.1em;letter-spacing:2px">cow 🐄 <span class="speak-btn" onclick="spk('cow')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">now ⏰ <span class="speak-btn" onclick="spk('now')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">how ❓ <span class="speak-btn" onclick="spk('how')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">down ⬇️ <span class="speak-btn" onclick="spk('down')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:1.1em;letter-spacing:2px">brown 🟤 <span class="speak-btn" onclick="spk('brown')" style="width:18px;height:18px;font-size:.5em;margin-left:4px">🔊</span></div>
+<div style="font-size:.7em;color:#888;margin-top:4px">🔒 下下页揭晓</div>
+</div>
+</div>
+
+<div class="story-speech"><p>📝 <b>小技巧：</b>虽然没绝对规律，但有一些线索：</p><p>• ow 在词<b style="color:#ffd200">尾</b>大多数发 /əʊ/（snow, blow, grow, show, know, low, slow, flow, row, throw……）</p><p>• ow 发 /aʊ/ 的词比较少，但很常用（cow, now, how, down, brown, town, crown……）</p><p>• <b style="color:#ff8a65">最好的办法：</b>多读多听，把常见的 ow=/əʊ/ 词记住，剩下的遇到再学！</p></div>
+
+</div></div>
+
+</div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// ═══ CAMBRIDGE AUDIO SYSTEM ═══
+var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+var PHONEMES={
+  '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
+  '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
+  '/ɒ/':'phonemes/sock.mp3','/uː/':'phonemes/blue.mp3','/ʊ/':'phonemes/foot.mp3',
+  '/e/':'phonemes/head.mp3','/ɜː/':'phonemes/bird.mp3','/ə/':'phonemes/above.mp3',
+  '/eɪ/':'phonemes/day_ei.mp3','/aɪ/':'phonemes/eye.mp3','/ɔɪ/':'phonemes/boy.mp3',
+  '/əʊ/':'phonemes/nose.mp3','/aʊ/':'phonemes/mouth.mp3','/ɪə/':'phonemes/ear.mp3',
+  '/eə/':'phonemes/hair.mp3','/ʊə/':'phonemes/pure.mp3',
+  '/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3',
+  '/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3',
+  '/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3',
+  '/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3',
+  '/ʃ/':'phonemes/she.mp3','/ʒ/':'phonemes/vision.mp3','/h/':'phonemes/hand.mp3',
+  '/tʃ/':'phonemes/cheese.mp3','/dʒ/':'phonemes/jump.mp3',
+  '/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/ŋ/':'phonemes/sing.mp3',
+  '/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/w/':'phonemes/we.mp3',
+  '/j/':'phonemes/yes.mp3',
+  '/i/':'phonemes/happy.mp3','/u/':'phonemes/situation.mp3',
+  '/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'
+};
+var WORDS={
+  'above':'words/above.mp3','act':'words/act.mp3','apple':'words/apple.mp3','back':'words/back.mp3','bag':'words/bag.mp3','bank':'words/bank.mp3','bat':'words/bat.mp3','bed':'words/bed.mp3','bee':'words/bee.mp3',
+  'belt':'words/belt.mp3','best':'words/best.mp3','big':'words/big.mp3','bird':'words/bird.mp3','blow':'words/blow.mp3','blue':'words/blue.mp3','boat':'words/boat.mp3','bone':'words/bone.mp3','book':'words/book.mp3',
+  'box':'words/box.mp3','boy':'words/boy.mp3','cake':'words/cake.mp3','camp':'words/camp.mp3','cap':'words/cap.mp3','cat':'words/cat.mp3','cheese':'words/cheese.mp3','chip':'words/chip.mp3',
+  'coat':'words/coat.mp3','cow':'words/cow.mp3','cup':'words/cup.mp3','cut':'words/cut.mp3','day':'words/day.mp3','desk':'words/desk.mp3','dog':'words/dog.mp3','door':'words/door.mp3',
+  'down':'words/down.mp3','eat':'words/eat.mp3','egg':'words/egg.mp3','eye':'words/eye.mp3','fast':'words/fast.mp3','father':'words/father.mp3','fish':'words/fish.mp3','fix':'words/fix.mp3',
+  'float':'words/float.mp3','flow':'words/flow.mp3','fly':'words/fly.mp3','foot':'words/foot.mp3','fox':'words/fox.mp3','give':'words/give.mp3','goat':'words/goat.mp3','gold':'words/gold.mp3',
+  'green':'words/green.mp3','grow':'words/grow.mp3','hand':'words/hand.mp3','happy':'words/happy.mp3','hat':'words/hat.mp3','he':'words/he.mp3','head':'words/head.mp3','help':'words/help.mp3',
+  'home':'words/home.mp3','hope':'words/hope.mp3','horse':'words/horse.mp3','hot':'words/hot.mp3','how':'words/how.mp3','ice':'words/ice.mp3','jump':'words/jump.mp3','king':'words/king.mp3',
+  'know':'words/know.mp3','left':'words/left.mp3','leg':'words/leg.mp3','like':'words/like.mp3','lion':'words/lion.mp3','log':'words/log.mp3','long':'words/long.mp3','look':'words/look.mp3',
+  'low':'words/low.mp3','me':'words/me.mp3','milk':'words/milk.mp3','moon':'words/moon.mp3','mouth':'words/mouth.mp3','my':'words/my.mp3','name':'words/name.mp3','nose':'words/nose.mp3',
+  'not':'words/not.mp3','now':'words/now.mp3','open':'words/open.mp3','pig':'words/pig.mp3','play':'words/play.mp3','pure':'words/pure.mp3','put':'words/put.mp3','rain':'words/rain.mp3',
+  'red':'words/red.mp3','road':'words/road.mp3','rose':'words/rose.mp3','row':'words/row.mp3','run':'words/run.mp3','sad':'words/sad.mp3','say':'words/say.mp3','sea':'words/sea.mp3',
+  'see':'words/see.mp3','she':'words/she.mp3','sheep':'words/sheep.mp3','ship':'words/ship.mp3','show':'words/show.mp3','sing':'words/sing.mp3','sister':'words/sister.mp3','sit':'words/sit.mp3',
+  'six':'words/six.mp3','slow':'words/slow.mp3','snow':'words/snow.mp3','soap':'words/soap.mp3','sock':'words/sock.mp3','stop':'words/stop.mp3','sun':'words/sun.mp3','table':'words/table.mp3',
+  'tea':'words/tea.mp3','ten':'words/ten.mp3','think':'words/think.mp3','this':'words/this.mp3','throw':'words/throw.mp3','toast':'words/toast.mp3','top':'words/top.mp3','town':'words/town.mp3',
+  'tree':'words/tree.mp3','very':'words/very.mp3','wait':'words/wait.mp3','we':'words/we.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3','with':'words/with.mp3',
+  'yes':'words/yes.mp3','toe':'words/toe.mp3','goes':'words/goes.mp3','hoe':'words/hoe.mp3','oboe':'words/oboe.mp3','you':'words/you.mp3','zoo':'words/zoo.mp3','ow':'words/ow.mp3','quiz':'words/quiz.mp3','sort':'words/sort.mp3','blown':'words/blown.mp3','board':'words/board.mp3','boast':'words/boast.mp3','boots':'words/boots.mp3','bowl':'words/bowl.mp3','brown':'words/brown.mp3','coach':'words/coach.mp3','coal':'words/coal.mp3','coast':'words/coast.mp3','crow':'words/crow.mp3','flown':'words/flown.mp3','foam':'words/foam.mp3','glow':'words/glow.mp3','go':'words/go.mp3','goal':'words/goal.mp3','groan':'words/groan.mp3','grown':'words/grown.mp3','hello':'words/hello.mp3','hoard':'words/hoard.mp3','hole':'words/hole.mp3','joe':'words/joe.mp3','known':'words/known.mp3','load':'words/load.mp3','loan':'words/loan.mp3','moan':'words/moan.mp3','note':'words/note.mp3','oar':'words/oar.mp3','own':'words/own.mp3','poke':'words/poke.mp3','roam':'words/roam.mp3','roast':'words/roast.mp3','rope':'words/rope.mp3','shown':'words/shown.mp3','soak':'words/soak.mp3','stone':'words/stone.mp3','story':'words/story.mp3','throat':'words/throat.mp3','thrown':'words/thrown.mp3','toad':'words/toad.mp3','toes':'words/toes.mp3','whoa':'words/whoa.mp3','audio':'words/audio.mp3','sec':'words/sec.mp3','phonemes':'words/phonemes.mp3','flipped':'words/flipped.mp3','en':'words/en.mp3','position':'words/position.mp3','data':'words/data.mp3','drag':'words/drag.mp3','px':'words/px.mp3','oa':'words/oa.mp3','binoe':'words/binoe.mp3','oe':'words/oe.mp3',
+};
+
+
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){var w=path.replace('words/','').replace('.mp3','');speakNow(w);return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');var w2=path.replace('words/','').replace('.mp3','');speakNow(w2)},{once:true});player.play().catch(function(e){el.classList.remove('on');var w3=path.replace('words/','').replace('.mp3','');speakNow(w3)});}
+
+function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
+function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
+function spk(word,el){
+  var w=word.toLowerCase();
+  if(el&&el.classList){el.classList.add('speaking');setTimeout(function(){el.classList.remove('speaking')},600)}
+  var p=WORDS[w];
+  if(p){var player=getAudio(p);if(!player||(player.error&&player.error.code===4)){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}
+  else{speakNow(w);}
+}
+
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
+function speakNow(word){
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
+  var voices=speechSynthesis.getVoices();
+  var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
+    voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||
+    voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50);
+}
+
+// === Navigation ===
+var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='lab')buildL();
+  if(n==='sort')buildSort();
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ LAB ═══
+var labData={
+  'oa':{label:'oa🚤',pattern:'oa',
+    words:[
+      ['boat','船 🚤'],['coat','外套 🧥'],['goat','山羊 🐐'],['road','路 🛣️'],['toad','蟾蜍 🐸'],
+      ['load','装载 📦'],['soap','肥皂 🧼'],['soak','浸泡 💧'],['coal','煤 🪨'],['goal','球门 🥅'],
+      ['foam','泡沫 🫧'],['roam','漫游 🚶'],['loan','贷款 💰'],['moan','呻吟 😩'],['groan','叹息 😫'],
+      ['float','漂浮 🛟'],['throat','喉咙 🗣️'],['coach','教练 🚌'],['toast','吐司 🍞'],['roast','烤 🍖'],
+      ['coast','海岸 🏖️'],['boast','吹嘘 😎']
+    ]},
+  'ow':{label:'ow❄️',pattern:'ow',
+    words:[
+      ['snow','雪 ❄️'],['blow','吹 💨'],['grow','生长 🌱'],['show','展示 👀'],['know','知道 🧠'],
+      ['low','低的 ⬇️'],['slow','慢的 🐌'],['flow','流动 🌊'],['glow','发光 ✨'],['row','划船 🚣'],
+      ['crow','乌鸦 🐦'],['throw','投掷 🤾'],['bowl','碗 🥣'],['own','拥有 👤'],['shown','展示过 👀'],
+      ['grown','长大 🌳'],['flown','飞过 ✈️'],['blown','吹过 💨'],['known','知道 🧠'],['thrown','扔了 🤾']
+    ]},
+  'oe':{label:'oe👟',pattern:'oe',
+    words:[
+      ['toe','脚趾 🦶'],['Joe','乔 👦'],['hoe','锄头 ⛏️'],['oboe','双簧管 🎺']
+    ]}
+};
+var curL='oa';
+function switchL(k){curL=k;buildL()}
+function buildL(){
+  var cfg=labData[curL];
+  var tabs='';
+  Object.keys(labData).forEach(function(k){
+    tabs+='<button class="lab-tab'+(k===curL?' active':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
+  });
+  document.getElementById('labTabs').innerHTML=tabs;
+  var pattern=cfg.pattern;
+  document.getElementById('labGrid').innerHTML=cfg.words.map(function(w,i){
+    var word=w[0],emoji=w[1],colored='';
+    var pi=word.indexOf(pattern);
+    var j=0;
+    while(j<word.length){
+      if(j===pi){
+        colored+='<span class="oa-ow">'+word.substring(j,j+pattern.length)+'</span>';
+        j+=pattern.length;
+      }else{
+        colored+='<span class="cn-c">'+word[j]+'</span>';
+        j++;
+      }
+    }
+    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\',this)"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'3px':word.length<=6?'2px':word.length<=7?'1px':'0px')+'">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
+  }).join('');
+}
+
+// ═══ SORT ═══
+var sortWords=[
+  // o_e
+  {w:'home',t:'oe_'},{w:'hope',t:'oe_'},{w:'rope',t:'oe_'},{w:'note',t:'oe_'},{w:'stone',t:'oe_'},
+  {w:'hole',t:'oe_'},{w:'poke',t:'oe_'},{w:'rose',t:'oe_'},{w:'bone',t:'oe_'},{w:'nose',t:'oe_'},
+  // oa
+  {w:'boat',t:'oa'},{w:'coat',t:'oa'},{w:'road',t:'oa'},{w:'soap',t:'oa'},{w:'toast',t:'oa'},
+  {w:'goat',t:'oa'},{w:'float',t:'oa'},{w:'coach',t:'oa'},
+  // ow
+  {w:'snow',t:'ow'},{w:'grow',t:'ow'},{w:'show',t:'ow'},{w:'blow',t:'ow'},{w:'slow',t:'ow'},
+  {w:'flow',t:'ow'},{w:'throw',t:'ow'},
+  // oe
+  {w:'toe',t:'oe2'},{w:'joe',t:'oe2'},{w:'hoe',t:'oe2'}
+];
+var selectedWord=null,placedCount=0;
+function buildSort(){
+  var pool=document.getElementById('sortPool'),h='';
+  sortWords.sort(function(){return Math.random()-0.5}).forEach(function(w){
+    h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>';
+  });
+  pool.innerHTML=h;
+  ['OE','OA','OW','OE2'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
+}
+function binType(id){return id==='binOE'?'oe_':id.replace('bin','').toLowerCase()}
+function setupBins(){
+  ['binOE','binOA','binOW','binOE2'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};
+    el.ondragleave=function(){el.classList.remove('drag-over')};
+    el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,binType(id))};
+  });
+}
+function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
+function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
+function dropToBin(w,type,correct){
+  if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
+  var ok=type===correct;
+  var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
+  if(ok){
+    item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';
+    var binId='bin'+(type==='oe_'?'OE':type.toUpperCase());
+    document.getElementById(binId+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
+    var label=type==='oe_'?'o_e':type;
+    document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+label+'!</span>';
+    placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>';
+  }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听 /əʊ/ 的写法？</span>'}
+  selectedWord=null;
+}
+function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
+function dragEnd(e){e.target.classList.remove('dragging')}
+var tl=null,tc=null;
+function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(79,195,247,.18);border:2px solid #4fc3f7;border-radius:14px;padding:6px 14px;font-weight:bold;color:#4fc3f7;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binOE','binOA','binOW','binOE2'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binOE','binOA','binOW','binOE2'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=binType(id);el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+function resetSort(){buildSort()}
+
+// ═══ QUIZ ═══
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[
+  // Fill-in-blank: oa or ow?
+  {t:'fill',q:'b __ __ t（船）空格填什么？',w:'boat',o:['oa','ow','oe','o_e'],a:0,x:'boat = b + oa + t，oa 发 /əʊ/ ✓'},
+  {t:'fill',q:'sn __ __（雪）空格填什么？',w:'snow',o:['oa','ow','oe','o_e'],a:1,x:'snow = sn + ow，ow 在词尾发 /əʊ/ ✓'},
+  {t:'fill',q:'c __ __ t（外套）空格填什么？',w:'coat',o:['oa','ow','oe','o_e'],a:0,x:'coat = c + oa + t，oa 在中间发 /əʊ/ ✓'},
+  {t:'fill',q:'gr __ __（生长）空格填什么？',w:'grow',o:['oa','ow','oe','o_e'],a:1,x:'grow = gr + ow，ow 在词尾发 /əʊ/ ✓'},
+  {t:'fill',q:'r __ __ d（路）空格填什么？',w:'road',o:['oa','ow','oe','o_e'],a:0,x:'road = r + oa + d，oa 发 /əʊ/ ✓'},
+  {t:'fill',q:'fl __ __（流动）空格填什么？',w:'flow',o:['oa','ow','oe','o_e'],a:1,x:'flow = fl + ow，ow 在词尾发 /əʊ/ ✓'},
+  // Listen and choose pattern
+  {t:'listen',q:'🔊 听发音，用的是 oa 还是 ow？',w:'boat',o:['oa','ow','o_e','oe'],a:0,x:'boat 中间是 oa → /bəʊt/ ✓'},
+  {t:'listen',q:'🔊 听发音，用的是 oa 还是 ow？',w:'snow',o:['oa','ow','o_e','oe'],a:1,x:'snow 结尾是 ow → /snəʊ/ ✓'},
+  {t:'listen',q:'🔊 听发音，用的是 oa 还是 ow？',w:'goat',o:['oa','ow','o_e','oe'],a:0,x:'goat 中间是 oa → /gəʊt/ ✓'},
+  {t:'listen',q:'🔊 听发音，用的是 oa 还是 ow？',w:'blow',o:['oa','ow','o_e','oe'],a:1,x:'blow 结尾是 ow → /bləʊ/ ✓'},
+  {t:'listen',q:'🔊 听发音，用的是 oa 还是 ow？',w:'toast',o:['oa','ow','o_e','oe'],a:0,x:'toast 中间是 oa → /təʊst/ ✓'},
+  {t:'listen',q:'🔊 听发音，用的是 oa 还是 ow？',w:'throw',o:['oa','ow','o_e','oe'],a:1,x:'throw 中间是 ow → /θrəʊ/ ✓'},
+  // Spelling choice
+  {t:'spell',q:'哪个是"船"的正确拼写？',w:'boat',o:['boat','bote','bowt','bout'],a:0,x:'/bəʊt/ = b + oa + t = boat ✓'},
+  {t:'spell',q:'哪个是"雪"的正确拼写？',w:'snow',o:['snow','snoa','snoe','sno'],a:0,x:'/snəʊ/ = sn + ow = snow ✓'},
+  {t:'spell',q:'哪个是"山羊"的正确拼写？',w:'goat',o:['goat','gote','gowt','gout'],a:0,x:'/gəʊt/ = g + oa + t = goat ✓'},
+  {t:'spell',q:'哪个是"生长"的正确拼写？',w:'grow',o:['grow','groa','groe','grrow'],a:0,x:'/grəʊ/ = gr + ow = grow ✓'},
+  // Pattern recognition
+  {t:'pattern',q:'下面哪个词用 oa 发 /əʊ/？',o:['road','now','cow','how'],a:0,x:'road 用 oa。now/cow/how 的 ow 发 /aʊ/！'},
+  {t:'pattern',q:'下面哪个词用 ow 发 /əʊ/？',o:['show','cow','now','how'],a:0,x:'show 的 ow 发 /əʊ/。cow/now/how 发 /aʊ/！'},
+  {t:'pattern',q:'home 里的 /əʊ/ 是用什么字母组合发的？',w:'home',o:['o_e','oa','ow','oe'],a:0,x:'home = h + o_e + m，o 和 e 分两边 ✓'},
+  {t:'pattern',q:'下面哪个词的 /əʊ/ 写法和其他三个不同？',o:['boat (oa)','snow (ow)','coat (oa)','road (oa)'],a:1,x:'snow 用 ow，其他三个都用 oa ✓'}
+,
+  {t:'find',q:'下面哪个词的 /əʊ/ 用 oe 拼写？',o:['boat','snow','toe','home'],a:2,x:'toe 用 oe 拼写！boat→oa，snow→ow，home→o_e。'},
+  {t:'find',q:'下面哪个词含 oe 发 /əʊ/？',o:['Joe','shoe','canoe','blue'],a:0,x:'Joe 的 oe 发 /əʊ/。shoe/canoe 的 oe 发 /uː/（后面会学）！'}
+];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={fill:'✏️ 填空选 oa/ow',listen:'👂 听音辨写法',spell:'🔤 选正确拼写',pattern:'🎯 辨别写法'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&(q.t==='fill'||q.t==='spell'))h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';else if(q.w&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！/əʊ/ 小队大师！'}else if(s>=8){e='🎉👏';m='非常棒！oa 和 ow 都掌握了！'}else if(s>=6){e='💪😊';m='还不错！再练练~'}else{e='📖✨';m='多听听发音，继续加油~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ef9a9a;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// ═══ BOOK ═══
+var bp_cp=0,bp_pages=[
+  {s:'❄️😊',t:'Snow',x:'It is a <span class="dg-hl">snow</span> day.<br>The <span class="dg-hl">road</span> is white.'},
+  {s:'🐐😊',t:'A Goat',x:'A <span class="dg-hl">goat</span> is on the <span class="dg-hl">road</span>.<br>It wears a <span class="dg-hl">coat</span>.'},
+  {s:'🚤😊',t:'A Boat',x:'The <span class="dg-hl">goat</span> gets on a <span class="dg-hl">boat</span>.<br>It <span class="dg-hl">floats</span> on the <span class="dg-hl">snow</span>!'},
+  {s:'🌱😊',t:'Grow',x:'The <span class="dg-hl">snow</span> melts.<br>The grass will <span class="dg-hl">grow</span>.'},
+  {s:'🧼😊',t:'Soap',x:'The <span class="dg-hl">goat</span> takes a bath with <span class="dg-hl">soap</span>.'},
+  {s:'😊❄️',t:'Glad',x:'The <span class="dg-hl">goat</span> is glad.<br>What a good <span class="dg-hl">snow</span> day!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">snow <span class="speak-btn" onclick="spk(&#39;snow&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow /əʊ/</div><div class="gz">雪 ❄️</div></div><div class="gi"><div class="gw">road <span class="speak-btn" onclick="spk(&#39;road&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">路 🛣️</div></div><div class="gi"><div class="gw">goat <span class="speak-btn" onclick="spk(&#39;goat&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">山羊 🐐</div></div><div class="gi"><div class="gw">coat <span class="speak-btn" onclick="spk(&#39;coat&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">外套 🧥</div></div><div class="gi"><div class="gw">boat <span class="speak-btn" onclick="spk(&#39;boat&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">船 🚤</div></div><div class="gi"><div class="gw">float <span class="speak-btn" onclick="spk(&#39;float&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">漂浮 🛟</div></div><div class="gi"><div class="gw">grow <span class="speak-btn" onclick="spk(&#39;grow&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow /əʊ/</div><div class="gz">生长 🌱</div></div><div class="gi"><div class="gw">soap <span class="speak-btn" onclick="spk(&#39;soap&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">肥皂 🧼</div></div></div>'},
+];
+// ═══ BOOK ═══
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/26-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+// === Init ===
+buildL();buildSort();initQ();
+</script>
+</body></html>

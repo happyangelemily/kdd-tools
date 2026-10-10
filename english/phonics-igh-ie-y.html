@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>/aɪ/ 小队 · igh、ie 和 y | 自然拼读 Stage 6</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #4fc3f7)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s ease-in-out;background:rgba(255,210,0,.4)}
+.sort-spk{width:22px!important;height:22px!important;font-size:.6em!important}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ef9a9a;color:#ef9a9a}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.story-speech{background:rgba(239,154,154,.06);border-left:3px solid #ef9a9a;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+
+/* Lab */
+.lab-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.lab-card{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 10px;text-align:center;width:120px;cursor:pointer;transition:all .4s}.lab-card:hover{border-color:rgba(239,154,154,.5);transform:translateY(-3px)}.lab-card .word{font-size:1.7em;font-weight:bold;letter-spacing:3px;overflow-wrap:break-word;word-break:break-word}.lab-card .hint{font-size:.7em;color:#888;margin-top:3px}.lab-card.flipped{animation:sparkle 1.5s ease-in-out infinite;border-color:#ef9a9a}.lab-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}.lab-tab{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.lab-tab:hover,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+
+/* Sort */
+.sort-hint{text-align:center;color:#888;font-size:.8em;margin-bottom:8px}.sort-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px;min-height:44px}.sort-bins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.sort-bin{flex:1;min-width:90px;min-height:100px;border-radius:14px;padding:6px;border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;transition:all .3s}.sort-bin-label{font-size:.82em;font-weight:bold;margin-bottom:6px;text-align:center}.sort-item{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:14px;font-size:.85em;font-weight:bold;cursor:grab;transition:all .3s;user-select:none;margin:2px;letter-spacing:1px;touch-action:none}.sort-item:active{cursor:grabbing}.sort-item.unplaced{background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.35);color:#ccc}.sort-item.placed{cursor:default;opacity:.3;pointer-events:none}.sort-bin .sort-item{opacity:1!important}.sort-item.selected{border-color:#ffd200!important;box-shadow:0 0 12px rgba(255,210,0,.5)}.sort-item.wrong{animation:shake .5s}.sort-feedback{text-align:center;margin-top:8px;font-size:.9em;min-height:22px}.sort-item.dragging{opacity:.4;transform:scale(.85)}
+
+/* Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ef9a9a;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ef9a9a}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(239,154,154,.06);border:1px solid rgba(239,154,154,.2)}
+
+/* Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(239,154,154,.3))}.book-title{font-size:1.4em;color:#ef9a9a;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(239,154,154,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}.gi .gz{font-size:.68em;color:#888;margin-top:2px}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.72em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn:active{transform:scale(.94)}
+  .nav-btn.active{background:rgba(239,154,154,.15);border-color:#ef9a9a;color:#ef9a9a}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .btn-gold:active{transform:scale(.95);box-shadow:0 0 20px rgba(255,138,101,.4)}
+  .btn-outline:active{border-color:#ef9a9a;color:#ef9a9a}
+  .btn-outline:disabled{opacity:.35}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;border-radius:50%;min-width:44px;min-height:44px}
+  .speak-btn:active{background:rgba(239,154,154,.4);transform:scale(1.15)}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .story-speech+.story-speech{margin-top:10px}
+  .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lab-card{width:auto;min-width:0;padding:12px 6px;border-radius:12px;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+  .lab-card:active{border-color:rgba(239,154,154,.5);transform:scale(.96)}
+  .lab-card .word{font-size:1.2em!important}
+  .lab-card .hint{font-size:.68em}
+  .lab-tabs{gap:3px;margin-bottom:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .lab-tab{padding:9px 6px;font-size:.7em;border-radius:14px;min-height:40px;white-space:nowrap;flex-shrink:0}
+  .lab-tab:active,.lab-tab.active{border-color:#ef9a9a;color:#ef9a9a;background:rgba(239,154,154,.1)}
+  .sort-hint{font-size:.75em;margin-bottom:6px}
+  .sort-pool{gap:5px;margin-bottom:8px;min-height:38px}
+  .sort-item{padding:9px 10px;font-size:.8em;border-radius:12px;min-height:44px;display:inline-flex;align-items:center}
+  .sort-item[draggable=true]{cursor:grab;min-height:44px}
+  .sort-spk{width:36px!important;height:36px!important;font-size:.7em!important}
+  .sort-bins{gap:5px}
+  .sort-bin{min-width:0;min-height:80px;padding:4px;border-radius:10px}
+  .sort-bin-label{font-size:.72em;margin-bottom:3px}
+  .sort-feedback{font-size:.82em;min-height:20px}
+  .sort-bin.drag-over{border-color:#ffd200!important;background:rgba(255,210,0,.15)!important;box-shadow:0 0 14px rgba(255,210,0,.3)}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ef9a9a}
+  .quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+  .quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .quiz-final.perfect .btn{margin:4px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+}
+
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .lab-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding:0 2px}
+  .lab-tab{flex-shrink:0;font-size:.68em;padding:7px 8px}
+  .sort-bins{flex-direction:column}
+  .sort-bin{min-height:60px;width:100%}
+  .sort-bin-label{font-size:.78em;text-align:left;padding-left:6px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+
+input,select,textarea{font-size:16px}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔊 /aɪ/ 小队 · igh、ie 和 y</h1><p class="subtitle">长音 /aɪ/ 最会打扮——三种写法，一个声音！</p>
+<div class="nav"><button class="nav-btn active" onclick="showS('story')">📖 故事</button><button class="nav-btn" onclick="showS('lab')">🧪 实验室</button><button class="nav-btn" onclick="showS('sort')">🎯 分拣</button><button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button><button class="nav-btn" onclick="showS('book')">📚 绘本</button><button class="nav-btn" onclick="showS('easter')">🥚 彩蛋</button></div>
+
+<!-- ===== STORY ===== -->
+<div class="section active" id="sec-story"><div class="glass">
+<h2>📖 同一个长音 /aɪ/，四种写法！</h2>
+
+<div class="story-speech"><p>还记得 <b style="color:#ffd200">i_e</b> 吗？like 里的 i 发 /aɪ/。但 /aɪ/ 还有别的写法！今天认识三个新朋友——<b style="color:#ffd200">igh</b>、<b style="color:#ffd200">ie</b> 和<b style="color:#ffd200">单音节词尾的 y</b>，它们都能发 /aɪ/！</p></div>
+
+<h3>🌙 igh：三字母组合，在词中发 /aɪ/</h3>
+<div class="story-speech"><p><b style="color:#ffd200">igh</b> 是三个字母一起发 /aɪ/。比如 <b style="color:#ffd200">night</b>（夜晚）——n + igh + t。<b>gh 不发音，i 发长音！</b> igh 通常站在词中间。</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">n</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ffd200">igh</span><span style="color:#888">+</span>
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">t</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">n</span><span style="color:#ffd200">igh</span><span style="color:#81c784">t</span></span>
+<span class="speak-btn" onclick="spkWord('night',this)">🔊</span>
+</div>
+
+<h3>🥧 ie：在词尾发 /aɪ/</h3>
+<div class="story-speech"><p><b style="color:#ffd200">ie</b> 在词尾发 /aɪ/。比如 <b style="color:#ffd200">pie</b>（派）——p + ie。ie 两个字幕，合起来一个声音！</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">p</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ffd200">ie</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">p</span><span style="color:#ffd200">ie</span></span>
+<span class="speak-btn" onclick="spkWord('pie',this)">🔊</span>
+</div>
+
+<h3>✈️ y：单音节词尾的 y 也发 /aɪ/</h3>
+<div class="story-speech"><p><b style="color:#ffd200">单音节词尾的 y</b> 也发 /aɪ/！比如 <b style="color:#ffd200">fly</b>（飞）、<b style="color:#ffd200">sky</b>（天空）、<b style="color:#ffd200">my</b>（我的）。注意：必须是<b>单音节</b>词！</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0">
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">f</span><span style="color:#888">+</span>
+<span style="background:rgba(129,199,132,.15);border:2px solid #81c784;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#81c784">l</span><span style="color:#888">+</span>
+<span style="background:rgba(255,210,0,.15);border:2px solid #ffd200;border-radius:12px;padding:10px 16px;font-size:1.3em;font-weight:bold;color:#ffd200">y</span>
+<span style="color:#888">=</span>
+<span style="background:rgba(255,210,0,.1);border:2px solid #ffd200;border-radius:12px;padding:10px 18px;font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:3px"><span style="color:#81c784">f</span><span style="color:#81c784">l</span><span style="color:#ffd200">y</span></span>
+<span class="speak-btn" onclick="spkWord('fly',this)">🔊</span>
+</div>
+
+<h3>🎯 核心规则：/aɪ/ 的四种写法</h3>
+<div class="story-speech"><p><b style="color:#ffd200">igh 在词中，ie 和 y 在词尾。三个都发 /aɪ/！</b> 加上魔法e（i_e），/aɪ/ 一共有四种写法：</p></div>
+
+<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">魔法e → i_e</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">l</span><span style="color:#ffd200">i</span><span style="color:#81c784">k</span><span style="color:#888">e</span> 👍</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">l-i-k-e，e让i发/aɪ/</div>
+<span class="speak-btn" onclick="spk('like')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">igh 在词中</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">n</span><span style="color:#ffd200">igh</span><span style="color:#81c784">t</span> 🌙</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">n-igh-t，gh不发音</div>
+<span class="speak-btn" onclick="spk('night')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">ie 在词尾</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">p</span><span style="color:#ffd200">ie</span> 🥧</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">p-ie，ie在结尾</div>
+<span class="speak-btn" onclick="spk('pie')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:12px 16px;text-align:center">
+<div style="color:#888;font-size:.8em;margin-bottom:4px">y 在词尾</div>
+<div style="font-size:1.3em;font-weight:bold;color:#ffd200;letter-spacing:2px"><span style="color:#81c784">f</span><span style="color:#81c784">l</span><span style="color:#ffd200">y</span> ✈️</div>
+<div style="font-size:.75em;color:#aaa;margin-top:4px">f-l-y，单音节y=/aɪ/</div>
+<span class="speak-btn" onclick="spk('fly')" style="display:inline-block;margin-top:4px">🔊</span>
+</div>
+</div>
+
+<div class="story-speech"><p>📝 <b>记住口诀：</b>igh 在词中间，ie 和 y 爱在词尾站。声音都是 /aɪ/，拼写位置不一样！gh 永远不发音——它是沉默的小尾巴！</p></div>
+</div></div>
+
+<!-- ===== LAB ===== -->
+<div class="section" id="sec-lab"><div class="glass"><h2>🧪 igh / ie / y 拼读实验室</h2><p style="color:#aaa;margin-bottom:8px">点击卡片翻转听发音！<span style="color:#ffd200">金色</span>=igh/ie/y元音 <span style="color:#81c784">绿色</span>=辅音</p>
+<div class="lab-tabs" id="labTabs"></div>
+<div class="lab-grid" id="labGrid"></div></div></div>
+
+<!-- ===== SORT ===== -->
+<div class="section" id="sec-sort"><div class="glass"><h2>🎯 分拣：i_e · igh · ie · y</h2><p class="sort-hint">读单词，判断 /aɪ/ 的写法，拖到对应框中</p><div class="sort-pool" id="sortPool"></div><div class="sort-bins">
+<div class="sort-bin" id="binI_E" onclick="clickToBin('i_e')"><div class="sort-bin-label" style="color:#ffd200">i_e</div><div id="binI_EItems"></div></div>
+<div class="sort-bin" id="binIGH" onclick="clickToBin('igh')"><div class="sort-bin-label" style="color:#ffd200">igh</div><div id="binIGHItems"></div></div>
+<div class="sort-bin" id="binIE" onclick="clickToBin('ie')"><div class="sort-bin-label" style="color:#ffd200">ie</div><div id="binIEItems"></div></div>
+<div class="sort-bin" id="binY" onclick="clickToBin('y')"><div class="sort-bin-label" style="color:#ffd200">y</div><div id="binYItems"></div></div>
+</div><div class="sort-feedback" id="sortFeedback"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div></div></div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">辨别 /aɪ/ 的四种写法</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
+<!-- ===== BOOK ===== -->
+<div class="section" id="sec-book"><div class="glass"><h2>📚 The Night Sky</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 /aɪ/ 小队绘本 🌙</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
+
+<!-- ===== EASTER EGG ===== -->
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：y 的另一种声音</h2>
+
+<div class="story-speech"><p><b style="color:#ffd200">y 在单音节词尾发 /aɪ/</b>（fly, sky, my, by, try），但在<b style="color:#ffd200">多音节词尾发 /ɪ/</b>（happy, baby, funny, city）——是<b>短 i /ɪ/</b>，不是长 /iː/！这一页只学单音节的 y=/aɪ/。等学到多音节词时再解锁 y 的另一个声音。</p></div>
+
+<h3>🔍 对比：单音节 vs 多音节</h3>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0">
+<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#ffd200;font-weight:bold;margin-bottom:6px;font-size:1.3em">fly ✈️</div>
+<div style="font-size:.9em;color:#aaa">单音节词<br>y 在词尾 → /aɪ/<br>/flaɪ/</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">y = /aɪ/ ✓</div>
+<span class="speak-btn" onclick="spk('fly')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+<div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#4fc3f7;font-weight:bold;margin-bottom:6px;font-size:1.3em">happy 😊</div>
+<div style="font-size:.9em;color:#aaa">多音节词（hap·py）<br>y 在词尾 → /ɪ/<br>/ˈhæpɪ/</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">y = 短 /ɪ/（不是长 /iː/）</div>
+<span class="speak-btn" onclick="spk('happy')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+<div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#4fc3f7;font-weight:bold;margin-bottom:6px;font-size:1.3em">baby 👶</div>
+<div style="font-size:.9em;color:#aaa">多音节词（ba·by）<br>y 在词尾 → /ɪ/<br>/ˈbeɪbɪ/</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">y = 短 /ɪ/（和 happy 一样）</div>
+<span class="speak-btn" onclick="spk('baby')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+<div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#4fc3f7;font-weight:bold;margin-bottom:6px;font-size:1.3em">funny 🤣</div>
+<div style="font-size:.9em;color:#aaa">多音节词（fun·ny）<br>y 在词尾 → /ɪ/<br>/ˈfʌnɪ/</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">y = 短 /ɪ/</div>
+<span class="speak-btn" onclick="spk('funny')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+<div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:14px 18px;text-align:center">
+<div style="color:#4fc3f7;font-weight:bold;margin-bottom:6px;font-size:1.3em">city 🏙️</div>
+<div style="font-size:.9em;color:#aaa">多音节词（cit·y）<br>y 在词尾 → /ɪ/<br>/ˈsɪtɪ/</div>
+<div style="color:#888;font-size:.75em;margin-top:4px">y = 短 /ɪ/</div>
+<span class="speak-btn" onclick="spk('city')" style="display:inline-block;margin-top:6px">🔊</span>
+</div>
+</div>
+
+<div class="story-speech"><p>🧠 <b>记住规则：</b>y 发 /aɪ/ 还是短 /ɪ/，取决于<b>词有几个音节</b>！单音节 → /aɪ/，多音节 → 短 /ɪ/。为什么？多音节词里<b>重音不在词尾的 y 上</b>，y 就弱化成又短又轻的 /ɪ/。⚠️ <b>注意：不是长音 /iː/</b>，不要读成「哈皮伊」——结尾短促轻短，一碰就收。这学期我们只学单音节的 y=/aɪ/，多音节的以后再说！</p></div>
+
+<h3>👁️ 彩蛋中的彩蛋：eye</h3>
+<div class="story-speech"><p><b style="color:#ffd200">eye</b>（眼睛）也发 /aɪ/，但它是唯一的 <b>e-y-e</b> 拼法——不算 igh/ie/y 任何一种！它是英语里最奇怪的 /aɪ/ 拼写，像一只眼睛在看着你 👁️。记住它：e-y-e = eye = /aɪ/！</p></div>
+</div></div>
+
+</div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// ═══ CAMBRIDGE AUDIO SYSTEM ═══
+var AUDIO_BASE='audio/';
+var spT=null,voiceRetries=0,voiceQ=[];
+function loadVoices(){const v=speechSynthesis.getVoices();if(v.length>0){while(voiceQ.length)speakNow(voiceQ.shift());return true}voiceRetries++;if(voiceRetries<30)setTimeout(loadVoices,400);return false}
+speechSynthesis.onvoiceschanged=()=>{loadVoices()};loadVoices();setTimeout(()=>{try{const d=new SpeechSynthesisUtterance('');d.volume=0;speechSynthesis.speak(d)}catch(e){}},800);
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+var PHONEMES={
+  '/iː/':'phonemes/sheep.mp3','/ɪ/':'phonemes/ship.mp3','/ɑː/':'phonemes/father.mp3',
+  '/æ/':'phonemes/hat.mp3','/ʌ/':'phonemes/cup.mp3','/ɔː/':'phonemes/horse.mp3',
+  '/ɒ/':'phonemes/sock.mp3','/uː/':'phonemes/blue.mp3','/ʊ/':'phonemes/foot.mp3',
+  '/e/':'phonemes/head.mp3','/ɜː/':'phonemes/bird.mp3','/ə/':'phonemes/above.mp3',
+  '/eɪ/':'phonemes/day_ei.mp3','/aɪ/':'phonemes/eye.mp3','/ɔɪ/':'phonemes/boy.mp3',
+  '/əʊ/':'phonemes/nose.mp3','/aʊ/':'phonemes/mouth.mp3','/ɪə/':'phonemes/ear.mp3',
+  '/eə/':'phonemes/hair.mp3','/ʊə/':'phonemes/pure.mp3',
+  '/p/':'phonemes/pen.mp3','/b/':'phonemes/book.mp3','/t/':'phonemes/town.mp3',
+  '/d/':'phonemes/day.mp3','/k/':'phonemes/cat.mp3','/g/':'phonemes/give.mp3',
+  '/f/':'phonemes/fish.mp3','/v/':'phonemes/very.mp3','/θ/':'phonemes/think.mp3',
+  '/ð/':'phonemes/this.mp3','/s/':'phonemes/say.mp3','/z/':'phonemes/zoo.mp3',
+  '/ʃ/':'phonemes/she.mp3','/ʒ/':'phonemes/vision.mp3','/h/':'phonemes/hand.mp3',
+  '/tʃ/':'phonemes/cheese.mp3','/dʒ/':'phonemes/jump.mp3',
+  '/m/':'phonemes/moon.mp3','/n/':'phonemes/name.mp3','/ŋ/':'phonemes/sing.mp3',
+  '/l/':'phonemes/look.mp3','/r/':'phonemes/run.mp3','/w/':'phonemes/we.mp3',
+  '/j/':'phonemes/yes.mp3',
+  '/i/':'phonemes/happy.mp3','/u/':'phonemes/situation.mp3',
+  '/juː/':'words/you.mp3','/kw/':'phonemes/kw.mp3','/ks/':'phonemes/ks.mp3'
+};
+var WORDS={
+  'above':'words/above.mp3','act':'words/act.mp3','actor':'words/actor.mp3','apple':'words/apple.mp3','apt':'words/apt.mp3','back':'words/back.mp3','bag':'words/bag.mp3','bang':'words/bang.mp3',
+  'bank':'words/bank.mp3','bar':'words/bar.mp3','bask':'words/bask.mp3','bat':'words/bat.mp3','bath':'words/bath.mp3','beach':'words/beach.mp3','bed':'words/bed.mp3','bee':'words/bee.mp3',
+  'before':'words/before.mp3','belch':'words/belch.mp3','belt':'words/belt.mp3','bench':'words/bench.mp3','bend':'words/bend.mp3','bent':'words/bent.mp3','best':'words/best.mp3','big':'words/big.mp3',
+  'bird':'words/bird.mp3','blob':'words/blob.mp3','blue':'words/blue.mp3','bolt':'words/bolt.mp3','bond':'words/bond.mp3','book':'words/book.mp3','box':'words/box.mp3','boy':'words/boy.mp3',
+  'brag':'words/brag.mp3','bread':'words/bread.mp3','break':'words/break.mp3','bred':'words/bred.mp3','brim':'words/brim.mp3','bug':'words/bug.mp3','bulk':'words/bulk.mp3','bump':'words/bump.mp3',
+  'bunch':'words/bunch.mp3','bus':'words/bus.mp3','bush':'words/bush.mp3','cake':'words/cake.mp3','camp':'words/camp.mp3','cap':'words/cap.mp3','cape':'words/cape.mp3','car':'words/car.mp3',
+  'cash':'words/cash.mp3','cat':'words/cat.mp3','chat':'words/chat.mp3','cheese':'words/cheese.mp3','chin':'words/chin.mp3','chip':'words/chip.mp3','chop':'words/chop.mp3','city':'words/city.mp3',
+  'clip':'words/clip.mp3','club':'words/club.mp3','cold':'words/cold.mp3','corn':'words/corn.mp3','cost':'words/cost.mp3','crab':'words/crab.mp3','crept':'words/crept.mp3','crib':'words/crib.mp3',
+  'crisp':'words/crisp.mp3','cup':'words/cup.mp3','cut':'words/cut.mp3','cute':'words/cute.mp3','damp':'words/damp.mp3','dark':'words/dark.mp3','dash':'words/dash.mp3','day':'words/day.mp3',
+  'dent':'words/dent.mp3','desk':'words/desk.mp3','dig':'words/dig.mp3','doctor':'words/doctor.mp3','dog':'words/dog.mp3','door':'words/door.mp3','dot':'words/dot.mp3','dream':'words/dream.mp3',
+  'drop':'words/drop.mp3','drum':'words/drum.mp3','duck':'words/duck.mp3','duct':'words/duct.mp3','dump':'words/dump.mp3','dunk':'words/dunk.mp3','dusk':'words/dusk.mp3','dust':'words/dust.mp3',
+  'ear':'words/ear.mp3','eat':'words/eat.mp3','egg':'words/egg.mp3','elf':'words/elf.mp3','enjoy':'words/enjoy.mp3','eye':'words/eye.mp3','fact':'words/fact.mp3','fan':'words/fan.mp3',
+  'far':'words/far.mp3','farm':'words/farm.mp3','fast':'words/fast.mp3','father':'words/father.mp3','felt':'words/felt.mp3','fern':'words/fern.mp3','filch':'words/filch.mp3','fill':'words/fill.mp3',
+  'filth':'words/filth.mp3','fin':'words/fin.mp3','fish':'words/fish.mp3','fist':'words/fist.mp3','fix':'words/fix.mp3','flag':'words/flag.mp3','flat':'words/flat.mp3','floor':'words/floor.mp3',
+  'flower':'words/flower.mp3','fly':'words/fly.mp3','fog':'words/fog.mp3','fold':'words/fold.mp3','foot':'words/foot.mp3','for':'words/for.mp3','fork':'words/fork.mp3','fox':'words/fox.mp3',
+  'frog':'words/frog.mp3','full':'words/full.mp3','fun':'words/fun.mp3','fund':'words/fund.mp3','funny':'words/funny.mp3','garden':'words/garden.mp3','gasp':'words/gasp.mp3','germ':'words/germ.mp3','gift':'words/gift.mp3',
+  'giraffe':'words/giraffe.mp3','give':'words/give.mp3','glad':'words/glad.mp3','goat':'words/goat.mp3','gold':'words/gold.mp3','golf':'words/golf.mp3','grab':'words/grab.mp3','gray':'words/gray.mp3',
+  'great':'words/great.mp3','green':'words/green.mp3','grin':'words/grin.mp3','guitar':'words/guitar.mp3','gulp':'words/gulp.mp3','gym':'words/gym.mp3','hair':'words/hair.mp3','halt':'words/halt.mp3',
+  'hand':'words/hand.mp3','hands':'words/hands.mp3','hang':'words/hang.mp3','happy':'words/happy.mp3','hasp':'words/hasp.mp3','hat':'words/hat.mp3','he':'words/he.mp3','head':'words/head.mp3','health':'words/health.mp3',
+  'held':'words/held.mp3','help':'words/help.mp3','helps':'words/helps.mp3','hemp':'words/hemp.mp3','hen':'words/hen.mp3','her':'words/her.mp3','hit':'words/hit.mp3','honk':'words/honk.mp3','hop':'words/hop.mp3',
+  'hope':'words/hope.mp3','horse':'words/horse.mp3','hot':'words/hot.mp3','hug':'words/hug.mp3','hunch':'words/hunch.mp3','hunt':'words/hunt.mp3','husk':'words/husk.mp3','hut':'words/hut.mp3',
+  'ice':'words/ice.mp3','igloo':'words/igloo.mp3','jam':'words/jam.mp3','jar':'words/jar.mp3','jet':'words/jet.mp3','jump':'words/jump.mp3','junk':'words/junk.mp3','just':'words/just.mp3',
+  'kept':'words/kept.mp3','kilt':'words/kilt.mp3','king':'words/king.mp3','kit':'words/kit.mp3','kite':'words/kite.mp3','lamp':'words/lamp.mp3','left':'words/left.mp3','leg':'words/leg.mp3',
+  'length':'words/length.mp3','lick':'words/lick.mp3','lift':'words/lift.mp3','like':'words/like.mp3','limp':'words/limp.mp3','link':'words/link.mp3','lint':'words/lint.mp3','lion':'words/lion.mp3',
+  'lip':'words/lip.mp3','lisp':'words/lisp.mp3','loft':'words/loft.mp3','log':'words/log.mp3','long':'words/long.mp3','look':'words/look.mp3','lost':'words/lost.mp3','lunch':'words/lunch.mp3',
+  'lymph':'words/lymph.mp3','mail':'words/mail.mp3','map':'words/map.mp3','mask':'words/mask.mp3','math':'words/math.mp3','me':'words/me.mp3','melt':'words/melt.mp3','mend':'words/mend.mp3',
+  'milk':'words/milk.mp3','mint':'words/mint.mp3','mix':'words/mix.mp3','month':'words/month.mp3','moon':'words/moon.mp3','more':'words/more.mp3','moth':'words/moth.mp3','mouth':'words/mouth.mp3',
+  'much':'words/much.mp3','mulch':'words/mulch.mp3','must':'words/must.mp3','my':'words/my.mp3','myth':'words/myth.mp3','name':'words/name.mp3','nest':'words/nest.mp3','net':'words/net.mp3',
+  'never':'words/never.mp3','north':'words/north.mp3','nose':'words/nose.mp3','not':'words/not.mp3','nut':'words/nut.mp3','nymph':'words/nymph.mp3','octopus':'words/octopus.mp3','odd':'words/odd.mp3',
+  'open':'words/open.mp3','opt':'words/opt.mp3','pack':'words/pack.mp3','pact':'words/pact.mp3','paint':'words/paint.mp3','pan':'words/pan.mp3','pant':'words/pant.mp3','park':'words/park.mp3',
+  'path':'words/path.mp3','peg':'words/peg.mp3','pen':'words/pen.mp3','pet':'words/pet.mp3','pick':'words/pick.mp3','pig':'words/pig.mp3','pin':'words/pin.mp3','pinch':'words/pinch.mp3',
+  'pink':'words/pink.mp3','plan':'words/plan.mp3','play':'words/play.mp3','plug':'words/plug.mp3','pond':'words/pond.mp3','pot':'words/pot.mp3','press':'words/press.mp3','prod':'words/prod.mp3',
+  'prompts':'words/prompts.mp3','pull':'words/pull.mp3','pulp':'words/pulp.mp3','pump':'words/pump.mp3','punt':'words/punt.mp3','pure':'words/pure.mp3','push':'words/push.mp3','put':'words/put.mp3',
+  'queen':'words/queen.mp3','raft':'words/raft.mp3','rain':'words/rain.mp3','ranch':'words/ranch.mp3','rat':'words/rat.mp3','read':'words/read.mp3','red':'words/red.mp3','rest':'words/rest.mp3',
+  'rich':'words/rich.mp3','ring':'words/ring.mp3','risk':'words/risk.mp3','river':'words/river.mp3','rock':'words/rock.mp3','romp':'words/romp.mp3','rose':'words/rose.mp3','run':'words/run.mp3','rush':'words/rush.mp3',
+  'rust':'words/rust.mp3','sad':'words/sad.mp3','sail':'words/sail.mp3','salt':'words/salt.mp3','sand':'words/sand.mp3','say':'words/say.mp3','scab':'words/scab.mp3','scalp':'words/scalp.mp3',
+  'scar':'words/scar.mp3','scram':'words/scram.mp3','script':'words/script.mp3','scum':'words/scum.mp3','sea':'words/sea.mp3','sect':'words/sect.mp3','see':'words/see.mp3','self':'words/self.mp3',
+  'send':'words/send.mp3','serve':'words/serve.mp3','shark':'words/shark.mp3','she':'words/she.mp3','sheep':'words/sheep.mp3','shelf':'words/shelf.mp3','ship':'words/ship.mp3','shop':'words/shop.mp3',
+  'short':'words/short.mp3','shred':'words/shred.mp3','shrub':'words/shrub.mp3','shrug':'words/shrug.mp3','sift':'words/sift.mp3','silk':'words/silk.mp3','sin':'words/sin.mp3','sing':'words/sing.mp3',
+  'sink':'words/sink.mp3','sir':'words/sir.mp3','sister':'words/sister.mp3','sit':'words/sit.mp3','six':'words/six.mp3','sixth':'words/sixth.mp3','sixths':'words/sixths.mp3','skin':'words/skin.mp3',
+  'skip':'words/skip.mp3','slam':'words/slam.mp3','sled':'words/sled.mp3','sleep':'words/sleep.mp3','slip':'words/slip.mp3','slug':'words/slug.mp3','smog':'words/smog.mp3','smug':'words/smug.mp3',
+  'snap':'words/snap.mp3','snip':'words/snip.mp3','sock':'words/sock.mp3','soft':'words/soft.mp3','son':'words/son.mp3','song':'words/song.mp3','speak':'words/speak.mp3','spin':'words/spin.mp3',
+  'splash':'words/splash.mp3','splat':'words/splat.mp3','split':'words/split.mp3','spot':'words/spot.mp3','sprig':'words/sprig.mp3','spring':'words/spring.mp3','sprint':'words/sprint.mp3','star':'words/star.mp3',
+  'stay':'words/stay.mp3','step':'words/step.mp3','stop':'words/stop.mp3','store':'words/store.mp3','storm':'words/storm.mp3','strap':'words/strap.mp3','strip':'words/strip.mp3','strong':'words/strong.mp3',
+  'strum':'words/strum.mp3','such':'words/such.mp3','sulk':'words/sulk.mp3','sun':'words/sun.mp3','swell':'words/swell.mp3','swept':'words/swept.mp3','swim':'words/swim.mp3','sylph':'words/sylph.mp3',
+  'table':'words/table.mp3','tank':'words/tank.mp3','tea':'words/tea.mp3','teacher':'words/teacher.mp3','ten':'words/ten.mp3','tent':'words/tent.mp3','tents':'words/tents.mp3','tenth':'words/tenth.mp3','term':'words/term.mp3',
+  'text':'words/text.mp3','texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3',
+  'throb':'words/throb.mp3','tick':'words/tick.mp3','top':'words/top.mp3','town':'words/town.mp3','train':'words/train.mp3','trap':'words/trap.mp3','tree':'words/tree.mp3','trim':'words/trim.mp3',
+  'trip':'words/trip.mp3','tub':'words/tub.mp3','tusk':'words/tusk.mp3','twig':'words/twig.mp3','twin':'words/twin.mp3','twist':'words/twist.mp3','type':'words/type.mp3','umbrella':'words/umbrella.mp3',
+  'unicorn':'words/unicorn.mp3','van':'words/van.mp3','verb':'words/verb.mp3','very':'words/very.mp3','vision':'words/vision.mp3','wait':'words/wait.mp3','wash':'words/wash.mp3','wasp':'words/wasp.mp3',
+  'way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3','wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3',
+  'which':'words/which.mp3','whip':'words/whip.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3','wind':'words/wind.mp3','wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3',
+  'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
+  'you':'words/you.mp3','zoo':'words/zoo.mp3',
+  // Additional /aɪ/ team words
+  'night':'words/night.mp3','light':'words/light.mp3','right':'words/right.mp3','bright':'words/bright.mp3',
+  'fight':'words/fight.mp3','tight':'words/tight.mp3','sight':'words/sight.mp3','might':'words/might.mp3',
+  'flight':'words/flight.mp3','fright':'words/fright.mp3','slight':'words/slight.mp3','knight':'words/knight.mp3',
+  'high':'words/high.mp3','sigh':'words/sigh.mp3','thigh':'words/thigh.mp3','delight':'words/delight.mp3',
+  'sky':'words/sky.mp3','try':'words/try.mp3','cry':'words/cry.mp3','dry':'words/dry.mp3',
+  'fry':'words/fry.mp3','spy':'words/spy.mp3','shy':'words/shy.mp3','sly':'words/sly.mp3',
+  'pie':'words/pie.mp3','lie':'words/lie.mp3','tie':'words/tie.mp3','die':'words/die.mp3',
+  'fries':'words/fries.mp3','cried':'words/cried.mp3','tried':'words/tried.mp3','dried':'words/dried.mp3',
+  'fried':'words/fried.mp3','skies':'words/skies.mp3','flies':'words/flies.mp3',
+  'rely':'words/rely.mp3','deny':'words/deny.mp3','apply':'words/apply.mp3',
+  'baby':'words/baby.mp3','bake':'words/bake.mp3','bite':'words/bite.mp3','dive':'words/dive.mp3',
+  'five':'words/five.mp3','hide':'words/hide.mp3','mile':'words/mile.mp3','nice':'words/nice.mp3',
+  'ride':'words/ride.mp3','side':'words/side.mp3','time':'words/time.mp3','white':'words/white.mp3',
+  'wife':'words/wife.mp3','wine':'words/wine.mp3','prize':'words/prize.mp3','rise':'words/rise.mp3',
+  'size':'words/size.mp3','smile':'words/smile.mp3','tide':'words/tide.mp3','wise':'words/wise.mp3',
+  'drive':'words/drive.mp3','price':'words/price.mp3','twice':'words/twice.mp3','ice':'words/ice.mp3',
+  'nine':'words/nine.mp3','line':'words/line.mp3','fine':'words/fine.mp3','pipe':'words/pipe.mp3',
+  'ripe':'words/ripe.mp3','site':'words/site.mp3','wide':'words/wide.mp3','slide':'words/slide.mp3','igh':'words/igh.mp3','quiz':'words/quiz.mp3','sort':'words/sort.mp3','ties':'words/ties.mp3','lies':'words/lies.mp3','tries':'words/tries.mp3','y':'words/y.mp3','bike':'words/bike.mp3','by':'words/by.mp3','firefly':'words/firefly.mp3','july':'words/july.mp3','midnight':'words/midnight.mp3','replies':'words/replies.mp3','spied':'words/spied.mp3','story':'words/story.mp3','sunlight':'words/sunlight.mp3','tonight':'words/tonight.mp3','why':'words/why.mp3','audio':'words/audio.mp3','sec':'words/sec.mp3','phonemes':'words/phonemes.mp3','flipped':'words/flipped.mp3','words':'words/words.mp3','en':'words/en.mp3','position':'words/position.mp3','data':'words/data.mp3','drag':'words/drag.mp3','px':'words/px.mp3','bini':'words/bini.mp3','fl':'words/fl.mp3','ie':'words/ie.mp3',
+};
+
+
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){var w=path.replace('words/','').replace('.mp3','');speakNow(w);return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');var w2=path.replace('words/','').replace('.mp3','');speakNow(w2)},{once:true});player.play().catch(function(e){el.classList.remove('on');var w3=path.replace('words/','').replace('.mp3','');speakNow(w3)});}
+
+function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
+function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w);}
+(function(){
+  for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]+'?v=1');a.preload='auto';a.load();audioCache[WORDS[k]]=a}
+  for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p+'?v=1');a2.preload='auto';a2.load();audioCache[p]=a2}}
+})();
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=getAudio(p);if(!player||(player.error&&player.error.code===4)){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+
+function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
+function speakNow(word){
+  speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;
+  var voices=speechSynthesis.getVoices();
+  var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||
+    voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||
+    voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];
+  if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50);
+}
+
+// === Navigation ===
+var NM={story:'故事',lab:'实验',sort:'分拣',quiz:'闯关',book:'绘本',easter:'彩蛋'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='lab')buildL();
+  if(n==='sort')buildSort();
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ LAB ═══
+var labData={
+  'igh':{label:'igh🌙 词中',vowel:'igh',vowelLen:3,
+    words:[
+      ['night','夜晚 🌙'],['light','灯光 💡'],['right','对的 ✅'],['bright','明亮 ✨'],['fight','打架 🥊'],
+      ['tight','紧的 🔒'],['sight','视力 👀'],['might','可能 🉑'],['flight','航班 ✈️'],['fright','惊吓 😱'],
+      ['slight','轻微 📏'],['knight','骑士 ⚔️'],['high','高的 ⬆️'],['sigh','叹气 😮‍💨'],['thigh','大腿 🦵'],
+      ['delight','快乐 😊'],['tonight','今晚 🌃'],['sunlight','阳光 ☀️'],['midnight','午夜 🕛']
+    ]},
+  'ie':{label:'ie🥧 词尾',vowel:'ie',vowelLen:2,
+    words:[
+      ['pie','派 🥧'],['lie','说谎 🤥'],['tie','领带 👔'],['die','死 💀'],['fries','薯条 🍟'],
+      ['cried','哭了 😢'],['tried','尝试 🔄'],['dried','干了 🏜️'],['fried','油炸 🍳'],['skies','天空 🌤️'],
+      ['flies','苍蝇 🪰'],['lies','谎言 🤥'],['ties','领带 👔'],['replies','回复 📝'],['spied','窥探 🕵️']
+    ]},
+  'y':{label:'y✈️ 词尾',vowel:'y',vowelLen:1,
+    words:[
+      ['fly','飞 ✈️'],['sky','天空 🌌'],['my','我的 👤'],['by','由 👈'],['why','为什么 ❓'],
+      ['try','尝试 🔄'],['cry','哭 😢'],['dry','干的 🏜️'],['fry','油炸 🍳'],['spy','间谍 🕵️'],
+      ['shy','害羞 😳'],['sly','狡猾 🦊'],['rely','依靠 🔗'],['deny','否认 🚫'],['apply','申请 📝'],
+      ['July','七月 📅']
+    ]}
+};
+var curL='igh';
+function switchL(k){curL=k;buildL()}
+function buildL(){
+  var cfg=labData[curL];
+  var tabs='';
+  Object.keys(labData).forEach(function(k){
+    tabs+='<button class="lab-tab'+(k===curL?' active':'')+'" onclick="switchL(\''+k+'\')">'+labData[k].label+'</button>';
+  });
+  document.getElementById('labTabs').innerHTML=tabs;
+  var vow=cfg.vowel,vowLen=cfg.vowelLen;
+  document.getElementById('labGrid').innerHTML=cfg.words.map(function(w,i){
+    var word=w[0],emoji=w[1],colored='',len=word.length,vowIdx=word.indexOf(vow);
+    if(vowIdx<0){vowIdx=word.toLowerCase().indexOf(vow.toLowerCase());}
+    for(var j=0;j<len;j++){
+      if(j===vowIdx){
+        var vtext=word.substring(j,j+vowLen);
+        colored+='<span style="color:#ffd200;font-weight:bold">'+vtext+'</span>';
+        j+=vowLen-1;
+      }else{
+        colored+='<span style="color:#81c784">'+word[j]+'</span>';
+      }
+    }
+    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'3px':word.length<=6?'2px':word.length<=7?'1px':'0px')+'">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
+  }).join('');
+}
+
+// ═══ SORT: i_e / igh / ie / y ═══
+var sortWords=[
+  // i_e words
+  {w:'like',t:'i_e'},{w:'kite',t:'i_e'},{w:'bike',t:'i_e'},{w:'time',t:'i_e'},{w:'ride',t:'i_e'},
+  {w:'five',t:'i_e'},{w:'nine',t:'i_e'},{w:'line',t:'i_e'},{w:'side',t:'i_e'},{w:'nice',t:'i_e'},
+  {w:'ice',t:'i_e'},{w:'size',t:'i_e'},
+  // igh words
+  {w:'night',t:'igh'},{w:'light',t:'igh'},{w:'right',t:'igh'},{w:'bright',t:'igh'},{w:'fight',t:'igh'},
+  {w:'high',t:'igh'},{w:'sight',t:'igh'},{w:'flight',t:'igh'},{w:'tight',t:'igh'},{w:'might',t:'igh'},
+  // ie words
+  {w:'pie',t:'ie'},{w:'lie',t:'ie'},{w:'tie',t:'ie'},{w:'die',t:'ie'},{w:'fries',t:'ie'},
+  {w:'cried',t:'ie'},{w:'tried',t:'ie'},{w:'dried',t:'ie'},{w:'flies',t:'ie'},{w:'skies',t:'ie'},
+  // y words
+  {w:'fly',t:'y'},{w:'sky',t:'y'},{w:'my',t:'y'},{w:'by',t:'y'},{w:'why',t:'y'},
+  {w:'try',t:'y'},{w:'cry',t:'y'},{w:'dry',t:'y'},{w:'shy',t:'y'},{w:'spy',t:'y'}
+];
+var selectedWord=null,placedCount=0;
+function buildSort(){
+  var pool=document.getElementById('sortPool'),h='';
+  sortWords.sort(function(){return Math.random()-0.5}).forEach(function(w){
+    h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>';
+  });
+  pool.innerHTML=h;
+  ['I_E','IGH','IE','Y'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
+}
+function setupBins(){
+  ['binI_E','binIGH','binIE','binY'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};
+    el.ondragleave=function(){el.classList.remove('drag-over')};
+    el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())};
+  });
+}
+function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
+function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
+function dropToBin(w,type,correct){
+  if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
+  // Map bin id to correct type: 'i_e' from bin id 'i_e', 'igh'->'igh', 'ie'->'ie', 'y'->'y'
+  var mappedType=type;
+  var ok=(mappedType===correct);
+  var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
+  if(ok){
+    item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';
+    // Map correct type to bin ID
+    var binId='bin'+(correct==='i_e'?'I_E':correct.toUpperCase());
+    document.getElementById(binId+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';
+    var label=correct==='i_e'?'i_e':correct;
+    document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+label+'!</span>';
+    placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>';
+  }else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听 /aɪ/ 是什么写法？</span>'}
+  selectedWord=null;
+}
+function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
+function dragEnd(e){e.target.classList.remove('dragging')}
+var tl=null,tc=null;
+function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(79,195,247,.18);border:2px solid #4fc3f7;border-radius:14px;padding:6px 14px;font-weight:bold;color:#4fc3f7;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binI_E','binIGH','binIE','binY'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binI_E','binIGH','binIE','binY'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+function resetSort(){buildSort()}
+
+// ═══ QUIZ ═══
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[
+  // Type 1: Which spelling?
+  {t:'spell',q:'哪个是正确的拼写？/naɪt/',o:['night','nite','niet','nyte'],a:0,x:'/naɪt/ = n-igh-t = night ✓。igh 三个字母一起发 /aɪ/'},
+  {t:'spell',q:'哪个是正确的拼写？/flaɪ/',o:['fly','flie','fligh','flye'],a:0,x:'/flaɪ/ = f-l-y = fly ✓。单音节词尾 y 发 /aɪ/'},
+  {t:'spell',q:'哪个是正确的拼写？/paɪ/',o:['pie','pigh','py','pye'],a:0,x:'/paɪ/ = p-ie = pie ✓。ie 在词尾发 /aɪ/'},
+  {t:'spell',q:'哪个是正确的拼写？/laɪt/',o:['light','lite','liet','lyte'],a:0,x:'/laɪt/ = l-igh-t = light ✓。igh 发 /aɪ/，gh 不发音！'},
+  {t:'spell',q:'哪个是正确的拼写？/skаɪ/',o:['sky','skie','skigh','scy'],a:0,x:'/skаɪ/ = s-k-y = sky ✓。单音节词尾 y 发 /aɪ/'},
+  // Type 2: Fill igh/ie/y
+  {t:'fill',q:'l _ _ _ t → 填什么？',o:['igh','ie','y','i_e'],a:0,x:'l-igh-t = light。igh 在词中间 ✓'},
+  {t:'fill',q:'p _ _ → 填什么？',o:['ie','igh','y','i_e'],a:0,x:'p-ie = pie。ie 在词尾 ✓'},
+  {t:'fill',q:'fl _ → 填什么？',o:['y','ie','igh','i_e'],a:0,x:'fl-y = fly。单音节词尾 y 发 /aɪ/ ✓'},
+  {t:'fill',q:'n _ _ _ t → 填什么？',o:['igh','ie','y','i_e'],a:0,x:'n-igh-t = night。igh 发 /aɪ/ ✓'},
+  {t:'fill',q:'t _ _ → 填什么？',o:['ie','igh','y','i_e'],a:0,x:'t-ie = tie。ie 在词尾 ✓'},
+  // Type 3: Listen and choose
+  {t:'listen',q:'🔊 听发音，是什么写法？',w:'fly',o:['igh（在词中）','ie（在词尾）','y（单音节词尾）','i_e（魔法e）'],a:2,x:'fly /flaɪ/ → 单音节词尾 y 发 /aɪ/ ✓'},
+  {t:'listen',q:'🔊 听发音，是什么写法？',w:'night',o:['igh（在词中）','ie（在词尾）','y（单音节词尾）','i_e（魔法e）'],a:0,x:'night /naɪt/ → igh 在词中间 ✓'},
+  {t:'listen',q:'🔊 听发音，是什么写法？',w:'pie',o:['igh（在词中）','ie（在词尾）','y（单音节词尾）','i_e（魔法e）'],a:1,x:'pie /paɪ/ → ie 在词尾 ✓'},
+  {t:'listen',q:'🔊 听发音，是什么写法？',w:'my',o:['igh（在词中）','ie（在词尾）','y（单音节词尾）','i_e（魔法e）'],a:2,x:'my /maɪ/ → 单音节词尾 y 发 /aɪ/ ✓'},
+  {t:'listen',q:'🔊 听发音，是什么写法？',w:'like',o:['igh（在词中）','ie（在词尾）','y（单音节词尾）','i_e（魔法e）'],a:3,x:'like /laɪk/ → i_e 魔法e ✓'},
+  // Type 4: Same /aɪ/ sound?
+  {t:'pattern',q:'下面哪些词有同样的 /aɪ/ 音？',o:['like / night / pie / dry → 全部都有 ✓','只有 like 和 night','只有 pie 和 dry','都没有'],a:0,x:'like(i_e)、night(igh)、pie(ie)、dry(y) — 全部发 /aɪ/！四种写法，一个声音 ✓'},
+  {t:'pattern',q:'fly 和 pie 里的 /aɪ/ 写法分别是？',o:['y 和 ie','igh 和 y','i_e 和 ie','都一样'],a:0,x:'fly = y词尾，pie = ie词尾。两个都在词尾，但拼写不同 ✓'},
+  {t:'pattern',q:'night 和 right 里的 /aɪ/ 相同吗？',o:['相同！都是 igh 发 /aɪ/ ✓','不同，night 是 n 的音','不同，right 多一个 r','不确定'],a:0,x:'night 和 right 都用 igh 发 /aɪ/。双胞胎拼法 ✓'},
+  {t:'pattern',q:'igh 中的 gh 发什么音？',o:['不发音！（沉默的 gh）','/g/','/h/','/f/'],a:0,x:'igh 中的 gh 不发音！igh 三个字母只发一个 /aɪ/。gh 是沉默的小尾巴 ✓'},
+  {t:'pattern',q:'\"igh 在词中，ie/y 在词尾\"——对吗？',o:['对 ✓','不对，igh 也在词尾','不对，ie 在词中','y 在任何位置都一样'],a:0,x:'没错！igh 喜欢站词中间（night, light），ie 和 y 在词尾（pie, fly）✓'}
+];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'\"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={spell:'✏️ 选正确拼写',fill:'🔤 填什么',listen:'👂 听音辨别',pattern:'🎯 模式判断'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w&&q.t==='listen')h+='<div class="quiz-word"><span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()" style="width:52px;height:52px;font-size:1.3em">🔊</span><div style="font-size:.72em;color:#888;margin-top:2px">点击听发音</div></div>';if(q.w&&q.t!=='listen')h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！/aɪ/ 大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ef9a9a;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// ═══ BOOK ═══
+var bp_cp=0,bp_pages=[
+  {s:'🌙😊',t:'The Night Sky',x:'At <span class="dg-hl">night</span>, the <span class="dg-hl">sky</span> is <span class="dg-hl">bright</span>.'},
+  {s:'💡😊',t:'A Light',x:'A <span class="dg-hl">light</span> shines <span class="dg-hl">high</span> in the <span class="dg-hl">sky</span>.'},
+  {s:'🪁😊',t:'Fly',x:'I <span class="dg-hl">fly</span> my kite at <span class="dg-hl">night</span>.'},
+  {s:'🌧️😔',t:'Cry',x:'The rain comes.<br>I <span class="dg-hl">cry</span>.'},
+  {s:'🌙😊',t:'Bright Again',x:'But the <span class="dg-hl">sky</span> is <span class="dg-hl">bright</span>.<br>I do not <span class="dg-hl">cry</span> now.'},
+  {s:'😊🪁',t:'Glad',x:'I <span class="dg-hl">fly</span> my kite.<br>What a <span class="dg-hl">bright</span> <span class="dg-hl">night</span>!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">night <span class="speak-btn" onclick="spk(&#39;night&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">夜晚 🌙</div></div><div class="gi"><div class="gw">sky <span class="speak-btn" onclick="spk(&#39;sky&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">y /aɪ/</div><div class="gz">天空 🌤️</div></div><div class="gi"><div class="gw">bright <span class="speak-btn" onclick="spk(&#39;bright&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">明亮 ✨</div></div><div class="gi"><div class="gw">light <span class="speak-btn" onclick="spk(&#39;light&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">光 💡</div></div><div class="gi"><div class="gw">high <span class="speak-btn" onclick="spk(&#39;high&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">高 ⬆️</div></div><div class="gi"><div class="gw">fly <span class="speak-btn" onclick="spk(&#39;fly&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">y /aɪ/</div><div class="gz">飞 ✈️</div></div><div class="gi"><div class="gw">cry <span class="speak-btn" onclick="spk(&#39;cry&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">y /aɪ/</div><div class="gz">哭 😢</div></div></div>'},
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/25-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+buildL();buildSort();initQ();
+</script>
+</body></html>

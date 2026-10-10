@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>字母组合定音：多音字母·歧义组合 | 自然拼读·解码</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}@keyframes sparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) drop-shadow(0 0 8px #ffd200)}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s;background:rgba(255,210,0,.4)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+.type-card{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 12px;text-align:center;min-width:86px}.type-card .w{font-size:1.2em;font-weight:bold;color:#ffd200}.type-card .m{color:#888;font-size:.68em;margin-top:2px;line-height:1.4}
+
+/* 目标板 */
+.goal-box{background:linear-gradient(135deg,rgba(255,138,101,.12),rgba(255,210,0,.08));border:2px solid rgba(255,138,101,.35);border-radius:18px;padding:22px 20px;text-align:center}
+.goal-tag{display:inline-block;background:rgba(255,138,101,.2);border:1px solid rgba(255,138,101,.5);color:#ff8a65;border-radius:20px;padding:3px 14px;font-size:.78em;font-weight:bold;margin-bottom:12px}
+.goal-line{font-size:1.25em;font-weight:bold;color:#ffe9c7;line-height:1.7}
+
+/* 思维流程图 */
+.flow{display:flex;flex-direction:column;gap:8px;max-width:560px;margin:0 auto}
+.flow-node{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.12);border-radius:14px;padding:11px 14px;transition:all .3s}
+.flow-node .step{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);color:#888;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.flow-node .q{flex:1;font-size:.95em;line-height:1.5}
+.flow-node .a{font-size:.82em;color:#888;text-align:right;flex-shrink:0}
+.flow-node.active{border-color:#ffd200;background:rgba(255,210,0,.07)}
+.flow-node.active .step{background:#ffd200;color:#1a1a2e}
+.flow-node.active .a{color:#ffd200}
+.flow-node.locked{opacity:.45}
+.flow-node.done{border-color:rgba(105,240,174,.35);background:rgba(105,240,174,.04)}
+.flow-node.done .a{color:#69f0ae}
+.flow-arrow{text-align:center;color:#555;font-size:.9em;line-height:1}
+.stage-tag{margin:16px 0 6px;padding:6px 12px;border-radius:10px;font-size:.85em;font-weight:bold;text-align:center}.stage-tag.s1{background:rgba(105,240,174,.14);color:#69f0ae;border:1px solid rgba(105,240,174,.4)}.stage-tag.s2{background:rgba(255,210,0,.08);color:#ffd200;border:1px solid rgba(255,210,0,.3)}.stage-tag.s3{background:rgba(255,138,101,.08);color:#ff8a65;border:1px solid rgba(255,138,101,.3)}.stage-tag.s4{background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
+
+/* 工作台 */
+.wb-stage{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0}
+.wb-word{display:flex;align-items:center;flex-wrap:nowrap;justify-content:center;gap:0;margin:6px 0}
+.wb-tile{font-size:2em;font-weight:bold;color:#e0e0e0;letter-spacing:1px;user-select:none;transition:all .25s}
+.wb-tile.hl{color:#ffd200;text-shadow:0 0 12px rgba(255,210,0,.6)}
+.wb-hint{min-height:30px;text-align:center;font-size:.92em;color:#e0e0e0;margin-top:6px}
+.wb-feedback{min-height:24px;text-align:center;font-size:.95em;margin:6px 0;font-weight:bold}
+.wb-types{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.wb-type-btn{padding:10px 16px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}
+.wb-type-btn:hover:not(.locked){border-color:#ffd200}
+.wb-type-btn.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+.wb-type-btn.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+.wb-type-btn.locked{pointer-events:none}
+.wb-progress{display:flex;gap:4px;justify-content:center;margin:10px 0;flex-wrap:wrap}.wb-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}.wb-dot.done{background:#69f0ae}.wb-dot.cur{background:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+
+/* 闯关 Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* 绘本 Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.78em;color:#aaa}.gi .gz{font-size:.78em;color:#bbb}
+
+/* 备忘卡 */
+.memo-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,210,0,.35);border-radius:16px;padding:20px;max-width:560px;margin:0 auto;position:relative;overflow:hidden}
+.memo-rule{margin:10px 0;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:12px;font-size:.95em;line-height:1.7}
+.memo-rule b{color:#ffd200}
+.memo-example{color:#81c784;font-size:.92em;letter-spacing:1px}
+.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+@media print{body{background:#fff;color:#111}.stars,.nav,.wb-stage,.speak-btn,.print-note,.quiz-nav,.book-nav,.book-pron{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.memo-card{background:#fff;border:2px solid #333;color:#111}.memo-card b{color:#c70}.memo-card .memo-rule{background:#f5f5f5}.memo-example{color:#070}.goal-line,h1,h2,h3{color:#111}.flow-node{background:#fff;border-color:#ccc;color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .magic-rule{padding:12px 14px;font-size:.9em}
+  .type-card{min-width:76px;padding:8px 8px}.type-card .w{font-size:1.05em}
+  .goal-line{font-size:1.05em}
+  .flow-node{padding:9px 10px}
+  .flow-node .a{font-size:.72em}
+  .stage-tag{font-size:.75em;padding:5px 10px}
+  .wb-tile{font-size:1.45em}
+  .wb-type-btn{padding:11px 12px;font-size:.85em;min-height:44px}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ffd200}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+  .gi .gz{font-size:.68em}
+  .memo-card{padding:14px}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🗣️ 字母组合定音</h1><p class="subtitle">见词能读 · 阶段 4 · 定音 —— 长词里，多音字母和歧义组合怎么选对声音！</p>
+<div class="nav">
+<button class="nav-btn active" onclick="showS('goal')">🎯 目标板</button>
+<button class="nav-btn" onclick="showS('flow')">🗺️ 流程图</button>
+<button class="nav-btn" onclick="showS('wb')">🔧 工作台</button>
+<button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button>
+<button class="nav-btn" onclick="showS('book')">📚 绘本</button>
+<button class="nav-btn" onclick="showS('memo')">💳 备忘卡</button>
+</div>
+
+<!-- ===== 目标板（讲故事） ===== -->
+<div class="section active" id="sec-goal"><div class="glass">
+<h2>🎯 今天学什么 · 长词里那些「多音」字母，选对声音</h2>
+
+<div class="story-speech"><p>上一步，你学会了<b style="color:#ffd200">看每个音节的元音、判类型</b>。可有些字母特别调皮——<b style="color:#ff8a65">同一个字母，在长词里却有好几个声音</b>！</p></div>
+
+<h3>🗣️ 两类「多音」小淘气（都在长词里）</h3>
+<div class="story-speech"><p><b style="color:#ffd200">第一类：多音字母</b>——一个字母两种声音，看它<b>后面跟着谁</b>：</p>
+<p>c → <b style="color:#ffd200">/k/</b>（pic·nic）还是 <b style="color:#ffd200">/s/</b>（ci·ty）？<br>g → <b style="color:#ffd200">/g/</b>（gar·den）还是 <b style="color:#ffd200">/dʒ/</b>（gi·ant）？<br>y → <b style="color:#ffd200">/j/</b>（yel·low）还是 <b style="color:#ffd200">/aɪ/</b>（but·ter·fly）还是 <b style="color:#ffd200">/ɪ/</b>（ba·by）？</p></div>
+
+<div class="story-speech"><p><b style="color:#ffd200">第二类：歧义组合</b>——两个字母手拉手，却有好几种读法，要<b>试音</b>：</p>
+<p>oo → <b style="color:#ffd200">/uː/</b>（mush·room）还是 <b style="color:#ffd200">/ʊ/</b>（cook·ie）？<br>ow → <b style="color:#ffd200">/əʊ/</b>（snow·man）还是 <b style="color:#ffd200">/aʊ/</b>（cow·boy）？<br>ea → <b style="color:#ffd200">/iː/</b>（tea·cher）还是 <b style="color:#ffd200">/e/</b>（break·fast）？</p></div>
+
+<div class="story-speech"><p>这就是解码地图上的<b style="color:#4fc3f7">🔵 阶段 4 · 第⑨步</b>。多音字母看<b>后面</b>，歧义组合靠<b>试音</b>——去「🔧 工作台」动手练！</p></div>
+
+</div></div>
+
+<!-- ===== 思维流程图 ===== -->
+<div class="section" id="sec-flow"><div class="glass">
+<h2>🗺️ 见词能读 · 解码一条线</h2>
+<p style="color:#aaa;font-size:.9em;margin-bottom:12px;text-align:center">解码一条线 · 4 个阶段。今天学 <span class="gold">🔵 阶段 4 · 定音</span>，其余已学 ✅。</p>
+<div class="flow" style="max-width:600px">
+<div class="stage-tag s1">🟢 阶段 1 · 大块预处理</div>
+<div class="flow-node done"><div class="step">①</div><div class="q">复合词 · 前后缀 · 辅音 -le</div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s2">🟡 阶段 2 · 标记元音核</div>
+<div class="flow-node done"><div class="step">④</div><div class="q">圈画<span class="dim">元音核</span>（静音 e 不算）</div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">⑤</div><div class="q">清点<span class="dim">元音核数量</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s3">🔴 阶段 3 · 音节边界切割</div>
+<div class="flow-node done"><div class="step">⑥</div><div class="q">辅音<span class="dim">夹心层</span>试切（VCCV/VCV/V-V）</div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">⑦</div><div class="q">切口<span class="dim">合法性校验</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s4">🔵 阶段 4 · 解码发音（今天学！）</div>
+<div class="flow-node done"><div class="step">⑧</div><div class="q">类型判定 <span class="dim">短/长/r/双元音</span></div><div class="a">✅ 已学</div></div>
+<div class="memo-rule"><b>⑨ 定音</b>（今天）→ 多音字母看后面、歧义组合靠试音<br><span class="memo-example">c→/k/·/s/ · g→/g/·/dʒ/ · oo→/uː/·/ʊ/ · ow→/əʊ/·/aʊ/</span><br><span style="color:#4fc3f7">🔜 词缀整块固定音（-tion / -ture / -cient）→ 见 73</span></div>
+<div class="flow-node locked"><div class="step">⑩</div><div class="q">定重音 <span class="dim">多音节重音</span></div><div class="a">🔒 后面学</div></div>
+</div>
+</div></div>
+
+<!-- ===== 工作台 ===== -->
+<div class="section" id="sec-wb"><div class="glass">
+<div class="magic-rule">🔵 今天学 <b>阶段 4：定音</b> —— 看长词里<b>金色字母/组合</b>，选出它在这个词里的声音！</div>
+<h3>🗣️ 第一步：看金色部分，选对声音</h3>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<div class="type-card"><div class="w">c</div><div class="m">/k/ pic·nic<br>/s/ ci·ty</div></div>
+<div class="type-card"><div class="w">g</div><div class="m">/g/ gar·den<br>/dʒ/ gi·ant</div></div>
+<div class="type-card"><div class="w">oo</div><div class="m">/uː/ mush·room<br>/ʊ/ cook·ie</div></div>
+<div class="type-card"><div class="w">ow</div><div class="m">/əʊ/ snow·man<br>/aʊ/ cow·boy</div></div>
+<div class="type-card"><div class="w">ea</div><div class="m">/iː/ tea·cher<br>/e/ break·fast</div></div>
+</div>
+<div class="magic-rule">🎯 记住：<b>多音字母</b>（c/g/y）看它<b>后面是不是 e/i/y</b>；<b>歧义组合</b>（oo/ow/ea/th…）先试常见音，读不通再试另一个音！</div>
+<h2>🔧 定音工作台</h2>
+<p style="color:#aaa;font-size:.88em;text-align:center;margin-bottom:6px">看长词 → <span class="gold">点金色字母</span>想它的音 → 选下面的声音</p>
+<div class="wb-progress" id="wbDots"></div>
+<div class="wb-stage">
+<div class="wb-word" id="wbWord"></div>
+<div class="wb-hint" id="wbHint"></div>
+<div class="wb-types" id="wbTypes"></div>
+<div class="wb-feedback" id="wbFeedback"></div>
+</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0">
+<button class="btn btn-outline" onclick="wbHelp()">💡 帮帮我</button>
+<button class="btn btn-outline" onclick="wbNext()">➡️ 下一个</button>
+</div>
+</div></div>
+
+<!-- ===== 闯关 ===== -->
+<div class="section" id="sec-quiz"><div class="glass">
+<h2>🏆 闯关挑战（10 题）</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">看长词里的金色字母/组合，选出正确的声音！</p>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- ===== 绘本 ===== -->
+<div class="section" id="sec-book"><div class="glass">
+<h2>📚 The Giant's Picnic</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">一本「多音字母」绘本 👾</p>
+<div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div>
+</div></div>
+
+<!-- ===== 备忘卡 ===== -->
+<div class="section" id="sec-memo"><div class="glass">
+<h2>💳 知识点备忘卡</h2>
+<div class="memo-card">
+<div style="text-align:center;font-size:1.1em;font-weight:bold;color:#ffd200">🗣️ 多音字母 · 歧义组合（长词里选音）</div>
+<div class="memo-rule"><b>多音字母 c</b> —— 后面是 e/i/y → 软音 /s/，其余 /k/<br><span class="memo-example">ci·ty /ˈsɪti/ · of·fice /ˈɒfɪs/ · cam·el /ˈkæml/ · pic·nic /ˈpɪknɪk/</span></div>
+<div class="memo-rule"><b>多音字母 g</b> —— 后面是 e/i/y → 软音 /dʒ/，其余 /g/<br><span class="memo-example">gi·ant /ˈdʒaɪənt/ · ma·gic /ˈmædʒɪk/ · gar·den /ˈɡɑːdn/ · ti·ger /ˈtaɪɡə/</span></div>
+<div class="memo-rule"><b>多音字母 y</b> —— 词首 /j/，词尾 /aɪ/ 或 /ɪ/<br><span class="memo-example">yel·low /ˈjeləʊ/ · but·ter·fly /ˈbʌtəflaɪ/ · ba·by /ˈbeɪbi/</span></div>
+<div class="memo-rule"><b>歧义组合 oo / ow / ea</b> —— 先试常见音，读不通再换<br><span class="memo-example">oo：mush·room /uː/ · cook·ie /ʊ/　ow：snow·man /əʊ/ · cow·boy /aʊ/　ea：tea·cher /iː/ · break·fast /e/</span></div>
+<div class="memo-rule"><b>歧义组合 th / ch / ie</b> —— 同样靠试音<br><span class="memo-example">th：birth·day /θ/ · mo·ther /ð/　ch：tea·cher /tʃ/ · ma·chine /ʃ/　ie：be·lieve /iː/ · un·tie /aɪ/</span></div>
+<div class="memo-rule" style="border:1px dashed rgba(255,210,0,.4)"><b>记住：</b>多音字母看<b>后面</b>（e/i/y 决定软硬），歧义组合靠<b>试音</b>（先常见、再换音）。</div>
+<div class="memo-rule" style="border:1px dashed rgba(79,195,247,.4)"><b>🔜 词缀预告：</b>-tion / -sion / -ture / -cient 是「固定发音」，整块读、不套普通音节规则 → <b>见 73</b>！</div>
+</div>
+<p class="print-note">🖨️ 可截图 / 打印保存（打印自动变白底）</p>
+</div></div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={
+'city':'words/city.mp3','circus':'words/circus.mp3','pencil':'words/pencil.mp3','cabin':'words/cabin.mp3','doctor':'words/doctor.mp3','giraffe':'words/giraffe.mp3','gentle':'words/gentle.mp3','guitar':'words/guitar.mp3','guess':'words/guess.mp3','yawn':'words/yawn.mp3','firefly':'words/firefly.mp3','happy':'words/happy.mp3','funny':'words/funny.mp3','story':'words/story.mp3','balloon':'words/balloon.mp3','bedroom':'words/bedroom.mp3','notebook':'words/notebook.mp3','cookbook':'words/cookbook.mp3','window':'words/window.mp3','flower':'words/flower.mp3','beach':'words/beach.mp3','weather':'words/weather.mp3','feather':'words/feather.mp3','brother':'words/brother.mp3','father':'words/father.mp3','thirsty':'words/thirsty.mp3','thirty':'words/thirty.mp3','chicken':'words/chicken.mp3','chief':'words/chief.mp3','butcher':'words/butcher.mp3','machine':'words/machine.mp3','field':'words/field.mp3','piece':'words/piece.mp3','believe':'words/believe.mp3','thief':'words/thief.mp3','office':'words/office.mp3','camel':'words/camel.mp3','picnic':'words/picnic.mp3',
+'giant':'words/giant.mp3','magic':'words/magic.mp3','garden':'words/garden.mp3','tiger':'words/tiger.mp3',
+'yellow':'words/yellow.mp3','butterfly':'words/butterfly.mp3','baby':'words/baby.mp3',
+'mushroom':'words/mushroom.mp3','cookie':'words/cookie.mp3','football':'words/football.mp3',
+'snowman':'words/snowman.mp3','cowboy':'words/cowboy.mp3',
+'teacher':'words/teacher.mp3','breakfast':'words/breakfast.mp3','mother':'words/mother.mp3','birthday':'words/birthday.mp3',
+'alone':'words/alone.mp3','wish':'words/wish.mp3','basket':'words/basket.mp3','cake':'words/cake.mp3','join':'words/join.mp3','smile':'words/smile.mp3','friend':'words/friend.mp3','bring':'words/bring.mp3','ride':'words/ride.mp3','cheer':'words/cheer.mp3'
+};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){speakNow(path.replace('words/','').replace('.mp3',''));return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');speakNow(path.replace('words/','').replace('.mp3',''))},{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === Navigation ===
+var NM={goal:'目标板',flow:'流程图',wb:'工作台',quiz:'闯关',book:'绘本',memo:'备忘卡'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// === Workbench data ===
+var WB=[
+{w:'city',hl:[0],opts:['/k/','/s/'],a:1,rule:'ci·ty：c 后面是 i → 软音 /s/',emoji:'🏙️'},
+{w:'office',hl:[4],opts:['/k/','/s/'],a:1,rule:'of·fice：c 后面是 e → 软音 /s/',emoji:'🏢'},
+{w:'circus',hl:[0],opts:['/k/','/s/'],a:1,rule:'cir·cus：c 后面是 i → 软音 /s/',emoji:'🎪'},
+{w:'pencil',hl:[3],opts:['/k/','/s/'],a:1,rule:'pen·cil：c 后面是 i → 软音 /s/',emoji:'✏️'},
+{w:'camel',hl:[0],opts:['/k/','/s/'],a:0,rule:'ca·mel：c 后面是 a → 硬音 /k/',emoji:'🐫'},
+{w:'picnic',hl:[5],opts:['/k/','/s/'],a:0,rule:'pic·nic：c 在词尾 → 硬音 /k/',emoji:'🧺'},
+{w:'cabin',hl:[0],opts:['/k/','/s/'],a:0,rule:'cab·in：c 后面是 a → 硬音 /k/',emoji:'🏠'},
+{w:'doctor',hl:[2],opts:['/k/','/s/'],a:0,rule:'doc·tor：c 后面是 o → 硬音 /k/',emoji:'👨‍⚕️'},
+{w:'giant',hl:[0],opts:['/g/','/dʒ/'],a:1,rule:'gi·ant：g 后面是 i → 软音 /dʒ/',emoji:'👾'},
+{w:'magic',hl:[2],opts:['/g/','/dʒ/'],a:1,rule:'ma·gic：g 后面是 i → 软音 /dʒ/',emoji:'🪄'},
+{w:'giraffe',hl:[0],opts:['/g/','/dʒ/'],a:1,rule:'gi·raffe：g 后面是 i → 软音 /dʒ/',emoji:'🦒'},
+{w:'gentle',hl:[0],opts:['/g/','/dʒ/'],a:1,rule:'gen·tle：g 后面是 e → 软音 /dʒ/',emoji:'🤝'},
+{w:'garden',hl:[0],opts:['/g/','/dʒ/'],a:0,rule:'gar·den：g 后面是 a → 硬音 /g/',emoji:'🌷'},
+{w:'tiger',hl:[2],opts:['/g/','/dʒ/'],a:0,rule:'ti·ger：g 后面是 e，但 tiger 是例外，仍读 /g/',emoji:'🐯'},
+{w:'guitar',hl:[0],opts:['/g/','/dʒ/'],a:0,rule:'gui·tar：g 后面是 u → 硬音 /g/',emoji:'🎸'},
+{w:'guess',hl:[0],opts:['/g/','/dʒ/'],a:0,rule:'guess：g 后面是 u → 硬音 /g/',emoji:'🤔'},
+{w:'yellow',hl:[0],opts:['/j/','/aɪ/','/ɪ/'],a:0,rule:'yel·low：y 在词首 → 辅音 /j/',emoji:'💛'},
+{w:'yawn',hl:[0],opts:['/j/','/aɪ/','/ɪ/'],a:0,rule:'yawn：y 在词首 → 辅音 /j/',emoji:'🥱'},
+{w:'butterfly',hl:[8],opts:['/j/','/aɪ/','/ɪ/'],a:1,rule:'but·ter·fly：y 在词尾 → /aɪ/',emoji:'🦋'},
+{w:'firefly',hl:[6],opts:['/j/','/aɪ/','/ɪ/'],a:1,rule:'fire·fly：y 在词尾 → /aɪ/',emoji:'🐞'},
+{w:'baby',hl:[3],opts:['/j/','/aɪ/','/ɪ/'],a:2,rule:'ba·by：y 在词尾（短词）→ /ɪ/',emoji:'👶'},
+{w:'happy',hl:[4],opts:['/j/','/aɪ/','/ɪ/'],a:2,rule:'hap·py：y 在词尾 → /ɪ/',emoji:'😊'},
+{w:'funny',hl:[4],opts:['/j/','/aɪ/','/ɪ/'],a:2,rule:'fun·ny：y 在词尾 → /ɪ/',emoji:'😂'},
+{w:'story',hl:[4],opts:['/j/','/aɪ/','/ɪ/'],a:2,rule:'sto·ry：y 在词尾 → /ɪ/',emoji:'📖'},
+{w:'mushroom',hl:[5,6],opts:['/uː/','/ʊ/'],a:0,rule:'mush·room：oo 常见音 /uː/',emoji:'🍄'},
+{w:'balloon',hl:[4,5],opts:['/uː/','/ʊ/'],a:0,rule:'bal·loon：oo 常见音 /uː/',emoji:'🎈'},
+{w:'bedroom',hl:[4,5],opts:['/uː/','/ʊ/'],a:0,rule:'bed·room：oo 常见音 /uː/',emoji:'🛏️'},
+{w:'cookie',hl:[1,2],opts:['/uː/','/ʊ/'],a:1,rule:'cook·ie：oo 读 /ʊ/',emoji:'🍪'},
+{w:'football',hl:[1,2],opts:['/uː/','/ʊ/'],a:1,rule:'foot·ball：oo 读 /ʊ/',emoji:'⚽'},
+{w:'notebook',hl:[5,6],opts:['/uː/','/ʊ/'],a:1,rule:'note·book：oo 读 /ʊ/',emoji:'📓'},
+{w:'cookbook',hl:[1,2],opts:['/uː/','/ʊ/'],a:1,rule:'cook·book：oo 读 /ʊ/',emoji:'📕'},
+{w:'snowman',hl:[2,3],opts:['/əʊ/','/aʊ/'],a:0,rule:'snow·man：ow 常见音 /əʊ/',emoji:'⛄'},
+{w:'window',hl:[4,5],opts:['/əʊ/','/aʊ/'],a:0,rule:'win·dow：ow 常见音 /əʊ/',emoji:'🪟'},
+{w:'cowboy',hl:[1,2],opts:['/əʊ/','/aʊ/'],a:1,rule:'cow·boy：ow 第二种音 /aʊ/',emoji:'🤠'},
+{w:'flower',hl:[2,3],opts:['/əʊ/','/aʊ/'],a:1,rule:'flow·er：ow 第二种音 /aʊ/',emoji:'🌸'},
+{w:'teacher',hl:[1,2],opts:['/iː/','/e/'],a:0,rule:'tea·cher：ea 常见音 /iː/',emoji:'👩‍🏫'},
+{w:'beach',hl:[1,2],opts:['/iː/','/e/'],a:0,rule:'beach：ea 常见音 /iː/',emoji:'🏖️'},
+{w:'breakfast',hl:[2,3],opts:['/iː/','/e/'],a:1,rule:'break·fast：ea 第二种音 /e/',emoji:'🍳'},
+{w:'weather',hl:[1,2],opts:['/iː/','/e/'],a:1,rule:'wea·ther：ea 第二种音 /e/',emoji:'🌦️'},
+{w:'feather',hl:[1,2],opts:['/iː/','/e/'],a:1,rule:'fea·ther：ea 第二种音 /e/',emoji:'🪶'},
+{w:'mother',hl:[2,3],opts:['/θ/','/ð/'],a:1,rule:'mo·ther：th 浊音 /ð/',emoji:'👩'},
+{w:'brother',hl:[3,4],opts:['/θ/','/ð/'],a:1,rule:'bro·ther：th 浊音 /ð/',emoji:'👦'},
+{w:'father',hl:[2,3],opts:['/θ/','/ð/'],a:1,rule:'fa·ther：th 浊音 /ð/',emoji:'👨'},
+{w:'birthday',hl:[3,4],opts:['/θ/','/ð/'],a:0,rule:'birth·day：th 清音 /θ/',emoji:'🎂'},
+{w:'thirsty',hl:[0,1],opts:['/θ/','/ð/'],a:0,rule:'thirs·ty：th 清音 /θ/',emoji:'🥤'},
+{w:'thirty',hl:[0,1],opts:['/θ/','/ð/'],a:0,rule:'thir·ty：th 清音 /θ/',emoji:'3️⃣'},
+{w:'chicken',hl:[0,1],opts:['/tʃ/','/ʃ/'],a:0,rule:'chick·en：ch 常见音 /tʃ/',emoji:'🐔'},
+{w:'chief',hl:[0,1],opts:['/tʃ/','/ʃ/'],a:0,rule:'chief：ch 常见音 /tʃ/',emoji:'👑'},
+{w:'butcher',hl:[3,4],opts:['/tʃ/','/ʃ/'],a:0,rule:'but·cher：ch 常见音 /tʃ/',emoji:'🥩'},
+{w:'machine',hl:[2,3],opts:['/tʃ/','/ʃ/'],a:1,rule:'ma·chine：ch 第二种音 /ʃ/',emoji:'⚙️'},
+{w:'field',hl:[1,2],opts:['/iː/','/aɪ/'],a:0,rule:'field：ie 常见音 /iː/',emoji:'🌾'},
+{w:'piece',hl:[1,2],opts:['/iː/','/aɪ/'],a:0,rule:'piece：ie 常见音 /iː/',emoji:'🧩'},
+{w:'believe',hl:[3,4],opts:['/iː/','/aɪ/'],a:0,rule:'be·lieve：ie 常见音 /iː/',emoji:'🙏'},
+{w:'thief',hl:[2,3],opts:['/iː/','/aɪ/'],a:0,rule:'thief：ie 常见音 /iː/',emoji:'🥷'},
+{w:'friend',hl:[2,3],opts:['/iː/','/e/'],a:1,rule:'friend：ie 第二种音 /e/',emoji:'🧑‍🤝‍🧑'}
+];
+var wbIdx=0,wbDone=[];
+function wbRender(){
+  var it=WB[wbIdx];
+  var html='';
+  for(var i=0;i<it.w.length;i++){
+    var cls='wb-tile'+(it.hl.indexOf(i)>=0?' hl':'');
+    html+='<span class="'+cls+'">'+it.w[i]+'</span>';
+  }
+  document.getElementById('wbWord').innerHTML=html;
+  document.getElementById('wbHint').innerHTML = wbDone[wbIdx] ? '👆 已答对，点「下一个」继续' : '👆 看长词里的金色字母/组合，选它的声音';
+  document.getElementById('wbFeedback').innerHTML='';
+  var tb='';
+  for(var j=0;j<it.opts.length;j++){
+    var c='wb-type-btn';
+    if(wbDone[wbIdx]){c+=' locked'; if(j===it.a)c+=' correct';}
+    tb+='<button class="'+c+'" onclick="wbPick('+j+')">'+it.opts[j]+'</button>';
+  }
+  document.getElementById('wbTypes').innerHTML=tb;
+  document.getElementById('wbWord').style.animation='none';void document.getElementById('wbWord').offsetWidth;
+  var dots='';
+  for(var j=0;j<WB.length;j++){var c='wb-dot';if(wbDone[j])c+=' done';else if(j===wbIdx)c+=' cur';dots+='<span class="'+c+'"></span>'}
+  document.getElementById('wbDots').innerHTML=dots;
+}
+function wbPick(t){
+  if(wbDone[wbIdx])return;
+  var it=WB[wbIdx];
+  if(t===it.a){
+    wbDone[wbIdx]=true;
+    wbRender();
+    document.getElementById('wbFeedback').innerHTML='<span class="green">✅ 选对了！</span> '+it.w+' → <span class="gold">'+it.opts[it.a]+'</span> '+it.emoji;
+    document.getElementById('wbWord').style.animation='pop .35s';
+    setTimeout(function(){spk(it.w)},150);
+  }else{
+    document.getElementById('wbFeedback').innerHTML='<span class="red">❌ 这个音不对哦，再想想</span>（可以点 💡 帮帮我）';
+    var btns=document.querySelectorAll('#wbTypes .wb-type-btn');
+    for(var k=0;k<btns.length;k++){if(k===t)btns[k].classList.add('wrong')}
+    document.getElementById('wbWord').style.animation='shake .4s';
+    setTimeout(function(){wbRender()},700);
+  }
+}
+function wbHelp(){
+  var it=WB[wbIdx];
+  document.getElementById('wbFeedback').innerHTML='💡 '+it.w+'：'+it.rule+' → <span class="gold">'+it.opts[it.a]+'</span>';
+  spk(it.w);
+}
+function wbNext(){
+  wbIdx=(wbIdx+1)%WB.length;wbRender();
+}
+
+// === Quiz ===
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[{t:'choose',q:'city 里的 c 读什么音？',w:'city',o:['/k/','/s/'],a:1,x:'ci·ty：c 后面是 i → 软音 /s/'},
+{t:'choose',q:'office 里的 c 读什么音？',w:'office',o:['/k/','/s/'],a:1,x:'of·fice：c 后面是 e → 软音 /s/'},
+{t:'choose',q:'circus 里的 c 读什么音？',w:'circus',o:['/k/','/s/'],a:1,x:'cir·cus：c 后面是 i → 软音 /s/'},
+{t:'choose',q:'pencil 里的 c 读什么音？',w:'pencil',o:['/k/','/s/'],a:1,x:'pen·cil：c 后面是 i → 软音 /s/'},
+{t:'choose',q:'camel 里的 c 读什么音？',w:'camel',o:['/k/','/s/'],a:0,x:'ca·mel：c 后面是 a → 硬音 /k/'},
+{t:'choose',q:'picnic 里的 c 读什么音？',w:'picnic',o:['/k/','/s/'],a:0,x:'pic·nic：c 在词尾 → 硬音 /k/'},
+{t:'choose',q:'cabin 里的 c 读什么音？',w:'cabin',o:['/k/','/s/'],a:0,x:'cab·in：c 后面是 a → 硬音 /k/'},
+{t:'choose',q:'doctor 里的 c 读什么音？',w:'doctor',o:['/k/','/s/'],a:0,x:'doc·tor：c 后面是 o → 硬音 /k/'},
+{t:'choose',q:'giant 里的 g 读什么音？',w:'giant',o:['/g/','/dʒ/'],a:1,x:'gi·ant：g 后面是 i → 软音 /dʒ/'},
+{t:'choose',q:'magic 里的 g 读什么音？',w:'magic',o:['/g/','/dʒ/'],a:1,x:'ma·gic：g 后面是 i → 软音 /dʒ/'},
+{t:'choose',q:'giraffe 里的 g 读什么音？',w:'giraffe',o:['/g/','/dʒ/'],a:1,x:'gi·raffe：g 后面是 i → 软音 /dʒ/'},
+{t:'choose',q:'gentle 里的 g 读什么音？',w:'gentle',o:['/g/','/dʒ/'],a:1,x:'gen·tle：g 后面是 e → 软音 /dʒ/'},
+{t:'choose',q:'garden 里的 g 读什么音？',w:'garden',o:['/g/','/dʒ/'],a:0,x:'gar·den：g 后面是 a → 硬音 /g/'},
+{t:'choose',q:'tiger 里的 g 读什么音？',w:'tiger',o:['/g/','/dʒ/'],a:0,x:'ti·ger：g 后面是 e，但 tiger 是例外，仍读 /g/'},
+{t:'choose',q:'guitar 里的 g 读什么音？',w:'guitar',o:['/g/','/dʒ/'],a:0,x:'gui·tar：g 后面是 u → 硬音 /g/'},
+{t:'choose',q:'guess 里的 g 读什么音？',w:'guess',o:['/g/','/dʒ/'],a:0,x:'guess：g 后面是 u → 硬音 /g/'},
+{t:'choose',q:'yellow 里的 y 读什么音？',w:'yellow',o:['/j/','/aɪ/','/ɪ/'],a:0,x:'yel·low：y 在词首 → 辅音 /j/'},
+{t:'choose',q:'yawn 里的 y 读什么音？',w:'yawn',o:['/j/','/aɪ/','/ɪ/'],a:0,x:'yawn：y 在词首 → 辅音 /j/'},
+{t:'choose',q:'butterfly 里的 y 读什么音？',w:'butterfly',o:['/j/','/aɪ/','/ɪ/'],a:1,x:'but·ter·fly：y 在词尾 → /aɪ/'},
+{t:'choose',q:'firefly 里的 y 读什么音？',w:'firefly',o:['/j/','/aɪ/','/ɪ/'],a:1,x:'fire·fly：y 在词尾 → /aɪ/'},
+{t:'choose',q:'baby 里的 y 读什么音？',w:'baby',o:['/j/','/aɪ/','/ɪ/'],a:2,x:'ba·by：y 在词尾（短词）→ /ɪ/'},
+{t:'choose',q:'happy 里的 y 读什么音？',w:'happy',o:['/j/','/aɪ/','/ɪ/'],a:2,x:'hap·py：y 在词尾 → /ɪ/'},
+{t:'choose',q:'funny 里的 y 读什么音？',w:'funny',o:['/j/','/aɪ/','/ɪ/'],a:2,x:'fun·ny：y 在词尾 → /ɪ/'},
+{t:'choose',q:'story 里的 y 读什么音？',w:'story',o:['/j/','/aɪ/','/ɪ/'],a:2,x:'sto·ry：y 在词尾 → /ɪ/'},
+{t:'choose',q:'mushroom 里的 oo 读什么音？',w:'mushroom',o:['/uː/','/ʊ/'],a:0,x:'mush·room：oo 常见音 /uː/'},
+{t:'choose',q:'balloon 里的 oo 读什么音？',w:'balloon',o:['/uː/','/ʊ/'],a:0,x:'bal·loon：oo 常见音 /uː/'},
+{t:'choose',q:'bedroom 里的 oo 读什么音？',w:'bedroom',o:['/uː/','/ʊ/'],a:0,x:'bed·room：oo 常见音 /uː/'},
+{t:'choose',q:'cookie 里的 oo 读什么音？',w:'cookie',o:['/uː/','/ʊ/'],a:1,x:'cook·ie：oo 读 /ʊ/'},
+{t:'choose',q:'football 里的 oo 读什么音？',w:'football',o:['/uː/','/ʊ/'],a:1,x:'foot·ball：oo 读 /ʊ/'},
+{t:'choose',q:'notebook 里的 oo 读什么音？',w:'notebook',o:['/uː/','/ʊ/'],a:1,x:'note·book：oo 读 /ʊ/'},
+{t:'choose',q:'cookbook 里的 oo 读什么音？',w:'cookbook',o:['/uː/','/ʊ/'],a:1,x:'cook·book：oo 读 /ʊ/'},
+{t:'choose',q:'snowman 里的 ow 读什么音？',w:'snowman',o:['/əʊ/','/aʊ/'],a:0,x:'snow·man：ow 常见音 /əʊ/'},
+{t:'choose',q:'window 里的 ow 读什么音？',w:'window',o:['/əʊ/','/aʊ/'],a:0,x:'win·dow：ow 常见音 /əʊ/'},
+{t:'choose',q:'cowboy 里的 ow 读什么音？',w:'cowboy',o:['/əʊ/','/aʊ/'],a:1,x:'cow·boy：ow 第二种音 /aʊ/'},
+{t:'choose',q:'flower 里的 ow 读什么音？',w:'flower',o:['/əʊ/','/aʊ/'],a:1,x:'flow·er：ow 第二种音 /aʊ/'},
+{t:'choose',q:'teacher 里的 ea 读什么音？',w:'teacher',o:['/iː/','/e/'],a:0,x:'tea·cher：ea 常见音 /iː/'},
+{t:'choose',q:'beach 里的 ea 读什么音？',w:'beach',o:['/iː/','/e/'],a:0,x:'beach：ea 常见音 /iː/'},
+{t:'choose',q:'breakfast 里的 ea 读什么音？',w:'breakfast',o:['/iː/','/e/'],a:1,x:'break·fast：ea 第二种音 /e/'},
+{t:'choose',q:'weather 里的 ea 读什么音？',w:'weather',o:['/iː/','/e/'],a:1,x:'wea·ther：ea 第二种音 /e/'},
+{t:'choose',q:'feather 里的 ea 读什么音？',w:'feather',o:['/iː/','/e/'],a:1,x:'fea·ther：ea 第二种音 /e/'},
+{t:'choose',q:'mother 里的 th 读什么音？',w:'mother',o:['/θ/','/ð/'],a:1,x:'mo·ther：th 浊音 /ð/'},
+{t:'choose',q:'brother 里的 th 读什么音？',w:'brother',o:['/θ/','/ð/'],a:1,x:'bro·ther：th 浊音 /ð/'},
+{t:'choose',q:'father 里的 th 读什么音？',w:'father',o:['/θ/','/ð/'],a:1,x:'fa·ther：th 浊音 /ð/'},
+{t:'choose',q:'birthday 里的 th 读什么音？',w:'birthday',o:['/θ/','/ð/'],a:0,x:'birth·day：th 清音 /θ/'},
+{t:'choose',q:'thirsty 里的 th 读什么音？',w:'thirsty',o:['/θ/','/ð/'],a:0,x:'thirs·ty：th 清音 /θ/'},
+{t:'choose',q:'thirty 里的 th 读什么音？',w:'thirty',o:['/θ/','/ð/'],a:0,x:'thir·ty：th 清音 /θ/'},
+{t:'choose',q:'chicken 里的 ch 读什么音？',w:'chicken',o:['/tʃ/','/ʃ/'],a:0,x:'chick·en：ch 常见音 /tʃ/'},
+{t:'choose',q:'chief 里的 ch 读什么音？',w:'chief',o:['/tʃ/','/ʃ/'],a:0,x:'chief：ch 常见音 /tʃ/'},
+{t:'choose',q:'butcher 里的 ch 读什么音？',w:'butcher',o:['/tʃ/','/ʃ/'],a:0,x:'but·cher：ch 常见音 /tʃ/'},
+{t:'choose',q:'machine 里的 ch 读什么音？',w:'machine',o:['/tʃ/','/ʃ/'],a:1,x:'ma·chine：ch 第二种音 /ʃ/'},
+{t:'choose',q:'field 里的 ie 读什么音？',w:'field',o:['/iː/','/aɪ/'],a:0,x:'field：ie 常见音 /iː/'},
+{t:'choose',q:'piece 里的 ie 读什么音？',w:'piece',o:['/iː/','/aɪ/'],a:0,x:'piece：ie 常见音 /iː/'},
+{t:'choose',q:'believe 里的 ie 读什么音？',w:'believe',o:['/iː/','/aɪ/'],a:0,x:'be·lieve：ie 常见音 /iː/'},
+{t:'choose',q:'thief 里的 ie 读什么音？',w:'thief',o:['/iː/','/aɪ/'],a:0,x:'thief：ie 常见音 /iː/'},
+{t:'choose',q:'friend 里的 ie 读什么音？',w:'friend',o:['/iː/','/e/'],a:1,x:'friend：ie 第二种音 /e/'}];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · 🗣️ 选音</div><div class="quiz-q">'+q.q+'</div>';h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！定音小达人！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ffd200;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// === Book ===
+var bp_cp=0,bp_pages=[
+  {s:'👾😔',t:'Alone',x:'A <span class="dg-hl">giant</span> lives all <span class="dg-hl">alone</span> near the <span class="dg-hl">city</span>.<br>“I wish I had friends,” he sighs.'},
+  {s:'🧺😊',t:'A Plan',x:'“I will have a <span class="dg-hl">picnic</span>!” he says.<br>“Maybe someone will come.”'},
+  {s:'🍪🍄',t:'The Basket',x:'He packs a <span class="dg-hl">cookie</span> and a <span class="dg-hl">mushroom</span> in his <span class="dg-hl">basket</span>.<br>“Yummy!” he smiles.'},
+  {s:'⛄😊',t:'A Snowman',x:'A <span class="dg-hl">snowman</span> rolls over.<br>“Can I <span class="dg-hl">join</span> your <span class="dg-hl">picnic</span>?”'},
+  {s:'🤠😊',t:'A Cowboy',x:'A <span class="dg-hl">cowboy</span> rides up.<br>“Me too! I <span class="dg-hl">bring</span> a song!”'},
+  {s:'👩‍🏫🎂',t:'A Cake',x:'A <span class="dg-hl">teacher</span> brings a big <span class="dg-hl">birthday</span> <span class="dg-hl">cake</span>.<br>“Let’s eat <span class="dg-hl">breakfast</span> together!”'},
+  {s:'⭐😊',t:'Friends',x:'The <span class="dg-hl">giant</span>’s <span class="dg-hl">mother</span> smiles and waves.<br>“You are not <span class="dg-hl">alone</span> now.” Everyone <span class="dg-hl">cheers</span>!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">giant <span class="speak-btn" onclick="spk(&#39;giant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">g→/dʒ/</div><div class="gz">巨人 👾</div></div><div class="gi"><div class="gw">city <span class="speak-btn" onclick="spk(&#39;city&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">c→/s/</div><div class="gz">城市 🏙️</div></div><div class="gi"><div class="gw">picnic <span class="speak-btn" onclick="spk(&#39;picnic&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">c→/k/</div><div class="gz">野餐 🧺</div></div><div class="gi"><div class="gw">cookie <span class="speak-btn" onclick="spk(&#39;cookie&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo→/ʊ/</div><div class="gz">饼干 🍪</div></div><div class="gi"><div class="gw">mushroom <span class="speak-btn" onclick="spk(&#39;mushroom&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo→/uː/</div><div class="gz">蘑菇 🍄</div></div><div class="gi"><div class="gw">snowman <span class="speak-btn" onclick="spk(&#39;snowman&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow→/əʊ/</div><div class="gz">雪人 ⛄</div></div><div class="gi"><div class="gw">cowboy <span class="speak-btn" onclick="spk(&#39;cowboy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow→/aʊ/</div><div class="gz">牛仔 🤠</div></div><div class="gi"><div class="gw">teacher <span class="speak-btn" onclick="spk(&#39;teacher&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ea→/iː/</div><div class="gz">老师 👩‍🏫</div></div><div class="gi"><div class="gw">breakfast <span class="speak-btn" onclick="spk(&#39;breakfast&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ea→/e/</div><div class="gz">早餐 🍳</div></div><div class="gi"><div class="gw">birthday <span class="speak-btn" onclick="spk(&#39;birthday&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">th→/θ/</div><div class="gz">生日 🎂</div></div><div class="gi"><div class="gw">mother <span class="speak-btn" onclick="spk(&#39;mother&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">th→/ð/</div><div class="gz">妈妈 👩</div></div></div>'}
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/decode42-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+wbRender();initQ();
+</script>
+</body></html>

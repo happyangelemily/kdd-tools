@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>听音能写⑥ 闭环自检：写完反向读一遍 | 自然拼读·编码</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s;background:rgba(255,210,0,.4)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+.type-card{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 12px;text-align:center;min-width:86px}.type-card .w{font-size:1.2em;font-weight:bold;color:#ffd200}.type-card .m{color:#888;font-size:.68em;margin-top:2px;line-height:1.4}
+.type-card.t0{border-color:rgba(105,240,174,.4);background:rgba(105,240,174,.07)}.type-card.t0 .w{color:#69f0ae}
+.type-card.t1{border-color:rgba(255,82,82,.4);background:rgba(255,82,82,.07)}.type-card.t1 .w{color:#ff8a80}
+
+/* 目标板 */
+.goal-box{background:linear-gradient(135deg,rgba(255,138,101,.12),rgba(255,210,0,.08));border:2px solid rgba(255,138,101,.35);border-radius:18px;padding:22px 20px;text-align:center}
+.goal-tag{display:inline-block;background:rgba(255,138,101,.2);border:1px solid rgba(255,138,101,.5);color:#ff8a65;border-radius:20px;padding:3px 14px;font-size:.78em;font-weight:bold;margin-bottom:12px}
+.goal-line{font-size:1.25em;font-weight:bold;color:#ffe9c7;line-height:1.7}
+
+/* 思维流程图 */
+.flow{display:flex;flex-direction:column;gap:8px;max-width:560px;margin:0 auto}
+.flow-node{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.12);border-radius:14px;padding:11px 14px;transition:all .3s}
+.flow-node .step{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);color:#888;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.flow-node .q{flex:1;font-size:.95em;line-height:1.5}
+.flow-node .a{font-size:.82em;color:#888;text-align:right;flex-shrink:0}
+.flow-node.active{border-color:#ffd200;background:rgba(255,210,0,.07)}
+.flow-node.active .step{background:#ffd200;color:#1a1a2e}
+.flow-node.active .a{color:#ffd200}
+.flow-node.locked{opacity:.45}
+.flow-node.done{border-color:rgba(105,240,174,.35);background:rgba(105,240,174,.04)}
+.flow-node.done .a{color:#69f0ae}
+.flow-arrow{text-align:center;color:#555;font-size:.9em;line-height:1}
+.stage-tag{margin:16px 0 6px;padding:6px 12px;border-radius:10px;font-size:.85em;font-weight:bold;text-align:center}.stage-tag.s1{background:rgba(105,240,174,.14);color:#69f0ae;border:1px solid rgba(105,240,174,.4)}.stage-tag.s2{background:rgba(255,210,0,.08);color:#ffd200;border:1px solid rgba(255,210,0,.3)}.stage-tag.s3{background:rgba(255,138,101,.08);color:#ff8a65;border:1px solid rgba(255,138,101,.3)}.stage-tag.s4{background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
+
+/* 工作台 */
+.wb-stage{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0}
+.wb-word{font-size:2.4em;font-weight:bold;color:#ffd200;letter-spacing:3px;margin:6px 0;text-align:center}
+.wb-hint{min-height:30px;text-align:center;font-size:.92em;color:#e0e0e0;margin-top:6px}
+.wb-opts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.wb-opt{padding:12px 30px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:1.15em;font-weight:bold;transition:all .3s}
+.wb-opt:hover:not(.locked){border-color:#ffd200}
+.wb-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}
+.wb-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}
+.wb-opt.locked{pointer-events:none}
+.wb-feedback{min-height:24px;text-align:center;font-size:.95em;margin:6px 0;font-weight:bold}
+.lvl-btn{padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;font-weight:bold;transition:all .3s}.lvl-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}.lvl-btn:hover{border-color:#ffd200}
+.wb-progress{display:flex;gap:4px;justify-content:center;margin:10px 0;flex-wrap:wrap}.wb-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}.wb-dot.done{background:#69f0ae}.wb-dot.cur{background:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+
+/* 闯关 Quiz */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:2em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:10px 24px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:1em;font-weight:bold;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* 绘本 Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.78em;color:#aaa}.gi .gz{font-size:.78em;color:#bbb}
+
+/* 备忘卡 */
+.memo-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,210,0,.35);border-radius:16px;padding:20px;max-width:560px;margin:0 auto;position:relative;overflow:hidden}
+.memo-rule{margin:10px 0;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:12px;font-size:.95em;line-height:1.7}
+.memo-rule b{color:#ffd200}
+.memo-example{color:#81c784;font-size:.92em;letter-spacing:1px}
+.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+@media print{body{background:#fff;color:#111}.stars,.nav,.wb-stage,.speak-btn,.print-note,.quiz-nav,.book-nav,.book-pron{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.memo-card{background:#fff;border:2px solid #333;color:#111}.memo-card b{color:#c70}.memo-card .memo-rule{background:#f5f5f5}.memo-example{color:#070}.goal-line,h1,h2,h3{color:#111}.flow-node{background:#fff;border-color:#ccc;color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .magic-rule{padding:12px 14px;font-size:.9em}
+  .type-card{min-width:76px;padding:8px 8px}.type-card .w{font-size:1.05em}
+  .goal-line{font-size:1.05em}
+  .flow-node{padding:9px 10px}
+  .flow-node .a{font-size:.72em}
+  .stage-tag{font-size:.75em;padding:5px 10px}
+  .wb-word{font-size:1.8em}
+  .wb-opt{padding:13px 22px;font-size:1em;min-height:44px}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.5em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.9em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ffd200}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+  .gi .gz{font-size:.68em}
+  .memo-card{padding:14px}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🔁 听音能写⑥ · 闭环自检</h1><p class="subtitle">听音能写 · 阶段4 —— 写完，反向读一遍验证！</p>
+<div class="nav">
+<button class="nav-btn active" onclick="showS('goal')">🎯 目标板</button>
+<button class="nav-btn" onclick="showS('flow')">🗺️ 流程图</button>
+<button class="nav-btn" onclick="showS('wb')">🔧 工作台</button>
+<button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button>
+<button class="nav-btn" onclick="showS('book')">📚 绘本</button>
+<button class="nav-btn" onclick="showS('memo')">💳 备忘卡</button>
+</div>
+
+<!-- ===== 目标板（讲故事） ===== -->
+<div class="section active" id="sec-goal"><div class="glass">
+<h2>🎯 今天学什么 · 写完，读一遍验一验</h2>
+
+<div class="story-speech"><p>拆音、写元音、填辅音、词尾三关、词根还原——<b style="color:#ffd200">六步都会了</b>！现在最后一步：<b style="color:#ff8a65">写完了，用手指指着刚写的词，用「见词能读」的本领重新读一遍</b>。</p></div>
+
+<h3>🔁 反向验证</h3>
+<div class="story-speech"><p>👆 指着写下的词 → 读出来 → 和听到的声音<b style="color:#ffd200">比一比</b>：</p>
+<p>✅ <b style="color:#69f0ae">读出来 = 听到的</b> → 拼写对了！</p>
+<p>❌ <b style="color:#ff8a80">读出来 ≠ 听到的</b> → 拼写有错，去检查<b style="color:#ffd200">元音</b>或<b style="color:#ffd200">词尾</b>。</p></div>
+
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<div class="type-card t0"><div class="w">papar → ❌</div><div class="m">读 /ˈpæpər/ 短音<br>但听到 /ˈpeɪpər/</div><span class="speak-btn" onclick="spk('paper')" style="display:inline-block;margin-top:4px">🔊</span></div>
+<div class="type-card t1"><div class="w">paper → ✅</div><div class="m">读 /ˈpeɪpər/<br>和听到的一样</div><span class="speak-btn" onclick="spk('paper')" style="display:inline-block;margin-top:4px">🔊</span></div>
+</div>
+
+<div class="story-speech"><p>这就是听音能写地图上的<b style="color:#4fc3f7">🔵 阶段4 · 第⑥步</b>。怎么验、怎么练，去「🔧 工作台」动手！</p></div>
+
+</div></div>
+
+<!-- ===== 思维流程图 ===== -->
+<div class="section" id="sec-flow"><div class="glass">
+<h2>🗺️ 听音能写 · 编码一条线</h2>
+<p style="color:#aaa;font-size:.9em;margin-bottom:12px;text-align:center">编码一条线 · 6 步 4 阶段。今天学 <span class="gold">🔵 阶段4 · 闭环自检</span>。</p>
+<div class="flow" style="max-width:600px">
+<div class="stage-tag s1">🟢 阶段 1 · 听觉拆分</div>
+<div class="flow-node done"><div class="step">①</div><div class="q">听觉拆分 <span class="dim">节拍统计 · 内部拆解</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s2">🟡 阶段 2 · 音-形映射</div>
+<div class="flow-node done"><div class="step">②</div><div class="q">锁元音 <span class="dim">先写元音骨架</span></div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">③</div><div class="q">填辅音 <span class="dim">多音字母看位置</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s3">🔴 阶段 3 · 拼写校验</div>
+<div class="flow-node done"><div class="step">④</div><div class="q">拼写守卫 <span class="dim">词尾三关</span></div><div class="a">✅ 已学</div></div>
+<div class="flow-node done"><div class="step">⑤</div><div class="q">词根还原 <span class="dim">加后缀先还原</span></div><div class="a">✅ 已学</div></div>
+<div class="stage-tag s4">🔵 阶段 4 · 闭环自检</div>
+<div class="memo-rule"><b>⑥ 闭环自检</b>（今天）→ 写完反向读一遍，读=听✅、读≠听→查元音/词尾<br><span class="memo-example">papar 读 /ˈpæpər/ ≠ /ˈpeɪpər/ → 少魔法 e，改 paper</span></div>
+<div class="flow-node locked"><div class="step">🧭</div><div class="q">编码总复盘 <span class="dim">一条线串讲</span></div><div class="a">🔒 后面学</div></div>
+</div>
+</div></div>
+
+<!-- ===== 工作台 ===== -->
+<div class="section" id="sec-wb"><div class="glass">
+<div class="magic-rule">🔵 今天学 <b>阶段4：闭环自检</b> —— 听词，读一读拼写，判断<b>对不对</b>！</div>
+<h2>🔧 闭环自检工作台</h2>
+<p style="color:#aaa;font-size:.88em;text-align:center;margin-bottom:6px">点 🔊 听词 → <span class="gold">读一读拼写</span> → 和听到的一样吗？</p>
+<div class="wb-progress" id="wbDots"></div>
+<div class="wb-stage">
+<div class="wb-word" id="wbWord"></div>
+<div class="wb-hint" id="wbHint"></div>
+<div class="wb-opts" id="wbOpts"></div>
+<div class="wb-feedback" id="wbFeedback"></div>
+</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0">
+<button class="btn btn-outline" onclick="wbHelp()">💡 帮帮我</button>
+<button class="btn btn-outline" onclick="wbNext()">➡️ 下一个</button>
+</div>
+</div></div>
+
+<!-- ===== 闯关 ===== -->
+<div class="section" id="sec-quiz"><div class="glass">
+<h2>🏆 闯关挑战（10 题）</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">听词，读拼写，判断对不对！</p>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- ===== 绘本 ===== -->
+<div class="section" id="sec-book"><div class="glass">
+<h2>📚 The Word Checker</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">一本「小编辑检查作业」绘本 🔍</p>
+<div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div>
+</div></div>
+
+<!-- ===== 备忘卡 ===== -->
+<div class="section" id="sec-memo"><div class="glass">
+<h2>💳 知识点备忘卡</h2>
+<div class="memo-card">
+<div style="text-align:center;font-size:1.1em;font-weight:bold;color:#ffd200">🔁 闭环自检 · 写完读一遍</div>
+<div class="memo-rule"><b>👆 第一步 · 指着读</b>：写完，用手指指着刚写的词，用「见词能读」的本领读出来</div>
+<div class="memo-rule"><b>⚖️ 第二步 · 比一比</b>：读出的声音 = 听到的声音吗？<br><span class="memo-example">读 = 听 → ✅ 对了 · 读 ≠ 听 → ❌ 有错</span></div>
+<div class="memo-rule"><b>🔍 第三步 · 查哪里</b>：错了先查<b>元音</b>（长短/r控/组合），再查<b>词尾</b>（魔法e/双写/ck·tch·dge）<br><span class="memo-example">papar 读 /ˈpæpər/ ≠ /ˈpeɪpər/ → 元音少了魔法 e → paper</span></div>
+<div class="memo-rule" style="border:1px dashed rgba(255,210,0,.4)"><b>💡 口诀</b>：写一笔，读一遍，对上音，才算完</div>
+</div>
+<p class="print-note">🖨️ 可截图 / 打印保存（打印自动变白底）</p>
+</div></div>
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={
+'cake':'words/cake.mp3','butter':'words/butter.mp3','dinner':'words/dinner.mp3','tiger':'words/tiger.mp3','snowman':'words/snowman.mp3','mushroom':'words/mushroom.mp3','table':'words/table.mp3','pencil':'words/pencil.mp3','city':'words/city.mp3','magic':'words/magic.mp3','giant':'words/giant.mp3','elephant':'words/elephant.mp3','family':'words/family.mp3','hospital':'words/hospital.mp3','umbrella':'words/umbrella.mp3','kangaroo':'words/kangaroo.mp3','cupcake':'words/cupcake.mp3','raincoat':'words/raincoat.mp3','soccer':'words/soccer.mp3','bishop':'words/bishop.mp3','coffee':'words/coffee.mp3','ticket':'words/ticket.mp3','pocket':'words/pocket.mp3','hammer':'words/hammer.mp3','muffin':'words/muffin.mp3','dentist':'words/dentist.mp3','trumpet':'words/trumpet.mp3','cowboy':'words/cowboy.mp3','birthday':'words/birthday.mp3','football':'words/football.mp3','bedroom':'words/bedroom.mp3','crayon':'words/crayon.mp3','doctor':'words/doctor.mp3','farmer':'words/farmer.mp3','station':'words/station.mp3','teacher':'words/teacher.mp3','turtle':'words/turtle.mp3','purple':'words/purple.mp3','cat':'words/cat.mp3','ride':'words/ride.mp3','hop':'words/hop.mp3','rain':'words/rain.mp3','ship':'words/ship.mp3',
+'duck':'words/duck.mp3','lake':'words/lake.mp3','bed':'words/bed.mp3','kite':'words/kite.mp3','car':'words/car.mp3','sun':'words/sun.mp3',
+'rabbit':'words/rabbit.mp3','garden':'words/garden.mp3','window':'words/window.mp3','paper':'words/paper.mp3','river':'words/river.mp3','sunset':'words/sunset.mp3','chicken':'words/chicken.mp3','banana':'words/banana.mp3','kitten':'words/kitten.mp3','music':'words/music.mp3','tomato':'words/tomato.mp3','rainbow':'words/rainbow.mp3',
+'little':'words/little.mp3','happy':'words/happy.mp3'
+};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){speakNow(path.replace('words/','').replace('.mp3',''));return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');speakNow(path.replace('words/','').replace('.mp3',''))},{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === Navigation ===
+var NM={goal:'目标板',flow:'流程图',wb:'工作台',quiz:'闯关',book:'绘本',memo:'备忘卡'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// === Workbench data：多音节词（听音→读拼写→判断对错）===
+var WB=[
+{w:'rabbit',sp:'rabot',right:false,fix:'rabbit',why:'「rabot」读 /ˈreɪbɒt/，但听到 /ˈræbɪt/ → 元音 a 写成 o'},
+{w:'garden',sp:'gorden',right:false,fix:'garden',why:'「gorden」读 /ˈgɔːdən/，但听到 /ˈgɑːdən/ → ar 写成 or'},
+{w:'window',sp:'winda',right:false,fix:'window',why:'「winda」读 /ˈwɪndə/，但听到 /ˈwɪndəʊ/ → 少了 w（ow）'},
+{w:'paper',sp:'papar',right:false,fix:'paper',why:'「papar」读 /ˈpæpər/，但听到 /ˈpeɪpər/ → 少了魔法 e'},
+{w:'river',sp:'riper',right:false,fix:'river',why:'「riper」读 /ˈraɪpər/，但听到 /ˈrɪvər/ → 多了魔法 e'},
+{w:'kitten',sp:'kiten',right:false,fix:'kitten',why:'「kiten」读 /ˈkaɪtn/，但听到 /ˈkɪtn/ → 少了双写 t'},
+{w:'music',sp:'musik',right:false,fix:'music',why:'「musik」词尾 k → 应写 c（词尾 /k/ 用 c）'},
+{w:'rainbow',sp:'ranbow',right:false,fix:'rainbow',why:'「ranbow」读 /ˈrænbəʊ/，但听到 /ˈreɪnbəʊ/ → 少了 i（ai）'},
+{w:'happy',sp:'hapy',right:false,fix:'happy',why:'「hapy」读 /ˈheɪpi/，但听到 /ˈhæpi/ → 少了双写 p'},
+{w:'butter',sp:'buter',right:false,fix:'butter',why:'「buter」读 /ˈbjuːtə/，但听到 /ˈbʌtə/ → 少了双写 t'},
+{w:'dinner',sp:'diner',right:false,fix:'dinner',why:'「diner」读 /ˈdaɪnə/，但听到 /ˈdɪnə/ → 少了双写 n'},
+{w:'tiger',sp:'tigar',right:false,fix:'tiger',why:'「tigar」读 /ˈtɪgə/，但听到 /ˈtaɪgə/ → i 写成 a'},
+{w:'snowman',sp:'snoman',right:false,fix:'snowman',why:'「snoman」读 /ˈsnəʊmən/，但听到 /ˈsnəʊmæn/ → 少了 w'},
+{w:'chicken',sp:'chiken',right:false,fix:'chicken',why:'「chiken」读 /ˈtʃaɪkən/，但听到 /ˈtʃɪkɪn/ → 少了 c（ck）'},
+{w:'mushroom',sp:'mushruum',right:false,fix:'mushroom',why:'「mushruum」拼写错 → oo 才是正确组合'},
+{w:'table',sp:'tabl',right:false,fix:'table',why:'「tabl」少了 -le 的 e → 应写 table'},
+{w:'pencil',sp:'pencle',right:false,fix:'pencil',why:'「pencle」读 /ˈpensl/ 但 cil 写错 → 应写 pencil'},
+{w:'city',sp:'citty',right:false,fix:'city',why:'「citty」多了 t → 应写 city'},
+{w:'magic',sp:'majic',right:false,fix:'magic',why:'「majic」g 写成 j → /dʒ/ 在 i 前用 g'},
+{w:'giant',sp:'jiant',right:false,fix:'giant',why:'「jiant」g 写成 j → /dʒ/ 在 i 前用 g'},
+{w:'banana',sp:'bananna',right:false,fix:'banana',why:'「bananna」多了 n → 应写 banana'},
+{w:'tomato',sp:'tomatto',right:false,fix:'tomato',why:'「tomatto」多了 t → 应写 tomato'},
+{w:'elephant',sp:'elefant',right:false,fix:'elephant',why:'「elefant」ph 写成 f → /f/ 用 ph'},
+{w:'family',sp:'famly',right:false,fix:'family',why:'「famly」少了 i → 应写 family'},
+{w:'hospital',sp:'hospitl',right:false,fix:'hospital',why:'「hospitl」少了 a → 应写 hospital'},
+{w:'umbrella',sp:'umbrela',right:false,fix:'umbrella',why:'「umbrela」少了 l → 双写 ll'},
+{w:'kangaroo',sp:'kangroo',right:false,fix:'kangaroo',why:'「kangroo」少了 a → 应写 kangaroo'},
+{w:'cupcake',sp:'cufcake',right:false,fix:'cupcake',why:'「cufcake」u 写成 f → 应写 cupcake'},
+{w:'raincoat',sp:'rainkoat',right:false,fix:'raincoat',why:'「rainkoat」c 写成 k → 应写 raincoat'},
+{w:'soccer',sp:'socker',right:false,fix:'soccer',why:'「socker」cc 写成 ck → 双写 cc'},
+{w:'bishop',sp:'bisop',right:false,fix:'bishop',why:'「bisop」少了 h → sh 是二合字母'},
+{w:'coffee',sp:'coffy',right:false,fix:'coffee',why:'「coffy」词尾 y → 应写 coffee'},
+{w:'ticket',sp:'tiket',right:false,fix:'ticket',why:'「tiket」少了 c → ck 是二合字母'},
+{w:'pocket',sp:'pockit',right:false,fix:'pocket',why:'「pockit」e 写成 i → 应写 pocket'},
+{w:'hammer',sp:'hamer',right:false,fix:'hammer',why:'「hamer」少了双写 m → 应写 hammer'},
+{w:'sunset',sp:'sunset',right:true,why:'「sunset」读 /ˈsʌnset/，和听到的一样 ✅'},
+{w:'muffin',sp:'muffin',right:true,why:'「muffin」读 /ˈmʌfɪn/，和听到的一样 ✅'},
+{w:'dentist',sp:'dentist',right:true,why:'「dentist」读 /ˈdentɪst/，和听到的一样 ✅'},
+{w:'trumpet',sp:'trumpet',right:true,why:'「trumpet」读 /ˈtrʌmpɪt/，和听到的一样 ✅'},
+{w:'cowboy',sp:'cowboy',right:true,why:'「cowboy」读 /ˈkaʊbɔɪ/，和听到的一样 ✅'},
+{w:'birthday',sp:'birthday',right:true,why:'「birthday」读 /ˈbɜːθdeɪ/，和听到的一样 ✅'},
+{w:'football',sp:'football',right:true,why:'「football」读 /ˈfʊtbɔːl/，和听到的一样 ✅'},
+{w:'bedroom',sp:'bedroom',right:true,why:'「bedroom」读 /ˈbedruːm/，和听到的一样 ✅'},
+{w:'crayon',sp:'crayon',right:true,why:'「crayon」读 /ˈkreɪən/，和听到的一样 ✅'},
+{w:'doctor',sp:'doctor',right:true,why:'「doctor」读 /ˈdɒktə/，和听到的一样 ✅'},
+{w:'farmer',sp:'farmer',right:true,why:'「farmer」读 /ˈfɑːmə/，和听到的一样 ✅'},
+{w:'station',sp:'station',right:true,why:'「station」读 /ˈsteɪʃn/，和听到的一样 ✅'},
+{w:'teacher',sp:'teacher',right:true,why:'「teacher」读 /ˈtiːtʃə/，和听到的一样 ✅'},
+{w:'turtle',sp:'turtle',right:true,why:'「turtle」读 /ˈtɜːtl/，和听到的一样 ✅'},
+{w:'purple',sp:'purple',right:true,why:'「purple」读 /ˈpɜːpl/，和听到的一样 ✅'}
+];
+
+var wbIdx=0,wbDone=[];
+function wbRender(){
+  var it=WB[wbIdx];
+  document.getElementById('wbWord').innerHTML=it.sp+' <span class="speak-btn" onclick="spk(\''+it.w+'\')" style="width:38px;height:38px;font-size:.8em">🔊</span>';
+  document.getElementById('wbHint').innerHTML = wbDone[wbIdx] ? '👆 判断对了！点「下一个」继续' : '👆 点 🔊 听词 → 读一读 <span class="gold">「'+it.sp+'」</span> → 和听到的一样吗？';
+  document.getElementById('wbFeedback').innerHTML='';
+  var opts=[['✅ 一样','true'],['❌ 不一样','false']];
+  var oh='';
+  for(var j=0;j<opts.length;j++){
+    var c='wb-opt';
+    if(wbDone[wbIdx]){c+=' locked'; if((opts[j][1]==='true')===it.right)c+=' correct';}
+    oh+='<button class="'+c+'" onclick="wbPick('+opts[j][1]+')">'+opts[j][0]+'</button>';
+  }
+  document.getElementById('wbOpts').innerHTML=oh;
+  document.getElementById('wbWord').style.animation='none';void document.getElementById('wbWord').offsetWidth;
+  var dots='';
+  for(var j=0;j<WB.length;j++){var c='wb-dot';if(wbDone[j])c+=' done';else if(j===wbIdx)c+=' cur';dots+='<span class="'+c+'"></span>'}
+  document.getElementById('wbDots').innerHTML=dots;
+}
+function wbPick(v){
+  if(wbDone[wbIdx])return;
+  var it=WB[wbIdx];
+  if(v===it.right){
+    wbDone[wbIdx]=true;
+    wbRender();
+    var fb;
+    if(it.right)fb='<span class="green">✅ 判断对了！</span> '+it.why;
+    else fb='<span class="green">✅ 抓到了！</span> 「'+it.sp+'」是错的，应该是 <span class="gold">'+it.fix+'</span> · '+it.why;
+    document.getElementById('wbFeedback').innerHTML=fb;
+    document.getElementById('wbWord').style.animation='pop .35s';
+    setTimeout(function(){spk(it.w)},150);
+  }else{
+    document.getElementById('wbFeedback').innerHTML='<span class="red">❌ 再听一遍、读一遍试试</span>（点 💡 帮帮我）';
+    var btns=document.querySelectorAll('#wbOpts .wb-opt');
+    for(var k=0;k<btns.length;k++){if((btns[k].textContent.indexOf('一样')>=0 && v)||(btns[k].textContent.indexOf('不一样')>=0 && !v))btns[k].classList.add('wrong')}
+    document.getElementById('wbWord').style.animation='shake .4s';
+    setTimeout(function(){wbRender()},700);
+  }
+}
+function wbHelp(){
+  var it=WB[wbIdx];
+  document.getElementById('wbFeedback').innerHTML='💡 '+it.w+(it.right?' = '+it.sp+'，对的':'：正确的是 '+it.fix+' · '+it.why);
+  spk(it.w);
+}
+function wbNext(){
+  wbIdx=(wbIdx+1)%WB.length;wbRender();
+}
+
+// === Quiz ===
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[{t:'choose',q:'听词，这个拼写「rabot」对吗？',w:'rabbit',sp:'rabot',o:['对 ✅','错 ❌'],a:1,x:'应写 rabbit！'},
+{t:'choose',q:'听词，这个拼写「gorden」对吗？',w:'garden',sp:'gorden',o:['对 ✅','错 ❌'],a:1,x:'应写 garden！'},
+{t:'choose',q:'听词，这个拼写「winda」对吗？',w:'window',sp:'winda',o:['对 ✅','错 ❌'],a:1,x:'应写 window！'},
+{t:'choose',q:'听词，这个拼写「papar」对吗？',w:'paper',sp:'papar',o:['对 ✅','错 ❌'],a:1,x:'应写 paper！'},
+{t:'choose',q:'听词，这个拼写「riper」对吗？',w:'river',sp:'riper',o:['对 ✅','错 ❌'],a:1,x:'应写 river！'},
+{t:'choose',q:'听词，这个拼写「kiten」对吗？',w:'kitten',sp:'kiten',o:['对 ✅','错 ❌'],a:1,x:'应写 kitten！'},
+{t:'choose',q:'听词，这个拼写「musik」对吗？',w:'music',sp:'musik',o:['对 ✅','错 ❌'],a:1,x:'应写 music！'},
+{t:'choose',q:'听词，这个拼写「ranbow」对吗？',w:'rainbow',sp:'ranbow',o:['对 ✅','错 ❌'],a:1,x:'应写 rainbow！'},
+{t:'choose',q:'听词，这个拼写「hapy」对吗？',w:'happy',sp:'hapy',o:['对 ✅','错 ❌'],a:1,x:'应写 happy！'},
+{t:'choose',q:'听词，这个拼写「buter」对吗？',w:'butter',sp:'buter',o:['对 ✅','错 ❌'],a:1,x:'应写 butter！'},
+{t:'choose',q:'听词，这个拼写「diner」对吗？',w:'dinner',sp:'diner',o:['对 ✅','错 ❌'],a:1,x:'应写 dinner！'},
+{t:'choose',q:'听词，这个拼写「tigar」对吗？',w:'tiger',sp:'tigar',o:['对 ✅','错 ❌'],a:1,x:'应写 tiger！'},
+{t:'choose',q:'听词，这个拼写「snoman」对吗？',w:'snowman',sp:'snoman',o:['对 ✅','错 ❌'],a:1,x:'应写 snowman！'},
+{t:'choose',q:'听词，这个拼写「chiken」对吗？',w:'chicken',sp:'chiken',o:['对 ✅','错 ❌'],a:1,x:'应写 chicken！'},
+{t:'choose',q:'听词，这个拼写「mushruum」对吗？',w:'mushroom',sp:'mushruum',o:['对 ✅','错 ❌'],a:1,x:'应写 mushroom！'},
+{t:'choose',q:'听词，这个拼写「tabl」对吗？',w:'table',sp:'tabl',o:['对 ✅','错 ❌'],a:1,x:'应写 table！'},
+{t:'choose',q:'听词，这个拼写「pencle」对吗？',w:'pencil',sp:'pencle',o:['对 ✅','错 ❌'],a:1,x:'应写 pencil！'},
+{t:'choose',q:'听词，这个拼写「citty」对吗？',w:'city',sp:'citty',o:['对 ✅','错 ❌'],a:1,x:'应写 city！'},
+{t:'choose',q:'听词，这个拼写「majic」对吗？',w:'magic',sp:'majic',o:['对 ✅','错 ❌'],a:1,x:'应写 magic！'},
+{t:'choose',q:'听词，这个拼写「jiant」对吗？',w:'giant',sp:'jiant',o:['对 ✅','错 ❌'],a:1,x:'应写 giant！'},
+{t:'choose',q:'听词，这个拼写「bananna」对吗？',w:'banana',sp:'bananna',o:['对 ✅','错 ❌'],a:1,x:'应写 banana！'},
+{t:'choose',q:'听词，这个拼写「tomatto」对吗？',w:'tomato',sp:'tomatto',o:['对 ✅','错 ❌'],a:1,x:'应写 tomato！'},
+{t:'choose',q:'听词，这个拼写「elefant」对吗？',w:'elephant',sp:'elefant',o:['对 ✅','错 ❌'],a:1,x:'应写 elephant！'},
+{t:'choose',q:'听词，这个拼写「famly」对吗？',w:'family',sp:'famly',o:['对 ✅','错 ❌'],a:1,x:'应写 family！'},
+{t:'choose',q:'听词，这个拼写「hospitl」对吗？',w:'hospital',sp:'hospitl',o:['对 ✅','错 ❌'],a:1,x:'应写 hospital！'},
+{t:'choose',q:'听词，这个拼写「umbrela」对吗？',w:'umbrella',sp:'umbrela',o:['对 ✅','错 ❌'],a:1,x:'应写 umbrella！'},
+{t:'choose',q:'听词，这个拼写「kangroo」对吗？',w:'kangaroo',sp:'kangroo',o:['对 ✅','错 ❌'],a:1,x:'应写 kangaroo！'},
+{t:'choose',q:'听词，这个拼写「cufcake」对吗？',w:'cupcake',sp:'cufcake',o:['对 ✅','错 ❌'],a:1,x:'应写 cupcake！'},
+{t:'choose',q:'听词，这个拼写「rainkoat」对吗？',w:'raincoat',sp:'rainkoat',o:['对 ✅','错 ❌'],a:1,x:'应写 raincoat！'},
+{t:'choose',q:'听词，这个拼写「socker」对吗？',w:'soccer',sp:'socker',o:['对 ✅','错 ❌'],a:1,x:'应写 soccer！'},
+{t:'choose',q:'听词，这个拼写「bisop」对吗？',w:'bishop',sp:'bisop',o:['对 ✅','错 ❌'],a:1,x:'应写 bishop！'},
+{t:'choose',q:'听词，这个拼写「coffy」对吗？',w:'coffee',sp:'coffy',o:['对 ✅','错 ❌'],a:1,x:'应写 coffee！'},
+{t:'choose',q:'听词，这个拼写「tiket」对吗？',w:'ticket',sp:'tiket',o:['对 ✅','错 ❌'],a:1,x:'应写 ticket！'},
+{t:'choose',q:'听词，这个拼写「pockit」对吗？',w:'pocket',sp:'pockit',o:['对 ✅','错 ❌'],a:1,x:'应写 pocket！'},
+{t:'choose',q:'听词，这个拼写「hamer」对吗？',w:'hammer',sp:'hamer',o:['对 ✅','错 ❌'],a:1,x:'应写 hammer！'},
+{t:'choose',q:'听词，这个拼写「sunset」对吗？',w:'sunset',sp:'sunset',o:['对 ✅','错 ❌'],a:0,x:'sunset 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「muffin」对吗？',w:'muffin',sp:'muffin',o:['对 ✅','错 ❌'],a:0,x:'muffin 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「dentist」对吗？',w:'dentist',sp:'dentist',o:['对 ✅','错 ❌'],a:0,x:'dentist 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「trumpet」对吗？',w:'trumpet',sp:'trumpet',o:['对 ✅','错 ❌'],a:0,x:'trumpet 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「cowboy」对吗？',w:'cowboy',sp:'cowboy',o:['对 ✅','错 ❌'],a:0,x:'cowboy 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「birthday」对吗？',w:'birthday',sp:'birthday',o:['对 ✅','错 ❌'],a:0,x:'birthday 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「football」对吗？',w:'football',sp:'football',o:['对 ✅','错 ❌'],a:0,x:'football 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「bedroom」对吗？',w:'bedroom',sp:'bedroom',o:['对 ✅','错 ❌'],a:0,x:'bedroom 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「crayon」对吗？',w:'crayon',sp:'crayon',o:['对 ✅','错 ❌'],a:0,x:'crayon 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「doctor」对吗？',w:'doctor',sp:'doctor',o:['对 ✅','错 ❌'],a:0,x:'doctor 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「farmer」对吗？',w:'farmer',sp:'farmer',o:['对 ✅','错 ❌'],a:0,x:'farmer 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「station」对吗？',w:'station',sp:'station',o:['对 ✅','错 ❌'],a:0,x:'station 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「teacher」对吗？',w:'teacher',sp:'teacher',o:['对 ✅','错 ❌'],a:0,x:'teacher 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「turtle」对吗？',w:'turtle',sp:'turtle',o:['对 ✅','错 ❌'],a:0,x:'turtle 和听到的一样 → 对！'},
+{t:'choose',q:'听词，这个拼写「purple」对吗？',w:'purple',sp:'purple',o:['对 ✅','错 ❌'],a:0,x:'purple 和听到的一样 → 对！'}];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · 🔁 闭环自检</div><div class="quiz-q">'+q.q+'</div>';h+='<div class="quiz-word">'+q.sp+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！闭环小侦探！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ffd200;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// === Book ===
+var bp_cp=0,bp_pages=[
+  {s:'🔍🤔',t:'The Checker',x:'A <span class="dg-hl">little</span> checker reads every word.<br>He points and reads it back, out loud.'},
+  {s:'❌😊',t:'Cak!',x:'He sees "cak". He reads: "cak" — short a.<br>But he heard "cake"! Wrong! Add the magic e.'},
+  {s:'❌😊',t:'Rid!',x:'He sees "rid". Reads: "rid" — short i.<br>But he heard "ride"! Wrong! Add the magic e.'},
+  {s:'❌😊',t:'Sip!',x:'He sees "sip". Reads: "sip".<br>But he heard "ship"! Wrong! Add the h.'},
+  {s:'✅😊',t:'Duck!',x:'He sees "duck". Reads: "duck".<br>Yes! It matches!'},
+  {s:'🎉😊',t:'All Right',x:'The checker is so <span class="dg-hl">happy</span>.<br>Every word is right now!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">cake <span class="speak-btn" onclick="spk(&#39;cake&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">蛋糕 🍰</div></div><div class="gi"><div class="gw">ride <span class="speak-btn" onclick="spk(&#39;ride&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">骑 🚲</div></div><div class="gi"><div class="gw">ship <span class="speak-btn" onclick="spk(&#39;ship&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sh</div><div class="gz">船 🚢</div></div><div class="gi"><div class="gw">duck <span class="speak-btn" onclick="spk(&#39;duck&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ck</div><div class="gz">鸭子 🦆</div></div><div class="gi"><div class="gw">lake <span class="speak-btn" onclick="spk(&#39;lake&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">湖 🏞️</div></div><div class="gi"><div class="gw">kite <span class="speak-btn" onclick="spk(&#39;kite&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">风筝 🪁</div></div></div>'}
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/encode6-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+wbRender();initQ();
+</script>
+</body></html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>音节切割 V-V · 见词能读③ | 自然拼读</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s;background:rgba(255,210,0,.4)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+.type-card{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 12px;text-align:center;min-width:86px}.type-card .w{font-size:1.2em;font-weight:bold;color:#ffd200}.type-card .m{color:#888;font-size:.68em;margin-top:2px;line-height:1.4}
+
+/* 流程图 */
+.flow{display:flex;flex-direction:column;gap:8px;max-width:560px;margin:0 auto}
+.flow-node{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.12);border-radius:14px;padding:11px 14px;transition:all .3s}
+.flow-node .step{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);color:#888;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.flow-node .q{flex:1;font-size:.95em;line-height:1.5}
+.flow-node .a{font-size:.82em;color:#888;text-align:right;flex-shrink:0}
+.flow-node.locked{opacity:.45}
+.flow-arrow{text-align:center;color:#555;font-size:.9em;line-height:1}
+.stage-tag{margin:16px 0 6px;padding:6px 12px;border-radius:10px;font-size:.85em;font-weight:bold;text-align:center}.stage-tag.s1{background:rgba(105,240,174,.14);color:#69f0ae;border:1px solid rgba(105,240,174,.4)}.stage-tag.s2{background:rgba(255,210,0,.08);color:#ffd200;border:1px solid rgba(255,210,0,.3)}.stage-tag.s3{background:rgba(255,138,101,.08);color:#ff8a65;border:1px solid rgba(255,138,101,.3)}.stage-tag.s4{background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.3)}
+
+/* 工作台 */
+.wb-stage{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0}
+.wb-word{display:flex;align-items:center;flex-wrap:nowrap;justify-content:center;gap:0;margin:6px 0}
+.wb-tile{font-size:2em;font-weight:bold;color:#e0e0e0;letter-spacing:1px;user-select:none;padding:2px 4px;border-radius:8px}
+.wb-tile.vowel{color:#ffd200}
+.wb-tile.cons{color:#81c784}
+.wb-tile.dg{color:#ff8a65;background:rgba(255,138,101,.15);box-shadow:0 0 0 2px rgba(255,138,101,.4)}
+.wb-cut{width:24px;height:58px;margin:0 -2px;position:relative;cursor:pointer;border-left:2px solid transparent;transition:all .2s;flex-shrink:0}
+.wb-cut:hover{border-left:2px solid rgba(255,255,255,.35)}
+.wb-cut.marker{border-left:2px solid #ffd200;box-shadow:-1px 0 12px rgba(255,210,0,.5)}
+.wb-cut.marker::before{content:'✂️';position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:.95em;z-index:2}
+.wb-cut.done{border-left:2px solid #69f0ae}
+.wb-cut.wrong{border-left:2px solid #ff5252;animation:shake .4s}
+.wb-hint{min-height:28px;text-align:center;font-size:.88em;color:#ccc;margin-top:6px;max-width:520px;line-height:1.6}
+.wb-feedback{min-height:24px;text-align:center;font-size:.95em;margin:6px 0;font-weight:bold}
+.wb-progress{display:flex;gap:4px;justify-content:center;margin:10px 0;flex-wrap:wrap}.wb-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}.wb-dot.done{background:#69f0ae}.wb-dot.cur{background:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}
+.wb-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}.wb-tab{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.88em;font-weight:bold;transition:all .3s}.wb-tab:hover,.wb-tab.active{border-color:#ffd200;color:#ffd200;background:rgba(255,210,0,.1)}
+
+/* 闯关 */
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* 绘本 */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.8em;color:#aaa}
+
+/* 备忘卡 */
+.memo-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,210,0,.35);border-radius:16px;padding:20px;max-width:560px;margin:0 auto;position:relative;overflow:hidden}
+.memo-rule{margin:10px 0;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:12px;font-size:.95em;line-height:1.7}
+.memo-rule b{color:#ffd200}
+.memo-example{color:#81c784;font-size:.92em;letter-spacing:1px}
+.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+@media print{body{background:#fff;color:#111}.stars,.nav,.wb-stage,.speak-btn,.print-note,.quiz-nav,.book-nav,.book-pron{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.memo-card{background:#fff;border:2px solid #333;color:#111}.memo-card b{color:#c70}.memo-card .memo-rule{background:#f5f5f5}.memo-example{color:#070}.goal-line,h1,h2,h3{color:#111}.flow-node{background:#fff;border-color:#ccc;color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .magic-rule{padding:12px 14px;font-size:.9em}
+  .type-card{min-width:76px;padding:8px 8px}.type-card .w{font-size:1.05em}
+  .flow-node{padding:9px 10px}
+  .flow-node .a{font-size:.72em}
+  .stage-tag{font-size:.75em;padding:5px 10px}
+  .wb-tile{font-size:1.45em}
+  .wb-cut{width:20px;height:46px}
+  .wb-cut.marker::before{font-size:.8em}
+  .wb-tab{padding:9px 10px;font-size:.78em;min-height:40px}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ffd200}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+  .memo-card{padding:14px}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>✂️ 音节切割 · V-V</h1><p class="subtitle">见词能读 · 阶段 3 · V-V —— 两个元音紧挨着（中间 0 个辅音），就在两个元音中间切</p>
+<div class="nav">
+<button class="nav-btn active" onclick="showS('goal')">🎯 目标板</button>
+<button class="nav-btn" onclick="showS('flow')">🗺️ 流程图</button>
+<button class="nav-btn" onclick="showS('wb')">🔧 工作台</button>
+<button class="nav-btn" onclick="showS('quiz')">🏆 闯关</button>
+<button class="nav-btn" onclick="showS('book')">📚 绘本</button>
+<button class="nav-btn" onclick="showS('memo')">💳 备忘卡</button>
+</div>
+
+<!-- ===== 目标板 ===== -->
+<div class="section active" id="sec-goal"><div class="glass">
+<h2>🎯 今天学什么 · 见词能读第三步</h2>
+<div class="story-speech"><p>两个元音核<b style="color:#ffd200">紧挨着</b>，中间<b style="color:#ffd200">一个辅音都没有</b>，叫 <b style="color:#ffd200">V-V</b>。这一刀最简单——就在两个元音正中间切！</p></div>
+<div class="magic-rule">🔪 <b>V-V</b>：中间 0 个辅音 → 在<b>两个元音之间</b>直接切一刀</div>
+<h3>🔪 直接切</h3>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<div class="type-card"><div class="w">li|on</div><div class="m">i · o 相邻<br>中间切</div><span class="speak-btn" onclick="spk('lion')" style="display:inline-block;margin-top:4px">🔊</span></div>
+<div class="type-card"><div class="w">di|et</div><div class="m">i · e 相邻<br>中间切</div><span class="speak-btn" onclick="spk('diet')" style="display:inline-block;margin-top:4px">🔊</span></div>
+</div>
+<div class="story-speech"><p>⚠️ 但要留个心眼：有些相邻的元音<b style="color:#ff8a65">看起来像组合</b>（比如 eat 里的 ea 是一个音 /iː/），可它们其实是<b style="color:#ffd200">两个分开的元音</b>，要切开！比如 <b style="color:#ffd200">cre|ate</b>、<b style="color:#ffd200">po|em</b>。去「🗺️ 流程图」看规则，去「🔧 工作台」动手切。</p></div>
+</div></div>
+
+<!-- ===== 流程图 ===== -->
+<div class="section" id="sec-flow"><div class="glass">
+<h2>🗺️ 见词能读 · 解码一条线</h2>
+<p style="color:#aaa;font-size:.9em;margin-bottom:12px;text-align:center">解码一条线 · 4 个阶段。今天学 <span class="gold">🔴 阶段 3</span>。</p>
+<div class="flow" style="max-width:600px">
+<div class="stage-tag s1">🟢 阶段 1 · 大块预处理（✅ 已学）</div>
+<div class="flow-node"><div class="step">①</div><div class="q">拆分<span class="dim">复合词</span></div><div class="a">✅</div></div>
+<div class="flow-node"><div class="step">②</div><div class="q">剥离<span class="dim">前后缀</span></div><div class="a">✅</div></div>
+<div class="flow-node"><div class="step">③</div><div class="q">识别<span class="dim">辅音 + le</span></div><div class="a">✅</div></div>
+<div class="stage-tag s2">🟡 阶段 2 · 标记元音核（✅ 已学）</div>
+<div class="flow-node"><div class="step">④</div><div class="q">圈画<span class="dim">元音核</span></div><div class="a">✅</div></div>
+<div class="flow-node"><div class="step">⑤</div><div class="q">清点<span class="dim">元音核数量</span></div><div class="a">✅</div></div>
+<div class="stage-tag s3">🔴 阶段 3 · 音节边界切割（今天学！）</div>
+<div class="memo-rule"><b>⑥ 辅音夹心层试切</b>（数两元音中间的辅音）<br>≥2 个 → VCCV 正中切 <span class="memo-example">rab|bit</span>（前面学）<br>1 个 → VCV 试错 <span class="memo-example">ti|ger · cam|el</span>（前面学）<br><b>0 个 → V-V 两元音中间切</b> <span class="memo-example">li|on · cre|ate</span></div>
+<div class="memo-rule"><b>⑦ 切口合法性校验</b>（0 号约束层）<br>硬黑名单：<span class="memo-example">sh · ch · th · ck · qu · ng</span> 不能切开<br>⚠️ <b>易混元音陷阱</b>：<span class="memo-example">ea / oe / ui</span> 平时是组合（一个音），但在这类词里是<b>两个元音</b>，必须切开（<span class="memo-example">cre|ate · po|em · flu|id</span>）</div>
+<div class="stage-tag s4">🔵 阶段 4 · 解码发音（后面学）</div>
+<div class="flow-node locked"><div class="step">⑧</div><div class="q">类型判定 · 定音 · 定重音</div><div class="a">🔒</div></div>
+</div>
+</div></div>
+
+<!-- ===== 工作台 ===== -->
+<div class="section" id="sec-wb"><div class="glass">
+<div class="magic-rule">🔴 今天学 <b>阶段 3：V-V</b> —— 中间 0 个辅音，两个元音紧挨着，就在它们中间切！</div>
+<h2>🔧 切词工作台</h2>
+<p style="color:#aaa;font-size:.88em;text-align:center;margin-bottom:6px">看词 → <span class="gold">点两个元音之间的缝，落一刀 ✂️</span> → 确认</p>
+<div class="wb-tabs" id="wbTabs"></div>
+<div class="wb-progress" id="wbDots"></div>
+<div class="wb-stage">
+<div class="wb-word" id="wbWord"></div>
+<div class="wb-hint" id="wbHint"></div>
+<div class="wb-feedback" id="wbFeedback"></div>
+</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0">
+<button class="btn btn-outline" onclick="wbHelp()">💡 帮帮我</button>
+<button class="btn btn-gold" onclick="wbCheck()">✅ 确认</button>
+<button class="btn btn-outline" onclick="wbNext()">➡️ 下一个</button>
+</div>
+</div></div>
+
+<!-- ===== 闯关 ===== -->
+<div class="section" id="sec-quiz"><div class="glass">
+<h2>🏆 闯关挑战（10 题）</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">找到 V-V 的切口！</p>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- ===== 绘本 ===== -->
+<div class="section" id="sec-book"><div class="glass">
+<h2>📚 The Lion's Poem</h2>
+<p style="color:#aaa;margin-bottom:8px;text-align:center">一本 V-V 绘本 🦁</p>
+<div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div>
+</div></div>
+
+<!-- ===== 备忘卡 ===== -->
+<div class="section" id="sec-memo"><div class="glass">
+<h2>💳 知识点备忘卡</h2>
+<div class="memo-card">
+<div style="text-align:center;font-size:1.1em;font-weight:bold;color:#ffd200">✂️ 音节切割 · V-V 完整版</div>
+<div class="memo-rule"><b>核心规则</b>：两个元音核中间 <b>0 个辅音</b>（紧挨着）→ 在<b>两个元音之间</b>切一刀<br><span class="memo-example">li|on · di|al · di|et · gi|ant</span></div>
+<div class="memo-rule"><b>⚠️ 易混元音陷阱</b>：ea / oe / ui 平时是组合（一个音），但在这里是<b>两个分开的元音</b>，必须切开<br><span class="memo-example">cre|ate（不是 ea=/iː/）· po|em（不是 oe=/əʊ/）· flu|id（不是 ui=/uː/）</span></div>
+<div class="memo-rule"><b>口诀</b>：两个元音手拉手，中间没辅音挡路；<b>一眼看清是不是组合，不是组合就中间切</b>！</div>
+<div class="memo-rule"><b>易错提醒</b><br>① 判断 ea/oe/ui 是不是组合，靠「读一读」——组合读成一个音，分开读成两个音<br>② qu 是辅音二合字母（q+u 一体），不是元音（quiet 的 u 不算元音核）<br>③ 元音核圈对是前提（见 66）</div>
+</div>
+<p class="print-note">🖨️ 可截图 / 打印保存（打印自动变白底）</p>
+</div></div>
+
+<script src="syllableRuleEngine.js"></script>
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={
+'lion':'words/lion.mp3','radio':'words/radio.mp3','piano':'words/piano.mp3','studio':'words/studio.mp3','diary':'words/diary.mp3','video':'words/video.mp3','idea':'words/idea.mp3','area':'words/area.mp3','museum':'words/museum.mp3','trio':'words/trio.mp3','duet':'words/duet.mp3','poet':'words/poet.mp3','client':'words/client.mp3','diamond':'words/diamond.mp3','violet':'words/violet.mp3','riot':'words/riot.mp3','onion':'words/onion.mp3','violin':'words/violin.mp3','buoy':'words/buoy.mp3','voyage':'words/voyage.mp3','genuine':'words/genuine.mp3','usual':'words/usual.mp3','casual':'words/casual.mp3','visual':'words/visual.mp3','annual':'words/annual.mp3','really':'words/really.mp3','theater':'words/theater.mp3','real':'words/real.mp3','liar':'words/liar.mp3','statue':'words/statue.mp3','dial':'words/dial.mp3','diet':'words/diet.mp3','giant':'words/giant.mp3','trial':'words/trial.mp3',
+'science':'words/science.mp3','quiet':'words/quiet.mp3','create':'words/create.mp3','react':'words/react.mp3','poem':'words/poem.mp3',
+'fluid':'words/fluid.mp3','ruin':'words/ruin.mp3','eat':'words/eat.mp3','tiger':'words/tiger.mp3'
+};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){speakNow(path.replace('words/','').replace('.mp3',''));return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');speakNow(path.replace('words/','').replace('.mp3',''))},{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === Navigation ===
+var NM={goal:'目标板',flow:'流程图',wb:'工作台',quiz:'闯关',book:'绘本',memo:'备忘卡'};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='quiz')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// ═══ 工作台：切词（V-V） ═══
+var WB={
+  basic:[
+    {w:'lion',n:[[1],[2]],a:1},
+    {w:'dial',n:[[1],[2]],a:1},
+    {w:'diet',n:[[1],[2]],a:1},
+    {w:'giant',n:[[1],[2]],a:1},
+    {w:'trial',n:[[2],[3]],a:2},
+    {w:'science',n:[[2],[3]],a:2},
+    {w:'quiet',n:[[2],[3]],a:2},
+    {w:'radio',n:[[1],[3],[4]],a:3},
+    {w:'piano',n:[[1],[2],[4]],a:1},
+    {w:'studio',n:[[2],[4],[5]],a:4},
+    {w:'diary',n:[[1],[2],[4]],a:1},
+    {w:'video',n:[[1],[3],[4]],a:3},
+    {w:'idea',n:[[0],[2],[3]],a:2},
+    {w:'area',n:[[0],[2],[3]],a:2},
+    {w:'museum',n:[[1],[3],[4]],a:3},
+    {w:'trio',n:[[2],[3]],a:2},
+    {w:'duet',n:[[1],[2]],a:1},
+    {w:'poet',n:[[1],[2]],a:1},
+    {w:'client',n:[[2],[3]],a:2},
+    {w:'diamond',n:[[1],[2],[4]],a:1},
+    {w:'violet',n:[[1],[2],[4]],a:1},
+    {w:'riot',n:[[1],[2]],a:1},
+    {w:'onion',n:[[1],[2],[4]],a:1},
+    {w:'violin',n:[[1],[2],[4]],a:1},
+    {w:'buoy',n:[[1],[2]],a:1},
+    {w:'voyage',n:[[1],[2],[4]],a:1}
+  ],
+  adv:[
+    {w:'create',n:[[2],[3]],a:2,trap:'ea'},
+    {w:'react',n:[[1],[2]],a:1,trap:'ea'},
+    {w:'poem',n:[[1],[2]],a:1,trap:'oe'},
+    {w:'fluid',n:[[2],[3]],a:2,trap:'ui'},
+    {w:'ruin',n:[[1],[2]],a:1,trap:'ui'},
+    {w:'genuine',n:[[1],[3],[4]],a:3,trap:'ui'},
+    {w:'usual',n:[[0],[2],[3]],a:2,trap:'ua'},
+    {w:'casual',n:[[1],[3],[4]],a:3,trap:'ua'},
+    {w:'visual',n:[[1],[3],[4]],a:3,trap:'ua'},
+    {w:'annual',n:[[0],[3],[4]],a:3,trap:'ua'},
+    {w:'really',n:[[1],[2],[4]],a:1,trap:'ea'},
+    {w:'theater',n:[[1],[2],[4]],a:1,trap:'ea'},
+    {w:'real',n:[[1],[2]],a:1,trap:'ea'},
+    {w:'liar',n:[[1],[2]],a:1,trap:'ia'},
+    {w:'statue',n:[[1],[3,4]],a:2,trap:'ua'}
+  ]
+};
+var wbLvl='basic',wbIdx=0,wbCut=-1,wbHelpOn=false;
+var wbDone={basic:[],adv:[]};
+function wbList(){return WB[wbLvl]}
+function wbCur(){return wbList()[wbIdx]}
+function nucleusAt(it,i){for(var j=0;j<it.n.length;j++){if(it.n[j].indexOf(i)>=0)return true}return false}
+function wbRef(it){return it.n[0][it.n[0].length-1]}  // V-V：参考 = 两个元音之间的切口
+function wbRender(){
+  var it=wbCur();
+  var h='';
+  for(var i=0;i<it.w.length;i++){
+    var cls='wb-tile '+(nucleusAt(it,i)?'vowel':'cons');
+    if(wbHelpOn){var dgs=SyllableEngine.findDigraphs(it.w);for(var d=0;d<dgs.length;d++){if(i>=dgs[d].start&&i<=dgs[d].end)cls+=' dg'}}
+    h+='<span class="'+cls+'">'+it.w[i]+'</span>';
+    if(i<it.w.length-1){
+      var cCls='wb-cut';
+      if(wbCut===i)cCls+=(wbDone[wbLvl][wbIdx]?' done':' marker');
+      h+='<span class="'+cCls+'" onclick="wbTapCut('+i+')"></span>';
+    }
+  }
+  document.getElementById('wbWord').innerHTML=h;
+  document.getElementById('wbHint').innerHTML=(wbDone[wbLvl][wbIdx]?'':(wbLvl==='basic'?'👆 两个元音紧挨着，就在它们<b>中间</b>切一刀':'⚠️ 这两个元音看起来像组合，其实是两个音，要<b>切开</b>！'));
+  document.getElementById('wbFeedback').innerHTML='';
+  var dots='';
+  for(var k=0;k<wbList().length;k++){var c2='wb-dot';if(wbDone[wbLvl][k])c2+=' done';else if(k===wbIdx)c2+=' cur';dots+='<span class="'+c2+'"></span>'}
+  document.getElementById('wbDots').innerHTML=dots;
+  var tabs='';
+  [['basic','🌱 基础关卡'],['adv','🔥 进阶挑战（易混元音）']].forEach(function(t){tabs+='<button class="wb-tab'+(wbLvl===t[0]?' active':'')+'" onclick="switchLvl(\''+t[0]+'\')">'+t[1]+'</button>'});
+  document.getElementById('wbTabs').innerHTML=tabs;
+}
+function switchLvl(l){wbLvl=l;wbIdx=0;wbCut=-1;wbHelpOn=false;wbRender()}
+function wbTapCut(i){
+  if(wbDone[wbLvl][wbIdx])return;
+  wbCut=i;wbRender();
+}
+function wbCheck(){
+  var it=wbCur();
+  if(wbDone[wbLvl][wbIdx])return;
+  if(wbCut<0){document.getElementById('wbFeedback').innerHTML='<span class="orange">👆 先点两个元音之间的缝，落一刀 ✂️</span>';return}
+  var dg=SyllableEngine.cutSplitsDigraph(it.w,wbCut);
+  if(dg){
+    document.getElementById('wbFeedback').innerHTML='<span class="red">❌ 切开了「'+dg+'」！它是二合字母，不能拆，往旁边挪</span>';
+    var cutEl=document.querySelectorAll('#wbWord .wb-cut')[wbCut];
+    if(cutEl){cutEl.classList.add('wrong');setTimeout(function(){cutEl.classList.remove('wrong')},500)}
+    return;
+  }
+  if(wbCut===it.a){
+    wbDone[wbLvl][wbIdx]=true;
+    wbRender();
+    var parts=it.w.slice(0,wbCut+1)+'|'+it.w.slice(wbCut+1);
+    document.getElementById('wbFeedback').innerHTML='<span class="green">✅ 切对了！</span> '+it.w+' = <span class="gold">'+parts+'</span>';
+    document.getElementById('wbWord').style.animation='pop .35s';
+    setTimeout(function(){spk(it.w)},150);
+  }else{
+    var ref=wbRef(it);
+    if(it.trap)document.getElementById('wbFeedback').innerHTML='<span class="orange">🤔 「'+it.trap+'」在这里是<b>两个元音</b>（不是一个音），在它们中间切：'+it.w.slice(0,ref+1)+'|'+it.w.slice(ref+1)+'</span>';
+    else document.getElementById('wbFeedback').innerHTML='<span class="orange">🤔 两个元音紧挨着，就在它们<b>中间</b>切</span>';
+  }
+}
+function wbHelp(){
+  var it=wbCur();
+  wbHelpOn=true;wbRender();
+  var nuc=it.n.map(function(x){return x.map(function(i){return it.w[i]}).join('')}).join(' · ');
+  var tip='💡 元音核：<span class="gold">'+nuc+'</span>；中间 <span class="orange">0 个辅音</span> → V-V 两元音中间切';
+  if(it.trap)tip+='　⚠️ 「'+it.trap+'」在这里不是组合，是两个分开的元音！';
+  document.getElementById('wbHint').innerHTML=tip;
+  spk(it.w);
+}
+function wbNext(){
+  wbIdx=(wbIdx+1)%wbList().length;wbCut=-1;wbHelpOn=false;wbRender();
+}
+wbRender();
+
+// === Quiz ===
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[{t:'cut',q:'lion 的切口在哪里？',w:'lion',o:['l|ion', 'li|on', 'lio|n'],a:0,x:'l|ion ✓'},
+{t:'cut',q:'dial 的切口在哪里？',w:'dial',o:['d|ial', 'di|al', 'dia|l'],a:0,x:'d|ial ✓'},
+{t:'cut',q:'diet 的切口在哪里？',w:'diet',o:['d|iet', 'di|et', 'die|t'],a:0,x:'d|iet ✓'},
+{t:'cut',q:'giant 的切口在哪里？',w:'giant',o:['g|iant', 'gi|ant', 'gia|nt'],a:0,x:'g|iant ✓'},
+{t:'cut',q:'trial 的切口在哪里？',w:'trial',o:['tr|ial', 't|rial', 'tri|al'],a:0,x:'tr|ial ✓'},
+{t:'cut',q:'science 的切口在哪里？',w:'science',o:['sc|ience', 's|cience', 'sci|ence'],a:0,x:'sc|ience ✓'},
+{t:'cut',q:'quiet 的切口在哪里？',w:'quiet',o:['qu|iet', 'q|uiet', 'qui|et'],a:0,x:'qu|iet ✓'},
+{t:'cut',q:'radio 的切口在哪里？',w:'radio',o:['rad|io', 'ra|dio', 'radi|o'],a:0,x:'rad|io ✓'},
+{t:'cut',q:'piano 的切口在哪里？',w:'piano',o:['p|iano', 'pi|ano', 'pia|no'],a:0,x:'p|iano ✓'},
+{t:'cut',q:'studio 的切口在哪里？',w:'studio',o:['stud|io', 'stu|dio', 'studi|o'],a:0,x:'stud|io ✓'},
+{t:'cut',q:'diary 的切口在哪里？',w:'diary',o:['d|iary', 'di|ary', 'dia|ry'],a:0,x:'d|iary ✓'},
+{t:'cut',q:'video 的切口在哪里？',w:'video',o:['vid|eo', 'vi|deo', 'vide|o'],a:0,x:'vid|eo ✓'},
+{t:'cut',q:'idea 的切口在哪里？',w:'idea',o:['id|ea', 'i|dea', 'ide|a'],a:0,x:'id|ea ✓'},
+{t:'cut',q:'area 的切口在哪里？',w:'area',o:['ar|ea', 'a|rea', 'are|a'],a:0,x:'ar|ea ✓'},
+{t:'cut',q:'museum 的切口在哪里？',w:'museum',o:['mus|eum', 'mu|seum', 'muse|um'],a:0,x:'mus|eum ✓'},
+{t:'cut',q:'trio 的切口在哪里？',w:'trio',o:['tr|io', 't|rio', 'tri|o'],a:0,x:'tr|io ✓'},
+{t:'cut',q:'duet 的切口在哪里？',w:'duet',o:['d|uet', 'du|et', 'due|t'],a:0,x:'d|uet ✓'},
+{t:'cut',q:'poet 的切口在哪里？',w:'poet',o:['p|oet', 'po|et', 'poe|t'],a:0,x:'p|oet ✓'},
+{t:'cut',q:'client 的切口在哪里？',w:'client',o:['cl|ient', 'c|lient', 'cli|ent'],a:0,x:'cl|ient ✓'},
+{t:'cut',q:'diamond 的切口在哪里？',w:'diamond',o:['d|iamond', 'di|amond', 'dia|mond'],a:0,x:'d|iamond ✓'},
+{t:'cut',q:'violet 的切口在哪里？',w:'violet',o:['v|iolet', 'vi|olet', 'vio|let'],a:0,x:'v|iolet ✓'},
+{t:'cut',q:'riot 的切口在哪里？',w:'riot',o:['r|iot', 'ri|ot', 'rio|t'],a:0,x:'r|iot ✓'},
+{t:'cut',q:'onion 的切口在哪里？',w:'onion',o:['o|nion', 'on|ion', 'oni|on'],a:0,x:'o|nion ✓'},
+{t:'cut',q:'violin 的切口在哪里？',w:'violin',o:['v|iolin', 'vi|olin', 'vio|lin'],a:0,x:'v|iolin ✓'},
+{t:'cut',q:'buoy 的切口在哪里？',w:'buoy',o:['b|uoy', 'bu|oy', 'buo|y'],a:0,x:'b|uoy ✓'},
+{t:'cut',q:'voyage 的切口在哪里？',w:'voyage',o:['v|oyage', 'vo|yage', 'voy|age'],a:0,x:'v|oyage ✓'},
+{t:'cut',q:'create 的切口在哪里？',w:'create',o:['cr|eate', 'c|reate', 'cre|ate'],a:0,x:'cr|eate ✓'},
+{t:'cut',q:'react 的切口在哪里？',w:'react',o:['r|eact', 're|act', 'rea|ct'],a:0,x:'r|eact ✓'},
+{t:'cut',q:'poem 的切口在哪里？',w:'poem',o:['p|oem', 'po|em', 'poe|m'],a:0,x:'p|oem ✓'},
+{t:'cut',q:'fluid 的切口在哪里？',w:'fluid',o:['fl|uid', 'f|luid', 'flu|id'],a:0,x:'fl|uid ✓'},
+{t:'cut',q:'ruin 的切口在哪里？',w:'ruin',o:['r|uin', 'ru|in', 'rui|n'],a:0,x:'r|uin ✓'},
+{t:'cut',q:'genuine 的切口在哪里？',w:'genuine',o:['gen|uine', 'ge|nuine', 'genu|ine'],a:0,x:'gen|uine ✓'},
+{t:'cut',q:'usual 的切口在哪里？',w:'usual',o:['us|ual', 'u|sual', 'usu|al'],a:0,x:'us|ual ✓'},
+{t:'cut',q:'casual 的切口在哪里？',w:'casual',o:['cas|ual', 'ca|sual', 'casu|al'],a:0,x:'cas|ual ✓'},
+{t:'cut',q:'visual 的切口在哪里？',w:'visual',o:['vis|ual', 'vi|sual', 'visu|al'],a:0,x:'vis|ual ✓'},
+{t:'cut',q:'annual 的切口在哪里？',w:'annual',o:['ann|ual', 'an|nual', 'annu|al'],a:0,x:'ann|ual ✓'},
+{t:'cut',q:'really 的切口在哪里？',w:'really',o:['r|eally', 're|ally', 'rea|lly'],a:0,x:'r|eally ✓'},
+{t:'cut',q:'theater 的切口在哪里？',w:'theater',o:['t|heater', 'th|eater', 'the|ater'],a:0,x:'t|heater ✓'},
+{t:'cut',q:'real 的切口在哪里？',w:'real',o:['r|eal', 're|al', 'rea|l'],a:0,x:'r|eal ✓'},
+{t:'cut',q:'liar 的切口在哪里？',w:'liar',o:['l|iar', 'li|ar', 'lia|r'],a:0,x:'l|iar ✓'},
+{t:'cut',q:'statue 的切口在哪里？',w:'statue',o:['st|atue', 's|tatue', 'sta|tue'],a:0,x:'st|atue ✓'}];
+var qS={qs:[],cur:0,as:[]};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],typeNames={cut:'✂️ 找切口',choose:'🎯 选择'},h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(typeNames[q.t]||'')+'</div><div class="quiz-q">'+q.q+'</div>';if(q.w)h+='<div class="quiz-word">'+q.w+' <span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🏆 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;if(qS.qs[qS.cur].a===i)sfxOK();else sfxNO();renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var e,m;if(s===10){e='🏆🌟';m='满分！V-V 切割大师！'}else if(s>=8){e='🎉👏';m='非常棒！'}else if(s>=6){e='💪😊';m='还不错！'}else{e='📖✨';m='再练练~'}f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">'+e+'</div><div style="font-size:1.4em;color:#ffd200;margin:8px 0">'+s+'/10</div><p>'+m+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再来一次</button></div></div>'}
+
+// === Book ===
+var bp_cp=0,bp_pages=[
+  {s:'🦁🌳',t:'A Quiet Spot',x:'A <span class="dg-hl">lion</span> sits under a <span class="dg-hl">giant</span> tree.<br>“What a <span class="dg-hl">quiet</span> spot!” it says.'},
+  {s:'🦁😊',t:'A Poem',x:'“I will <span class="dg-hl">create</span> a <span class="dg-hl">poem</span>,” it says.'},
+  {s:'🦁😔',t:'No Words',x:'But the <span class="dg-hl">lion</span> cannot write!<br>It sits and sits. No words come.'},
+  {s:'🚶🥤',t:'Some Fluid',x:'A man on a <span class="dg-hl">diet</span> walks by.<br>“Drink some <span class="dg-hl">fluid</span>,” he says.'},
+  {s:'🥤😊',t:'Think',x:'“It will help you think!”<br>The <span class="dg-hl">lion</span> drinks the <span class="dg-hl">fluid</span>.'},
+  {s:'🦁😊',t:'The Words Come',x:'Now the words come!<br>It writes a fine <span class="dg-hl">poem</span>.'},
+  {s:'📖😄',t:'Read Aloud',x:'The <span class="dg-hl">lion</span> reads the <span class="dg-hl">poem</span> aloud.<br>Everyone <span class="dg-hl">reacts</span> with a smile.'},
+  {s:'🦁😊',t:'Glad',x:'“Let us <span class="dg-hl">create</span> more poems!” What a good day!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">lion <span class="speak-btn" onclick="spk(&#39;lion&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">狮子 🦁</div></div><div class="gi"><div class="gw">giant <span class="speak-btn" onclick="spk(&#39;giant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">巨人 🦒</div></div><div class="gi"><div class="gw">quiet <span class="speak-btn" onclick="spk(&#39;quiet&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">安静 🤫</div></div><div class="gi"><div class="gw">create <span class="speak-btn" onclick="spk(&#39;create&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">创作 ✍️</div></div><div class="gi"><div class="gw">poem <span class="speak-btn" onclick="spk(&#39;poem&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">诗 📖</div></div><div class="gi"><div class="gw">diet <span class="speak-btn" onclick="spk(&#39;diet&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">节食 🥗</div></div><div class="gi"><div class="gw">fluid <span class="speak-btn" onclick="spk(&#39;fluid&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">液体 💧</div></div><div class="gi"><div class="gw">react <span class="speak-btn" onclick="spk(&#39;react&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">VV</div><div class="gz">反应 😲</div></div></div>'},
+];
+var bp_reading=false,bp_audio=null;
+function spkBookUK(){playBookAudio('uk')}
+function spkBookUS(){playBookAudio('us')}
+function playBookAudio(accent){
+  if(bp_audio){bp_audio.pause();bp_audio=null;bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});return}
+  bp_reading=true;
+  document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
+  bp_audio=new Audio(AUDIO_BASE+'book/decode33-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
+  bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
+}
+function renderP(){
+  if(bp_audio){bp_audio.pause();bp_audio=null}
+  if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}
+  var p=bp_pages[bp_cp];
+  document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;
+  document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;
+  document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';
+  document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';
+  var g=bp_cp===bp_pages.length-1;
+  document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>';
+}
+function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
+function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
+
+// === Init ===
+wbRender();initQ();
+</script>
+</body></html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>毕业大乱斗：全规则终极挑战 | 自然拼读·毕业</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}@keyframes confetti{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(120px) rotate(360deg);opacity:0}}
+.speak-btn{background:rgba(255,210,0,.15);border:1px solid rgba(255,210,0,.25);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72em;transition:all .2s;flex-shrink:0;color:#ffd200}.speak-btn:hover{background:rgba(255,210,0,.3);transform:scale(1.2)}.speak-btn.speaking{animation:pulse .3s;background:rgba(255,210,0,.4)}
+.container{position:relative;z-index:1;max-width:850px;margin:0 auto;padding:20px}.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;margin:20px 0;animation:slideIn .6s ease-out both}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ffd200,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}h2{color:#ff8a65;font-size:1.3em;margin-bottom:16px;display:flex;align-items:center;gap:8px}h3{color:#ffd200;font-size:1.1em;margin:16px 0 8px}.subtitle{text-align:center;color:#aaa;margin-bottom:12px;font-size:.9em}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}.nav-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.nav-btn:hover,.nav-btn.active{background:rgba(255,210,0,.12);border-color:#ffd200;color:#ffd200}
+.btn{padding:10px 24px;border-radius:25px;border:none;cursor:pointer;font-size:1em;font-weight:600;transition:all .3s}.btn-gold{background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e}.btn-gold:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,138,101,.4)}.btn-outline{background:transparent;color:#ccc;border:1px solid rgba(255,255,255,.3)}.btn-outline:hover{border-color:#ffd200;color:#ffd200}.btn-outline:disabled{opacity:.35;cursor:default}
+.section{display:none}.section.active{display:block}
+.gold{color:#ffd200;font-weight:bold}.orange{color:#ff8a65;font-weight:bold}.green{color:#81c784;font-weight:bold}.red{color:#ff5252;font-weight:bold}.dim{color:#888}
+.story-speech{background:rgba(255,210,0,.06);border-left:3px solid #ffd200;border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0;font-size:1.05em;line-height:1.7}
+.magic-rule{background:rgba(255,210,0,.08);border:2px dashed rgba(255,210,0,.3);border-radius:16px;padding:16px 20px;margin:16px 0;text-align:center;font-size:1.05em;line-height:1.8}
+
+/* 成就墙 */
+.achievement-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;max-width:640px;margin:0 auto}
+.ach-badge{background:rgba(0,0,0,.25);border:1.5px solid rgba(105,240,174,.35);border-radius:12px;padding:10px 12px;text-align:center}.ach-badge .an{font-weight:bold;color:#69f0ae;font-size:.9em}.ach-badge .ad{font-size:.72em;color:#aaa;margin-top:2px}.ach-badge.final{border-color:rgba(255,210,0,.5);background:rgba(255,210,0,.08)}.ach-badge.final .an{color:#ffd200}
+
+/* 大乱斗 */
+.arena-head{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.arena-stat{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:8px 16px;text-align:center;min-width:90px}.arena-stat .sl{font-size:.7em;color:#aaa}.arena-stat .sv{font-size:1.3em;font-weight:bold;color:#ffd200}
+.combo-flash{animation:pop .4s}
+.quiz-container{max-width:600px;margin:0 auto}.quiz-progress{display:flex;gap:3px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.quiz-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);transition:all .3s}.quiz-dot.correct{background:#69f0ae;border-color:#69f0ae}.quiz-dot.wrong{background:#ff5252;border-color:#ff5252}.quiz-dot.current{border-color:#ffd200;box-shadow:0 0 8px rgba(255,210,0,.5)}.quiz-card{margin:12px 0;padding:16px;background:rgba(0,0,0,.2);border-radius:14px}.quiz-q-num{color:#ff8a65;font-size:.85em;margin-bottom:4px}.quiz-q{font-size:1.05em;margin-bottom:4px;line-height:1.6}.quiz-word{font-size:1.8em;font-weight:bold;color:#ffd200;text-align:center;margin:8px 0;letter-spacing:3px}.quiz-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.quiz-opt{padding:9px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.9em;transition:all .3s}.quiz-opt:hover:not(.locked){border-color:#ffd200}.quiz-opt.correct{background:rgba(105,240,174,.2)!important;border-color:#69f0ae!important;color:#69f0ae!important}.quiz-opt.wrong{background:rgba(255,82,82,.2)!important;border-color:#ff5252!important;color:#ff5252!important}.quiz-opt.locked{pointer-events:none}.quiz-explain{margin-top:8px;min-height:28px;text-align:center;font-size:.9em;line-height:1.5}.quiz-nav{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}.quiz-nav .qi{color:#888;font-size:.9em}.quiz-final{text-align:center;padding:18px;border-radius:18px}.quiz-final.perfect{background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.2)}
+
+/* 毕业证书 */
+.cert{background:linear-gradient(160deg,#2a1f0a,#1a1a2e 40%,#1a1a2e 60%,#2a1f0a);border:3px double #ffd200;border-radius:16px;padding:30px 20px;text-align:center;max-width:520px;margin:0 auto;position:relative}
+.cert-ribbon{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e;font-weight:bold;padding:4px 20px;border-radius:20px;font-size:.85em}
+.cert-title{font-size:1.8em;font-weight:bold;color:#ffd200;letter-spacing:4px;margin:10px 0}
+.cert-body{font-size:.95em;color:#e0e0e0;line-height:2}
+.cert-name{background:transparent;border:none;border-bottom:2px dashed #ffd200;color:#ffd200;font-size:1.3em;font-weight:bold;text-align:center;width:60%;padding:4px 0;margin:8px 0}
+.cert-seal{font-size:3em;margin:10px 0;animation:float 3s ease-in-out infinite}
+.cert-foot{display:flex;justify-content:space-between;font-size:.75em;color:#aaa;margin-top:14px}
+.print-note{text-align:center;color:#888;font-size:.8em;margin-top:14px}
+
+/* 绘本 Book */
+.book-page{background:rgba(255,255,255,.03);border-radius:20px;padding:22px;text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center}.book-scene{font-size:4em;margin:12px 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,210,0,.3))}.book-title{font-size:1.4em;color:#ffd200;font-weight:bold;margin:6px 0}.book-text{font-size:1.1em;line-height:2.1;color:#e0e0e0;max-width:500px}.book-text .dg-hl{color:#ffd200;font-weight:bold}.book-nav{display:flex;gap:10px;align-items:center;margin-top:14px}.book-page-num{color:#888;font-size:.9em}.book-pron{display:flex;gap:8px;justify-content:center;margin-top:10px}.pron-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#ccc;cursor:pointer;font-size:.85em;transition:all .3s}.pron-btn.uk{border-color:rgba(79,195,247,.4)}.pron-btn.us{border-color:rgba(255,138,101,.4)}.pron-btn.playing{animation:pulse .3s;pointer-events:none}.glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;max-width:500px;margin:12px auto 0;text-align:left}.gi{background:rgba(0,0,0,.2);border-radius:10px;padding:8px 10px}.gi .gw{font-weight:bold;color:#ffd200}.gi .gm{font-size:.78em;color:#aaa}.gi .gz{font-size:.78em;color:#bbb}
+
+@media print{body{background:#fff;color:#111}.stars,.nav,.speak-btn,.print-note,.quiz-nav,.book-nav,.book-pron,.arena-head{display:none!important}.glass{background:#fff;border:1px solid #ccc;color:#111}.cert{background:#fff;border:3px double #333;color:#111}.cert-title,.cert-name{color:#c70}.cert-body{color:#111}.goal-line,h1,h2,h3{color:#111}}
+
+@media(max-width:768px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .container{padding:6px;max-width:480px}
+  h1{font-size:1.2em}h2{font-size:.95em}h3{font-size:.85em}
+  .glass{padding:14px 8px;margin:8px 0;border-radius:12px}
+  .subtitle{font-size:.78em;padding:0 4px}
+  .nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:6px 0}
+  .nav-btn{padding:11px 4px;font-size:.7em;border-radius:14px;min-height:44px;text-align:center;white-space:nowrap}
+  .nav-btn.active{background:rgba(255,210,0,.15);border-color:#ffd200;color:#ffd200}
+  .btn{padding:13px 18px;font-size:.88em;border-radius:22px;min-height:44px}
+  .speak-btn{width:44px!important;height:44px!important;font-size:.9em!important;min-width:44px;min-height:44px}
+  .story-speech{padding:10px 12px;font-size:.88em;line-height:1.65}
+  .magic-rule{padding:12px 14px;font-size:.9em}
+  .achievement-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:5px}
+  .ach-badge{padding:8px 8px}.ach-badge .an{font-size:.8em}.ach-badge .ad{font-size:.66em}
+  .arena-stat{min-width:70px;padding:6px 10px}.arena-stat .sv{font-size:1.1em}
+  .quiz-container{max-width:100%}
+  .quiz-card{padding:10px}
+  .quiz-q{font-size:.88em}
+  .quiz-word{font-size:1.3em;letter-spacing:2px}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .quiz-opt{padding:12px 10px;font-size:.85em;border-radius:18px;min-height:44px;width:auto}
+  .quiz-opt:active:not(.locked){border-color:#ffd200}
+  .quiz-nav{gap:6px;flex-wrap:wrap;justify-content:center}
+  .quiz-nav .qi{font-size:.8em}
+  .quiz-progress{gap:2px}
+  .quiz-dot{width:12px;height:12px}
+  .quiz-explain{font-size:.82em}
+  .quiz-final{padding:14px}
+  .cert{padding:24px 14px}
+  .cert-title{font-size:1.4em}
+  .cert-name{width:80%;font-size:1.1em}
+  .book-page{padding:12px;min-height:200px;border-radius:12px}
+  .book-scene{font-size:2.5em;margin:6px 0}
+  .book-title{font-size:1em;margin:4px 0}
+  .book-text{font-size:.9em;line-height:1.8;padding:0 4px}
+  .book-nav{gap:6px;margin-top:8px}
+  .book-pron{gap:5px;margin-top:8px}
+  .pron-btn{padding:9px 12px;font-size:.78em;min-height:40px;border-radius:16px}
+  .book-page-num{font-size:.8em}
+  .glossary-grid{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:4px}
+  .gi{padding:5px 6px}
+  .gi .gw{font-size:.8em}
+  .gi .gm{font-size:.68em}
+  .gi .gz{font-size:.68em}
+}
+@media(max-width:480px){
+  .container{padding:4px}
+  .glass{padding:12px 6px;margin:6px 0;border-radius:10px}
+  h1{font-size:1.1em}h2{font-size:.9em}
+  .nav{gap:4px}
+  .nav-btn{padding:10px 3px;font-size:.68em;min-height:44px;border-radius:12px}
+  .quiz-opts{grid-template-columns:1fr}
+  .quiz-opt{font-size:.82em;min-height:44px}
+  .book-scene{font-size:2em}
+  .book-text{font-size:.85em;line-height:1.7}
+  .speak-btn{width:44px!important;height:44px!important}
+  body{padding-bottom:env(safe-area-inset-bottom,12px)}
+}
+</style>
+<body><div class="stars" id="stars"></div><div class="container">
+<h1>🎓 毕业大乱斗</h1><p class="subtitle">全规则终极挑战 —— 你通关了 83 页，来证明自己是拼读高手！</p>
+<div class="nav">
+<button class="nav-btn active" onclick="showS('goal')">🎯 毕业宣言</button>
+<button class="nav-btn" onclick="showS('wall')">🏅 成就墙</button>
+<button class="nav-btn" onclick="showS('arena')">⚔️ 大乱斗</button>
+<button class="nav-btn" onclick="showS('cert')">🎓 毕业证书</button>
+</div>
+
+<!-- ===== 毕业宣言 ===== -->
+<div class="section active" id="sec-goal"><div class="glass">
+<h2>🎯 毕业宣言 · 你是拼读高手</h2>
+<div class="story-speech"><p>🎉 恭喜你！从 <b style="color:#ffd200">01 字母音</b> 一路学到 <b style="color:#ff8a65">82 编码总复盘</b>，你走完了<b style="color:#ffd200">整整 14 个阶段</b>。</p></div>
+<div class="story-speech"><p>你学会了：<b style="color:#ffd200">见词能读</b>（看词拆音读出来）和 <b style="color:#ff8a65">听音能写</b>（听词选写法写出来）。这两样本领，让你能<b style="color:#ffd200">读任何词、写任何词</b>！</p></div>
+<div class="magic-rule">⚔️ 现在，来一场<b>毕业大乱斗</b>——全规则随机抽题，无提示！<br>连续答对能攒 <span class="gold">连击（combo）</span>，攒得越多分越高！</div>
+<div class="story-speech"><p>🎯 先看看「🏅 成就墙」回顾你走过的路，然后去「⚔️ 大乱斗」证明自己，最后领「🎓 毕业证书」！</p></div>
+</div></div>
+
+<!-- ===== 成就墙 ===== -->
+<div class="section" id="sec-wall"><div class="glass">
+<h2>🏅 成就墙 · 你走过的路</h2>
+<p style="color:#aaa;font-size:.9em;margin-bottom:12px;text-align:center">14 阶段 + 综合，全部 ✅ 完成！</p>
+<div class="achievement-grid">
+<div class="ach-badge"><div class="an">✅ 一 · 基础</div><div class="ad">01-14 字母音·连缀</div></div>
+<div class="ach-badge"><div class="an">✅ 二 · 桥接</div><div class="ad">15-16 短音·音节</div></div>
+<div class="ach-badge"><div class="an">✅ 三 · 魔法E</div><div class="ad">17-22 a_e 等</div></div>
+<div class="ach-badge"><div class="an">✅ 四 · 二合音</div><div class="ad">23-28 ai ee 等</div></div>
+<div class="ach-badge"><div class="an">✅ 五 · 稀有</div><div class="ad">29-32 收藏夹</div></div>
+<div class="ach-badge"><div class="an">✅ 六 · 剩余元音</div><div class="ad">33-35 ou oi aw</div></div>
+<div class="ach-badge"><div class="an">✅ 七 · R控制</div><div class="ad">36-42 ar or 等</div></div>
+<div class="ach-badge"><div class="an">✅ 八 · schwa</div><div class="ad">43-44 弱读·例外</div></div>
+<div class="ach-badge"><div class="an">✅ 九 · 辅音补丁</div><div class="ad">45-51 软C软G 等</div></div>
+<div class="ach-badge"><div class="an">✅ 十 · 词尾</div><div class="ad">52-59 -s -ing 等</div></div>
+<div class="ach-badge"><div class="an">✅ 十一 · 构词</div><div class="ad">60-61 前后缀</div></div>
+<div class="ach-badge"><div class="an">✅ 十二 · 高频词</div><div class="ad">62-64 220词</div></div>
+<div class="ach-badge"><div class="an">✅ 十三 · 解码</div><div class="ad">65-75 见词能读</div></div>
+<div class="ach-badge"><div class="an">✅ 十四 · 编码</div><div class="ad">76-82 听音能写</div></div>
+<div class="ach-badge final"><div class="an">🎓 十五 · 综合</div><div class="ad">83 毕业大乱斗</div></div>
+</div>
+</div></div>
+
+<!-- ===== 大乱斗 ===== -->
+<div class="section" id="sec-arena"><div class="glass">
+<div class="magic-rule">⚔️ <b>毕业大乱斗</b> —— 全规则随机抽题，<b>无提示</b>！连击加分！</div>
+<div class="arena-head">
+<div class="arena-stat"><div class="sl">得分</div><div class="sv" id="sc">0</div></div>
+<div class="arena-stat"><div class="sl">连击</div><div class="sv" id="combo">0</div></div>
+<div class="arena-stat"><div class="sl">最高连击</div><div class="sv" id="maxcombo">0</div></div>
+</div>
+<div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div>
+</div></div>
+
+<!-- ===== 毕业证书 ===== -->
+<div class="section" id="sec-cert"><div class="glass">
+<h2>🎓 毕业证书</h2>
+<div class="cert">
+<div class="cert-ribbon">CERTIFICATE · 毕业证书</div>
+<div class="cert-title">🎓 毕业证书</div>
+<div class="cert-body">
+兹证明<br>
+<input class="cert-name" placeholder="写下你的名字" id="certName"><br>
+已完成 <b style="color:#ffd200">自然拼读全体系 · 83 页</b> 的挑战<br>
+掌握 <b style="color:#69f0ae">🔍 见词能读</b> 与 <b style="color:#ff8a65">✍️ 听音能写</b> 两大本领
+</div>
+<div class="cert-seal">🌟</div>
+<div class="cert-foot"><span>📅 日期：____年__月__日</span><span>🏆 拼读高手</span></div>
+</div>
+<p class="print-note">🖨️ 填上名字，截图 / 打印保存（打印自动变白底）</p>
+</div></div>
+
+
+
+<script>
+// === Stars ===
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;c.appendChild(s)}})();
+
+// === Audio ===
+var AUDIO_BASE='audio/';
+var WORDS={
+'cat':'words/cat.mp3','ship':'words/ship.mp3','cake':'words/cake.mp3','car':'words/car.mp3','boy':'words/boy.mp3','city':'words/city.mp3','giraffe':'words/giraffe.mp3','knife':'words/knife.mp3',
+'banana':'words/banana.mp3','tomato':'words/tomato.mp3','read':'words/read.mp3','moon':'words/moon.mp3','duck':'words/duck.mp3','hill':'words/hill.mp3','running':'words/running.mp3','making':'words/making.mp3','rain':'words/rain.mp3','garden':'words/garden.mp3',
+'every':'words/every.mp3','butterfly':'words/butterfly.mp3','together':'words/together.mp3','magic':'words/magic.mp3','adventure':'words/adventure.mp3','cloud':'words/cloud.mp3','mushroom':'words/mushroom.mp3','cookie':'words/cookie.mp3','snowman':'words/snowman.mp3','cowboy':'words/cowboy.mp3','boy':'words/boy.mp3','back':'words/back.mp3','kiss':'words/kiss.mp3','window':'words/window.mp3','buses':'words/buses.mp3','music':'words/music.mp3','knife':'words/knife.mp3','complete':'words/complete.mp3','never':'words/never.mp3','little':'words/little.mp3','rabbit':'words/rabbit.mp3','sunset':'words/sunset.mp3'
+};
+var audioCache={};
+function getAudio(path){var pl=audioCache[path];if(!pl){pl=new Audio(AUDIO_BASE+path);pl.preload='auto';audioCache[path]=pl;}return pl;}
+function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=getAudio(path);if(!player){speakNow(path.replace('words/','').replace('.mp3',''));return}player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',function(){el.classList.remove('on');speakNow(path.replace('words/','').replace('.mp3',''))},{once:true});player.play().catch(function(e){el.classList.remove('on')});}
+function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=getAudio(p);if(!player){var fresh=new Audio(AUDIO_BASE+p+'?v=1');fresh.play().catch(function(){speakNow(w)});fresh.addEventListener('error',function(){speakNow(w)},{once:true});audioCache[p]=fresh;return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
+
+// === Navigation ===
+var NM={goal:'毕业宣言',wall:'成就墙',arena:'大乱斗',cert:'毕业证书',};
+function showS(n){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(NM[n]))b.classList.add('active')});
+  if(n==='arena')initQ();
+  if(n==='book'){bp_cp=0;renderP()}
+}
+
+// === 大乱斗 Quiz（全规则 + combo + 得分）===
+function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
+function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
+
+var quizPool=[
+{t:'read',q:'🔤 单 · cat 的 c 读什么？',w:'cat',o:['/k/','/s/'],a:0,x:'c 在 a 前 → /k/！'},
+{t:'read',q:'🔤 单 · ship 的 sh 读什么？',w:'ship',o:['/s/','/ʃ/'],a:1,x:'二合音 sh → /ʃ/！'},
+{t:'read',q:'🔤 单 · cake 的 a 读什么？',w:'cake',o:['/æ/ 短音','/eɪ/ 长音'],a:1,x:'魔法 E → /eɪ/！'},
+{t:'read',q:'🔤 单 · car 的 ar 读什么？',w:'car',o:['/ɑː/','/ɔː/'],a:0,x:'R 控 ar → /ɑː/！'},
+{t:'read',q:'🔤 单 · boy 的 oy 读什么？',w:'boy',o:['/ɔɪ/','/aʊ/'],a:0,x:'双元音 oy → /ɔɪ/！'},
+{t:'read',q:'🔤 单 · knife 的 k 读什么？',w:'knife',o:['/k/','不发音'],a:1,x:'静音 k，不发音！'},
+{t:'read',q:'🔤 单 · moon 的 oo 读什么？',w:'moon',o:['/uː/','/ʊ/'],a:0,x:'oo → /uː/！'},
+{t:'read',q:'🔤 单 · cloud 的 ou 读什么？',w:'cloud',o:['/aʊ/','/əʊ/'],a:0,x:'ou → /aʊ/！'},
+{t:'read',q:'📚 多 · banana 有几个音节？',w:'banana',o:['2','3','4'],a:1,x:'ba-na-na，3 个音节！'},
+{t:'read',q:'📚 多 · tomato 重音在第几个音节？',w:'tomato',o:['第1','第2','第3'],a:1,x:'to-MA-to，重音在中间！'},
+{t:'read',q:'📚 多 · city 的 c 读什么？',w:'city',o:['/k/','/s/'],a:1,x:'软 C（i 前）→ /s/！'},
+{t:'read',q:'📚 多 · giraffe 的 g 读什么？',w:'giraffe',o:['/g/','/dʒ/'],a:1,x:'软 G → /dʒ/！'},
+{t:'read',q:'📚 多 · mushroom 的 oo 读什么？',w:'mushroom',o:['/uː/','/ʊ/'],a:0,x:'oo → /uː/！'},
+{t:'read',q:'📚 多 · cookie 的 oo 读什么？',w:'cookie',o:['/uː/','/ʊ/'],a:1,x:'oo → /ʊ/！'},
+{t:'read',q:'📚 多 · snowman 的 ow 读什么？',w:'snowman',o:['/əʊ/','/aʊ/'],a:0,x:'ow → /əʊ/！'},
+{t:'read',q:'📚 多 · cowboy 的 ow 读什么？',w:'cowboy',o:['/əʊ/','/aʊ/'],a:1,x:'ow → /aʊ/！'},
+{t:'write',q:'🔤 单 · 听词，正确拼写是？',w:'cake',o:['cak','cake'],a:1,x:'长音 /eɪ/ → 魔法 E！'},
+{t:'write',q:'🔤 单 · 听词，词尾 /k/ 写法是？',w:'duck',o:['c','k','ck'],a:2,x:'短元音后 /k/ → ck！'},
+{t:'write',q:'🔤 单 · 听词，正确拼写是？',w:'hill',o:['hil','hill'],a:1,x:'FLOSS 双写 ll！'},
+{t:'write',q:'🔤 单 · 听词，/ʃ/ 写法是？',w:'ship',o:['s','sh','ch'],a:1,x:'/ʃ/ → sh！'},
+{t:'write',q:'🔤 单 · 听词，正确拼写是？',w:'kiss',o:['kis','kiss'],a:1,x:'FLOSS 双写 ss！'},
+{t:'write',q:'🔤 单 · 听词，词尾 /k/ 写法是？',w:'back',o:['bac','back'],a:1,x:'短元音后 /k/ → ck！'},
+{t:'write',q:'🔤 单 · 听词，元音写法是？',w:'rain',o:['ai','ay','a_e'],a:0,x:'/eɪ/ 在词中 → ai！'},
+{t:'write',q:'🔤 单 · 听词，正确拼写是？',w:'boy',o:['boi','boy'],a:1,x:'/ɔɪ/ 在词尾 → oy！'},
+{t:'write',q:'📚 多 · 听词，正确拼写是？',w:'rabbit',o:['rabit','rabbit'],a:1,x:'短元音 + 单辅音 b → 双写 bb！'},
+{t:'write',q:'📚 多 · 听词，正确拼写是？',w:'garden',o:['garden','gorden'],a:0,x:'R 控 ar → garden！'},
+{t:'write',q:'📚 多 · 听词，-ing 拼写是？',w:'running',o:['runing','running'],a:1,x:'双写 n！'},
+{t:'write',q:'📚 多 · 听词，-ing 拼写是？',w:'making',o:['makeing','making'],a:1,x:'去 e 加 ing！'},
+{t:'write',q:'📚 多 · 听词，复数拼写是？',w:'buses',o:['buss','buses'],a:1,x:'bus 以 s 结尾 → 加 -es！'},
+{t:'write',q:'📚 多 · 听词，正确拼写是？',w:'music',o:['musik','music'],a:1,x:'词尾 /k/ → c！'},
+{t:'write',q:'📚 多 · 听词，正确拼写是？',w:'window',o:['winda','window'],a:1,x:'/əʊ/ → ow！'},
+{t:'write',q:'📚 多 · 听词，正确拼写是？',w:'sunset',o:['sunset','sunsat'],a:0,x:'复合词 sun+set → sunset！'}
+];
+var qS={qs:[],cur:0,as:[],combo:0,maxcombo:0,score:0};
+function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1),combo:0,maxcombo:0,score:0};document.getElementById('qf').style.display='none';document.getElementById('sc').textContent='0';document.getElementById('combo').textContent='0';document.getElementById('maxcombo').textContent='0';renderQD();renderQC()}
+function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
+function renderQC(){var q=qS.qs[qS.cur],answered=qS.as[qS.cur]>=0,chosen=qS.as[qS.cur],h='<div class="quiz-card"><div class="quiz-q-num">第'+(qS.cur+1)+'/10题 · '+(q.t==='read'?'🔍 见词能读':'✍️ 听音能写')+'</div><div class="quiz-q">'+q.q+'</div>';var show=q.t==='read';h+='<div class="quiz-word">'+(show?q.w+' ':'')+'<span class="speak-btn" onclick="spk(\''+q.w+'\');event.stopPropagation()">🔊</span></div>';h+='<div class="quiz-opts">'+q.o.map(function(o,i){var cls='quiz-opt'+(answered?' locked':'');if(answered){if(i===q.a)cls+=' correct';else if(chosen===i)cls+=' wrong'}return'<button class="'+cls+'" onclick="ansQ('+i+')">'+o+'</button>'}).join('')+'</div>';var isOk=answered&&chosen===q.a;h+='<div class="quiz-explain">'+(answered?(isOk?'<span style="color:#69f0ae">✅ 正确！</span> ':'<span style="color:#ff5252">❌ 不对~</span> ')+q.x:'')+'</div></div>';document.getElementById('qc').innerHTML=h;var n='';n+='<button class="btn btn-outline" onclick="goQ(-1)"'+(qS.cur===0?' disabled':'')+'>⬅ 上一题</button>';n+='<span class="qi">'+(qS.cur+1)+' / 10</span>';n+='<button class="btn btn-outline" onclick="goQ(1)"'+(qS.cur>=9?' disabled':'')+'>下一题 ▶</button>';var allDone=qS.as.every(function(x){return x>=0});if(allDone)n+='<button class="btn btn-gold" onclick="showQR()">🎓 看成绩</button>';document.getElementById('qn').innerHTML=n}
+function ansQ(i){if(qS.as[qS.cur]>=0)return;qS.as[qS.cur]=i;var ok=qS.qs[qS.cur].a===i;if(ok){sfxOK();qS.combo++;if(qS.combo>qS.maxcombo)qS.maxcombo=qS.combo;var bonus=qS.combo>=3?5:0;qS.score+=10+bonus;}else{sfxNO();qS.combo=0;}document.getElementById('sc').textContent=qS.score;document.getElementById('combo').textContent=qS.combo;document.getElementById('maxcombo').textContent=qS.maxcombo;renderQD();renderQC()}
+function goQ(d){var n=qS.cur+d;if(n<0||n>=10)return;qS.cur=n;renderQD();renderQC()}
+function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:0)},0);document.getElementById('qc').innerHTML='';document.getElementById('qn').innerHTML='';var f=document.getElementById('qf');f.style.display='block';var rank;if(qS.score>=120)rank='🏆 S 级 · 拼读大师！';else if(qS.score>=90)rank='🌟 A 级 · 非常厉害！';else if(qS.score>=60)rank='💪 B 级 · 很不错！';else rank='🌱 C 级 · 再闯一次！';f.innerHTML='<div class="quiz-final perfect"><div style="font-size:3em">🎓</div><div style="font-size:1.5em;color:#ffd200;margin:8px 0">'+qS.score+' 分</div><div style="font-size:1.1em;color:#e0e0e0">答对 '+s+'/10 · 最高连击 '+qS.maxcombo+'</div><p style="margin-top:6px">'+rank+'</p><div style="margin-top:10px"><button class="btn btn-gold" onclick="initQ()">🔄 再战一次</button></div></div>'}
+
+// === Init ===
+initQ();
+</script>
+</body></html>
