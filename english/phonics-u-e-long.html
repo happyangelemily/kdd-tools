@@ -568,14 +568,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🪈😊',t:'A Flute',x:'<span class="dg-hl">Luke</span> has a <span class="dg-hl">flute</span>.<br>It is a <span class="dg-hl">June</span> gift.'},
-  {s:'🪈😖',t:'So Rude',x:'A <span class="dg-hl">brute</span> takes the <span class="dg-hl">flute</span>.<br>How <span class="dg-hl">rude</span>!'},
-  {s:'🪈😔',t:'Sad',x:'<span class="dg-hl">Luke</span> is so sad.<br>He wants his <span class="dg-hl">flute</span> back.'},
-  {s:'🪈💪',t:'Not a Brute',x:'<span class="dg-hl">Luke</span> is not a <span class="dg-hl">brute</span>.<br>He asks for his <span class="dg-hl">flute</span>.'},
-  {s:'🪈😊',t:'A Rule',x:'The <span class="dg-hl">brute</span> is sorry.<br>“Here is your <span class="dg-hl">flute</span>.” What a good <span class="dg-hl">rule</span>!'},
-  {s:'🪈😊',t:'Glad',x:'<span class="dg-hl">Luke</span> is glad.<br>He has his <span class="dg-hl">flute</span> back.'},
+  {s:'🪈😊',t:'A Flute',x:'<span class="dg-hl">Luke</span> has a <span class="dg-hl">flute</span>.<br>It is a gift from <span class="dg-hl">June</span>.<br>He plays it all day long.'},
+  {s:'🪈😤',t:'A Rude Brute',x:'A big <span class="dg-hl">brute</span> grabs the <span class="dg-hl">flute</span>.<br>“Mine now!” he growls.<br>How <span class="dg-hl">rude</span>!'},
+  {s:'🪈😔',t:'So Sad',x:'<span class="dg-hl">Luke</span> is so sad.<br>He wants his <span class="dg-hl">flute</span> back.<br>Tears fill his eyes.'},
+  {s:'🪈💪',t:'Be Kind',x:'<span class="dg-hl">Luke</span> is not a <span class="dg-hl">brute</span>.<br>He walks up and speaks softly.<br>“May I have my <span class="dg-hl">flute</span>, please?”'},
+  {s:'🪈🤝',t:'A Rule',x:'The <span class="dg-hl">brute</span> feels sorry.<br>“Here is your <span class="dg-hl">flute</span>,” he says.<br>“Taking things is against the <span class="dg-hl">rule</span>.”'},
+  {s:'🪈😊',t:'Glad',x:'<span class="dg-hl">Luke</span> is glad.<br>He has his <span class="dg-hl">flute</span> back.<br>He plays a sweet song for <span class="dg-hl">June</span>.'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">Luke <span class="speak-btn" onclick="spk(&#39;luke&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /uː/</div><div class="gz">卢克 👦</div></div><div class="gi"><div class="gw">flute <span class="speak-btn" onclick="spk(&#39;flute&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /uː/</div><div class="gz">长笛 🪈</div></div><div class="gi"><div class="gw">June <span class="speak-btn" onclick="spk(&#39;june&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /uː/</div><div class="gz">六月 🗓</div></div><div class="gi"><div class="gw">brute <span class="speak-btn" onclick="spk(&#39;brute&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /uː/</div><div class="gz">野兽 💪</div></div><div class="gi"><div class="gw">rude <span class="speak-btn" onclick="spk(&#39;rude&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /uː/</div><div class="gz">粗鲁 😤</div></div><div class="gi"><div class="gw">rule <span class="speak-btn" onclick="spk(&#39;rule&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /uː/</div><div class="gz">规则 📏</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
