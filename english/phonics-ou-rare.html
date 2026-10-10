@@ -378,14 +378,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🍩😊',t:'Dough',x:'A baker makes <span class="dg-hl">dough</span>.<br>It is <span class="dg-hl">gold</span> <span class="dg-hl">dough</span>!'},
-  {s:'❄️😔',t:'Cold',x:'The day is <span class="dg-hl">cold</span>.<br>The <span class="dg-hl">dough</span> will not rise.'},
-  {s:'💡😊',t:'Told',x:'The baker <span class="dg-hl">told</span> the <span class="dg-hl">dough</span>, “You can do it!”'},
-  {s:'🥖😊',t:'Gold Bread',x:'The <span class="dg-hl">dough</span> bakes into <span class="dg-hl">gold</span> bread.<br><span class="dg-hl">Though</span> it is <span class="dg-hl">cold</span> out, it is so good.'},
-  {s:'💰😊',t:'Sold',x:'The baker <span class="dg-hl">sold</span> the bread.<br><span class="dg-hl">Though</span> it was <span class="dg-hl">cold</span>, they came.'},
-  {s:'😊🥖',t:'Glad',x:'The baker is glad.<br>What good <span class="dg-hl">gold</span> bread!'},
+  {s:'🍩😊',t:'Dough',x:'A baker makes soft <span class="dg-hl">dough</span>.<br>It is warm, <span class="dg-hl">gold</span> <span class="dg-hl">dough</span>.<br>He pats it and smiles.'},
+  {s:'❄️😔',t:'Cold',x:'But the day is <span class="dg-hl">cold</span>.<br>The <span class="dg-hl">dough</span> will not rise.<br>The baker sighs and waits.'},
+  {s:'💡😊',t:'Told',x:'The baker <span class="dg-hl">told</span> the <span class="dg-hl">dough</span>, “You can do it!”<br>He wraps it in a warm cloth.<br>Then he waits and waits.'},
+  {s:'🥖😊',t:'Gold Bread',x:'At last, the <span class="dg-hl">dough</span> rises high!<br>It bakes into <span class="dg-hl">gold</span> bread.<br><span class="dg-hl">Though</span> it is <span class="dg-hl">cold</span> out, it is so good.'},
+  {s:'💰😊',t:'Sold',x:'The baker <span class="dg-hl">sold</span> the <span class="dg-hl">gold</span> bread.<br>People came from all around.<br><span class="dg-hl">Though</span> it was <span class="dg-hl">cold</span>, they came.'},
+  {s:'😊🥖',t:'Glad',x:'The baker is glad.<br>The <span class="dg-hl">gold</span> bread is all gone.<br>What a good, warm day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">dough <span class="speak-btn" onclick="spk(&#39;dough&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ough /əʊ/</div><div class="gz">面团 🍩</div></div><div class="gi"><div class="gw">gold <span class="speak-btn" onclick="spk(&#39;gold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">old /əʊ/</div><div class="gz">金子 🥇</div></div><div class="gi"><div class="gw">cold <span class="speak-btn" onclick="spk(&#39;cold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">old /əʊ/</div><div class="gz">冷 ❄️</div></div><div class="gi"><div class="gw">told <span class="speak-btn" onclick="spk(&#39;told&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">old /əʊ/</div><div class="gz">告诉 💬</div></div><div class="gi"><div class="gw">sold <span class="speak-btn" onclick="spk(&#39;sold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">old /əʊ/</div><div class="gz">卖出 💰</div></div><div class="gi"><div class="gw">though <span class="speak-btn" onclick="spk(&#39;though&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ough /əʊ/</div><div class="gz">虽然 🤔</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

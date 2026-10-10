@@ -565,14 +565,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🐱😔',t:'A Kitten',x:'A kitten is stuck.<br>It needs a rescue.'},
-  {s:'👧💪',t:'A Big Tube',x:'A kid <span class="dg-hl">uses</span> a <span class="dg-hl">huge</span> <span class="dg-hl">tube</span> to help.'},
-  {s:'🐱😊',t:'Rescue',x:'The kid rescues the kitten.<br>It is <span class="dg-hl">cute</span>!'},
-  {s:'🎵😊',t:'A Tune',x:'The kid hums a <span class="dg-hl">tune</span>.<br>The kitten is glad.'},
-  {s:'😊🐱',t:'A Few Pals',x:'A <span class="dg-hl">few</span> pals come.<br>They see the <span class="dg-hl">cute</span> kitten.'},
-  {s:'😊🐱',t:'Glad',x:'The kitten is safe.<br>What a good rescue!'},
+  {s:'🐱😔',t:'A Kitten',x:'A <span class="dg-hl">cute</span> kitten is stuck high up.<br>It needs a <span class="dg-hl">rescue</span>.<br>“Help me!” it mews.'},
+  {s:'👧💪',t:'A Big Tube',x:'A kid sees the kitten.<br>She <span class="dg-hl">uses</span> a <span class="dg-hl">huge</span> <span class="dg-hl">tube</span>.<br>She slides it up to the kitten.'},
+  {s:'🐱😊',t:'Rescue',x:'The kid <span class="dg-hl">rescues</span> the <span class="dg-hl">cute</span> kitten.<br>Down, down, down it slides.<br>It lands safe and soft.'},
+  {s:'🎵😊',t:'A Tune',x:'The kid hums a soft <span class="dg-hl">tune</span>.<br>The <span class="dg-hl">cute</span> kitten calms down.<br>It purrs and rubs her leg.'},
+  {s:'😊🐱',t:'A Few Pals',x:'A <span class="dg-hl">few</span> pals come to see.<br>“What a <span class="dg-hl">cute</span> kitten!” they cheer.<br>They all want to pet it.'},
+  {s:'😊🐱',t:'Glad',x:'The kitten is safe at last.<br>It was a brave <span class="dg-hl">rescue</span>.<br>What a good <span class="dg-hl">tune</span> to end the day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">use <span class="speak-btn" onclick="spk(&#39;use&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">使用 📤</div></div><div class="gi"><div class="gw">huge <span class="speak-btn" onclick="spk(&#39;huge&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">巨大 🐘</div></div><div class="gi"><div class="gw">tube <span class="speak-btn" onclick="spk(&#39;tube&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">管子 🔬</div></div><div class="gi"><div class="gw">cute <span class="speak-btn" onclick="spk(&#39;cute&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">可爱 🥰</div></div><div class="gi"><div class="gw">tune <span class="speak-btn" onclick="spk(&#39;tune&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">u_e /juː/</div><div class="gz">旋律 🎵</div></div><div class="gi"><div class="gw">rescue <span class="speak-btn" onclick="spk(&#39;rescue&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ue /juː/</div><div class="gz">救援 🛟</div></div><div class="gi"><div class="gw">few <span class="speak-btn" onclick="spk(&#39;few&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ew /juː/</div><div class="gz">几个 🔢</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

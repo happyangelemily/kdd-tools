@@ -567,14 +567,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🎈😊',t:'A Balloon',x:'A <span class="dg-hl">blue</span> <span class="dg-hl">balloon</span> is in the sky.'},
-  {s:'🌙😊',t:'The Moon',x:'It floats up to the <span class="dg-hl">moon</span>.<br><span class="dg-hl">Soon</span> it is gone.'},
-  {s:'😔🎈',t:'Lost',x:'The <span class="dg-hl">balloon</span> is lost.<br>A kid is sad.'},
-  {s:'🍜😊',t:'Noodles',x:'The kid eats <span class="dg-hl">noodles</span> to feel good.'},
-  {s:'🦢😊',t:'A Goose',x:'A <span class="dg-hl">goose</span> brings the <span class="dg-hl">balloon</span> back!<br>It is <span class="dg-hl">true</span>.'},
-  {s:'😊🎈',t:'Glad',x:'The kid is so glad.<br>What a <span class="dg-hl">cool</span> <span class="dg-hl">blue</span> <span class="dg-hl">balloon</span>!'},
+  {s:'🎈😊',t:'A Balloon',x:'A <span class="dg-hl">blue</span> <span class="dg-hl">balloon</span> is in the sky.<br>It floats up, up, up.<br>A kid watches it go.'},
+  {s:'🌙😊',t:'The Moon',x:'The <span class="dg-hl">balloon</span> floats to the <span class="dg-hl">moon</span>.<br><span class="dg-hl">Soon</span> it is just a dot.<br>Then it is gone.'},
+  {s:'😔🎈',t:'Lost',x:'The <span class="dg-hl">balloon</span> is lost.<br>The kid is so sad.<br>“I want my <span class="dg-hl">blue</span> <span class="dg-hl">balloon</span> back!”'},
+  {s:'🍜😔',t:'Noodles',x:'The kid eats warm <span class="dg-hl">noodles</span> to feel better.<br>But still, his heart is sad.<br>No <span class="dg-hl">balloon</span> to play with.'},
+  {s:'🦢😊',t:'A Goose',x:'A kind <span class="dg-hl">goose</span> flies down.<br>It brings the <span class="dg-hl">blue</span> <span class="dg-hl">balloon</span> back!<br>It is <span class="dg-hl">true</span>!'},
+  {s:'😊🎈',t:'Glad',x:'The kid hugs the <span class="dg-hl">goose</span>.<br>“You are so <span class="dg-hl">cool</span>!” he laughs.<br>What a <span class="dg-hl">true</span>, kind friend!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">blue <span class="speak-btn" onclick="spk(&#39;blue&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ue /uː/</div><div class="gz">蓝色 🔵</div></div><div class="gi"><div class="gw">balloon <span class="speak-btn" onclick="spk(&#39;balloon&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo /uː/</div><div class="gz">气球 🎈</div></div><div class="gi"><div class="gw">moon <span class="speak-btn" onclick="spk(&#39;moon&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo /uː/</div><div class="gz">月亮 🌙</div></div><div class="gi"><div class="gw">soon <span class="speak-btn" onclick="spk(&#39;soon&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo /uː/</div><div class="gz">很快 ⏰</div></div><div class="gi"><div class="gw">noodle <span class="speak-btn" onclick="spk(&#39;noodle&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo /uː/</div><div class="gz">面条 🍜</div></div><div class="gi"><div class="gw">goose <span class="speak-btn" onclick="spk(&#39;goose&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo /uː/</div><div class="gz">鹅 🦢</div></div><div class="gi"><div class="gw">true <span class="speak-btn" onclick="spk(&#39;true&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ue /uː/</div><div class="gz">真的 ✅</div></div><div class="gi"><div class="gw">cool <span class="speak-btn" onclick="spk(&#39;cool&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oo /uː/</div><div class="gz">酷 😎</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

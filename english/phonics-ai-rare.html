@@ -377,14 +377,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'👶😊',t:'A Kind Child',x:'A <span class="dg-hl">kind</span> <span class="dg-hl">child</span> <span class="dg-hl">finds</span> a lost dog.'},
-  {s:'🐕😊',t:'Wild',x:'The dog is <span class="dg-hl">wild</span>.<br>It runs and runs.'},
-  {s:'👶💡',t:'Mind',x:'The <span class="dg-hl">child</span> does not <span class="dg-hl">mind</span>.<br>“I will help you.”'},
-  {s:'👶🛒',t:'Buy',x:'The <span class="dg-hl">child</span> <span class="dg-hl">buys</span> the dog a treat.'},
-  {s:'😊🐕',t:'A Guy',x:'A <span class="dg-hl">guy</span> comes by.<br>“What a <span class="dg-hl">kind</span> <span class="dg-hl">child</span>!” he says.'},
-  {s:'👋😊',t:'Bye',x:'The dog is home.<br>“Bye, <span class="dg-hl">kind</span> <span class="dg-hl">child</span>!”'},
+  {s:'👶😊',t:'A Kind Child',x:'A <span class="dg-hl">kind</span> <span class="dg-hl">child</span> <span class="dg-hl">finds</span> a lost dog.<br>The dog is scared and cold.<br>“I will help you,” the <span class="dg-hl">child</span> says.'},
+  {s:'🐕😊',t:'Wild',x:'The dog is <span class="dg-hl">wild</span> and shy.<br>It runs and runs away.<br>But the <span class="dg-hl">child</span> does not give up.'},
+  {s:'👶💡',t:'Mind',x:'The <span class="dg-hl">child</span> does not <span class="dg-hl">mind</span>.<br>“I will <span class="dg-hl">find</span> a way,” she says.<br>She walks slowly and softly.'},
+  {s:'👶🛒',t:'Buy',x:'The <span class="dg-hl">child</span> <span class="dg-hl">buys</span> the dog a treat.<br>The dog comes closer and closer.<br>It takes the treat from her hand.'},
+  {s:'😊🐕',t:'A Guy',x:'A <span class="dg-hl">guy</span> comes by.<br>“What a <span class="dg-hl">kind</span> <span class="dg-hl">child</span>!” he says.<br>“This dog has a new friend.”'},
+  {s:'👋😊',t:'Bye',x:'The dog is home and warm.<br>“<span class="dg-hl">Bye</span>, <span class="dg-hl">kind</span> <span class="dg-hl">child</span>!” it seems to say.<br>What a happy day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">kind <span class="speak-btn" onclick="spk(&#39;kind&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i /aɪ/</div><div class="gz">善良 ❤️</div></div><div class="gi"><div class="gw">child <span class="speak-btn" onclick="spk(&#39;child&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i /aɪ/</div><div class="gz">孩子 👶</div></div><div class="gi"><div class="gw">find <span class="speak-btn" onclick="spk(&#39;find&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i /aɪ/</div><div class="gz">找到 🔍</div></div><div class="gi"><div class="gw">wild <span class="speak-btn" onclick="spk(&#39;wild&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i /aɪ/</div><div class="gz">野生的 🦁</div></div><div class="gi"><div class="gw">mind <span class="speak-btn" onclick="spk(&#39;mind&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i /aɪ/</div><div class="gz">介意 🧠</div></div><div class="gi"><div class="gw">buy <span class="speak-btn" onclick="spk(&#39;buy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">uy /aɪ/</div><div class="gz">买 🛒</div></div><div class="gi"><div class="gw">guy <span class="speak-btn" onclick="spk(&#39;guy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">uy /aɪ/</div><div class="gz">家伙 👦</div></div><div class="gi"><div class="gw">bye <span class="speak-btn" onclick="spk(&#39;bye&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ye /aɪ/</div><div class="gz">再见 👋</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
