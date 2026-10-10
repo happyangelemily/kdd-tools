@@ -456,14 +456,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🐸😊',t:'Hopping',x:'A frog is <span class="dg-hl">hopping</span>.<br>Hop, hop, hop!'},
-  {s:'🐸🏃',t:'Running',x:'The frog is <span class="dg-hl">running</span>.<br>It is <span class="dg-hl">running</span> fast!'},
-  {s:'🐸🏊',t:'Swimming',x:'The frog is <span class="dg-hl">swimming</span>.<br>Swim, swim, swim!'},
-  {s:'🐸🪑',t:'Sitting',x:'The frog is <span class="dg-hl">sitting</span>.<br>It needs a rest.'},
-  {s:'🐸🛑',t:'Stopping',x:'The frog is <span class="dg-hl">stopping</span>.<br>It sees a big bug!'},
-  {s:'😊🐸',t:'Glad',x:'The frog is glad.<br>What a good day of <span class="dg-hl">hopping</span> and <span class="dg-hl">swimming</span>!'},
+  {s:'🐸😊',t:'Hopping',x:'A frog is <span class="dg-hl">hopping</span> by the pond.<br>Hop, hop, hop it goes!<br>The sun is warm and bright.'},
+  {s:'🐸🏃',t:'Running',x:'Then the frog starts <span class="dg-hl">running</span>.<br>It is <span class="dg-hl">running</span> very fast!<br>Its legs go up and down.'},
+  {s:'🐸🏊',t:'Swimming',x:'The frog jumps into the pond.<br>Now it is <span class="dg-hl">swimming</span>.<br>Swim, swim, swim!'},
+  {s:'🐸🪑',t:'Sitting',x:'After a long swim, the frog is <span class="dg-hl">sitting</span> on a rock.<br>It needs a little rest.<br>It closes its eyes.'},
+  {s:'🐸🛑',t:'Stopping',x:'Suddenly, the frog is <span class="dg-hl">stopping</span>.<br>It sees a big, fat bug!<br>It is <span class="dg-hl">stopping</span> to take aim.'},
+  {s:'🐸🎯',t:'Hopping Again',x:'The frog is <span class="dg-hl">hopping</span> toward the bug.<br>Hop, hop, hop!<br>It leaps high into the air.'},
+  {s:'🐸🏊',t:'Run and Swim',x:'The bug flies away fast!<br>The frog is <span class="dg-hl">running</span> after it.<br>Then it is <span class="dg-hl">swimming</span> across the pond.'},
+  {s:'😊🐸',t:'Glad',x:'The frog is glad.<br>It had a day of <span class="dg-hl">hopping</span>, <span class="dg-hl">running</span>, and <span class="dg-hl">swimming</span>.<br>Now it is <span class="dg-hl">sitting</span> by the pond, happy and full.'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">hopping <span class="speak-btn" onclick="spk(&#39;hopping&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">hop→hopping</div><div class="gz">跳 🦘</div></div><div class="gi"><div class="gw">running <span class="speak-btn" onclick="spk(&#39;running&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">run→running</div><div class="gz">跑 🏃</div></div><div class="gi"><div class="gw">swimming <span class="speak-btn" onclick="spk(&#39;swimming&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">swim→swimming</div><div class="gz">游泳 🏊</div></div><div class="gi"><div class="gw">sitting <span class="speak-btn" onclick="spk(&#39;sitting&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sit→sitting</div><div class="gz">坐 🪑</div></div><div class="gi"><div class="gw">stopping <span class="speak-btn" onclick="spk(&#39;stopping&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">stop→stopping</div><div class="gz">停 🛑</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
