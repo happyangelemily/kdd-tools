@@ -418,14 +418,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // === Book ===
 var bp_cp=0,bp_pages=[
-  {s:'🔍🤔',t:'The Checker',x:'A <span class="dg-hl">little</span> checker reads every word.<br>He points and reads it back, out loud.'},
-  {s:'❌😊',t:'Cak!',x:'He sees "cak". He reads: "cak" — short a.<br>But he heard "cake"! Wrong! Add the magic e.'},
-  {s:'❌😊',t:'Rid!',x:'He sees "rid". Reads: "rid" — short i.<br>But he heard "ride"! Wrong! Add the magic e.'},
-  {s:'❌😊',t:'Sip!',x:'He sees "sip". Reads: "sip".<br>But he heard "ship"! Wrong! Add the h.'},
-  {s:'✅😊',t:'Duck!',x:'He sees "duck". Reads: "duck".<br>Yes! It matches!'},
-  {s:'🎉😊',t:'All Right',x:'The checker is so <span class="dg-hl">happy</span>.<br>Every word is right now!'},
-  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">cake <span class="speak-btn" onclick="spk(&#39;cake&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">蛋糕 🍰</div></div><div class="gi"><div class="gw">ride <span class="speak-btn" onclick="spk(&#39;ride&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">骑 🚲</div></div><div class="gi"><div class="gw">ship <span class="speak-btn" onclick="spk(&#39;ship&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sh</div><div class="gz">船 🚢</div></div><div class="gi"><div class="gw">duck <span class="speak-btn" onclick="spk(&#39;duck&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ck</div><div class="gz">鸭子 🦆</div></div><div class="gi"><div class="gw">lake <span class="speak-btn" onclick="spk(&#39;lake&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">湖 🏞️</div></div><div class="gi"><div class="gw">kite <span class="speak-btn" onclick="spk(&#39;kite&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">风筝 🪁</div></div></div>'}
-];
+  {s:'🔍🤔',t:'The Checker',x:'A little checker reads every word.<br>He points and reads it back, out loud.<br>He is very good at his job.'},
+  {s:'❌😊',t:'Cak',x:'He sees “cak”. He reads: “cak” — short a.<br>But he heard “<span class="dg-hl">cake</span>”!<br>Wrong! Add the magic e.'},
+  {s:'❌😊',t:'Rid',x:'He sees “rid”. Reads: “rid” — short i.<br>But he heard “<span class="dg-hl">ride</span>”!<br>Wrong! Add the magic e.'},
+  {s:'❌😊',t:'Sip',x:'He sees “sip”. Reads: “sip”.<br>But he heard “<span class="dg-hl">ship</span>”!<br>Wrong! Add the h.'},
+  {s:'✅😊',t:'Duck',x:'He sees “<span class="dg-hl">duck</span>”. Reads: “<span class="dg-hl">duck</span>”.<br>Yes! It matches!<br>The checker smiles and nods.'},
+  {s:'🏞️😊',t:'Lake',x:'He checks “<span class="dg-hl">lake</span>” with its magic e.<br>It sounds just right.<br>Then he checks “<span class="dg-hl">kite</span>” too.'},
+  {s:'✅😊',t:'All Right',x:'The checker reads and reads.<br>Every word is checked with care.<br>Each one sounds just right now.'},
+  {s:'😊🔍',t:'Glad',x:'The checker is so happy.<br>Every single word is right.<br>What a great checker he is!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">cake <span class="speak-btn" onclick="spk(&#39;cake&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">蛋糕 🍰</div></div><div class="gi"><div class="gw">ride <span class="speak-btn" onclick="spk(&#39;ride&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">骑 🚲</div></div><div class="gi"><div class="gw">ship <span class="speak-btn" onclick="spk(&#39;ship&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sh</div><div class="gz">船 🚢</div></div><div class="gi"><div class="gw">duck <span class="speak-btn" onclick="spk(&#39;duck&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ck</div><div class="gz">鸭子 🦆</div></div><div class="gi"><div class="gw">lake <span class="speak-btn" onclick="spk(&#39;lake&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">湖 🏞️</div></div><div class="gi"><div class="gw">kite <span class="speak-btn" onclick="spk(&#39;kite&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">魔法e</div><div class="gz">风筝 🪁</div></div></div>'},
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
