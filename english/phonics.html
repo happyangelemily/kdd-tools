@@ -106,6 +106,14 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
   .sub-stage{padding-left:14px}
   .tool-link.live .tool-desc{display:none}
 }
+
+.sub-stage.locked .sub-name{color:#6a6a6a}
+.sub-stage.locked .lock{font-size:.78em;margin-left:2px;opacity:.55}
+.tool-link.locked{background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.08);color:#666;cursor:default}
+.tool-link.locked:hover{background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.08)}
+.tool-link.locked .tool-dot{background:#555;box-shadow:none}
+.tool-link.locked .tool-label{color:#777;font-weight:600}
+.tool-link.locked .tool-lock{margin-left:auto;font-size:.8em;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -113,65 +121,12 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 <div class="container">
 <div class="hero"><h1>🗺️ 自然拼读完整学习路线</h1><p class="sub">6 阶体系 · 从零基础到自主阅读</p><p class="tagline">跟随公众号进度 · 工具持续更新中 🌱</p></div>
 <div class="timeline">
-<div class="stage"><div class="stage-badge">1</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🔰</span><span class="stage-title">入门预备与字母基础</span></div><div class="stage-path">磨耳朵 <span class="arr">→</span> 语音意识 <span class="arr">→</span> 26个字母名与字母音 <span class="arr">→</span> 元音和辅音</div><div class="stage-goal">耳朵有充足语感积累、能自主拆音；记牢 26 字母音形；分得清元音和辅音</div><div class="tools-list"><div class="sub-stage"><div class="sub-head"><span class="sub-name">字母名音 · 元辅音</span></div><a class="tool-link live" href="phonics-letter-names-sounds.html"><span class="tool-dot"></span><span class="tool-label">字母名 vs 字母音</span><span class="tool-desc">26字母全辨析 · 44音素参考</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-vowels-consonants.html"><span class="tool-dot"></span><span class="tool-label">分清元音和辅音</span><span class="tool-desc">主唱🎤伴奏🥁 · 元音桥拼读</span><span class="tool-go">→</span></a></div></div></div></div>
-<div class="stage"><div class="stage-badge">2</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🧱</span><span class="stage-title">CVC 与辅音系统拓展</span></div><div class="stage-path">CVC 短元音 <span class="arr">→</span> 辅音二合音 (sh/ch/th/wh/ck/ng/ph) <span class="arr">→</span> 辅音连缀 (bl/str…) <span class="arr">→</span> CCVC / CVCC / CCVCC 综合</div><div class="stage-goal">任何带辅音组合的短元音单音节词，见词就能拼</div><div class="tools-list"><div class="sub-stage"><div class="sub-head"><span class="sub-name">CVC 短元音</span></div><a class="tool-link live" href="phonics-cvc.html"><span class="tool-dot"></span><span class="tool-label">CVC 短元音单词</span><span class="tool-desc">拼读最基础结构 · 听音分拣</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">辅音二合音融入 CVC</span></div><a class="tool-link live" href="phonics-digraphs-in-cvc.html"><span class="tool-dot"></span><span class="tool-label">二合音融入CVC</span><span class="tool-desc">sh/ch/th/wh/ck/ng/ph · 双层三明治</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">辅音连缀家族</span></div><a class="tool-link live" href="phonics-l-blends.html"><span class="tool-dot"></span><span class="tool-label">L 家族连缀</span><span class="tool-desc">bl cl fl gl pl sl · 词尾 -ld -lf -lk -lp -lt</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-r-blends.html"><span class="tool-dot"></span><span class="tool-label">R 家族连缀</span><span class="tool-desc">br cr dr fr gr pr tr · 只有词首</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-s-blends.html"><span class="tool-dot"></span><span class="tool-label">S 家族连缀</span><span class="tool-desc">sc sk sm sn sp st sw · 三字母 + 词尾</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-nasal-blends.html"><span class="tool-dot"></span><span class="tool-label">鼻音家族连缀</span><span class="tool-desc">-mp -nd -nt -nk · 词尾鼻音 + 三字母 -mpt -nct</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-clean-final-blends.html"><span class="tool-dot"></span><span class="tool-label">清辅音词尾连缀</span><span class="tool-desc">-ft -pt -ct -xt · 清辅音 + t 轻轻收尾</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-w-blends.html"><span class="tool-dot"></span><span class="tool-label">W 家族连缀</span><span class="tool-desc">tw dw sw · 辅音 + w 圆嘴巴</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">连缀加长</span></div><a class="tool-link live" href="phonics-ccvc-forward.html"><span class="tool-dot"></span><span class="tool-label">CCVC 前置加长</span><span class="tool-desc">词首连缀 + 短元音 · stop / frog / strap</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-cvcc-backward.html"><span class="tool-dot"></span><span class="tool-label">CVCC 后置加长</span><span class="tool-desc">词尾连缀 + 短元音 · milk / hand / jump</span><span class="tool-go">→</span></a></div></div></div></div>
-<!-- 阶段三 -->
-    <div class="stage">
-      <div class="stage-badge">3</div>
-      <div class="stage-card">
-        <div class="stage-head">
-          <span class="stage-icon">✨</span>
-          <span class="stage-title">元音变脸与长元音体系</span>
-        </div>
-        <div class="stage-path">魔法 e (CVCe) <span class="arr">→</span> 长元音二合音 (ai/ay, ee/ea, oa/ow) <span class="arr">→</span> 双元音与特殊元音 (oi/oy, ou/ow, au/aw, oo) <span class="arr">→</span> R 控制元音</div>
-        <div class="stage-goal">80% 的日常单音节词都能自主拼读</div>
-      </div>
-    </div>
-
-    <!-- 阶段四 -->
-    <div class="stage">
-      <div class="stage-badge">4</div>
-      <div class="stage-card">
-        <div class="stage-head">
-          <span class="stage-icon">📐</span>
-          <span class="stage-title">特殊规则与词法拓展</span>
-        </div>
-        <div class="stage-path">c/g 软硬音 <span class="arr">→</span> 静音字母 (kn/wr/mb) <span class="arr">→</span> 隐形长音 (old/ild/ind) <span class="arr">→</span> -s/-es · -ed 三种发音 <span class="arr">→</span> tion/sion/ture</div>
-        <div class="stage-goal">单音节拼读无死角，熟练掌握常见词形变化、固定词尾发音</div>
-      </div>
-    </div>
-
-    <!-- 阶段五 -->
-    <div class="stage">
-      <div class="stage-badge">5</div>
-      <div class="stage-card">
-        <div class="stage-head">
-          <span class="stage-icon">🔧</span>
-          <span class="stage-title">多音节拼读进阶</span>
-        </div>
-        <div class="stage-path">6 类音节类型 <span class="arr">→</span> 划分口诀（两分手、一归后、组合不拆分） <span class="arr">→</span> 双 / 三音节综合拼读</div>
-        <div class="stage-goal">遇到陌生长单词，可自主拆分、精准拼读，不用死记字母</div>
-      </div>
-    </div>
-
-    <!-- 阶段六 -->
-    <div class="stage">
-      <div class="stage-badge">6</div>
-      <div class="stage-card">
-        <div class="stage-head">
-          <span class="stage-icon">🏁</span>
-          <span class="stage-title">专项巩固与阅读落地</span>
-        </div>
-        <div class="stage-path">高频词专项（全程并行） <span class="arr">→</span> 综合闯关 <span class="arr">→</span> 绘本解码 → 自主阅读</div>
-        <div class="stage-goal">可流利朗读对应难度分级绘本，具备完整的英语自主阅读能力</div>
-      </div>
+<div class="stage"><div class="stage-badge">1</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🔰</span><span class="stage-title">入门预备与字母基础</span></div><div class="stage-path">磨耳朵 <span class="arr">→</span> 语音意识 <span class="arr">→</span> 26个字母名与字母音 <span class="arr">→</span> 元音和辅音</div><div class="stage-goal">耳朵有充足语感积累、能自主拆音；记牢 26 字母音形；分得清元音和辅音</div><div class="tools-list"><div class="sub-stage"><div class="sub-head"><span class="sub-name">字母名音 · 元辅音</span></div><a class="tool-link live" href="phonics-letter-names-sounds.html"><span class="tool-dot"></span><span class="tool-label">字母名 vs 字母音</span><span class="tool-desc">26字母全辨析 · 44音素参考</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-vowels-consonants.html"><span class="tool-dot"></span><span class="tool-label">分清元音和辅音</span><span class="tool-desc">主唱🎤伴奏🥁 · 元音桥拼读</span><span class="tool-go">→</span></a></div></div></div></div><div class="stage"><div class="stage-badge">2</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🧱</span><span class="stage-title">CVC 与辅音系统拓展</span></div><div class="stage-path">CVC 短元音 <span class="arr">→</span> 辅音二合音 (sh/ch/th/wh/ck/ng/ph) <span class="arr">→</span> 辅音连缀 (bl/str…) <span class="arr">→</span> CCVC / CVCC / CCVCC 综合</div><div class="stage-goal">任何带辅音组合的短元音单音节词，见词就能拼</div><div class="tools-list"><div class="sub-stage"><div class="sub-head"><span class="sub-name">CVC 短元音</span></div><a class="tool-link live" href="phonics-cvc.html"><span class="tool-dot"></span><span class="tool-label">CVC 短元音单词</span><span class="tool-desc">拼读最基础结构 · 听音分拣</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">辅音二合音融入 CVC</span></div><a class="tool-link live" href="phonics-digraphs-in-cvc.html"><span class="tool-dot"></span><span class="tool-label">二合音融入CVC</span><span class="tool-desc">sh/ch/th/wh/ck/ng/ph · 双层三明治</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">辅音连缀家族</span></div><a class="tool-link live" href="phonics-l-blends.html"><span class="tool-dot"></span><span class="tool-label">L 家族连缀</span><span class="tool-desc">bl cl fl gl pl sl · 词尾 -ld -lf -lk -lp -lt</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-r-blends.html"><span class="tool-dot"></span><span class="tool-label">R 家族连缀</span><span class="tool-desc">br cr dr fr gr pr tr · 只有词首</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-s-blends.html"><span class="tool-dot"></span><span class="tool-label">S 家族连缀</span><span class="tool-desc">sc sk sm sn sp st sw · 三字母 + 词尾</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-nasal-blends.html"><span class="tool-dot"></span><span class="tool-label">鼻音家族连缀</span><span class="tool-desc">-mp -nd -nt -nk · 词尾鼻音 + 三字母 -mpt -nct</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-clean-final-blends.html"><span class="tool-dot"></span><span class="tool-label">清辅音词尾连缀</span><span class="tool-desc">-ft -pt -ct -xt · 清辅音 + t 轻轻收尾</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-w-blends.html"><span class="tool-dot"></span><span class="tool-label">W 家族连缀</span><span class="tool-desc">tw dw sw · 辅音 + w 圆嘴巴</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">连缀加长与混合闭音节</span></div><a class="tool-link live" href="phonics-ccvc-forward.html"><span class="tool-dot"></span><span class="tool-label">CCVC 前置加长</span><span class="tool-desc">词首连缀 + 短元音 · stop / frog / strap</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-cvcc-backward.html"><span class="tool-dot"></span><span class="tool-label">CVCC 后置加长</span><span class="tool-desc">词尾连缀 + 短元音 · milk / hand / jump</span><span class="tool-go">→</span></a><div class="tool-link locked"><span class="tool-dot"></span><span class="tool-label">混合闭音节连缀</span><span class="tool-lock">🔒</span></div><div class="tool-link locked"><span class="tool-dot"></span><span class="tool-label">二合音加入连缀</span><span class="tool-lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">六个短元音总结</span><span class="lock">🔒</span></div></div></div></div></div><div class="stage"><div class="stage-badge">3</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">✨</span><span class="stage-title">元音变脸与长元音体系</span></div><div class="stage-path">魔法 e (CVCe) <span class="arr">→</span> 长元音二合音 (ai/ay, ee/ea, oa/ow) <span class="arr">→</span> 双元音与特殊元音 (oi/oy, ou/ow, au/aw, oo) <span class="arr">→</span> R 控制元音</div><div class="stage-goal">80% 的日常单音节词都能自主拼读</div><div class="tools-list"><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">音节承启 · 开闭音节</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">魔法 E</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">长元音二合音及其稀有写法</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">双元音</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">R 控元音</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">稀有写法补充</span><span class="lock">🔒</span></div></div></div></div></div><div class="stage"><div class="stage-badge">4</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">📐</span><span class="stage-title">特殊规则与词法拓展</span></div><div class="stage-path">c/g 软硬音 <span class="arr">→</span> 静音字母 (kn/wr/mb) <span class="arr">→</span> 隐形长音 (old/ild/ind) <span class="arr">→</span> -s/-es · -ed 三种发音 <span class="arr">→</span> tion/sion/ture</div><div class="stage-goal">单音节拼读无死角，熟练掌握常见词形变化、固定词尾发音</div><div class="tools-list"><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">弱读 schwa · 闭音节例外</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">辅音特殊规则</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">词尾与词形变化</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">构词法 · 前后缀</span><span class="lock">🔒</span></div></div></div></div></div><div class="stage"><div class="stage-badge">5</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🔧</span><span class="stage-title">多音节拼读进阶</span></div><div class="stage-path">6 类音节类型 <span class="arr">→</span> 划分口诀（两分手、一归后、组合不拆分） <span class="arr">→</span> 双 / 三音节综合拼读</div><div class="stage-goal">遇到陌生长单词，可自主拆分、精准拼读，不用死记字母</div><div class="tools-list"><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">解码 · 见词能读</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">编码 · 听音能写</span><span class="lock">🔒</span></div></div></div></div></div><div class="stage"><div class="stage-badge">6</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🏁</span><span class="stage-title">专项巩固与阅读落地</span></div><div class="stage-path">高频词专项（全程并行） <span class="arr">→</span> 综合闯关 <span class="arr">→</span> 绘本解码 → 自主阅读</div><div class="stage-goal">可流利朗读对应难度分级绘本，具备完整的英语自主阅读能力</div><div class="tools-list"><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">高频词 · 全程并行</span><span class="lock">🔒</span></div></div><div class="sub-stage locked"><div class="sub-head"><span class="sub-name">毕业大乱斗</span><span class="lock">🔒</span></div></div></div></div></div>
 </div>
 <div class="footer">
     <p>关注公众号「<span class="highlight">可豆妈妈</span>」</p>
     <p>每次上新第一时间收到通知，陪孩子一步步走完拼读全程 👣</p>
   </div>
-
-
 </div>
 <script>
 (function(){
