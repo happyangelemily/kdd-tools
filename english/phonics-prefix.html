@@ -386,14 +386,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'😞😔',t:'Unhappy',x:'A kid is <span class="dg-hl">unhappy</span>.<br>The day is <span class="dg-hl">unfair</span>.'},
-  {s:'🔓😊',t:'Unlock',x:'The kid <span class="dg-hl">unlocks</span> a box.<br>What is inside?'},
-  {s:'🔁😊',t:'Replay',x:'The kid <span class="dg-hl">replays</span> a fun game.'},
-  {s:'✍️😊',t:'Rewrite',x:'The kid <span class="dg-hl">rewrites</span> a story.<br>It is better now!'},
-  {s:'♻️😊',t:'Reuse',x:'The kid <span class="dg-hl">reuses</span> an old box.<br>What a good idea!'},
-  {s:'😊👧',t:'Glad',x:'The kid is glad.<br>The day is not <span class="dg-hl">unhappy</span> now!'},
+  {s:'😞😔',t:'Unhappy',x:'A kid is <span class="dg-hl">unhappy</span>.<br>The day feels <span class="dg-hl">unfair</span>.<br>Nothing goes right.'},
+  {s:'🔓😊',t:'Unlock',x:'The kid finds a small box.<br>It tries to <span class="dg-hl">unlock</span> it.<br>Click! The lid pops open.'},
+  {s:'🔁😊',t:'Replay',x:'Inside is a fun game!<br>The kid <span class="dg-hl">replays</span> it again and again.<br>What a good game!'},
+  {s:'✍️😊',t:'Rewrite',x:'Then the kid <span class="dg-hl">rewrites</span> a story.<br>It makes the ending happy.<br>The new story is so much better!'},
+  {s:'♻️😊',t:'Reuse',x:'The kid <span class="dg-hl">reuses</span> an old box.<br>It becomes a little house.<br>What a clever idea!'},
+  {s:'🔓🎨',t:'Unlock More',x:'The kid <span class="dg-hl">unlocks</span> one more box.<br>It is full of bright crayons.<br>The kid smiles from ear to ear.'},
+  {s:'😊👧',t:'Not Unfair Now',x:'The day does not feel <span class="dg-hl">unfair</span> now.<br>The kid is not <span class="dg-hl">unhappy</span> anymore.<br>There is so much to do!'},
+  {s:'😊👧',t:'Glad',x:'The kid is so glad.<br>It <span class="dg-hl">replayed</span>, <span class="dg-hl">rewrote</span>, and <span class="dg-hl">reused</span>.<br>What a good, bright day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">unhappy <span class="speak-btn" onclick="spk(&#39;unhappy&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">un-</div><div class="gz">不开心 😞</div></div><div class="gi"><div class="gw">unfair <span class="speak-btn" onclick="spk(&#39;unfair&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">un-</div><div class="gz">不公平 ⚖️</div></div><div class="gi"><div class="gw">unlock <span class="speak-btn" onclick="spk(&#39;unlock&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">un-</div><div class="gz">解锁 🔓</div></div><div class="gi"><div class="gw">replay <span class="speak-btn" onclick="spk(&#39;replay&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">re-</div><div class="gz">重播 🔁</div></div><div class="gi"><div class="gw">rewrite <span class="speak-btn" onclick="spk(&#39;rewrite&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">re-</div><div class="gz">重写 ✍️</div></div><div class="gi"><div class="gw">reuse <span class="speak-btn" onclick="spk(&#39;reuse&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">re-</div><div class="gz">再利用 ♻️</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

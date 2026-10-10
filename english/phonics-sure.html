@@ -406,14 +406,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'💰😊',t:'A Treasure',x:'A kid finds a <span class="dg-hl">treasure</span>.<br>What a <span class="dg-hl">pleasure</span>!'},
-  {s:'📏😊',t:'Measure',x:'The kid <span class="dg-hl">measures</span> the <span class="dg-hl">treasure</span>.<br>It is so big!'},
-  {s:'🏖️😊',t:'Leisure',x:'In the <span class="dg-hl">leisure</span> time, the kid digs more.'},
-  {s:'📸😊',t:'Exposure',x:'The <span class="dg-hl">treasure</span> gets <span class="dg-hl">exposure</span>.<br>Everyone sees it!'},
-  {s:'🏞️😊',t:'Enclosure',x:'The kid puts the <span class="dg-hl">treasure</span> in an <span class="dg-hl">enclosure</span>.'},
-  {s:'😊💰',t:'Glad',x:'The kid is glad.<br>What a good <span class="dg-hl">treasure</span> and <span class="dg-hl">pleasure</span>!'},
+  {s:'💰😊',t:'A Treasure',x:'A kid finds a big <span class="dg-hl">treasure</span>.<br>What a <span class="dg-hl">pleasure</span> it is!<br>The chest shines with gold.'},
+  {s:'📏😊',t:'Measure',x:'The kid <span class="dg-hl">measures</span> the <span class="dg-hl">treasure</span>.<br>It is so big and heavy!<br>The kid can not lift it alone.'},
+  {s:'🏖️😊',t:'Leisure',x:'In the <span class="dg-hl">leisure</span> time, the kid digs more.<br>There may be more <span class="dg-hl">treasure</span> below!<br>The shovel goes dig, dig, dig.'},
+  {s:'📸😊',t:'Exposure',x:'The <span class="dg-hl">treasure</span> gets lots of <span class="dg-hl">exposure</span>.<br>Everyone comes to see it.<br>The news spreads fast.'},
+  {s:'🏞️😊',t:'An Enclosure',x:'The kid puts the <span class="dg-hl">treasure</span> in an <span class="dg-hl">enclosure</span>.<br>It is safe behind glass.<br>People can look but not touch.'},
+  {s:'💰🤝',t:'A Pleasure to Share',x:'It is a <span class="dg-hl">pleasure</span> to share the <span class="dg-hl">treasure</span>.<br>The kid tells its story to all.<br>Everyone listens with wide eyes.'},
+  {s:'📏😊',t:'Measure Again',x:'They <span class="dg-hl">measure</span> the <span class="dg-hl">treasure</span> together.<br>It is the biggest one in town!<br>The kid beams with pride.'},
+  {s:'😊💰',t:'Glad',x:'The kid is so glad.<br>Finding the <span class="dg-hl">treasure</span> was a true <span class="dg-hl">pleasure</span>.<br>It sits safe in its <span class="dg-hl">enclosure</span>.'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">treasure <span class="speak-btn" onclick="spk(&#39;treasure&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sure /ʒə/</div><div class="gz">宝藏 💰</div></div><div class="gi"><div class="gw">pleasure <span class="speak-btn" onclick="spk(&#39;pleasure&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sure /ʒə/</div><div class="gz">愉快 😊</div></div><div class="gi"><div class="gw">measure <span class="speak-btn" onclick="spk(&#39;measure&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sure /ʒə/</div><div class="gz">测量 📏</div></div><div class="gi"><div class="gw">leisure <span class="speak-btn" onclick="spk(&#39;leisure&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sure /ʒə/</div><div class="gz">闲暇 🏖️</div></div><div class="gi"><div class="gw">exposure <span class="speak-btn" onclick="spk(&#39;exposure&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sure /ʒə/</div><div class="gz">曝光 📸</div></div><div class="gi"><div class="gw">enclosure <span class="speak-btn" onclick="spk(&#39;enclosure&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-sure /ʒə/</div><div class="gz">围场 🏞️</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

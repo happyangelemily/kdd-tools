@@ -397,14 +397,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🐌😊',t:'Slowly',x:'A snail goes <span class="dg-hl">slowly</span>.<br>A kid runs <span class="dg-hl">quickly</span>.'},
-  {s:'📢😊',t:'Loudly',x:'The kid calls <span class="dg-hl">loudly</span>.<br>“Look at the snail!”'},
-  {s:'😄😊',t:'Happily',x:'The kid smiles <span class="dg-hl">happily</span>.<br>It is a good day.'},
-  {s:'🤝😊',t:'Helpful',x:'The kid is <span class="dg-hl">helpful</span>.<br>It carries the snail.'},
-  {s:'⚠️😊',t:'Careful',x:'The kid is <span class="dg-hl">careful</span> with the snail.'},
-  {s:'🙏😊',t:'Thankful',x:'The snail is <span class="dg-hl">thankful</span>.<br>What a kind kid!'},
+  {s:'🐌😊',t:'Slowly',x:'A snail goes <span class="dg-hl">slowly</span> across the path.<br>A kid runs <span class="dg-hl">quickly</span> by.<br>They nearly bump!'},
+  {s:'📢😊',t:'Loudly',x:'The kid calls <span class="dg-hl">loudly</span>, “Watch out!”<br>The snail stops and hides.<br>The kid kneels down low.'},
+  {s:'😄😊',t:'Happily',x:'The kid smiles <span class="dg-hl">happily</span> at the snail.<br>“You are so cute!” it says.<br>The snail peeks out <span class="dg-hl">slowly</span>.'},
+  {s:'🤝😊',t:'Helpful',x:'The kid is very <span class="dg-hl">helpful</span>.<br>It picks up the snail with care.<br>It carries it to the grass.'},
+  {s:'⚠️😊',t:'Careful',x:'The kid is <span class="dg-hl">careful</span> with the snail.<br>It sets it down so gently.<br>The snail wiggles its feelers.'},
+  {s:'🙏😊',t:'Thankful',x:'The snail is <span class="dg-hl">thankful</span>.<br>It waves a little feeler.<br>The kid laughs <span class="dg-hl">happily</span>.'},
+  {s:'🐌🏠',t:'Slowly Home',x:'The snail goes <span class="dg-hl">slowly</span> into the grass.<br>The kid walks <span class="dg-hl">quickly</span> home.<br>Both are happy and safe.'},
+  {s:'😊👧',t:'Glad',x:'The kid is so glad.<br>Being <span class="dg-hl">helpful</span> and <span class="dg-hl">careful</span> feels good.<br>The <span class="dg-hl">thankful</span> snail was a new friend!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">slowly <span class="speak-btn" onclick="spk(&#39;slowly&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ly</div><div class="gz">慢慢地 🐌</div></div><div class="gi"><div class="gw">quickly <span class="speak-btn" onclick="spk(&#39;quickly&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ly</div><div class="gz">快速地 🏃</div></div><div class="gi"><div class="gw">loudly <span class="speak-btn" onclick="spk(&#39;loudly&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ly</div><div class="gz">大声地 📢</div></div><div class="gi"><div class="gw">happily <span class="speak-btn" onclick="spk(&#39;happily&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ly</div><div class="gz">开心地 😄</div></div><div class="gi"><div class="gw">helpful <span class="speak-btn" onclick="spk(&#39;helpful&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ful</div><div class="gz">有帮助 🤝</div></div><div class="gi"><div class="gw">careful <span class="speak-btn" onclick="spk(&#39;careful&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ful</div><div class="gz">小心 ⚠️</div></div><div class="gi"><div class="gw">thankful <span class="speak-btn" onclick="spk(&#39;thankful&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ful</div><div class="gz">感激的 🙏</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
