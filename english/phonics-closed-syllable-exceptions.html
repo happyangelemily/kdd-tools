@@ -411,14 +411,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'👴😊',t:'A Kind Man',x:'An <span class="dg-hl">old</span> man is very <span class="dg-hl">kind</span>.'},
-  {s:'👴🐕',t:'A Wild Dog',x:'A <span class="dg-hl">wild</span> dog runs by.<br>It is <span class="dg-hl">cold</span> and sad.'},
-  {s:'👴💗',t:'Kind',x:'The <span class="dg-hl">kind</span> man <span class="dg-hl">finds</span> the dog.<br>“Come home,” he says.'},
-  {s:'👴🤲',t:'Hold',x:'The man <span class="dg-hl">holds</span> the dog.<br>It is warm now.'},
-  {s:'👴🥇',t:'Gold',x:'The man has a <span class="dg-hl">gold</span> heart.<br>The dog is glad.'},
-  {s:'😊👴',t:'Glad',x:'The <span class="dg-hl">old</span> man and the dog are pals.<br>What a <span class="dg-hl">kind</span> <span class="dg-hl">old</span> man!'},
+  {s:'👴😊',t:'A Kind Man',x:'An <span class="dg-hl">old</span> man is very <span class="dg-hl">kind</span>.<br>He lives in a small warm hut.<br>He has a <span class="dg-hl">gold</span> heart.'},
+  {s:'👴🐕',t:'A Wild Dog',x:'A <span class="dg-hl">wild</span> dog runs by.<br>It is <span class="dg-hl">cold</span> and sad.<br>It shivers in the snow.'},
+  {s:'👴🔍',t:'Find',x:'The <span class="dg-hl">kind</span> <span class="dg-hl">old</span> man <span class="dg-hl">finds</span> the dog.<br>“Come home with me,” he says.<br>The dog wags its tail slowly.'},
+  {s:'👴🤲',t:'Hold',x:'The man <span class="dg-hl">holds</span> the <span class="dg-hl">cold</span> dog close.<br>He wraps it in a soft blanket.<br>It is warm now.'},
+  {s:'👴🥇',t:'Gold',x:'The man has a <span class="dg-hl">gold</span> heart, they say.<br>He gives the dog warm milk.<br>The dog drinks it all up.'},
+  {s:'🐕😊',t:'Not Wild Now',x:'The dog is not <span class="dg-hl">wild</span> now.<br>It curls up by the warm fire.<br>It <span class="dg-hl">holds</span> its head up high.'},
+  {s:'👴🐕',t:'Find a Friend',x:'The dog <span class="dg-hl">finds</span> a new home.<br>The <span class="dg-hl">old</span> man <span class="dg-hl">finds</span> a new pal.<br>They are both so happy.'},
+  {s:'😊👴',t:'Glad',x:'The <span class="dg-hl">old</span> man is so glad.<br>The dog is warm and <span class="dg-hl">kind</span> to him.<br>What a <span class="dg-hl">gold</span> day it is!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">old <span class="speak-btn" onclick="spk(&#39;old&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">老的 👴</div></div><div class="gi"><div class="gw">kind <span class="speak-btn" onclick="spk(&#39;kind&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ind /aɪ/</div><div class="gz">善良 💗</div></div><div class="gi"><div class="gw">wild <span class="speak-btn" onclick="spk(&#39;wild&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ild /aɪ/</div><div class="gz">野生的 🦁</div></div><div class="gi"><div class="gw">cold <span class="speak-btn" onclick="spk(&#39;cold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">冷的 ❄️</div></div><div class="gi"><div class="gw">find <span class="speak-btn" onclick="spk(&#39;find&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-ind /aɪ/</div><div class="gz">找到 🔍</div></div><div class="gi"><div class="gw">hold <span class="speak-btn" onclick="spk(&#39;hold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">握住 🤲</div></div><div class="gi"><div class="gw">gold <span class="speak-btn" onclick="spk(&#39;gold&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">-old /əʊ/</div><div class="gz">金子 🥇</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
