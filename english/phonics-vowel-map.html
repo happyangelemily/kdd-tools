@@ -432,14 +432,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // === Book（保留原绘本）===
 var bp_cp=0,bp_pages=[
-  {s:'🔤😢',t:'No Heart',x:'A <span class="dg-hl">little</span> word sits all <span class="dg-hl">alone</span>.<br>It has no heart, so it <span class="dg-hl">cannot</span> sing.'},
-  {s:'✨😊',t:'A Comes!',x:'The <span class="dg-hl">vowel</span> "a" flies in.<br>"Do not be sad! I will be your heart!"'},
-  {s:'🪄😊',t:'The Cape',x:'The word needs a <span class="dg-hl">magic</span> heart.<br>"a" wears her cape — "a_e"! Now it sings "cake!"'},
-  {s:'🌧️😊',t:'More Hearts',x:'"a" helps more words.<br>"ai" for rain, "ay" for day, "ar" for car!'},
-  {s:'⛵😊',t:'Vowels Help',x:'More <span class="dg-hl">vowels</span> come to help.<br>"ee" for see, "oa" for boat, "oi" for coin!'},
-  {s:'🎉😊',t:'Every Word Sings',x:'<span class="dg-hl">Every</span> word has a heart now.<br>They sing and dance, all so <span class="dg-hl">happy</span>!'},
-  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">rabbit <span class="speak-btn" onclick="spk(&#39;rabbit&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">a短音</div><div class="gz">兔子 🐰</div></div><div class="gi"><div class="gw">tiger <span class="speak-btn" onclick="spk(&#39;tiger&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i长音</div><div class="gz">老虎 🐯</div></div><div class="gi"><div class="gw">market <span class="speak-btn" onclick="spk(&#39;market&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ar R控</div><div class="gz">市场 🛒</div></div><div class="gi"><div class="gw">outside <span class="speak-btn" onclick="spk(&#39;outside&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou双元音</div><div class="gz">外面 🌍</div></div></div>'}
-];
+  {s:'🔤😢',t:'No Heart',x:'A little word sits all alone.<br>It has no heart, so it cannot sing.<br>It looks so sad and quiet.'},
+  {s:'✨😊',t:'A Comes',x:'The vowel “a” flies in with a smile.<br>“Do not be sad! I will be your heart!”<br>Now the word can say its sound.'},
+  {s:'🐰😊',t:'The Rabbit',x:'The word becomes a <span class="dg-hl">rabbit</span>.<br>“a” gives it a short sound.<br>The <span class="dg-hl">rabbit</span> hops with joy.'},
+  {s:'🐯😊',t:'The Tiger',x:'Another word needs a heart.<br>“i” steps in, strong and long.<br>It becomes a brave <span class="dg-hl">tiger</span>.'},
+  {s:'🛒😊',t:'The Market',x:'“ar” gives a word a growly heart.<br>It becomes a busy <span class="dg-hl">market</span>.<br>People buy and sell all day.'},
+  {s:'🌍😊',t:'Outside',x:'“ou” is a bouncy heart.<br>It becomes the word <span class="dg-hl">outside</span>.<br>The sun shines warm and bright.'},
+  {s:'🎉😊',t:'Every Word Sings',x:'Every word has a heart now.<br>The <span class="dg-hl">rabbit</span>, <span class="dg-hl">tiger</span>, and <span class="dg-hl">market</span> sing.<br>Even <span class="dg-hl">outside</span> hums along.'},
+  {s:'😊🔤',t:'Glad',x:'All the words are happy.<br>Each one has the right heart.<br>They sing and dance together.'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">rabbit <span class="speak-btn" onclick="spk(&#39;rabbit&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">a短音</div><div class="gz">兔子 🐰</div></div><div class="gi"><div class="gw">tiger <span class="speak-btn" onclick="spk(&#39;tiger&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">i长音</div><div class="gz">老虎 🐯</div></div><div class="gi"><div class="gw">market <span class="speak-btn" onclick="spk(&#39;market&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ar R控</div><div class="gz">市场 🛒</div></div><div class="gi"><div class="gw">outside <span class="speak-btn" onclick="spk(&#39;outside&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ou双元音</div><div class="gz">外面 🌍</div></div></div>'},
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
