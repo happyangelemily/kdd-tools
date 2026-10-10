@@ -73,20 +73,20 @@ var WORDS={
   'store':'words/store.mp3','storm':'words/storm.mp3','strand':'words/strand.mp3','strands':'words/strands.mp3','strap':'words/strap.mp3','strict':'words/strict.mp3','strip':'words/strip.mp3','strong':'words/strong.mp3','strum':'words/strum.mp3',
   'such':'words/such.mp3','sulk':'words/sulk.mp3','sun':'words/sun.mp3','swell':'words/swell.mp3','swept':'words/swept.mp3','swim':'words/swim.mp3','sylph':'words/sylph.mp3','table':'words/table.mp3',
   'tank':'words/tank.mp3','tea':'words/tea.mp3','teacher':'words/teacher.mp3','ten':'words/ten.mp3','tent':'words/tent.mp3','tenth':'words/tenth.mp3','term':'words/term.mp3','text':'words/text.mp3',
-  'texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3','throb':'words/throb.mp3',
+  'texts':'words/texts.mp3','that':'words/that.mp3','them':'words/them.mp3','then':'words/then.mp3','thin':'words/thin.mp3','think':'words/think.mp3','this':'words/this.mp3','throb':'words/throb.mp3','thrum':'words/thrum.mp3',
   'tick':'words/tick.mp3','top':'words/top.mp3','tract':'words/tract.mp3','train':'words/train.mp3','tramp':'words/tramp.mp3','tract':'words/tract.mp3','train':'words/train.mp3','trap':'words/trap.mp3','tree':'words/tree.mp3','trim':'words/trim.mp3',
   'trip':'words/trip.mp3','trump':'words/trump.mp3','trunk':'words/trunk.mp3','trunks':'words/trunks.mp3','trust':'words/trust.mp3','trusts':'words/trusts.mp3','tub':'words/tub.mp3','tusk':'words/tusk.mp3','twig':'words/twig.mp3','twin':'words/twin.mp3',
   'twist':'words/twist.mp3','twists':'words/twists.mp3','type':'words/type.mp3','umbrella':'words/umbrella.mp3','unicorn':'words/unicorn.mp3','van':'words/van.mp3','verb':'words/verb.mp3','very':'words/very.mp3',
   'vision':'words/vision.mp3','wait':'words/wait.mp3','wash':'words/wash.mp3','wasp':'words/wasp.mp3','way':'words/way.mp3','we':'words/we.mp3','welsh':'words/welsh.mp3','went':'words/went.mp3',
   'wept':'words/wept.mp3','wet':'words/wet.mp3','what':'words/what.mp3','when':'words/when.mp3','which':'words/which.mp3','whip':'words/whip.mp3','wild':'words/wild.mp3','wind_1':'words/wind_1.mp3',
   'wind_2':'words/wind_2.mp3','wing':'words/wing.mp3','winter':'words/winter.mp3','wish':'words/wish.mp3','wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3',
-  'xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3','find':'words/find.mp3','kind':'words/kind.mp3','mind':'words/mind.mp3','child':'words/child.mp3','old':'words/old.mp3','most':'words/most.mp3','all':'words/all.mp3','ball':'words/ball.mp3','talk':'words/talk.mp3','walk':'words/walk.mp3','you':'words/you.mp3','scald':'words/scald.mp3','skulk':'words/skulk.mp3','smelt':'words/smelt.mp3','swift':'words/swift.mp3','glint':'words/glint.mp3','dwelt':'words/dwelt.mp3','squelch':'words/squelch.mp3','stench':'words/stench.mp3','trench':'words/trench.mp3','clench':'words/clench.mp3','strength':'words/strength.mp3','sphinx':'words/sphinx.mp3','shrimp':'words/shrimp.mp3','thrift':'words/thrift.mp3','thrust':'words/thrust.mp3','crunch':'words/crunch.mp3','zoo':'words/zoo.mp3','blinks':'words/blinks.mp3','blond':'words/blond.mp3','clamps':'words/clamps.mp3','cramps':'words/cramps.mp3','drafts':'words/drafts.mp3','drifts':'words/drifts.mp3','frosts':'words/frosts.mp3','grants':'words/grants.mp3','grasps':'words/grasps.mp3','stomps':'words/stomps.mp3','stunt':'words/stunt.mp3','branch':'words/branch.mp3','drench':'words/drench.mp3','stunts':'words/stunts.mp3','sculpt':'words/sculpt.mp3','prompt':'words/prompt.mp3','glimpse':'words/glimpse.mp3','twelfth':'words/twelfth.mp3',};
+  'xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3','you':'words/you.mp3','scald':'words/scald.mp3','skulk':'words/skulk.mp3','smelt':'words/smelt.mp3','swift':'words/swift.mp3','glint':'words/glint.mp3','dwelt':'words/dwelt.mp3','squelch':'words/squelch.mp3','stench':'words/stench.mp3','trench':'words/trench.mp3','clench':'words/clench.mp3','strength':'words/strength.mp3','sphinx':'words/sphinx.mp3','shrimp':'words/shrimp.mp3','thrift':'words/thrift.mp3','thrust':'words/thrust.mp3','crunch':'words/crunch.mp3','zoo':'words/zoo.mp3','blinks':'words/blinks.mp3','blond':'words/blond.mp3','clamps':'words/clamps.mp3','cramps':'words/cramps.mp3','drafts':'words/drafts.mp3','drifts':'words/drifts.mp3','frosts':'words/frosts.mp3','grants':'words/grants.mp3','grasps':'words/grasps.mp3','stomps':'words/stomps.mp3','stunt':'words/stunt.mp3','branch':'words/branch.mp3','drench':'words/drench.mp3','stunts':'words/stunts.mp3','sculpt':'words/sculpt.mp3','prompt':'words/prompt.mp3','glimpse':'words/glimpse.mp3','twelfth':'words/twelfth.mp3','thick':'words/thick.mp3','shock':'words/shock.mp3','check':'words/check.mp3','chuck':'words/chuck.mp3','shush':'words/shush.mp3',};
 (function(){try{for(var k in WORDS){var a=new Audio(AUDIO_BASE+WORDS[k]);a.preload='auto';a.load();audioCache[WORDS[k]]=a}for(var k in PHONEMES){var p=PHONEMES[k];if(!audioCache[p]){var a2=new Audio(AUDIO_BASE+p);a2.preload='auto';a2.load();audioCache[p]=a2}}}catch(e){}})();
 function playAudio(path,el){if(!el||!el.classList)return;if(el.classList.contains('on'))return;var player=audioCache[path];if(!player)return;player.pause();player.currentTime=0;el.classList.add('on');var done=function(){el.classList.remove('on')};player.addEventListener('ended',done,{once:true});player.addEventListener('error',done,{once:true});player.play().catch(function(e){el.classList.remove('on')});}
 
 function spkPhoneme(ipa,el){var p=PHONEMES[ipa];if(p){playAudio(p,el);return}}
 function spkWord(word,el){var w=word.toLowerCase();var p=WORDS[w];if(p){playAudio(p,el);return}spk(w)}
-function spk(word){var w=String(word).toLowerCase().replace(/[^a-z']/g,'');var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
+function spk(word){var w=word.toLowerCase();var p=WORDS[w];if(p){var player=audioCache[p];if(!player){speakNow(w);return}player.pause();player.currentTime=0;player.addEventListener('error',function(){speakNow(w)},{once:true});player.play().catch(function(){speakNow(w)});}else{speakNow(w);}}
 
 function isFem(n){return/female|woman|samantha|karen|moira|fiona|veena|tessa|susan|ava|allison/i.test(n)}
 function speakNow(word){speechSynthesis.resume();if(spT){clearTimeout(spT);spT=null}speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;u.pitch=1;u.volume=1;var voices=speechSynthesis.getVoices();var en=voices.find(function(v){return v.lang==='en-US'&&v.name.includes('Google')})||voices.filter(function(v){return v.lang==='en-US'}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0]||voices.filter(function(v){return v.lang.startsWith('en')}).sort(function(a,b){return isFem(a.name)?-1:isFem(b.name)?1:0})[0];if(en)u.voice=en;setTimeout(function(){speechSynthesis.speak(u)},50)}
@@ -137,66 +137,70 @@ function makeDeconCard(cat, word, letters){
   return h;
 }
 
-// ═══ STORY: Decon Examples + Variety Cards ═══
+// ═══ STORY: Digraph-in-Blend Decon Cards ═══
 (function(){
-  // CCVCC decon example: stamp
-  var h=makeDeconCard('CCVCC','stamp ✉️',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'},{l:'a',s:'/æ/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'}]);
-  // CCVCC variety: one per coda type
-  h='';
-  h+=makeDeconCard('mp','stamp',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'},{l:'a',s:'/æ/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'}]);
-  h+=makeDeconCard('nk','drink',[{l:'d',s:'/d/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/ŋ/',c:'#ef9a9a'},{l:'k',s:'/k/',c:'#ef9a9a'}]);
-  document.getElementById('ccvccVariety').innerHTML=h;
+  var h='';
+  h+=makeDeconCard('shr-','shrimp',[{l:'sh',s:'/ʃ/',c:'#ff8a65'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('thr-','thrift',[{l:'th',s:'/θ/',c:'#ff8a65'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'f',s:'/f/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
+  h+=makeDeconCard('s+ph-','sphinx',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'ph',s:'/f/',c:'#ff8a65'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/ŋ/',c:'#ef9a9a'},{l:'x',s:'/k/',s2:'/s/',c:'#ef9a9a'}]);
+  document.getElementById('onsetCards').innerHTML=h;
 })();
 (function(){
-  // CCVCCC decon example: sculpt
-  var h=makeDeconCard('CCVCCC','sculpt 🗿',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'c',s:'/k/',c:'#ce93d8'},{l:'u',s:'/ʌ/',c:'#4fc3f7'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
-  // CCVCCC variety
-  h='';
-  h+=makeDeconCard('CCVCCC','sculpt',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'c',s:'/k/',c:'#ce93d8'},{l:'u',s:'/ʌ/',c:'#4fc3f7'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
-  h+=makeDeconCard('CCVCCC','prompt',[{l:'p',s:'/p/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'o',s:'/ɒ/',c:'#4fc3f7'},{l:'m',s:'/m/',c:'#ef9a9a'},{l:'p',s:'/p/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
-  document.getElementById('ccvcccCards').innerHTML=h;
-})();
-(function(){
-  // CCCVCC decon example: sprint
-  var h=makeDeconCard('CCCVCC','sprint 🏃',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'p',s:'/p/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
-  // CCCVCC variety: sprint, strand (one per coda type)
-  h='';
-  h+=makeDeconCard('nt','sprint',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'p',s:'/p/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'i',s:'/ɪ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ef9a9a'},{l:'t',s:'/t/',c:'#ef9a9a'}]);
-  h+=makeDeconCard('nd','strand',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'a',s:'/æ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ef9a9a'},{l:'d',s:'/d/',c:'#ef9a9a'}]);
-  document.getElementById('cccvccCards').innerHTML=h;
-})();
-// CCCVCCC explanation
-(function(){
-  document.getElementById('cccvcccCards').innerHTML='<div style="background:rgba(239,154,154,.04);border:1px solid rgba(239,154,154,.2);border-radius:12px;padding:14px 18px;text-align:center;max-width:400px;margin:0 auto;line-height:1.7"><p style="color:#ef9a9a;font-weight:bold;margin-bottom:6px">📝 CCCVCCC 模式说明</p><p style="color:#ccc;font-size:.9em">sprints / strands / scripts 等词，全部是<b style="color:#ffd200">「CCCVCC + 后缀 -s」</b>的结构。没有非后缀的纯 CCCVCCC 单词。</p><p style="color:#aaa;font-size:.82em;margin-top:8px">🔒 后缀 -s/-es 要等后面专门学。</p></div>';
+  var h='';
+  h+=makeDeconCard('-nch','crunch',[{l:'c',s:'/k/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'u',s:'/ʌ/',c:'#4fc3f7'},{l:'n',s:'/n/',c:'#ef9a9a'},{l:'ch',s:'/tʃ/',c:'#ff8a65'}]);
+  h+=makeDeconCard('-lch','squelch',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'q',s:'/k/',c:'#ce93d8'},{l:'u',s:'/w/',c:'#ce93d8'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'ch',s:'/tʃ/',c:'#ff8a65'}]);
+  h+=makeDeconCard('-th','twelfth',[{l:'t',s:'/t/',c:'#ce93d8'},{l:'w',s:'/w/',c:'#ce93d8'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'f',s:'/f/',c:'#ef9a9a'},{l:'th',s:'/θ/',c:'#ff8a65'}]);
+  document.getElementById('codaCards').innerHTML=h;
 })();
 
+// ═══ EASTER EGG: -ngth double digraph ═══
+(function(){
+  var h='';
+  h+=makeDeconCard('-ngth ⭐','strength',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'t',s:'/t/',c:'#ce93d8'},{l:'r',s:'/r/',c:'#ce93d8'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'ng',s:'/ŋ/',c:'#ff8a65'},{l:'th',s:'/θ/',c:'#ff8a65'}]);
+  h+=makeDeconCard('-ngth','length',[{l:'l',s:'/l/',c:'#ce93d8'},{l:'e',s:'/e/',c:'#4fc3f7'},{l:'ng',s:'/ŋ/',c:'#ff8a65'},{l:'th',s:'/θ/',c:'#ff8a65'}]);
+  document.getElementById('easterEnd').innerHTML=h;
+})();
 
 // ═══ LAB ═══
+var DIGRAPHS=['sh','th','ch','ng','ph','ck','wh'];
 var labData={
-  'ccvcc':{
-    label:'CCVCC (2+1+2)',blendLen:2,
+  'onset':{
+    label:'🔹 词首二合音 (2C开头)',pos:'onset',
     subs:{
-      'nd':{label:'-nd',words:[['stand','站立 🧍'],['spend','花费 💸'],['bland','平淡 😐'],['blend','混合 🌀'],['brand','品牌 🏷'],['blond','金发 👱'],['grand','宏伟 🏰']]},
-      'nt':{label:'-nt',words:[['spent','花费过 💸'],['front','前面 🚪'],['grant','授予 🎫'],['plant','植物 🌱'],['slant','倾斜 📐'],['blunt','钝的 🔪'],['grunt','咕哝 😤'],['stunt','特技 🎪']]},
-      'mp':{label:'-mp',words:[['stamp','邮票 ✉️'],['clamp','夹子 🔧'],['cramp','抽筋 😫'],['tramp','流浪者 🚶'],['plump','丰满 🍗'],['slump','暴跌 📉'],['trump','王牌 ♠️'],['stomp','跺脚 👣'],['crimp','卷曲 🦐'],['skimp','吝啬 🪙'],['primp','打扮 💄'],['frump','邋遢 👗']]},
-      'nk':{label:'-nk',words:[['blank','空白 ⬜'],['plank','木板 🪵'],['prank','恶作剧 🎭'],['clank','叮当 🔗'],['crank','曲柄 🔧'],['stink','臭味 🤢'],['blink','眨眼 👁'],['brink','边缘 🌊'],['drink','喝 🥤'],['clink','碰杯 🥂'],['trunk','树干 🧳'],['flunk','不及格 📉'],['slink','溜走 🐍'],['spunk','勇气 💪'],['plunk','弹拨 🪕']]},
-      'stftct':{label:'-st/-ft/-ct',words:[['blast','爆炸 💥'],['crest','顶峰 🏔'],['crust','外壳 🍞'],['frost','霜 ❄️'],['trust','信任 🤝'],['twist','扭转 🪢'],['grist','谷物 🌾'],['draft','草稿 📝'],['drift','漂流 🌊'],['tract','地带 📄'],['crept','爬行 🐢']]},
-      'spsklt':{label:'-sp/-sk/-lt',words:[['clasp','扣子 🔒'],['grasp','抓住 ✊'],['brisk','轻快 🏃'],['flask','烧瓶 🧪'],['stilt','高跷 🪜'],['scalp','头皮 💆'],['skulk','躲藏 🕵'],['smelt','冶炼 🔩'],['swift','快速 💨'],['dwelt','住过 🏠'],['glint','闪光 ✨']]}
+      'shr':{label:'shr- (sh+r)',words:[['shrimp','虾 🦐'],['shrug','耸肩 🤷'],['shred','撕碎 📄'],['shrub','灌木 🌳']]},
+      'thr':{label:'thr- (th+r)',words:[['thrift','节俭 💰'],['thrust','猛推 🚀'],['throb','跳动 💓'],['thrum','弹拨 🎸']]},
+      'sph':{label:'s+ph- (s+ph)',words:[['sphinx','狮身人面 🗿']]},
+      'sh':{label:'sh- (词首sh)',words:[['shelf','架子 📚']]}
     }
   },
-  'ccvccc':{
-    label:'CCVCCC (2+1+3)',blendLen:2,
-    words:[['sculpt','雕刻 🗿'],['prompt','提示 💡'],['glimpse','一瞥 👀']]
+  'both':{
+    label:'🔹 词首+词尾都有二合音',pos:'both',
+    words:[['which','🤔','wh+ch'],['shock','😲','sh+ck'],['thick','📏','th+ck'],['check','✅','ch+ck'],['chuck','🏈','ch+ck'],['shush','🤫','sh+sh']]
   },
-  'cccvcc':{
-    label:'CCCVCC (3+1+2)',blendLen:3,
-    words:[['splint','夹板 🩹'],['sprint','冲刺 🏃'],['strand','一缕 🧵'],['strict','严格 📏'],['script','剧本 📜'],['scrimp','节省 🪙']]
+  'coda':{
+    label:'🔹 词尾二合音 (2C结尾)',pos:'coda',
+    subs:{
+      'nch':{label:'-nch (n+ch)',words:[['crunch','嘎吱 🦷'],['branch','树枝 🌿'],['drench','湿透 💧'],['stench','臭味 👃'],['trench','壕沟 🕳'],['bench','长凳 🪑']]},
+      'th':{label:'-th (辅音+th)',words:[['month','月份 🗓'],['twelfth','第十二 1️⃣2️⃣']]},
+      'sh':{label:'-sh (l+sh)',words:[['Welsh','威尔士 🏴']]},
+      'mph':{label:'-mph (m+ph)',words:[['nymph','仙女 🧚'],['lymph','淋巴 🩸']]},
+      'xth':{label:'-xth (x+th)',words:[['sixth','第六 6️⃣']]},
+      'lch':{label:'-lch (l+ch)',words:[['squelch','咕叽 💦']]}
+    }
   }
 };
-var curL='ccvcc';
-var curSub='nd';
-function switchL(k){curL=k;var s=labData[k].subs;curSub=s?Object.keys(s)[0]:null;buildL()}
-function switchSub(k){curSub=k;buildL()}
+var curL='onset';
+function switchL(k){curL=k;buildL()}
+function colorDigraphs(word){
+  var vowels='aeiou',i=0,out='';
+  while(i<word.length){
+    var two=word.substring(i,i+2);
+    if(DIGRAPHS.indexOf(two)>=0){out+='<span class="dg-c">'+two+'</span>';i+=2;}
+    else if(vowels.indexOf(word[i])>=0 || word[i]==='y'){out+='<span class="vw">'+word[i]+'</span>';i++;}
+    else{out+='<span class="cn-c">'+word[i]+'</span>';i++;}
+  }
+  return out;
+}
 function buildL(){
   var cfg=labData[curL];
   if(!cfg){document.getElementById('labGrid').innerHTML='';return}
@@ -206,58 +210,75 @@ function buildL(){
   });
   document.getElementById('labTabs').innerHTML=tabs;
   var subEl=document.getElementById('labSubtabs');
+  if(subEl){subEl.innerHTML='';subEl.style.display='none'}
+  var allWords=[];
   if(cfg.subs){
-    var stabs='';
     Object.keys(cfg.subs).forEach(function(k){
-      stabs+='<button class="lab-subtab'+(k===curSub?' active':'')+'" onclick="switchSub(\''+k+'\')">'+cfg.subs[k].label+'</button>';
+      var sub=cfg.subs[k];
+      var tag=sub.label.split(' (')[0];
+      sub.words.forEach(function(w){allWords.push([w[0],w[1],tag])});
     });
-    subEl.innerHTML=stabs;
-    subEl.style.display='flex';
-  }else{subEl.innerHTML='';subEl.style.display='none'}
-  var words=cfg.subs?cfg.subs[curSub].words:(cfg.words||[]);
-  var bl=cfg.blendLen,blendColor=bl>=3?'#ef9a9a':'#ce93d8',vowels='aeiou';
-  document.getElementById('labGrid').innerHTML=words.map(function(w,i){
-    var word=w[0],emoji=w[1],len=word.length;
-    var sb=findStartBlend(word);
-    var ebLen=(curL==='ccvccc')?3:2;
-    var ebPos=len-ebLen;
-    var j=0,colored='';
-    while(j<len){
-      if(sb&&j===0){colored+='<span class="sb-c">'+sb.blend+'</span>';j+=sb.len}
-      else if(j>=ebPos){colored+='<span class="eb-c">'+word.substring(j)+'</span>';j=len}
-      else if(vowels.indexOf(word[j])>=0){colored+='<span class="vw">'+word[j]+'</span>';j++}
-      else{colored+='<span class="cn-c">'+word[j]+'</span>';j++}
-    }
-    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'3px':word.length<=6?'2px':word.length<=7?'1px':'0px')+'">'+colored+'</div><div class="hint">'+emoji+'</div></div>';
+  }else{
+    (cfg.words||[]).forEach(function(w){allWords.push([w[0],w[1],w[2]||''])});
+  }
+  document.getElementById('labGrid').innerHTML=allWords.map(function(w,i){
+    var word=w[0],emoji=w[1],tag=w[2]||'';
+    var colored=colorDigraphs(word);
+    var hint=emoji;
+    return '<div class="lab-card" id="lc'+i+'" onclick="document.getElementById(\'lc'+i+'\').classList.toggle(\'flipped\');spk(\''+word+'\')"><div class="word" style="font-size:'+(word.length<=4?'1.7em':word.length<=5?'1.45em':word.length<=6?'1.25em':word.length<=7?'1.1em':word.length<=8?'0.95em':word.length<=9?'0.85em':word.length<=10?'0.76em':'0.68em')+';letter-spacing:'+(word.length<=5?'1px':word.length<=6?'1px':word.length<=7?'0px':'0px')+'">'+colored+'</div><div class="hint">'+hint+'</div></div>';
   }).join('');
 }
 
 // ═══ SORT ═══
-var sortWords=[{w:'stand',t:'a'},{w:'grand',t:'a'},{w:'brand',t:'a'},{w:'grant',t:'a'},{w:'plant',t:'a'},{w:'stamp',t:'a'},{w:'clamp',t:'a'},{w:'blank',t:'a'},{w:'blast',t:'a'},{w:'tract',t:'a'},{w:'clasp',t:'a'},{w:'flask',t:'a'},{w:'scalp',t:'a'},{w:'strand',t:'a'},{w:'spend',t:'e'},{w:'blend',t:'e'},{w:'drink',t:'i'},{w:'stink',t:'i'},{w:'glint',t:'i'},{w:'splint',t:'i'},{w:'sprint',t:'i'},{w:'strict',t:'i'},{w:'script',t:'i'},{w:'scrimp',t:'i'},{w:'swift',t:'i'},{w:'glimpse',t:'i'},{w:'front',t:'o'},{w:'stomp',t:'o'},{w:'frost',t:'o'},{w:'prompt',t:'o'},{w:'blunt',t:'u'},{w:'grunt',t:'u'},{w:'trump',t:'u'},{w:'trunk',t:'u'},{w:'trust',t:'u'},{w:'sculpt',t:'u'}];
+var sortWords=[{w:'shrimp',t:'sh'},{w:'shrug',t:'sh'},{w:'shred',t:'sh'},{w:'shrub',t:'sh'},{w:'shelf',t:'sh'},{w:'Welsh',t:'sh'},
+  {w:'thrift',t:'th'},{w:'thrust',t:'th'},{w:'throb',t:'th'},{w:'thrum',t:'th'},{w:'month',t:'th'},{w:'sixth',t:'th'},{w:'twelfth',t:'th'},
+  {w:'crunch',t:'ch'},{w:'branch',t:'ch'},{w:'drench',t:'ch'},{w:'stench',t:'ch'},{w:'trench',t:'ch'},{w:'squelch',t:'ch'},{w:'bench',t:'ch'},
+  {w:'sphinx',t:'ng'},{w:'nymph',t:'ng'},{w:'lymph',t:'ng'}];
 var selectedWord=null,placedCount=0;
 function buildSort(){
   var pool=document.getElementById('sortPool'),h='';
   sortWords.sort(function(){return Math.random()-0.5}).forEach(function(w){h+='<span class="sort-item unplaced" data-word="'+w.w+'" data-type="'+w.t+'" draggable="true" onclick="selWord(this)" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="touchStart(event,\''+w.w+'\')">'+w.w+' <span class="spk sort-spk" onclick="event.stopPropagation();spk(\''+w.w+'\')">🔊</span></span>'});
   pool.innerHTML=h;
-  ['A','E','I','O','U'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
+  ['Sh','Th','Ch','Ng'].forEach(function(v){document.getElementById('bin'+v+'Items').innerHTML=''});
   document.getElementById('sortFeedback').innerHTML='';selectedWord=null;placedCount=0;setupBins();
 }
-function setupBins(){['binA','binE','binI','binO','binU'].forEach(function(id){var el=document.getElementById(id);el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};el.ondragleave=function(){el.classList.remove('drag-over')};el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())}})}
+function setupBins(){['binSh','binTh','binCh','binNg'].forEach(function(id){var el=document.getElementById(id);el.ondragover=function(e){e.preventDefault();el.classList.add('drag-over')};el.ondragleave=function(){el.classList.remove('drag-over')};el.ondrop=function(e){e.preventDefault();el.classList.remove('drag-over');var w=e.dataTransfer.getData('text');if(w)dropToBin(w,id.replace('bin','').toLowerCase())}})}
 function selWord(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-item.unplaced').forEach(function(i){i.classList.remove('selected')});el.classList.add('selected');selectedWord={w:el.getAttribute('data-word'),t:el.getAttribute('data-type')}}
 function clickToBin(type){if(!selectedWord){document.getElementById('sortFeedback').innerHTML='<span style="color:#4fc3f7">👆 请先点击或拖拽一个单词</span>';return}dropToBin(selectedWord.w,type,selectedWord.t)}
-function dropToBin(w,type,correct){if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}var ok=type===correct;var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;var typeLabels={a:'a /æ/',e:'e /e/',i:'i /ɪ/',o:'o /ɒ/',u:'u /ʌ/'};var binCap=type.toUpperCase();if(ok){item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';document.getElementById('bin'+binCap+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+typeLabels[type]+'!</span>';placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>'}else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听中间的元音？</span>'}selectedWord=null}
+function dropToBin(w,type,correct){
+  if(!correct){var it=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');correct=it?it.getAttribute('data-type'):null}
+  var ok=type===correct;
+  var item=document.querySelector('.sort-item[data-word="'+w+'"].unplaced');if(!item)return;
+  var typeLabels={sh:'sh /ʃ/',th:'th /θ/',ch:'ch /tʃ/',ng:'ng /ŋ/ · ph /f/'};
+  var binCap=type.charAt(0).toUpperCase()+type.slice(1);
+  if(ok){item.classList.remove('unplaced','selected');item.classList.add('placed');item.draggable=false;item.onclick=null;item.style.cursor='default';document.getElementById('bin'+binCap+'Items').innerHTML+='<span class="sort-item placed" style="margin:2px;background:rgba(105,240,174,.1);border-color:rgba(105,240,174,.4);color:#69f0ae">'+w+'</span>';document.getElementById('sortFeedback').innerHTML='<span style="color:#69f0ae">✅ '+w+' → '+typeLabels[type]+'!</span>';placedCount++;if(placedCount>=sortWords.length)document.getElementById('sortFeedback').innerHTML='<span style="color:#ffd200">🎉 全部正确！</span>'}
+  else{item.classList.add('wrong');setTimeout(function(){item.classList.remove('wrong')},500);document.getElementById('sortFeedback').innerHTML='<span style="color:#ff5252">❌ 再听听，是哪个二合音？</span>'}
+  selectedWord=null}
 function dragStart(e){e.dataTransfer.setData('text',e.target.getAttribute('data-word'));setTimeout(function(){e.target.classList.add('dragging')},0)}
 function dragEnd(e){e.target.classList.remove('dragging')}
 var tl=null,tc=null;
 function touchStart(e,w){if(e.target.classList.contains('placed'))return;tl=w;var t=e.touches[0];tc=document.createElement('div');tc.className='sort-item';tc.textContent=w;tc.style.cssText='position:fixed;z-index:999;pointer-events:none;left:'+(t.clientX-20)+'px;top:'+(t.clientY-15)+'px;background:rgba(255,210,0,.18);border:2px solid #ffd200;border-radius:14px;padding:6px 14px;font-weight:bold;color:#ffd200;font-size:.9em';document.body.appendChild(tc);selWord(e.target)}
-document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binA','binE','binI','binO','binU'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
-document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binA','binE','binI','binO','binU'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
+document.addEventListener('touchmove',function(e){if(!tc)return;e.preventDefault();var t=e.touches[0];tc.style.left=(t.clientX-20)+'px';tc.style.top=(t.clientY-15)+'px';['binSh','binTh','binCh','binNg'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)el.classList.add('drag-over');else el.classList.remove('drag-over')})},{passive:false});
+document.addEventListener('touchend',function(e){if(!tc)return;var t=e.changedTouches[0],type=null;['binSh','binTh','binCh','binNg'].forEach(function(id){var el=document.getElementById(id),r=el.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)type=id.replace('bin','').toLowerCase();el.classList.remove('drag-over')});if(type&&tl){var correct=document.querySelector('.sort-item[data-word="'+tl+'"].unplaced');if(correct)dropToBin(tl,type,correct.getAttribute('data-type'))}if(tc){document.body.removeChild(tc);tc=null}tl=null});
 function resetSort(){buildSort()}
 
 // ═══ QUIZ ═══
 function sfxOK(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1100,a.currentTime+.1);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.25);o.start(a.currentTime);o.stop(a.currentTime+.25)}
 function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.setValueAtTime(300,a.currentTime);g.gain.setValueAtTime(.1,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.2);o.start(a.currentTime);o.stop(a.currentTime+.2)}
-var quizPool=[{t:'struct',q:'stamp 是什么结构？',w:'stamp',o:['CCVCC','CCVCCC','CCCVCC','CCCVCCC'],a:0,x:'st(2)+a+mp(2)=CCVCC，5个音位'},{t:'struct',q:'plant 是什么结构？',w:'plant',o:['CCVCC','CCVCCC','CCCVCC'],a:0,x:'pl(2)+a+nt(2)=CCVCC，5个音位'},{t:'struct',q:'sprint 是什么结构？',w:'sprint',o:['CCVCC','CCVCCC','CCCVCC','CCCVCCC'],a:2,x:'spr(3)+i+nt(2)=CCCVCC，6个音位'},{t:'struct',q:'script 是什么结构？',w:'script',o:['CCVCC','CCVCCC','CCCVCC'],a:2,x:'scr(3)+i+pt(2)=CCCVCC，6个音位'},{t:'struct',q:'drink 是什么结构？',w:'drink',o:['CCVCC','CCVCCC','CCCVCC','CCCVCCC'],a:0,x:'dr(2)+i+nk(2)=CCVCC，5个音位'},{t:'struct',q:'trust 是什么结构？',w:'trust',o:['CCVCC','CCVCCC','CCCVCC'],a:0,x:'tr(2)+u+st(2)=CCVCC，5个音位'},{t:'struct',q:'strand 是什么结构？',w:'strand',o:['CCVCC','CCVCCC','CCCVCC','CCCVCCC'],a:2,x:'str(3)+a+nd(2)=CCCVCC'},{t:'struct',q:'strict 是什么结构？',w:'strict',o:['CCVCC','CCVCCC','CCCVCC','CCCVCCC'],a:2,x:'str(3)+i+ct(2)=CCCVCC。ct=2个音'},{t:'struct',q:'stop 是什么结构？',w:'stop',o:['CCVCC','CCVC','CVCC','CCCVCC'],a:1,x:'st(2)+o+p(1)=CCVC。只有开头连缀'},{t:'struct',q:'hand 是什么结构？',w:'hand',o:['CCVCC','CCVC','CVCC','CCCVCC'],a:2,x:'h(1)+a+nd(2)=CVCC。只有结尾连缀'},{t:'count',q:'🔊 听发音，sprint 有几个音位？',w:'sprint',o:['4个','5个','6个','7个'],a:2,x:'=6个音位'},{t:'count',q:'🔊 听发音，plant 有几个音位？',w:'plant',o:['4个','5个','6个','7个'],a:1,x:'=5个音位'},{t:'count',q:'🔊 听发音，sprint 有几个音位？',w:'sprint',o:['5个','6个','7个','8个'],a:1,x:'=6个音位'},{t:'count',q:'🔊 听发音，stamp 有几个音位？',w:'stamp',o:['3个','4个','5个','6个'],a:2,x:'=5个音位'},{t:'listen',q:'🔊 开头有几个辅音？',w:'sprint',o:['1个','2个','3个','4个'],a:2,x:'spr=3个辅音'},{t:'listen',q:'🔊 开头有几个辅音？',w:'stamp',o:['1个','2个','3个','4个'],a:1,x:'st=2个辅音'},{t:'listen',q:'🔊 结尾有几个辅音？',w:'plant',o:['1个','2个','3个','4个'],a:1,x:'nt=2个辅音'},{t:'vowel',q:'stamp 中间的元音是什么？',w:'stamp',o:['a /æ/ (短)','a /eɪ/ (长)','e /e/','i /ɪ/'],a:0,x:'a 读短音 /æ/'},{t:'vowel',q:'sprint 中间的元音是什么？',w:'sprint',o:['i /aɪ/ (长)','i /ɪ/ (短)','e /e/','a /æ/'],a:1,x:'i 读短音 /ɪ/'},{t:'choose',q:'下面哪个是 CCCVCC？',o:['stamp','drink','sprint','trust'],a:2,x:'sprint=spr+int'},{t:'choose',q:'下面哪个是 CCVCCC？',o:['sculpt','stamp','sprint','drink'],a:0,x:'sculpt=sc+ulpt, 6个音位'},{t:'choose',q:'下面哪个结尾有3个辅音？',o:['stamp','sculpt','sprint','plant'],a:1,x:'sculpt 结尾 lpt=3个辅音'},{t:'choose',q:'哪个不是混合连缀？',o:['stamp','cat','drink','trust'],a:1,x:'cat=CVC'},{t:'spell',q:'/sprɪnt/ 正确拼写？',o:['sprint','sprinnt','sprind','sprintt'],a:0,x:'s-p-r-i-n-t=sprint'},{t:'spell',q:'/strænd/ 正确拼写？',o:['strand','strannd','stranned','strandd'],a:0,x:'s-t-r-a-n-d=strand'}];
+var quizPool=[
+  {t:'struct',q:'shrimp 是什么结构？',w:'shrimp',o:['CCVC','CCVCC','CCCVCC','CVCC'],a:1,x:'sh(1)+r(1)=2C 开头 + i + mp(2C) = CCVCC，5 个音位'},
+  {t:'struct',q:'crunch 是什么结构？',w:'crunch',o:['CCVC','CVCC','CCVCC','CCCVCC'],a:2,x:'cr(2C)+u+nch(2C) = CCVCC，5 个音位'},
+  {t:'struct',q:'squelch 是什么结构？',w:'squelch',o:['CCVCC','CCCVCC','CCVCCC','CVCC'],a:1,x:'squ(3C)+e+lch(2C) = CCCVCC，6 个音位'},
+  {t:'count',q:'🔊 听发音，shrimp 有几个音位？',w:'shrimp',o:['4个','5个','6个','7个'],a:1,x:'sh 是 1 个音！/ʃ/+/r/+/ɪ/+/m/+/p/ = 5 个'},
+  {t:'count',q:'🔊 听发音，thrift 有几个音位？',w:'thrift',o:['4个','5个','6个','7个'],a:1,x:'th 是 1 个音！/θ/+/r/+/ɪ/+/f/+/t/ = 5 个'},
+  {t:'digraph',q:'shrimp 里的 sh 算几个音？',w:'shrimp',o:['1个','2个','3个','0个'],a:0,x:'sh = /ʃ/ 二合音，两个字母 1 个音'},
+  {t:'digraph',q:'crunch 里的 ch 算几个音？',w:'crunch',o:['1个','2个','3个','0个'],a:0,x:'ch = /tʃ/ 二合音，两个字母 1 个音'},
+  {t:'listen',q:'🔊 shrimp 开头有几个辅音音位？',w:'shrimp',o:['1个','2个','3个','4个'],a:1,x:'sh(1) + r(1) = 2 个辅音音位'},
+  {t:'digraph',q:'month 里的 th 算几个音？',w:'month',o:['1个','2个','3个','0个'],a:0,x:'th = /θ/ 二合音，两个字母 1 个音'},
+  {t:'digraph',q:'nymph 里的 ph 算几个音？',w:'nymph',o:['1个','2个','3个','0个'],a:0,x:'ph = /f/ 二合音，两个字母 1 个音'},
+  {t:'digraph',q:'Welsh 里的 sh 算几个音？',w:'Welsh',o:['1个','2个','3个','0个'],a:0,x:'sh = /ʃ/ 二合音，两个字母 1 个音'},
+  {t:'count',q:'🔊 听发音，sixth 有几个音位？',w:'sixth',o:['4个','5个','6个','7个'],a:1,x:'/s/+/ɪ/+/k/+/s/+/θ/ = 5 个音。x 是 2 个音，th 是 1 个音！'}
+];
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
 function renderQD(){document.getElementById('qd').innerHTML=qS.qs.map(function(_,i){var c='quiz-dot';if(i===qS.cur)c+=' current';if(qS.as[i]>=0)c+=' '+(qS.as[i]===qS.qs[i].a?'correct':'wrong');return'<div class="'+c+'"></div>'}).join('')}
@@ -268,14 +289,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'📮🚩',t:'A Big Plan',x:'<span class="dg-hl">Grant</span> has a big <span class="dg-hl">plan</span>.<br>He will <span class="dg-hl">plant</span> a <span class="dg-hl">flag</span> on the top.'},
-  {s:'🏔️❄️',t:'The Frost',x:'The top is cold with <span class="dg-hl">frost</span>.<br><span class="dg-hl">Grant</span> will not <span class="dg-hl">stop</span>.'},
-  {s:'💨😖',t:'The Wind Blasts',x:'The wind <span class="dg-hl">blasts</span>!<br><span class="dg-hl">Grant</span> <span class="dg-hl">slips</span> and <span class="dg-hl">slips</span>.'},
-  {s:'🥤💪',t:'A Drink',x:'<span class="dg-hl">Grant</span> takes a <span class="dg-hl">drink</span> from his <span class="dg-hl">flask</span>.<br>“I can do it!” he says.'},
-  {s:'🤝😊',t:'A Pal Helps',x:'A pal comes to <span class="dg-hl">help</span>.<br>They go up, up, up.'},
-  {s:'🚩😊',t:'The Top',x:'At the top, <span class="dg-hl">Grant</span> <span class="dg-hl">plants</span> the <span class="dg-hl">flag</span>.<br>What a <span class="dg-hl">grand</span> day!'},
-  {s:'😊🌟',t:'Glad',x:'<span class="dg-hl">Grant</span> is so <span class="dg-hl">glad</span>.<br>The <span class="dg-hl">flag</span> flies in the <span class="dg-hl">wind</span>. What a <span class="dg-hl">grand</span> <span class="dg-hl">trip</span>!'},
-  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">Grant <span class="speak-btn" onclick="spk(&#39;grant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">plan <span class="speak-btn" onclick="spk(&#39;plan&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVC</div></div><div class="gi"><div class="gw">plant <span class="speak-btn" onclick="spk(&#39;plant&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">flag <span class="speak-btn" onclick="spk(&#39;flag&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVC</div></div><div class="gi"><div class="gw">frost <span class="speak-btn" onclick="spk(&#39;frost&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">stop <span class="speak-btn" onclick="spk(&#39;stop&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVC</div></div><div class="gi"><div class="gw">blast <span class="speak-btn" onclick="spk(&#39;blast&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">slip <span class="speak-btn" onclick="spk(&#39;slip&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVC</div></div><div class="gi"><div class="gw">drink <span class="speak-btn" onclick="spk(&#39;drink&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">flask <span class="speak-btn" onclick="spk(&#39;flask&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">help <span class="speak-btn" onclick="spk(&#39;help&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CVCC</div></div><div class="gi"><div class="gw">grand <span class="speak-btn" onclick="spk(&#39;grand&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVCC</div></div><div class="gi"><div class="gw">glad <span class="speak-btn" onclick="spk(&#39;glad&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVC</div></div><div class="gi"><div class="gw">wind <span class="speak-btn" onclick="spk(&#39;wind&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CVCC</div></div><div class="gi"><div class="gw">trip <span class="speak-btn" onclick="spk(&#39;trip&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">CCVC</div></div></div>'},
+  {s:'🦐🐚',t:'A Wish',x:'A <span class="dg-hl">shrimp</span> sits on a <span class="dg-hl">shelf</span>.<br>It <span class="dg-hl">shrugs</span>. “I want that big shell up there.”'},
+  {s:'🦐😔',t:'Not Strong',x:'The <span class="dg-hl">shrimp</span> is not strong.<br>It cannot get the shell.'},
+  {s:'🦐💪',t:'Thrift',x:'A pal says, “Use <span class="dg-hl">thrift</span>! Push and <span class="dg-hl">thrust</span>!”'},
+  {s:'🦐💪',t:'Push and Thrust',x:'The <span class="dg-hl">shrimp</span> pushes and <span class="dg-hl">thrusts</span>.<br>Up, up, up it goes.'},
+  {s:'🪵😖',t:'Crunch!',x:'<span class="dg-hl">Crunch</span>! The <span class="dg-hl">branch</span> snaps!<br>The <span class="dg-hl">shrimp</span> <span class="dg-hl">slips</span>.'},
+  {s:'🦐🌧️',t:'Squelch',x:'<span class="dg-hl">Squelch</span>! The mud pulls at it.<br>The <span class="dg-hl">shrimp</span> <span class="dg-hl">shrugs</span> and tries again.'},
+  {s:'🦐🐚😊',t:'The Big Shell',x:'The <span class="dg-hl">shrimp</span> lifts the big shell!<br>It is so <span class="dg-hl">glad</span>. What a strong <span class="dg-hl">shrimp</span>!'},
+  {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">shrimp <span class="speak-btn" onclick="spk(&#39;shrimp&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">shr- CCVC</div></div><div class="gi"><div class="gw">shelf <span class="speak-btn" onclick="spk(&#39;shelf&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">sh- + -lf</div></div><div class="gi"><div class="gw">shrug <span class="speak-btn" onclick="spk(&#39;shrug&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">shr- CCVC</div></div><div class="gi"><div class="gw">thrift <span class="speak-btn" onclick="spk(&#39;thrift&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">thr- CCVCC</div></div><div class="gi"><div class="gw">thrust <span class="speak-btn" onclick="spk(&#39;thrust&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">thr- CCVCC</div></div><div class="gi"><div class="gw">crunch <span class="speak-btn" onclick="spk(&#39;crunch&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">cr- + nch</div></div><div class="gi"><div class="gw">branch <span class="speak-btn" onclick="spk(&#39;branch&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">br- + nch</div></div><div class="gi"><div class="gw">squelch <span class="speak-btn" onclick="spk(&#39;squelch&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">squ- + lch</div></div><div class="gi"><div class="gw">glad <span class="speak-btn" onclick="spk(&#39;glad&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">gl- CCVC</div></div></div>'},
 ];
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
@@ -285,22 +306,14 @@ function playBookAudio(accent){
   bp_reading=true;
   document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});
   document.querySelectorAll('.pron-btn').forEach(function(b){if((accent==='uk'&&b.classList.contains('uk'))||(accent==='us'&&b.classList.contains('us')))b.classList.add('playing')});
-  bp_audio=new Audio(AUDIO_BASE+'book/08-page'+(bp_cp+1)+'-'+accent+'.mp3');
+  bp_audio=new Audio(AUDIO_BASE+'book/08b-page'+(bp_cp+1)+'-'+accent+'.mp3');
   bp_audio.onended=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
   bp_audio.onerror=function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null};
   bp_audio.play().catch(function(){document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')});bp_reading=false;bp_audio=null});
 }
-
 function renderP(){if(bp_audio){bp_audio.pause();bp_audio=null}if(bp_reading){speechSynthesis.cancel();bp_reading=false;document.querySelectorAll('.pron-btn.playing').forEach(function(b){b.classList.remove('playing')})}var p=bp_pages[bp_cp];document.getElementById('bs').textContent=p.s;document.getElementById('bt').textContent=p.t;document.getElementById('bx').innerHTML=p.x;document.getElementById('pn').textContent=(bp_cp+1)+'/'+bp_pages.length;document.getElementById('bp').style.visibility=bp_cp===0?'hidden':'visible';document.getElementById('bn').style.visibility=bp_cp===bp_pages.length-1?'hidden':'visible';var g=bp_cp===bp_pages.length-1;document.getElementById('bookPron').innerHTML=g?'':'<button class="pron-btn uk" onclick="spkBookUK()">🇬🇧 UK RP</button><button class="pron-btn us" onclick="spkBookUS()">🇺🇸 US</button>'}
 function nextP(){if(bp_cp<bp_pages.length-1){bp_cp++;renderP()}}
 function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
-
-// ═══ EASTER EGG: -ald (a + l) ═══
-(function(){
-  var h='';
-  h+=makeDeconCard('-ald','scald 🔥',[{l:'s',s:'/s/',c:'#ce93d8'},{l:'c',s:'/k/',c:'#ce93d8'},{l:'a',s:'/ɔː/',c:'#ff8a65'},{l:'l',s:'/l/',c:'#ef9a9a'},{l:'d',s:'/d/',c:'#ef9a9a'}]);
-  document.getElementById('easterAld').innerHTML=h;
-})();
 
 // === Init ===
 buildL();buildSort();initQ();
