@@ -463,15 +463,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🌧️😔',t:'Rain',x:'It is a <span class="dg-hl">rain</span> <span class="dg-hl">day</span>.<br>We cannot <span class="dg-hl">play</span>.'},
-  {s:'🏠😔',t:'So Sad',x:'We are so sad.<br>We want to <span class="dg-hl">play</span> in the sun.'},
-  {s:'💡😊',t:'A Way',x:'Mom smiles. “There is a <span class="dg-hl">way</span>!”<br>“We can <span class="dg-hl">play</span> inside.”'},
-  {s:'🎨😊',t:'Paint',x:'We <span class="dg-hl">paint</span> a big <span class="dg-hl">train</span>.<br>It is fun!'},
-  {s:'🚂😊',t:'A Train',x:'The <span class="dg-hl">train</span> has a <span class="dg-hl">tail</span> and a <span class="dg-hl">mail</span> car.'},
-  {s:'🌤️😊',t:'The Rain Stops',x:'The <span class="dg-hl">rain</span> stops.<br>We go out to <span class="dg-hl">play</span>!'},
-  {s:'😊🌞',t:'A Good Day',x:'We <span class="dg-hl">play</span> all <span class="dg-hl">day</span>.<br>What a good <span class="dg-hl">day</span>!'},
+  {s:'🌧️😔',t:'Rain',x:'It is a <span class="dg-hl">rain</span> <span class="dg-hl">day</span>.<br>We cannot <span class="dg-hl">play</span> outside.<br>The <span class="dg-hl">rain</span> taps on the window.'},
+  {s:'🌧️😔',t:'So Sad',x:'We are so sad.<br>We want to <span class="dg-hl">play</span> in the sun.<br>But the <span class="dg-hl">rain</span> will not stop.'},
+  {s:'💡🎨',t:'A Way',x:'Mom smiles. “There is a <span class="dg-hl">way</span>!”<br>“We can <span class="dg-hl">paint</span> a big <span class="dg-hl">train</span>.”<br>She gets out the paints.'},
+  {s:'🎨🚂',t:'Paint',x:'We <span class="dg-hl">paint</span> a long, red <span class="dg-hl">train</span>.<br>It has a wagging <span class="dg-hl">tail</span>.<br>It has a little <span class="dg-hl">mail</span> car too.'},
+  {s:'🌤️😊',t:'The Rain Stops',x:'The <span class="dg-hl">rain</span> stops at last!<br>We run out to <span class="dg-hl">play</span>.<br>What a sunny <span class="dg-hl">day</span>!'},
+  {s:'😊🌞',t:'A Good Day',x:'We <span class="dg-hl">play</span> all <span class="dg-hl">day</span> in the sun.<br>We wave at the <span class="dg-hl">train</span> we painted.<br>What a good <span class="dg-hl">day</span>!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">rain <span class="speak-btn" onclick="spk(&#39;rain&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ai /eɪ/</div><div class="gz">雨 🌧️</div></div><div class="gi"><div class="gw">day <span class="speak-btn" onclick="spk(&#39;day&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ay /eɪ/</div><div class="gz">日子 ☀️</div></div><div class="gi"><div class="gw">play <span class="speak-btn" onclick="spk(&#39;play&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ay /eɪ/</div><div class="gz">玩耍 🎮</div></div><div class="gi"><div class="gw">way <span class="speak-btn" onclick="spk(&#39;way&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ay /eɪ/</div><div class="gz">路 🛣️</div></div><div class="gi"><div class="gw">paint <span class="speak-btn" onclick="spk(&#39;paint&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ai /eɪ/</div><div class="gz">画画 🎨</div></div><div class="gi"><div class="gw">train <span class="speak-btn" onclick="spk(&#39;train&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ai /eɪ/</div><div class="gz">火车 🚂</div></div><div class="gi"><div class="gw">tail <span class="speak-btn" onclick="spk(&#39;tail&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ai /eɪ/</div><div class="gz">尾巴 🐒</div></div><div class="gi"><div class="gw">mail <span class="speak-btn" onclick="spk(&#39;mail&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ai /eɪ/</div><div class="gz">邮件 📧</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}

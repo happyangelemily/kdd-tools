@@ -478,14 +478,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'❄️😊',t:'Snow',x:'It is a <span class="dg-hl">snow</span> day.<br>The <span class="dg-hl">road</span> is white.'},
-  {s:'🐐😊',t:'A Goat',x:'A <span class="dg-hl">goat</span> is on the <span class="dg-hl">road</span>.<br>It wears a <span class="dg-hl">coat</span>.'},
-  {s:'🚤😊',t:'A Boat',x:'The <span class="dg-hl">goat</span> gets on a <span class="dg-hl">boat</span>.<br>It <span class="dg-hl">floats</span> on the <span class="dg-hl">snow</span>!'},
-  {s:'🌱😊',t:'Grow',x:'The <span class="dg-hl">snow</span> melts.<br>The grass will <span class="dg-hl">grow</span>.'},
-  {s:'🧼😊',t:'Soap',x:'The <span class="dg-hl">goat</span> takes a bath with <span class="dg-hl">soap</span>.'},
-  {s:'😊❄️',t:'Glad',x:'The <span class="dg-hl">goat</span> is glad.<br>What a good <span class="dg-hl">snow</span> day!'},
+  {s:'❄️😊',t:'Snow',x:'It is a <span class="dg-hl">snow</span> day.<br>The <span class="dg-hl">road</span> is all white.<br>A <span class="dg-hl">goat</span> puts on a warm <span class="dg-hl">coat</span>.'},
+  {s:'🐐🚤',t:'A Boat',x:'The <span class="dg-hl">goat</span> sees a little <span class="dg-hl">boat</span>.<br>It sits on the <span class="dg-hl">snow</span> by the <span class="dg-hl">road</span>.<br>“Let me <span class="dg-hl">float</span>!” the <span class="dg-hl">goat</span> says.'},
+  {s:'🚤😊',t:'Float',x:'The <span class="dg-hl">goat</span> gets on the <span class="dg-hl">boat</span>.<br>It <span class="dg-hl">floats</span> down the white <span class="dg-hl">road</span>.<br>What fun!'},
+  {s:'🌱😊',t:'Grow',x:'The <span class="dg-hl">snow</span> melts in the sun.<br>Green grass begins to <span class="dg-hl">grow</span>.<br>The <span class="dg-hl">boat</span> stops with a bump.'},
+  {s:'🧼😊',t:'Soap',x:'The <span class="dg-hl">goat</span> is muddy now.<br>It takes a warm bath with <span class="dg-hl">soap</span>.<br>Scrub, scrub, scrub!'},
+  {s:'🐐😊',t:'Glad',x:'The <span class="dg-hl">goat</span> is clean and dry.<br>It sits by the <span class="dg-hl">road</span> in the sun.<br>What a good <span class="dg-hl">snow</span> day!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">snow <span class="speak-btn" onclick="spk(&#39;snow&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow /əʊ/</div><div class="gz">雪 ❄️</div></div><div class="gi"><div class="gw">road <span class="speak-btn" onclick="spk(&#39;road&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">路 🛣️</div></div><div class="gi"><div class="gw">goat <span class="speak-btn" onclick="spk(&#39;goat&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">山羊 🐐</div></div><div class="gi"><div class="gw">coat <span class="speak-btn" onclick="spk(&#39;coat&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">外套 🧥</div></div><div class="gi"><div class="gw">boat <span class="speak-btn" onclick="spk(&#39;boat&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">船 🚤</div></div><div class="gi"><div class="gw">float <span class="speak-btn" onclick="spk(&#39;float&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">漂浮 🛟</div></div><div class="gi"><div class="gw">grow <span class="speak-btn" onclick="spk(&#39;grow&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ow /əʊ/</div><div class="gz">生长 🌱</div></div><div class="gi"><div class="gw">soap <span class="speak-btn" onclick="spk(&#39;soap&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">oa /əʊ/</div><div class="gz">肥皂 🧼</div></div></div>'},
-];
+];;
 // ═══ BOOK ═══
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}

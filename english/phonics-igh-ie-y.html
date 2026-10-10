@@ -551,14 +551,14 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🌙😊',t:'The Night Sky',x:'At <span class="dg-hl">night</span>, the <span class="dg-hl">sky</span> is <span class="dg-hl">bright</span>.'},
-  {s:'💡😊',t:'A Light',x:'A <span class="dg-hl">light</span> shines <span class="dg-hl">high</span> in the <span class="dg-hl">sky</span>.'},
-  {s:'🪁😊',t:'Fly',x:'I <span class="dg-hl">fly</span> my kite at <span class="dg-hl">night</span>.'},
-  {s:'🌧️😔',t:'Cry',x:'The rain comes.<br>I <span class="dg-hl">cry</span>.'},
-  {s:'🌙😊',t:'Bright Again',x:'But the <span class="dg-hl">sky</span> is <span class="dg-hl">bright</span>.<br>I do not <span class="dg-hl">cry</span> now.'},
-  {s:'😊🪁',t:'Glad',x:'I <span class="dg-hl">fly</span> my kite.<br>What a <span class="dg-hl">bright</span> <span class="dg-hl">night</span>!'},
+  {s:'🌙😊',t:'The Night Sky',x:'At <span class="dg-hl">night</span>, the <span class="dg-hl">sky</span> is <span class="dg-hl">bright</span>.<br>The stars shine <span class="dg-hl">high</span> above.<br>I look up and smile.'},
+  {s:'💡😊',t:'A Light',x:'A <span class="dg-hl">light</span> shines in the <span class="dg-hl">sky</span>.<br>It glows so <span class="dg-hl">bright</span> and clear.<br>“I will <span class="dg-hl">fly</span> my kite!” I say.'},
+  {s:'🪁😊',t:'Fly',x:'I <span class="dg-hl">fly</span> my kite at <span class="dg-hl">night</span>.<br>It goes <span class="dg-hl">high</span>, <span class="dg-hl">high</span>, <span class="dg-hl">high</span>!<br>The kite dances with the stars.'},
+  {s:'🌧️😔',t:'Cry',x:'Suddenly, the rain comes.<br>The <span class="dg-hl">sky</span> turns dark and gray.<br>I <span class="dg-hl">cry</span> a little.'},
+  {s:'🌙😊',t:'Bright Again',x:'But soon the rain stops.<br>The <span class="dg-hl">sky</span> is <span class="dg-hl">bright</span> again.<br>I do not <span class="dg-hl">cry</span> now.'},
+  {s:'😊🪁',t:'Glad',x:'I <span class="dg-hl">fly</span> my kite under the <span class="dg-hl">light</span>.<br>What a <span class="dg-hl">bright</span> <span class="dg-hl">night</span>!<br>I am so glad.'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">night <span class="speak-btn" onclick="spk(&#39;night&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">夜晚 🌙</div></div><div class="gi"><div class="gw">sky <span class="speak-btn" onclick="spk(&#39;sky&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">y /aɪ/</div><div class="gz">天空 🌤️</div></div><div class="gi"><div class="gw">bright <span class="speak-btn" onclick="spk(&#39;bright&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">明亮 ✨</div></div><div class="gi"><div class="gw">light <span class="speak-btn" onclick="spk(&#39;light&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">光 💡</div></div><div class="gi"><div class="gw">high <span class="speak-btn" onclick="spk(&#39;high&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">igh /aɪ/</div><div class="gz">高 ⬆️</div></div><div class="gi"><div class="gw">fly <span class="speak-btn" onclick="spk(&#39;fly&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">y /aɪ/</div><div class="gz">飞 ✈️</div></div><div class="gi"><div class="gw">cry <span class="speak-btn" onclick="spk(&#39;cry&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">y /aɪ/</div><div class="gz">哭 😢</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
