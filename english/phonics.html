@@ -12,27 +12,18 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
 .container{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:20px 20px 60px}
 
-/* Hero */
 .hero{text-align:center;padding:28px 0 20px}
 .hero h1{font-size:1.7em;background:linear-gradient(135deg,#42a5f5,#80deea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .hero .sub{color:#777;font-size:.85em}
 .hero .tagline{color:#66bb6a;font-size:.8em;margin-top:6px}
 
-/* Timeline */
 .timeline{position:relative;margin:0 0 0 28px;padding-left:20px}
-.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,#42a5f5,#66bb6a,#ffb74d,#e57373,#ab47bc,#80deea);border-radius:1px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,#42a5f5,#66bb6a,#ffb74d,#80deea);border-radius:1px}
 
 .stage{position:relative;margin-bottom:24px}
 .stage:last-child{margin-bottom:0}
 
-.stage-badge{
-  position:absolute;left:-36px;top:6px;
-  width:32px;height:32px;border-radius:50%;
-  background:#1a1a2e;border:2px solid #42a5f5;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:.85em;color:#42a5f5;
-  z-index:1
-}
+.stage-badge{position:absolute;left:-36px;top:6px;width:32px;height:32px;border-radius:50%;background:#1a1a2e;border:2px solid #42a5f5;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#42a5f5;z-index:1}
 .stage:nth-child(1) .stage-badge{border-color:#42a5f5;color:#42a5f5}
 .stage:nth-child(2) .stage-badge{border-color:#66bb6a;color:#66bb6a}
 .stage:nth-child(3) .stage-badge{border-color:#ffb74d;color:#ffb74d}
@@ -40,11 +31,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage:nth-child(5) .stage-badge{border-color:#ab47bc;color:#ab47bc}
 .stage:nth-child(6) .stage-badge{border-color:#80deea;color:#80deea}
 
-.stage-card{
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
-  border-radius:14px;padding:16px 18px;transition:border-color .2s;
-  border-left:4px solid #42a5f5;
-}
+.stage-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px 18px;transition:border-color .2s;border-left:4px solid #42a5f5}
 .stage:nth-child(1) .stage-card{border-left-color:#42a5f5}
 .stage:nth-child(2) .stage-card{border-left-color:#66bb6a}
 .stage:nth-child(3) .stage-card{border-left-color:#ffb74d}
@@ -52,9 +39,9 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage:nth-child(5) .stage-card{border-left-color:#ab47bc}
 .stage:nth-child(6) .stage-card{border-left-color:#80deea}
 
-.stage-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.stage-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .stage-icon{font-size:1.5em;flex-shrink:0}
-.stage-title{font-size:1.05em;font-weight:700;color:#e8e8e8}
+.stage-title{font-size:1.15em;font-weight:700;color:#e8e8e8}
 .stage:nth-child(1) .stage-title{color:#42a5f5}
 .stage:nth-child(2) .stage-title{color:#66bb6a}
 .stage:nth-child(3) .stage-title{color:#ffb74d}
@@ -68,16 +55,25 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage-goal{font-size:.78em;color:#555;margin-bottom:12px;padding:8px 12px;background:rgba(255,255,255,.02);border-radius:8px;line-height:1.5}
 .stage-goal::before{content:'✅ '}
 
-/* Tools */
-.tools-list{display:flex;flex-direction:column;gap:6px}
-.tool-link{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;text-decoration:none;transition:all .2s;font-size:.88em}
+.tools-list{display:flex;flex-direction:column;gap:18px}
+.sub-stage{display:flex;flex-direction:column;gap:7px;border-left:3px solid #42a5f5;padding-left:20px}
+.stage:nth-child(1) .sub-stage{border-left-color:#42a5f5}
+.stage:nth-child(2) .sub-stage{border-left-color:#66bb6a}
+.stage:nth-child(3) .sub-stage{border-left-color:#ffb74d}
+.stage:nth-child(4) .sub-stage{border-left-color:#e57373}
+.stage:nth-child(5) .sub-stage{border-left-color:#ab47bc}
+.stage:nth-child(6) .sub-stage{border-left-color:#80deea}
+.sub-head{display:flex;align-items:baseline;gap:8px}
+.sub-name{font-weight:800;color:#f2f2f2;font-size:1.05em}
+.sub-range{color:#777;font-size:.78em;font-weight:400}
+
+.tool-link{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;text-decoration:none;transition:all .2s;font-size:.88em;margin-left:24px}
 .tool-link.live{background:rgba(66,165,245,.08);border:1px solid rgba(66,165,245,.15);color:#e0e0e0}
 .tool-link.live:hover{background:rgba(66,165,245,.15);border-color:rgba(66,165,245,.35)}
 .tool-link.live .tool-dot{width:7px;height:7px;border-radius:50%;background:#66bb6a;flex-shrink:0;box-shadow:0 0 6px #66bb6a}
 .tool-link.live .tool-label{color:#42a5f5;font-weight:600}
 .tool-link.live .tool-desc{color:#888;font-size:.82em;margin-left:auto;text-align:right;flex-shrink:0}
 .tool-link.live .tool-go{color:#42a5f5;font-size:.8em;flex-shrink:0}
-
 .stage:nth-child(1) .tool-link.live{border-color:rgba(66,165,245,.15)}
 .stage:nth-child(2) .tool-link.live{border-color:rgba(102,187,106,.15);background:rgba(102,187,106,.06)}
 .stage:nth-child(2) .tool-link.live .tool-label{color:#66bb6a}
@@ -85,13 +81,19 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .stage:nth-child(3) .tool-link.live{border-color:rgba(255,183,77,.15);background:rgba(255,183,77,.06)}
 .stage:nth-child(3) .tool-link.live .tool-label{color:#ffb74d}
 .stage:nth-child(3) .tool-link.live .tool-go{color:#ffb74d}
+.stage:nth-child(4) .tool-link.live{border-color:rgba(229,115,115,.15);background:rgba(229,115,115,.06)}
+.stage:nth-child(4) .tool-link.live .tool-label{color:#e57373}
+.stage:nth-child(4) .tool-link.live .tool-go{color:#e57373}
+.stage:nth-child(5) .tool-link.live{border-color:rgba(171,71,188,.15);background:rgba(171,71,188,.06)}
+.stage:nth-child(5) .tool-link.live .tool-label{color:#ab47bc}
+.stage:nth-child(5) .tool-link.live .tool-go{color:#ab47bc}
+.stage:nth-child(6) .tool-link.live{border-color:rgba(128,222,234,.15);background:rgba(128,222,234,.06)}
+.stage:nth-child(6) .tool-link.live .tool-label{color:#80deea}
+.stage:nth-child(6) .tool-link.live .tool-go{color:#80deea}
 
-/* Footer */
 .footer{text-align:center;margin-top:40px;padding:24px 0 0}
 .footer p{color:#555;font-size:.78em;line-height:1.6}
 .footer .highlight{color:#66bb6a;font-weight:600}
-
-.corner-note{text-align:center;color:#444;font-size:.75em;margin-top:10px}
 
 @media(max-width:500px){
   .hero h1{font-size:1.35em}
@@ -100,7 +102,8 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
   .stage-badge{left:-32px;width:28px;height:28px;font-size:.75em}
   .stage-card{padding:14px 12px}
   .stage-title{font-size:.95em}
-  .tool-link{font-size:.82em;padding:8px 10px}
+  .tool-link{font-size:.82em;padding:8px 10px;margin-left:16px}
+  .sub-stage{padding-left:14px}
   .tool-link.live .tool-desc{display:none}
 }
 </style>
@@ -108,119 +111,11 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 <body>
 <div class="stars" id="stars"></div>
 <div class="container">
-
-  <div class="hero">
-    <h1>🗺️ 自然拼读完整学习路线</h1>
-    <p class="sub">6 阶体系 · 从零基础到自主阅读</p>
-    <p class="tagline">跟随公众号进度 · 工具持续更新中 🌱</p>
-  </div>
-
-  <div class="timeline">
-
-    <!-- 阶段一 -->
-    <div class="stage">
-      <div class="stage-badge">1</div>
-      <div class="stage-card">
-        <div class="stage-head">
-          <span class="stage-icon">🔰</span>
-          <span class="stage-title">入门预备与字母基础</span>
-        </div>
-        <div class="stage-path">磨耳朵 <span class="arr">→</span> 语音意识 <span class="arr">→</span> 26个字母名与字母音 <span class="arr">→</span> 元音和辅音</div>
-        <div class="stage-goal">耳朵有充足语感积累、能自主拆音；记牢 26 字母音形；分得清元音和辅音</div>
-        <div class="tools-list">
-          <a class="tool-link live" href="phonics-letter-names-sounds.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">字母名 vs 字母音</span>
-            <span class="tool-desc">26字母全辨析 · 44音素参考</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-vowels-consonants.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">分清元音和辅音</span>
-            <span class="tool-desc">主唱🎤伴奏🥁 · 元音桥拼读</span>
-            <span class="tool-go">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- 阶段二 -->
-    <div class="stage">
-      <div class="stage-badge">2</div>
-      <div class="stage-card">
-        <div class="stage-head">
-          <span class="stage-icon">🧱</span>
-          <span class="stage-title">CVC 与辅音系统拓展</span>
-        </div>
-        <div class="stage-path">CVC 短元音 <span class="arr">→</span> 辅音二合音 (sh/ch/th/wh/ck/ng/ph) <span class="arr">→</span> 辅音连缀 (bl/str…) <span class="arr">→</span> CCVC / CVCC / CCVCC 综合</div>
-        <div class="stage-goal">任何带辅音组合的短元音单音节词，见词就能拼</div>
-        <div class="tools-list">
-          <a class="tool-link live" href="phonics-cvc.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">CVC 短元音单词</span>
-            <span class="tool-desc">拼读最基础结构 · 听音分拣</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-digraphs-in-cvc.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">二合音融入CVC</span>
-            <span class="tool-desc">sh/ch/th/wh/ck/ng/ph · 双层三明治</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-l-blends.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">L 家族连缀</span>
-            <span class="tool-desc">bl cl fl gl pl sl · 词尾 -ld -lf -lk -lp -lt</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-r-blends.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">R 家族连缀</span>
-            <span class="tool-desc">br cr dr fr gr pr tr · 只有词首</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-s-blends.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">S 家族连缀</span>
-            <span class="tool-desc">sc sk sm sn sp st sw · 三字母 + 词尾</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-nasal-blends.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">鼻音家族连缀</span>
-            <span class="tool-desc">-mp -nd -nt -nk · 词尾鼻音 + 三字母 -mpt -nct</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-clean-final-blends.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">清辅音词尾连缀</span>
-            <span class="tool-desc">-ft -pt -ct -xt · 清辅音 + t 轻轻收尾</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-w-blends.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">W 家族连缀</span>
-            <span class="tool-desc">tw dw sw · 辅音 + w 圆嘴巴</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-ccvc-forward.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">CCVC 前置加长</span>
-            <span class="tool-desc">词首连缀 + 短元音 · stop / frog / strap</span>
-            <span class="tool-go">→</span>
-          </a>
-          <a class="tool-link live" href="phonics-cvcc-backward.html">
-            <span class="tool-dot"></span>
-            <span class="tool-label">CVCC 后置加长</span>
-            <span class="tool-desc">词尾连缀 + 短元音 · milk / hand / jump</span>
-            <span class="tool-go">→</span>
-          </a>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- 阶段三 -->
+<div class="hero"><h1>🗺️ 自然拼读完整学习路线</h1><p class="sub">6 阶体系 · 从零基础到自主阅读</p><p class="tagline">跟随公众号进度 · 工具持续更新中 🌱</p></div>
+<div class="timeline">
+<div class="stage"><div class="stage-badge">1</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🔰</span><span class="stage-title">入门预备与字母基础</span></div><div class="stage-path">磨耳朵 <span class="arr">→</span> 语音意识 <span class="arr">→</span> 26个字母名与字母音 <span class="arr">→</span> 元音和辅音</div><div class="stage-goal">耳朵有充足语感积累、能自主拆音；记牢 26 字母音形；分得清元音和辅音</div><div class="tools-list"><div class="sub-stage"><div class="sub-head"><span class="sub-name">字母名音 · 元辅音</span><span class="sub-range">1-2</span></div><a class="tool-link live" href="phonics-letter-names-sounds.html"><span class="tool-dot"></span><span class="tool-label">字母名 vs 字母音</span><span class="tool-desc">26字母全辨析 · 44音素参考</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-vowels-consonants.html"><span class="tool-dot"></span><span class="tool-label">分清元音和辅音</span><span class="tool-desc">主唱🎤伴奏🥁 · 元音桥拼读</span><span class="tool-go">→</span></a></div></div></div></div>
+<div class="stage"><div class="stage-badge">2</div><div class="stage-card"><div class="stage-head"><span class="stage-icon">🧱</span><span class="stage-title">CVC 与辅音系统拓展</span></div><div class="stage-path">CVC 短元音 <span class="arr">→</span> 辅音二合音 (sh/ch/th/wh/ck/ng/ph) <span class="arr">→</span> 辅音连缀 (bl/str…) <span class="arr">→</span> CCVC / CVCC / CCVCC 综合</div><div class="stage-goal">任何带辅音组合的短元音单音节词，见词就能拼</div><div class="tools-list"><div class="sub-stage"><div class="sub-head"><span class="sub-name">CVC 短元音</span><span class="sub-range">3</span></div><a class="tool-link live" href="phonics-cvc.html"><span class="tool-dot"></span><span class="tool-label">CVC 短元音单词</span><span class="tool-desc">拼读最基础结构 · 听音分拣</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">辅音二合音融入 CVC</span><span class="sub-range">4</span></div><a class="tool-link live" href="phonics-digraphs-in-cvc.html"><span class="tool-dot"></span><span class="tool-label">二合音融入CVC</span><span class="tool-desc">sh/ch/th/wh/ck/ng/ph · 双层三明治</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">辅音连缀家族</span><span class="sub-range">5-10</span></div><a class="tool-link live" href="phonics-l-blends.html"><span class="tool-dot"></span><span class="tool-label">L 家族连缀</span><span class="tool-desc">bl cl fl gl pl sl · 词尾 -ld -lf -lk -lp -lt</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-r-blends.html"><span class="tool-dot"></span><span class="tool-label">R 家族连缀</span><span class="tool-desc">br cr dr fr gr pr tr · 只有词首</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-s-blends.html"><span class="tool-dot"></span><span class="tool-label">S 家族连缀</span><span class="tool-desc">sc sk sm sn sp st sw · 三字母 + 词尾</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-nasal-blends.html"><span class="tool-dot"></span><span class="tool-label">鼻音家族连缀</span><span class="tool-desc">-mp -nd -nt -nk · 词尾鼻音 + 三字母 -mpt -nct</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-clean-final-blends.html"><span class="tool-dot"></span><span class="tool-label">清辅音词尾连缀</span><span class="tool-desc">-ft -pt -ct -xt · 清辅音 + t 轻轻收尾</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-w-blends.html"><span class="tool-dot"></span><span class="tool-label">W 家族连缀</span><span class="tool-desc">tw dw sw · 辅音 + w 圆嘴巴</span><span class="tool-go">→</span></a></div><div class="sub-stage"><div class="sub-head"><span class="sub-name">连缀加长</span><span class="sub-range">11-12</span></div><a class="tool-link live" href="phonics-ccvc-forward.html"><span class="tool-dot"></span><span class="tool-label">CCVC 前置加长</span><span class="tool-desc">词首连缀 + 短元音 · stop / frog / strap</span><span class="tool-go">→</span></a><a class="tool-link live" href="phonics-cvcc-backward.html"><span class="tool-dot"></span><span class="tool-label">CVCC 后置加长</span><span class="tool-desc">词尾连缀 + 短元音 · milk / hand / jump</span><span class="tool-go">→</span></a></div></div></div></div>
+<!-- 阶段三 -->
     <div class="stage">
       <div class="stage-badge">3</div>
       <div class="stage-card">
@@ -270,11 +165,8 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
         <div class="stage-path">高频词专项（全程并行） <span class="arr">→</span> 综合闯关 <span class="arr">→</span> 绘本解码 → 自主阅读</div>
         <div class="stage-goal">可流利朗读对应难度分级绘本，具备完整的英语自主阅读能力</div>
       </div>
-    </div>
-
-  </div>
-
-  <div class="footer">
+</div>
+<div class="footer">
     <p>关注公众号「<span class="highlight">可豆妈妈</span>」</p>
     <p>每次上新第一时间收到通知，陪孩子一步步走完拼读全程 👣</p>
   </div>
