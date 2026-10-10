@@ -361,14 +361,16 @@ function showQR(){var s=qS.as.reduce(function(a,x,i){return a+(x===qS.qs[i].a?1:
 
 // ═══ BOOK ═══
 var bp_cp=0,bp_pages=[
-  {s:'🔥😊',t:'A Fire',x:'A <span class="dg-hl">fire</span> is in the pit.<br>It is so warm.'},
-  {s:'🔌😊',t:'A Wire',x:'A <span class="dg-hl">wire</span> hangs low.<br>A <span class="dg-hl">tire</span> rolls by.'},
-  {s:'👦😊',t:'Admire',x:'A kid stops to <span class="dg-hl">admire</span> the <span class="dg-hl">fire</span>.'},
-  {s:'👦💭',t:'Desire',x:'He has a <span class="dg-hl">desire</span> to make his own <span class="dg-hl">fire</span>.'},
-  {s:'👦🔥',t:'The Fire',x:'The kid makes a small <span class="dg-hl">fire</span>.<br>It is safe.'},
-  {s:'😊👦',t:'Glad',x:'The kid is glad.<br>What a good <span class="dg-hl">fire</span>!'},
+  {s:'🔥😊',t:'A Fire',x:'A warm <span class="dg-hl">fire</span> glows in the pit.<br>It crackles and pops.<br>A kid sits close and smiles.'},
+  {s:'🔌😊',t:'A Wire',x:'A <span class="dg-hl">wire</span> hangs low nearby.<br>A <span class="dg-hl">tire</span> rolls slowly by.<br>The kid looks at the warm <span class="dg-hl">fire</span>.'},
+  {s:'👦🤩',t:'Admire',x:'The kid stops to <span class="dg-hl">admire</span> the <span class="dg-hl">fire</span>.<br>The flames dance up and up.<br>“How beautiful!” he whispers.'},
+  {s:'👦💭',t:'Desire',x:'He has a strong <span class="dg-hl">desire</span>.<br>He wants to make his own <span class="dg-hl">fire</span>.<br>But he knows it can be risky.'},
+  {s:'👦🧠',t:'A Plan',x:'“I will be very careful,” he says.<br>He clears a safe, flat spot.<br>He gathers small dry twigs.'},
+  {s:'👦🔥',t:'The Fire',x:'He makes a small, safe <span class="dg-hl">fire</span>.<br>It starts with a tiny spark.<br>Soon it glows warm and bright.'},
+  {s:'👦🤩',t:'Admire Again',x:'He sits back to <span class="dg-hl">admire</span> his <span class="dg-hl">fire</span>.<br>The <span class="dg-hl">wire</span> and <span class="dg-hl">tire</span> are far away.<br>Everything is safe and calm.'},
+  {s:'😊👦',t:'Glad',x:'The kid is glad.<br>His <span class="dg-hl">desire</span> came true at last.<br>What a warm, good <span class="dg-hl">fire</span>!'},
   {s:'📖✨',t:'Words We Met',x:'<div class="glossary-grid"><div class="gi"><div class="gw">fire <span class="speak-btn" onclick="spk(&#39;fire&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ire /aɪə/</div><div class="gz">火 🔥</div></div><div class="gi"><div class="gw">wire <span class="speak-btn" onclick="spk(&#39;wire&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ire /aɪə/</div><div class="gz">电线 🔌</div></div><div class="gi"><div class="gw">tire <span class="speak-btn" onclick="spk(&#39;tire&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ire /aɪə/</div><div class="gz">轮胎 🛞</div></div><div class="gi"><div class="gw">admire <span class="speak-btn" onclick="spk(&#39;admire&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ire /aɪə/</div><div class="gz">敬佩 🤩</div></div><div class="gi"><div class="gw">desire <span class="speak-btn" onclick="spk(&#39;desire&#39;);event.stopPropagation()" style="width:18px;height:18px;font-size:.5em">🔊</span></div><div class="gm">ire /aɪə/</div><div class="gz">渴望 💭</div></div></div>'},
-];
+];;
 var bp_reading=false,bp_audio=null;
 function spkBookUK(){playBookAudio('uk')}
 function spkBookUS(){playBookAudio('us')}
