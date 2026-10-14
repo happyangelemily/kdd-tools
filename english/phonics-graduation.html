@@ -48,11 +48,15 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#
 .book-progress{margin:14px auto 0;max-width:560px}.pbar{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}.pbar .fill{height:100%;background:linear-gradient(90deg,#ff8a65,#ffd200);transition:width .3s}
 
 /* hover 词卡 */
-.wpop{position:fixed;z-index:70;background:#1a1a2e;border:2px solid #ffd200;border-radius:16px;padding:14px 16px;max-width:250px;box-shadow:0 12px 40px rgba(0,0,0,.7);animation:pop .2s;display:none}
+.wpop{position:fixed;z-index:70;background:#1a1a2e;border:2px solid #ffd200;border-radius:16px;padding:14px 16px;max-width:300px;box-shadow:0 12px 40px rgba(0,0,0,.7);animation:pop .2s;display:none}
 .wpop .wi{font-size:2em;text-align:center}
 .wpop .ww{font-size:1.6em;font-weight:bold;color:#ffd200;text-align:center;margin:2px 0;letter-spacing:1px}
 .wpop .wc{font-size:.95em;color:#e0e0e0;text-align:center;margin-bottom:6px}
 .wpop .wr{font-size:.82em;color:#bbb;line-height:1.55;text-align:center}
+.wseg{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:7px 0 3px}
+.wseg-item{display:flex;flex-direction:column;align-items:center;background:rgba(0,0,0,.28);border-radius:8px;padding:4px 7px;min-width:32px}
+.wseg-let{font-weight:bold;font-size:1.3em;line-height:1.2}
+.wseg-ipa{font-size:.72em;color:#ffd200}
 
 /* ===== 毕业证书（白底）===== */
 .cert{background:#fff;color:#333;border-radius:16px;padding:34px 26px;text-align:center;max-width:520px;margin:0 auto;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.4);border:1px solid #e6d9a8}
@@ -94,12 +98,13 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#
 <h1>🎓 毕业典礼</h1><p class="subtitle">回顾 83 页 → 自己读一本英文绘本 → 领毕业证书</p>
 <div class="nav" id="nav"></div>
 
-<!-- 知识回顾 -->
-<div class="section" id="sec-know"><div class="glass">
-<h2>📚 知识回顾 · 拼读大树</h2>
-<p class="khint">点彩色阶段可收起来 · 每个例词点一下能听发音 🔊</p>
-<div id="knowBox"></div>
-</div></div>
+<!-- 知识回顾（六大阶段，一级标签）-->
+<div class="section" id="sec-stage0"><div class="glass"><div id="stageBox0"></div></div></div>
+<div class="section" id="sec-stage1"><div class="glass"><div id="stageBox1"></div></div></div>
+<div class="section" id="sec-stage2"><div class="glass"><div id="stageBox2"></div></div></div>
+<div class="section" id="sec-stage3"><div class="glass"><div id="stageBox3"></div></div></div>
+<div class="section" id="sec-stage4"><div class="glass"><div id="stageBox4"></div></div></div>
+<div class="section" id="sec-stage5"><div class="glass"><div id="stageBox5"></div></div></div>
 
 <!-- 毕业绘本 -->
 <div class="section" id="sec-book"><div class="glass">
@@ -123,8 +128,8 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#
 兹证明<br>
 <input class="cert-name" placeholder="写下你的名字" id="certName"><br>
 已完成 <b style="color:#b8860b">自然拼读全体系</b> 的学习<br>
-并能<b style="color:#4caf50">自己读懂一本英文绘本</b><br>
-掌握 <b style="color:#4caf50">🔍 见词能读</b> 与 <b style="color:#e67e22">✍️ 听音能写</b> 两大本领
+会<b style="color:#4caf50">拼</b>、会<b style="color:#4caf50">认</b>每一个单词<br>
+掌握了 <b style="color:#4caf50">🔍 见词能读</b> · <b style="color:#e67e22">✍️ 听音能写</b> 的独立阅读本领
 </div>
 <div class="cert-seal">🌟</div>
 <div class="cert-foot">
@@ -166,35 +171,32 @@ function spk(word,el){
 function speakNow(word){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.75;speechSynthesis.speak(u)}catch(e){}}
 
 // === Navigation ===
-var NAVS=[{id:'know',name:'📚 知识回顾'},{id:'book',name:'📖 毕业绘本'},{id:'cert',name:'🎓 毕业证书'}];
 function buildNav(){
-  document.getElementById('nav').innerHTML=NAVS.map(function(n,i){return '<button class="nav-btn'+(i===0?' active':'')+'" onclick="showS(\''+n.id+'\')">'+n.name+'</button>'}).join('');
+  var h=KNOW.map(function(stage,i){return '<button class="nav-btn" style="--c:'+stage.c+'" onclick="showS(\'stage'+i+'\')">'+stage.name+'</button>'}).join('');
+  h+='<button class="nav-btn" onclick="showS(\'book\')">📖 毕业绘本</button>';
+  h+='<button class="nav-btn" onclick="showS(\'cert\')">🎓 毕业证书</button>';
+  document.getElementById('nav').innerHTML=h;
 }
 function showS(n){
   document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
   document.getElementById('sec-'+n).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');if(b.textContent.includes(n==='know'?'知识':(n==='book'?'绘本':'证书')))b.classList.add('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(b){if(b.getAttribute('onclick').indexOf("'"+n+"'")>=0)b.classList.add('active')});
 }
 
-// ===== 知识回顾渲染 =====
-function toggleStage(i){document.getElementById('kstage'+i).classList.toggle('collapsed')}
-function renderKnow(){
-  var h='';
-  KNOW.forEach(function(stage,si){
-    h+='<div class="kstage" id="kstage'+si+'" style="--c:'+stage.c+'">';
-    h+='<div class="kstage-head" onclick="toggleStage('+si+')"><span class="kstage-icon">'+stage.icon+'</span><span class="kstage-name">'+stage.name+'</span><span class="kstage-intro">'+stage.intro+'</span><span class="kstage-fold">▼</span></div>';
-    h+='<div class="kstage-body">';
-    stage.subs.forEach(function(sub){
-      h+='<div class="ksub"><div class="ksub-name">'+sub.name+'</div>';
-      sub.cards.forEach(function(card){
-        var ws=card.w.map(function(wp){return '<span class="kword" style="--c:'+stage.c+'" onclick="spk(\''+wp[0]+'\',this)">'+wp[0]+' <b>'+wp[1]+'</b> <span class="sp">🔊</span></span>'}).join('');
-        h+='<div class="kcard"><div class="kcard-title"><span>'+card.i+'</span>'+card.t+'</div><div class="kcard-rule">'+card.r+'</div><div class="kcard-words">'+ws+'</div></div>';
-      });
-      h+='</div>';
+// ===== 知识回顾渲染（每阶段一个 section）=====
+function renderStage(i){
+  var stage=KNOW[i];
+  var h='<h2 style="color:'+stage.c+'">'+stage.name+'</h2><p class="khint">'+stage.intro+' · 每个例词点一下能听发音 🔊</p>';
+  stage.subs.forEach(function(sub){
+    h+='<div class="ksub" style="--c:'+stage.c+'"><div class="ksub-name">'+sub.name+'</div>';
+    sub.cards.forEach(function(card){
+      var ws=card.w.map(function(wp){return '<span class="kword" style="--c:'+stage.c+'" onclick="spk(\''+wp[0]+'\',this)">'+wp[0]+' <b>'+wp[1]+'</b> <span class="sp">🔊</span></span>'}).join('');
+      h+='<div class="kcard"><div class="kcard-title"><span>'+card.i+'</span>'+card.t+'</div><div class="kcard-rule">'+card.r+'</div><div class="kcard-words">'+ws+'</div></div>';
     });
-    h+='</div></div>';
+    h+='</div>';
   });
-  document.getElementById('knowBox').innerHTML=h;
+  document.getElementById('stageBox'+i).innerHTML=h;
 }
 
 // ===== 毕业绘本 =====
@@ -235,13 +237,24 @@ function showWpop(el){
   var w=el.getAttribute('data-w');var card=WORDCARDS[w];if(!card)return;
   var pop=document.getElementById('wpop');
   if(!pop){pop=document.createElement('div');pop.id='wpop';pop.className='wpop';document.body.appendChild(pop);}
-  pop.innerHTML='<div class="wi">'+card.i+'</div><div class="ww">'+el.textContent+'</div><div class="wc">'+card.c+'</div><div class="wr">'+card.r+'</div>';
+  pop.innerHTML='<div class="wi">'+card.i+'</div><div class="ww">'+el.textContent+'</div><div class="wc">'+card.c+'</div>'+renderSeg(card.seg)+'<div class="wr">'+card.r+'</div>';
   pop.style.display='block';
   var r=el.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight;
   var x=r.left+r.width/2-pw/2,y=r.top-ph-8;
   if(y<8)y=r.bottom+8;
   x=Math.max(8,Math.min(x,window.innerWidth-pw-8));
   pop.style.left=x+'px';pop.style.top=y+'px';
+}
+function renderSeg(seg){
+  if(!seg||!seg.length)return '';
+  var h='<div class="wseg">';
+  seg.forEach(function(s){
+    var color=(s[2]==='v')?'#4fc3f7':((s[2]==='s'||s[2]==='e')?'#9e9e9e':'#81c784');
+    var ipa=s[1]||(s[2]==='e'?'不发音':(s[2]==='s'?'静音':''));
+    h+='<span class="wseg-item"><span class="wseg-let" style="color:'+color+'">'+s[0]+'</span><span class="wseg-ipa">'+ipa+'</span></span>';
+  });
+  h+='</div>';
+  return h;
 }
 function hideWpop(){var p=document.getElementById('wpop');if(p)p.style.display='none';}
 document.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('.pw');if(el)showWpop(el)});
@@ -254,7 +267,15 @@ function downloadPDF(){
   var btn=event.target;
   if(!window.html2canvas||!window.jspdf){alert('PDF 组件加载中，请稍候再试（需联网）');return;}
   var cert=document.getElementById('cert');
-  html2canvas(cert,{scale:2,backgroundColor:'#ffffff',useCORS:true}).then(function(canvas){
+  html2canvas(cert,{scale:2,backgroundColor:'#ffffff',useCORS:true,onclone:function(doc){
+    var c=doc.getElementById('cert');if(c)c.style.paddingTop='46px';
+    var rb=doc.querySelector('.cert-ribbon');
+    if(rb){rb.style.position='relative';rb.style.top='0';rb.style.left='0';rb.style.transform='none';rb.style.margin='0 auto 12px';rb.style.display='inline-block';}
+    var nm=doc.getElementById('certName');
+    if(nm){var s=doc.createElement('span');s.style.cssText='display:inline-block;border-bottom:2px dashed #b8860b;color:#b8860b;font-size:1.35em;font-weight:bold;padding:4px 16px;min-width:130px';s.textContent=nm.value||'________';nm.parentNode.replaceChild(s,nm);}
+    var dt=doc.getElementById('certDate');
+    if(dt){var d=doc.createElement('span');d.style.cssText='color:#b8860b;font-size:1em;border-bottom:2px dashed #b8860b;padding:2px 10px';d.textContent=dt.value||'____年__月__日';dt.parentNode.replaceChild(d,dt);}
+  }}).then(function(canvas){
     var img=canvas.toDataURL('image/png');
     var pdf=new window.jspdf.jsPDF('p','mm','a4');
     var pw=pdf.internal.pageSize.getWidth(),ph=pdf.internal.pageSize.getHeight();
@@ -269,6 +290,6 @@ function downloadPDF(){
 function setToday(){var d=new Date();var s=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var el=document.getElementById('certDate');if(el)el.value=s;}
 
 // === Init ===
-buildNav();renderKnow();renderPage();setToday();
+buildNav();KNOW.forEach(function(s,i){renderStage(i)});renderPage();setToday();
 </script>
 </body></html>
