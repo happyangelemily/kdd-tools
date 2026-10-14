@@ -57,18 +57,18 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#
 .wseg-item{display:flex;flex-direction:column;align-items:center;background:rgba(0,0,0,.28);border-radius:8px;padding:4px 7px;min-width:32px}
 .wseg-let{font-weight:bold;font-size:1.3em;line-height:1.2}
 .wseg-ipa{font-size:.72em;color:#ffd200}
+.wst{font-size:.78em;color:#4fc3f7;line-height:1.5;text-align:center;margin:4px 0 1px;background:rgba(79,195,247,.08);border-radius:8px;padding:3px 8px}
 
 /* ===== 毕业证书（白底）===== */
-.cert{background:#fff;color:#333;border-radius:16px;padding:34px 26px;text-align:center;max-width:520px;margin:0 auto;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.4);border:1px solid #e6d9a8}
-.cert::before{content:'';position:absolute;inset:8px;border:2px solid #c9a63c;border-radius:10px;pointer-events:none}
-.cert-ribbon{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e;font-weight:bold;padding:4px 20px;border-radius:20px;font-size:.82em;white-space:nowrap}
-.cert-title{font-size:1.9em;font-weight:bold;color:#b8860b;letter-spacing:5px;margin:12px 0 4px}
+.cert{background:#fff;color:#333;border:3px double #c9a63c;border-radius:14px;padding:28px 22px 26px;text-align:center;max-width:520px;margin:0 auto;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.cert-ribbon{display:inline-block;background:linear-gradient(135deg,#ff8a65,#ffd200);color:#1a1a2e;font-weight:bold;padding:5px 22px;border-radius:20px;font-size:.82em;margin:0 auto 14px}
+.cert-title{font-size:1.9em;font-weight:bold;color:#b8860b;letter-spacing:5px;margin:6px 0 4px}
 .cert-en{font-size:.72em;color:#c9a63c;letter-spacing:2px;margin-bottom:14px;text-transform:uppercase}
 .cert-body{font-size:.95em;color:#444;line-height:2.1}
 .cert-name{background:transparent;border:none;border-bottom:2px dashed #b8860b;color:#b8860b;font-size:1.35em;font-weight:bold;text-align:center;width:62%;padding:4px 0;margin:8px 0}
 .cert-date{background:transparent;border:none;border-bottom:2px dashed #b8860b;color:#b8860b;font-size:1em;text-align:center;padding:3px 0;margin:4px 0;max-width:180px}
 .cert-seal{font-size:3.2em;margin:12px 0 4px;animation:float 3s ease-in-out infinite}
-.cert-foot{display:flex;justify-content:space-between;font-size:.75em;color:#999;margin-top:10px;padding:0 4px}
+.cert-foot{display:flex;justify-content:space-between;align-items:center;font-size:.8em;color:#777;margin-top:16px;padding:0 4px;gap:8px}
 .cert-actions{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
 .cert-note{text-align:center;color:#888;font-size:.8em;margin-top:10px}
 
@@ -133,7 +133,7 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#
 </div>
 <div class="cert-seal">🌟</div>
 <div class="cert-foot">
-<span>📅 日期 <input class="cert-date" type="date" id="certDate"></span>
+<span>📅 日期：<input class="cert-date" type="date" id="certDate"></span>
 <span>🏆 拼读高手</span>
 </div>
 </div>
@@ -237,7 +237,7 @@ function showWpop(el){
   var w=el.getAttribute('data-w');var card=WORDCARDS[w];if(!card)return;
   var pop=document.getElementById('wpop');
   if(!pop){pop=document.createElement('div');pop.id='wpop';pop.className='wpop';document.body.appendChild(pop);}
-  pop.innerHTML='<div class="wi">'+card.i+'</div><div class="ww">'+el.textContent+'</div><div class="wc">'+card.c+'</div>'+renderSeg(card.seg)+'<div class="wr">'+card.r+'</div>';
+  pop.innerHTML='<div class="wi">'+card.i+'</div><div class="ww">'+el.textContent+'</div><div class="wc">'+card.c+'</div>'+renderSeg(card.seg)+'<div class="wst">'+(card.st||'')+'</div><div class="wr">'+card.r+'</div>';
   pop.style.display='block';
   var r=el.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight;
   var x=r.left+r.width/2-pw/2,y=r.top-ph-8;
@@ -268,13 +268,10 @@ function downloadPDF(){
   if(!window.html2canvas||!window.jspdf){alert('PDF 组件加载中，请稍候再试（需联网）');return;}
   var cert=document.getElementById('cert');
   html2canvas(cert,{scale:2,backgroundColor:'#ffffff',useCORS:true,onclone:function(doc){
-    var c=doc.getElementById('cert');if(c)c.style.paddingTop='46px';
-    var rb=doc.querySelector('.cert-ribbon');
-    if(rb){rb.style.position='relative';rb.style.top='0';rb.style.left='0';rb.style.transform='none';rb.style.margin='0 auto 12px';rb.style.display='inline-block';}
     var nm=doc.getElementById('certName');
     if(nm){var s=doc.createElement('span');s.style.cssText='display:inline-block;border-bottom:2px dashed #b8860b;color:#b8860b;font-size:1.35em;font-weight:bold;padding:4px 16px;min-width:130px';s.textContent=nm.value||'________';nm.parentNode.replaceChild(s,nm);}
     var dt=doc.getElementById('certDate');
-    if(dt){var d=doc.createElement('span');d.style.cssText='color:#b8860b;font-size:1em;border-bottom:2px dashed #b8860b;padding:2px 10px';d.textContent=dt.value||'____年__月__日';dt.parentNode.replaceChild(d,dt);}
+    if(dt){var d=doc.createElement('span');d.style.cssText='color:#b8860b;font-size:1em;font-weight:bold';var v=dt.value;d.textContent=v?(v.split('-')[0]+'年'+parseInt(v.split('-')[1])+'月'+parseInt(v.split('-')[2])+'日'):'____年__月__日';dt.parentNode.replaceChild(d,dt);}
   }}).then(function(canvas){
     var img=canvas.toDataURL('image/png');
     var pdf=new window.jspdf.jsPDF('p','mm','a4');
@@ -290,6 +287,6 @@ function downloadPDF(){
 function setToday(){var d=new Date();var s=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var el=document.getElementById('certDate');if(el)el.value=s;}
 
 // === Init ===
-buildNav();KNOW.forEach(function(s,i){renderStage(i)});renderPage();setToday();
+buildNav();KNOW.forEach(function(s,i){renderStage(i)});renderPage();setToday();showS('stage0');
 </script>
 </body></html>
