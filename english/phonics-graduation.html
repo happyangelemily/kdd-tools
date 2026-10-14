@@ -212,7 +212,7 @@ function renderText(x){
 }
 function renderPage(){
   var p=BOOK[bp_cp];
-  document.getElementById('bookPage').innerHTML='<div class="book-page"><div class="book-scene">'+p.s+'</div><div class="book-title">'+p.t+'</div><div class="book-text">'+renderText(p.x)+'</div><div class="book-pron">'+(bp_cp>=BOOK.length-1?'':'<button class="pron-btn uk" onclick="spkBook(\'uk\')">🇬🇧 UK</button><button class="pron-btn us" onclick="spkBook(\'us\')">🇺🇸 US</button>')+'</div></div>';
+  document.getElementById('bookPage').innerHTML='<div class="book-page"><div class="book-scene">'+p.s+'</div><div class="book-title">'+p.t+'</div><div class="book-text">'+renderText(p.x)+'</div><div class="book-pron"><button class="pron-btn uk" onclick="spkBook(\'uk\')">🇬🇧 UK</button><button class="pron-btn us" onclick="spkBook(\'us\')">🇺🇸 US</button></div></div>';
   document.getElementById('bFill').style.width=((bp_cp+1)/BOOK.length*100)+'%';
   document.getElementById('bookNav').innerHTML='<button class="btn btn-outline" onclick="goPage(-1)"'+(bp_cp===0?' disabled':'')+'>⬅ 上一页</button><span class="book-pagenum">'+(bp_cp+1)+' / '+BOOK.length+'</span><button class="btn btn-gold" onclick="goPage(1)">'+(bp_cp>=BOOK.length-1?'🎓 看证书':'下一页 ▶')+'</button>';
   hideWpop();
