@@ -58,6 +58,12 @@ h1{font-size:1.9em;text-align:center;background:linear-gradient(135deg,#ff8a65,#
 .wseg-let{font-weight:bold;font-size:1.3em;line-height:1.2}
 .wseg-ipa{font-size:.72em;color:#ffd200}
 .wst{font-size:.78em;color:#4fc3f7;line-height:1.5;text-align:center;margin:4px 0 1px;background:rgba(79,195,247,.08);border-radius:8px;padding:3px 8px}
+.wsyll{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin:6px 0 2px;align-items:stretch}
+.wsyll-item{display:flex;flex-direction:column;align-items:center;background:rgba(255,210,0,.07);border:1px solid rgba(255,210,0,.22);border-radius:10px;padding:5px 9px;min-width:46px}
+.wsyll-syll{font-weight:bold;font-size:1.3em;color:#ffd200;line-height:1.2}
+.wsyll-ipa{font-size:.7em;color:#ff8a65;margin:2px 0}
+.wsyll-st{font-size:.68em;color:#bbb;line-height:1.3;text-align:center;max-width:70px}
+.wsyll-sep{align-self:center;color:#ffd200;font-size:1.3em;font-weight:bold}
 
 /* ===== 毕业证书（白底）===== */
 .cert{background:#fff;color:#333;border:3px double #c9a63c;border-radius:14px;padding:28px 22px 26px;text-align:center;max-width:520px;margin:0 auto;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.4)}
@@ -237,13 +243,23 @@ function showWpop(el){
   var w=el.getAttribute('data-w');var card=WORDCARDS[w];if(!card)return;
   var pop=document.getElementById('wpop');
   if(!pop){pop=document.createElement('div');pop.id='wpop';pop.className='wpop';document.body.appendChild(pop);}
-  pop.innerHTML='<div class="wi">'+card.i+'</div><div class="ww">'+el.textContent+'</div><div class="wc">'+card.c+'</div>'+renderSeg(card.seg)+'<div class="wst">'+(card.st||'')+'</div><div class="wr">'+card.r+'</div>';
+  pop.innerHTML='<div class="wi">'+card.i+'</div><div class="ww">'+el.textContent+'</div><div class="wc">'+card.c+'</div>'+renderSeg(card.seg)+renderSyll(card.syll)+'<div class="wst">'+(card.st||'')+'</div><div class="wr">'+card.r+'</div>';
   pop.style.display='block';
   var r=el.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight;
   var x=r.left+r.width/2-pw/2,y=r.top-ph-8;
   if(y<8)y=r.bottom+8;
   x=Math.max(8,Math.min(x,window.innerWidth-pw-8));
   pop.style.left=x+'px';pop.style.top=y+'px';
+}
+function renderSyll(syll){
+  if(!syll||!syll.length)return '';
+  var h='<div class="wsyll">';
+  syll.forEach(function(s,i){
+    h+='<div class="wsyll-item"><div class="wsyll-syll">'+s[0]+'</div><div class="wsyll-ipa">'+s[1]+'</div><div class="wsyll-st">'+s[2]+'</div></div>';
+    if(i<syll.length-1)h+='<div class="wsyll-sep">·</div>';
+  });
+  h+='</div>';
+  return h;
 }
 function renderSeg(seg){
   if(!seg||!seg.length)return '';
