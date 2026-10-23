@@ -115,6 +115,14 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
 }
 
 input,select,textarea{font-size:16px}
+.syl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.syl-card{background:rgba(0,0,0,.2);border:2px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.syl-ico{font-size:1.7em;line-height:1}
+.syl-name{font-weight:bold;font-size:.95em}
+.syl-word{font-size:1.2em;font-weight:bold;letter-spacing:2px}
+.syl-desc{color:#aaa;font-size:.7em;line-height:1.45}
+.syl-tag{font-size:.66em;white-space:nowrap}
+@media(max-width:768px){.syl-grid{grid-template-columns:repeat(2,1fr);gap:7px}.syl-card{padding:10px 5px;border-radius:12px}.syl-name{font-size:.82em}.syl-word{font-size:1.05em}.syl-desc{font-size:.66em}.syl-ico{font-size:1.5em}}
 </style>
 <body><div class="stars" id="stars"></div><div class="container">
 <h1>🧱 音节：单词的发音积木</h1><p class="subtitle">拆词成音节 · 开音节喊名字 · 闭音节发短音</p>
@@ -154,45 +162,14 @@ input,select,textarea{font-size:16px}
 </div>
 
 <h3>🧩 六种音节积木</h3>
-<div style="display:flex;flex-direction:column;gap:6px;margin:10px 0">
-  <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;flex-wrap:wrap">
-    <span style="font-size:1.25em">🔒</span>
-    <span style="font-weight:bold;color:#4fc3f7;min-width:86px">闭音节</span>
-    <span style="flex:1;min-width:180px;color:#aaa;font-size:.88em">元音被挡，发短音（cat）</span>
-    <span style="color:#69f0ae;font-size:.78em;white-space:nowrap">✅ 学过</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;background:rgba(255,210,0,.08);border:1px solid rgba(255,210,0,.35);border-radius:10px;padding:8px 12px;flex-wrap:wrap">
-    <span style="font-size:1.25em">🔓</span>
-    <span style="font-weight:bold;color:#ffd200;min-width:86px">开音节</span>
-    <span style="flex:1;min-width:180px;color:#aaa;font-size:.88em">元音喊名字（he · make）</span>
-    <span style="color:#ffd200;font-size:.78em;white-space:nowrap">📖 本课学</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;flex-wrap:wrap">
-    <span style="font-size:1.25em">✨</span>
-    <span style="font-weight:bold;color:#ce93d8;min-width:86px">魔法-E (VCe)</span>
-    <span style="flex:1;min-width:180px;color:#aaa;font-size:.88em">= 相对开音节，元音+辅音+不发音 e（cake）</span>
-    <span style="color:#888;font-size:.78em;white-space:nowrap">⏳ 后面学</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;flex-wrap:wrap">
-    <span style="font-size:1.25em">🎇</span>
-    <span style="font-weight:bold;color:#ce93d8;min-width:86px">元音组合</span>
-    <span style="flex:1;min-width:180px;color:#aaa;font-size:.88em">两个字母合发一个音（rain）</span>
-    <span style="color:#888;font-size:.78em;white-space:nowrap">⏳ 后面学</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;flex-wrap:wrap">
-    <span style="font-size:1.25em">🦁</span>
-    <span style="font-weight:bold;color:#ef9a9a;min-width:86px">R 控元音</span>
-    <span style="flex:1;min-width:180px;color:#aaa;font-size:.88em">元音被 r 改变（car）</span>
-    <span style="color:#888;font-size:.78em;white-space:nowrap">⏳ 后面学</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;flex-wrap:wrap">
-    <span style="font-size:1.25em">📦</span>
-    <span style="font-weight:bold;color:#ffd200;min-width:86px">辅音-le</span>
-    <span style="flex:1;min-width:180px;color:#aaa;font-size:.88em">词尾特殊音节（table）</span>
-    <span style="color:#888;font-size:.78em;white-space:nowrap">⏳ 后面学</span>
-  </div>
+<div class="syl-grid">
+  <div class="syl-card" style="border-color:rgba(79,195,247,.45)"><div class="syl-ico">🔒</div><div class="syl-name" style="color:#4fc3f7">闭音节</div><div class="syl-word"><span style="color:#81c784">c</span><span style="color:#4fc3f7;text-decoration:underline">a</span><span style="color:#81c784">t</span></div><div class="syl-desc">元音被挡<br>发短音</div><div class="syl-tag" style="color:#69f0ae">✅ 学过</div></div>
+  <div class="syl-card" style="border-color:rgba(255,210,0,.5)"><div class="syl-ico">🔓</div><div class="syl-name" style="color:#ffd200">开音节</div><div class="syl-word"><span style="color:#81c784">h</span><span style="color:#ffd200;text-decoration:underline">e</span></div><div class="syl-desc">绝对 · 元音站词尾<br>喊名字</div><div class="syl-tag" style="color:#ffd200">📖 本课学</div></div>
+  <div class="syl-card" style="border-color:rgba(206,147,216,.45)"><div class="syl-ico">✨</div><div class="syl-name" style="color:#ce93d8">魔法-E</div><div class="syl-word"><span style="color:#81c784">c</span><span style="color:#ce93d8;text-decoration:underline">a</span><span style="color:#81c784">k</span><span style="color:#888">e</span></div><div class="syl-desc">相对 · 元音+辅音+e<br>喊名字</div><div class="syl-tag" style="color:#888">⏳ 后面学</div></div>
+  <div class="syl-card" style="border-color:rgba(206,147,216,.4)"><div class="syl-ico">🎇</div><div class="syl-name" style="color:#ce93d8">元音组合</div><div class="syl-word"><span style="color:#81c784">r</span><span style="color:#ce93d8;text-decoration:underline">ai</span><span style="color:#81c784">n</span></div><div class="syl-desc">两字母<br>合发一音</div><div class="syl-tag" style="color:#888">⏳ 后面学</div></div>
+  <div class="syl-card" style="border-color:rgba(239,154,154,.45)"><div class="syl-ico">🦁</div><div class="syl-name" style="color:#ef9a9a">R 控元音</div><div class="syl-word"><span style="color:#81c784">c</span><span style="color:#ef9a9a;text-decoration:underline">ar</span></div><div class="syl-desc">元音被 r<br>改变</div><div class="syl-tag" style="color:#888">⏳ 后面学</div></div>
+  <div class="syl-card" style="border-color:rgba(255,210,0,.45)"><div class="syl-ico">📦</div><div class="syl-name" style="color:#ffd200">辅音-le</div><div class="syl-word"><span style="color:#81c784">tab</span><span style="color:#ffd200;text-decoration:underline">le</span></div><div class="syl-desc">词尾特殊<br>音节</div><div class="syl-tag" style="color:#888">⏳ 后面学</div></div>
 </div>
-
 <h3>🔒 闭音节 · 元音被挡，发短音</h3>
 <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0">
 <div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-size:1.3em;font-weight:bold"><span style="color:#81c784">c</span><span style="color:#4fc3f7;text-decoration:underline">a</span><span style="color:#81c784">p</span></div><div style="color:#888;font-size:.7em">/kæp/ 帽子</div><span class="speak-btn" onclick="spk(&#39;cap&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div>
@@ -217,7 +194,7 @@ input,select,textarea{font-size:16px}
 <div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-size:1.3em;font-weight:bold"><span style="color:#81c784">l</span><span style="color:#ffd200;text-decoration:underline">i</span><span style="color:#81c784">k</span><span style="color:#888">e</span></div><div style="color:#888;font-size:.7em">/laɪk/ 喜欢</div><span class="speak-btn" onclick="spk(&#39;like&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div>
 <div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-size:1.3em;font-weight:bold"><span style="color:#81c784">n</span><span style="color:#ffd200;text-decoration:underline">o</span><span style="color:#81c784">t</span><span style="color:#888">e</span></div><div style="color:#888;font-size:.7em">/nəʊt/ 便条</div><span class="speak-btn" onclick="spk(&#39;note&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div>
 </div>
-<div class="magic-rule" style="border-color:rgba(255,210,0,.4)">✨ 相对开音节 = <b>魔法 E</b>（a_e / i_e / o_e…），后面 17-22 课细细学！</div>
+<div class="magic-rule" style="border-color:rgba(255,210,0,.4)">✨ 相对开音节 = <b>魔法 E</b>（a_e / i_e / o_e…），接下来魔法 E 那几课细细学！</div>
 
 <h3>🔍 三步读生词</h3>
 <div style="background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;margin:10px 0">
