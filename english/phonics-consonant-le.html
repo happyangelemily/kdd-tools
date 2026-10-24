@@ -160,6 +160,10 @@ input,select,textarea{font-size:16px}
 <div class="sort-feedback" id="sortFeedback"></div>
 <div style="text-align:center;margin-top:8px"><button class="btn btn-outline" onclick="resetSort()">🔄 重来</button></div>
 </div></div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz"><div class="glass"><h2>🏆 闯关挑战（10题）</h2><p style="color:#aaa;margin-bottom:8px">听音 · 辨结构 · 选拼写</p><div class="quiz-container"><div class="quiz-progress" id="qd"></div><div id="qc"></div><div class="quiz-nav" id="qn"></div><div id="qf" style="display:none"></div></div></div></div>
+
 <!-- ===== BOOK ===== -->
 <div class="section" id="sec-book"><div class="glass"><h2>📚 The Little Apple</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本 -le 结尾绘本 🍎</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
 
@@ -368,7 +372,6 @@ var quizPool=[{t:'find',q:'table 词尾 ble 发什么音？',w:'table',o:['/l/',
 {t:'spell',q:'/ˈpɜːpl/（紫色）的正确拼写是？',o:['purpel','purple','purpal','purpil'],a:1,x:'purple 用 ple 拼写！'},
 {t:'choose',q:'-le 前面是短元音，辅音会怎样？',o:['双写','不写','变成元音','消失'],a:0,x:'短元音后 le 前的辅音要双写（little、apple、middle）。'},
 {t:'listen',q:'🔊 听发音：table 词尾是？',w:'table',o:['/əl/','/l/','/liː/','/eɪl/'],a:0,x:'table 词尾 ble 发 /əl/！'}
-];
 ];
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
