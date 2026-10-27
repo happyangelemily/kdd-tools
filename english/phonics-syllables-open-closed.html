@@ -207,7 +207,7 @@ input,select,textarea{font-size:16px}
 <div class="magic-rule">🎯 口诀：<b>门开着，元音喊名字；门关着，元音发短音。隔着辅音藏个 e，遥控元音喊名字！</b></div>
 
 <h3>🎮 听音小侦探</h3>
-<div class="story-speech"><p>点 🔊 听词，选：元音<b style="color:#ffd200">喊名字</b>（开）还是<b style="color:#4fc3f7">发短音</b>（闭）？</p></div>
+<div class="story-speech"><p>点 🔊 听词，判断是 <b style="color:#4fc3f7">🔵 闭音节（发短音）</b> 还是 <b style="color:#ffd200">🟡 开音节（喊名字）</b>？</p></div>
 <div style="background:rgba(0,0,0,.25);border:2px solid rgba(255,210,0,.3);border-radius:14px;padding:16px;text-align:center;margin:12px 0">
   <div style="font-weight:bold;color:#ffd200;margin-bottom:6px">🔍 听一听，选一选</div>
   <div style="font-size:1.6em;font-weight:bold;color:#ffd200;letter-spacing:3px;margin:6px 0" id="gWord">cap</div>
@@ -408,8 +408,8 @@ function gShow(){
   gDone=false;
   document.getElementById('gWord').textContent=gQ[gI].w;
   document.getElementById('gOpts').innerHTML=
-    '<button class="quiz-opt" onclick="gPick(0)">🔵 发短音</button>'+
-    '<button class="quiz-opt" onclick="gPick(1)">🟡 喊名字</button>';
+    '<button class="quiz-opt" onclick="gPick(0)">🔵 闭音节<br><span style="font-size:.72em;color:#4fc3f7">发短音</span></button>'+
+    '<button class="quiz-opt" onclick="gPick(1)">🟡 开音节<br><span style="font-size:.72em;color:#ffd200">喊名字</span></button>';
   document.getElementById('gFb').innerHTML='';
 }
 function gPick(i){
@@ -433,8 +433,8 @@ function gNext(){
 gShow();
 
 // ═══ LAB ═══
-var labData={open:{label:'🔓 开音节 · 元音站词尾，喊名字',words:['he👦他','she👧她','we👥我们','me🙋我','be✨是','go🏃去','no🙅不','so👉所以','hi👋嗨','I🙋我']},closed:{label:'🔒 闭音节 · 被挡发短音',words:['cap🧢帽子','cat🐱猫','hat🎩礼帽','map🗺️地图','pet🐶宠物','bed🛏️床','pen🖊️笔','leg🦵腿','sit🪑坐','pig🐷猪','kit🔧装备','big🔍大','hot🥵热','hop🦘跳','dog🐕狗','box📦盒子','not🙅不','cut🔪切','cup☕杯子','sun☀️太阳','bus🚌公交','run🏃跑']}};
-var curL='open';
+var labData={abs:{label:'🔓 绝对开音节 CV · 元音站词尾，喊名字',words:['he👦他','she👧她','we👥我们','me🙋我','be✨是','go🏃去','no🙅不','so👉所以','hi👋嗨','I🙋我']},rel:{label:'✨ 相对开音节 CVCe · 元音+辅音+魔法 e',words:['make🛠️做','cake🎂蛋糕','like❤️喜欢','note📝便条','hope🌟希望','kite🪁风筝','cube🧊方块','cute🥰可爱','game🎮游戏','name📛名字','late⏰迟到','wave👋挥手']},closed:{label:'🔒 闭音节 · 被挡发短音',words:['cap🧢帽子','cat🐱猫','hat🎩礼帽','map🗺️地图','pet🐶宠物','bed🛏️床','pen🖊️笔','leg🦵腿','sit🪑坐','pig🐷猪','kit🔧装备','big🔍大','hot🥵热','hop🦘跳','dog🐕狗','box📦盒子','not🙅不','cut🔪切','cup☕杯子','sun☀️太阳','bus🚌公交','run🏃跑']}};
+var curL='abs';
 function switchL(k){curL=k;buildL()}
 function buildL(){
   var cfg=labData[curL];
