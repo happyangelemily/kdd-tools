@@ -444,7 +444,9 @@ var quizPool=[{t:'choose',q:'hop 加 -ing 要不要双写？',o:['要，hopping'
 {t:'choose',q:'run 加 -ing 要不要双写？',o:['要，running','不要','都可以','不知道'],a:0,x:'run 单音节+短元音+单辅音n，双写→running！'},
 {t:'choose',q:'双写需要几个条件同时满足？',o:['1个','2个','3个','不需要'],a:2,x:'三个条件同时满足：单音节+短元音+单辅音收尾。'},
 {t:'find',q:'下面哪个词加 -ing 要双写？',o:['read','swim','play','jump'],a:1,x:'swim 要双写→swimming！read/play/jump 都不双写。'},
-{t:'choose',q:'big 加 -er 要不要双写？',o:['要，bigger','不要，biger','都可以','不知道'],a:0,x:'big 单音节+短元音+单辅音g，双写→bigger！'}
+{t:'choose',q:'big 加 -er 要不要双写？',o:['要，bigger','不要，biger','都可以','不知道'],a:0,x:'big 单音节+短元音+单辅音g，双写→bigger！'},
+{t:'choose',q:'sit 加 -ing 要不要双写？',o:['要，sitting','不要，siting','都可以','不知道'],a:0,x:'sit 单音节+短元音+单辅音t，双写→sitting！'},
+{t:'find',q:'下面哪个词加 -ing 不双写？',o:['run','swim','jump','sit'],a:2,x:'jump 两个辅音 mp 收尾，不双写→jumping！'}
 ];
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
