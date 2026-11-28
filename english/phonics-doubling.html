@@ -27,6 +27,9 @@ h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff8a65,#ff
 .fam-form .sf{font-size:.64em;color:#ff8a65;font-weight:bold}
 .fam-form .fw{font-size:1.02em;font-weight:bold;color:#e0e0e0;letter-spacing:.5px}
 .fam-form .fw em{font-style:normal;color:#ff8a65;font-weight:bold;text-decoration:underline;text-underline-offset:3px}
+#doubles .fam,#multiDoubles .fam{border-color:rgba(105,240,174,.4);background:rgba(105,240,174,.07)}
+#multiNo .fam{border-color:rgba(255,82,82,.4);background:rgba(255,82,82,.07)}
+#wxyNo .fam{border-color:rgba(255,183,77,.4);background:rgba(255,183,77,.07)}
 .lab-card .lf{display:flex;align-items:center;gap:3px;justify-content:center;margin-top:4px;font-size:.74em;line-height:1.5}
 .lab-card .ls{color:#ff8a65;font-size:.82em;font-weight:bold;flex-shrink:0}
 .lab-card .lw{color:#e0e0e0;font-weight:bold;letter-spacing:.3px;overflow-wrap:break-word}
@@ -147,9 +150,12 @@ input,select,textarea{font-size:16px}
 <!-- ===== STORY ===== -->
 <div class="section active" id="sec-story"><div class="glass">
 <h2>📖 什么时候要「双写」？</h2>
-<div class="story-speech"><p>加 -ing、-ed、-er、-est、-y 之前，有时候要多写一个字母。什么时候？看<b style="color:#ffd200">三个条件</b>：</p></div>
-<div class="magic-rule">三个条件<b>同时满足</b>才双写：<br>① <b>单音节</b>　② <b>一个短元音</b>　③ <b>一个辅音收尾</b></div>
-<div class="magic-rule" style="border-color:rgba(105,240,174,.45);text-align:left;font-size:.92em;line-height:1.9">🎨 <b style="color:#69f0ae">🟢 绿色</b> = 多写的那个字母（双写）　·　<b style="color:#ff8a65">🟠 橙色</b> = 后面加的小尾巴（-ing / -ed / -er…）</div>
+<div class="story-speech"><p>加 -ing、-ed、-er、-est、-y 之前，有时候要多写一个字母。什么时候？看<b style="color:#ffd200">两条规则</b>：</p></div>
+<div class="magic-rule">两条规则<b>同时满足</b>才双写：<br>① <b>重音在最后一个音节</b>　② <b>尾重读音节＝一个短元音 ＋ 一个辅音字母结尾</b></div>
+<h3>🔑 为什么要「多写一个字母」？</h3>
+<div class="story-speech"><p>为了<b style="color:#69f0ae">保护短元音</b>！你看 <b style="color:#ffd200">hop</b>（跳，短音 /ɒ/）加 -ing：</p></div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0"><div style="background:rgba(255,82,82,.06);border:2px solid rgba(255,82,82,.3);border-radius:14px;padding:12px 16px;text-align:center"><div style="font-weight:bold;color:#ff5252">hop → hop<span class="suf-hl">ing</span></div><div style="color:#888;font-size:.72em;margin-top:3px">❌ 会被读成 hope（希望），o 变长音了</div><span class="speak-btn" onclick="spk(&#39;hoping&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="color:#ffd200;font-weight:bold;align-self:center">→</div><div style="background:rgba(105,240,174,.06);border:2px solid rgba(105,240,174,.3);border-radius:14px;padding:12px 16px;text-align:center"><div style="font-weight:bold;color:#69f0ae">hop → ho<span class="dbl-hl">pp</span><span class="suf-hl">ing</span></div><div style="color:#888;font-size:.72em;margin-top:3px">✅ 双写 p，像一堵墙，o 守住短音 /ɒ/</div><span class="speak-btn" onclick="spk(&#39;hopping&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div></div>
+<div class="story-speech"><p>🧠 多写的那个字母，就是<b style="color:#69f0ae">一道墙</b>——它隔开后面的小尾巴，不让小尾巴把前面的元音「拉长」。元音被墙挡住，就安心读<b>短音</b>啦！</p></div>
 <h3>🔧 这些「小尾巴」各管一件事</h3>
 <div class="story-speech"><p>加 -ing/-ed/-er/-est/-y 不是乱加的——每个小尾巴都在给单词「换装」，改变它的意思：</p></div>
 <div style="display:flex;flex-direction:column;gap:6px;margin:10px 0">
@@ -159,13 +165,27 @@ input,select,textarea{font-size:16px}
 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:7px 12px"><span style="font-weight:bold;color:#ff8a65;min-width:36px;font-size:.95em">+est</span><span style="flex:1;min-width:130px;color:#ccc;font-size:.88em">最…（比一比，最高）</span><span style="color:#ffd200;font-size:.95em">big → bi<span class="dbl-hl">gg</span><span class="suf-hl">est</span> <span class="speak-btn" onclick="spk(&#39;biggest&#39;)" style="width:18px;height:18px;font-size:.5em">🔊</span></span></div>
 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:7px 12px"><span style="font-weight:bold;color:#ff8a65;min-width:36px;font-size:.95em">+y</span><span style="flex:1;min-width:130px;color:#ccc;font-size:.88em">变成「有…的」（形容词）</span><span style="color:#ffd200;font-size:.95em">sun → su<span class="dbl-hl">nn</span><span class="suf-hl">y</span> <span class="speak-btn" onclick="spk(&#39;sunny&#39;)" style="width:18px;height:18px;font-size:.5em">🔊</span></span></div>
 </div>
-<h3>✅ 要双写（三条件全满足）—— 看看怎么「变形」</h3>
+<h3>1️⃣ 单音节：天然重读，只看第②条</h3>
+<div class="story-speech"><p>单音节词就一个音节，重音当然在它身上，所以<b style="color:#ff8a65">只看第②条</b>：一个短元音＋一个辅音字母收尾。</p></div>
+<h3 style="color:#69f0ae;background:rgba(105,240,174,.1);border-left:4px solid #69f0ae;border-radius:0 10px 10px 0;padding:7px 14px">✅ 要双写（短元音＋单辅音收尾）</h3>
 <div id="doubles"></div>
 
-<h3>❌ 不双写（缺一个条件）</h3>
-<div class="story-speech"><p><b>jump</b>（两个辅音 mp 收尾）、<b>hope</b>（长元音）、<b>play</b>（两个元音 ay）——都不双写：</p></div>
-<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0"><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-size:1.2em;font-weight:bold;color:#ffd200">jump</div><div style="color:#888;font-size:.7em;margin-top:2px">→ <span style="font-size:1.71em;font-weight:bold;color:#ffd200">jump<span class="suf-hl">ing</span></span> 跳</div><span class="speak-btn" onclick="spk(&#39;jump&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-size:1.2em;font-weight:bold;color:#ffd200">hope</div><div style="color:#888;font-size:.7em;margin-top:2px">→ <span style="font-size:1.71em;font-weight:bold;color:#ffd200">hop<span class="suf-hl">ing</span></span> 希望</div><span class="speak-btn" onclick="spk(&#39;hope&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-size:1.2em;font-weight:bold;color:#ffd200">play</div><div style="color:#888;font-size:.7em;margin-top:2px">→ <span style="font-size:1.71em;font-weight:bold;color:#ffd200">play<span class="suf-hl">ing</span></span> 玩</div><span class="speak-btn" onclick="spk(&#39;play&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div></div>
-<div class="magic-rule">🎯 口诀：<b>单音节 + 短元音 + 单辅音收尾 → 双写！</b></div>
+<h3>2️⃣ 多音节：先看第①条（重音）</h3>
+<div class="story-speech"><p>多音节词先看<b>重音在不在最后一个音节</b>——在，才可能双写；不在，就不双写。<b style="color:#ffd200">粗体</b>＝重读音节。</p></div>
+<h3 style="color:#69f0ae;background:rgba(105,240,174,.1);border-left:4px solid #69f0ae;border-radius:0 10px 10px 0;padding:7px 14px">✅ 多音节要双写（重音在尾）</h3>
+<div id="multiDoubles"></div>
+<h3 style="color:#ff5252;background:rgba(255,82,82,.1);border-left:4px solid #ff5252;border-radius:0 10px 10px 0;padding:7px 14px">❌ 多音节不双写（重音不在尾）</h3>
+<div id="multiNo"></div>
+
+<h3 style="color:#ffb74d;background:rgba(255,183,77,.1);border-left:4px solid #ffb74d;border-radius:0 10px 10px 0;padding:7px 14px">⚠️ 例外：w / x / y 结尾，不双写</h3>
+<div class="story-speech"><p>就算两条规则都满足，词尾是 <b>w、x、y</b> 也<b style="color:#ff5252">不双写</b>。为什么？因为它们的「收尾」是假的：</p></div>
+<div id="wxyNo"></div>
+<div class="story-speech"><p>🧠 <b style="color:#4fc3f7">w、y</b> 常常和前面的元音「手拉手」组成<b>元音组合</b>（snow 的 ow、play 的 ay），不是单独收尾的辅音；<b style="color:#4fc3f7">x</b> 一个字母发两个音 <b>/k/ + /s/</b>，等于两个辅音——都不满足「单个辅音收尾」，所以不双写！</p></div>
+
+<h3>🏆 综合闯关：判断要不要双写</h3>
+<div class="story-speech"><p>学完了，来检验一下！下面 10 个单词，每个判断「加 -ing 要不要双写」，点一下按钮看对错（涵盖所有类型）：</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0" id="dblQuiz"></div>
+<div id="dblQuizScore" style="text-align:center;min-height:24px;margin-top:8px;font-size:.95em"></div>
 </div></div>
 
 <!-- ===== LAB ===== -->
@@ -191,15 +211,12 @@ input,select,textarea{font-size:16px}
 <div class="section" id="sec-book"><div class="glass"><h2>📚 The Hopping Frog</h2><p style="color:#aaa;margin-bottom:8px;text-align:center">一本双写规则绘本 ✏️</p><div class="book-page" id="bookPage"><div class="book-scene" id="bs"></div><div class="book-title" id="bt"></div><div class="book-text" id="bx"></div><div class="book-pron" id="bookPron"></div><div class="book-nav"><button class="btn btn-outline" onclick="prevP()" id="bp">⬅</button><span class="book-page-num" id="pn"></span><button class="btn btn-outline" onclick="nextP()" id="bn">➡</button></div></div></div></div>
 
 <!-- ===== EASTER EGG ===== -->
-<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：双写是为了「守住短元音」</h2>
-<div class="story-speech"><p>为什么 hop 要双写成 hopping？因为如果不双写——hoping 会被读成「hop + ing」，但 <b style="color:#ffd200">hope + ing</b> 也是 hoping！</p></div>
-<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0">
-<div style="background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-weight:bold;color:#4fc3f7">hop</div><div style="color:#888;font-size:.7em">/hɒp/ 短音</div><span class="speak-btn" onclick="spk(&#39;hop&#39;)">🔊</span></div>
-<div style="color:#ffd200;font-weight:bold;align-self:center">→</div>
-<div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:10px 14px;text-align:center"><div style="font-weight:bold;color:#ffd200">ho<span class="dbl-hl">pp</span><span class="suf-hl">ing</span></div><div style="color:#888;font-size:.7em">双写守住 /ɒ/</div><span class="speak-btn" onclick="spk(&#39;hopping&#39;)">🔊</span></div>
-</div>
-<div class="story-speech"><p>🧠 双写的「pp」就是一道墙，挡住魔法 e，让 o 保持短音 /ɒ/！</p></div>
+<div class="section" id="sec-easter"><div class="glass"><h2>🥚 彩蛋：拓展后缀也走「同一条规则」</h2>
+<div class="story-speech"><p>除了 -ing/-ed/-er/-est/-y，还有更多<b style="color:#ffd200">元音开头的小尾巴</b>：<b>-en、-ish、-ery、-able、-ance、-ence、-ar</b>。加词时同样要<b style="color:#69f0ae">守住短元音</b>、双写收尾的辅音（小学先认识即可，不要求掌握）：</p></div>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0"><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">sad → sa<span class="dbl-hl">dd</span><span class="suf-hl">en</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-en 双写 d · 使伤心</div><span class="speak-btn" onclick="spk(&#39;sadden&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">red → re<span class="dbl-hl">dd</span><span class="suf-hl">ish</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-ish 双写 d · 微红的</div><span class="speak-btn" onclick="spk(&#39;reddish&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">rob → ro<span class="dbl-hl">bb</span><span class="suf-hl">ery</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-ery 双写 b · 抢劫</div><span class="speak-btn" onclick="spk(&#39;robbery&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">forget → forge<span class="dbl-hl">tt</span><span class="suf-hl">able</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-able 双写 t · 可忘记的</div><span class="speak-btn" onclick="spk(&#39;forgettable&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">admit → admi<span class="dbl-hl">tt</span><span class="suf-hl">ance</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-ance 双写 t · 允许进入</div><span class="speak-btn" onclick="spk(&#39;admittance&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">occur → occu<span class="dbl-hl">rr</span><span class="suf-hl">ence</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-ence 双写 r · 发生</div><span class="speak-btn" onclick="spk(&#39;occurrence&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div><div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.25);border-radius:10px;padding:9px 13px;text-align:center"><div style="font-size:1.05em;font-weight:bold;color:#ffd200">beg → be<span class="dbl-hl">gg</span><span class="suf-hl">ar</span></div><div style="color:#888;font-size:.68em;margin-top:2px">-ar 双写 g · 乞丐</div><span class="speak-btn" onclick="spk(&#39;beggar&#39;)" style="display:inline-block;margin-top:4px">🔊</span></div></div>
+<div class="story-speech"><p>🧠 看这七个例子，和 -ing 那套一模一样：词干都是「短元音＋单辅音」收尾（sad、red、rob、forget、admit、occur、beg），加元音开头的小尾巴时把那个辅音<b>双写当「墙」</b>守住短音——每一条都对得上！（生僻的 -al 也走这条规则，如 acquit→acquittal 宣告无罪，先认识即可。）</p></div>
 </div></div>
+
 
 </div>
 
@@ -290,6 +307,7 @@ var WORDS={'walk':'words/walk.mp3','clean':'words/clean.mp3',
   'wisp':'words/wisp.mp3','with':'words/with.mp3','word':'words/word.mp3','work':'words/work.mp3','xylophone':'words/xylophone.mp3','yellow':'words/yellow.mp3','yelp':'words/yelp.mp3','yes':'words/yes.mp3',
   'be':'words/be.mp3','go':'words/go.mp3','hi':'words/hi.mp3','no':'words/no.mp3','note':'words/note.mp3','so':'words/so.mp3','bigger':'words/bigger.mp3','hopping':'words/hopping.mp3','jumping':'words/jumping.mp3','playing':'words/playing.mp3','running':'words/running.mp3','sunny':'words/sunny.mp3','you':'words/you.mp3','zoo':'words/zoo.mp3','hoping':'words/hoping.mp3','reading':'words/reading.mp3','helping':'words/helping.mp3','walking':'words/walking.mp3','opening':'words/opening.mp3','cleaning':'words/cleaning.mp3','planning':'words/planning.mp3','planned':'words/planned.mp3','planner':'words/planner.mp3','shopping':'words/shopping.mp3','shopped':'words/shopped.mp3','shopper':'words/shopper.mp3','sitting':'words/sitting.mp3','sitter':'words/sitter.mp3','hopped':'words/hopped.mp3','hopper':'words/hopper.mp3','stopping':'words/stopping.mp3','stopped':'words/stopped.mp3','stopper':'words/stopper.mp3','runner':'words/runner.mp3','swimming':'words/swimming.mp3','swimmer':'words/swimmer.mp3','biggest':'words/biggest.mp3','hotter':'words/hotter.mp3','hottest':'words/hottest.mp3','funny':'words/funny.mp3','jumper':'words/jumper.mp3','player':'words/player.mp3','reader':'words/reader.mp3','helper':'words/helper.mp3','walker':'words/walker.mp3','opener':'words/opener.mp3','cleaner':'words/cleaner.mp3','cleanest':'words/cleanest.mp3','longer':'words/longer.mp3','shorter':'words/shorter.mp3',
   'are':'words/are.mp3','any':'words/any.mp3','many':'words/many.mp3','pete':'words/pete.mp3','quiz':'words/quiz.mp3','sort':'words/sort.mp3','us':'words/us.mp3','story':'words/story.mp3','audio':'words/audio.mp3','sec':'words/sec.mp3','stroke':'words/stroke.mp3','phonemes':'words/phonemes.mp3','cvc':'words/cvc.mp3','flipped':'words/flipped.mp3','rgba':'words/rgba.mp3','http':'words/http.mp3','en':'words/en.mp3','tubb':'words/tubb.mp3','floot':'words/floot.mp3','cuube':'words/cuube.mp3','cutte':'words/cutte.mp3',
+'admit':'words/admit.mp3','upset':'words/upset.mp3','begin':'words/begin.mp3','forget':'words/forget.mp3','prefer':'words/prefer.mp3','visit':'words/visit.mp3','listen':'words/listen.mp3','happen':'words/happen.mp3','snow':'words/snow.mp3','new':'words/new.mp3','beginning':'words/beginning.mp3','forgetting':'words/forgetting.mp3','admitting':'words/admitting.mp3','admitted':'words/admitted.mp3','preferring':'words/preferring.mp3','preferred':'words/preferred.mp3','upsetting':'words/upsetting.mp3','beginner':'words/beginner.mp3','visiting':'words/visiting.mp3','listening':'words/listening.mp3','happening':'words/happening.mp3','snowing':'words/snowing.mp3','boxing':'words/boxing.mp3','newer':'words/newer.mp3','sadden':'words/sadden.mp3','thinnish':'words/thinnish.mp3','robbery':'words/robbery.mp3','jumped':'words/jumped.mp3','played':'words/played.mp3','helped':'words/helped.mp3','walked':'words/walked.mp3','opened':'words/opened.mp3','cleaned':'words/cleaned.mp3','rainy':'words/rainy.mp3','rob':'words/rob.mp3','occur':'words/occur.mp3','beg':'words/beg.mp3','reddish':'words/reddish.mp3','forgettable':'words/forgettable.mp3','admittance':'words/admittance.mp3','occurrence':'words/occurrence.mp3','beggar':'words/beggar.mp3',
 };
 
 
@@ -327,18 +345,18 @@ function showS(n){
 // ═══ LAB ═══
 var labData={
  'double':{label:'要双写 ✏️',groups:[
-   {suf:'+ing',t:'正在做',items:[['hopping','hop'],['stopping','stop'],['running','run'],['swimming','swim'],['sitting','sit'],['shopping','shop'],['planning','plan']]},
-   {suf:'+ed',t:'做过了',items:[['hopped','hop'],['stopped','stop'],['planned','plan'],['shopped','shop']]},
-   {suf:'+er',t:'做的人/东西',items:[['hopper','hop'],['stopper','stop'],['runner','run'],['swimmer','swim'],['sitter','sit'],['shopper','shop'],['planner','plan']]},
+   {suf:'+ing',t:'正在做',items:[['hopping','hop'],['stopping','stop'],['running','run'],['swimming','swim'],['sitting','sit'],['shopping','shop'],['planning','plan'],['beginning','begin'],['forgetting','forget'],['admitting','admit'],['preferring','prefer'],['upsetting','upset']]},
+   {suf:'+ed',t:'做过了',items:[['hopped','hop'],['stopped','stop'],['planned','plan'],['shopped','shop'],['admitted','admit'],['preferred','prefer']]},
+   {suf:'+er',t:'做的人/东西',items:[['hopper','hop'],['stopper','stop'],['runner','run'],['swimmer','swim'],['sitter','sit'],['shopper','shop'],['planner','plan'],['beginner','begin']]},
    {suf:'+er',t:'更…（比较级）',items:[['bigger','big'],['hotter','hot']]},
    {suf:'+est',t:'最…',items:[['biggest','big'],['hottest','hot']]},
    {suf:'+y',t:'有…的',items:[['sunny','sun'],['funny','fun']]}
  ]},
  'no':{label:'不双写 🚫',groups:[
-   {suf:'+ing',t:'正在做',items:[['jumping','jump'],['hoping','hope'],['playing','play'],['reading','read'],['helping','help'],['walking','walk'],['opening','open'],['cleaning','clean']]},
+   {suf:'+ing',t:'正在做',items:[['jumping','jump'],['hoping','hope'],['playing','play'],['reading','read'],['helping','help'],['walking','walk'],['opening','open'],['cleaning','clean'],['visiting','visit'],['listening','listen'],['happening','happen'],['snowing','snow'],['boxing','box']]},
    {suf:'+ed',t:'做过了',items:[['jumped','jump'],['played','play'],['helped','help'],['walked','walk'],['opened','open'],['cleaned','clean']]},
    {suf:'+er',t:'做的人/东西',items:[['jumper','jump'],['player','play'],['reader','read'],['helper','help'],['walker','walk'],['opener','open'],['cleaner','clean']]},
-   {suf:'+er',t:'更…（比较级）',items:[['longer','long'],['shorter','short']]},
+   {suf:'+er',t:'更…（比较级）',items:[['longer','long'],['shorter','short'],['newer','new']]},
    {suf:'+est',t:'最…',items:[['cleanest','clean']]},
    {suf:'+y',t:'有…的',items:[['rainy','rain']]}
  ]}
@@ -366,7 +384,8 @@ function buildL(){
 // ═══ SORT → 变形配对（连线） ═══
 var mQ=[
   {b:'hop',w:'hopping'},{b:'stop',w:'stopped'},{b:'run',w:'runner'},{b:'big',w:'bigger'},{b:'hot',w:'hottest'},{b:'sun',w:'sunny'},
-  {b:'jump',w:'jumping'},{b:'play',w:'played'},{b:'read',w:'reader'},{b:'clean',w:'cleanest'},{b:'rain',w:'rainy'}
+  {b:'jump',w:'jumping'},{b:'play',w:'played'},{b:'read',w:'reader'},{b:'clean',w:'cleanest'},{b:'rain',w:'rainy'},
+  {b:'begin',w:'beginning'},{b:'forget',w:'forgetting'},{b:'admit',w:'admitted'},{b:'box',w:'boxing'},{b:'snow',w:'snowing'},{b:'visit',w:'visiting'}
 ];
 var mSel=null,mDone=0,mLines=[];
 var mColors=['#ffd200','#69f0ae','#4fc3f7','#ff8a65','#ba68c8','#f06292','#81c784','#ffb74d','#4dd0e1','#aed581','#e6ee9c','#ce93d8'];
@@ -440,13 +459,21 @@ function sfxNO(){var a=new(window.AudioContext||window.webkitAudioContext)(),o=a
 var quizPool=[{t:'choose',q:'hop 加 -ing 要不要双写？',o:['要，hopping','不要，hoping','都可以','不知道'],a:0,x:'hop 单音节+短元音+单辅音p收尾，双写→hopping！'},
 {t:'choose',q:'hope 加 -ing 要不要双写？',o:['要','不要，hoping','都可以','不知道'],a:1,x:'hope 是长元音（魔法e），不双写→hoping（还要去 e）！'},
 {t:'choose',q:'jump 加 -ing 要不要双写？',o:['要','不要，jumping','都可以','不知道'],a:1,x:'jump 是两个辅音 mp 收尾，不双写→jumping！'},
-{t:'choose',q:'play 加 -ing 要不要双写？',o:['要','不要，playing','都可以','不知道'],a:1,x:'play 是两个元音 ay，不双写→playing！'},
+{t:'choose',q:'play 加 -ing 要不要双写？',o:['要','不要，playing','都可以','不知道'],a:1,x:'play 词尾是 y，例外不双写→playing！'},
 {t:'choose',q:'run 加 -ing 要不要双写？',o:['要，running','不要','都可以','不知道'],a:0,x:'run 单音节+短元音+单辅音n，双写→running！'},
-{t:'choose',q:'双写需要几个条件同时满足？',o:['1个','2个','3个','不需要'],a:2,x:'三个条件同时满足：单音节+短元音+单辅音收尾。'},
+{t:'choose',q:'双写需要几条规则同时满足？',o:['1条','2条','3条','不需要'],a:1,x:'两条规则：①重音在最后一个音节 ②短元音+单辅音收尾。'},
 {t:'find',q:'下面哪个词加 -ing 要双写？',o:['read','swim','play','jump'],a:1,x:'swim 要双写→swimming！read/play/jump 都不双写。'},
 {t:'choose',q:'big 加 -er 要不要双写？',o:['要，bigger','不要，biger','都可以','不知道'],a:0,x:'big 单音节+短元音+单辅音g，双写→bigger！'},
 {t:'choose',q:'sit 加 -ing 要不要双写？',o:['要，sitting','不要，siting','都可以','不知道'],a:0,x:'sit 单音节+短元音+单辅音t，双写→sitting！'},
-{t:'find',q:'下面哪个词加 -ing 不双写？',o:['run','swim','jump','sit'],a:2,x:'jump 两个辅音 mp 收尾，不双写→jumping！'}
+{t:'find',q:'下面哪个词加 -ing 不双写？',o:['run','swim','jump','sit'],a:2,x:'jump 两个辅音 mp 收尾，不双写→jumping！'},
+{t:'choose',q:'begin 加 -ing 要不要双写？',o:['要，beginning','不要，begining','都可以','不知道'],a:0,x:'begin 重音在 gin（尾音节），短元音+单辅音n，双写→beginning！'},
+{t:'choose',q:'forget 加 -ing 要不要双写？',o:['要，forgetting','不要，forgeting','都可以','不知道'],a:0,x:'forget 重音在 get（尾音节），双写→forgetting！'},
+{t:'choose',q:'admit 加 -ing 要不要双写？',o:['要，admitting','不要，admiting','都可以','不知道'],a:0,x:'admit 重音在 mit（尾音节），双写→admitting！'},
+{t:'choose',q:'prefer 加 -ed 要不要双写？',o:['要，preferred','不要，prefered','都可以','不知道'],a:0,x:'prefer 重音在 fer（尾音节），双写 r→preferred！'},
+{t:'choose',q:'visit 加 -ing 要不要双写？',o:['要','不要，visiting','都可以','不知道'],a:1,x:'visit 重音在 vis（第一个音节），不在尾，不双写→visiting！'},
+{t:'choose',q:'box 加 -ing 要不要双写？',o:['要','不要，boxing','都可以','不知道'],a:1,x:'box 词尾是 x（发两个音 /ks/），例外不双写→boxing！'},
+{t:'choose',q:'snow 加 -ing 要不要双写？',o:['要','不要，snowing','都可以','不知道'],a:1,x:'snow 词尾是 w，例外不双写→snowing！'},
+{t:'find',q:'哪些字母结尾就算满足规则也不双写？',o:['p、t、n','w、x、y','b、d、g','s、z'],a:1,x:'w、x、y 结尾不双写（x 发两个音，w、y 常作元音）。'}
 ];
 var qS={qs:[],cur:0,as:[]};
 function initQ(){var p=[].concat(quizPool).sort(function(){return Math.random()-0.5});qS={qs:p.slice(0,10),cur:0,as:new Array(10).fill(-1)};document.getElementById('qf').style.display='none';renderQD();renderQC()}
@@ -498,8 +525,7 @@ function prevP(){if(bp_cp>0){bp_cp--;renderP()}}
 
 var DOUBLES=[
   {r:'hop',i:'/hɒp/',z:'跳',f:[['+ing','hopping'],['+ed','hopped'],['+er','hopper']]},
-  {r:'big',i:'/bɪg/',z:'大',f:[['+er','bigger'],['+est','biggest']]},
-  {r:'sun',i:'/sʌn/',z:'阳光',f:[['+y','sunny']]}
+  {r:'big',i:'/bɪg/',z:'大',f:[['+er','bigger'],['+est','biggest']]}
 ];
 function renderDoubles(){
   var h='';
@@ -515,8 +541,73 @@ function renderDoubles(){
   document.getElementById('doubles').innerHTML=h;
 }
 
+var MULTI_DOUBLES=[
+  {b:'be·<b>gin</b>',z:'开始',w:'beginning',s:'ing'},
+  {b:'for·<b>get</b>',z:'忘记',w:'forgetting',s:'ing'}
+];
+var MULTI_NO=[
+  {b:'<b>vis</b>·it',z:'参观',w:'visiting',s:'ing'},
+  {b:'<b>lis</b>·ten',z:'听',w:'listening',s:'ing'}
+];
+var WXY_NO=[
+  {b:'box <span style="color:#888;font-size:.72em">(x)</span>',z:'拳击',w:'boxing',s:'ing'},
+  {b:'play <span style="color:#888;font-size:.72em">(y)</span>',z:'玩',w:'playing',s:'ing'}
+];
+function renderForms(arr,elId){
+  var h=arr.map(function(x){
+    var stem=x.w.slice(0,x.w.length-x.s.length),hl;
+    if(stem.length>=2&&stem[stem.length-1]===stem[stem.length-2]){hl=stem.slice(0,stem.length-2)+'<span class="dbl-hl">'+stem.slice(stem.length-2)+'</span><span class="suf-hl">'+x.s+'</span>';}
+    else{hl=stem+'<span class="suf-hl">'+x.s+'</span>';}
+    return '<div class="fam"><span class="fam-root"><span class="rw">'+x.b+'</span> <span class="ri">'+x.z+'</span></span><span class="fam-arrow">→</span><span class="fam-form"><span class="fw">'+hl+'</span> <span class="speak-btn" onclick="spk(\''+x.w+'\')" style="width:20px;height:20px;font-size:.55em">🔊</span></span></div>';
+  }).join('');
+  document.getElementById(elId).innerHTML=h;
+}
+
+var DBL_QUIZ=[
+  {w:'run',dbl:1,der:'running',z:'跑'},
+  {w:'visit',dbl:0,der:'visiting',z:'参观'},
+  {w:'begin',dbl:1,der:'beginning',z:'开始'},
+  {w:'play',dbl:0,der:'playing',z:'玩'},
+  {w:'hop',dbl:1,der:'hopping',z:'跳'},
+  {w:'listen',dbl:0,der:'listening',z:'听'},
+  {w:'box',dbl:0,der:'boxing',z:'拳击'},
+  {w:'forget',dbl:1,der:'forgetting',z:'忘记'},
+  {w:'jump',dbl:0,der:'jumping',z:'跳'},
+  {w:'hope',dbl:0,der:'hoping',z:'希望'}
+];
+var dblQDone=0,dblQScore=0;
+function renderDblQuiz(){
+  var h='';
+  DBL_QUIZ.forEach(function(q,i){
+    h+='<div class="dblq-card" id="dblq'+i+'" style="background:rgba(0,0,0,.18);border:2px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;text-align:center;min-width:112px"><div style="font-size:1.3em;font-weight:bold;color:#ffd200">'+q.w+'</div><div style="color:#888;font-size:.68em;margin:2px 0">'+q.z+'</div><div style="display:flex;gap:5px;justify-content:center;margin:5px 0"><button onclick="dblQ('+i+',1)" style="padding:5px 10px;border-radius:16px;border:1px solid rgba(105,240,174,.4);background:rgba(105,240,174,.1);color:#69f0ae;cursor:pointer;font-size:.78em">✏️ 要双写</button><button onclick="dblQ('+i+',0)" style="padding:5px 10px;border-radius:16px;border:1px solid rgba(255,138,101,.4);background:rgba(255,138,101,.1);color:#ff8a65;cursor:pointer;font-size:.78em">🚫 不双写</button></div><div id="dblqfb'+i+'" style="font-size:.72em;min-height:16px;margin-top:2px"></div></div>';
+  });
+  document.getElementById('dblQuiz').innerHTML=h;
+}
+function dblQ(i,ans){
+  var card=document.getElementById('dblq'+i);
+  if(card.className.indexOf('done')>=0)return;
+  card.className='dblq-card done';
+  var q=DBL_QUIZ[i],ok=(ans===q.dbl);
+  if(ok)dblQScore++;
+  dblQDone++;
+  var fb=document.getElementById('dblqfb'+i);
+  fb.innerHTML=ok?('✅ '+q.w+' → '+q.der):('❌ '+q.w+' → '+q.der);
+  card.style.borderColor=ok?'#69f0ae':'#ff5252';
+  card.style.background=ok?'rgba(105,240,174,.12)':'rgba(255,82,82,.12)';
+  if(dblQDone>=DBL_QUIZ.length){
+    var s=document.getElementById('dblQuizScore');
+    var e=(dblQScore===10)?'🏆 满分！双写小达人！':((dblQScore>=8)?'🎉 太棒了！':((dblQScore>=6)?'💪 还不错！':'📖 再练练~'));
+    s.innerHTML=e+'　答对 '+dblQScore+'/10　<button onclick="resetDblQuiz()" style="padding:4px 12px;border-radius:16px;border:1px solid rgba(255,210,0,.4);background:rgba(255,210,0,.1);color:#ffd200;cursor:pointer;font-size:.82em">🔄 再来一次</button>';
+  }
+}
+function resetDblQuiz(){
+  dblQDone=0;dblQScore=0;
+  renderDblQuiz();
+  document.getElementById('dblQuizScore').innerHTML='';
+}
+
 // === Init ===
-renderDoubles();buildL();initQ();
+renderDoubles();renderForms(MULTI_DOUBLES,'multiDoubles');renderForms(MULTI_NO,'multiNo');renderForms(WXY_NO,'wxyNo');renderDblQuiz();buildL();initQ();
 </script>
 </body>
 </html>
